@@ -1,9 +1,7 @@
 ﻿CREATE DATABASE webbantivi
-
 go
 
 USE webbantivi
-
 go
 
 -- lý do trả hàng
@@ -36,9 +34,9 @@ CREATE TABLE bill
 CREATE TABLE returns_product
   (
      id          BIGINT IDENTITY(1, 1) PRIMARY KEY,
-     id_customer BIGINT,
-     id_bill     BIGINT,
-     id_product  BIGINT,
+     id_customer BIGINT references customer(id),
+     id_bill     BIGINT  references bill(id),
+     id_product  BIGINT  references products(id),
      create_date DATETIME,
      quantity    INT,
      status      INT -- trạng thái phiếu trả hàng
