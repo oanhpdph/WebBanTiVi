@@ -17,81 +17,81 @@ CREATE TABLE reason
 CREATE TABLE brand
   (
      id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-	 code varchar(10),
-	 namebrand nvarchar(max)
+   code varchar(10),
+   namebrand nvarchar(max)
   )
   -- Bảo hành
 CREATE TABLE guarantee
   (
      id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-	 code varchar(10),
-	 nameguarantee nvarchar(max),
-	 year_guarantee date
+   code varchar(10),
+   nameguarantee nvarchar(max),
+   year_guarantee date
   )
   -- Xuất xứ
 CREATE TABLE origin
   (
      id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-	 code varchar(10),
-	 nameorigin nvarchar(max)
+   code varchar(10),
+   nameorigin nvarchar(max)
   )
   -- nhà cung cấp
 CREATE TABLE manufacture
   (
      id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-	 code varchar(10),
-	 namemanufacture nvarchar(max)
+   code varchar(10),
+   namemanufacture nvarchar(max)
   )
   -- màu sắc
 CREATE TABLE color
   (
      id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-	 code varchar(10),
-	 namecolor nvarchar(max)
+   code varchar(10),
+   namecolor nvarchar(max)
   )
   -- Loại
 CREATE TABLE category
   (
      id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-	 code varchar(10),
-	 namecategory nvarchar(max)
+   code varchar(10),
+   namecategory nvarchar(max)
   )
   -- độ phân giải
 CREATE TABLE resolution
   (
      id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-	 code varchar(10),
-	 nameresolution nvarchar(max),
-	 screen_length float,-- chiều dài màn hình (pixel)
-	 screen_width float,
+   code varchar(10),
+   nameresolution nvarchar(max),
+   screen_length float,-- chiều dài màn hình (pixel)
+   screen_width float,
   )
   -- size
 CREATE TABLE size
   (
      id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-	 code varchar(10),
-	 namesizeinch nvarchar(max),
-	 TV_length float, -- chiều dài TV tính cả viền (cm)
-	 TV_width float,
-	 thickness float, -- độ dày TV
+   code varchar(10),
+   namesizeinch nvarchar(max),
+   TV_length float, -- chiều dài TV tính cả viền (cm)
+   TV_width float,
+   thickness float, -- độ dày TV
   )
   -- sản phẩm
 CREATE TABLE products
   (
      id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-	 code varchar(10),
-	 nameTV nvarchar(max),
-	 price_import bigint,
-	 price_export bigint,
-	 quantity int,
-	 id_brand     BigInt REFERENCES brand(id),
-	 id_guarantee    BigInt REFERENCES guarantee(id),
-	 id_origin   BigInt REFERENCES origin(id),
-	 id_manufacture   BigInt REFERENCES manufacture(id),
-	 id_color    BigInt REFERENCES color(id),
-	 id_category   BigInt REFERENCES category(id),
-	 id_resolution   BigInt REFERENCES resolution(id),
-	 id_size   BigInt REFERENCES size(id),
+   code varchar(10),
+   nameTV nvarchar(max),
+   price_import bigint,
+   price_export bigint,
+   quantity int,
+   id_brand     BigInt REFERENCES brand(id),
+   id_guarantee    BigInt REFERENCES guarantee(id),
+   id_origin   BigInt REFERENCES origin(id),
+   id_manufacture   BigInt REFERENCES manufacture(id),
+   id_color    BigInt REFERENCES color(id),
+   id_category   BigInt REFERENCES category(id),
+   id_resolution   BigInt REFERENCES resolution(id),
+   id_size   BigInt REFERENCES size(id),
 
   )
 
@@ -99,7 +99,7 @@ CREATE TABLE products
 CREATE TABLE images
   (
      id BIGINT IDENTITY(1, 1) PRIMARY KEY
-	 id_product     BigInt REFERENCES products(id) ,-- id sản phẩm
+   id_product     BigInt REFERENCES products(id) ,-- id sản phẩm
      image_product VARCHAR(max)
   )
 
@@ -143,4 +143,23 @@ CREATE TABLE image_or_video
      id_returns     BIGINT REFERENCES returns_product(id),
      -- id phiếu trả hàng
      image_or_video VARCHAR(max)
-  ) 
+  )
+
+  CREATE TABLE promotiondetails(
+  id  BIGINT IDENTITY(1, 1) PRIMARY KEY,
+  id_product     BigInt REFERENCES products(id) ,
+  Startdate    DATE,
+  Enddate    DATE,
+  Reducedform  BIT,
+  status    INT,
+    
+)
+GO
+CREATE TABLE promotion(
+  id  BIGINT IDENTITY(1, 1) PRIMARY KEY,
+  id_promotiondetails REFERENCES promotiondetails(id) ,
+  Reducedvalue    MONEY,
+  Maximumreductionvalue  MONEY,
+    
+)
+GO
