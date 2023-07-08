@@ -13,106 +13,146 @@ CREATE TABLE reason
      reason NVARCHAR(max)-- lý do trả hàng là ?
   )
 
-  -- Hãng
+-- Hãng
 CREATE TABLE brand
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-   code varchar(10),
-   namebrand nvarchar(max)
+     id        BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     code      VARCHAR(10),
+     namebrand NVARCHAR(max)
   )
-  -- Bảo hành
+
+-- Bảo hành
 CREATE TABLE guarantee
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-   code varchar(10),
-   nameguarantee nvarchar(max),
-   year_guarantee date
+     id             BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     code           VARCHAR(10),
+     nameguarantee  NVARCHAR(max),
+     year_guarantee DATE
   )
-  -- Xuất xứ
+
+-- Xuất xứ
 CREATE TABLE origin
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-   code varchar(10),
-   nameorigin nvarchar(max)
+     id         BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     code       VARCHAR(10),
+     nameorigin NVARCHAR(max)
   )
-  -- nhà cung cấp
+
+-- nhà cung cấp
 CREATE TABLE manufacture
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-   code varchar(10),
-   namemanufacture nvarchar(max)
+     id              BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     code            VARCHAR(10),
+     namemanufacture NVARCHAR(max)
   )
-  -- màu sắc
+
+-- màu sắc
 CREATE TABLE color
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-   code varchar(10),
-   namecolor nvarchar(max)
+     id        BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     code      VARCHAR(10),
+     namecolor NVARCHAR(max)
   )
-  -- Loại
+
+-- Loại
 CREATE TABLE category
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-   code varchar(10),
-   namecategory nvarchar(max)
+     id           BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     code         VARCHAR(10),
+     namecategory NVARCHAR(max)
   )
-  -- độ phân giải
+
+-- độ phân giải
 CREATE TABLE resolution
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-   code varchar(10),
-   nameresolution nvarchar(max),
-   screen_length float,-- chiều dài màn hình (pixel)
-   screen_width float,
+     id             BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     code           VARCHAR(10),
+     nameresolution NVARCHAR(max),
+     screen_length  FLOAT,-- chiều dài màn hình (pixel)
+     screen_width   FLOAT,
   )
-  -- size
+
+-- size
 CREATE TABLE size
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-   code varchar(10),
-   namesizeinch nvarchar(max),
-   TV_length float, -- chiều dài TV tính cả viền (cm)
-   TV_width float,
-   thickness float, -- độ dày TV
+     id           BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     code         VARCHAR(10),
+     namesizeinch NVARCHAR(max),
+     tv_length    FLOAT,-- chiều dài TV tính cả viền (cm)
+     tv_width     FLOAT,
+     thickness    FLOAT, -- độ dày TV
   )
-  -- sản phẩm
+
+-- sản phẩm
 CREATE TABLE products
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-   code varchar(10),
-   nameTV nvarchar(max),
-   price_import bigint,
-   price_export bigint,
-   quantity int,
-   id_brand     BigInt REFERENCES brand(id),
-   id_guarantee    BigInt REFERENCES guarantee(id),
-   id_origin   BigInt REFERENCES origin(id),
-   id_manufacture   BigInt REFERENCES manufacture(id),
-   id_color    BigInt REFERENCES color(id),
-   id_category   BigInt REFERENCES category(id),
-   id_resolution   BigInt REFERENCES resolution(id),
-   id_size   BigInt REFERENCES size(id),
-
+     id             BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     code           VARCHAR(10),
+     nametv         NVARCHAR(max),
+     price_import   BIGINT,
+     price_export   BIGINT,
+     quantity       INT,
+     id_brand       BIGINT REFERENCES brand(id),
+     id_guarantee   BIGINT REFERENCES guarantee(id),
+     id_origin      BIGINT REFERENCES origin(id),
+     id_manufacture BIGINT REFERENCES manufacture(id),
+     id_color       BIGINT REFERENCES color(id),
+     id_category    BIGINT REFERENCES category(id),
+     id_resolution  BIGINT REFERENCES resolution(id),
+     id_size        BIGINT REFERENCES size(id),
   )
 
-  -- hình ảnh
+-- hình ảnh
 CREATE TABLE images
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY
-   id_product     BigInt REFERENCES products(id) ,-- id sản phẩm
+     id            BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     id_product    BIGINT REFERENCES products(id),-- id sản phẩm
      image_product VARCHAR(max)
   )
+
+CREATE TABLE adress
+  (
+     code         UNIQUEIDENTIFIER DEFAULT Newid() PRIMARY KEY,
+     NAME         NVARCHAR(50),
+     describe     NVARCHAR(max),
+     city         NVARCHAR(50),
+     district     NVARCHAR(50),
+     ward         NVARCHAR(50),
+     street       NVARCHAR(50),
+     codecustomer BIGINT REFERENCES customer(id)
+  )
+
+go
 
 -- khách hàng
 CREATE TABLE customer
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY
+     id                BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     NAME              NVARCHAR(50),
+     [date]            DATE,
+     diachi            NVARCHAR(max),
+     phone_number      VARCHAR(15) UNIQUE,
+     email             VARCHAR(50) UNIQUE,
+     gender            BIT,
+     id_card           VARCHAR(15) UNIQUE,
+     id_number         VARCHAR(15) UNIQUE,
+     avatar            VARCHAR(50),
+     status            INT,
+     accumulated_point INT DEFAULT 0
   )
+
+go
 
 --hóa đơn
 CREATE TABLE bill
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY
+     id                BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     date_founded      DATE,
+     the_establishment NVARCHAR(50),
+     note              NVARCHAR(max),
+     date_payment      DATE,
+     status            INT,
+     buyer             BIGINT REFERENCES customer(id)
   )
 
 -- phiếu trả hàng
@@ -145,21 +185,63 @@ CREATE TABLE image_or_video
      image_or_video VARCHAR(max)
   )
 
-  CREATE TABLE promotiondetails(
-  id  BIGINT IDENTITY(1, 1) PRIMARY KEY,
-  id_product     BigInt REFERENCES products(id) ,
-  Startdate    DATE,
-  Enddate    DATE,
-  Reducedform  BIT,
-  status    INT,
-    
-)
-GO
-CREATE TABLE promotion(
-  id  BIGINT IDENTITY(1, 1) PRIMARY KEY,
-  id_promotiondetails REFERENCES promotiondetails(id) ,
-  Reducedvalue    MONEY,
-  Maximumreductionvalue  MONEY,
-    
-)
-GO
+CREATE TABLE promotiondetails
+  (
+     id          BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     id_product  BIGINT REFERENCES products(id),
+     startdate   DATE,
+     enddate     DATE,
+     reducedform BIT,
+     status      INT,
+  )
+
+go
+
+CREATE TABLE promotion
+  (
+     id                    BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     id_promotiondetails   BIGINT REFERENCES promotiondetails(id),
+     reducedvalue          MONEY,
+     maximumreductionvalue MONEY,
+  )
+
+go
+
+CREATE TABLE membershipcard
+  (
+     id                VARCHAR(50) PRIMARY KEY,
+     color             NVARCHAR(10),
+     card_type         NVARCHAR(10),
+     release_date      DATE,
+     cancellation_date DATE,
+     status            INT,
+     owner             BIGINT REFERENCES customer(id)
+  )
+
+go
+
+CREATE TABLE exchange_card
+  (
+     id             BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     id_product_old BIGINT REFERENCES products(id),
+     id_product_new BIGINT,
+     id_customer    BIGINT REFERENCES customer (id),
+     datestart      DATE,
+     stattus        INT,
+     describe       NVARCHAR(30),
+     id_reason      BIGINT REFERENCES reason_exchange(id)
+  )
+
+CREATE TABLE image_or_video_exchange
+  (
+     id             UNIQUEIDENTIFIER DEFAULT Newid() PRIMARY KEY,
+     id_exchange     BIGINT REFERENCES exchange_card(id),
+
+     image_or_video VARCHAR(max)
+  )
+
+CREATE TABLE reason_exchange
+  (
+     id          BIGINT IDENTITY(1, 1) PRIMARY KEY,
+     name_reason NVARCHAR(100)
+  ) 
