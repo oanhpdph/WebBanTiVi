@@ -1,4 +1,4 @@
-﻿﻿CREATE DATABASE webbantivi
+﻿CREATE DATABASE webbantivi
 
 go
 
@@ -104,8 +104,8 @@ CREATE TABLE products
   -- hình ảnh
 CREATE TABLE images
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY
-   id_product     BigInt REFERENCES products(id) ,-- id sản phẩm
+     id BIGINT IDENTITY(1, 1) PRIMARY KEY,
+   id_product   BigInt REFERENCES products(id) ,-- id sản phẩm
      image_product VARCHAR(max)
   )
 
@@ -126,13 +126,36 @@ CREATE TABLE customer
      accumulated_point INT DEFAULT 0
   )
 
+    -- chức vụ
+  CREATE TABLE Position 
+  (
+  id BIGINT IDENTITY(1, 1) PRIMARY KEY,
+  code nvarchar(30),
+  name nvarchar(30)
+  )
+  -- nhân viên
+  CREATE TABLE staff
+  (
+  id BIGINT IDENTITY(1, 1) PRIMARY KEY,
+  code nvarchar(30),
+  last_name nvarchar(30),
+  middle_name nvarchar(30),
+  first_name nvarchar(30),
+  gender tinyint,
+  date Date,
+  address nvarchar(50),
+  phone nvarchar(30),
+  password nvarchar(20),
+  status int,
+  position_id BIGINT REFERENCES Position(id)
+  )
 --hóa đơn
 CREATE TABLE bill
   (
-     id BIGINT IDENTITY(1, 1) PRIMARY KEY
+     id BIGINT IDENTITY(1, 1) PRIMARY KEY,
 	 id_customer BIGINT REFERENCES customer(id),
 	 code varchar(10) ,
-	 id_staff BIGINT not null,
+	 id_staff BIGINT not null references staff(id),
 	 create_date Date not null,
 	 payment_date Date not null, -- ngày thanh toán
 	 ship_date Date not null,
@@ -142,13 +165,15 @@ CREATE TABLE bill
 	 address nvarchar(100),
 	 phone nvarchar(30)
   )
+
   -- hoa don chitiet 
   CREATE TABLE bill_detail
   (
-  id_hoadon BIGINT IDENTITY(1, 1) PRIMARY KEY,
-  id_product BIGINT,
+  id_bill BIGINT references bill(id),
+  id_product BIGINT references products(id),
   quantity int ,
-  price nvarchar(30)
+  price nvarchar(30),
+  primary key(id_bill,id_product)
   )
   --giỏ hàng
   CREATE TABLE Cart
@@ -161,12 +186,14 @@ CREATE TABLE bill
   -- giỏ hàng chi tiết
   CREATE TABLE Cart_detail
   (
-  id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-  cart_id BIGINT ,
-  product_id BIGINT,
+  cart_id BIGINT references Cart(id),
+  product_id BIGINT references products(id),
   quantity int,
-  price nvarchar(30)
+  price nvarchar(30),
+  create_date Datetime
+  primary key(cart_id,product_id)
   )
+  drop table bill_detail
 -- phiếu trả hàng
 CREATE TABLE returns_product
   (
@@ -225,45 +252,25 @@ CREATE TABLE image_or_video_exchange
      -- id phiếu đổi hàng
      image_or_video VARCHAR(max)
   )
-  -- chức vụ
-  CREATE TABLE Position 
-  (
-  id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-  code nvarchar(30),
-  name nvarchar(30)
-  )
-  -- nhân viên
-  CREATE TABLE staff
-  (
-  id BIGINT IDENTITY(1, 1) PRIMARY KEY,
-  code nvarchar(30),
-  last_name nvarchar(30),
-  middle_name nvarchar(30),
-  first_name nvarchar(30),
-  gender tinyint,
-  date Date,
-  address nvarchar(50),
-  phone nvarchar(30),
-  password nvarchar(20),
-  status int,
-  position_id BIGINT REFERENCES Position(id)
-  )
+
   
     --
-  CREATE TABLE promotiondetails(
-  id  BIGINT IDENTITY(1, 1) PRIMARY KEY,
+  CREATE TABLE promotion_details(
+  id_promotion  BIGINT references promotion(id),
   id_product     BigInt REFERENCES products(id) ,
   Startdate    DATE,
   Enddate    DATE,
   Reducedform  BIT,
   status    INT,
+  primary key(id_promotion, id_product)
     
 )
 GO
+drop table promotion_details
 --
 CREATE TABLE promotion(
   id  BIGINT IDENTITY(1, 1) PRIMARY KEY,
-  promotiondetails_id BIGINT REFERENCES promotiondetails(id) ,
+  code varchar(50),
   Reducedvalue    MONEY,
   Maximumreductionvalue  MONEY,
     
