@@ -1,0 +1,252 @@
+<div class="page-header">
+    <h3 class="page-title">Direct Sales</h3>
+</div>
+<div class="row">
+    <div class="left-content col-8">
+        <div class="grid-margin stretch-card">
+            <div class="card ">
+                <div class="col-lg-12">
+                    <div class="card-body">
+                        <form class="nav-link form-inline mt-2 mt-md-0">
+                            <div class="input-group border-dark">
+                                <input type="text" class="form-control" style="border-radius:20px 0 0 20px"
+                                       placeholder="Search product">
+                                <div class="input-group-append">
+                              <span class="input-group-text">
+                                <i class="mdi mdi-magnify"></i>
+                              </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- thông tin sản phẩm tìm kiếm được-->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table .table-hover">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Total</th>
+                                    <th>function</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><img src="/admin/assets/images/faces/face1.jpg" alt=""></td>
+                                    <td class="limited-content">Tivi LG OLED evo C3 65 inch 2023 4K Smart TV |
+                                        OLED65C3
+                                    </td>
+                                    <td>
+                                        <input type="number" style="width: 60px; height: 30px" value="1">
+                                    </td>
+                                    <td>$ 160.25</td>
+                                    <td><b>$ 160.25</b></td>
+                                    <td><a href="#" style="color: #0b090c"><i
+                                            class="mdi mdi-delete-forever icon-md"></i></a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid-margin stretch-card">
+
+            <div class="card ">
+                <!-- thông tin của người mua-->
+                <form class="forms-sample">
+                    <div class="card-body ">
+                        <h4 class="card-title">Infomation customer</h4>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="nameCustomer">Name</label>
+                                    <div class="input-group">
+                                        <div class="input-group-append input-group-info-customer">
+                                            <span class="input-group-text"><i class="mdi mdi-account"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control  input-group-info-customer"
+                                               id="nameCustomer"
+                                               placeholder="Name customer">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phoneNumberCustomer">Phone number</label>
+                                    <div class="input-group">
+                                        <div class="input-group-append input-group-info-customer">
+                                            <span class="input-group-text"><i class="mdi mdi-cellphone"></i>
+                                            </span>
+                                        </div>
+                                        <input class="form-control  input-group-info-customer" id="phoneNumberCustomer"
+                                               placeholder="Phone number customer">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="birthday">Birthday</label>
+                                    <input class="form-control datepicker  input-group-info-customer" id="birthday"
+                                           type="date"
+                                           placeholder="dd/mm/yyyy">
+                                </div>
+                                <div class="form-group">
+                                    <label for="genderCustomer">Gender</label>
+                                    <div class="input-group">
+                                        <div class="input-group-append input-group-info-customer">
+                                            <span class="input-group-text"><i class="mdi mdi-gender-male-female"></i>
+                                            </span>
+                                        </div>
+                                        <select class="form-control  input-group-info-customer" id="genderCustomer">
+                                            <option>Male</option>
+                                            <option>Female</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="city">Province/City</label>
+                                    <select class="js-example-basic-single" style="width:100%;font-size: 50px"
+                                            id="city">
+                                        <option value="HN">Hà Nội</option>
+                                        <option value="NB">Ninh Bình</option>
+                                        <option value="ND">Nam Định</option>
+                                        <option value="TH">Thanh Hóa</option>
+                                        <option value="TN">Thái Nguyên</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="district">District</label>
+                                    <select class="js-example-basic-single" style="width: 100%;" id="district">
+                                        <option value="HN">Hà Nội</option>
+                                        <option value="NB">Ninh Bình</option>
+                                        <option value="ND">Nam Định</option>
+                                        <option value="TH">Thanh Hóa</option>
+                                        <option value="TN">Thái Nguyên</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ward">Ward</label>
+                                    <select class="js-example-basic-single" style="width: 100%;" id="ward">
+                                        <option value="HN">Hà Nội</option>
+                                        <option value="NB">Ninh Bình</option>
+                                        <option value="ND">Nam Định</option>
+                                        <option value="TH">Thanh Hóa</option>
+                                        <option value="TN">Thái Nguyên</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="detailAddressCustomer">Detail address</label>
+                                    <div class="input-group">
+                                        <div class="input-group-append  input-group-info-customer">
+                                            <span class="input-group-text"><i class=" mdi mdi-home"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control  input-group-info-customer"
+                                               id="detailAddressCustomer"
+                                               placeholder="Detail address customer">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="right-content col-4 ">
+        <div class="grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Check Out</h4>
+                    <form class="forms-sample">
+                        <div class="form-group row">
+                            <div class="text-left col-md-6">
+                                <label for="totalPrice">Total price:</label>
+                            </div>
+                            <div class="text-right col-md-6">
+                                <span id="totalPrice">4.000.000<u>đ</u></span>
+                            </div>
+                        </div>
+                        <div role="separator" class="dropdown-divider"></div>
+                        <div class="form-group">
+                            <div class="form-group row">
+                                <div class="text-left col-md-6">
+                                    <label class="text-warning"><b>Customer must pay:</b></label>
+                                </div>
+                                <div class="text-right col-md-6">
+                                    <span class="text-warning"><b>4.000.000<u>đ</u></b></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group row">
+                                <div class="text-left align-text-bottom col-md-5">
+                                    <label for="customerPay">Customer pay:</label>
+                                </div>
+                                <div class=" col-md-7">
+                                    <span class="input-group"><input type="text"
+                                                                     class="form-control border-top-0 border-left-0 border-right-0 text-right"
+                                                                     style="font-size: 18.67px ;height: 20px;  border-bottom:#c0a16b solid 1px"
+                                                                     id="customerPay"><u>đ</u></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="separator" class="dropdown-divider"></div>
+                        <div class="form-group">
+                            <div class="form-group row">
+                                <div class="text-left col-md-6">
+                                    <label>Give back:</label>
+                                </div>
+                                <div class="text-right col-md-6">
+                                    <span>0<u>đ</u></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group row">
+                                <div class="text-left col-md-12 input-group">
+                                    <div class="btn-icon-append">
+                                        <i class="mdi mdi-border-color"></i>
+                                    </div>
+                                    <input class="form-control border-right-0 border-left-0 border-top-0 "
+                                           type="text" placeholder="Ghi chú" style="height: 20px; border-bottom:#c0a16b solid 1px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-check mx-sm-2 col-md-10">
+                                <label class="form-check-label">Print bill
+                                    <i class="input-helper"></i> <input type="checkbox" class="form-check-input"
+                                                                        checked=""></label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-check col-md-1"></div>
+                            <div class="form-check col-md-5">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input form" name="optionsRadios"
+                                           id="optionsRadios1" value=""> Cash <i class="input-helper"></i></label>
+                            </div>
+                            <div class="form-check col-md-6">
+                                <label class="form-check-label">
+                                    <input type="radio" class="form-check-input" name="optionsRadios"
+                                           id="optionsRadios2" value="option2" checked=""> Transfer <i
+                                        class="input-helper"></i></label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <button type="button" class="btn btn-warning btn-lg btn-block"> Pay
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
