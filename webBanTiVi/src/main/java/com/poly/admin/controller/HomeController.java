@@ -15,7 +15,7 @@ public class HomeController {
     @GetMapping("/admin/dashboard")
     public String loadDashboard(HttpSession session) {
         session.setAttribute("pageView", "/admin/page/dashboard.html");
-        return "admin/layout";
+        return "admin/home";
     }
 
     @GetMapping("/admin/bill")
