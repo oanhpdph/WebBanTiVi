@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Product Tables</h4>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+        <h5 class="card-header">Table Product</h5>
+        <div class="table-responsive text-nowrap">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Price Import</th>
+                    <th>Price Export</th>
+                    <th>Quantity</th>
+                    <th>Brand</th>
+                    <th>Guarantee</th>
+                    <th>Origin</th>
+                    <th>Manufacture</th>
+                    <th>Color</th>
+                    <th>Category</th>
+                    <th>Resolution</th>
+                    <th>Size</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="item" items="${items}">
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.price}</td>
+                        <td>${item.category.name}</td>
+                        <td><p><img src="/static/images/${item.image}" alt="car_image"
+                                    style="height: 50px; width: 50px"/></p>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="/admin/product/edit/${item.id}">Edit</a>
+                            <a class="btn btn-sm btn-danger" href="/admin/product/delete/${item.id}">Delete</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<hr>
+</body>
+</html>

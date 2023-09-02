@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>PRODUCT</title>
+</head>
+<body>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forms/</span> Product Layouts</h4>
+<div class="col-12">
+    <div class="card">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h3>PRODUCT</h3>
+            <form action="/product/index" style="margin-top: 30px;" modelAttribute="product">
+                <div class="mt-3">
+                    <label for="id" class="mb-1">ID</label>
+                    <input value="${product.id}" name="id" type="text" class="form-control"/>
+                </div>
+                <div class="mt-3">
+                    <label for="code" class="mb-1">Code</label>
+                    <input value="${product.code}" name="code" type="text" class="form-control"/>
+                </div>
+                <div class="mt-4">
+                    <label for="nametv" class="mb-1">NameTV</label>
+                    <input value="${product.nametv}" name="nametv" type="text" class="form-control"/>
+                </div>
+                <div class="mt-3">
+                    <label for="price_import" class="mb-1">Price Import
+                    </label>
+                    <input value="${product.price_import}" name="price_import" type="text" class="form-control"/>
+                </div>
+                <div class="mt-3">
+                    <label for="price_export" class="mb-1">Price Export
+                    </label>
+                    <input value="${product.price_export}" name="price_export" type="text" class="form-control"/>
+                </div>
+                <div class="mt-4">
+                    <label for="quantity" class="mb-1">Quantity</label>
+                    <input value="${product.quantity}" name="quantity" type="text" class="form-control"/>
+                </div>
+                <div class="mt-3">
+                    <label for="" class="mb-1">Band</label>
+                    <select name="category" class="form-control  ">
+                        <option value="">----------</option>
+                        <c:forEach items="${category}" var="category">
+                            <option value="${category.id}" ${category.id==product.category.id ?
+                            'selected="selected"':''}>${category.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="mt-3">
+                    <label for="" class="mb-1">Guarantee</label>
+                    <select name="category" class="form-control  ">
+                        <option value="">----------</option>
+                        <c:forEach items="${category}" var="category">
+                            <option value="${category.id}" ${category.id==product.category.id ?
+                            'selected="selected"':''}>${category.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="mt-3">
+                    <label for="" class="mb-1">Origin</label>
+                    <select name="category" class="form-control  ">
+                        <option value="">----------</option>
+                        <c:forEach items="${category}" var="category">
+                            <option value="${category.id}" ${category.id==product.category.id ?
+                            'selected="selected"':''}>${category.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="mt-3">
+                    <label for="" class="mb-1">Manufacture</label>
+                    <select name="category" class="form-control  ">
+                        <option value="">----------</option>
+                        <c:forEach items="${category}" var="category">
+                            <option value="${category.id}" ${category.id==product.category.id ?
+                            'selected="selected"':''}>${category.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="mt-3">
+                    <label for="" class="mb-1">Color</label>
+                    <select name="category" class="form-control  ">
+                        <option value="">----------</option>
+                        <c:forEach items="${category}" var="category">
+                            <option value="${category.id}" ${category.id==product.category.id ?
+                            'selected="selected"':''}>${category.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="mt-3">
+                    <label for="" class="mb-1">Category</label>
+                    <select name="category" class="form-control  ">
+                        <option value="">----------</option>
+                        <c:forEach items="${category}" var="category">
+                            <option value="${category.id}" ${category.id==product.category.id ?
+                            'selected="selected"':''}>${category.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="mt-3">
+                    <label for="" class="mb-1">Resolution</label>
+                    <select name="category" class="form-control  ">
+                        <option value="">----------</option>
+                        <c:forEach items="${category}" var="category">
+                            <option value="${category.id}" ${category.id==product.category.id ?
+                            'selected="selected"':''}>${category.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="mt-3">
+                    <label for="" class="mb-1">Size</label>
+                    <select name="category" class="form-control  ">
+                        <option value="">----------</option>
+                        <c:forEach items="${category}" var="category">
+                            <option value="${category.id}" ${category.id==product.category.id ?
+                            'selected="selected"':''}>${category.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <br>
+                <div style="margin-top: 35px;">
+                    <button type="submit" class="btn btn-primary">
+                        Save
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<hr>
+<style>
+    .bg-login {
+        position: relative;
+        width: 100%;
+        min-height: auto;
+        background-position: right 0px top 0px;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        background-size: cover;
+        -o-background-size: cover;
+    }
+
+    .login-form {
+        border: 1px solid #DDD;
+        max-width: 400px;
+        padding: 20px;
+        margin-top: 100px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+<br>
+</body>
+</html>
