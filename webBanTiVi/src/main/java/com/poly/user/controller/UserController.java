@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 
 
-	@GetMapping("/home")
+	@GetMapping("/")
 	public String index(HttpSession session){
 		session.setAttribute("pageView", "/user/page/index.html");
 		System.out.println("asasas");
@@ -24,9 +24,9 @@ public class UserController {
 		return "user/layout";
 	}
 	@RequestMapping("/promotion")
-	public String promotion(){
-
-		return "home/promotions";
+	public String promotion(HttpSession session){
+		session.setAttribute("pageView", "/user/page/promotions.html");
+		return "user/layout";
 	}
 
 }
