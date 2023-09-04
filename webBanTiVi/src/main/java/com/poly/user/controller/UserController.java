@@ -15,7 +15,7 @@ public class UserController {
 	@GetMapping("/")
 	public String index(HttpSession session){
 		session.setAttribute("pageView", "/user/page/index.html");
-		System.out.println("asasas");
+
 		return "user/layout";
 	}
 	@RequestMapping("/product")
