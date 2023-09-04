@@ -6,128 +6,181 @@
 </head>
 <body>
 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Forms/</span> Staff Layouts</h4>
-<div class="col-12">
-    <div class="card">
-        <div class="container-xxl flex-grow-1 container-p-y">
-            <h3>STAFF</h3>
-            <form action="/product/index" style="margin-top: 30px;" modelAttribute="product">
-                <div class="mb-3 row">
-                    <label for="html5-text-input" class="col-md-2 col-form-label">Id</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" value="Sneat" id="html5-text-input">
-                    </div>
+<hr>
+<div class="col-md-12">
+    <div class="card mb-4">
+        <h5 class="card-header">Profile Details</h5>
+        <!-- Account -->
+        <div class="card-body">
+            <div class="d-flex align-items-start align-items-sm-center gap-4">
+                <img src="../assets/img/avatars/1.png" alt="user-avatar" class="d-block rounded" height="100"
+                     width="100" id="uploadedAvatar">
+                <div class="button-wrapper">
+                    <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                        <span class="d-none d-sm-block">Upload new photo</span>
+                        <i class="bx bx-upload d-block d-sm-none"></i>
+                        <input type="file" id="upload" class="account-file-input" hidden=""
+                               accept="image/png, image/jpeg">
+                    </label>
+                    <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                        <i class="bx bx-reset d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Reset</span>
+                    </button>
+
+                    <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
                 </div>
-                <div class="mb-3 row">
-                    <label for="html5-text-input" class="col-md-2 col-form-label">Code</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" value="Sneat" id="html5-text-input">
+            </div>
+        </div>
+        <hr class="my-0">
+        <div class="card-body">
+            <form id="formAccountSettings" method="POST" onsubmit="return false">
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label for="firstName" class="form-label">Id</label>
+                        <input class="form-control" type="text" id="id" name="firstName" value="John"
+                               autofocus="">
                     </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="html5-text-input" class="col-md-2 col-form-label">Last Name</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" value="Sneat" id="html5-text-input">
+                    <div class="mb-3 col-md-6">
+                        <label for="firstName" class="form-label">Code</label>
+                        <input class="form-control" type="text" id="code" name="firstName" value="John"
+                               autofocus="">
                     </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="html5-text-input" class="col-md-2 col-form-label">Middle Name</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" value="Sneat" id="html5-text-input">
+                    <div class="mb-3 col-md-6">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input class="form-control" type="text" id="firstName" name="firstName" value="John"
+                               autofocus="">
                     </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="html5-text-input" class="col-md-2 col-form-label">First Name</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" value="Sneat" id="html5-text-input">
+                    <div class="mb-3 col-md-6">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input class="form-control" type="text" name="lastName" id="lastName" value="Doe">
                     </div>
-                </div>
-                <div class="row gy-3">
-                    <div class="col-md">
-                        <label for="name" class="mb-1">Gender</label>
-                        <div class="form-check form-check-inline mt-3" style="padding-left: 165px">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                   value="option1">
-                            <label class="form-check-label" for="inlineRadio1">Male</label>
+                    <div class="mb-3 col-md-6">
+                        <label for="firstName" class="form-label">Middle Name</label>
+                        <input class="form-control" type="text" id="middleName" name="firstName" value="John"
+                               autofocus="">
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <!--                        <div class="row gy-3">-->
+                        <div class="col-md">
+                            <label for="name" class="mb-1">Gender</label> <br>
+                            <div class="form-check form-check-inline mt-3">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                       value="option1">
+                                <label class="form-check-label" for="inlineRadio1">Male</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                       value="option2">
+                                <label class="form-check-label" for="inlineRadio2">Female</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                                       value="option3" disabled="">
+                                <label class="form-check-label" for="inlineRadio3">Other (disabled)</label>
+                            </div>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                   value="option2">
-                            <label class="form-check-label" for="inlineRadio2">Female</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
-                                   value="option3" disabled="">
-                            <label class="form-check-label" for="inlineRadio3">Other (disabled)</label>
-                        </div>
+                        <!--                        </div>-->
                     </div>
-                </div>
-                <br>
-                <div class="mb-3 row">
-                    <label for="html5-date-input" class="col-md-2 col-form-label">Date</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="html5-text-input" class="col-md-2 col-form-label">Address</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" value="Sneat" id="html5-text-input">
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="html5-tel-input" class="col-md-2 col-form-label">Phone</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="tel" value="90-(164)-188-556" id="html5-tel-input">
-                    </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="html5-password-input" class="col-md-2 col-form-label">Password</label>
-                    <div class="col-md-10">
-                        <input class="form-control" type="password" value="password" id="html5-password-input">
-                    </div>
-                </div>
-                <div class="row gy-3">
-                    <div class="col-md">
-                        <label for="name" class="mb-1">Status</label>
-                        <div class="form-check form-check-inline mt-3" style="padding-left: 170px">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
-                                   value="option1">
-                            <label class="form-check-label" for="inlineRadio1">Action</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
-                                   value="option2">
-                            <label class="form-check-label" for="inlineRadio2">Inaction</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
-                                   value="option3" disabled="">
-                            <label class="form-check-label" for="inlineRadio3">Other (disabled)</label>
+                    <div class="mb-3 col-md-6">
+                        <label for="html5-date-input" class="col-md-2 col-form-label">Date</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="date" value="2021-06-18" id="html5-date-input">
                         </div>
                     </div>
-                </div>
-                <br>
-                <div class="mb-3 row">
-                    <label for="html5-password-input" class="col-md-2 col-form-label">Position</label>
-                    <div class="col-md-10">
-                        <select name="category" class="form-control  ">
-                            <option value="">----------</option>
-                            <c:forEach items="${category}" var="category">
-                                <option value="${category.id}" ${category.id==product.category.id ?
-                                'selected="selected"':''}>${category.name}</option>
-                            </c:forEach>
+                    <div class="mb-3 col-md-6">
+                        <label for="html5-password-input" class="col-md-2 col-form-label">Password</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="password" value="password" id="html5-password-input">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label class="form-label" for="phoneNumber">Phone Number</label>
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text">US (+1)</span>
+                            <input type="text" id="phoneNumber" name="phoneNumber" class="form-control"
+                                   placeholder="202 555 0111">
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Address">
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="col-md">
+                            <label for="name" class="mb-1">Status</label> <br>
+                            <div class="form-check form-check-inline mt-3">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                       value="option1">
+                                <label class="form-check-label" for="inlineRadio1">Action</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                       value="option2">
+                                <label class="form-check-label" for="inlineRadio2">Inaction</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3"
+                                       value="option3" disabled="">
+                                <label class="form-check-label" for="inlineRadio3">Other (disabled)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="language" class="form-label">Position</label>
+                        <select id="language" class="select2 form-select">
+                            <option value="">Select Language</option>
+                            <option value="en">English</option>
+                            <option value="fr">French</option>
+                            <option value="de">German</option>
+                            <option value="pt">Portuguese</option>
                         </select>
                     </div>
                 </div>
-                <div style="margin-top: 35px;">
-                    <button type="submit" class="btn btn-primary">
-                        Save
-                    </button>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                    <button type="reset" class="btn btn-outline-secondary">Cancel</button>
                 </div>
             </form>
         </div>
+        <!-- /Account -->
+    </div>
+    <div class="card">
+        <h5 class="card-header">Delete Account</h5>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Code</th>
+                    <th>First Name</th>
+                    <th>Gender</th>
+                    <th>Date</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="item" items="${items}">
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.price}</td>
+                        <td>${item.category.name}</td>
+                        <td><p><img src="/static/images/${item.image}" alt="car_image"
+                                    style="height: 50px; width: 50px"/></p>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="/admin/product/edit/${item.id}">Edit</a>
+                            <a class="btn btn-sm btn-danger" href="/admin/product/delete/${item.id}">Delete</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-<hr>
 </body>
 </html>
