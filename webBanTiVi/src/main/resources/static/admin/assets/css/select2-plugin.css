@@ -1,0 +1,10 @@
+.select2-selection__clear{
+    font-size: 20px !important;
+}
+.select2-selection,.select2-selection--single{
+    height: 38.28px !important;
+}
+.select2-selection__rendered{
+    height: 38.28px !important;
+    line-height: 38.28px !important;
+}
