@@ -43,5 +43,10 @@ public class UserController {
 		session.setAttribute("pageView", "/user/page/lookuporder.html");
 		return "user/layout";
 	}
+	@RequestMapping("/registercard")
+	public String registercard(HttpSession session){
+		session.setAttribute("pageView", "/user/page/registercard.html");
+		return "user/layout";
+	}
 }
 
