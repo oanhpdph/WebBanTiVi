@@ -20,16 +20,15 @@ public class HomeController {
         return "admin/layout";
     }
 
-    @GetMapping("/admin/bill")
+    @GetMapping("/admin/order")
     public String loadBill(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/bill.html");
+        session.setAttribute("pageView", "/admin/page/bill/bill.html");
         return "admin/layout";
     }
 
     @GetMapping("/admin/direct_sales")
     public String loadDirectSales(HttpSession session) {
         session.setAttribute("pageView", "/admin/page/directSales.html");
-
         return "admin/page/directSales";
     }
 
@@ -114,7 +113,7 @@ public class HomeController {
 
     @GetMapping("/admin/statistic")
     public String loadStatistic(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/bill.html");
+        session.setAttribute("pageView", "/admin/page/dashboard.html");
         return "admin/layout";
     }
 
