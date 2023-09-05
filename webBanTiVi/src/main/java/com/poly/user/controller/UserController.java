@@ -28,6 +28,10 @@ public class UserController {
 		session.setAttribute("pageView", "/user/page/promotions.html");
 		return "user/layout";
 	}
-
+	@RequestMapping("/shop")
+	public String shop(HttpSession session){
+		session.setAttribute("pageView", "/user/page/shop.html");
+		return "user/layout";
+	}
 }
 
