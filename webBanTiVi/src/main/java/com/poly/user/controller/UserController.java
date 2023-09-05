@@ -33,5 +33,15 @@ public class UserController {
 		session.setAttribute("pageView", "/user/page/shop.html");
 		return "user/layout";
 	}
+	@RequestMapping("/shopping-cart")
+	public String shoppingcart(HttpSession session){
+		session.setAttribute("pageView", "/user/page/shoppingcart.html");
+		return "user/layout";
+	}
+	@RequestMapping("/lookuporder")
+	public String lookuporder(HttpSession session){
+		session.setAttribute("pageView", "/user/page/lookuporder.html");
+		return "user/layout";
+	}
 }
 
