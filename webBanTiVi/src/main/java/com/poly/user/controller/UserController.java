@@ -48,5 +48,21 @@ public class UserController {
 		session.setAttribute("pageView", "/user/page/registercard.html");
 		return "user/layout";
 	}
+	@RequestMapping("/completed")
+	public String completed(HttpSession session){
+		session.setAttribute("pageView", "/user/page/_order/_order_complete.html");
+		return "user/layout";
+	}
+	@RequestMapping("/processing")
+	public String processing(HttpSession session){
+		session.setAttribute("pageView", "/user/page/_order/_order_processing.html");
+		return "user/layout";
+	}
+	@RequestMapping("/return")
+	public String productreturn(HttpSession session){
+		session.setAttribute("pageView", "/user/page/_order/_order_return.html");
+		return "user/layout";
+	}
+
 }
 
