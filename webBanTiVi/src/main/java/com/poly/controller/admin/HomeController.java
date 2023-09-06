@@ -12,9 +12,7 @@ public class HomeController {
         return "admin/layout";
     }
 
-
-
-    @GetMapping("/admin/dashboard")
+    @GetMapping("/admin/dashboard1")
     public String loadDashboard(HttpSession session) {
         session.setAttribute("pageView", "/admin/page/dashboard.html");
         return "admin/layout";
@@ -44,7 +42,6 @@ public class HomeController {
         return "admin/layout";
     }
 
-    ///////
     @GetMapping("/admin/product")
     public String loadProduct(HttpSession session) {
         session.setAttribute("pageView", "/admin/page/list_product.html");
@@ -117,9 +114,4 @@ public class HomeController {
         return "admin/layout";
     }
 
-    @GetMapping("/Login")
-    public String loadLogin(HttpSession session){
-        session.setAttribute("pageView","/admin/page/dashboard.html");
-        return "admin/layout";
-    }
 }
