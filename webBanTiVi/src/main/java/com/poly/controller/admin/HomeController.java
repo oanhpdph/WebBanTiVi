@@ -1,4 +1,4 @@
-package com.poly.admin.controller;
+package com.poly.controller.admin;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;

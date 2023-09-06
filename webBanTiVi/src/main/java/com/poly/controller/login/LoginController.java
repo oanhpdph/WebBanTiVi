@@ -1,4 +1,4 @@
-package com.poly.login.controller;
+package com.poly.controller.login;
 
 
 import org.springframework.stereotype.Controller;

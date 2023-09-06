@@ -1,4 +1,4 @@
-package com.poly.user.controller;
+package com.poly.controller.user;
 
 
 import jakarta.servlet.http.HttpSession;
