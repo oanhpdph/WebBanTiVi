@@ -44,15 +44,15 @@ public class HomeController {
 
     @GetMapping("/admin/product")
     public String loadProduct(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/list_product.html");
-        return "admin/layout";
-    }
-
-    @GetMapping("/admin/product/list")
-    public String loadPro(HttpSession session) {
         session.setAttribute("pageView", "/admin/page/product.html");
         return "admin/layout";
     }
+
+//    @GetMapping("/admin/product/list")
+//    public String loadPro(HttpSession session) {
+//        session.setAttribute("pageView", "/admin/page/product.html");
+//        return "admin/layout";
+//    }
 
     @GetMapping("/admin/product/brand")
     public String loadBrand(HttpSession session) {
