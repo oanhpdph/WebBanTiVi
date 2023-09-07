@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class BillController {
 
-    @GetMapping("/admin/order/{billCode}")
+    @GetMapping("/admin/order_detail/{billCode}")
     public String loadDetailBill(HttpSession session, @PathVariable(name = "billCode") Integer billCode){
-        session.setAttribute("pageView","/admin/page/bill/bill-detail.html");
+        session.setAttribute("pageView","/admin/page/order/order_detail.html");
         return "/admin/layout";
     }
 }

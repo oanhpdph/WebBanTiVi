@@ -8,19 +8,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
     @GetMapping("/admin")
     public String loadHome(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/dashboard.html");
+        session.setAttribute("pageView", "/admin/page/statistic.html");
         return "admin/layout";
     }
 
-    @GetMapping("/admin/dashboard1")
+    @GetMapping("/admin/dashboard")
     public String loadDashboard(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/dashboard.html");
+        session.setAttribute("pageView", "/admin/page/dashboard/dashboard.html");
         return "admin/layout";
     }
 
     @GetMapping("/admin/order")
     public String loadBill(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/bill/bill.html");
+        session.setAttribute("pageView", "/admin/page/order/order.html");
         return "admin/layout";
     }
 
@@ -32,7 +32,7 @@ public class HomeController {
 
     @GetMapping("/admin/customer")
     public String loadCustomer(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/customer.html");
+        session.setAttribute("pageView", "/admin/page/customer/customer.html");
         return "admin/layout";
     }
 
@@ -110,7 +110,7 @@ public class HomeController {
 
     @GetMapping("/admin/statistic")
     public String loadStatistic(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/dashboard.html");
+        session.setAttribute("pageView", "/admin/page/statistic.html");
         return "admin/layout";
     }
 
