@@ -21,11 +21,32 @@
     <link rel="stylesheet" th:href="@{/login/assets/vendor/css/theme-default.css}"class="template-customizer-theme-css"/>
     <link rel="stylesheet" th:href="@{/login/assets/css/demo.css}"/>
     <link rel="stylesheet" th:href="@{/login/assets/vendor/css/pages/page-auth.css}"/>
+
+    <script th:src="@{/login/assets/vendor/js/helpers.js}"></script>
+    <script th:src="@{/login/assets/js/config.js}"></script>
 </head>
 
 <body>
 <!-- Content -->
+<div class="header">
+    <nav class="header-navbar">
+        <ul class="header-nav-list">
+            <li class="header-nav-item">Hệ thống cửa hàng tivi</li>
+            <li class="header-nav-item">
+                <a class="header-nav-item-link" href="/">LOGO</a>
+            </li>
+        </ul>
 
+        <ul class="header-nav-list">
+            <li class="header-nav-item">
+                <a href="#" class="header-nav-item-link">HỎI ĐÁP</a>
+            </li>
+            <li class="header-nav-item">
+                <a href="/" class="header-nav-item-link">QUAY LẠI</a>
+            </li>
+        </ul>
+    </nav>
+</div>
 <div class="container-xxl">
     <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
@@ -218,7 +239,13 @@
         </div>
     </div>
 </div>
-
+<div class="footer">
+    <div class="footer-text">
+        Bạn gặp khó khăn gì khi đăng nhập, đăng ký ?Gọi
+        <span><a href="/hotro" class="sdt">1800 1008</a></span> để được hỗ trợ
+        nhanh nhất.
+    </div>
+</div>
 <script th:src="@{/login/assets/vendor/libs/jquery/jquery.js}"></script>
 <script th:src="@{/login/assets/vendor/libs/popper/popper.js}"></script>
 <script th:src="@{/login/assets/vendor/js/bootstrap.js}"></script>
