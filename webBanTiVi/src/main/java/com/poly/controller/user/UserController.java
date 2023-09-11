@@ -23,7 +23,7 @@ public class UserController {
 		session.setAttribute("pageView", "/user/page/products.html");
 		return "user/layout";
 	}
-	@RequestMapping("/promotions")
+	@RequestMapping("/promotion")
 	public String promotion(HttpSession session){
 		session.setAttribute("pageView", "/user/page/promotions.html");
 		return "user/layout";
@@ -36,6 +36,11 @@ public class UserController {
 	@RequestMapping("/shopping-cart")
 	public String shoppingcart(HttpSession session){
 		session.setAttribute("pageView", "/user/page/shoppingcart.html");
+		return "user/layout";
+	}
+	@RequestMapping("/about")
+	public String about(HttpSession session){
+		session.setAttribute("pageView", "/user/page/about.html");
 		return "user/layout";
 	}
 	@RequestMapping("/logincard")
