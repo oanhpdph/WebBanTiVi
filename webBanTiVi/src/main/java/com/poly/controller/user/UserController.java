@@ -83,6 +83,10 @@ public class UserController {
 		session.setAttribute("pageView", "/user/page/_order/_order_return.html");
 		return "user/layout";
 	}
-
+	@RequestMapping("/membership-card")
+	public String membershipcard(HttpSession session){
+		session.setAttribute("pageView", "/user/page/membershipcard.html");
+		return "user/layout";
+	}
 }
 
