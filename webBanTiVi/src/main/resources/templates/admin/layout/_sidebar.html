@@ -89,6 +89,7 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Management</span>
         </li>
+
         <li class="menu-item">
             <a th:href="@{/admin/product}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-tv"></i>
@@ -114,21 +115,27 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a th:href="@{/admin/customer}" class="menu-link">
+                    <a th:href="@{/admin/customer/list}" class="menu-link">
                         <div data-i18n="list customer">List customer</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a th:href="@{/admin/customer}" class="menu-link">
+                    <a th:href="@{/admin/customer/rank}" class="menu-link">
                         <div data-i18n="list customer">Rank</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a th:href="@{/admin/chat}" class="menu-link">
+                    <a th:href="@{https://fchat.vn/livechat}" class="menu-link" target="_blank">
                         <div data-i18n="chat">Chat with customer</div>
                     </a>
                 </li>
             </ul>
+        </li>
+        <li class="menu-item">
+            <a th:href="@{/admin/blog}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <div data-i18n="Blog">Blog</div>
+            </a>
         </li>
     </ul>
 </aside>

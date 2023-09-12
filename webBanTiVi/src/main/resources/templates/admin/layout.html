@@ -48,7 +48,7 @@
     <link rel="stylesheet" th:href="@{/admin/plugin/css/bill.css}"/>
 
     <!-- Helpers -->
-
+    <script th:src="@{/admin/assets/vendor/js/helpers.js}"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
@@ -79,12 +79,8 @@
 <script th:src="@{/admin/assets/vendor/js/bootstrap.js}"></script>
 <script th:src="@{/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
 <script th:src="@{/admin/assets/js/select2.min.js}"></script>
-<!--date range picker-->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-
-<!--end date range picker-->
 <script th:src="@{/admin/assets/vendor/js/menu.js}"></script>
+
 <!-- end build -->
 
 <!-- Vendors JS -->
@@ -93,6 +89,10 @@
 <!-- Main JS -->
 <script th:src="@{/admin/assets/js/main.js}"></script>
 
+<!--date range picker-->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<!--end date range picker-->
 <!-- Page JS -->
 <script th:src="@{/admin/assets/js/dashboards-analytics.js}"></script>
 <script th:src="@{/admin/plugin/js/date_picker_order.js}"></script>

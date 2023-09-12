@@ -10,4 +10,5 @@ $('#date-seach-order').daterangepicker({
         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
         'Last 30 Days': [moment().subtract(29, 'days'), moment()]
     },
+
 });

@@ -1,9 +1,10 @@
 <div class="page-header row">
-    <h3 class="page-title col-5">Order</h3>
+    <h3 class="page-title col-lg-5 col-md-5 col-sm-5">Order</h3>
+    <div class="col-lg-7 text-end mb-4 col-md-7 col-sm-12">
+        <button class="btn btn-warning"><span class="tf-icon bx bx-export"></span>Xuất file excel</button>
+    </div>
 </div>
-<div class="col-12 text-end mb-4">
-    <button class="btn btn-warning"><span class="tf-icon bx bx-export"></span>Xuất file excel</button>
-</div>
+
 <div class="card">
     <div class="card-header">
         <form class="col-12 mt-2">
@@ -30,7 +31,7 @@
                     <div class="input-group form-check">
                         <div class="input-group input-group-merge input">
                             <label for="date-seach-order" class="input-group-text">Select date:</label>
-                            <input type="text" class="form-control" id="date-seach-order" >
+                            <input type="text" class="form-control" id="date-seach-order">
                         </div>
                     </div>
                 </div>
@@ -44,38 +45,33 @@
     </div>
     <div class="card-body">
         <hr>
-        <div class="row">
-            <div style="width: 1%">#</div>
-            <div style="width: 10%"><b>Code bill</b></div>
-            <div style="width: 15%"><b>Name</b></div>
-            <div style="width: 12%"><b>Total price</b></div>
-            <div class="col-2" style="width: 15%">
-                <select class="form-select">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Code bill</th>
+                <th>Name</th>
+                <th><select class="form-select select2">
                     <optgroup label="Source">
                         <option selected>All</option>
                         <option>Web</option>
-                        <option>Direct sale</option>
+                        <option>Store</option>
                     </optgroup>
-                </select>
-            </div>
-            <div style="width: 12%"><b>Time create</b></div>
-            <div style="width: 13%;">
-                <select class="form-select" style="width: 100%;">
+                </select></th>
+                <th>Time create</th>
+                <th><select class="form-select select2">
                     <optgroup label="Pay">
                         <option selected>All</option>
                         <option>Paid</option>
                         <option>Unpaid</option>
                         <option>Refunded</option>
                     </optgroup>
-                </select>
-            </div>
-            <div style="width: 20%">
-                <select class="select2 select2-selection overflow-hidden"
-                        style="width: 100%; white-space: pre-wrap">
+                </select></th>
+                <th><select class="form-select select2 overflow-hidden" style="width: 100%">
                     <optgroup label="Trạng thái đơn hàng">
-                        <option selected>Tất cả</option>
+                        <option>Tất cả</option>
                         <option>Chờ xử lý</option>
-                        <option>Đang chuẩn bị hàng</option>
+                        <option selected>Đang chuẩn bị hàng</option>
                         <option>Hết hàng</option>
                         <option>Đang giao hàng</option>
                         <option>Lỗi giao hàng</option>
@@ -87,68 +83,30 @@
                         <option>Đã trả hàng</option>
                     </optgroup>
                 </select>
-            </div>
-            <hr class="mt-3">
-            <a th:href="@{/admin/order_detail/{billcode}(billcode=5)}" class="text-decoration-none text-link">
-                <div class="select-order row">
-                    <div style="width: 1%">1</div>
-                    <div style="width: 10%">098738432</div>
-                    <div style="width: 15%">Phạm Đức Oanh</div>
-                    <div style="width: 12%">1212121212</div>
-                    <div style="width: 15%;">
-                        <span>Web</span>
+                </th>
+            </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+            <tr onclick="oncl(5)">
+                <td >
+                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                        <strong>1</strong></button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
                     </div>
-                    <div style="width: 12%">02/09/2023 12:12</div>
-                    <div style="width: 13%">
-                        <span>Paid</span>
-                    </div>
-
-                    <div style="width: 20%;">
-                        <span>Đang chuẩn bị hàng</span>
-                    </div>
-                </div>
-            </a>
-            <hr class="mt-3">
-            <a th:href="@{/admin/order}" class="text-decoration-none text-link">
-                <div class="select-order row">
-                    <div style="width: 1%">1</div>
-                    <div style="width: 10%">098738432</div>
-                    <div style="width: 15%">Phạm Đức Oanh</div>
-                    <div style="width: 12%">1212121212</div>
-                    <div style="width: 15%;">
-                        <span>Web</span>
-                    </div>
-                    <div style="width: 12%">02/09/2023 12:12</div>
-                    <div style="width: 13%">
-                        <span>Paid</span>
-                    </div>
-
-                    <div style="width: 20%;">
-                        <span>Đang chuẩn bị hàng</span>
-                    </div>
-                </div>
-            </a>
-            <hr class="mt-3">
-            <a th:href="@{/admin/order}" class="text-decoration-none text-link">
-                <div class="select-order row">
-                    <div style="width: 1%">1</div>
-                    <div style="width: 10%">098738432</div>
-                    <div style="width: 15%">Phạm Đức Oanh</div>
-                    <div style="width: 12%">1212121212</div>
-                    <div style="width: 15%;">
-                        <span>Web</span>
-                    </div>
-                    <div style="width: 12%">02/09/2023 12:12</div>
-                    <div style="width: 13%">
-                        <span>Paid</span>
-                    </div>
-
-                    <div style="width: 20%;">
-                        <span>Đang chuẩn bị hàng</span>
-                    </div>
-                </div>
-            </a>
-        </div>
+                </td>
+                <td>098738</td>
+                <td class="text-nowrap">
+                    Phạm Đức Oanh
+                </td>
+                <td>Web</td>
+                <td>02/09/2023 12:12</td>
+                <td>Paid</td>
+                <td style="white-space: pre-wrap">Đang chuẩn bị hàng</td>
+            </tr>
+            </tbody>
+        </table>
         <hr class="card-separator">
     </div>
     <div class="card-footer">
@@ -190,3 +148,8 @@
         </div>
     </div>
 </div>
+<script>
+    function oncl( id){
+        window.location.href = "http://localhost:8080/admin/order_detail/"+id
+    }
+</script>
