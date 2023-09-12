@@ -1,0 +1,254 @@
+<h4 class="fw-semibold py-3 mb-4"> Danh sách khách hàng </h4>
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+        <button class="btn btn-success w-100" onclick="" data-bs-toggle="modal" data-bs-target="#create-customer"><span class="tf-icon bx bx-plus mx-2"></span>Thêm khách hàng</button>
+    </div>
+    <div class="modal fade" id="create-customer" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông tin khách hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
+                            <img th:src="@{/admin/assets/img/elements/20.jpg}" src="" class="w-px-200">
+                        </div>
+                        <div class="row col-lg-8 col-xl-9">
+                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                <div class="mb-3">
+                                    <label for="nameKH" class="form-label">Họ
+                                        tên:</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="diachi" class="form-label">Địa chỉ:</label>
+                                    <textarea type="text" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="sdt">Số điện thoại</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nameKH" class="form-label">Giới tính:</label>
+                                    <select type="text" class="form-select">
+                                        <option>
+                                            Nam
+                                        </option>
+                                        <option>
+                                            Nữ
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-4 col-lg-6 col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label" for="ngaysinh">Ngày sinh</label>
+                                    <input class="form-control" type="date">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="hangKH">Hạng khách hàng</label>
+                                    <select class="form-select">
+                                        <option>Vàng</option>
+                                        <option>Bạc</option>
+                                        <option>Đồng</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+        <button class="btn btn-warning w-100"><span class="tf-icon bx bx-export mx-2"></span>Xuất file excel</button>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 col-3">
+        <button class="btn btn-primary w-100"><span class="tf-icon bx bx-import mx-2"></span>Nhập file excel</button>
+    </div>
+</div>
+<div class="card mb-3 ">
+    <div class="card-header">
+        <form class="col-12 mt-2">
+            <div class="col-12 row">
+                <div class="col-7">
+                    <div class="form-check input-group input-group-merge">
+                    <span class="input-group-text">
+                        <i class="bx bx-search"></i>
+                    </span>
+                        <input type="text" class="form-control" placeholder="Tìm tên, sđt">
+                        <button class="btn btn-primary" type="button">Search</button>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-warning" data-bs-toggle="tooltip" data-bs-offset="0,4"
+                            data-bs-placement="bottom" data-bs-html="true" title=""
+                            data-bs-original-title="<span>Reset filter</span>" aria-describedby="tooltip91262">
+                        <i class='bx bx-reset'></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="row mt-4 form-check">
+            <div class="col-md-2">
+                <span><b class="text-danger">3</b>  Khách hàng</span>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <hr>
+        <div class="table-responsive text-nowrap">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tên</th>
+                    <th>Năm sinh</th>
+                    <th>Giới tính</th>
+                    <th>SĐT</th>
+                    <th>Hạng</th>
+                    <th>Tiền nợ</th>
+                    <th>Tài khoản</th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                <tr onclick="" data-bs-toggle="modal" data-bs-target="#exLargeModal">
+                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>
+                    <td>Albert Cook</td>
+                    <td>Albert Cook</td>
+
+                    <td><span class="badge bg-label-primary me-1">Active</span></td>
+                    <td>
+                        0123456789
+                    </td>
+                    <td>
+                        Vàng
+                    </td>
+                    <td>
+                        0
+                    </td>
+                    <td>
+                        có
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="modal fade" id="exLargeModal" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel4">Thông tin khách hàng</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
+                                    <img th:src="@{/admin/assets/img/elements/20.jpg}" src="" class="w-px-200">
+                                </div>
+                                <div class="row col-lg-8 col-xl-9">
+                                    <div class="col-xl-4 col-lg-6 col-md-6">
+                                        <div class="mb-3">
+                                            <label for="nameKH" class="form-label">Họ
+                                                tên:</label>
+                                            <input type="text" class="form-control" id="nameKH">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="diachi" class="form-label">Địa chỉ:</label>
+                                            <textarea type="text" class="form-control" id="diachi"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="sdt">Số điện thoại</label>
+                                            <input type="text" class="form-control" id="sdt">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="nameKH" class="form-label">Giới tính:</label>
+                                            <select type="text" class="form-select" id="gioitinh">
+                                                <option>
+                                                    Nam
+                                                </option>
+                                                <option>
+                                                    Nữ
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-6 col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="ngaysinh">Ngày sinh</label>
+                                            <input class="form-control" type="date" id="ngaysinh">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="hangKH">Hạng khách hàng</label>
+                                            <select class="form-select" id="hangKH">
+                                                <option>Vàng</option>
+                                                <option>Bạc</option>
+                                                <option>Đồng</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="card-separator">
+    </div>
+    <div class="card-footer">
+        <div class="d-inline-flex float-end">
+            <div class="mx-3 row" style="width: 180px">
+                <label for="select-view" class="col-form-label col-5 text-end">View:</label>
+                <div class="col-7">
+                    <select class="form-select text-start" id="select-view">
+                        <option>10</option>
+                        <option>20</option>
+                        <option>40</option>
+                        <option>80</option>
+                    </select>
+                </div>
+            </div>
+            <div aria-label="Page pagination">
+                <ul class="pagination">
+                    <li class="page-item first">
+                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                    </li>
+                    <li class="page-item prev">
+                        <a class="page-link" href="javascript:void(0);"><i
+                                class="tf-icon bx bx-chevron-left"></i></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">2</a>
+                    </li>
+                    <li class="page-item next">
+                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                    </li>
+                    <li class="page-item last">
+                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
