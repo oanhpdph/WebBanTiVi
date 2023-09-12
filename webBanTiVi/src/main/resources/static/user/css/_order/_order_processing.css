@@ -403,4 +403,6 @@ svg:not(:root) {
     transition: color 0.2s ease 0s;
     color: rgba(0, 0, 0, 0.8);
 }
-
+.gAImis{
+    color: #ee4d2d;
+}

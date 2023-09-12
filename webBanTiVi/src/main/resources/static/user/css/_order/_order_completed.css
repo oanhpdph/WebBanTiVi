@@ -1,3 +1,6 @@
+body {
+    color: rgba(0, 0, 0, 0.8)
+}
 .required {
     color: red;
 }
@@ -48,4 +51,237 @@ select {
     background-color: black;
     color:white;
 
+}
+._20hgQK {
+    color:black;
+}
+.gAImis, .OFl2GI:hover {
+    color: #ee4d2d;
+}
+
+._9Ro5mP {
+    max-width: 200px;
+    margin-left: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: bold;
+}
+.x5GTyN {
+    vertical-align: middle;
+}
+._7uZf6Q {
+    min-width: 0;
+    padding: 0 0 0 12px;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    word-wrap: break-word;
+}
+.vb0b-P {
+    margin: 0 0 5px;
+    color: rgba(0,0,0,.54);
+}
+.x7nENX {
+    padding: 12px 0 0;
+    align-items: center;
+    flex-wrap: nowrap;
+    color: rgba(0,0,0,.87);
+}
+/*ho so */
+.kul4\+s {
+    display: block;
+    width: 180px;
+    flex-shrink: 0;
+}
+.AmWkJQ {
+    display: flex;
+    padding: 15px 0;
+    border-bottom: 1px solid #efefef;
+}
+._1O4r\+C, .shopee-avatar {
+    width: 50px;
+    height: 50px;
+}
+.shopee-avatar {
+    display: inline-block;
+    position: relative;
+    border-radius: 50%;
+    border: 0.0625rem solid rgba(0,0,0,.09);
+    box-sizing: border-box;
+}
+.shopee-avatar__placeholder .icon-headshot {
+    stroke: #c6c6c6;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 2rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+:not(svg) {
+    transform-origin: 0px 0px;
+}
+.shopee-avatar__placeholder {
+    width: 100%;
+    position: relative;
+    padding-top: 100%;
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.shopee-avatar__img, .shopee-avatar__img-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+.shopee-avatar__img {
+    border-radius: 50%;
+}
+:not(svg) {
+    transform-origin: 0px 0px;
+}
+img {
+    overflow-clip-margin: content-box;
+
+}
+img {
+    border: 0;
+}
+.miwGmI {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 15px;
+    overflow: hidden;
+}
+
+.mC1Llc {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-height: 1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+}
+._78QHr1 {
+    text-transform: capitalize;
+    text-decoration: none;
+}
+svg:not(:root) {
+    overflow: hidden;
+}
+.rhmIbk {
+    list-style: none;
+    padding: 0;
+    margin: 27px 0 0;
+    cursor: pointer;
+}
+.stardust-dropdown {
+    position: relative;
+}
+.\+1U02e {
+    text-decoration: none;
+    color: rgba(0,0,0,.87);
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.9375rem;
+}
+.bfikuD {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    line-height: 1.25rem;
+    text-align: center;
+    border-radius: 50%;
+    color: #fff;
+    flex-shrink: 0;
+    margin-right: 0.625rem;
+}
+.bfikuD>img {
+    width: 100%;
+    height: 100%;
+}
+img {
+    border: 0;
+}
+.DlL0zX {
+    line-height: 1rem;
+    color:black
+}
+.adF7Xs {
+    font-weight: 500;
+    margin-right: 0.3125rem;
+}
+._7udlQ7 {
+    vertical-align: middle;
+    position: absolute;
+}
+svg:not(:root) {
+    overflow: hidden;
+}
+.stardust-dropdown {
+    position: relative;
+}
+.\+1U02e {
+    text-decoration: none;
+    color: rgba(0,0,0,.87);
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.9375rem;
+}
+.\+1U02e, .qyt-aY {
+    text-transform: capitalize;
+    transition: color .1s cubic-bezier(.4,0,.2,1);
+}
+.bfikuD {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    line-height: 1.25rem;
+    text-align: center;
+    border-radius: 50%;
+    color: #fff;
+    flex-shrink: 0;
+    margin-right: 0.625rem;
+}
+.DlL0zX {
+    line-height: 1rem;
+}
+.stardust-dropdown__item-body {
+    transition: height .4s cubic-bezier(.4,0,.2,1),opacity .4s cubic-bezier(.4,0,.2,1);
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+.Yu7gVR {
+    display: block;
+    padding: 0 0 0.1875rem 2.125rem;
+}
+.FEE-3D {
+    text-decoration: none;
+    color: rgba(0,0,0,.87);
+    display: block;
+    margin-bottom: 0.9375rem;
+    color: rgba(0,0,0,.65);
+}
+a {
+    color: black;
+}
+.gAImis{
+    color: #ee4d2d;
 }
