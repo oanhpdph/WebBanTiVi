@@ -46,6 +46,12 @@ public class HomeController {
         return "admin/layout";
     }
 
+    @GetMapping("/admin/position")
+    public String loadPosition(HttpSession session) {
+        session.setAttribute("pageView", "/admin/page/position.html");
+        return "admin/layout";
+    }
+
     @GetMapping("/admin/product")
     public String loadProduct(HttpSession session) {
         session.setAttribute("pageView", "/admin/page/product/product.html");

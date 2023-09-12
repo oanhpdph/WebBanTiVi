@@ -38,6 +38,21 @@ public class UserController {
 		session.setAttribute("pageView", "/user/page/shoppingcart.html");
 		return "user/layout";
 	}
+	@RequestMapping("/about")
+	public String about(HttpSession session){
+		session.setAttribute("pageView", "/user/page/about.html");
+		return "user/layout";
+	}
+	@RequestMapping("/logincard")
+	public String logincard(HttpSession session){
+		session.setAttribute("pageView", "/user/page/logincard.html");
+		return "user/layout";
+	}
+	@RequestMapping("/products")
+	public String products(HttpSession session){
+		session.setAttribute("pageView", "/user/page/products.html");
+		return "user/layout";
+	}
 	@RequestMapping("/shopping-detail")
 	public String shoppingdetail(HttpSession session){
 		session.setAttribute("pageView", "/user/page/shopdetail.html");
@@ -68,6 +83,10 @@ public class UserController {
 		session.setAttribute("pageView", "/user/page/_order/_order_return.html");
 		return "user/layout";
 	}
-
+	@RequestMapping("/membership-card")
+	public String membershipcard(HttpSession session){
+		session.setAttribute("pageView", "/user/page/membershipcard.html");
+		return "user/layout";
+	}
 }
 
