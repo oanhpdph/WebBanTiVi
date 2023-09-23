@@ -1,7 +1,7 @@
 //////////
 let files = [],
     button = document.querySelector('.top button'),
-    form = document.querySelector('form'),
+    form = document.querySelector('.dropzone'),
     container = document.querySelector('.container'),
     text = document.querySelector('.inner'),
     browse = document.querySelector('.select'),
@@ -15,8 +15,7 @@ input.addEventListener('change', () => {
     for (let i = 0; i < file.length; i++) {
         if (files.every(e => e.name != file[i].name)) files.push(file[i])
     }
-
-    form.reset();
+    // form.reset();
     showImages();
 })
 

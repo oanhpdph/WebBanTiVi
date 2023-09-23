@@ -12,13 +12,6 @@ CREATE TABLE reason_returns
      id     INT IDENTITY PRIMARY KEY,
      reason NVARCHAR(max)-- lý do trả hàng là ?
   )
-  -- lý do dổi hàng
-CREATE TABLE reason_exchange
-  (
-     id     INT IDENTITY PRIMARY KEY,
-     reason NVARCHAR(max)-- lý do đổi hàng là ?
-  )
-
   -- Hãng
 CREATE TABLE brand
   (
@@ -155,19 +148,13 @@ CREATE TABLE bill
      id BIGINT IDENTITY(1, 1) PRIMARY KEY,
 	 id_customer BIGINT REFERENCES customer(id),
 	 code varchar(10) ,
-	 id_staff BIGINT not null references staff(id),
 	 create_date Date not null,
 	 payment_date Date not null, -- ngày thanh toán
-	 ship_date Date not null,
-	 received_date Date not null,
 	 status int,
-	 consignee_name nvarchar(100),
-	 address nvarchar(100),
-	 phone nvarchar(30)
   )
 
   -- hoa don chitiet 
-  CREATE TABLE bill_detail
+  CREATE TABLE bill_product
   (
   id_bill BIGINT references bill(id),
   id_product BIGINT references products(id),
@@ -184,7 +171,7 @@ CREATE TABLE bill
   create_date Date,
   )
   -- giỏ hàng chi tiết
-  CREATE TABLE Cart_detail
+  CREATE TABLE cart_product
   (
   cart_id BIGINT references Cart(id),
   product_id BIGINT references products(id),
@@ -193,7 +180,6 @@ CREATE TABLE bill
   create_date Datetime
   primary key(cart_id,product_id)
   )
-  drop table bill_detail
 -- phiếu trả hàng
 CREATE TABLE returns_product
   (
@@ -206,36 +192,6 @@ CREATE TABLE returns_product
      status      INT -- trạng thái phiếu trả hàng
   )
 
--- chi tiết lý do trả hàng
-CREATE TABLE returns_reason_detail
-  (
-     id_reason  INT REFERENCES reason_returns(id),
-     id_returns BIGINT REFERENCES returns_product(id),
-     note       NVARCHAR(200),
-     PRIMARY KEY (id_reason, id_returns)
-  )
-  -- phiếu đổi hàng
-  CREATE TABLE  exchange_product
-  (
-   id  BIGINT IDENTITY(1, 1) PRIMARY KEY,
-   customer_id BIGINT REFERENCES customer(id),
-   bill_id     BIGINT REFERENCES bill(id),
-   product_exchange_id  BIGINT,
-   product_new_id BIGINT,
-   create_date Date,
-   status int, -- trạng thái 
-   quantity int
-  )
--- chi tiết lý do đổi hàng
-  CREATE TABLE exchange_reason_detail
-  (
-     id_reason  INT REFERENCES reason_exchange(id),
-     id_exchange BIGINT REFERENCES exchange_product(id),
-     note       NVARCHAR(200),
-     PRIMARY KEY (id_reason, id_exchange)
-  )
-
-
 -- ảnh hoặc video đính kèm trả hàng
 CREATE TABLE image_or_video
   (
@@ -244,35 +200,23 @@ CREATE TABLE image_or_video
      -- id phiếu trả hàng
      image_or_video VARCHAR(max)
   )
-  -- ảnh hoặc video đính kèm đổi hàng
-CREATE TABLE image_or_video_exchange
-  (
-     id             UNIQUEIDENTIFIER DEFAULT Newid() PRIMARY KEY,
-     id_exchange     BIGINT REFERENCES exchange_product(id),
-     -- id phiếu đổi hàng
-     image_or_video VARCHAR(max)
-  )
-
-  
-    --
-  CREATE TABLE promotion_details(
-  id_promotion  BIGINT references promotion(id),
-  id_product     BigInt REFERENCES products(id) ,
-  Startdate    DATE,
-  Enddate    DATE,
-  Reducedform  BIT,
-  status    INT,
-  primary key(id_promotion, id_product)
-    
-)
-GO
-drop table promotion_details
---
+ 
+ --
 CREATE TABLE promotion(
   id  BIGINT IDENTITY(1, 1) PRIMARY KEY,
   code varchar(50),
   Reducedvalue    MONEY,
   Maximumreductionvalue  MONEY,
-    
 )
 GO
+CREATE TABLE promotion_details(
+  id_promotion  BIGINT references promotion(id),
+  id_product     BigInt REFERENCES products(id),
+  Startdate    DATE,
+  Enddate    DATE,
+  Reducedform  BIT,
+  status    INT,
+  primary key(id_promotion, id_product)
+)
+GO
+
