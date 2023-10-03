@@ -86,10 +86,7 @@ public class UserController {
 	@RequestMapping("/layout_order")
 	public String layout(HttpSession session){
 		session.setAttribute("pageView", "/user/page/layout_order.html");
-//		session.setAttribute("pageViewOrder", "/user/page/_order/_order_detail.html");
-		session.setAttribute("pageViewOrder", "/user/page/_order/_order_processing.html");
-//		session.setAttribute("pageViewOrder", "/user/page/_order/_order_complete.html");
-//			session.setAttribute("pageViewOrder", "/user/page/_order/_order_return.html");
+		session.setAttribute("pageViewOrder", "/user/page/_order/_order_complete.html");
 			return "user/layout";
 	}
 	@RequestMapping("/membership-card")

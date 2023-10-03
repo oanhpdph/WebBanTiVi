@@ -10,11 +10,8 @@ body{
 div {
     display: block;
 }
-.x0QT2k:first-child {
-    padding-top: 24px;
-}
+
 .x0QT2k {
-    padding: 12px 24px;
     background: rgb(255, 255, 255);
 }
 h2.a11y-hidden, h3.a11y-hidden {
@@ -235,7 +232,7 @@ a:-webkit-any-link {
     top: 0px;
 }
 .kvXy0c {
-    padding: 24px 24px 12px;
+    padding: 24px 0px 12px;
     background: rgb(255, 254, 251);
 }
 .-\37 8s2g {
@@ -267,7 +264,7 @@ svg:not(:root) {
     line-height: 30px;
 }
 .AM4Cxf {
-    padding: 12px 24px 24px;
+    padding: 12px 0px 24px;
     display: flex;
     flex-wrap: nowrap;
     place-content: center space-between;

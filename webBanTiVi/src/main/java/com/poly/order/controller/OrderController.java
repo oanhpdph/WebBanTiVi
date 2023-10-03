@@ -22,6 +22,12 @@ public class OrderController {
         session.setAttribute("pageViewOrder", "/user/page/_order/_order_processing.html");
         return "user/layout";
     }
+    @GetMapping("/layout_order/detail")
+    public String detail(HttpSession session){
+        session.setAttribute("pageViewOrder", "/user/page/_order/_order_detail.html");
+        return "user/layout";
+    }
+
 
 }
 
