@@ -204,8 +204,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="item" items="${items}">
-                    <tr>
+
+                    <tr th:each = "item: ${items}">
                         <td>${item.id}</td>
                         <td>${item.name}</td>
                         <td>${item.price}</td>
@@ -218,7 +218,6 @@
                             <a class="btn btn-sm btn-danger" href="/admin/product/delete/${item.id}">Delete</a>
                         </td>
                     </tr>
-                </c:forEach>
                 </tbody>
             </table>
         </div>
