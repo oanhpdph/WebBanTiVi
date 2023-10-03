@@ -1,10 +1,5 @@
-<div class="page-header row">
-    <h3 class="page-title col-lg-5 col-md-5 col-sm-5">Order</h3>
-    <div class="col-lg-7 text-end mb-4 col-md-7 col-sm-12">
-        <button class="btn btn-warning"><span class="tf-icon bx bx-export"></span>Xuất file excel</button>
-    </div>
-</div>
 
+<h4 class="fw-bold py-3 mb-4">Order</h4>
 <div class="card">
     <div class="card-header">
         <form class="col-12 mt-2">
@@ -26,8 +21,8 @@
                     </button>
                 </div>
             </div>
-            <div class="col-12 row mt-2">
-                <div class="col-7">
+            <div class="col-lg-6 col-xl-7 col-md-9 col-sm-12 row mt-2">
+                <div class="col-lg-9 col-xl-7 col-md-9 col-sm-8">
                     <div class="input-group form-check">
                         <div class="input-group input-group-merge input">
                             <label for="date-seach-order" class="input-group-text">Select date:</label>
@@ -37,13 +32,22 @@
                 </div>
             </div>
         </form>
-        <div class="row mt-4 form-check">
-            <div class="col-md-2">
-                <span><b class="text-danger">3</b>  Hóa đơn</span>
-            </div>
-        </div>
     </div>
     <div class="card-body">
+        <div class="row">
+            <div class="col-md-2 d-flex align-items-center">
+                <span><b class="text-danger">3</b>  Hóa đơn</span>
+            </div>
+            <div class="col-md-10 text-end">
+                <div class="btn-group" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-outline-secondary">Excel
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary">PDF
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary">In</button>
+                </div>
+            </div>
+        </div>
         <hr>
         <table class="table table-hover">
             <thead>
@@ -51,6 +55,7 @@
                 <th>#</th>
                 <th>Code bill</th>
                 <th>Name</th>
+                <th>Total price</th>
                 <th><select class="form-select select2">
                     <optgroup label="Source">
                         <option selected>All</option>
@@ -88,7 +93,7 @@
             </thead>
             <tbody class="table-border-bottom-0">
             <tr onclick="oncl(5)">
-                <td >
+                <td>
                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                         <strong>1</strong></button>
                     <div class="dropdown-menu">
@@ -100,6 +105,7 @@
                 <td class="text-nowrap">
                     Phạm Đức Oanh
                 </td>
+                <td>1000000<u>đ</u></td>
                 <td>Web</td>
                 <td>02/09/2023 12:12</td>
                 <td>Paid</td>
@@ -149,7 +155,7 @@
     </div>
 </div>
 <script>
-    function oncl( id){
-        window.location.href = "http://localhost:8080/admin/order_detail/"+id
+    function oncl(id) {
+        window.location.href = "http://localhost:8080/admin/order_detail/" + id
     }
 </script>

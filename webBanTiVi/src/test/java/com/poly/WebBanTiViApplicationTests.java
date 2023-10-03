@@ -9,5 +9,4 @@ class WebBanTiViApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
