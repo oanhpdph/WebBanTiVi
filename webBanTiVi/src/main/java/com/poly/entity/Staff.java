@@ -33,6 +33,7 @@ public class Staff {
     @Column(name="gender")
     private boolean gender;
 
+    @Temporal(TemporalType.DATE)
     @Column(name="birthday")
     private Date birthday;
 
@@ -57,7 +58,7 @@ public class Staff {
     private boolean active;
 
     @Column(name="position")
-    private int position;
+    private boolean position;
 
     @Column(name="avatar")
     private String avatar;

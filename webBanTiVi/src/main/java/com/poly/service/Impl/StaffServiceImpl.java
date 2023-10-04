@@ -1,6 +1,6 @@
 package com.poly.service.Impl;
 
-import com.poly.Repositoies.StaffRepository;
+import com.poly.repository.StaffRepository;
 import com.poly.entity.Staff;
 import com.poly.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
