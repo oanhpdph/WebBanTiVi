@@ -1,12 +1,13 @@
 package com.poly.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name="staff")
@@ -21,9 +22,11 @@ public class Staff {
     @Column(name="id")
     private Integer id;
 
+    @NotBlank(message = "Code is not null")
     @Column(name="code")
     private String code;
 
+    @NotBlank(message = "Name is not null")
     @Column(name="name")
     private String name;
 
@@ -33,15 +36,20 @@ public class Staff {
     @Column(name="birthday")
     private Date birthday;
 
+    @NotBlank(message = "Name is not null")
     @Column(name="address")
     private String  address;
 
+
+    @NotBlank(message = "Email is not null")
     @Column(name="email")
     private String  email;
 
+    @NotBlank(message = "Phone is not null")
     @Column(name="phone")
     private String  phone;
 
+    @NotBlank(message = "Password is not null")
     @Column(name="password")
     private String  password;
 
