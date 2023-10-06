@@ -7,7 +7,7 @@ import com.poly.entity.idClass.ProductSupplierId;
 import java.util.List;
 import java.util.Optional;
 
-public interface Product_supplierService {
+public interface ProductSupplierService {
     ProductSupplier save(ProductSupplier productSupplier);
 
     void delete(ProductSupplierId id);

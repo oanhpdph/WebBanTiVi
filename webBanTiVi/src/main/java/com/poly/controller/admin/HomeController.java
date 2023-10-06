@@ -1,6 +1,7 @@
 package com.poly.controller.admin;
 
 import com.poly.entity.Staff;
+import com.poly.service.Impl.ProductServiceImpl;
 import com.poly.service.Impl.StaffServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -16,6 +17,8 @@ public class HomeController {
 
     @Autowired
     StaffServiceImpl staffService;
+    @Autowired
+    ProductServiceImpl productService;
     @GetMapping("")
     public String loadHome(HttpSession session) {
         session.setAttribute("pageView", "/admin/page/statistic.html");
@@ -112,11 +115,12 @@ public class HomeController {
 
         return "admin/layout";
     }
-
+   //product
     @GetMapping("/product")
-    public String loadProduct(HttpSession session) {
+    public String loadProduct(HttpSession session,Model model) {
         session.setAttribute("pageView", "/admin/page/product/product.html");
         session.setAttribute("active","/product");
+        model.addAttribute("listsp",productService.findAll());
         return "admin/layout";
     }
 
