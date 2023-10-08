@@ -22,14 +22,6 @@ CREATE TABLE brand
      namebrand NVARCHAR(max)
   )
 
--- Bảo hành
-CREATE TABLE guarantee
-  (
-     id             INT IDENTITY(1, 1) PRIMARY KEY,
-     code           VARCHAR(10),
-     nameguarantee  NVARCHAR(max),
-     year_guarantee DATE
-  )
 
 -- Xuất xứ
 CREATE TABLE origin
@@ -107,8 +99,8 @@ CREATE TABLE product
      price_import   money,
      price_export   money,
      quantity       INT,
+     guarantee      INT,
      id_brand       INT REFERENCES brand(id),
-     id_guarantee   INT REFERENCES guarantee(id),
      id_origin      INT REFERENCES origin(id),
      id_manufacture INT REFERENCES manufacture(id),
      id_color       INT REFERENCES color(id),
