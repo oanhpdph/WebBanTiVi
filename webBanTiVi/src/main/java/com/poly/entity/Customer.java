@@ -24,12 +24,12 @@ public class Customer {
     @Column(name="name")
     private String name;
 
+    @Temporal(TemporalType.DATE)
     @Column(name="date")
-    private Date date;
+    private Date birthday;
 
-    @Column(name="diachi")
-    private String diachi;
-
+    @Column(name="address")
+    private String address;
 
     @Column(name="phone_number")
     private String phone_number;
@@ -37,11 +37,8 @@ public class Customer {
     @Column(name="email")
     private String email;
 
-
-
     @Column(name="gender")
     private boolean gender;
-
 
     @Column(name="id_card")
     private String id_card;

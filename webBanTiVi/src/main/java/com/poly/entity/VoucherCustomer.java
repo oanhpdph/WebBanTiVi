@@ -17,6 +17,7 @@ import java.sql.Date;
 @IdClass(VoucherCustomerId.class)
 @Builder
 public class VoucherCustomer {
+
     @Id
     @ManyToOne
     @JoinColumn(name = "id_customer")
@@ -27,9 +28,11 @@ public class VoucherCustomer {
     @JoinColumn(name = "id_voucher")
     private Voucher voucher;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_start")
     private Date date_start;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date_end")
     private Date date_end;
 
