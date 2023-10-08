@@ -4,10 +4,12 @@ import com.poly.entity.Supplier;
 import com.poly.repository.SupplierRepository;
 import com.poly.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class SupplierServiceImpl implements SupplierService {
     @Autowired
     SupplierRepository supplierRepository;

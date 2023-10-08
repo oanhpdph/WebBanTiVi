@@ -2,7 +2,6 @@ package com.poly.common;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -10,13 +9,11 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.stream.Stream;
 
-public class Printer {
+public class SavePdf {
 
     public void savePdf() {
         Document document = new Document();
@@ -29,7 +26,7 @@ public class Printer {
             // Lấy đường dẫn và tên tệp mà người dùng đã chọn
             File selectedFile = fileChooser.getSelectedFile();
             String fileName = selectedFile.getName();
-            String pdfFilePath=null;
+            String pdfFilePath;
             if (!fileName.endsWith(".pdf")) {
                  pdfFilePath = selectedFile.getAbsolutePath() + ".pdf";
             } else {
@@ -70,9 +67,6 @@ public class Printer {
         table.addCell("row 1, col 3");
     }
 
-    public static void main(String[] args) {
-        Printer printer = new Printer();
-        printer.savePdf();
-    }
+
 }
 
