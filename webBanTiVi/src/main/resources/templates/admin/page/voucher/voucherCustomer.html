@@ -1,0 +1,185 @@
+<h4 class="fw-semibold py-3 mb-4"> Danh sách Voucher</h4>
+<div class="mb-4">
+    <form th:action="@{/admin/voucherCustomer/add}" method="post" th:object="${voucherCustomer}">
+        <div>
+            <div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thông tin Voucher Customer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="row col-lg-12 col-xl-9">
+                                <div class="col-xl-4 col-lg-6 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Customer:</label>
+                                        <br>
+                                        <select th:field="*{customer}">
+                                            <option th:each="i:${session.listCustomer}" th:value="${i.id}" th:text="${i.name}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Voucher:</label>
+                                        <br>
+                                        <select th:field="*{voucher}">
+                                            <option th:each="v:${session.listVoucher}" th:value="${v.id}" th:text="${v.code}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Start Day:</label>
+                                        <input type="date" class="form-control" th:field="*{date_start}" name="date_start">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Start Day:</label>
+                                        <input type="date" class="form-control" th:field="*{date_end}">
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Active:</label>
+                                        <br>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" th:field="*{active}"
+                                                   th:value="true" checked>
+                                            <label class="form-check-label" >Acitve</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" th:field="*{active}"
+                                                   th:value="false">
+                                            <label class="form-check-label">Non-active</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Reset</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="card mb-3 ">
+    <div class="card-header">
+        <form class="col-12 mt-2">
+            <div class="col-12 row">
+                <div class="col-7">
+                    <div class="form-check input-group input-group-merge">
+                    <span class="input-group-text">
+                        <i class="bx bx-search"></i>
+                    </span>
+                        <input type="text" class="form-control" placeholder="Tìm tên, sđt">
+                        <button class="btn btn-primary" type="button">Search</button>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-warning" data-bs-toggle="tooltip" data-bs-offset="0,4"
+                            data-bs-placement="bottom" data-bs-html="true" title=""
+                            data-bs-original-title="<span>Reset filter</span>" aria-describedby="tooltip91262">
+                        <i class='bx bx-reset'></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2 d-flex align-items-center">
+                <p>Voucher :
+<!--                    <span th:text="${#lists.size(listVoucherCustomer)}"></span>-->
+                </p>
+            </div>
+            <div class="col-md-10 text-end">
+                <div class="btn-group" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-outline-secondary">Excel
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary">PDF
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary">In</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="table-responsive text-nowrap">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Customer</th>
+                    <th>Voucher</th>
+                    <th>Date Start</th>
+                    <th>Date End</th>
+                    <th>Active</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                <tr th:each="voucher : ${listVoucherCustomer}">
+                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>
+                    <td th:text="${voucher.customer.name}"></td>
+                    <td th:text="${voucher.voucher.code}"></td>
+                    <td th:text="${voucher.date_start}"></td>
+                    <td th:text="${voucher.date_end}"></td>
+                    <td>
+                        <span th:if="${voucher.active} == true" th:text="Active"/>
+                        <span th:if="${voucher.active} == false" th:text="ChưaActive"/>
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-primary"
+                           th:href="@{/admin/voucherCustomer/edit/{id_voucher}/{id_customer}(id_voucher=${voucher.voucher.id},id_customer=${voucher.customer.id})}">Edit</a>
+                        <a class="btn btn-sm btn-danger"
+                           th:href="@{/admin/voucherCustomer/delete/{id}(id=${voucher.customer.id})}">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+        <hr class="card-separator">
+    </div>
+    <div class="card-footer">
+        <div class="d-inline-flex float-end">
+            <div class="mx-3 row" style="width: 180px">
+                <label for="select-view" class="col-form-label col-5 text-end">View:</label>
+                <div class="col-7">
+                    <select class="form-select text-start" id="select-view">
+                        <option>10</option>
+                        <option>20</option>
+                        <option>40</option>
+                        <option>80</option>
+                    </select>
+                </div>
+            </div>
+            <div aria-label="Page pagination">
+                <ul class="pagination">
+                    <li class="page-item first">
+                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                    </li>
+                    <li class="page-item prev">
+                        <a class="page-link" href="javascript:void(0);"><i
+                                class="tf-icon bx bx-chevron-left"></i></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">2</a>
+                    </li>
+                    <li class="page-item next">
+                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                    </li>
+                    <li class="page-item last">
+                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

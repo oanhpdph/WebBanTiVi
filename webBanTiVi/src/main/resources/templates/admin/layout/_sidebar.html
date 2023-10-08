@@ -60,14 +60,26 @@
                         <div data-i18n="list customer">List customer</div>
                     </a>
                 </li>
-                <li th:class="${#strings.equals(session.active,'/customer/rank')?'menu-item active':'menu-item'}">
-                    <a th:href="@{/admin/customer/rank}" class="menu-link">
-                        <div data-i18n="list customer">Rank</div>
-                    </a>
-                </li>
                 <li class="menu-item">
                     <a th:href="@{https://fchat.vn/livechat}" class="menu-link" target="_blank">
                         <div data-i18n="chat">Chat with customer</div>
+                    </a>
+                </li>
+            </ul>
+        <li th:class="${#strings.contains(session.active,'voucher')?'menu-item active open':'menu-item'}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                <div data-i18n="Customer">Voucher</div>
+            </a>
+            <ul class="menu-sub">
+                <li th:class="${#strings.equals(session.active,'/voucher')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/voucher}" class="menu-link">
+                        <div data-i18n="list customer">List voucher</div>
+                    </a>
+                </li>
+                <li th:class="${#strings.equals(session.active,'/voucherCustomer')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/voucherCustomer}" class="menu-link">
+                        <div data-i18n="chat">List voucher customer</div>
                     </a>
                 </li>
             </ul>

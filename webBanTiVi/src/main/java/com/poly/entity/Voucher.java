@@ -2,14 +2,18 @@ package com.poly.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Date;
 
 @Entity
 @Table(name="voucher")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Voucher {
 
     @Id
@@ -38,6 +42,16 @@ public class Voucher {
 
     @Column(name="quantity")
     private int quantity;
+
+    @Column(name="start_day")
+    private Date start_day;
+
+    @Column(name="expiration_date")
+    private Date exDate;
+
+
+    @Column(name="active")
+    private boolean active;
 
 
 }
