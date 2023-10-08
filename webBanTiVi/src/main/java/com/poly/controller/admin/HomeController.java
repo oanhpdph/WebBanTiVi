@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin")
 public class HomeController {
@@ -37,6 +39,8 @@ public class HomeController {
 
     @GetMapping("/bill/list_bill")
     public String loadBill(HttpSession session) {
+        session.setAttribute("pageView", "/admin/page/order/order.html");
+        session.setAttribute("active", "/order");
         session.setAttribute("listBill", billImpl.getALl());
         session.setAttribute("pageView", "/admin/page/bill/bill.html");
         session.setAttribute("active", "/bill/list_bill");
@@ -109,7 +113,6 @@ public class HomeController {
     public String loadPosition(HttpSession session) {
         session.setAttribute("pageView", "/admin/page/position.html");
         session.setAttribute("active", "/position");
-
         return "admin/layout";
     }
 

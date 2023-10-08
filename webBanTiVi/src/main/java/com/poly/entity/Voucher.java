@@ -2,17 +2,19 @@ package com.poly.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.Date;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name="voucher")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Voucher {
 
     @Id
@@ -50,4 +52,5 @@ public class Voucher {
 
     @Column(name="active")
     private Boolean active;
+
 }

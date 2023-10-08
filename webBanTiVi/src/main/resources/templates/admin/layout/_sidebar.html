@@ -80,6 +80,23 @@
                     </a>
                 </li>
             </ul>
+        <li th:class="${#strings.contains(session.active,'voucher')?'menu-item active open':'menu-item'}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                <div data-i18n="Customer">Voucher</div>
+            </a>
+            <ul class="menu-sub">
+                <li th:class="${#strings.equals(session.active,'/voucher')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/voucher}" class="menu-link">
+                        <div data-i18n="list customer">List voucher</div>
+                    </a>
+                </li>
+                <li th:class="${#strings.equals(session.active,'/voucherCustomer')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/voucherCustomer}" class="menu-link">
+                        <div data-i18n="chat">List voucher customer</div>
+                    </a>
+                </li>
+            </ul>
         </li>
         <li th:class="${#strings.equals(session.active,'/blog')?'menu-item active':'menu-item'}">
             <a th:href="@{/admin/blog}" class="menu-link">

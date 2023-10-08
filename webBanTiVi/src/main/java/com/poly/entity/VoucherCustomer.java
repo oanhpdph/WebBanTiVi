@@ -3,10 +3,11 @@ package com.poly.entity;
 import com.poly.entity.idClass.VoucherCustomerId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "voucher_customer")
@@ -14,7 +15,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @IdClass(VoucherCustomerId.class)
-public class Voucher_Customer {
+@Builder
+public class VoucherCustomer {
 
     @Id
     @ManyToOne
@@ -35,5 +37,6 @@ public class Voucher_Customer {
     private Date date_end;
 
     @Column(name="active")
-    private Boolean active;
+    private boolean active;
+
 }

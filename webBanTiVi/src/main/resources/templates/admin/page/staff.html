@@ -13,8 +13,8 @@
                         <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                             <span class="d-none d-sm-block">Upload new photo</span>
                             <i class="bx bx-upload d-block d-sm-none"></i>
-                            <input type="file" id="upload" class="account-file-input" hidden="" th:field="*{avatar}"
-                                   accept="image/png, image/jpeg">
+                            <input type="file" id="upload" class="account-file-input" hidden=""
+                                   accept="image/png, image/jpeg" th:field="*{avatar}">
                         </label>
                         <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
                             <i class="bx bx-reset d-block d-sm-none"></i>
@@ -50,7 +50,6 @@
                             <label class="form-label">Address</label>
                             <input type="text" class="form-control" th:field="*{address}" placeholder="Address">
                             <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}"/>
-
                         </div>
                     </div>
                     <div class="row g-3">
@@ -58,27 +57,29 @@
                             <label class="mb-1">Gender</label> <br>
                             <div class="form-check form-check-inline mt-3">
                                 <input class="form-check-input" type="radio" th:field="*{gender}" id="inlineRadio1"
-                                       value="true">
+                                       th:value="true">
+                                value="true">
                                 <label class="form-check-label" for="inlineRadio1">Male</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" th:field="*{gender}" id="inlineRadio2"
-                                       value="false">
+                                       th:value="false">
+                                value="false">
                                 <label class="form-check-label" for="inlineRadio2">Female</label>
                             </div>
                         </div>
-                        <!--                        -->
                         <div class="col-sm-4">
+                            <label for="html5-date-input" class="col-md-2 col-form-label">Birthday</label>
+                            <input class="form-control" type="date" value="" id="html5-date-input"
+                                   th:field="*{birthday}">
                             <label class="col-md-2 col-form-label">Birthday</label>
                             <input class="form-control" type="date" th:field="*{birthday}">
                         </div>
-                        <!--                        -->
                         <div class="col-sm-4">
                             <label for="html5-password-input" class="col-md-3 col-form-label">Password</label>
                             <input class="form-control" type="text" value="password" id="html5-password-input"
                                    th:field="*{password}">
                             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"/>
-
 
                         </div>
                     </div>
@@ -87,55 +88,54 @@
                             <label class="form-label" for="phoneNumber">Phone Number</label>
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text">VN (+84)</span>
-                                <input type="text" id="phoneNumber" th:field="*{phone}" class="form-control"
-                                       placeholder="394408163">
+                                <input type="text" id="phoneNumber" name="phoneNumber" class="form-control"
+                                       placeholder="394 408 163 " th:field="*{phone}">
                                 <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"/>
-
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <label class="mb-1">Active</label> <br>
-                            <div class="form-check form-check-inline ">
-                                <input class="form-check-input" type="radio" th:field="*{active}"
-                                       value="true">
-                                <label class="form-check-label" for="inlineRadio2">Active</label>
+                            <div class="form-check form-check-inline mt-3">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions1"
+                                       value="true" th:field="*{active}">
+                                <label class="form-check-label" for="inlineRadio1">Active</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" th:field="*{active}"
-                                       value="false">
-                                <label class="form-check-label" for="inlineRadio2">No Active</label>
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions1"
+                                       value="false" th:field="*{active}">
+                                <label class="form-check-label" for="inlineRadio2">Non-Active</label>
                             </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <!--                            -->
-                            <small class="text-light fw-semibold">Default</small>
-                            <div class="mt-3">
-                                <!-- Button trigger modal -->
-                                <div class="input-group">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#basicModal">
-                                        Position
-                                    </button>
-                                    <select class="form-select"
-                                            aria-label="Example select with button addon" th:field="*{position}">
-                                        <option value="0">Select Position</option>
-                                        <option value=0>Admin</option>
-                                        <option value=1>Staff</option>
-                                    </select>
+                            <div class="col-sm-4">
+                                <small class="text-light fw-semibold">Default</small>
+                                <div class="mt-3">
+                                    <!-- Button trigger modal -->
+                                    <div class="input-group">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#basicModal">
+                                            Position
+                                        </button>
+                                        <select class="form-select"
+                                                aria-label="Example select with button addon" th:field="*{position}">
+                                            <option th:value=10>Select Position</option>
+                                            <option th:value=0>Admin</option>
+                                            <option th:value=1>User</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="row mt-2" th:text="${message}"></div>
+                    <br> <br>
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                        <button type="submit" class="btn btn-primary me-2"
+                                th:formaction="@{/admin/staff/update/{id}(id=*{id})}" formmethod="post">Update changes
+                        </button>
+                        <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                    </div>
                 </div>
-                <div class="row mt-2" th:text="${message}"></div>
-                <br> <br>
-                <div class="mt-2">
-                    <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                    <button type="submit" class="btn btn-primary me-2"
-                            th:formaction="@{/admin/staff/update/{id}(id=${staff.id})}" formmethod="post">Update changes
-                    </button>
-                    <button type="reset" class="btn btn-outline-secondary">Cancel</button>
-                </div>
+            </div>
         </form>
     </div>
     <!-- /Account -->
@@ -143,7 +143,7 @@
 <hr>
 
 <div class="card">
-    <h5 class="card-header">Delete Account</h5>
+    <h5 class="card-header">Account</h5>
     <div class="card-body">
         <table class="table">
             <thead>
@@ -151,39 +151,43 @@
                 <th>Id</th>
                 <th>Code</th>
                 <th>Name</th>
-                <th>Email</th>
                 <th>Gender</th>
-                <!--                    <th>Birthday</th>-->
+                <th>Birthday</th>
                 <th>Address</th>
                 <th>Phone</th>
-                <th>Password</th>
-                <th>Active</th>
                 <th>Position</th>
+                <th>Image</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
 
-            <tr th:each="staff : ${listStaff}">
+            <tr th:each="staff: ${listStaff}">
                 <td th:text="${staff.id}"></td>
                 <td th:text="${staff.code}"></td>
                 <td th:text="${staff.name}"></td>
-                <td th:text="${staff.email}"></td>
                 <td>
-                    <span th:if="${staff.gender == 'true'}">Female</span>
-                    <span th:unless="${staff.gender == 'false'}">Male</span>
+                    <span th:if="${staff.gender} == true" th:text="Male"/>
+                    <span th:if="${staff.gender} == false" th:text="Female"/>
                 </td>
+                <td th:text="${staff.birthday}"></td>
                 <td th:text="${staff.address}"></td>
                 <td th:text="${staff.phone}"></td>
-                <td th:text="${staff.password}"></td>
-                <td th:text="${staff.active}"></td>
                 <td>
-                    <span th:if="${staff.position == 0 }">Admin</span>
-                    <span th:if="${staff.position == 1}">Staff</span>
+                    <span th:if="${staff.position} == 0" th:text="Admin"/>
+                    <span th:if="${staff.position} == 1" th:text="User"/>
+
+                </td>
+                <td><p>
+                    <img th:src="@{'/image/'+*{staff.avatar}}"
+                         style="height: 80px; width: 80px"/>
+
+                </p>
                 </td>
                 <td>
-                    <a class="btn btn-sm btn-primary" th:href="@{/admin/staff/edit/{id}(id=${staff.id})}">Edit</a>
-                    <a class="btn btn-sm btn-danger" th:href="@{/admin/staff/delete/{id}(id=${staff.id})}">Delete</a>
+                    <a class="btn btn-sm btn-primary" th:href="@{/admin/staff/edit/{id}(id=*{staff.id})}">Edit</a>
+                    <a class="btn btn-sm btn-danger"
+                       th:href="@{/admin/staff/delete/{id}(id=*{staff.id})}">Delete</a>
                 </td>
             </tr>
 
