@@ -11,6 +11,7 @@ CREATE TABLE coupon
      id      INT IDENTITY(1, 1) PRIMARY KEY,
      code    VARCHAR(30),
      [value] VARCHAR(10),
+	 image varchar(200),
      active  BIT
   )
 

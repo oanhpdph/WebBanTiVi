@@ -4,10 +4,12 @@ import com.poly.entity.BillStatus;
 import com.poly.repository.BillStatusRepos;
 import com.poly.service.BillStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class BillStatusImpl implements BillStatusService {
     @Autowired
     private BillStatusRepos billStatusRepos;
