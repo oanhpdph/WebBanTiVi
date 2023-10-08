@@ -1,0 +1,217 @@
+<h4 class="fw-semibold py-3 mb-4"> Danh sách Voucher</h4>
+<div class="mb-4">
+    <form th:action="@{/admin/voucher/add}" method="post" th:object="${voucher}">
+        <div>
+            <div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Thông tin voucher</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+
+                            <div class="row col-lg-12 col-xl-9">
+                                <div class="col-xl-4 col-lg-6 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Code:</label>
+                                        <input type="text" class="form-control" th:field="*{code}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Name Voucher:</label>
+                                        <input  type="text" class="form-control" th:field="*{name_voucher}">
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Value</label>
+                                        <input type="text" class="form-control" th:field="*{value}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Active:</label>
+                                        <br>
+                                        <div class="form-check form-check-inline mt-3">
+                                            <input class="form-check-input" type="radio" th:field="*{active}"
+                                                   id="inlineRadio1"
+                                                   th:value="true">
+                                            <label class="form-check-label" for="inlineRadio1">Acitve</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" th:field="*{active}"
+                                                   id="inlineRadio2"
+                                                   th:value="false">
+                                            <label class="form-check-label" for="inlineRadio2">Non-active</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label"> Reduced Form</label>
+                                        <input class="form-control" type="text" th:field="*{reduced_form}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Minimum Value</label>
+                                        <input class="form-control" type="text" th:field="*{minimum_value}">
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Maximum Discount:</label>
+                                        <input type="text" class="form-control" th:field="*{maximum_discount}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Start Day:</label>
+                                        <input type="date" class="form-control" th:field="*{start_day}">
+                                    </div>
+
+                                </div>
+                                <div class="col-xl-4 col-lg-6 col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Quantity:</label>
+                                        <input type="text" class="form-control" th:field="*{quantity}"/>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Expiration Date:</label>
+                                        <input type="date" class="form-control" th:field="*{exDate}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Reset</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="card mb-3 ">
+    <div class="card-header">
+        <form class="col-12 mt-2">
+            <div class="col-12 row">
+                <div class="col-7">
+                    <div class="form-check input-group input-group-merge">
+                    <span class="input-group-text">
+                        <i class="bx bx-search"></i>
+                    </span>
+                        <input type="text" class="form-control" placeholder="Tìm tên, sđt">
+                        <button class="btn btn-primary" type="button">Search</button>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <button class="btn btn-warning" data-bs-toggle="tooltip" data-bs-offset="0,4"
+                            data-bs-placement="bottom" data-bs-html="true" title=""
+                            data-bs-original-title="<span>Reset filter</span>" aria-describedby="tooltip91262">
+                        <i class='bx bx-reset'></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2 d-flex align-items-center">
+                <p>Voucher :
+                    <span th:text="${#lists.size(listVoucher)}"></span>
+                </p>
+            </div>
+            <div class="col-md-10 text-end">
+                <div class="btn-group" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-outline-secondary">Excel
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary">PDF
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary">In</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="table-responsive text-nowrap">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>code</th>
+                    <th>Name Voucher</th>
+                    <th>Value</th>
+                    <th>Reduced Form</th>
+                    <th>Minimum Value</th>
+                    <th>Maximum Discount</th>
+                    <th>Quantity</th>
+                    <th>Start Day</th>
+                    <th>Expiration Date</th>
+                    <th>Active </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                <tr th:each="voucher : ${listVoucher}">
+                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>
+                    <td th:text="${voucher.code}"></td>
+                    <td th:text="${voucher.name_voucher}"></td>
+                    <td th:text="${voucher.value}"></td>
+                    <td th:text="${voucher.reduced_form}"></td>
+                    <td th:text="${voucher.minimum_value}"></td>
+                    <td th:text="${voucher.maximum_discount}"></td>
+                    <td th:text="${voucher.quantity}"></td>
+                    <td th:text="${voucher.start_day}"></td>
+                    <td th:text="${voucher.exDate}"></td>
+                    <td>
+                        <span th:if="${voucher.active} == true" th:text="Active"/>
+                        <span th:if="${voucher.active} == false" th:text="Chưa Active"/>
+                    </td>
+
+                    <td>
+                        <a class="btn btn-sm btn-primary" th:href="@{/admin/voucher/edit/{id}(id=*{voucher.id})}">Edit</a>
+                        <a class="btn btn-sm btn-danger"
+                           th:href="@{/admin/voucher/delete/{id}(id=*{voucher.id})}">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+        <hr class="card-separator">
+    </div>
+    <div class="card-footer">
+        <div class="d-inline-flex float-end">
+            <div class="mx-3 row" style="width: 180px">
+                <label for="select-view" class="col-form-label col-5 text-end">View:</label>
+                <div class="col-7">
+                    <select class="form-select text-start" id="select-view">
+                        <option>10</option>
+                        <option>20</option>
+                        <option>40</option>
+                        <option>80</option>
+                    </select>
+                </div>
+            </div>
+            <div aria-label="Page pagination">
+                <ul class="pagination">
+                    <li class="page-item first">
+                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                    </li>
+                    <li class="page-item prev">
+                        <a class="page-link" href="javascript:void(0);"><i
+                                class="tf-icon bx bx-chevron-left"></i></a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0);">2</a>
+                    </li>
+                    <li class="page-item next">
+                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                    </li>
+                    <li class="page-item last">
+                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

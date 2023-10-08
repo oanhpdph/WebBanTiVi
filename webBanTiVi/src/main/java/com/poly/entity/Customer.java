@@ -2,16 +2,18 @@ package com.poly.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name="customer")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class Customer {
 
     @Id
