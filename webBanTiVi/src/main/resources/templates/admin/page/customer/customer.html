@@ -30,7 +30,7 @@
                                     <div class="mb-3">
                                         <label class="form-label">Địa chỉ:</label>
                                         <textarea style="height: 12px" type="text" class="form-control"
-                                                  th:field="*{diachi}"></textarea>
+                                                  th:field="*{address}"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-6 col-md-6">
@@ -58,7 +58,7 @@
                                 <div class="col-xl-4 col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label" >Ngày sinh</label>
-                                        <input class="form-control" type="date" th:field="*{date}">
+                                        <input class="form-control" type="date" th:field="*{birthday}">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" >Email</label>
@@ -148,8 +148,8 @@
                 <tr th:each="cus : ${listCus}">
                     <!--                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>-->
                     <td th:text="${cus.name}"></td>
-                    <td th:text="${cus.date}"></td>
-                    <td th:text="${cus.diachi}"></td>
+                    <td th:text="${cus.birthday}"></td>
+                    <td th:text="${cus.address}"></td>
                     <td th:text="${cus.phone_number}"></td>
                     <td th:text="${cus.email}"></td>
                     <td>

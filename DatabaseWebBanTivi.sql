@@ -147,7 +147,7 @@ CREATE TABLE customer
      id                INT IDENTITY(1, 1) PRIMARY KEY,
      [name]            NVARCHAR(50),
      [date]            DATE,
-     address            NVARCHAR(max),
+     [address]            NVARCHAR(max),
      phone_number      VARCHAR(15),
      email             VARCHAR(50) UNIQUE,
      gender            BIT,
