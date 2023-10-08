@@ -26,18 +26,20 @@ public class Bill {
     @Column(name="code")
     private String code;
 
+    @Temporal(TemporalType.DATE)
     @Column(name="create_date")
     private Date createDate;
 
+    @Temporal(TemporalType.DATE)
     @Column(name="payment_date")
     private Date paymentDate;
 
     @ManyToOne
-    @JoinColumn(name="status")
+    @JoinColumn(name="id_status")
     private BillStatus billStatus;
 
     @ManyToOne
-    @JoinColumn(name="payment_method")
+    @JoinColumn(name="id_paymentmethod")
     private PaymentMethod paymentMethod;
 
     @Column(name="note")

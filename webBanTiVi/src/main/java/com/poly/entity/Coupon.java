@@ -26,4 +26,6 @@ public class Coupon {
     @Column(name="active")
     private boolean active;
 
+    @Column(name = "image")
+    private String image;
 }
