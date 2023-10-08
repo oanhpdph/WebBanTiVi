@@ -1,6 +1,7 @@
 package com.poly.controller.admin;
 
 import com.poly.entity.Staff;
+import com.poly.service.Impl.ProductServiceImpl;
 import com.poly.service.Impl.BillImpl;
 import com.poly.service.Impl.StaffServiceImpl;
 import jakarta.servlet.http.HttpSession;
@@ -19,6 +20,9 @@ public class HomeController {
 
     @Autowired
     StaffServiceImpl staffService;
+
+    @Autowired
+    ProductServiceImpl productService;
 
     @Autowired
     private BillImpl billImpl;
@@ -115,10 +119,12 @@ public class HomeController {
         session.setAttribute("active", "/position");
         return "admin/layout";
     }
-
+   //product
     @GetMapping("/product")
-    public String loadProduct(HttpSession session) {
+    public String loadProduct(HttpSession session,Model model) {
         session.setAttribute("pageView", "/admin/page/product/product.html");
+        session.setAttribute("active","/product");
+        model.addAttribute("listsp",productService.findAll());
         session.setAttribute("active", "/product");
         return "admin/layout";
     }

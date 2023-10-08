@@ -2,33 +2,33 @@ package com.poly.service.Impl;
 
 import com.poly.entity.ProductSupplier;
 import com.poly.entity.idClass.ProductSupplierId;
-import com.poly.repository.Product_SupplierRepository;
-import com.poly.service.Product_supplierService;
+import com.poly.repository.ProductSupplierRepository;
+import com.poly.service.ProductSupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 
-public class Product_SupplierServiceImpl implements Product_supplierService {
+public class ProductSupplierServiceImpl implements ProductSupplierService {
     @Autowired
-    Product_SupplierRepository product_supplierRepository;
+    ProductSupplierRepository productsupplierRepository;
     @Override
     public ProductSupplier save(ProductSupplier productSupplier) {
-        return product_supplierRepository.save(productSupplier);
+        return productsupplierRepository.save(productSupplier);
     }
 
     @Override
     public void delete(ProductSupplierId id) {
-    product_supplierRepository.delete(product_supplierRepository.findById(id).get());
+    productsupplierRepository.delete(productsupplierRepository.findById(id).get());
     }
 
     @Override
     public List<ProductSupplier> findAll() {
-        return product_supplierRepository.findAll();
+        return productsupplierRepository.findAll();
     }
 
     @Override
     public Optional<ProductSupplier> findById(ProductSupplierId id) {
-        return product_supplierRepository.findById(id);
+        return productsupplierRepository.findById(id);
     }
 }
