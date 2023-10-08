@@ -21,6 +21,7 @@ public class Cart {
     private Integer id;
 
     @OneToOne
+    @JoinColumn(name = "customer")
     private Customer customer;
 
     @Column(name = "code")
