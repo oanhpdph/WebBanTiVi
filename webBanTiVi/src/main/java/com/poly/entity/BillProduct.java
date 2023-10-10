@@ -2,19 +2,13 @@ package com.poly.entity;
 
 import com.poly.entity.idClass.BillProductId;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "bill_product")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @IdClass(BillProductId.class)
 public class BillProduct {
 

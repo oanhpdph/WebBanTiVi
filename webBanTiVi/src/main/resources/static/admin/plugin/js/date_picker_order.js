@@ -1,5 +1,6 @@
 $('#date-seach-order').daterangepicker({
     alwaysShowCalendars: true,
+    autoUpdateInput: false,
     locale: {
         format: 'YYYY/MM/DD',
         cancelable: 'Clear'
@@ -16,5 +17,8 @@ $('#date-seach-order').daterangepicker({
     },
 });
 $('input[id="date-seach-order"]').on('cancel.daterangepicker', function(ev, picker) {
-    $(this).val(new Date().toLocaleDateString() +'-'+ new Date().toLocaleDateString());
+    $(this).val("");
+});
+$('input[id="date-seach-order"]').on('apply.daterangepicker', function(ev, picker) {
+    $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
 });
