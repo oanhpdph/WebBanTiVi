@@ -44,7 +44,7 @@ public class Voucher {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "start_day")
-    private Date dateDay;
+    private Date startDay;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "expiration_date")
