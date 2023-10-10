@@ -42,10 +42,10 @@ public class Customer {
     private boolean gender;
 
     @Column(name="id_card")
-    private String id_card;
+    private String idCard;
 
     @Column(name="id_number")
-    private String id_number;
+    private String idNumber;
 
     @Column(name="avatar")
     private String avatar;
@@ -54,10 +54,11 @@ public class Customer {
     private int status;
 
     @Column(name="accumulated_point")
-    private int accumulated_point;
+    private int accumulatedPoint;
 
 
     @OneToMany(mappedBy = "customer")
     private List<Bill> listBill;
 
 }
+
