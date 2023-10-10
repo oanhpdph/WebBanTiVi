@@ -21,22 +21,22 @@ public class HomeController {
 
     @GetMapping("")
     public String loadHome(HttpSession session,Model model) {
-        model.addAttribute("pageView", "/admin/page/statistic.html");
-        model.addAttribute("active", "/dashboard");
+        session.setAttribute("pageView", "/admin/page/statistic.html");
+        session.setAttribute("active", "/dashboard");
         return "admin/layout";
     }
 
     @GetMapping("/dashboard")
     public String loadDashboard(HttpSession session,Model model) {
-        model.addAttribute("pageView", "/admin/page/dashboard/dashboard.html");
-        model.addAttribute("active", "/dashboard");
+        session.setAttribute("pageView", "/admin/page/dashboard/dashboard.html");
+        session.setAttribute("active", "/dashboard");
         return "admin/layout";
     }
 
     @GetMapping("/position")
     public String loadPosition(HttpSession session,Model model) {
-        model.addAttribute("pageView", "/admin/page/position.html");
-        model.addAttribute("active", "/position");
+        session.setAttribute("pageView", "/admin/page/position.html");
+        session.setAttribute("active", "/position");
         return "admin/layout";
     }
    //product
@@ -44,15 +44,15 @@ public class HomeController {
 
     @GetMapping("/statistic")
     public String loadStatistic(HttpSession session, Model model) {
-        model.addAttribute("pageView", "/admin/page/statistic.html");
-        model.addAttribute("active", "/statistic");
+        session.setAttribute("pageView", "/admin/page/statistic.html");
+        session.setAttribute("active", "/statistic");
         return "admin/layout";
     }
 
     @GetMapping("/blog")
     public String loadBlog(HttpSession session, Model model) {
-        model.addAttribute("pageView", "/admin/page/blog/blog.html");
-        model.addAttribute("active", "/blog");
+        session.setAttribute("pageView", "/admin/page/blog/blog.html");
+        session.setAttribute("active", "/blog");
         return "admin/layout";
     }
 
