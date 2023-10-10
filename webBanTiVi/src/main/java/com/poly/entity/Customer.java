@@ -27,7 +27,7 @@ public class Customer {
     @Column(name="date")
     private Date date;
 
-    @Column(name="diachi")
+    @Column(name="address")
     private String diachi;
 
 
@@ -36,7 +36,6 @@ public class Customer {
 
     @Column(name="email")
     private String email;
-
 
 
     @Column(name="gender")

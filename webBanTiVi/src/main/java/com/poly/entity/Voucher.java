@@ -49,9 +49,15 @@ public class Voucher {
     @Column(name="expiration_date")
     private Date exDate;
 
-
     @Column(name="active")
     private boolean active;
+
+    @Column(name="image")
+    private String image;
+
+    @Column(name="banner")
+    private String banner;
+
 
 
 }
