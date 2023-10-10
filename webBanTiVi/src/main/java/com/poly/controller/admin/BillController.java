@@ -1,11 +1,13 @@
 package com.poly.controller.admin;
 
+import com.poly.entity.Bill;
 import com.poly.entity.BillProduct;
 import com.poly.entity.idClass.BillProductId;
 import com.poly.service.BillService;
 import com.poly.service.Impl.BPServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import com.poly.service.Impl.BillImpl;
@@ -14,14 +16,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin")
 public class BillController {
 
     @Autowired
     BPServiceImpl billProductService;
+
     @Autowired
     private BillService billService;
+
+    public class Search {
+        private String keyword;
+        private String date;
+    }
 
     @GetMapping("/bill_product")
     public String index(Model model) {
@@ -54,7 +65,6 @@ public class BillController {
         return "redirect:/admin/bill_product";
     }
 
-
     @GetMapping("/bill_detail/{billCode}")
     public String loadBillById(HttpSession session, @PathVariable(name = "billCode") Integer idBill) {
         session.setAttribute("billDetail", billService.getOneById(idBill));
@@ -70,21 +80,30 @@ public class BillController {
         return "/admin/layout";
     }
 
-    @GetMapping("/bill/list_bill")
-    public String loadBill(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/order/order.html");
-        session.setAttribute("active", "/order");
-        session.setAttribute("listBill", billService.getALl());
+
+    @GetMapping(value = {"/bill/list_bill"})
+    public String loadBill(HttpSession session, Model model, @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageRequest, @RequestParam(name = "size", required = false, defaultValue = "1") Integer sizeRequest) {
+        Page<Bill> list = billService.getPagination(pageRequest, sizeRequest);
+        Integer totalPage = list.getTotalPages();
+        model.addAttribute("search", new Search());
+        model.addAttribute("totalElement", list.getTotalElements());
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("listBill", billService.getALlDto(pageRequest, sizeRequest));
+        session.setAttribute("size", sizeRequest);
+        session.setAttribute("page", pageRequest);
         session.setAttribute("pageView", "/admin/page/bill/bill.html");
         session.setAttribute("active", "/bill/list_bill");
-        return "admin/layout";
+        if (totalPage < pageRequest) {
+            return "redirect:/admin/bill/list_bill?page=" + totalPage + "&size=" + sizeRequest;
+        }
+        return "/admin/layout";
     }
 
-    @GetMapping("/bill/payment_method")
-    public String loadPaymentMethod(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/bill/payment_method.html");
-        session.setAttribute("active", "/bill/payment_method");
-        return "admin/layout";
+    @GetMapping("/bill/list_bill/search")
+    public String search(@ModelAttribute("search") Search search, HttpSession session,Model model) {
+        Integer page = (Integer) session.getAttribute("page");
+        Integer size = (Integer) session.getAttribute("size");
+        model.addAttribute("listBill",billService.search(search.keyword,page,size));
+        return "/admin/layout";
     }
-
 }

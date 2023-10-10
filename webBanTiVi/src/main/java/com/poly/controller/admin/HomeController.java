@@ -40,14 +40,7 @@ public class HomeController {
         return "admin/layout";
     }
    //product
-    @GetMapping("/product")
-    public String loadProduct(HttpSession session,Model model) {
-        session.setAttribute("pageView", "/admin/page/product/product.html");
-        session.setAttribute("active","/product");
-        model.addAttribute("listsp",productService.findAll());
-        session.setAttribute("active", "/product");
-        return "admin/layout";
-    }
+
 
     @GetMapping("/statistic")
     public String loadStatistic(HttpSession session) {

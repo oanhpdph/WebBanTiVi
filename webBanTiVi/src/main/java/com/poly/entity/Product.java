@@ -25,7 +25,7 @@ public class Product {
     @Column(name = "nametv")
     private String name;
 
-    @Column(name = "price_inport")
+    @Column(name = "price_import")
     private BigDecimal price_import;
 
     @Column(name = "price_export")

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name="customer")
@@ -32,7 +33,7 @@ public class Customer {
     private String address;
 
     @Column(name="phone_number")
-    private String phone_number;
+    private String phoneNumber;
 
     @Column(name="email")
     private String email;
@@ -54,5 +55,9 @@ public class Customer {
 
     @Column(name="accumulated_point")
     private int accumulated_point;
+
+
+    @OneToMany(mappedBy = "customer")
+    private List<Bill> listBill;
 
 }
