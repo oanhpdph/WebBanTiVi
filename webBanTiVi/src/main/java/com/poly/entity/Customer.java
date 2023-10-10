@@ -38,24 +38,20 @@ public class Customer {
     @Column(name="email")
     private String email;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name="gender")
     private boolean gender;
 
     @Column(name="id_card")
     private String idCard;
 
-    @Column(name="id_number")
-    private String idNumber;
-
     @Column(name="avatar")
     private String avatar;
 
     @Column(name="status")
     private int status;
-
-    @Column(name="accumulated_point")
-    private int accumulatedPoint;
-
 
     @OneToMany(mappedBy = "customer")
     private List<Bill> listBill;

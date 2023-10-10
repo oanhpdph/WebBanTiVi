@@ -9,8 +9,8 @@ go
 CREATE TABLE coupon
   (
      id      INT IDENTITY(1, 1) PRIMARY KEY,
-     code    VARCHAR(30),
-     [value] VARCHAR(10),
+     code    VARCHAR(30) not null,
+     [value] VARCHAR(10) not null,
 	 image varchar(200),
      active  BIT
   )
@@ -19,8 +19,8 @@ CREATE TABLE coupon
 CREATE TABLE brand
   (
      id        INT IDENTITY(1, 1) PRIMARY KEY,
-     code      VARCHAR(10),
-     namebrand NVARCHAR(max)
+     code      VARCHAR(10) not null,
+     namebrand NVARCHAR(max) not null
   )
 
 
@@ -28,79 +28,79 @@ CREATE TABLE brand
 CREATE TABLE origin
   (
      id         INT IDENTITY(1, 1) PRIMARY KEY,
-     code       VARCHAR(10),
-     nameorigin NVARCHAR(max)
+     code       VARCHAR(10) not null,
+     nameorigin NVARCHAR(max) not null
   )
 
 -- nhà cung cấp
 CREATE TABLE manufacture
   (
      id               INT IDENTITY(1, 1) PRIMARY KEY,
-     code             VARCHAR(10),
-     name_manufacture NVARCHAR(max)
+     code             VARCHAR(10) not null,
+     name_manufacture NVARCHAR(max) not null
   )
 
 -- màu sắc
 CREATE TABLE color
   (
      id        INT IDENTITY(1, 1) PRIMARY KEY,
-     code      VARCHAR(10),
-     namecolor NVARCHAR(max)
+     code      VARCHAR(10) not null,
+     namecolor NVARCHAR(max) not null
   )
 
 -- Loại
 CREATE TABLE [type]
   (
      id        INT IDENTITY(1, 1) PRIMARY KEY,
-     code      VARCHAR(10),
-     name_type NVARCHAR(max)
+     code      VARCHAR(10) not null,
+     name_type NVARCHAR(max) not null
   )
 
 CREATE TABLE feature
   (
      id           INT IDENTITY(1, 1) PRIMARY KEY,
-     code         VARCHAR(10),
-     name_feature NVARCHAR(max)
+     code         VARCHAR(10) not null,
+     name_feature NVARCHAR(max) not null
   )
 
 CREATE TABLE supplier
   (
      id            INT IDENTITY(1, 1) PRIMARY KEY,
-     code          VARCHAR(10),
-     name_supplier NVARCHAR(max)
+     code          VARCHAR(10) not null,
+     name_supplier NVARCHAR(max) not null
   )
 
 -- độ phân giải
 CREATE TABLE resolution
   (
      id             INT IDENTITY(1, 1) PRIMARY KEY,
-     code           VARCHAR(10),
-     nameresolution NVARCHAR(max),
-     screen_length  FLOAT,-- chiều dài màn hình (pixel)
-     screen_width   FLOAT,
+     code           VARCHAR(10) not null,
+     nameresolution NVARCHAR(max) not null, 
+     screen_length  FLOAT not null,-- chiều dài màn hình (pixel)
+     screen_width   FLOAT not null,
   )
 
 -- size
 CREATE TABLE size
   (
      id           INT IDENTITY(1, 1) PRIMARY KEY,
-     code         VARCHAR(10),
-     namesizeinch NVARCHAR(max),
-     tv_length    FLOAT,-- chiều dài TV tính cả viền (cm)
-     tv_width     FLOAT,
-     thickness    FLOAT, -- độ dày TV
+     code         VARCHAR(10) not null,
+     namesizeinch NVARCHAR(max) not null,
+     tv_length    FLOAT not null,-- chiều dài TV tính cả viền (cm)
+     tv_width     FLOAT not null,
+     thickness    FLOAT not null, -- độ dày TV
   )
 
 -- sản phẩm
 CREATE TABLE product
   (
      id             INT IDENTITY(1, 1) PRIMARY KEY,
-     code           VARCHAR(10),
-     nametv         NVARCHAR(max),
-     price_import   money,
-     price_export   money,
-     quantity       INT,
-     guarantee      INT,
+     code           VARCHAR(10) not null,
+     nametv         NVARCHAR(max) not null,
+     price_import   money not null,
+     price_export   money not null,
+     quantity       INT not null,
+     guarantee      INT not null,
      id_brand       INT REFERENCES brand(id),
      id_origin      INT REFERENCES origin(id),
      id_manufacture INT REFERENCES manufacture(id),
@@ -128,16 +128,16 @@ CREATE TABLE product_feature
 CREATE TABLE image_product
   (
      id INT IDENTITY(1,1) primary key,
-	 id_product INT REFERENCES product(id),
-     name_image varchar(200),
+	 id_product INT REFERENCES product(id) not null,
+     name_image varchar(200) not null,
   )
 -- chi tiết coupon
 CREATE TABLE coupon_product
   (
      id_coupon  INT REFERENCES coupon(id),
      id_product INT REFERENCES product(id),
-     date_start DATE,
-     date_end   DATE,
+     date_start DATE not null,
+     date_end   DATE not null,
      PRIMARY KEY(id_coupon, id_product)
   )
 
@@ -147,29 +147,28 @@ CREATE TABLE customer
      id                INT IDENTITY(1, 1) PRIMARY KEY,
      [name]            NVARCHAR(50),
      [date]            DATE,
-     [address]            NVARCHAR(max),
-     phone_number      VARCHAR(15),
-     email             VARCHAR(50) UNIQUE,
+     [address]         NVARCHAR(max),
+     phone_number      VARCHAR(10) not null,
+     email             VARCHAR(50) UNIQUE not null,
+	 password          VARCHAR(50),
      gender            BIT,
      id_card           VARCHAR(15) UNIQUE,
-     id_number         VARCHAR(15) UNIQUE,
      avatar            VARCHAR(50),
-     status            INT,
-     accumulated_point INT DEFAULT 0
+     status            bit not null,
   )
 
 CREATE TABLE voucher
   (
      id               INT IDENTITY(1, 1) PRIMARY KEY,
-     code             VARCHAR(30),
-     name_voucher     VARCHAR(100),
-     [value]          INT,
-     reduced_form     BIT,-- giảm theo % hoặc tiền trực tiếp
-     minimum_value    MONEY,-- giá trị đơn hàng tối thiểu cần
-     maximum_discount MONEY,--giá trị tối đa đơn hàng giảm
-     quantity         INT, -- số lượng voucher
-	 start_day		  DATE,-- thời gian bắt đầu có hiệu lực
-     expiration_date  DATE,-- thời gian mã giảm giá hết hiệu lực
+     code             VARCHAR(30) not null,
+     name_voucher     VARCHAR(100) not null,
+     [value]          INT not null,
+     reduced_form     BIT not null,-- giảm theo % hoặc tiền trực tiếp
+     minimum_value    MONEY not null,-- giá trị đơn hàng tối thiểu cần
+     maximum_discount MONEY not null,--giá trị tối đa đơn hàng giảm
+     quantity         INT not null, -- số lượng voucher
+	 start_day		  DATE not null,-- thời gian bắt đầu có hiệu lực
+     expiration_date  DATE not null,-- thời gian mã giảm giá hết hiệu lực
 	 active			  BIT
   )
 
@@ -177,27 +176,27 @@ CREATE TABLE voucher_customer
   (
      id_customer INT REFERENCES customer(id),
      id_voucher  INT REFERENCES voucher(id),
-     date_start  DATETIME,-- thời gian nhận
-     date_end    DATETIME,-- thời gian hết hiệu lực
-	 active      BIT
+     date_start  DATETIME not null,-- thời gian nhận
+     date_end    DATETIME not null,-- thời gian hết hiệu lực
+	 active      BIT not null
   )
 
 -- đánh giá
 CREATE TABLE evaluate
   (
 	 id          INT IDENTITY(1, 1) PRIMARY KEY,
-     id_product  INT REFERENCES product(id),
-     id_customer INT REFERENCES customer(id),
-     date_create DATETIME,
-     point       INT,
-     comment     NVARCHAR(max),
+     id_product  INT REFERENCES product(id) not null,
+     id_customer INT REFERENCES customer(id) not null,
+     date_create DATETIME not null,
+     point       INT not null,
+     comment     NVARCHAR(max) ,
   )
 
 CREATE TABLE image_evaluate
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
-     id_evaluate INT REFERENCES evaluate(id),
-	 name_image varchar(200)
+     id_evaluate INT REFERENCES evaluate(id) not null,
+	 name_image varchar(200) not null
   )
 
 
@@ -205,14 +204,14 @@ CREATE TABLE image_evaluate
 CREATE TABLE staff
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
-     code        NVARCHAR(30),
-     [name]      NVARCHAR(50),
+     code        NVARCHAR(30) not null,
+     [name]      NVARCHAR(50) not null,
      gender      BIT,
      birthday    DATE,
      address     NVARCHAR(max),
-     email       VARCHAR(100),
-     phone       NVARCHAR(10),
-     password    VARCHAR(20),
+     email       VARCHAR(100) not null,
+     phone       VARCHAR(10) not null,
+     password    VARCHAR(20) not null,
      active      BIT,
      position	 BIT,
      avatar      VARCHAR(100)
@@ -222,16 +221,16 @@ CREATE TABLE staff
 CREATE TABLE bill_status
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
-     status      NVARCHAR(100),
-     description NVARCHAR(max)
+     status      NVARCHAR(100) not null,
+     description NVARCHAR(max) not null
   )
 
 -- phương thức thanh toán
 CREATE TABLE payment_method
   (
      id             INT IDENTITY(1, 1) PRIMARY KEY,
-     payment_method NVARCHAR(255),
-     active         BIT,
+     payment_method NVARCHAR(255) not null,
+     active         BIT not null,
      description    NVARCHAR(max)
   )
 
@@ -239,12 +238,14 @@ CREATE TABLE payment_method
 CREATE TABLE bill
   (
      id               INT IDENTITY(1, 1) PRIMARY KEY,
-     id_customer      INT REFERENCES customer(id),
-     code             VARCHAR(10),
+     id_customer      INT REFERENCES customer(id) not null,
+     code             VARCHAR(10) not null,
      create_date      DATE NOT NULL,
-     payment_date     DATE,-- ngày thanh toán
-     id_status        INT REFERENCES bill_status(id),
-     id_paymentmethod INT REFERENCES payment_method,
+	 totalPrice		  Money,
+     payment_date     DATE not null,-- ngày thanh toán
+     id_status        INT REFERENCES bill_status(id) not null,
+     id_paymentmethod INT REFERENCES payment_method not null,
+	 payment_status	  INT default 1,
      note             NVARCHAR(max)
   )
 
@@ -253,33 +254,34 @@ CREATE TABLE bill_product
   (
      id_bill    INT REFERENCES bill(id),
      id_product INT REFERENCES product(id),
-     quantity   INT,
-     price      money,
+     quantity   INT not null,
+     price      money not null,
+	 status		bit
      PRIMARY KEY(id_bill, id_product)
   )
 
 CREATE TABLE delivery_notes
   (
      id             INT IDENTITY(1,1) PRIMARY KEY,
-     received       NVARCHAR(50),
-     received_phone VARCHAR(20),
+     received       NVARCHAR(50) not null,
+     received_phone VARCHAR(20) not null,
      deliver        NVARCHAR(50),
-     delivery_phone VARCHAR(20),
+     delivery_phone VARCHAR(20) not null,
      delivery_date  DATE,
      received_date  DATE,
      delivery_fee   MONEY,
      note           NVARCHAR(max),
      status         INT,
-	 id_bill        INT REFERENCES bill(id),
+	 id_bill        INT REFERENCES bill(id) not null,
   )
 
 --giỏ hàng
 CREATE TABLE cart
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
-     id_customer INT REFERENCES customer(id),
+     id_customer INT REFERENCES customer(id) not null,
      code        NVARCHAR(30),
-     date_update DATETIME
+     date_update DATETIME,
   )
 
 -- giỏ hàng chi tiết
@@ -287,7 +289,7 @@ CREATE TABLE cart_product
   (
      cart_id     INT REFERENCES cart(id),
      product_id  INT REFERENCES product(id),
-     quantity    INT,
+     quantity    INT not null,
      note        NVARCHAR(max),
      create_date DATETIME,
 	 date_update DATETIME

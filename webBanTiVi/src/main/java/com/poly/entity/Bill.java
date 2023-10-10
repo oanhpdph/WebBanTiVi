@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,12 @@ public class Bill {
     @Temporal(TemporalType.DATE)
     @Column(name="payment_date")
     private Date paymentDate;
+
+    @Column(name = "totalPrice")
+    private BigDecimal totalPrice;
+
+    @Column(name="payment_status")
+    private int paymentStatus;
 
     @ManyToOne
     @JoinColumn(name="id_status")
