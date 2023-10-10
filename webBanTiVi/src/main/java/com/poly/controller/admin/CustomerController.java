@@ -23,8 +23,8 @@ public class CustomerController {
 
     @GetMapping("/customer/list")
     public String loadCustomer(HttpSession session, Model model) {
-        model.addAttribute("pageView", "/admin/page/customer/customer.html");
-        model.addAttribute("active", "/customer/list");
+        session.setAttribute("pageView", "/admin/page/customer/customer.html");
+        session.setAttribute("active", "/customer/list");
         model.addAttribute("customer", new Customer());
         model.addAttribute("listCus", this.customerService.findAll());
         return "admin/layout";

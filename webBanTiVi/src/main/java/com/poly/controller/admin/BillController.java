@@ -61,15 +61,15 @@ public class BillController {
     @GetMapping("/bill_detail/{billCode}")
     public String loadBillById(HttpSession session, @PathVariable(name = "billCode") Integer idBill,Model model) {
         session.setAttribute("billDetail", billService.getOneById(idBill));
-        model.addAttribute("pageView", "/admin/page/bill/bill_detail.html");
+        session.setAttribute("pageView", "/admin/page/bill/bill_detail.html");
         return "/admin/layout";
     }
 
     @DeleteMapping("/bill/delete/{billCode}")
     public String deleteBill(HttpSession session, @PathVariable(name = "billCode") Integer idBill,Model model) {
         Boolean check = billService.delete(idBill);
-        model.addAttribute("pageView", "/admin/page/bill/bill.html");
-        model.addAttribute("active", "/bill/list_bill");
+        session.setAttribute("pageView", "/admin/page/bill/bill.html");
+        session.setAttribute("active", "/bill/list_bill");
         return "/admin/layout";
     }
 
@@ -84,8 +84,8 @@ public class BillController {
         model.addAttribute("listBill", billService.getALlDto(pageRequest, sizeRequest));
         session.setAttribute("size", sizeRequest);
         session.setAttribute("page", pageRequest);
-        model.addAttribute("pageView", "/admin/page/bill/bill.html");
-        model.addAttribute("active", "/bill/list_bill");
+        session.setAttribute("pageView", "/admin/page/bill/bill.html");
+        session.setAttribute("active", "/bill/list_bill");
         if (totalPage < pageRequest) {
             return "redirect:/admin/bill/list_bill?page=" + totalPage + "&size=" + sizeRequest;
         }

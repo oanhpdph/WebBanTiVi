@@ -33,8 +33,8 @@ public class ProductController {
     }
     @GetMapping("/product")
     public String loadProduct(HttpSession session,Model model) {
-        model.addAttribute("pageView", "/admin/page/product/product.html");
-        model.addAttribute("active","/product");
+        session.setAttribute("pageView", "/admin/page/product/product.html");
+        session.setAttribute("active","/product");
         model.addAttribute("listsp",productService.findAll());
         return "admin/layout";
     }

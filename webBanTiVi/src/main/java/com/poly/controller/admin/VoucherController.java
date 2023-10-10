@@ -22,8 +22,8 @@ public class VoucherController {
     // voucher
     @GetMapping("/voucher/list")
     public String voucher(HttpSession session, Model model){
-        model.addAttribute("pageView", "/admin/page/voucher/voucher.html");
-        model.addAttribute("active", "/voucher/list");
+        session.setAttribute("pageView", "/admin/page/voucher/voucher.html");
+        session.setAttribute("active", "/voucher/list");
         model.addAttribute("listVoucher",this.voucherService.findAll());
         model.addAttribute("voucher",new Voucher());
         return "admin/layout";

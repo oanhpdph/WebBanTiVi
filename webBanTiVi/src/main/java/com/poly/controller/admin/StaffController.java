@@ -22,8 +22,8 @@ public class StaffController {
 
     @GetMapping("/staff")
     public String loadStaff(HttpSession session, Model model) {
-        model.addAttribute("pageView", "/admin/page/staff.html");
-        model.addAttribute("active", "/staff");
+        session.setAttribute("pageView", "/admin/page/staff.html");
+        session.setAttribute("active", "/staff");
         model.addAttribute("listStaff",staffService.findAll());
         model.addAttribute("staff", new Staff());
         return "admin/layout";
