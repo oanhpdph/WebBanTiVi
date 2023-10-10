@@ -38,8 +38,8 @@ public class VoucherCustomerController {
     // voucherCustomer
     @GetMapping("/voucherCustomer")
     public String voucherCustomer(HttpSession session, Model model) {
-        session.setAttribute("pageView", "/admin/page/voucher/voucherCustomer.html");
-        session.setAttribute("active", "/voucherCustomer");
+        model.addAttribute("pageView", "/admin/page/voucher/voucherCustomer.html");
+        model.addAttribute("active", "/voucherCustomer");
         session.setAttribute("listCustomer", this.customerService.findAll());
         System.out.println(customerService.findAll());
         session.setAttribute("listVoucher", this.voucherService.findAll());

@@ -20,10 +20,10 @@ public class VoucherController {
     @Autowired
     private VoucherService voucherService;
     // voucher
-    @GetMapping("/voucher")
+    @GetMapping("/voucher/list")
     public String voucher(HttpSession session, Model model){
-        session.setAttribute("pageView", "/admin/page/voucher/voucher.html");
-        session.setAttribute("active", "/voucher");
+        model.addAttribute("pageView", "/admin/page/voucher/voucher.html");
+        model.addAttribute("active", "/voucher/list");
         model.addAttribute("listVoucher",this.voucherService.findAll());
         model.addAttribute("voucher",new Voucher());
         return "admin/layout";

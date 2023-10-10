@@ -14,13 +14,13 @@
     <div class="menu-inner-shadow"></div>
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li th:class="${#strings.equals(session.active,'/dashboard')?'menu-item active':'menu-item'}">
+        <li th:class="${#strings.equals(active,'/dashboard')?'menu-item active':'menu-item'}">
             <a th:href="@{/admin/dashboard}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
-        <li th:class="${#strings.equals(session.active,'/statistic')?'menu-item active':'menu-item'}">
+        <li th:class="${#strings.equals(active,'/statistic')?'menu-item active':'menu-item'}">
             <a th:href="@{/admin/statistic}" class="menu-link">
                 <i class=' menu-icon tf-icons bx bx-bar-chart-alt'></i>
                 <div data-i18n="Statistics">Statistic</div>
@@ -31,67 +31,67 @@
             <span class="menu-header-text">Management</span>
         </li>
 
-        <li th:class="${#strings.equals(session.active,'/product')?'menu-item active':'menu-item'}">
+        <li th:class="${#strings.equals(active,'/product')?'menu-item active':'menu-item'}">
             <a th:href="@{/admin/product}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-tv"></i>
                 <div data-i18n="order">Product</div>
             </a>
         </li>
-        <li th:class="${#strings.equals(session.active,'/staff')?'menu-item active':'menu-item'}">
+        <li th:class="${#strings.equals(active,'/staff')?'menu-item active':'menu-item'}">
             <a th:href="@{/admin/staff}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user-pin"></i>
                 <div data-i18n="order">Staff</div>
             </a>
         </li>
-        <li th:class="${#strings.contains(session.active,'/bill')?'menu-item active open':'menu-item'}">
+        <li th:class="${#strings.contains(active,'/bill')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-receipt"></i>
                 <div data-i18n="">Bill</div>
             </a>
             <ul class="menu-sub">
-                <li th:class="${#strings.equals(session.active,'/bill/list_bill')?'menu-item active':'menu-item'}">
+                <li th:class="${#strings.equals(active,'/bill/list_bill')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/bill/list_bill}" class="menu-link">
                         <div data-i18n="order">List bill</div>
                     </a>
                 </li>
-                <li th:class="${#strings.equals(session.active,'/bill/payment_method')?'menu-item active':'menu-item'}">
+                <li th:class="${#strings.equals(active,'/bill/payment_method')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/bill/payment_method}" class="menu-link">
                         <div data-i18n="order">Payment method</div>
                     </a>
                 </li>
             </ul>
         </li>
-        <li th:class="${#strings.contains(session.active,'customer')?'menu-item active open':'menu-item'}">
+        <li th:class="${#strings.contains(active,'customer')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-user-circle"></i>
                 <div data-i18n="Customer">Customer</div>
             </a>
             <ul class="menu-sub">
-                <li th:class="${#strings.equals(session.active,'/customer/list')?'menu-item active':'menu-item'}">
+                <li th:class="${#strings.equals(active,'/customer/list')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/customer/list}" class="menu-link">
                         <div data-i18n="list customer">List customer</div>
                     </a>
                 </li>
             </ul>
-        <li th:class="${#strings.contains(session.active,'voucher')?'menu-item active open':'menu-item'}">
+        <li th:class="${#strings.contains(active,'voucher')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-user-circle"></i>
                 <div data-i18n="Customer">Voucher</div>
             </a>
             <ul class="menu-sub">
-                <li th:class="${#strings.equals(session.active,'/voucher')?'menu-item active':'menu-item'}">
-                    <a th:href="@{/admin/voucher}" class="menu-link">
+                <li th:class="${#strings.equals(active,'/voucher/list')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/voucher/list}" class="menu-link">
                         <div data-i18n="list customer">List voucher</div>
                     </a>
                 </li>
-                <li th:class="${#strings.equals(session.active,'/voucherCustomer')?'menu-item active':'menu-item'}">
+                <li th:class="${#strings.equals(active,'/voucherCustomer')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/voucherCustomer}" class="menu-link">
                         <div data-i18n="chat">List voucher customer</div>
                     </a>
                 </li>
             </ul>
         </li>
-        <li th:class="${#strings.equals(session.active,'/blog')?'menu-item active':'menu-item'}">
+        <li th:class="${#strings.equals(active,'/blog')?'menu-item active':'menu-item'}">
             <a th:href="@{/admin/blog}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-receipt"></i>
                 <div data-i18n="Blog">Blog</div>

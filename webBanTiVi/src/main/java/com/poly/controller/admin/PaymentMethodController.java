@@ -21,8 +21,8 @@ public class PaymentMethodController {
     public String loadPaymentMethod(HttpSession session, Model model) {
         model.addAttribute("listPaymentMethod", paymentMethodService.getAll());
         model.addAttribute("paymentMethodAtt", new PaymentMethod());
-        session.setAttribute("pageView", "/admin/page/bill/payment_method.html");
-        session.setAttribute("active", "/bill/payment_method");
+        model.addAttribute("pageView", "/admin/page/bill/payment_method.html");
+        model.addAttribute("active", "/bill/payment_method");
         return "admin/layout";
     }
 

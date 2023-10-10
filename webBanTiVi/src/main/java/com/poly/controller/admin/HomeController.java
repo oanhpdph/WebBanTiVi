@@ -20,39 +20,39 @@ public class HomeController {
     ProductServiceImpl productService;
 
     @GetMapping("")
-    public String loadHome(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/statistic.html");
-        session.setAttribute("active", "/dashboard");
+    public String loadHome(HttpSession session,Model model) {
+        model.addAttribute("pageView", "/admin/page/statistic.html");
+        model.addAttribute("active", "/dashboard");
         return "admin/layout";
     }
 
     @GetMapping("/dashboard")
-    public String loadDashboard(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/dashboard/dashboard.html");
-        session.setAttribute("active", "/dashboard");
+    public String loadDashboard(HttpSession session,Model model) {
+        model.addAttribute("pageView", "/admin/page/dashboard/dashboard.html");
+        model.addAttribute("active", "/dashboard");
         return "admin/layout";
     }
 
     @GetMapping("/position")
-    public String loadPosition(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/position.html");
-        session.setAttribute("active", "/position");
+    public String loadPosition(HttpSession session,Model model) {
+        model.addAttribute("pageView", "/admin/page/position.html");
+        model.addAttribute("active", "/position");
         return "admin/layout";
     }
    //product
 
 
     @GetMapping("/statistic")
-    public String loadStatistic(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/statistic.html");
-        session.setAttribute("active", "/statistic");
+    public String loadStatistic(HttpSession session, Model model) {
+        model.addAttribute("pageView", "/admin/page/statistic.html");
+        model.addAttribute("active", "/statistic");
         return "admin/layout";
     }
 
     @GetMapping("/blog")
-    public String loadBlog(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/blog/blog.html");
-        session.setAttribute("active", "/blog");
+    public String loadBlog(HttpSession session, Model model) {
+        model.addAttribute("pageView", "/admin/page/blog/blog.html");
+        model.addAttribute("active", "/blog");
         return "admin/layout";
     }
 
