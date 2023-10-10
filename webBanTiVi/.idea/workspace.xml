@@ -5,108 +5,387 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/voucher/voucherAdd.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/voucher/voucherDetail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_4_11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_4_11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_5_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_15_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_15_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_15_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jdk8_2_15_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_datatype_jackson_datatype_jsr310_2_15_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_module_jackson_module_parameter_names_2_15_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_jayway_jsonpath_json_path_2_8_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_microsoft_sqlserver_mssql_jdbc_11_2_3_jre17.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_istack_istack_commons_runtime_4_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_zaxxer_HikariCP_5_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_micrometer_micrometer_commons_1_11_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_micrometer_micrometer_observation_1_11_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_smallrye_jandex_3_0_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_activation_jakarta_activation_api_2_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_annotation_jakarta_annotation_api_2_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_inject_jakarta_inject_api_2_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_persistence_jakarta_persistence_api_3_1_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_transaction_jakarta_transaction_api_2_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_xml_bind_jakarta_xml_bind_api_4_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_1_14_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_agent_1_14_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_accessors_smart_2_4_11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_json_smart_2_4_11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_antlr_antlr4_runtime_4_10_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_20_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_to_slf4j_2_20_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_10_1_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_10_1_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_10_1_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_9_20.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_assertj_assertj_core_3_24_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_attoparser_attoparser_2_0_7_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_eclipse_angus_angus_activation_2_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_jaxb_core_4_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_jaxb_runtime_4_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_glassfish_jaxb_txw2_4_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_common_hibernate_commons_annotations_6_0_6_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_orm_hibernate_core_6_2_9_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_5_3_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_5_9_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_9_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_9_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_params_5_9_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_9_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_9_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_core_5_3_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_junit_jupiter_5_3_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_objenesis_objenesis_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_9_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_projectlombok_lombok_1_18_30.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_skyscreamer_jsonassert_1_5_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_2_0_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_2_0_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_devtools_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_aop_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_data_jpa_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_json_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_thymeleaf_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_commons_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_jpa_3_1_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_6_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aspects_6_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_6_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_6_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_6_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_6_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jcl_6_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_6_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_orm_6_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_6_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_6_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_6_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_6_0_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_thymeleaf_3_1_2_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_thymeleaf_thymeleaf_spring6_3_1_2_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_unbescape_unbescape_1_1_6_RELEASE.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_xmlunit_xmlunit_core_2_9_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_33.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/common/SavePdf.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/common/SendEmail.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/config/ExportExcel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/config/MailConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/BrandController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/ColorController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/CouponController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/CouponProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/EvaluateController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/FeatureController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/ManufactureController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/PaymentMethodController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/ProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/ProductFeatureController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/ProductSupplierController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/ResolutionController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/SizeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/SupplierController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/TypeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/user/CartController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/user/CartProductController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Bill.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/BillProduct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/BillStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Brand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Cart.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/CartProduct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Color.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Coupon.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/CouponProduct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/DeliveryNotes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Feature.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/ImageEvaluate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/ImageProduct.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Manufacture.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Origin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/PaymentMethod.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/ProductFeature.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/ProductSupplier.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Resolution.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Size.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Supplier.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Type.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/idClass/BillProductId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/idClass/CartProductId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/idClass/CouponProductId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/idClass/ProductFeatureId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/idClass/ProductSupplierId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/BillProductRepos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/BillRepos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/BillStatusRepos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/BrandRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/CartProductRepos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/CartRepos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/ColorRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/CouponProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/CouponRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/DeliveryNotesRepos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/EvaluateRepos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/FeatureRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/ManufactureRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/PaymentMethodRepos.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/ProductFeatureRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/ProductRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/ProductSupplierRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/ResolutionRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/SizeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/SupplierRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/repository/TypeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/BillProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/BillService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/BillStatusService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/BrandService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/CartProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/CartService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/ColorService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/CouponProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/CouponService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/DeliveryNotesSevice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/EvaluateService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/FeatureService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/BPServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/BillImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/BillStatusImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/BrandServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/CPServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/CartSeviceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/ColorServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/CouponProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/CouponServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/DeliveryNotesImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/EvaluateServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/FeatureServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/ManufactureServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/PaymentMethodImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/ProductFeatureServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/ProductServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/ProductSupplierServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/ResolutionServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/SizeServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/SupplierServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/TypeServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/ManufactureService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/PaymentMethodService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/ProductFeatureService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/ProductSupplierService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/ResolutionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/SizeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/SupplierService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/TypeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/image/download.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/bill/payment_method.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/VoucherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/VoucherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebBanTiVi.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/BillController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/BillController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/entity/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/entity/Evaluate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Evaluate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/entity/Staff.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Staff.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/entity/Voucher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/Voucher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/entity/VoucherCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/VoucherCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/entity/idClass/VoucherCustomerId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/idClass/VoucherCustomerId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/StaffServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/StaffServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/service/StaffService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/StaffService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/avatars/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/avatars/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/avatars/6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/avatars/7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/avatars/default-avatar.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/backgrounds/18.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/12.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/13.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/17.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/18.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/19.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/20.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/elements/WIN_20230905_12_44_01_Pro.mp4" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/favicon/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/favicon/logobig6-03.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/brands/asana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/brands/behance.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/brands/dribbble.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/brands/facebook.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/brands/github.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/brands/google.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/brands/instagram.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/brands/mailchimp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/brands/slack.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/brands/twitter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/unicons/cc-primary.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/unicons/cc-success.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/unicons/cc-warning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/unicons/chart-success.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/unicons/chart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/unicons/paypal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/unicons/wallet-info.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/icons/unicons/wallet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/illustrations/girl-doing-yoga-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/illustrations/man-with-laptop-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/illustrations/page-misc-error-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/img.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/layouts/layout-container-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/layouts/layout-fluid-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/layouts/layout-without-menu-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/layouts/layout-without-navbar-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/img/logobig6-02.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/js/config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/js/dashboards-analytics.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/js/form-basic-inputs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/js/select2-plugin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/js/ui-popover.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/js/ui-toasts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/vendor/css/pages/page-account-settings.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/vendor/css/pages/page-auth.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/assets/vendor/css/pages/page-auth.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/vendor/css/pages/page-icons.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/assets/vendor/css/pages/page-misc.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/plugin/css/rank_customer_plugin.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/admin/plugin/css/select2-plugin.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/admin/plugin/css/select2-plugin.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/image/logobig6-01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/css/demo.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/avatars/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/avatars/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/avatars/6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/avatars/7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/backgrounds/18.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/elements/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/elements/11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/elements/12.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/elements/13.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/elements/17.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/elements/18.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/elements/19.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/elements/2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/elements/20.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/elements/3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/elements/4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/elements/5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/elements/7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/favicon/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/brands/asana.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/brands/behance.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/brands/dribbble.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/brands/facebook.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/brands/github.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/brands/google.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/brands/instagram.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/brands/mailchimp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/brands/slack.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/brands/twitter.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/unicons/cc-primary.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/unicons/cc-success.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/unicons/cc-warning.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/unicons/chart-success.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/unicons/chart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/unicons/paypal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/unicons/wallet-info.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/icons/unicons/wallet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/illustrations/girl-doing-yoga-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/illustrations/man-with-laptop-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/illustrations/page-misc-error-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/layouts/layout-container-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/layouts/layout-fluid-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/layouts/layout-without-menu-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/img/layouts/layout-without-navbar-light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/js/config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/js/dashboards-analytics.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/js/extended-ui-perfect-scrollbar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/js/form-basic-inputs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/js/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/js/pages-account-settings-account.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/js/ui-modals.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/js/ui-popover.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/js/ui-toasts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/css/core.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/css/pages/page-account-settings.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/css/pages/page-auth.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/css/pages/page-icons.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/css/pages/page-misc.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/css/theme-default.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/fonts/boxicons.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/fonts/boxicons/boxicons.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/fonts/boxicons/boxicons.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/fonts/boxicons/boxicons.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/fonts/boxicons/boxicons.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/fonts/boxicons/boxicons.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/js/bootstrap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/js/helpers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/js/menu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/libs/apex-charts/apex-charts.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/libs/apex-charts/apexcharts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/libs/highlight/highlight-github.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/libs/highlight/highlight.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/libs/highlight/highlight.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/libs/jquery/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/libs/masonry/masonry.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/login/assets/vendor/libs/popper/popper.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/about/about-us.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/about/team-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/about/team-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/about/team-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/about/team-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/about/testimonial-author.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/about/testimonial-pic.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/banner/banner-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/banner/banner-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/banner/banner-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/blog/blog-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/blog/blog-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/blog/blog-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/blog/blog-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/blog/blog-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/blog/blog-6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/blog/blog-7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/blog/blog-8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/blog/blog-9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/blog/details/blog-author.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/blog/details/blog-details.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/blog/details/thethanhvien.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/breadcrumb-bg.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/clients/client-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/clients/client-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/clients/client-3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/clients/client-4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/clients/client-5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/clients/client-6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/clients/client-7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/clients/client-8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/footer-logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/hero/hero-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/hero/hero-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/icon/calendar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/icon/cart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/icon/compare.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/icon/heart.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/icon/search.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/instagram/instagram-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/instagram/instagram-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/instagram/instagram-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/instagram/instagram-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/instagram/instagram-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/instagram/instagram-6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/payment.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product-sale.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-12.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-13.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-14.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/product/product-9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/shop-details/details-payment.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/shop-details/product-big-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/shop-details/product-big-3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/shop-details/product-big-4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/shop-details/product-big.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/shop-details/thumb-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/shop-details/thumb-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/shop-details/thumb-3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/shop-details/thumb-4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/shopping-cart/cart-1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/shopping-cart/cart-2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/shopping-cart/cart-3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/img/shopping-cart/cart-4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_about.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_base.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_blog-details.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_blog-sidebar.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_blog.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_breadcrumb.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_checkout.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_contact.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_footer.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_header.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_hero.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_home-page.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_mixins.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_product.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_responsive.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_shop-details.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_shop.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_shopping-cart.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/_variable.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/user/sass/style.scss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/layout/_sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/layout/_sidebar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/page/customer/customer.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/customer/customer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/page/order/order.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/bill/bill.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/page/order/order_detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/bill/bill_detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/page/staff.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/staff.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/page/voucher/voucher.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/voucher/voucher.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/page/voucher/voucherAdd.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/voucher/voucherAdd.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/page/voucher/voucherDetail.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/voucher/voucherDetail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login/page/forgot-password.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/login/forgot-password.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login/page/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/login/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login/page/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/login/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/user/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/user/layout.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,6 +454,19 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WebBanTiViApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="WebBanTiVi" />
       <extension name="coverage">
@@ -227,6 +519,7 @@
       <workItem from="1696823719872" duration="93000" />
       <workItem from="1696863892932" duration="82000" />
       <workItem from="1696864149600" duration="3602000" />
+      <workItem from="1696947527880" duration="766000" />
     </task>
     <servers />
   </component>

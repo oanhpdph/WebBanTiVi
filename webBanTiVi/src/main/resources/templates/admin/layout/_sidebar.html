@@ -43,11 +43,25 @@
                 <div data-i18n="order">Staff</div>
             </a>
         </li>
-        <li th:class="${#strings.equals(session.active,'/order')?'menu-item active':'menu-item'}">
-            <a th:href="@{/admin/order}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-receipt"></i>
-                <div data-i18n="order">Order</div>
+        <li th:class="${#strings.contains(session.active,'/bill')?'menu-item active open':'menu-item'}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                <div data-i18n="">Bill</div>
             </a>
+            <ul class="menu-sub">
+                <li th:class="${#strings.equals(session.active,'/bill/list_bill')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/bill/list_bill}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-receipt"></i>
+                        <div data-i18n="order">List bill</div>
+                    </a>
+                </li>
+                <li th:class="${#strings.equals(session.active,'/bill/payment_method')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/bill/payment_method}" class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-receipt"></i>
+                        <div data-i18n="order">Payment method</div>
+                    </a>
+                </li>
+            </ul>
         </li>
         <li th:class="${#strings.contains(session.active,'customer')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">

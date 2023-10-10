@@ -1,29 +1,23 @@
 package com.poly.controller.admin;
 
-import com.poly.entity.Customer;
-import com.poly.entity.Staff;
-import com.poly.entity.Voucher;
-import com.poly.entity.VoucherCustomer;
-import com.poly.service.CustomerService;
-import com.poly.service.StaffService;
-import com.poly.service.VoucherCustomerService;
-import com.poly.service.VoucherService;
+import com.poly.service.Impl.BillImpl;
+import com.poly.service.Impl.ProductServiceImpl;
+import com.poly.service.Impl.StaffServiceImpl;
 import jakarta.servlet.http.HttpSession;
-//import jakarta.validation.Valid;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 @Controller
 @RequestMapping("/admin")
 public class HomeController {
 
+    @Autowired
+    StaffServiceImpl staffService;
+
+    @Autowired
+    ProductServiceImpl productService;
 
     @GetMapping("")
     public String loadHome(HttpSession session) {
@@ -39,30 +33,18 @@ public class HomeController {
         return "admin/layout";
     }
 
-    @GetMapping("/order")
-    public String loadBill(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/order/order.html");
-        session.setAttribute("active", "/order");
-        return "admin/layout";
-    }
-
-    @GetMapping("/direct_sales")
-    public String loadDirectSales(HttpSession session) {
-        session.setAttribute("pageView", "/admin/page/direct_sales/directSales.html");
-        return "admin/page/direct_sales/directSales";
-    }
-
-
     @GetMapping("/position")
     public String loadPosition(HttpSession session) {
         session.setAttribute("pageView", "/admin/page/position.html");
         session.setAttribute("active", "/position");
         return "admin/layout";
     }
-
+   //product
     @GetMapping("/product")
-    public String loadProduct(HttpSession session) {
+    public String loadProduct(HttpSession session,Model model) {
         session.setAttribute("pageView", "/admin/page/product/product.html");
+        session.setAttribute("active","/product");
+        model.addAttribute("listsp",productService.findAll());
         session.setAttribute("active", "/product");
         return "admin/layout";
     }
@@ -80,7 +62,5 @@ public class HomeController {
         session.setAttribute("active", "/blog");
         return "admin/layout";
     }
-
-
 
 }

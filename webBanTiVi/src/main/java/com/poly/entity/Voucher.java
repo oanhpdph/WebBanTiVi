@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name="voucher")
@@ -18,46 +19,38 @@ public class Voucher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
     private Integer id;
 
     @Column(name="code")
     private String code;
 
     @Column(name="name_voucher")
-    private String name_voucher;
+    private String nameVoucher;
 
     @Column(name="value")
     private int value;
 
     @Column(name="reduced_form")
-    private double reduced_form;
+    private boolean reducedForm;
 
     @Column(name="minimum_value")
-    private double minimum_value;
-
+    private BigDecimal minimumValue;
 
     @Column(name="maximum_discount")
-    private double maximum_discount;
+    private BigDecimal maximumDiscount;
 
     @Column(name="quantity")
-    private int quantity;
+    private Integer quantity;
 
-    @Column(name="start_day")
-    private Date start_day;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "start_day")
+    private Date startDay;
 
-    @Column(name="expiration_date")
-    private Date exDate;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "expiration_date")
+    private Date expirationDate;
 
     @Column(name="active")
-    private boolean active;
-
-    @Column(name="image")
-    private String image;
-
-    @Column(name="banner")
-    private String banner;
-
-
+    private Boolean active;
 
 }

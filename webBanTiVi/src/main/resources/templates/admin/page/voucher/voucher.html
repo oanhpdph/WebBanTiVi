@@ -157,12 +157,12 @@
                     <td th:text="${voucher.code}"></td>
                     <td th:text="${voucher.name_voucher}"></td>
                     <td th:text="${voucher.value}"></td>
-                    <td th:text="${voucher.reduced_form}"></td>
-                    <td th:text="${voucher.minimum_value}"></td>
-                    <td th:text="${voucher.maximum_discount}"></td>
+                    <td th:text="${voucher.reducedForm}"></td>
+                    <td th:text="${voucher.minimumValue}"></td>
+                    <td th:text="${voucher.maximumDiscount}"></td>
                     <td th:text="${voucher.quantity}"></td>
-                    <td th:text="${voucher.start_day}"></td>
-                    <td th:text="${voucher.exDate}"></td>
+                    <td th:text="${voucher.startDay}"></td>
+                    <td th:text="${voucher.expirationDate}"></td>
                     <td>
                         <span th:if="${voucher.active} == true" th:text="Active"/>
                         <span th:if="${voucher.active} == false" th:text="ChưaActive"/>
