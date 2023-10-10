@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "bill")
@@ -44,4 +45,7 @@ public class Bill {
 
     @Column(name="note")
     private String note;
+
+    @OneToMany(mappedBy = "bill")
+    private List<BillProduct> billProducts;
 }

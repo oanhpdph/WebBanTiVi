@@ -1,12 +1,18 @@
 package com.poly.service.Impl;
 
+import com.poly.dto.BillDto;
 import com.poly.entity.Bill;
 import com.poly.repository.BillRepos;
 import com.poly.service.BillService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -14,9 +20,42 @@ public class BillImpl implements BillService {
     @Autowired
     private BillRepos billRepos;
 
+    private BillDto billDto = new BillDto();
+
     @Override
-    public List<Bill> getALl() {
-        return billRepos.findAll();
+    public Page<Bill> getPagination(Integer pageRequest, Integer sizeRequest) {
+        Pageable pageable = PageRequest.of(pageRequest, sizeRequest);
+        Page<Bill> pagination = billRepos.findAll(pageable);
+        return pagination;
+    }
+
+    @Override
+    public List<BillDto> getALlDto(Integer pageRequest, Integer sizeRequest) {
+        Pageable pageable = PageRequest.of(pageRequest - 1, sizeRequest);
+        List<BillDto> listDto = new ArrayList<>();
+        for (Map<String, Object> map : billRepos.selectListBill(pageable)) {
+            listDto.add(billDto.getDto(map));
+        }
+        return listDto;
+    }
+
+    @Override
+    public List<BillDto> search(String data, Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        List<BillDto> listDto = new ArrayList<>();
+        for (Map<String, Object> map : billRepos.search(data,pageable)) {
+            listDto.add(billDto.getDto(map));
+        }
+        return listDto;
+    }
+
+    @Override
+    public Integer getPage(Integer sizeList, Integer pageSize) {
+        float page= (float) sizeList / pageSize;
+        if(page>(int) page){
+            return (int)page+1;
+        }
+        return (int) page;
     }
 
     @Override
@@ -61,7 +100,7 @@ public class BillImpl implements BillService {
     @Override
     public Bill getOneByIdCustomer(Integer idCustomer) {
         Optional<Bill> optional = billRepos.getBillByCustomer(idCustomer);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             return optional.get();
         }
         return null;

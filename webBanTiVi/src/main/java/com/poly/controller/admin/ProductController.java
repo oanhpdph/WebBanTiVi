@@ -12,22 +12,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/admin")
 public class ProductController {
     @Autowired
     ProductServiceImpl productService;
-    @RequestMapping("/admin/product/save")
+    @RequestMapping("/product/save")
     public String saveProduct(Model model, @ModelAttribute("item")Product product) {
         productService.save(product);
         return "admin/product";
     }
-    @RequestMapping("/admin/product/delete/{id}")
+    @RequestMapping("/product/delete/{id}")
     public String deleteProduct(Model model,@PathVariable("id")Integer id) {
         productService.delete(id);
         return "admin/product";
     }
-    @RequestMapping("/admin/product/edit/{id}")
+    @RequestMapping("/product/edit/{id}")
     public String editProduct(Model model,@PathVariable("id")Integer id) {
         productService.findById(id);
         return "admin/product";
+    }
+    @GetMapping("/product")
+    public String loadProduct(HttpSession session,Model model) {
+        session.setAttribute("pageView", "/admin/page/product/product.html");
+        session.setAttribute("active","/product");
+        model.addAttribute("listsp",productService.findAll());
+        return "admin/layout";
     }
 }

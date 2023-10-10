@@ -20,44 +20,37 @@ public class HomeController {
     ProductServiceImpl productService;
 
     @GetMapping("")
-    public String loadHome(HttpSession session) {
+    public String loadHome(HttpSession session,Model model) {
         session.setAttribute("pageView", "/admin/page/statistic.html");
         session.setAttribute("active", "/dashboard");
         return "admin/layout";
     }
 
     @GetMapping("/dashboard")
-    public String loadDashboard(HttpSession session) {
+    public String loadDashboard(HttpSession session,Model model) {
         session.setAttribute("pageView", "/admin/page/dashboard/dashboard.html");
         session.setAttribute("active", "/dashboard");
         return "admin/layout";
     }
 
     @GetMapping("/position")
-    public String loadPosition(HttpSession session) {
+    public String loadPosition(HttpSession session,Model model) {
         session.setAttribute("pageView", "/admin/page/position.html");
         session.setAttribute("active", "/position");
         return "admin/layout";
     }
    //product
-    @GetMapping("/product")
-    public String loadProduct(HttpSession session,Model model) {
-        session.setAttribute("pageView", "/admin/page/product/product.html");
-        session.setAttribute("active","/product");
-        model.addAttribute("listsp",productService.findAll());
-        session.setAttribute("active", "/product");
-        return "admin/layout";
-    }
+
 
     @GetMapping("/statistic")
-    public String loadStatistic(HttpSession session) {
+    public String loadStatistic(HttpSession session, Model model) {
         session.setAttribute("pageView", "/admin/page/statistic.html");
         session.setAttribute("active", "/statistic");
         return "admin/layout";
     }
 
     @GetMapping("/blog")
-    public String loadBlog(HttpSession session) {
+    public String loadBlog(HttpSession session, Model model) {
         session.setAttribute("pageView", "/admin/page/blog/blog.html");
         session.setAttribute("active", "/blog");
         return "admin/layout";

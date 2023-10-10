@@ -27,7 +27,7 @@ public class PaymentMethodImpl implements PaymentMethodService {
 
     @Override
     public PaymentMethod update(PaymentMethod paymentMethod, Integer id) {
-        Optional<PaymentMethod> optional = getOne(id);
+        Optional<PaymentMethod> optional= paymentMethodRepos.findById(id);
         if (optional.isPresent()) {
             PaymentMethod paymentMethod1 = optional.get();
             paymentMethod1.setActive(paymentMethod.getActive());
@@ -40,7 +40,7 @@ public class PaymentMethodImpl implements PaymentMethodService {
 
     @Override
     public Boolean delete(Integer id) {
-        Optional<PaymentMethod> optional = getOne(id);
+        Optional<PaymentMethod> optional= paymentMethodRepos.findById(id);
         if (optional.isPresent()) {
             paymentMethodRepos.delete(optional.get());
             return true;
@@ -49,8 +49,11 @@ public class PaymentMethodImpl implements PaymentMethodService {
     }
 
     @Override
-    public Optional<PaymentMethod> getOne(Integer id) {
+    public PaymentMethod getOne(Integer id) {
         Optional<PaymentMethod> optional= paymentMethodRepos.findById(id);
-        return optional;
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        return null;
     }
 }

@@ -61,3 +61,4 @@ public class Customer {
     private List<Bill> listBill;
 
 }
+

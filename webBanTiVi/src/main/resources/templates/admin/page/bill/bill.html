@@ -1,22 +1,25 @@
-
+<html xmlns:th="http://www.thymeleaf.org">
 <h4 class="fw-bold py-3 mb-4">List bill</h4>
 <div class="card">
     <div class="card-header">
-        <form class="col-12 mt-2">
+        <form class="col-12 mt-2" th:action="@{/admin/bill/list_bill}" method="post" th:object="${search}">
             <div class="col-12 row">
                 <div class="col-7">
                     <div class="form-check input-group input-group-merge">
                     <span class="input-group-text">
                         <i class="bx bx-search"></i>
                     </span>
-                        <input type="text" class="form-control" placeholder="Search order code, name, phone number">
-                        <button class="btn btn-primary" type="button">Search</button>
+                        <input type="text" class="form-control" placeholder="Search order code, name, phone number"
+                               name="keyword">
+                        <a th:href="@{/admin/bill/list_bill/search}">
+                            <button class="btn btn-primary" type="button">Search</button>
+                        </a>
                     </div>
                 </div>
                 <div class="col-1">
-                    <button class="btn btn-warning" data-bs-toggle="tooltip" data-bs-offset="0,4"
+                    <button class="btn btn-warning" data-bs-offset="0,4"
                             data-bs-placement="bottom" data-bs-html="true" title=""
-                            data-bs-original-title="<span>Reset filter</span>" aria-describedby="tooltip91262">
+                            data-bs-original-title="<span>Reset filter</span>" type="reset">
                         <i class='bx bx-reset'></i>
                     </button>
                 </div>
@@ -26,7 +29,7 @@
                     <div class="input-group form-check">
                         <div class="input-group input-group-merge input">
                             <label for="date-seach-order" class="input-group-text">Select date:</label>
-                            <input type="text" class="form-control" id="date-seach-order">
+                            <input type="text" class="form-control" id="date-seach-order" name="date">
                         </div>
                     </div>
                 </div>
@@ -36,7 +39,7 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-2 d-flex align-items-center">
-                <span><b class="text-danger">3</b>  Hóa đơn</span>
+                <span><b class="text-danger">[(${totalElement})]</b>  Hóa đơn</span>
             </div>
             <div class="col-md-10 text-end">
                 <div class="btn-group" role="group" aria-label="First group">
@@ -49,113 +52,120 @@
             </div>
         </div>
         <hr>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Code bill</th>
-                <th>Name</th>
-                <th>Total price</th>
-                <th><select class="form-select select2">
-                    <optgroup label="Source">
-                        <option selected>All</option>
-                        <option>Web</option>
-                        <option>Store</option>
-                    </optgroup>
-                </select></th>
-                <th>Time create</th>
-                <th><select class="form-select select2">
-                    <optgroup label="Pay">
-                        <option selected>All</option>
-                        <option>Paid</option>
-                        <option>Unpaid</option>
-                        <option>Refunded</option>
-                    </optgroup>
-                </select></th>
-                <th><select class="form-select select2 overflow-hidden" style="width: 100%">
-                    <optgroup label="Trạng thái đơn hàng">
-                        <option>Tất cả</option>
-                        <option>Chờ xử lý</option>
-                        <option selected>Đang chuẩn bị hàng</option>
-                        <option>Hết hàng</option>
-                        <option>Đang giao hàng</option>
-                        <option>Lỗi giao hàng</option>
-                        <option>Đã hoàn thành</option>
-                        <option>Shop hủy</option>
-                        <option>Khách hủy</option>
-                        <option>Yêu cầu trả hàng</option>
-                        <option>Chờ trả hàng</option>
-                        <option>Đã trả hàng</option>
-                    </optgroup>
-                </select>
-                </th>
-            </tr>
-            </thead>
-            <tbody class="table-border-bottom-0">
-            <tr onclick="oncl(5)">
-                <td>
-                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                        <strong>1</strong></button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                    </div>
-                </td>
-                <td>098738</td>
-                <td class="text-nowrap">
-                    Phạm Đức Oanh
-                </td>
-                <td>1000000<u>đ</u></td>
-                <td>Web</td>
-                <td>02/09/2023 12:12</td>
-                <td>Paid</td>
-                <td style="white-space: pre-wrap">Đang chuẩn bị hàng</td>
-            </tr>
-            </tbody>
-        </table>
-        <hr class="card-separator">
+        <div class="overflow-auto">
+            <table class="table table-hover overflow-hidden">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Code bill</th>
+                    <th>Name</th>
+                    <th>Total price</th>
+                    <!--                <th><select class="form-select select2">-->
+                    <!--                    <optgroup label="Source">-->
+                    <!--                        <option selected>All</option>-->
+                    <!--                        <option>Web</option>-->
+                    <!--                        <option>Store</option>-->
+                    <!--                    </optgroup>-->
+                    <!--                </select></th>-->
+                    <th>Time create</th>
+                    <th><select class="form-select select2">
+                        <optgroup label="Pay">
+                            <option selected>All</option>
+                            <option>Paid</option>
+                            <option>Unpaid</option>
+                            <option>Refunded</option>
+                        </optgroup>
+                    </select></th>
+                    <th><select class="form-select select2 overflow-hidden" style="width: 100%">
+                        <optgroup label="Trạng thái đơn hàng">
+                            <option>Tất cả</option>
+                            <option>Chờ xử lý</option>
+                            <option selected>Đang chuẩn bị hàng</option>
+                            <option>Hết hàng</option>
+                            <option>Đang giao hàng</option>
+                            <option>Lỗi giao hàng</option>
+                            <option>Đã hoàn thành</option>
+                            <option>Shop hủy</option>
+                            <option>Khách hủy</option>
+                            <option>Yêu cầu trả hàng</option>
+                            <option>Chờ trả hàng</option>
+                            <option>Đã trả hàng</option>
+                        </optgroup>
+                    </select>
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                <tr th:each="listBill,billStat: ${listBill}" th:onclick="|oncl(${listBill.id})|">
+                    <td>
+                        <strong>[(${billStat.index+1})]</strong>
+                    </td>
+                    <td>[(${listBill.code})]</td>
+                    <td class="text-nowrap">
+                        [(${listBill.customer})]
+                    </td>
+                    <td> [(${listBill.totalPrice})]<u>đ</u></td>
+                    <td>[(${listBill.createDate})]</td>
+                    <td>Paid</td>
+                    <td style="white-space: pre-wrap">[(${listBill.status})]</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="card-footer">
         <div class="d-inline-flex float-end">
             <div class="mx-3 row" style="width: 180px">
                 <label for="select-view" class="col-form-label col-5 text-end">View:</label>
                 <div class="col-7">
-                    <select class="form-select text-start" id="select-view">
-                        <option>10</option>
-                        <option>20</option>
-                        <option>40</option>
-                        <option>80</option>
+                    <select class="form-select text-start" id="select-view"
+                            th:onchange="|changeSize(${session.page});|">
+                        <option value="1" th:selected="${session.size == 1}">10</option>
+                        <option value="2" th:selected="${session.size == 2}">20</option>
+                        <option value="40" th:selected="${session.size == 40}">40</option>
+                        <option value="80" th:selected="${session.size == 80}">80</option>
                     </select>
                 </div>
             </div>
             <div aria-label="Page pagination">
                 <ul class="pagination">
                     <li class="page-item first">
-                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                        <a class="page-link" c><i class="tf-icon bx bx-chevrons-left"></i></a>
                     </li>
                     <li class="page-item prev">
-                        <a class="page-link" href="javascript:void(0);"><i
+                        <a class="page-link"
+                           th:href="@{'/admin/bill/list_bill?page='+${session.page==1? '1': session.page - 1}+'&size='+${session.size}}"><i
                                 class="tf-icon bx bx-chevron-left"></i></a>
                     </li>
-                    <li class="page-item">
-                        <a class="page-link" href="javascript:void(0);">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="javascript:void(0);">2</a>
+                    <li class="page-item" th:each="pagination:${#numbers.sequence(1,totalPage)}">
+                        <a class="page-link"
+                           th:href="@{'/admin/bill/list_bill?page='+${pagination}+'&size='+${session.size}}"
+                           th:text="${pagination}"></a>
                     </li>
                     <li class="page-item next">
-                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                        <a class="page-link"
+                           th:href="@{'/admin/bill/list_bill?page='+${session.page < totalPage ? session.page + 1 : totalPage }+'&size='+${session.size}}"><i
+                                class="tf-icon bx bx-chevron-right"></i></a>
                     </li>
                     <li class="page-item last">
-                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                        <a class="page-link"
+                           th:href="@{'/admin/bill/list_bill?page='+${totalPage}+'&size='+${session.size}}"><i
+                                class="tf-icon bx bx-chevrons-right"></i></a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
+</html>
 <script>
     function oncl(id) {
         window.location.href = "http://localhost:8080/admin/bill_detail/" + id
+    }
+
+    function changeSize(page) {
+        var size = document.getElementById("select-view")
+        console.log(size.value)
+        window.location.href = "http://localhost:8080/admin/bill/list_bill?size=" + size.value + '&page=' + page
     }
 </script>

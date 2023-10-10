@@ -20,6 +20,7 @@ public class ProductFeature {
     @JoinColumn(name="id_feature")
     private Feature feature;
 
+    @Id
     @ManyToOne
     @JoinColumn(name="id_product")
     private Product product;
