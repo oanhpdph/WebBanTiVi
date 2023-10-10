@@ -25,19 +25,19 @@ public class Voucher {
     private String code;
 
     @Column(name="name_voucher")
-    private String name_voucher;
+    private String nameVoucher;
 
     @Column(name="value")
     private int value;
 
     @Column(name="reduced_form")
-    private boolean reduced_form;
+    private boolean reducedForm;
 
     @Column(name="minimum_value")
-    private BigDecimal minimum_value;
+    private BigDecimal minimumValue;
 
     @Column(name="maximum_discount")
-    private BigDecimal maximum_discount;
+    private BigDecimal maximumDiscount;
 
     @Column(name="quantity")
     private Integer quantity;
