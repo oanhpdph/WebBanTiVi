@@ -73,6 +73,20 @@
                     </a>
                 </li>
             </ul>
+        </li>
+        <li th:class="${#strings.contains(session.active,'evaluate')?'menu-item active open':'menu-item'}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                <div data-i18n="Customer">Evaluate</div>
+            </a>
+            <ul class="menu-sub">
+                <li th:class="${#strings.equals(session.active,'/evaluate/list')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/evaluate/list}" class="menu-link">
+                        <div data-i18n="list customer">List evalute</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li th:class="${#strings.contains(session.active,'voucher')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-user-circle"></i>
