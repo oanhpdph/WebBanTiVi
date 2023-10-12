@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "evaluate")
@@ -27,7 +27,7 @@ public class Evaluate {
     @JoinColumn(name="id_customer")
     private Customer customer;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name="date_create")
     private Date dateCreate;
 
