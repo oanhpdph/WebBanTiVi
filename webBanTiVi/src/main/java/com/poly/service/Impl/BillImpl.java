@@ -1,6 +1,5 @@
 package com.poly.service.Impl;
 
-import com.poly.dto.BillDto;
 import com.poly.entity.Bill;
 import com.poly.repository.BillRepos;
 import com.poly.service.BillService;
@@ -10,9 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.Optional;
 
 @Service
@@ -20,7 +19,6 @@ public class BillImpl implements BillService {
     @Autowired
     private BillRepos billRepos;
 
-    private BillDto billDto = new BillDto();
 
     @Override
     public Page<Bill> getPagination(Integer pageRequest, Integer sizeRequest) {
@@ -29,31 +27,34 @@ public class BillImpl implements BillService {
         return pagination;
     }
 
-    @Override
-    public List<BillDto> getALlDto(Integer pageRequest, Integer sizeRequest) {
-        Pageable pageable = PageRequest.of(pageRequest - 1, sizeRequest);
-        List<BillDto> listDto = new ArrayList<>();
-        for (Map<String, Object> map : billRepos.selectListBill(pageable)) {
-            listDto.add(billDto.getDto(map));
-        }
-        return listDto;
-    }
 
     @Override
-    public List<BillDto> search(String data, Integer page, Integer size) {
+    public Page<Bill> search(String data, String date, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page - 1, size);
-        List<BillDto> listDto = new ArrayList<>();
-        for (Map<String, Object> map : billRepos.search(data,pageable)) {
-            listDto.add(billDto.getDto(map));
+        System.out.println(date);
+        Page<Bill> pagination = null;
+        if ("".equals(date)) {
+            pagination = billRepos.searchByKey(data, pageable);
+            return pagination;
         }
-        return listDto;
+        String date1 = date.substring(0, date.indexOf("-") - 1).replace("/", "-");
+        String date2 = date.substring(date.indexOf("-") + 1, date.length()).replace("/", "-");
+        System.out.println(date1 + date2);
+        Date dateStart = Date.valueOf(date1.trim());
+        Date dateEnd = Date.valueOf(date2.trim());
+        if ("".equals(data)) {
+            pagination = billRepos.searchByDate(dateStart, dateEnd, pageable);
+            return pagination;
+        }
+        pagination = billRepos.searchByKeyandDate(data, dateStart, dateEnd, pageable);
+        return pagination;
     }
 
     @Override
     public Integer getPage(Integer sizeList, Integer pageSize) {
-        float page= (float) sizeList / pageSize;
-        if(page>(int) page){
-            return (int)page+1;
+        float page = (float) sizeList / pageSize;
+        if (page > (int) page) {
+            return (int) page + 1;
         }
         return (int) page;
     }

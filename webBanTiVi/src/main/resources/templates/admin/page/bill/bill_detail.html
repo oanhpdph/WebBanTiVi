@@ -2,9 +2,11 @@
     <div class="row">
         <h3 class="page-title col-5">Order details</h3>
         <div class="col-7 text-end">
-            <button type="button" class="btn btn-primary col-3" onclick="history.back()">
-                <span class="tf-icons bx bx-arrow-back mx-1"></span>Go back
-            </button>
+            <a th:href="@{/admin/bill/list_bill}">
+                <button type="button" class="btn btn-primary col-3">
+                    <span class="tf-icons bx bx-arrow-back mx-1"></span>Go back
+                </button>
+            </a>
             <button type="button" class="btn btn-danger col-3">
                 <span class="tf-icons bx bx-printer mx-1"></span>Print bill
             </button>

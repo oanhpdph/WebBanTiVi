@@ -1,71 +1,52 @@
 package com.poly.common;
 
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Service;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.stream.Stream;
 
+import java.io.IOException;
+
+@Service
 public class SavePdf {
 
-    public void savePdf() {
-        Document document = new Document();
 
-        // Sử dụng JFileChooser để cho phép người dùng chọn nơi lưu tệp PDF
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("File (*.pdf)", "pdf"));
-        int userChoice = fileChooser.showSaveDialog(null);
-        if (userChoice == JFileChooser.APPROVE_OPTION) {
-            // Lấy đường dẫn và tên tệp mà người dùng đã chọn
-            File selectedFile = fileChooser.getSelectedFile();
-            String fileName = selectedFile.getName();
-            String pdfFilePath;
-            if (!fileName.endsWith(".pdf")) {
-                 pdfFilePath = selectedFile.getAbsolutePath() + ".pdf";
-            } else {
-                 pdfFilePath = selectedFile.getAbsolutePath();
-            }
-            try {
-                // Tạo một đối tượng PdfWriter để viết tài liệu vào tệp PDF
-                PdfWriter.getInstance(document, new FileOutputStream(pdfFilePath));
+    public void savePdf(HttpServletResponse response) throws IOException {
+        // Tạo đối tượng tài liệu
+        // Tạo một tệp PDF mới
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=example.pdf");
+        PdfDocument pdfDoc = new PdfDocument(new PdfWriter(response.getOutputStream()));
 
-                // Mở tài liệu để viết
-                document.open();
-                PdfPTable table = new PdfPTable(3);
-                addTableHeader(table);
-                addRows(table);
-                document.add(table);
-                // Đóng tài liệu
-                document.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if (userChoice == JFileChooser.CANCEL_OPTION) {
-            System.out.println("Người dùng đã hủy lựa chọn.");
-        }
+        // Tạo một trang và tài liệu
+        Document document = new Document(pdfDoc);
+
+        // Thêm nội dung vào tài liệu
+        document.add(new Paragraph("Hello, this is a sample PDF document created with iText."));
+
+        // Đóng tài liệu
+        document.close();
     }
-    private void addTableHeader(PdfPTable table) {
-        Stream.of("column header 1", "column header 2", "column header 3")
-                .forEach(columnTitle -> {
-                    PdfPCell header = new PdfPCell();
-                    header.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                    header.setBorderWidth(2);
-                    header.setPhrase(new Phrase(columnTitle));
-                    table.addCell(header);
-                });
-    }
-    private void addRows(PdfPTable table) {
-        table.addCell("Phạm đức Oanh");
-        table.addCell("Bùi Huyền");
-        table.addCell("row 1, col 3");
-    }
+
+//    private void addTableHeader(PdfPTable table) {
+//        Stream.of("column header 1", "column header 2", "column header 3")
+//                .forEach(columnTitle -> {
+//                    PdfPCell header = new PdfPCell();
+//                    header.setBackgroundColor(BaseColor.LIGHT_GRAY);
+//                    header.setBorderWidth(2);
+//                    header.setPhrase(new Phrase(columnTitle));
+//                    table.addCell(header);
+//                });
+//    }
+//
+//    private void addRows(PdfPTable table) {
+//        table.addCell("Phạm đức Oanh");
+//        table.addCell("Bùi Huyền");
+//        table.addCell("row 1, col 3");
+//    }
 
 
 }
