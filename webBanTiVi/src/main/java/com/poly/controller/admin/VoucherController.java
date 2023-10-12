@@ -25,7 +25,6 @@ public class VoucherController {
         session.setAttribute("pageView", "/admin/page/voucher/voucher.html");
         session.setAttribute("active", "/voucher/list");
         model.addAttribute("listVoucher",this.voucherService.findAll());
-        model.addAttribute("voucher",new Voucher());
         return "admin/layout";
     }
     @PostMapping("/voucher/add")
@@ -40,10 +39,11 @@ public class VoucherController {
     }
 
     @GetMapping("/voucher/edit/{id}")
-    public String showVoucher(@PathVariable("id") Integer id, Model model) {
+    public String showVoucher(HttpSession session,@PathVariable("id") Integer id, Model model) {
+        session.setAttribute("pageView", "/admin/page/voucher/voucherDetail.html");
+        session.setAttribute("active", "/voucher");
         Voucher voucher = this.voucherService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-
         model.addAttribute("voucher", voucher);
         model.addAttribute("listVoucher", this.voucherService.findAll());
         return "admin/layout";
@@ -65,5 +65,12 @@ public class VoucherController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         this.voucherService.delete(id);
         return "redirect:/admin/voucher";
+    }
+    @RequestMapping("/voucher/viewadd")
+    public String viewAdd(HttpSession session,Model model){
+        session.setAttribute("pageView", "/admin/page/voucher/voucherAdd.html");
+        session.setAttribute("active", "/voucher");
+        model.addAttribute("voucher", new Voucher());
+       return "admin/layout";
     }
 }

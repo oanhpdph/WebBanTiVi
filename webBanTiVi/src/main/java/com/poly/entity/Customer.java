@@ -45,7 +45,7 @@ public class Customer {
     private boolean gender;
 
     @Column(name="id_card")
-    private String id_card;
+    private String idCard;
 
     @Column(name="avatar")
     private String avatar;
@@ -57,3 +57,4 @@ public class Customer {
     private List<Bill> listBill;
 
 }
+
