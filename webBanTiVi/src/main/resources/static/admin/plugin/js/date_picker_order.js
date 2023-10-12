@@ -16,9 +16,9 @@ $('#date-seach-order').daterangepicker({
         'Last 30 Days': [moment().subtract(29, 'days'), moment()]
     },
 });
-$('input[id="date-seach-order"]').on('cancel.daterangepicker', function(ev, picker) {
-    $(this).val("");
-});
+// $('input[id="date-seach-order"]').on('cancel.daterangepicker', function(ev, picker) {
+//     $(this).val("MM/dd/yyyy"-"MM/dd/yyyy");
+// });
 $('input[id="date-seach-order"]').on('apply.daterangepicker', function(ev, picker) {
-    $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+    $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
 });

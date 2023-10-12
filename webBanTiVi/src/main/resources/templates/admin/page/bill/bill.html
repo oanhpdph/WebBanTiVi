@@ -10,16 +10,14 @@
                         <i class="bx bx-search"></i>
                     </span>
                         <input type="text" class="form-control" placeholder="Search order code, name, phone number"
-                               name="keyword">
-                        <a th:href="@{/admin/bill/list_bill/search}">
-                            <button class="btn btn-primary" type="button">Search</button>
-                        </a>
+                               th:name="key" id="key" th:field="*{key}" autocomplete="off">
+                        <button class="btn btn-primary" type="submit" id="search">Search</button>
                     </div>
                 </div>
                 <div class="col-1">
                     <button class="btn btn-warning" data-bs-offset="0,4"
                             data-bs-placement="bottom" data-bs-html="true" title=""
-                            data-bs-original-title="<span>Reset filter</span>" type="reset">
+                            data-bs-original-title="<span>Reset filter</span>" type="button" id="reset">
                         <i class='bx bx-reset'></i>
                     </button>
                 </div>
@@ -29,7 +27,8 @@
                     <div class="input-group form-check">
                         <div class="input-group input-group-merge input">
                             <label for="date-seach-order" class="input-group-text">Select date:</label>
-                            <input type="text" class="form-control" id="date-seach-order" name="date">
+                            <input type="text" class="form-control" id="date-seach-order" name="date" th:field="*{date}"
+                                   placeholder="MM/DD/YYYY-MM/DD/YYYY" autocomplete="off">
                         </div>
                     </div>
                 </div>
@@ -38,15 +37,22 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-2 d-flex align-items-center">
-                <span><b class="text-danger">[(${totalElement})]</b>  Hóa đơn</span>
+            <div class="form-check col-md-2 d-flex align-items-center">
+                <span><b class="text-danger">[(${totalElements})]</b>  Hóa đơn</span>
             </div>
             <div class="col-md-10 text-end">
                 <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-outline-secondary">Excel
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary">PDF
-                    </button>
+                    <!--                    <button id="dowload-excel">-->
+                    <a th:href="@{/admin/bill/list_bill/download_excel}" type="button"
+                       class="btn btn-outline-secondary">
+                        Excel
+                    </a>
+                    <!--                    </button>-->
+                    <!--                    <button >-->
+                    <a th:href="@{/admin/bill/list_bill/downloadpdf}" type="button" class="btn btn-outline-secondary">
+                        PDF
+                    </a>
+                    <!--                    </button>-->
                     <button type="button" class="btn btn-outline-secondary">In</button>
                 </div>
             </div>
@@ -69,18 +75,18 @@
                     <!--                </select></th>-->
                     <th>Time create</th>
                     <th><select class="form-select select2">
-                        <optgroup label="Pay">
-                            <option selected>All</option>
-                            <option>Paid</option>
-                            <option>Unpaid</option>
-                            <option>Refunded</option>
+                        <optgroup label="Thanh toán">
+                            <option selected>Tất cả</option>
+                            <option>Đã thanh toán</option>
+                            <option>Chưa thanh toán</option>
+                            <option>Đã hoàn tiền</option>
                         </optgroup>
                     </select></th>
-                    <th><select class="form-select select2 overflow-hidden" style="width: 100%">
+                    <th><select class="form-select select2 ">
                         <optgroup label="Trạng thái đơn hàng">
-                            <option>Tất cả</option>
+                            <option selected>Tất cả</option>
                             <option>Chờ xử lý</option>
-                            <option selected>Đang chuẩn bị hàng</option>
+                            <option>Đang chuẩn bị hàng</option>
                             <option>Hết hàng</option>
                             <option>Đang giao hàng</option>
                             <option>Lỗi giao hàng</option>
@@ -96,18 +102,18 @@
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                <tr th:each="listBill,billStat: ${listBill}" th:onclick="|oncl(${listBill.id})|">
+                <tr th:each="listBill,billStat: ${session.list.content}" th:onclick="|oncl(${listBill.id})|">
                     <td>
                         <strong>[(${billStat.index+1})]</strong>
                     </td>
                     <td>[(${listBill.code})]</td>
                     <td class="text-nowrap">
-                        [(${listBill.customer})]
+                        [(${listBill.customer.name})]
                     </td>
                     <td> [(${listBill.totalPrice})]<u>đ</u></td>
                     <td>[(${listBill.createDate})]</td>
-                    <td>Paid</td>
-                    <td style="white-space: pre-wrap">[(${listBill.status})]</td>
+                    <td th:text="${listBill.paymentStatus == 1 ? 'Đã thanh toán' : listBill.paymentStatus == 2 ? 'Chưa thanh toán' : 'Đã hoàn tiền'}"></td>
+                    <td style="white-space: pre-wrap">[(${listBill.billStatus.status})]</td>
                 </tr>
                 </tbody>
             </table>
@@ -120,8 +126,8 @@
                 <div class="col-7">
                     <select class="form-select text-start" id="select-view"
                             th:onchange="|changeSize(${session.page});|">
-                        <option value="1" th:selected="${session.size == 1}">10</option>
-                        <option value="2" th:selected="${session.size == 2}">20</option>
+                        <option value="10" th:selected="${session.size == 10}">10</option>
+                        <option value="20" th:selected="${session.size == 20}">20</option>
                         <option value="40" th:selected="${session.size == 40}">40</option>
                         <option value="80" th:selected="${session.size == 80}">80</option>
                     </select>
@@ -130,14 +136,15 @@
             <div aria-label="Page pagination">
                 <ul class="pagination">
                     <li class="page-item first">
-                        <a class="page-link" c><i class="tf-icon bx bx-chevrons-left"></i></a>
+                        <a class="page-link" th:href="@{'/admin/bill/list_bill?page=1&size='+${session.size}}"><i
+                                class="tf-icon bx bx-chevrons-left"></i></a>
                     </li>
                     <li class="page-item prev">
                         <a class="page-link"
                            th:href="@{'/admin/bill/list_bill?page='+${session.page==1? '1': session.page - 1}+'&size='+${session.size}}"><i
                                 class="tf-icon bx bx-chevron-left"></i></a>
                     </li>
-                    <li class="page-item" th:each="pagination:${#numbers.sequence(1,totalPage)}">
+                    <li class="page-item" th:each="pagination:${#numbers.sequence(1,session.list.totalPages)}">
                         <a class="page-link"
                            th:href="@{'/admin/bill/list_bill?page='+${pagination}+'&size='+${session.size}}"
                            th:text="${pagination}"></a>
@@ -168,4 +175,13 @@
         console.log(size.value)
         window.location.href = "http://localhost:8080/admin/bill/list_bill?size=" + size.value + '&page=' + page
     }
+
+    $("#reset").click(function () {
+        $("#key").val("")
+        $("#date-seach-order").val("")
+    })
+    $("#dowload-excel").click(function () {
+        window.location.href = "http://localhost:8080"
+    })
+
 </script>
