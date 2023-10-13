@@ -108,14 +108,8 @@ CREATE TABLE product
      id_type        INT REFERENCES [type](id),
      id_size        INT REFERENCES size(id),
      id_resolution  INT REFERENCES resolution(id),
+	 id_supplier	INT REFERENCES supplier(id),
      active         BIT
-  )
-
-CREATE TABLE product_supplier
-  (
-     id_supplier INT REFERENCES supplier(id),
-     id_product  INT REFERENCES product(id),
-     PRIMARY KEY(id_supplier, id_product)
   )
 
 CREATE TABLE product_feature
