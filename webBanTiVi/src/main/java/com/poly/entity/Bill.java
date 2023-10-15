@@ -53,6 +53,6 @@ public class Bill {
     @Column(name="note")
     private String note;
 
-    @OneToMany(mappedBy = "bill")
+    @OneToMany(mappedBy = "bill",fetch = FetchType.EAGER)
     private List<BillProduct> billProducts;
 }

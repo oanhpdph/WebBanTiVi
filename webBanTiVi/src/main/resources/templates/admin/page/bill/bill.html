@@ -1,8 +1,7 @@
-<html xmlns:th="http://www.thymeleaf.org">
 <h4 class="fw-bold py-3 mb-4">List bill</h4>
 <div class="card">
-    <div class="card-header">
-        <form class="col-12 mt-2" th:action="@{/admin/bill/list_bill}" method="post" th:object="${search}">
+    <form class="col-12 mt-2" th:action="@{/admin/bill/list_bill}" method="get" th:object="${search}" id="formBill">
+        <div class="card-header">
             <div class="col-12 row">
                 <div class="col-7">
                     <div class="form-check input-group input-group-merge">
@@ -10,14 +9,14 @@
                         <i class="bx bx-search"></i>
                     </span>
                         <input type="text" class="form-control" placeholder="Search order code, name, phone number"
-                               th:name="key" id="key" th:field="*{key}" autocomplete="off">
-                        <button class="btn btn-primary" type="submit" id="search">Search</button>
+                               name="key" id="search-input" th:field="*{key}" autocomplete="off">
+                        <button class="btn btn-primary" type="button" id="search">Search</button>
                     </div>
                 </div>
                 <div class="col-1">
-                    <button class="btn btn-warning" data-bs-offset="0,4"
+                    <button class="btn btn-warning" data-bs-offset="0,4" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" data-bs-html="true" title=""
-                            data-bs-original-title="<span>Reset filter</span>" type="button" id="reset">
+                            data-bs-original-title="<span>Reset form</span>" type="button" id="reset">
                         <i class='bx bx-reset'></i>
                     </button>
                 </div>
@@ -33,155 +32,152 @@
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="form-check col-md-2 d-flex align-items-center">
-                <span><b class="text-danger">[(${totalElements})]</b>  Hóa đơn</span>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="form-check col-md-2 d-flex align-items-center">
+                    <span><b class="text-danger">[(${totalElements})]</b>  Hóa đơn</span>
+                </div>
+                <div class="col-md-10 text-end">
+                    <div class="btn-group" role="group" aria-label="First group">
+                        <a th:href="@{/admin/bill/list_bill/download_excel}" type="button"
+                           class="btn btn-outline-secondary">
+                            Excel
+                        </a>
+                        <a th:href="@{/admin/bill/list_bill/downloadpdf}" type="button"
+                           class="btn btn-outline-secondary">
+                            PDF
+                        </a>
+                        <button type="button" class="btn btn-outline-secondary">In</button>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-10 text-end">
-                <div class="btn-group" role="group" aria-label="First group">
-                    <!--                    <button id="dowload-excel">-->
-                    <a th:href="@{/admin/bill/list_bill/download_excel}" type="button"
-                       class="btn btn-outline-secondary">
-                        Excel
-                    </a>
-                    <!--                    </button>-->
-                    <!--                    <button >-->
-                    <a th:href="@{/admin/bill/list_bill/downloadpdf}" type="button" class="btn btn-outline-secondary">
-                        PDF
-                    </a>
-                    <!--                    </button>-->
-                    <button type="button" class="btn btn-outline-secondary">In</button>
+            <hr>
+            <div class="overflow-auto">
+                <table class="table table-hover table-bordered overflow-hidden">
+                    <thead>
+                    <tr class="row-table">
+                        <th>#</th>
+                        <th>Code bill</th>
+                        <th>Name</th>
+                        <th>Total price</th>
+                        <!--                <th><select class="form-select select2">-->
+                        <!--                    <optgroup label="Source">-->
+                        <!--                        <option selected>All</option>-->
+                        <!--                        <option>Web</option>-->
+                        <!--                        <option>Store</option>-->
+                        <!--                    </optgroup>-->
+                        <!--                </select></th>-->
+                        <th>Time create</th>
+                        <th><select class="form-select select2" th:name="paymentStatus" id="paymentStatus"
+                                    th:field="*{paymentStatus}">
+                            <optgroup th:label="#{invoice.pay}">
+                                <option selected value="-1" th:text="#{invoice.all}"></option>
+                                <option value="1" th:text="#{invoice.paid}"></option>
+                                <option value="2" th:text="#{invoice.unpaid}"></option>
+                                <option value="3" th:text="#{invoice.refund}"></option>
+                            </optgroup>
+                        </select></th>
+                        <th><select class="form-select select2" id="filterBillStatus" th:field="*{billStatus}"
+                                    th:name="billStatus">
+                            <optgroup label="Trạng thái đơn hàng">
+                                <option th:selected="${session.defaultBillStatus == ''}" value="">Tất cả</option>
+                                <option value="WP" th:selected="${session.defaultBillStatus=='WP'}">Chờ xử lý</option>
+                                <option value="PG" th:selected="${session.defaultBillStatus== 'PG'}">Đang chuẩn bị
+                                    hàng
+                                </option>
+                                <option value="OS" th:selected="${session.defaultBillStatus == 'OS'}">Hết hàng</option>
+                                <option value="DE" th:selected="${ session.defaultBillStatus =='DE'}">Đang giao hàng
+                                </option>
+                                <option value="DEE" th:selected="${session.defaultBillStatus == 'DEE'}">Lỗi giao hàng
+                                </option>
+                                <option value="CO" th:selected="${ session.defaultBillStatus  == 'CO'}">Đã hoàn thành
+                                </option>
+                                <option value="SC" th:selected="${ session.defaultBillStatus ==  'SC'}">Shop hủy
+                                </option>
+                                <option value="CC" th:selected="${ session.defaultBillStatus  == 'CC'}">Khách hủy
+                                </option>
+                                <option value="RR" th:selected="${ session.defaultBillStatus == 'RR'}">Yêu cầu trả
+                                    hàng
+                                </option>
+                                <option value="WR" th:selected="${ session.defaultBillStatus  == 'WR'}">Chờ trả hàng
+                                </option>
+                                <option value="RE" th:selected="${session.defaultBillStatus  == 'RE'}">Đã trả hàng
+                                </option>
+                            </optgroup>
+                        </select>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                    <tr th:each="listBill,billStat: ${session.list.content}" th:onclick="|oncl(${ listBill.id })|">
+                        <td>
+                            <strong>[(${billStat.index+1})]</strong>
+                        </td>
+                        <td>[(${listBill.code})]</td>
+                        <td>
+                            [(${listBill.customer.name})]
+                        </td>
+                        <td> [( ${#numbers.formatDecimal(listBill.totalPrice, 0,'COMMA',0,'POINT')})]<u>đ</u></td>
+                        <td>[(${listBill.createDate})]</td>
+                        <td th:text="${listBill.paymentStatus == 1 ? 'Đã thanh toán' : listBill.paymentStatus == 2 ? 'Chưa thanh toán' : 'Đã hoàn tiền'}"></td>
+                        <td>[(${listBill.billStatus.status})]</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <div class="d-inline-flex float-end">
+                <div class="mx-3 row" style="width: 180px">
+                    <label for="select-size" class="col-form-label col-5 text-end">View:</label>
+                    <div class="col-7">
+                        <select class="form-select text-start" id="select-size" th:name="size"
+                        >
+                            <option value="10" th:selected="${session.size == 10}">10</option>
+                            <option value="20" th:selected="${session.size == 20}">20</option>
+                            <option value="40" th:selected="${session.size == 40}">40</option>
+                            <option value="80" th:selected="${session.size == 80}">80</option>
+                        </select>
+                    </div>
+                </div>
+                <div aria-label="Page pagination">
+                    <ul class="pagination">
+                        <li class="page-item first">
+                            <a class="page-link" id="first" th:value="1" type="button">
+                                <i class="tf-icon bx bx-chevrons-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item prev">
+                            <a class="page-link" id="prev" th:value="${session.page==1? '1': session.page - 1}"><i
+                                    class="tf-icon bx bx-chevron-left"></i></a>
+                        </li>
+                        <li class="page-item mx-2">
+                            <div class="input-group input-group-merge">
+                                <input class="form-control inputPage" id="pageInput" type="number" name="page"
+                                       th:onblur="|blurInputPage(${session.page},${session.size})|"
+                                       th:onkeydown="|keydownPage(event,${session.page},${session.size})|"
+                                       th:value="${session.page}">
+                                <span class="input-group-text">/[(${session.list.totalPages})]</span>
+                                <input id="totalPage" value="${session.list.totalPages}" hidden="hidden">
+                            </div>
+                        </li>
+                        <li class="page-item next">
+                            <a class="page-link" id="next"
+                               th:value="${session.page < session.list.totalPages ? session.page + 1 : session.list.totalPages }">
+                                <i class="tf-icon bx bx-chevron-right"></i>
+                            </a>
+                        </li>
+                        <li class="page-item last">
+                            <a class="page-link" id="last" th:value="${session.list.totalPages}">
+                                <i class="tf-icon bx bx-chevrons-right"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <hr>
-        <div class="overflow-auto">
-            <table class="table table-hover overflow-hidden">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Code bill</th>
-                    <th>Name</th>
-                    <th>Total price</th>
-                    <!--                <th><select class="form-select select2">-->
-                    <!--                    <optgroup label="Source">-->
-                    <!--                        <option selected>All</option>-->
-                    <!--                        <option>Web</option>-->
-                    <!--                        <option>Store</option>-->
-                    <!--                    </optgroup>-->
-                    <!--                </select></th>-->
-                    <th>Time create</th>
-                    <th><select class="form-select select2">
-                        <optgroup label="Thanh toán">
-                            <option selected>Tất cả</option>
-                            <option>Đã thanh toán</option>
-                            <option>Chưa thanh toán</option>
-                            <option>Đã hoàn tiền</option>
-                        </optgroup>
-                    </select></th>
-                    <th><select class="form-select select2 ">
-                        <optgroup label="Trạng thái đơn hàng">
-                            <option selected>Tất cả</option>
-                            <option>Chờ xử lý</option>
-                            <option>Đang chuẩn bị hàng</option>
-                            <option>Hết hàng</option>
-                            <option>Đang giao hàng</option>
-                            <option>Lỗi giao hàng</option>
-                            <option>Đã hoàn thành</option>
-                            <option>Shop hủy</option>
-                            <option>Khách hủy</option>
-                            <option>Yêu cầu trả hàng</option>
-                            <option>Chờ trả hàng</option>
-                            <option>Đã trả hàng</option>
-                        </optgroup>
-                    </select>
-                    </th>
-                </tr>
-                </thead>
-                <tbody class="table-border-bottom-0">
-                <tr th:each="listBill,billStat: ${session.list.content}" th:onclick="|oncl(${listBill.id})|">
-                    <td>
-                        <strong>[(${billStat.index+1})]</strong>
-                    </td>
-                    <td>[(${listBill.code})]</td>
-                    <td class="text-nowrap">
-                        [(${listBill.customer.name})]
-                    </td>
-                    <td> [(${listBill.totalPrice})]<u>đ</u></td>
-                    <td>[(${listBill.createDate})]</td>
-                    <td th:text="${listBill.paymentStatus == 1 ? 'Đã thanh toán' : listBill.paymentStatus == 2 ? 'Chưa thanh toán' : 'Đã hoàn tiền'}"></td>
-                    <td style="white-space: pre-wrap">[(${listBill.billStatus.status})]</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="card-footer">
-        <div class="d-inline-flex float-end">
-            <div class="mx-3 row" style="width: 180px">
-                <label for="select-view" class="col-form-label col-5 text-end">View:</label>
-                <div class="col-7">
-                    <select class="form-select text-start" id="select-view"
-                            th:onchange="|changeSize(${session.page});|">
-                        <option value="10" th:selected="${session.size == 10}">10</option>
-                        <option value="20" th:selected="${session.size == 20}">20</option>
-                        <option value="40" th:selected="${session.size == 40}">40</option>
-                        <option value="80" th:selected="${session.size == 80}">80</option>
-                    </select>
-                </div>
-            </div>
-            <div aria-label="Page pagination">
-                <ul class="pagination">
-                    <li class="page-item first">
-                        <a class="page-link" th:href="@{'/admin/bill/list_bill?page=1&size='+${session.size}}"><i
-                                class="tf-icon bx bx-chevrons-left"></i></a>
-                    </li>
-                    <li class="page-item prev">
-                        <a class="page-link"
-                           th:href="@{'/admin/bill/list_bill?page='+${session.page==1? '1': session.page - 1}+'&size='+${session.size}}"><i
-                                class="tf-icon bx bx-chevron-left"></i></a>
-                    </li>
-                    <li class="page-item" th:each="pagination:${#numbers.sequence(1,session.list.totalPages)}">
-                        <a class="page-link"
-                           th:href="@{'/admin/bill/list_bill?page='+${pagination}+'&size='+${session.size}}"
-                           th:text="${pagination}"></a>
-                    </li>
-                    <li class="page-item next">
-                        <a class="page-link"
-                           th:href="@{'/admin/bill/list_bill?page='+${session.page < totalPage ? session.page + 1 : totalPage }+'&size='+${session.size}}"><i
-                                class="tf-icon bx bx-chevron-right"></i></a>
-                    </li>
-                    <li class="page-item last">
-                        <a class="page-link"
-                           th:href="@{'/admin/bill/list_bill?page='+${totalPage}+'&size='+${session.size}}"><i
-                                class="tf-icon bx bx-chevrons-right"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    </form>
 </div>
-</html>
-<script>
-    function oncl(id) {
-        window.location.href = "http://localhost:8080/admin/bill_detail/" + id
-    }
-
-    function changeSize(page) {
-        var size = document.getElementById("select-view")
-        console.log(size.value)
-        window.location.href = "http://localhost:8080/admin/bill/list_bill?size=" + size.value + '&page=' + page
-    }
-
-    $("#reset").click(function () {
-        $("#key").val("")
-        $("#date-seach-order").val("")
-    })
-    $("#dowload-excel").click(function () {
-        window.location.href = "http://localhost:8080"
-    })
-
-</script>
+<script th:src="@{/admin/plugin/js/bill.js}"></script>

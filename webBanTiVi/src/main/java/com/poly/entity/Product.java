@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -63,5 +64,8 @@ public class Product {
     private Resolution resolution;
 
     @Column(name = "active")
-    private boolean active;
+    private Boolean active;
+
+    @OneToMany(mappedBy = "product")
+    private List<ImageProduct> listImage;
 }
