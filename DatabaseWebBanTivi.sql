@@ -108,14 +108,8 @@ CREATE TABLE product
      id_type        INT REFERENCES [type](id),
      id_size        INT REFERENCES size(id),
      id_resolution  INT REFERENCES resolution(id),
+	 id_supplier	INT REFERENCES supplier(id),
      active         BIT
-  )
-
-CREATE TABLE product_supplier
-  (
-     id_supplier INT REFERENCES supplier(id),
-     id_product  INT REFERENCES product(id),
-     PRIMARY KEY(id_supplier, id_product)
   )
 
 CREATE TABLE product_feature
@@ -252,6 +246,7 @@ CREATE TABLE bill
 	 payment_status	  INT default 1,
      note             NVARCHAR(max)
   )
+  select * from bill b where b.create_date between '01/01/2023' and '01/02/2023'
 
 -- hoa don chi tiet
 CREATE TABLE bill_product

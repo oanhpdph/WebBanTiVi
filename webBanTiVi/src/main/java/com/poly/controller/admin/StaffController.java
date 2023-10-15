@@ -7,11 +7,16 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @Controller
 @RequestMapping("/admin")
@@ -21,7 +26,8 @@ public class StaffController {
     StaffService staffService;
 
     @GetMapping("/staff")
-    public String loadStaff(HttpSession session, Model model) {
+    public String loadStaff(HttpSession session, Model model)  {
+
         session.setAttribute("pageView", "/admin/page/staff.html");
         session.setAttribute("active", "/staff");
         model.addAttribute("listStaff",staffService.findAll());
@@ -29,12 +35,10 @@ public class StaffController {
         return "admin/layout";
     }
 
+
     @PostMapping("/staff/add")
-    public String addStaff(Model model, @Valid Staff staff, BindingResult result) {
-        if (result.hasErrors()) {
-            model.addAttribute("message", "Vui long dien day du thong tin");
-            return "admin/layout";
-        }
+    public String addStaff(Model model,  @ModelAttribute("staff") Staff staff, @RequestParam("avatar") String file)  {
+        staff.setAvatar(file);
         this.staffService.save(staff);
         model.addAttribute("listStaff", staffService.findAll());
         return "redirect:/admin/staff";
@@ -50,12 +54,13 @@ public class StaffController {
     }
 
     @PostMapping("/staff/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid Staff staff, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            staff.setId(id);
-            return "admin/layout";
-        }
-        staffService.save(staff);
+    public String updateUser(@PathVariable("id") Integer id, Staff staff, Model model, @RequestParam("avatar") String file) {
+            
+            staff.setAvatar(file);
+           this.staffService.save(staff);
+
+
+        model.addAttribute("listStaff", staffService.findAll());
         return "redirect:/admin/staff";
     }
 
