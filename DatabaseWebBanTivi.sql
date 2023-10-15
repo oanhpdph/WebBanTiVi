@@ -242,6 +242,7 @@ CREATE TABLE bill
 	 payment_status	  INT default 1,
      note             NVARCHAR(max)
   )
+  select * from bill b where b.create_date between '01/01/2023' and '01/02/2023'
 
 -- hoa don chi tiet
 CREATE TABLE bill_product
