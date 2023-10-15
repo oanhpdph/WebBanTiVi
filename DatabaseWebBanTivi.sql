@@ -9,7 +9,7 @@ go
 CREATE TABLE coupon
   (
      id      INT IDENTITY(1, 1) PRIMARY KEY,
-     code    VARCHAR(30) not null,
+     code    VARCHAR(30) not null unique,
      [value] VARCHAR(10) not null,
 	 image varchar(200),
      active  BIT
@@ -95,7 +95,7 @@ CREATE TABLE size
 CREATE TABLE product
   (
      id             INT IDENTITY(1, 1) PRIMARY KEY,
-     code           VARCHAR(10) not null,
+     code           VARCHAR(10) not null unique,
      nametv         NVARCHAR(max) not null,
      price_import   money not null,
      price_export   money not null,
@@ -130,7 +130,9 @@ CREATE TABLE image_product
      id INT IDENTITY(1,1) primary key,
 	 id_product INT REFERENCES product(id) not null,
      name_image varchar(200) not null,
+	 location bit
   )
+
 -- chi tiết coupon
 CREATE TABLE coupon_product
   (
@@ -160,7 +162,7 @@ CREATE TABLE customer
 CREATE TABLE voucher
   (
      id               INT IDENTITY(1, 1) PRIMARY KEY,
-     code             VARCHAR(30) not null,
+     code             VARCHAR(30) not null unique,
      name_voucher     VARCHAR(100) not null,
      [value]          INT not null,
      reduced_form     BIT not null,-- giảm theo % hoặc tiền trực tiếp
@@ -204,7 +206,7 @@ CREATE TABLE image_evaluate
 CREATE TABLE staff
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
-     code        NVARCHAR(30) not null,
+     code        NVARCHAR(30) not null unique,
      [name]      NVARCHAR(50) not null,
      gender      BIT,
      birthday    DATE,
@@ -221,6 +223,7 @@ CREATE TABLE staff
 CREATE TABLE bill_status
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
+	 code		 varchar(10) not null unique,
      status      NVARCHAR(100) not null,
      description NVARCHAR(max) not null
   )
@@ -229,6 +232,7 @@ CREATE TABLE bill_status
 CREATE TABLE payment_method
   (
      id             INT IDENTITY(1, 1) PRIMARY KEY,
+	 code			varchar(10) not null unique,
      payment_method NVARCHAR(255) not null,
      active         BIT not null,
      description    NVARCHAR(max)
@@ -239,7 +243,7 @@ CREATE TABLE bill
   (
      id               INT IDENTITY(1, 1) PRIMARY KEY,
      id_customer      INT REFERENCES customer(id) not null,
-     code             VARCHAR(10) not null,
+     code             VARCHAR(10) not null unique,
      create_date      DATE NOT NULL,
 	 totalPrice		  Money,
      payment_date     DATE not null,-- ngày thanh toán
@@ -280,7 +284,7 @@ CREATE TABLE cart
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
      id_customer INT REFERENCES customer(id) not null,
-     code        NVARCHAR(30),
+     code        NVARCHAR(30) unique,
      date_update DATETIME,
   )
 
@@ -295,3 +299,280 @@ CREATE TABLE cart_product
 	 date_update DATETIME
      PRIMARY KEY(cart_id, product_id)
   )
+ INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('WP'
+           ,N'Chờ xử lý'
+           ,N'Chờ xác nhận mua hàng bên phía khách hàng')
+GO
+INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('PG'
+           ,N'Đang chuẩn bị hàng'
+           ,N'Cửa hàng chuẩn bị hàng, đóng gói hàng cho khách')
+GO
+INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('OS'
+           ,N'Hết hàng'
+           ,N'Cửa hàng hết sản phẩm trong kho')
+GO
+INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('DE'
+           ,N'Đang giao hàng'
+           ,N'Sản phẩm đang được giao đến cho khách hàng')
+GO
+INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('DEE'
+           ,N'Lỗi giao hàng'
+           ,N'Xảy ra lỗi trong quá trình giao hàng')
+GO
+INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('CO'
+           ,N'Đã hoàn thành'
+           ,N'Đơn hàng giao thành công đến cho khách hàng')
+GO 
+INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('CO'
+           ,N'Đã hoàn thành'
+           ,N'Đơn hàng giao thành công đến cho khách hàng')
+		   GO
+INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('SC'
+           ,N'Shop hủy'
+           ,N'Đơn hàng bị hủy từ phía cửa hàng')
+
+GO
+INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('CC'
+           ,N'Khách hủy'
+           ,N'Khách hàng hủy mua sản phẩm')
+
+GO
+INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('RR'
+           ,N'Yêu cầu trả hàng'
+           ,N'Khách hàng yêu cầu trả hàng')
+
+GO
+INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('WR'
+           ,N'Chờ trả hàng'
+           ,N'Chờ sản phẩm gửi về khi yêu cầu trả hàng được xác nhận')
+
+GO
+INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('RE'
+           ,N'Đã trả hàng'
+           ,N'Đã nhận lại được sản phẩm bị yêu cầu trả hàng')
+
+GO
+
+INSERT INTO [dbo].[payment_method]
+           ([code]
+           ,[payment_method]
+           ,[active]
+           ,[description])
+     VALUES
+           ('CA'
+           ,N'Tiền mặt'
+           ,1
+           ,N'Thanh toán trực tiếp bằng tiền mặt khi nhận hàng')
+GO
+
+INSERT INTO [dbo].[payment_method]
+           ([code]
+           ,[payment_method]
+           ,[active]
+           ,[description])
+     VALUES
+           ('VNP'
+           ,'Thanh toán điện tử Vn-pay'
+           ,1
+           ,N'Thanh toán trực tuyến qua Vn-pay')
+GO
+
+INSERT INTO [dbo].[customer]
+           ([name]
+           ,[date]
+           ,[address]
+           ,[phone_number]
+           ,[email]
+           ,[password]
+           ,[gender]
+           ,[id_card]
+           ,[avatar]
+           ,[status])
+     VALUES
+           (N'Phạm đức oanh'
+           ,'2003-12-13'
+           ,N'Liên trì 1, yên hòa, yên mô, ninh bình'
+           ,'0369921455'
+           ,'oanhpdph25707@fpt.edu.vn'
+           ,'123456'
+           ,1
+           ,'037203004908'
+           ,''
+           ,1)
+GO
+
+INSERT INTO [dbo].[bill]
+           ([id_customer]
+           ,[code]
+           ,[create_date]
+           ,[totalPrice]
+           ,[payment_date]
+           ,[id_status]
+           ,[id_paymentmethod]
+           ,[payment_status]
+           ,[note])
+     VALUES
+           (1
+           ,'HD1'
+           ,'2023-10-15'
+           ,10000000
+           ,'2023-10-15'
+           ,1
+           ,2
+           ,1
+           ,N'')
+GO
+
+
+INSERT INTO [dbo].[product]
+           ([code]
+           ,[nametv]
+           ,[price_import]
+           ,[price_export]
+           ,[quantity]
+           ,[guarantee]
+           ,[id_brand]
+           ,[id_origin]
+           ,[id_manufacture]
+           ,[id_color]
+           ,[id_type]
+           ,[id_size]
+           ,[id_resolution]
+           ,[active])
+     VALUES
+           ('SP01'
+           ,N'Sản phẩm 1'
+           ,10000
+           ,15000
+           ,100
+           ,3
+           ,null
+           ,null
+           ,null
+           ,null
+           ,null
+           ,null
+           ,null
+           ,1)
+GO
+INSERT INTO [dbo].[product]
+           ([code]
+           ,[nametv]
+           ,[price_import]
+           ,[price_export]
+           ,[quantity]
+           ,[guarantee]
+           ,[id_brand]
+           ,[id_origin]
+           ,[id_manufacture]
+           ,[id_color]
+           ,[id_type]
+           ,[id_size]
+           ,[id_resolution]
+           ,[active])
+     VALUES
+           ('SP02'
+           ,N'Sản phẩm 2'
+           ,10000
+           ,15000
+           ,100
+           ,3
+           ,null
+           ,null
+           ,null
+           ,null
+           ,null
+           ,null
+           ,null
+           ,1)
+GO
+
+
+
+INSERT INTO [dbo].[bill_product]
+           ([id_bill]
+           ,[id_product]
+           ,[quantity]
+           ,[price]
+           ,[status])
+     VALUES
+           (2
+           ,1
+           ,5
+           ,500
+           ,1)
+GO
+
+INSERT INTO [dbo].[bill_product]
+           ([id_bill]
+           ,[id_product]
+           ,[quantity]
+           ,[price]
+           ,[status])
+     VALUES
+           (2
+           ,2
+           ,5
+           ,500
+           ,1)
+GO

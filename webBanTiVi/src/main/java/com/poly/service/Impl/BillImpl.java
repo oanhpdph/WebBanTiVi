@@ -1,17 +1,25 @@
 package com.poly.service.Impl;
 
+import com.poly.dto.SearchBillDto;
 import com.poly.entity.Bill;
 import com.poly.repository.BillRepos;
 import com.poly.service.BillService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,44 +27,41 @@ public class BillImpl implements BillService {
     @Autowired
     private BillRepos billRepos;
 
-
-    @Override
-    public Page<Bill> getPagination(Integer pageRequest, Integer sizeRequest) {
-        Pageable pageable = PageRequest.of(pageRequest, sizeRequest);
-        Page<Bill> pagination = billRepos.findAll(pageable);
-        return pagination;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
 
     @Override
-    public Page<Bill> search(String data, String date, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page - 1, size);
-        System.out.println(date);
-        Page<Bill> pagination = null;
-        if ("".equals(date)) {
-            pagination = billRepos.searchByKey(data, pageable);
-            return pagination;
-        }
-        String date1 = date.substring(0, date.indexOf("-") - 1).replace("/", "-");
-        String date2 = date.substring(date.indexOf("-") + 1, date.length()).replace("/", "-");
-        System.out.println(date1 + date2);
-        Date dateStart = Date.valueOf(date1.trim());
-        Date dateEnd = Date.valueOf(date2.trim());
-        if ("".equals(data)) {
-            pagination = billRepos.searchByDate(dateStart, dateEnd, pageable);
-            return pagination;
-        }
-        pagination = billRepos.searchByKeyandDate(data, dateStart, dateEnd, pageable);
-        return pagination;
-    }
+    public Page<Bill> loadData(SearchBillDto searchBillDto, Pageable pageable) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Bill> billCriteriaQuery = criteriaBuilder.createQuery(Bill.class);
+        Root<Bill> billRoot = billCriteriaQuery.from(Bill.class);
 
-    @Override
-    public Integer getPage(Integer sizeList, Integer pageSize) {
-        float page = (float) sizeList / pageSize;
-        if (page > (int) page) {
-            return (int) page + 1;
+        List<Predicate> list = new ArrayList<Predicate>();
+        if (!searchBillDto.getKey().isEmpty()) {
+            list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("code"), searchBillDto.getKey()),
+                    criteriaBuilder.equal(billRoot.get("customer").get("name"), searchBillDto.getKey()),
+                    criteriaBuilder.equal(billRoot.get("customer").get("phoneNumber"),searchBillDto.getKey())));
         }
-        return (int) page;
+        if (searchBillDto.getPaymentStatus() != -1) {
+            list.add(criteriaBuilder.equal(billRoot.get("paymentStatus"), searchBillDto.getPaymentStatus()));
+        }
+        if (!searchBillDto.getBillStatus().isEmpty()) {
+            list.add(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), searchBillDto.getBillStatus()));
+        }
+        if (!searchBillDto.getDate().isEmpty()) {
+            String date1 = searchBillDto.getDate().substring(0, searchBillDto.getDate().indexOf("-") - 1).replace("/", "-");
+            String date2 = searchBillDto.getDate().substring(searchBillDto.getDate().indexOf("-") + 1, searchBillDto.getDate().length()).replace("/", "-");
+            System.out.println(date1 + date2);
+            Date dateStart = Date.valueOf(date1.trim());
+            Date dateEnd = Date.valueOf(date2.trim());
+            list.add(criteriaBuilder.between(billRoot.get("createDate"), dateStart, dateEnd));
+        }
+        billCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
+        List<Bill> result = entityManager.createQuery(billCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
+        List<Bill> result2 = entityManager.createQuery(billCriteriaQuery).getResultList();
+        Page<Bill> page = new PageImpl<>(result, pageable, result2.size());
+        return page;
     }
 
     @Override

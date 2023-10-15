@@ -23,6 +23,9 @@ public class PaymentMethod {
     @Column(name = "payment_method")
     private String paymentMethod;
 
+    @Column(name="code")
+    private String code;
+
     @Column(name="active")
     private Boolean active;
 

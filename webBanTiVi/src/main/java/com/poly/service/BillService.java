@@ -1,17 +1,14 @@
 package com.poly.service;
 
+import com.poly.dto.SearchBillDto;
 import com.poly.entity.Bill;
 import org.springframework.data.domain.Page;
-
-import java.text.ParseException;
+import org.springframework.data.domain.Pageable;
 
 public interface BillService {
 
-    Page<Bill> getPagination(Integer page, Integer size);
 
-    Page<Bill> search(String data,String date, Integer page, Integer size) ;
-
-    Integer getPage(Integer sizeList, Integer pageSize);
+    Page<Bill> loadData(SearchBillDto searchBillDto, Pageable pageable);
 
     Bill add(Bill bill);
 

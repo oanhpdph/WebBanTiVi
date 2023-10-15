@@ -28,6 +28,6 @@ public class BillProduct {
     @Column(name="price")
     private BigDecimal price;
 
-    @Column(name="active")
+    @Column(name="status")
     private Boolean active;
 }

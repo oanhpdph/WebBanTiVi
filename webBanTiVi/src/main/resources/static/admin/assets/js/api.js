@@ -65,8 +65,3 @@ form.addEventListener('drop', e => {
 
     showImages();
 })
-
-// button.addEventListener('click', ()=>{
-//     let form = new FormData();
-//     files.forEach(e,i)
-// })

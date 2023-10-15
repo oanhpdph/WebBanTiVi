@@ -17,6 +17,9 @@ public class BillStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name="code")
+    private String code;
+
     @Column(name="status")
     private String status;
 
