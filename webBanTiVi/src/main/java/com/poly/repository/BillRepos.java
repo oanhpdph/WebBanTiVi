@@ -21,8 +21,7 @@ public interface BillRepos extends JpaRepository<Bill, Integer> {
     @Query(value = "select b from Bill b where b.createDate between ?1 and ?2")
     Page<Bill> searchByDate(Date dateStart, Date dateEnd, Pageable pageable);
 
-
-    @Query(value = "select b from Bill b where (b.code = ?1 or b.customer.name = %?1%) and b.createDate between ?2 and ?3")
+    @Query(value = "select b from Bill b where (b.code = ?1 or b.customer.name like %?1%) and b.createDate between ?2 and ?3")
     Page<Bill> searchByKeyandDate(String key, Date dateStart, Date dateEnd, Pageable pageable);
 
 }

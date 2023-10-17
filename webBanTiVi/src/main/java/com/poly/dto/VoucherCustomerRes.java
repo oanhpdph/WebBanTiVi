@@ -1,8 +1,6 @@
 package com.poly.dto;
 
-import com.poly.entity.Customer;
-import com.poly.entity.Voucher;
-import com.poly.entity.VoucherCustomer;
+
 import lombok.*;
 
 import java.sql.Date;
