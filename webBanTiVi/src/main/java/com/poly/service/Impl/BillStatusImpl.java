@@ -14,7 +14,6 @@ public class BillStatusImpl implements BillStatusService {
     @Autowired
     private BillStatusRepos billStatusRepos;
 
-
     @Override
     public List<BillStatus> getAll() {
         return billStatusRepos.findAll();
