@@ -1,11 +1,17 @@
 package com.poly.controller.admin;
 
-import com.poly.entity.PaymentMethod;
+import com.poly.entity.Bill;
 import com.poly.entity.Voucher;
 import com.poly.service.VoucherService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,19 +23,52 @@ public class VoucherController {
 
     @Autowired
     private VoucherService voucherService;
+
+    @Getter
+    @Setter
+    public class Search {
+        private String date;
+        private String key;
+    }
+
+
     // voucher
     @GetMapping("/voucher/list")
-    public String voucher(HttpSession session, Model model){
+    public String voucher(HttpSession session, Model model,
+                          @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageRequest,
+                          @RequestParam(name = "size", required = false, defaultValue = "10") Integer sizeRequest){
+     Page<Voucher> list = voucherService.getPagination(pageRequest - 1, sizeRequest);
+        model.addAttribute("search", new Search());
+        model.addAttribute("totalElements", list.getTotalElements());
+        session.setAttribute("list", list);
+        session.setAttribute("size", sizeRequest);
+        session.setAttribute("page", pageRequest);
         session.setAttribute("pageView", "/admin/page/voucher/voucher.html");
         session.setAttribute("active", "/voucher/list");
-        model.addAttribute("listVoucher",this.voucherService.findAll());
-        model.addAttribute("voucher", new Voucher());
-        return "admin/layout";
+        if (list.getTotalPages() < pageRequest) {
+            return "redirect:/admin/voucher/list?page=" + list.getTotalPages() + "&size=" + sizeRequest;
+        }
+        return "/admin/layout";
+
     }
+
+    @PostMapping("/voucher/list")
+    public String search(@ModelAttribute(name = "search") VoucherController.Search search, Model model, HttpSession session) {
+        if ("".equals(search.key.trim()) && "".equals(search.date.trim())) {
+            return "redirect:/admin/voucher/list";
+        }
+        Page<Voucher> list = voucherService.search(search.key, search.date, 1, 10);
+        session.setAttribute("list", list);
+        model.addAttribute("totalElements", list.getTotalElements());
+        return "/admin/layout";
+    }
+
+
+
     @PostMapping("/voucher/add")
     public String addVoucher( @Valid @ModelAttribute("voucher")  Voucher voucher, BindingResult result,Model model) {
         this.voucherService.save(voucher);
-        model.addAttribute("listVoucher", voucherService.findAll());
+//        model.addAttribute("listVoucher", voucherService.findAll(pageable));
         model.addAttribute("voucher", new Voucher());
         return "redirect:/admin/voucher/list";
     }
@@ -39,7 +78,7 @@ public class VoucherController {
         Voucher voucher = this.voucherService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         model.addAttribute("voucher", voucher);
-        model.addAttribute("listVoucher", this.voucherService.findAll());
+//        model.addAttribute("listVoucher", this.voucherService.findAll(pageable));
         return "admin/layout";
     }
 

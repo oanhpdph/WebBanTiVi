@@ -1,14 +1,20 @@
 package com.poly.controller.admin;
 
+import com.poly.common.UploadFile;
 import com.poly.entity.Customer;
+import com.poly.entity.Staff;
 import com.poly.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 
 @Controller
@@ -28,9 +34,22 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/save")
-    public String addCustomer(@ModelAttribute("customer") Customer customer,Model model, @RequestParam("avatar") String file ) {
-        customer.setAvatar(file);
+    public String addCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult result,Model model, @RequestParam("image") MultipartFile file ) {
+
+        System.out.println(result.hasErrors());
+        if (result.hasErrors()) {
+            return "admin/layout";
+        }
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
+        customer.setAvatar(fileName);
         this.customerService.save(customer);
+        String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
+        try {
+            UploadFile.saveFile(uploadDir, fileName, file);
+        } catch (IOException e) {
+            //
+            e.printStackTrace();
+        }
         model.addAttribute("listCus", customerService.findAll());
         return "redirect:/admin/customer/list";
     }
@@ -47,9 +66,30 @@ public class CustomerController {
 
     @PostMapping("/customer/update/{id}")
     public String updateCustomer(@PathVariable("id") Integer id,
-                              Customer customer,
-                                 @RequestParam("avatar") String file) {
-        customer.setAvatar(file);
+                             @ModelAttribute("customer") Customer customer,
+                                 @RequestParam("image") MultipartFile file) {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
+        Customer findCustomer  = this.customerService.findById(customer.getId()).orElse(null);
+
+        findCustomer.setBirthday(customer.getBirthday());
+        findCustomer.setName(customer.getName());
+        findCustomer.setEmail(customer.getEmail());
+        findCustomer.setAddress(customer.getAddress());
+        findCustomer.setPassword(customer.getPassword());
+        findCustomer.setPhoneNumber(customer.getPhoneNumber());
+        findCustomer.setGender(customer.isGender());
+        findCustomer.setIdCard(customer.getIdCard());
+        findCustomer.setStatus(customer.getStatus());
+        if (!"".equals(fileName)) {
+            findCustomer.setAvatar(fileName);
+            String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
+            try {
+                UploadFile.saveFile(uploadDir, fileName, file);
+            } catch (IOException e) {
+                //
+                e.printStackTrace();
+            }
+        }
         customerService.save(customer);
         return "redirect:/admin/customer/list";
     }

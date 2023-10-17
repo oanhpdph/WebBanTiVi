@@ -6,7 +6,7 @@
             Thêm Voucher
         </button>
     </div>
-    <form th:action="@{/admin/customer/save}" method="post" th:object="${customer}">
+    <form th:action="@{/admin/customer/save}" method="post" th:object="${customer}" enctype="multipart/form-data">
         <div class="modal fade" th:id="largeModal" tabindex="-1"
              aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
@@ -18,13 +18,15 @@
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
-                                <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar">
+                                <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar" class="d-block rounded"
+                                     height="100" width="100" id="uploadedAvatar">
                                 <br> <br>
                                 <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                                     <span class="d-none d-sm-block">Upload new photo</span>
                                     <i class="bx bx-upload d-block d-sm-none"></i>
-                                    <input type="file" id="upload" class="account-file-input" hidden="" accept="image/png, image/jpeg"
-                                    name="avatar" th:name="avatar"  th:text="${customer.avatar}"
+                                    <input type="file" id="upload" class="account-file-input" hidden=""
+                                           accept="image/png, image/jpeg"
+                                           name="image"
                                     >
                                 </label>
                             </div>
@@ -65,11 +67,6 @@
                                 <div class="col-sm-4">
                                     <label class="form-label">Email</label>
                                     <input class="form-control" type="email" th:name="email">
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label class="form-label">Id Number:</label>
-                                    <input type="text" class="form-control" th:name="idNumber">
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="form-label">Id Card:</label>
@@ -167,8 +164,7 @@
                             <i class="bx bxs-edit-alt"></i>
                         </button>
 
-                        <div class="modal fade" th:id="|modal${customer.id}|" tabindex="-1"
-                             aria-hidden="true">
+                        <div class="modal fade" th:id="|modal${customer.id}|" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-xl" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -177,15 +173,19 @@
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form th:action="@{/admin/customer/update/{id}(id=${customer.id})}" method="post" th:object="${customer}">
+                                        <form th:action="@{/admin/customer/update/{id}(id=${customer.id})}"
+                                              method="post" th:object="${customer}" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
-                                                    <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar">
+                                                    <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar"
+                                                         class="d-block rounded" height="100" width="100"
+                                                         id="uploadedAvatar">
                                                     <br> <br>
                                                     <label th:for="upload2" tabindex="0">
                                                         <span class="d-none d-sm-block" style="padding-left: 10px">Upload new photo</span>
                                                         <i class="bx bx-upload d-block d-sm-none"></i>
-                                                        <input type="file" th:id="upload2" class="account-file-input" accept="image/png, image/jpeg" name="avatar"
+                                                        <input type="file" th:id="upload2" class="account-file-input"
+                                                               accept="image/png, image/jpeg" name="image"
                                                                th:name="avatar">
                                                     </label>
                                                 </div>
@@ -199,7 +199,7 @@
                                                     <div class="col-sm-4">
                                                         <label class="form-label">Địa chỉ:</label>
                                                         <textarea style="height: 12px" type="text" class="form-control"
-                                                                  th:name="address"   th:text="${customer.address}"
+                                                                  th:name="address" th:text="${customer.address}"
 
                                                         ></textarea>
                                                     </div>
@@ -209,9 +209,7 @@
                                                         <label class="form-label">Số điện thoại</label>
                                                         <input type="text" class="form-control"
                                                                th:name="phoneNumber"
-                                                               th:value="${customer.phoneNumber}"
-
-                                                        >
+                                                               th:value="${customer.phoneNumber}">
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <label class="form-label">Giới tính:</label>
@@ -221,8 +219,7 @@
                                                                    th:id="|active${customer.id}|"
                                                                    th:name="gender"
                                                                    th:value="true"
-                                                                   th:checked="${customer.gender==true}"
-                                                            >
+                                                                   th:checked="${customer.gender==true}">
                                                             <label class="form-check-label"
                                                                    th:for="|active${customer.id}|">Male</label>
                                                         </div>
@@ -231,8 +228,7 @@
                                                                    th:id="|active${customer.id}|"
                                                                    th:name="gender"
                                                                    th:value="false"
-                                                                   th:checked="${customer.gender==false}"
-                                                            >
+                                                                   th:checked="${customer.gender==false}">
                                                             <label class="form-check-label"
                                                                    th:for="|active${customer.id}|">Female</label>
                                                         </div>
@@ -249,19 +245,11 @@
                                                                th:value="${customer.email}">
                                                     </div>
 
-
-                                                    <div class="col-sm-4">
-                                                        <label class="form-label">Id Number:</label>
-                                                        <input type="text" class="form-control" th:name="idNumber"
-                                                               th:value="${customer.idNumber}">
-                                                    </div>
                                                     <div class="col-sm-4">
                                                         <label class="form-label">Id Card:</label>
                                                         <input type="text" class="form-control" th:name="idCard"
                                                                th:value="${customer.idCard}"/>
                                                     </div>
-
-
                                                 </div>
                                             </div>
                                             <br>
@@ -294,7 +282,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <a th:href="@{/admin/customer/delete/{id}(id=*{customer.id})}"
                            onclick="return confirm('Xác nhận xóa')">
                             <button type="button" class="btn btn-icon btn-danger">
