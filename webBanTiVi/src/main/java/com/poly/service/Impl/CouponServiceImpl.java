@@ -18,7 +18,6 @@ public class CouponServiceImpl implements CouponService {
     public Coupon save(Coupon coupon) {
         return couponRepository.save(coupon);
     }
-
     @Override
     public void delete(Integer id) {
         couponRepository.delete(couponRepository.findById(id).get());

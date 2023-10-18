@@ -1,10 +1,7 @@
 package com.poly.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "coupon")
@@ -12,6 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Coupon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

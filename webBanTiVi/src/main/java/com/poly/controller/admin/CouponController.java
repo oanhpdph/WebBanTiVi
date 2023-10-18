@@ -11,18 +11,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 public class CouponController {
     @Autowired
     CouponServiceImpl couponService;
-    @RequestMapping("/coupon/save")
-    public String saveCoupon(Model model, @ModelAttribute("item") Coupon coupon) {
-        couponService.save(coupon);
-        return "admin/coupon";
+    @GetMapping("/coupon")
+    public String showCouponList(Model model) {
+        List<Coupon> listCoupon = couponService.findAll();
+        return "coupon";
     }
-
+    @GetMapping("/coupon/new")
+    public String showNewForm(Model model){
+        model.addAttribute("coupon",new Coupon());
+        model.addAttribute("pageTitle","Add New Coupon");
+        return "coupon_form";
+    }
+    @PostMapping("/coupon/save")
+    public String saveCoupon(Coupon coupon, RedirectAttributes ra){
+        couponService.save(coupon);
+        ra.addFlashAttribute("message","Coupon has been saved successfully");
+        return "redirect:/admin/coupon";
+    }
     @RequestMapping("/coupon/edit/{id}")
     public String editCoupon(Model model, @PathVariable("id")Integer id) {
         couponService.findById(id);
