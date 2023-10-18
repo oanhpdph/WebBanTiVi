@@ -2,7 +2,9 @@ package com.poly.service.Impl;
 
 import com.poly.dto.SearchBillDto;
 import com.poly.entity.Bill;
+import com.poly.entity.BillStatus;
 import com.poly.repository.BillRepos;
+import com.poly.repository.BillStatusRepos;
 import com.poly.service.BillService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -13,7 +15,6 @@ import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,9 @@ import java.util.Optional;
 public class BillImpl implements BillService {
     @Autowired
     private BillRepos billRepos;
+
+    @Autowired
+    private BillStatusRepos billStatusRepos;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -41,7 +45,7 @@ public class BillImpl implements BillService {
         if (!searchBillDto.getKey().isEmpty()) {
             list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("code"), searchBillDto.getKey()),
                     criteriaBuilder.equal(billRoot.get("customer").get("name"), searchBillDto.getKey()),
-                    criteriaBuilder.equal(billRoot.get("customer").get("phoneNumber"),searchBillDto.getKey())));
+                    criteriaBuilder.equal(billRoot.get("customer").get("phoneNumber"), searchBillDto.getKey())));
         }
         if (searchBillDto.getPaymentStatus() != -1) {
             list.add(criteriaBuilder.equal(billRoot.get("paymentStatus"), searchBillDto.getPaymentStatus()));
@@ -75,10 +79,11 @@ public class BillImpl implements BillService {
         if (optional.isPresent()) {
             Bill billUpdate = optional.get();
             billUpdate.setBillStatus(bill.getBillStatus());
-            billUpdate.setPaymentMethod(bill.getPaymentMethod());
-            billUpdate.setNote(bill.getNote());
-            billUpdate.setCustomer(bill.getCustomer());
-            billUpdate.setPaymentDate(bill.getPaymentDate());
+//            billUpdate.setPaymentMethod(bill.getPaymentMethod());
+//            billUpdate.setNote(bill.getNote());
+//            billUpdate.setCustomer(bill.getCustomer());
+//            billUpdate.setPaymentDate(bill.getPaymentDate());
+            billUpdate.setPaymentStatus(bill.getPaymentStatus());
             return billRepos.save(billUpdate);
         }
         return null;
@@ -111,4 +116,5 @@ public class BillImpl implements BillService {
         }
         return null;
     }
+
 }

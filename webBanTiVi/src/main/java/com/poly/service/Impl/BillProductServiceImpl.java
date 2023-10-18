@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BPServiceImpl implements BillProductService {
+public class BillProductServiceImpl implements BillProductService {
     @Autowired
-    BillProductRepos repos;
+    private BillProductRepos repos;
 
     @Override
     public List<BillProduct> getAll() {

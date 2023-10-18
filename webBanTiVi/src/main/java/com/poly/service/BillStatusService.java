@@ -8,6 +8,8 @@ public interface BillStatusService{
 
     List<BillStatus> getAll();
 
+    BillStatus getOneBycode(String code);
+
     BillStatus add(BillStatus billStatus);
 
     BillStatus update(BillStatus billStatus, Integer id);

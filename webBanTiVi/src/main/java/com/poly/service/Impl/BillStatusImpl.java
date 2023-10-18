@@ -20,6 +20,15 @@ public class BillStatusImpl implements BillStatusService {
     }
 
     @Override
+    public BillStatus getOneBycode(String code) {
+        Optional<BillStatus> optionalBillStatus = billStatusRepos.findByCode(code);
+        if (optionalBillStatus.isPresent()) {
+            return optionalBillStatus.get();
+        }
+        return null;
+    }
+
+    @Override
     public BillStatus add(BillStatus billStatus) {
         return billStatusRepos.save(billStatus);
     }
@@ -27,7 +36,7 @@ public class BillStatusImpl implements BillStatusService {
     @Override
     public BillStatus update(BillStatus billStatus, Integer id) {
         Optional<BillStatus> optional = billStatusRepos.findById(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             BillStatus status = optional.get();
             status.setStatus(billStatus.getStatus());
             status.setDescription(billStatus.getDescription());
@@ -39,7 +48,7 @@ public class BillStatusImpl implements BillStatusService {
     @Override
     public Boolean delete(Integer id) {
         Optional<BillStatus> optional = billStatusRepos.findById(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()) {
             billStatusRepos.delete(optional.get());
             return true;
         }
