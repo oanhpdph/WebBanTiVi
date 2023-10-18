@@ -32,8 +32,8 @@ public class VoucherCustomerServiceImpl implements VoucherCustomerService {
         VoucherCustomer voucherCustomer = new VoucherCustomer();
         voucherCustomer.setCustomer(optionalCustomer.get());
         voucherCustomer.setVoucher(optionalVoucher.get());
-        voucherCustomer.setDate_end(voucher.getDate_end());
-        voucherCustomer.setDate_start(voucher.getDate_start());
+        voucherCustomer.setDateEnd(voucher.getDate_end());
+        voucherCustomer.setDateStart(voucher.getDate_start());
         voucherCustomer.setActive(voucher.getActive());
         return  this.voucherCustomerRepository.save(voucherCustomer);
 
