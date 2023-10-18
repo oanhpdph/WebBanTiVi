@@ -31,11 +31,28 @@
             <span class="menu-header-text">Management</span>
         </li>
 
-        <li th:class="${#strings.equals(session.active,'/product')?'menu-item active':'menu-item'}">
-            <a th:href="@{/admin/product}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-tv"></i>
-                <div data-i18n="order">Product</div>
+        <li th:class="${#strings.contains(session.active,'/product')?'menu-item active open':'menu-item'}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <div data-i18n="">Product</div>
             </a>
+            <ul class="menu-sub">
+                <li th:class="${#strings.equals(session.active,'/product')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/product}" class="menu-link">
+                        <div data-i18n="order">Product</div>
+                    </a>
+                </li>
+                <li th:class="${#strings.equals(session.active,'/coupon')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/coupon}" class="menu-link">
+                        <div data-i18n="order">Coupon</div>
+                    </a>
+                </li>
+                <li th:class="${#strings.equals(session.active,'/feature')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/feature}" class="menu-link">
+                        <div data-i18n="order">Feature</div>
+                    </a>
+                </li>
+            </ul>
         </li>
         <li th:class="${#strings.equals(session.active,'/staff')?'menu-item active':'menu-item'}">
             <a th:href="@{/admin/staff}" class="menu-link">
@@ -73,6 +90,7 @@
                     </a>
                 </li>
             </ul>
+        </li>
         <li th:class="${#strings.contains(session.active,'voucher')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-user-circle"></i>
@@ -95,24 +113,6 @@
             <a th:href="@{/admin/blog}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-receipt"></i>
                 <div data-i18n="Blog">Blog</div>
-            </a>
-        </li>
-        <li th:class="${#strings.equals(session.active,'/coupon')?'menu-item active':'menu-item'}">
-            <a th:href="@{/admin/coupon}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-tv"></i>
-                <div data-i18n="coupon">Coupon</div>
-            </a>
-        </li>
-        <li th:class="${#strings.equals(session.active,'/brand')?'menu-item active':'menu-item'}">
-            <a th:href="@{/admin/brand}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-tv"></i>
-                <div data-i18n="brand">Brand</div>
-            </a>
-        </li>
-        <li th:class="${#strings.equals(session.active,'/feature')?'menu-item active':'menu-item'}">
-            <a th:href="@{/admin/feature}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-tv"></i>
-                <div data-i18n="feature">Feature</div>
             </a>
         </li>
     </ul>
