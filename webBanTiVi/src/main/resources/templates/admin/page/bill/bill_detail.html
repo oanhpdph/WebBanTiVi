@@ -13,8 +13,11 @@
         </div>
     </div>
 </div>
+
+
 <div class="row">
     <!--    sản phẩm, phiếu giao-->
+    <input th:value="${billDetail.id}" style="display: none" id="idBill">
     <div class="col-lg-8 col-md-8 order-0">
         <div class="row">
             <!--            Sản phẩm-->
@@ -74,19 +77,19 @@
                 <div class="tab-content" style="z-index: initial">
                     <div class="tab-pane fade active show" id="navs-top-info-customer" role="tabpanel">
                         <!--                     thông tin khách hàng-->
-                        <form th:action="@{/admin/bill/bill_detail/delivery_note}" method="post">
+                        <form th:action="@{/admin/bill/bill_detail/delivery_note}" id="formUpdateDeliveryNotes">
                             <div class="row">
                                 <h4 class="fw-bold text-start col-6 col-md-6">Đơn từ web</h4>
                                 <div class="col-6 col-md-6 text-end">
-                                    <button class="btn btn-warning" type="button" id="btnEditInfo">Chỉnh sửa</button>
-                                    <!--                                    <button class="btn btn-dark" type="button" id="btnCancel">Hủy</button>-->
-                                    <button class="btn btn-success display-none" type="button" id="btnSave"
-                                            name="editInfo"
-                                            style="display: none">Lưu
+                                    <button class="btn btn-warning" type="button" id="btnEdit"
+                                            name="editInfo">Chỉnh sửa
                                     </button>
-                                    <button class="btn btn-dark display-none" type="button" id="btnCancel"
-                                            name="editInfo"
-                                            style="display:none;">Hủy
+                                    <button class="btn btn-success" type="button" id="btnSave"
+                                            th:value="${deliveryNote.id}"
+                                            name="editInfo">Lưu
+                                    </button>
+                                    <button class="btn btn-dark" type="reset" id="btnCancel"
+                                            name="editInfo">Reset
                                     </button>
 
                                 </div>
@@ -99,73 +102,67 @@
                                         <td><strong>Tên khách hàng:</strong>
                                         </td>
                                         <td>
-                                            <input class="form-check form-control w-100" type="text" th:value="${oanh}"
-                                                   id="nameCustomer"
-                                                   style="display: none">
-                                            <p id="nameText">phạm oanh</p>
+                                            <p id="nameText" th:text="${deliveryNote.received}"></p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td><strong>SĐT khách hàng:</strong>
                                         </td>
                                         <td>
-                                            <input class="form-check form-control w-100" type="text" value="Oanh"
-                                                   id="phoneCustomer"
-                                                   style="display: none">
-                                            <p id="phoneText">12345577</p>
+                                            <p id="phoneText" th:text="${deliveryNote.receiverPhone}"></p>
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Email:</strong>
+                                        </td>
+                                        <td>
+                                            <p id="emailCustomerText" th:text="${deliveryNote.deliveryEmail}"></p></td>
                                     </tr>
                                     <tr>
                                         <td><strong>Tên người nhận:</strong>
                                         </td>
-                                        <td>
-                                            <input class="form-check form-control w-100" type="text" th:value="${oanh}"
-                                                   id="deliver"
-                                                   style="display: none">
-                                            <p id="deliverText">Phạm Oanh</p>
+                                        <td class="input-group">
+                                            <input class="form-check form-control " type="text"
+                                                   th:value="${deliveryNote.deliver}" name="deliver"
+                                                   id="deliver" disabled="true">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td><strong>SĐT người nhận:</strong>
                                         </td>
-                                        <td><input class="form-check form-control w-100" type="text" th:value="${oanh}"
-                                                   id="phoneDeliver"
-                                                   style="display: none">
-                                            <p id="phoneDeliverText">12345678</p></td>
+                                        <td class="input-group">
+                                            <input class="form-check form-control " type="text"
+                                                   th:value="${deliveryNote.deliveryPhone}" name="deliveryPhone"
+                                                   id="deliveryPhone" disabled="true">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><strong>Địa chỉ người nhận:</strong>
                                         </td>
-                                        <td>
-                                            <input class="form-check form-control w-100" type="text" th:value="${oanh}"
-                                                   id="addressDeliver"
-                                                   style="display: none">
-                                            <p id="addressDeliverText">Liên Trì 1, Xã Yên Hòa, Huyện Yên Mô, Tỉnh Ninh
-                                                Bình</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Email:</strong>
+                                        <td class="input-group">
+                                            <input class="form-control" type="text"
+                                                   th:value="${deliveryNote.receivingAddress}" name="receivingAddress"
+                                                   id="receivingAddress" disabled="true">
                                         </td>
-                                        <td><input class="form-check form-control w-100" type="text" th:value="${oanh}"
-                                                   id="emailCustomer"
-                                                   style="display: none">
-                                            <p id="emailCustomerText">opham084@gmail.com</p></td>
                                     </tr>
+
                                     <tr>
                                         <td><strong>Phí giao hàng:</strong>
                                         </td>
-                                        <td><input class="form-check form-control w-100" type="text" th:value="${oanh}"
-                                                   id="deliveryFee"
-                                                   style="display: none">
-                                            <p id="deliveryFeeText">10000000</p></td>
+                                        <td class="input-group">
+                                            <input class="form-check form-control " type="number"
+                                                   th:value="${#numbers.formatInteger(deliveryNote.deliveryFee,1)}"
+                                                   name="deliveryFee"
+                                                   id="deliveryFee" disabled="true">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td><strong>Ghi chú:</strong>
                                         </td>
-                                        <td><input class="form-check form-control w-100" type="text" th:value="${oanh}"
-                                                   id="note"
-                                                   style="display: none">
-                                            <p id="noteText">opham084@gmail.com</p></td>
+                                        <td class="input-group"><input class="form-check form-control " type="text"
+                                                                       th:value="${deliveryNote.note}" name="note"
+                                                                       id="note" disabled="true">
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -239,15 +236,14 @@
     </div>
     <!--Trạng thái đơn hàng, thanh toán-->
     <div class="col-lg-4 col-md-4 mb-4 order-1">
-        <form th:action="@{/admin/bill/bill_detail/update_status/{id}(id=${billDetail.id})}" method="get"
-              id="formStatus">
+        <form th:action="@{/admin/bill/bill_detail}" id="formUpdateStatus">
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="form-label"> Trạng thái đơn hàng</div>
                     <div class="list-group list-group-flush">
-                        <select class="form-select list-group list-group-flush select2" id="billStatus" name="status"
-                                th:field="${billDetail.billStatus.code}">
-                            <option value="WP" th:selected="${'WP'== billDetail.billStatus.code  }">Chờ xử lý
+                        <input th:value="${billDetail.billStatus.code}" id="codeStatus" style="display: none">
+                        <select class="form-select list-group list-group-flush select2" id="billStatus" name="status">
+                            <option value="WP" th:selected="${'WP'== billDetail.billStatus.code}">Chờ xử lý
                             </option>
                             <option value="PG" th:selected="${'PG' == billDetail.billStatus.code}">Đang chuẩn bị
                                 hàng
@@ -275,11 +271,12 @@
             </div>
             <div class="card mb-4">
                 <div class="card-body">
+                    <input th:value="${billDetail.paymentStatus}" id="payment" style="display: none">
                     <div class="form-label"> Trạng thái thanh toán</div>
                     <div class="list-group list-group-flush">
-                        <select class="form-select list-group list-group-flush select2" name="payment"
+                        <select class="form-select list-group list-group-flush select2"
                                 th:field="${billDetail.paymentStatus}"
-                                id="paymentStatus">
+                                id="paymentStatus" name="paymentStatus">
                             <option value="1">Đã thanh toán</option>
                             <option value="2">Chưa thanh toán</option>
                             <option value="3">Đã hoàn tiền</option>
@@ -287,70 +284,68 @@
                     </div>
                 </div>
             </div>
-            <div class="card">
-                <div class="d-flex align-items-end row">
-                    <div class="card-body">
+        </form>
+        <div class="card">
+            <div class="d-flex align-items-end row">
+                <div class="card-body">
                     <span class="card-title mt-3 mb-3">
                          <b>Tổng tiền</b>
                     </span>
-                        <div class="mb-3 row">
-                            <hr>
-                            <div class="mb-2">
-                                <div class="row">
-                                    <label class="col-5 col-md-5"><b class="text-start">Tổng:</b></label>
-                                    <span class="text-end col-7 col-md-7">1000000<u>đ</u></span>
-                                </div>
-                                <small class="col-12 col-md-12"
-                                       th:text="|(${#lists.size(billDetail.billProducts)} sản phẩm)|"></small>
+                    <div class="mb-3 row">
+                        <hr>
+                        <div class="mb-2">
+                            <div class="row">
+                                <label class="col-5 col-md-5"><b class="text-start">Tổng gốc:</b></label>
+                                <span class="text-end col-7 col-md-7">1000000<u>đ</u></span>
                             </div>
-                            <div class="mb-2">
-                                <div class="row">
-                                    <label class="col-6 col-md-6"><b class="text-start">Giảm giá:</b></label>
-                                    <span class="text-end col-6 col-md-6">-1000000<u>đ</u></span>
-                                </div>
+                            <small class="col-12 col-md-12"
+                                   th:text="|(${#lists.size(billDetail.billProducts)} sản phẩm)|"></small>
+                        </div>
+                        <div class="mb-2">
+                            <div class="row">
+                                <label class="col-6 col-md-6"><b class="text-start">Giảm giá:</b></label>
+                                <span class="text-end col-6 col-md-6">-1000000<u>đ</u></span>
                             </div>
-                            <div class="mb-2">
-                                <div class="row">
-                                    <label class="col-6 col-md-6"><b class="text-start">Voucher:</b></label>
-                                    <span class="text-end col-6 col-md-6">-1000000<u>đ</u></span>
-                                </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="row">
+                                <label class="col-6 col-md-6"><b class="text-start">Voucher:</b></label>
+                                <span class="text-end col-6 col-md-6">-1000000<u>đ</u></span>
                             </div>
-                            <hr>
-                            <div class="mt-2 mb-2">
-                                <div class="row">
-                                    <label class="col-6 col-md-6"><b class="text-start">Voucher:</b></label>
-                                    <span class="text-end col-6 col-md-6">-1000000<u>đ</u></span>
-                                </div>
+                        </div>
+                        <hr>
+                        <div class="mt-2 mb-2">
+                            <div class="row">
+                                <label class="col-6 col-md-6"><b class="text-start">Tổng sau giảm:</b></label>
+                                <span class="text-end col-6 col-md-6">1000000<u>đ</u></span>
                             </div>
-                            <div class="col-md">
-                                <div class="form-check form-check-inline mt-3">
-                                    <input class="form-check-input" type="radio" name="paymentMethod"
-                                           id="inlineRadio1"
-                                           value="option1">
-                                    <label class="form-check-label" for="inlineRadio1">Tiền mặt</label>
-                                </div>
-                                <div class="form-check form-check-inline mt-3">
-                                    <input class="form-check-input" type="radio" name="paymentMethod"
-                                           id="inlineRadio2"
-                                           value="option2">
-                                    <label class="form-check-label" for="inlineRadio2">Chuyển khoản Vnpay</label>
-                                </div>
+                        </div>
+                        <div class="mt-2 mb-2">
+                            <label class="form-label"><b class="text-start">Ghi chú:</b></label>
+                            <textarea class="form-control"></textarea>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-check mt-3">
+                                <input class="form-check-input" type="radio" name="paymentMethod"
+                                       id="inlineRadio1"
+                                       value="option1">
+                                <label class="form-check-label" for="inlineRadio1">Tiền mặt</label>
                             </div>
-                            <div class="col-12 text-center">
-                                <button class="btn btn-warning mt-4 ">Thanh toán</button>
+                            <div class="form-check  mt-3">
+                                <input class="form-check-input" type="radio" name="paymentMethod"
+                                       id="inlineRadio2"
+                                       value="option2">
+                                <label class="form-check-label" for="inlineRadio2">Chuyển khoản Vnpay</label>
                             </div>
-                            <!--                        <div class="col-12 text-center">-->
-                            <!--                            <button class="btn btn-danger mt-4 ">Hoàn tiền</button>-->
-                            <!--                        </div>-->
-                            <!--                        <div class="col-12 text-center">-->
-                            <!--                            <button class="btn btn-dark mt-4 ">Hủy</button>-->
-                            <!--                        </div>-->
+                        </div>
+                        <div class="col-12 text-center">
+                            <button class="btn btn-warning mt-4 ">Thanh toán</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
-<script src="/admin/plugin/js/bill_detail.js"></script>
+<script src="/admin/plugin/js/invoice_detail.js"></script>
 </html>

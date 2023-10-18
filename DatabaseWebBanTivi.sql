@@ -108,8 +108,14 @@ CREATE TABLE product
      id_type        INT REFERENCES [type](id),
      id_size        INT REFERENCES size(id),
      id_resolution  INT REFERENCES resolution(id),
-	 id_supplier	INT REFERENCES supplier(id),
      active         BIT
+  )
+
+CREATE TABLE product_supplier
+  (
+     id_supplier INT REFERENCES supplier(id),
+     id_product  INT REFERENCES product(id),
+     PRIMARY KEY(id_supplier, id_product)
   )
 
 CREATE TABLE product_feature
@@ -243,35 +249,39 @@ CREATE TABLE bill
      payment_date     DATE not null,-- ngày thanh toán
      id_status        INT REFERENCES bill_status(id) not null,
      id_paymentmethod INT REFERENCES payment_method not null,
-	 payment_status	  INT default 1,
+	 id_voucher		  INT REFERENCES voucher,
+	 payment_status	  INT default 1, 
      note             NVARCHAR(max)
   )
-  select * from bill b where b.create_date between '01/01/2023' and '01/02/2023'
 
 -- hoa don chi tiet
 CREATE TABLE bill_product
   (
-     id_bill    INT REFERENCES bill(id),
-     id_product INT REFERENCES product(id),
-     quantity   INT not null,
-     price      money not null,
-	 status		bit
+     id_bill		INT REFERENCES bill(id),
+     id_product		INT REFERENCES product(id),
+     quantity		INT not null,
+     price			money not null,
+	 reduced_money	money,
+	 status			bit,
+	 note			NVARCHAR(200)
      PRIMARY KEY(id_bill, id_product)
   )
 
 CREATE TABLE delivery_notes
   (
-     id             INT IDENTITY(1,1) PRIMARY KEY,
-     received       NVARCHAR(50) not null,
-     received_phone VARCHAR(20) not null,
-     deliver        NVARCHAR(50),
-     delivery_phone VARCHAR(20) not null,
-     delivery_date  DATE,
-     received_date  DATE,
-     delivery_fee   MONEY,
-     note           NVARCHAR(max),
-     status         INT,
-	 id_bill        INT REFERENCES bill(id) not null,
+     id					INT IDENTITY(1,1) PRIMARY KEY,
+     received			NVARCHAR(50) not null,
+     received_phone		VARCHAR(20) not null,
+	 received_email		VARCHAR(100) not null,
+	 receiving_address  NVARCHAR(200) NOT NULL,
+     deliver			NVARCHAR(50),
+     delivery_phone		VARCHAR(20) not null,
+     delivery_date		DATE,
+     received_date		DATE,
+     delivery_fee		MONEY,
+     note				NVARCHAR(max),
+     status				INT,
+	 id_bill			INT REFERENCES bill(id) not null,
   )
 
 --giỏ hàng
@@ -570,4 +580,28 @@ INSERT INTO [dbo].[bill_product]
            ,5
            ,500
            ,1)
+GO
+
+INSERT INTO [dbo].[delivery_notes]
+           ([received]
+           ,[received_phone]
+           ,[deliver]
+           ,[delivery_phone]
+           ,[delivery_date]
+           ,[received_date]
+           ,[delivery_fee]
+           ,[note]
+           ,[status]
+           ,[id_bill])
+     VALUES
+           ('Phạm đức oanh'
+           ,'0987778788'
+           ,'Phạm đức oanh'
+           ,'0987678778'
+           ,'2023-10-12'
+           ,'2023-10-15'
+           ,'100000000'
+           ,'Không'
+           ,1
+           ,2)
 GO

@@ -22,49 +22,5 @@
             </div>
         </div>
         <!-- /Search -->
-
-        <ul class="navbar-nav flex-row align-items-center ms-auto">
-            <!-- User -->
-            <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
-                   data-bs-auto-close="outside">
-                    <div class="avatar">
-                        <img src="/image/download.jpg" alt class="w-px-30 h-auto rounded-circle"/>
-                    </div>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li class="dropdown dropstart">
-                        <a class="dropdown-item dropdown-toggle" href="javascript:void(0);" data-bs-toggle="dropdown">
-                            <span class="align-middle" th:text="#{lang.language}"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="?lang=vi">
-                                    <span><img class="w-px-20" src="/image/vietnam.png"></span>
-                                    <span class="align-middle" th:text="#{lang.vietnamese}"></span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item" href="?lang=en">
-                                    <span><img class="w-px-20" src="/image/english.png"></span>
-                                    <span class="align-middle" th:text="#{lang.english}"></span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="/login">
-                            <i class="bx bx-power-off me-2"></i>
-                            <span class="align-middle" th:text="#{navbar.logOut}">Log Out</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <!--/ User -->
-        </ul>
     </div>
 </nav>

@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface BillProductService {
 
-    public List<BillProduct> getAll();
+    List<BillProduct> getAll();
 
-    public void save(BillProduct bp);
+    void save(BillProduct bp);
 
-    public void delete(BillProductId id);
+    void delete(BillProductId id);
 
-    public BillProduct edit(BillProductId id);
+    BillProduct edit(BillProductId id);
 }

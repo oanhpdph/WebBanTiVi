@@ -6,9 +6,8 @@ import com.poly.dto.SearchBillDto;
 import com.poly.entity.Bill;
 import com.poly.entity.BillProduct;
 import com.poly.entity.idClass.BillProductId;
+import com.poly.service.BillProductService;
 import com.poly.service.BillService;
-import com.poly.service.Impl.BPServiceImpl;
-import com.poly.service.Impl.BillStatusImpl;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
@@ -33,13 +32,10 @@ import java.util.List;
 public class BillController {
 
     @Autowired
-    BPServiceImpl billProductService;
+    private BillProductService billProductService;
 
     @Autowired
     private BillService billService;
-
-    @Autowired
-    private BillStatusImpl billStatus;
 
     @Autowired
     private ExportExcel exportExcel;

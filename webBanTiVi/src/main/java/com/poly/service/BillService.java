@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface BillService {
 
-
     Page<Bill> loadData(SearchBillDto searchBillDto, Pageable pageable);
 
     Bill add(Bill bill);
@@ -19,4 +18,5 @@ public interface BillService {
     Bill getOneById(Integer id);
 
     Bill getOneByIdCustomer(Integer idCustomer);
+
 }
