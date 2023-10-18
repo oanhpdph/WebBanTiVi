@@ -31,12 +31,6 @@ public class ColorController {
     }
 
 
-    @GetMapping
-    public List<Color> getAll(){
-
-        return colorService.getAll();
-    }
-
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Integer id){

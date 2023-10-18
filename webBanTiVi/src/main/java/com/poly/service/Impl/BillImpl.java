@@ -28,9 +28,6 @@ public class BillImpl implements BillService {
     @Autowired
     private BillRepos billRepos;
 
-    @Autowired
-    private BillStatusRepos billStatusRepos;
-
     @PersistenceContext
     private EntityManager entityManager;
 

@@ -30,12 +30,6 @@ public class ManufactureController {
     }
 
 
-    @GetMapping
-    public List<Manufacture> getAll(){
-
-        return manufactureService.getAll();
-    }
-
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Integer id){
