@@ -98,15 +98,16 @@
 </form>
 <div class="card mb-3 ">
     <div class="card-header">
-        <form class="col-12 mt-2">
+        <form class="col-12 mt-2" th:action="@{/admin/voucher/list}" method="post" th:object="${search}">
             <div class="col-12 row">
                 <div class="col-7">
                     <div class="form-check input-group input-group-merge">
                     <span class="input-group-text">
                         <i class="bx bx-search"></i>
                     </span>
-                        <input type="text" class="form-control" placeholder="Tìm tên, sđt">
-                        <button class="btn btn-primary" type="button">Search</button>
+                        <input type="text" class="form-control" placeholder="Tìm tên, sđt" name="keywords"
+                               th:name="key" id="key" th:field="*{key}" autocomplete="off">
+                        <button class="btn btn-primary" type="submit">Search</button>
                     </div>
                 </div>
                 <div class="col-1">
@@ -117,6 +118,17 @@
                     </button>
                 </div>
             </div>
+            <div class="col-lg-6 col-xl-7 col-md-9 col-sm-12 row mt-2">
+                <div class="col-lg-9 col-xl-7 col-md-9 col-sm-8">
+                    <div class="input-group form-check">
+                        <div class="input-group input-group-merge input">
+                            <label for="date-seach-order" class="input-group-text">Select date:</label>
+                            <input type="text" class="form-control" id="date-seach-order" name="date" th:field="*{date}"
+                                   placeholder="MM/DD/YYYY-MM/DD/YYYY" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
     <div class="card mb-4">
@@ -124,7 +136,7 @@
             <div class="row">
                 <div class="col-md-2 d-flex align-items-center">
                     <p>Voucher :
-                        <span th:text="${#lists.size(listVoucher)}"></span>
+                        <!--                        <span th:text="${#lists.size(list.content)}"></span>-->
                     </p>
                 </div>
                 <div class="col-md-10 text-end">
@@ -158,7 +170,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="voucher : ${listVoucher}">
+                    <tr th:each="voucher : ${session.list.content}">
                         <td th:text="${voucher.code}"></td>
                         <td th:text="${voucher.nameVoucher}"></td>
                         <td th:text="${voucher.value}"></td>
@@ -176,155 +188,155 @@
                         <td>
                             <div>
 
-                                    <button type="button" class="btn btn-icon btn-primary" data-bs-toggle="modal"
-                                            th:data-bs-target="|#modal${voucher.id}|">
-                                        <i class="bx bxs-edit-alt"></i>
-                                    </button>
+                                <button type="button" class="btn btn-icon btn-primary" data-bs-toggle="modal"
+                                        th:data-bs-target="|#modal${voucher.id}|">
+                                    <i class="bx bxs-edit-alt"></i>
+                                </button>
 
-                                    <div class="modal fade" th:id="|modal${voucher.id}|" tabindex="-1"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog modal-xl" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Thông tin voucher</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form th:action="@{/admin/voucher/update/{id}(id=${voucher.id})}"
-                                                          method="post"
-                                                          th:object="${voucher}">
-                                                        <div class="row">
-                                                            <div class="row col-lg-12 col-xl-9">
-                                                                <div class="col-xl- col-lg-6 col-md-6">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">Code:</label>
-                                                                        <input type="text" class="form-control"
-                                                                               th:name="code"
-                                                                               th:value="${voucher.code}"
-                                                                        >
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">Name Voucher:</label>
-                                                                        <input type="text" class="form-control"
-                                                                               th:name="nameVoucher"
-                                                                               th:value="${voucher.code}"
-                                                                        >
-                                                                    </div>
+                                <div class="modal fade" th:id="|modal${voucher.id}|" tabindex="-1"
+                                     aria-hidden="true">
+                                    <div class="modal-dialog modal-xl" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Thông tin voucher</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form th:action="@{/admin/voucher/update/{id}(id=${voucher.id})}"
+                                                      method="post"
+                                                      th:object="${voucher}">
+                                                    <div class="row">
+                                                        <div class="row col-lg-12 col-xl-9">
+                                                            <div class="col-xl- col-lg-6 col-md-6">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Code:</label>
+                                                                    <input type="text" class="form-control"
+                                                                           th:name="code"
+                                                                           th:value="${voucher.code}"
+                                                                    >
                                                                 </div>
-                                                                <div class="col-xl- col-lg-6 col-md-6">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">Value</label>
-                                                                        <input type="text" class="form-control"
-                                                                               th:name="value"
-                                                                               th:value="${voucher.value}"
-                                                                        >
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">Active:</label>
-                                                                        <br>
-                                                                        <div class="form-check form-check-inline mt-3">
-                                                                            <input class="form-check-input" type="radio"
-                                                                                   th:id="|active${voucher.id}|"
-                                                                                   th:name="active"
-                                                                                   th:value="true"
-                                                                                   th:checked="${voucher.active==true}"
-                                                                            >
-                                                                            <label class="form-check-label"
-                                                                                   th:for="|active${voucher.id}|">Acitve</label>
-                                                                        </div>
-                                                                        <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" type="radio"
-                                                                                   th:id="|active${voucher.id}|"
-                                                                                   th:name="active"
-                                                                                   th:value="false"
-                                                                                   th:checked="${voucher.active==false}">
-                                                                            <label class="form-check-label"
-                                                                                   th:for="|active${voucher.id}|">Non-active</label>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Name Voucher:</label>
+                                                                    <input type="text" class="form-control"
+                                                                           th:name="nameVoucher"
+                                                                           th:value="${voucher.code}"
+                                                                    >
                                                                 </div>
-                                                                <div class="col-xl-3 col-lg-6 col-md-6">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label"> Reduced Form</label>
-                                                                        <input class="form-control" type="text"
-                                                                               th:name="reducedForm"
-                                                                               th:value="${voucher.reducedForm}"
-                                                                        >
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">Minimum Value</label>
-                                                                        <input class="form-control" type="text"
-                                                                               th:name="minimumValue"
-                                                                               th:value="${voucher.minimumValue}">
-                                                                    </div>
+                                                            </div>
+                                                            <div class="col-xl- col-lg-6 col-md-6">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Value</label>
+                                                                    <input type="text" class="form-control"
+                                                                           th:name="value"
+                                                                           th:value="${voucher.value}"
+                                                                    >
                                                                 </div>
-                                                                <div class="col-xl-3 col-lg-6 col-md-6">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">Maximum
-                                                                            Discount:</label>
-                                                                        <input type="text" class="form-control"
-                                                                               th:name="maximumDiscount"
-                                                                               th:value="${voucher.maximumDiscount}"
-
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Active:</label>
+                                                                    <br>
+                                                                    <div class="form-check form-check-inline mt-3">
+                                                                        <input class="form-check-input" type="radio"
+                                                                               th:id="|active${voucher.id}|"
+                                                                               th:name="active"
+                                                                               th:value="true"
+                                                                               th:checked="${voucher.active==true}"
                                                                         >
+                                                                        <label class="form-check-label"
+                                                                               th:for="|active${voucher.id}|">Acitve</label>
                                                                     </div>
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">Start Day:</label>
-                                                                        <input type="date" class="form-control"
-                                                                               th:name="startDay"
-                                                                               th:value="${voucher.startDay}"
-                                                                        >
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-xl-3 col-lg-6 col-md-6">
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">Quantity:</label>
-                                                                        <input type="text" class="form-control"
-                                                                               th:name="quantity"
-                                                                               th:value="${voucher.quantity}"
-                                                                        />
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label class="form-label">Expiration
-                                                                            Date:</label>
-                                                                        <input type="date" class="form-control"
-                                                                               th:name="expirationDate"
-                                                                               th:value="${voucher.expirationDate}"
-                                                                        />
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input" type="radio"
+                                                                               th:id="|active${voucher.id}|"
+                                                                               th:name="active"
+                                                                               th:value="false"
+                                                                               th:checked="${voucher.active==false}">
+                                                                        <label class="form-check-label"
+                                                                               th:for="|active${voucher.id}|">Non-active</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="col-xl-3 col-lg-6 col-md-6">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label"> Reduced Form</label>
+                                                                    <input class="form-control" type="text"
+                                                                           th:name="reducedForm"
+                                                                           th:value="${voucher.reducedForm}"
+                                                                    >
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Minimum Value</label>
+                                                                    <input class="form-control" type="text"
+                                                                           th:name="minimumValue"
+                                                                           th:value="${voucher.minimumValue}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-3 col-lg-6 col-md-6">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Maximum
+                                                                        Discount:</label>
+                                                                    <input type="text" class="form-control"
+                                                                           th:name="maximumDiscount"
+                                                                           th:value="${voucher.maximumDiscount}"
+
+                                                                    >
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Start Day:</label>
+                                                                    <input type="date" class="form-control"
+                                                                           th:name="startDay"
+                                                                           th:value="${voucher.startDay}"
+                                                                    >
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-3 col-lg-6 col-md-6">
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Quantity:</label>
+                                                                    <input type="text" class="form-control"
+                                                                           th:name="quantity"
+                                                                           th:value="${voucher.quantity}"
+                                                                    />
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label class="form-label">Expiration
+                                                                        Date:</label>
+                                                                    <input type="date" class="form-control"
+                                                                           th:name="expirationDate"
+                                                                           th:value="${voucher.expirationDate}"
+                                                                    />
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="row justify-content-xl-end">
-                                                            <div class="w-auto">
-                                                                <button type="reset"
+                                                    </div>
+                                                    <div class="row justify-content-xl-end">
+                                                        <div class="w-auto">
+                                                            <button type="reset"
+                                                                    class="btn btn-primary btn-control">
+                                                                Reset
+                                                            </button>
+                                                        </div>
+                                                        <div class="w-auto">
+                                                            <button type="submit"
+                                                                    class="btn btn-primary btn-control"
+                                                                    onclick="return confirm('Xác nhận cập nhật')">
+                                                                Update
+                                                            </button>
+                                                        </div>
+                                                        <div class="w-auto">
+                                                            <a th:href="@{/admin/voucher/delete/{id}(id=${voucher.id})}"
+                                                               onclick="return confirm('Xác nhận xóa')">
+                                                                <button type="button"
                                                                         class="btn btn-primary btn-control">
-                                                                    Reset
+                                                                    Delete
                                                                 </button>
-                                                            </div>
-                                                            <div class="w-auto">
-                                                                <button type="submit"
-                                                                        class="btn btn-primary btn-control"
-                                                                        onclick="return confirm('Xác nhận cập nhật')">
-                                                                    Update
-                                                                </button>
-                                                            </div>
-                                                            <div class="w-auto">
-                                                                <a th:href="@{/admin/voucher/delete/{id}(id=${voucher.id})}"
-                                                                   onclick="return confirm('Xác nhận xóa')">
-                                                                    <button type="button"
-                                                                            class="btn btn-primary btn-control">
-                                                                        Delete
-                                                                    </button>
-                                                                </a>
-                                                            </div>
+                                                            </a>
                                                         </div>
-                                                    </form>
-                                                </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                                 <a th:href="@{/admin/voucher/delete/{id}(id=*{voucher.id})}"
                                    onclick="return confirm('Xác nhận xóa')">
                                     <button type="button" class="btn btn-icon btn-danger">
@@ -336,14 +348,13 @@
                     </tr>
                     </tbody>
                 </table>
-
-
             </div>
             <hr class="card-separator">
         </div>
         <div class="card-footer">
+
             <div class="d-inline-flex float-end">
-                <div class="mx-3 row" style="width: 180px">
+                <div class="mx-3 row" style="width: 180px; color: black">
                     <label for="select-view" class="col-form-label col-5 text-end">View:</label>
                     <div class="col-7">
                         <select class="form-select text-start" id="select-view">
@@ -357,23 +368,28 @@
                 <div aria-label="Page pagination">
                     <ul class="pagination">
                         <li class="page-item first">
-                            <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
+                            <a class="page-link" th:href="@{'/admin/voucher/list?page=1&size='+${session.size}}"><i
+                                    class="tf-icon bx bx-chevrons-left"></i></a>
                         </li>
                         <li class="page-item prev">
-                            <a class="page-link" href="javascript:void(0);"><i
+                            <a class="page-link"
+                               th:href="@{'/admin/voucher/list?page='+${session.page==1? '1': session.page - 1}+'&size='+${session.size}}"><i
                                     class="tf-icon bx bx-chevron-left"></i></a>
                         </li>
-                        <li class="page-item">
-                            <a class="page-link" href="javascript:void(0);">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="javascript:void(0);">2</a>
+                        <li class="page-item" th:each="pagination:${#numbers.sequence(1,session.list.totalPages)}">
+                            <a class="page-link"
+                               th:href="@{'/admin/voucher/list?page='+${pagination}+'&size='+${session.size}}"
+                               th:text="${pagination}"></a>
                         </li>
                         <li class="page-item next">
-                            <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                            <a class="page-link"
+                               th:href="@{'/admin/voucher/list?page='+${session.page < totalPage ? session.page + 1 : totalPage }+'&size='+${session.size}}"><i
+                                    class="tf-icon bx bx-chevron-right"></i></a>
                         </li>
                         <li class="page-item last">
-                            <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
+                            <a class="page-link"
+                               th:href="@{'/admin/voucher/list?page='+${totalPage}+'&size='+${session.size}}"><i
+                                    class="tf-icon bx bx-chevrons-right"></i></a>
                         </li>
                     </ul>
                 </div>

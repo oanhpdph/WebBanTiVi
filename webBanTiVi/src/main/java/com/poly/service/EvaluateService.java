@@ -1,11 +1,7 @@
 package com.poly.service;
 
-import com.poly.dto.EvaluateRes;
 import com.poly.entity.Evaluate;
-import com.poly.repository.EvaluateRepos;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.poly.dto.EvaluateRes;
 import java.util.List;
 
 public interface EvaluateService {

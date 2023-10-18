@@ -16,19 +16,18 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- Account -->
-                    <form th:action="@{/admin/staff/add}" th:object="${staff}" method="POST" >
+                    <form th:action="@{/admin/staff/add}" th:object="${staff}" method="POST"  enctype="multipart/form-data" >
                         <div class="card-body">
                             <div class="d-flex align-items-start align-items-sm-center gap-4">
                                 <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar" class="d-block rounded"
                                      height="100"
-                                     width="100" th:id="uploadeAvatar">
+                                     width="100" id="uploadeAvatar">
                                 <div class="button-wrapper">
-                                    <label for="uploadedAvatar"  tabindex="0">
+                                    <label for="customFile"  tabindex="0">
                                         <span class="d-none d-sm-block">Upload new photo</span>
                                         <i class="bx bx-upload d-block d-sm-none"></i>
-                                        <input type="file" id="uploadedAvatar" class="account-file-input" name="avatar"
-                                               accept="image/*" th:name="avatar" >
-
+                                        <input type="file" class="custom-file-input" id="customFile"
+                                               name="image" accept="image/*">
                                     </label>
                                     <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
                                         <i class="bx bx-reset d-block d-sm-none"></i>
@@ -90,7 +89,7 @@
                                     <div class="col-sm-4">
                                         <label for="html5-password-input"
                                                class="col-md-3 col-form-label">Password</label>
-                                        <input class="form-control" type="text" value="password"
+                                        <input class="form-control" type="text"
                                                id="html5-password-input"
                                                th:name="password">
 
@@ -215,7 +214,7 @@
 
                                 <div class="card-body">
                                     <form th:action="@{/admin/staff/update/{id}(id=${staff.id})}" th:object="${staff}"
-                                          method="POST">
+                                          method="POST" enctype="multipart/form-data" >
                                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                                             <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar"
                                                  class="d-block rounded"
@@ -227,8 +226,8 @@
                                                 <label th:for="uploadedAvatar"  tabindex="0">
                                                     <span class="d-none d-sm-block">Upload new photo</span>
                                                     <i class="bx bx-upload d-block d-sm-none"></i>
-                                                    <input type="file" th:id="uploadedAvatar"  class="account-file-input" name="avatar"
-                                                           accept="image/png, image/jpeg" th:name="avatar"  >
+                                                    <input type="file" th:id="uploadedAvatar"  class="account-file-input" name="image"
+                                                           accept="image/png, image/jpeg"  >
                                                     <input type="text"  th:value="${staff.avatar}" >
                                                 </label>
                                                 <button type="button"
@@ -313,7 +312,7 @@
                                                 </div>
                                                 <div class="row g-3">
                                                     <div class="col-sm-4">
-                                                        <label class="form-label" for="phoneNumber">Phone Number</label>
+                                                        <label class="form-label" >Phone Number</label>
                                                         <div class="input-group input-group-merge">
                                                             <span class="input-group-text">VN (+84)</span>
                                                             <input type="text"

@@ -1,7 +1,9 @@
 package com.poly.service;
 
-import com.poly.entity.Staff;
+import com.poly.entity.Bill;
 import com.poly.entity.Voucher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +16,15 @@ public interface VoucherService {
 
     void delete(Integer id);
 
-    List<Voucher> findAll();
+    Page<Voucher> findAll(Pageable pageable);
 
     Optional<Voucher> findById(Integer id);
 
+
+    // chia page
+
+
+    Page<Voucher> getPagination(Integer page, Integer size);
+
+    Page<Voucher> search(String data,String date, Integer page, Integer size) ;
 }

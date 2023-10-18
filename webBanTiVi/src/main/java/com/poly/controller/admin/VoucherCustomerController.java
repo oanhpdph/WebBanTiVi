@@ -40,9 +40,8 @@ public class VoucherCustomerController {
     public String voucherCustomer(HttpSession session, Model model) {
         session.setAttribute("pageView", "/admin/page/voucher/voucherCustomer.html");
         session.setAttribute("active", "/voucherCustomer");
-        session.setAttribute("listCustomer", this.customerService.findAll());
-        System.out.println(customerService.findAll());
-        session.setAttribute("listVoucher", this.voucherService.findAll());
+//        session.setAttribute("listCustomer", this.customerService.findAll());
+//        session.setAttribute("listVoucher", this.voucherService.findAll(pageable));
         model.addAttribute("listVoucherCustomer", this.voucherCustomerService.findAll());
         model.addAttribute("voucherCustomer", new VoucherCustomerRes());
         return "admin/layout";

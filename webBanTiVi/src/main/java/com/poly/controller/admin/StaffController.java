@@ -1,5 +1,6 @@
 package com.poly.controller.admin;
 
+import com.poly.common.UploadFile;
 import com.poly.entity.Staff;
 import com.poly.service.StaffService;
 import jakarta.servlet.http.HttpSession;
@@ -13,11 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-
 @Controller
 @RequestMapping("/admin")
 public class StaffController {
@@ -37,9 +33,22 @@ public class StaffController {
 
 
     @PostMapping("/staff/add")
-    public String addStaff(Model model,  @ModelAttribute("staff") Staff staff, @RequestParam("avatar") String file)  {
-        staff.setAvatar(file);
+    public String addStaff(Model model, @Valid @ModelAttribute("staff") Staff staff,BindingResult bindingResult, @RequestParam("image") MultipartFile file)  {
+
+        System.out.println(bindingResult.hasErrors());
+        if (bindingResult.hasErrors()) {
+            return "admin/layout";
+        }
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
+        staff.setAvatar(fileName);
         this.staffService.save(staff);
+        String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
+        try {
+            UploadFile.saveFile(uploadDir, fileName, file);
+        } catch (IOException e) {
+            //
+            e.printStackTrace();
+        }
         model.addAttribute("listStaff", staffService.findAll());
         return "redirect:/admin/staff";
     }
@@ -54,12 +63,30 @@ public class StaffController {
     }
 
     @PostMapping("/staff/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, Staff staff, Model model, @RequestParam("avatar") String file) {
-            
-            staff.setAvatar(file);
-           this.staffService.save(staff);
+    public String updateUser(@PathVariable("id") Integer id,  @ModelAttribute("staff") Staff staff, Model model, @RequestParam("image") MultipartFile file) {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
+        Staff findStaff = staffService.findById(staff.getId()).orElse(null);
 
-
+        findStaff.setCode(staff.getCode());
+        findStaff.setName(staff.getName());
+        findStaff.setEmail(staff.getEmail());
+        findStaff.setGender(staff.isGender());
+        findStaff.setPassword(staff.getPassword());
+        findStaff.setPhone(staff.getPhone());
+        findStaff.setAddress(staff.getAddress());
+        findStaff.setPosition(staff.isPosition());
+        findStaff.setBirthday(staff.getBirthday());
+        if (!"".equals(fileName)) {
+            findStaff.setAvatar(fileName);
+            String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
+            try {
+                UploadFile.saveFile(uploadDir, fileName, file);
+            } catch (IOException e) {
+                //
+                e.printStackTrace();
+            }
+        }
+           this.staffService.save(findStaff);
         model.addAttribute("listStaff", staffService.findAll());
         return "redirect:/admin/staff";
     }
