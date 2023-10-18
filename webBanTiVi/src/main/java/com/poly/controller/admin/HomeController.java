@@ -21,7 +21,7 @@ public class HomeController {
 
     @GetMapping("")
     public String loadHome(HttpSession session,Model model) {
-        session.setAttribute("pageView", "/admin/page/statistic.html");
+        session.setAttribute("pageView", "/admin/page/statistic/statistic.html");
         session.setAttribute("active", "/dashboard");
         return "admin/layout";
     }
@@ -44,7 +44,7 @@ public class HomeController {
 
     @GetMapping("/statistic")
     public String loadStatistic(HttpSession session, Model model) {
-        session.setAttribute("pageView", "/admin/page/statistic.html");
+        session.setAttribute("pageView", "/admin/page/statistic/statistic.html");
         session.setAttribute("active", "/statistic");
         return "admin/layout";
     }
