@@ -67,4 +67,9 @@ public class VoucherServiceImpl implements VoucherService {
     public Optional<Voucher> findById(Integer id) {
         return this.voucherRepository.findById(id);
     }
+
+    @Override
+    public List<Voucher> findAllList() {
+        return this.voucherRepository.findAll();
+    }
 }

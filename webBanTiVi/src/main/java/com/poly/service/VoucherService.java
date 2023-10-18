@@ -20,6 +20,7 @@ public interface VoucherService {
 
     Optional<Voucher> findById(Integer id);
 
+    List<Voucher> findAllList();
 
     // chia page
 
