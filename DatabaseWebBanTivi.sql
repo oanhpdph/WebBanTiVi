@@ -292,7 +292,7 @@ CREATE TABLE cart
      code        NVARCHAR(30) unique,
      date_update DATETIME,
   )
-
+  select * from product
 -- giỏ hàng chi tiết
 CREATE TABLE cart_product
   (
