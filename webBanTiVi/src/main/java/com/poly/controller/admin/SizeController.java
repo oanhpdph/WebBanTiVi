@@ -31,11 +31,6 @@ public class SizeController {
     }
 
 
-    @GetMapping
-    public List<Size> getAll(){
-
-        return sizeService.getAll();
-    }
 
 
     @DeleteMapping("/delete/{id}")

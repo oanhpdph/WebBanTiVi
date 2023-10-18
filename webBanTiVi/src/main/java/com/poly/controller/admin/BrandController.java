@@ -31,12 +31,6 @@ public class BrandController {
     }
 
 
-    @GetMapping
-    public List<Brand> getAll() {
-
-        return brandService.getAll();
-    }
-
 
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Integer id) {
