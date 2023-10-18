@@ -48,7 +48,6 @@ public class VoucherController {
         model.addAttribute("listVoucher", this.voucherService.findAll());
         return "admin/layout";
     }
-
     @PostMapping("/voucher/update/{id}")
     public String updatevoucher(@PathVariable("id") Integer id, @Valid Voucher voucher, BindingResult result, Model model) {
         if (result.hasErrors()) {

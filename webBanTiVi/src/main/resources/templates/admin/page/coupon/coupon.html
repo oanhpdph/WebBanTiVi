@@ -1,0 +1,100 @@
+<link rel="stylesheet" href="/admin/assets/css/app.css"/>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">UI elements /</span> Coupon</h4>
+<form action="/upload" method="post">
+    <div class="row">
+        <!-- Basic Badges -->
+        <div class="col-lg">
+            <div class="card mb-4"><h5 class="card-header">Coupon</h5>
+                <div class="card-body">
+                    <div class="row">
+                        <!-- Basic Badges -->
+                        <div class="col-lg">
+                            <div class="top">
+                                <p>Dropzone Image Uploading</p>
+                                <br>
+                                <button type="button">Upload</button>
+                            </div>
+                            <div action="/upload" method="post" class="dragover form-dropzone select dropzone">
+                                <span class="inner">Drop Image here or <span>Browse</span>
+                                </span>
+                                <input name="file" type="file" class="file mx-3" multiple />
+                            </div>
+                            <div class="container">
+
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="mb-3 row">
+                        <label class="col-md-2 col-form-label">Code</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" placeholder="code" id="html5-text-input2">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-2 col-form-label">Value</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" placeholder="name" id="html5-text-input3">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-2 col-form-label">Active</label>
+                        <div class="col-md-10">
+                            <input class="form-control" type="text" placeholder="active" id="html5-text-input4">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+                <h5 class="card-header">Add Coupon badges</h5>
+                <div class="card-body">
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                        <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="row">
+    <!-- Button with Badges -->
+    <div class="col-lg">
+        <div class="card mb-4">
+            <h5 class="card-header">Table Coupon</h5>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Value</th>
+                        <th>Active</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.code}</td>
+                        <td>${item.active}</td>
+                        <td><p><img src="" alt="car_image"
+                                    style="height: 50px; width: 50px"/></p>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="/admin/coupon/edit/${item.id}">Edit</a>
+                            <a class="btn btn-sm btn-danger" href="/admin/coupon/delete/${item.id}">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<!-- Script -->
+<script src="/admin/assets/js/api.js"></script>

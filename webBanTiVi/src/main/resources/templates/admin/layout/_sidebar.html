@@ -97,5 +97,23 @@
                 <div data-i18n="Blog">Blog</div>
             </a>
         </li>
+        <li th:class="${#strings.equals(session.active,'/coupon')?'menu-item active':'menu-item'}">
+            <a th:href="@{/admin/coupon}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-tv"></i>
+                <div data-i18n="coupon">Coupon</div>
+            </a>
+        </li>
+        <li th:class="${#strings.equals(session.active,'/brand')?'menu-item active':'menu-item'}">
+            <a th:href="@{/admin/brand}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-tv"></i>
+                <div data-i18n="brand">Brand</div>
+            </a>
+        </li>
+        <li th:class="${#strings.equals(session.active,'/feature')?'menu-item active':'menu-item'}">
+            <a th:href="@{/admin/feature}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-tv"></i>
+                <div data-i18n="feature">Feature</div>
+            </a>
+        </li>
     </ul>
 </aside>
