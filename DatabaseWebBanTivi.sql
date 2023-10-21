@@ -22,7 +22,14 @@ CREATE TABLE brand
      code      VARCHAR(10) not null,
      namebrand NVARCHAR(max) not null
   )
-
+  select * from brand 
+  insert into brand values('b1','SamSung')
+  insert into origin values('o1','VietNam')
+  insert into manufacture values('m1','manu1')
+  insert into color values('c1','Black')
+  insert into [type] values('t1','oled')
+  insert into feature values('f1','feature1')
+  insert into supplier values('s1','sup1')
 
 -- Xuất xứ
 CREATE TABLE origin
@@ -79,6 +86,8 @@ CREATE TABLE resolution
      screen_length  FLOAT not null,-- chiều dài màn hình (pixel)
      screen_width   FLOAT not null,
   )
+  insert into resolution values('b1','HD','720','1280')
+insert into size values('b1','X','720','1280','4')
 
 -- size
 CREATE TABLE size
@@ -108,14 +117,8 @@ CREATE TABLE product
      id_type        INT REFERENCES [type](id),
      id_size        INT REFERENCES size(id),
      id_resolution  INT REFERENCES resolution(id),
+	 id_supplier	INT REFERENCES supplier(id),
      active         BIT
-  )
-
-CREATE TABLE product_supplier
-  (
-     id_supplier INT REFERENCES supplier(id),
-     id_product  INT REFERENCES product(id),
-     PRIMARY KEY(id_supplier, id_product)
   )
 
 CREATE TABLE product_feature
@@ -132,6 +135,8 @@ CREATE TABLE image_product
      name_image varchar(200) not null,
 	 location bit
   )
+  insert into image_product(id_product, name_image) values(4,'anh 1')
+  select * from image_product
 
 -- chi tiết coupon
 CREATE TABLE coupon_product
@@ -249,39 +254,35 @@ CREATE TABLE bill
      payment_date     DATE not null,-- ngày thanh toán
      id_status        INT REFERENCES bill_status(id) not null,
      id_paymentmethod INT REFERENCES payment_method not null,
-	 id_voucher		  INT REFERENCES voucher,
-	 payment_status	  INT default 1, 
+	 payment_status	  INT default 1,
      note             NVARCHAR(max)
   )
+  select * from bill b where b.create_date between '01/01/2023' and '01/02/2023'
 
 -- hoa don chi tiet
 CREATE TABLE bill_product
   (
-     id_bill		INT REFERENCES bill(id),
-     id_product		INT REFERENCES product(id),
-     quantity		INT not null,
-     price			money not null,
-	 reduced_money	money,
-	 status			bit,
-	 note			NVARCHAR(200)
+     id_bill    INT REFERENCES bill(id),
+     id_product INT REFERENCES product(id),
+     quantity   INT not null,
+     price      money not null,
+	 status		bit
      PRIMARY KEY(id_bill, id_product)
   )
 
 CREATE TABLE delivery_notes
   (
-     id					INT IDENTITY(1,1) PRIMARY KEY,
-     received			NVARCHAR(50) not null,
-     received_phone		VARCHAR(20) not null,
-	 received_email		VARCHAR(100) not null,
-	 receiving_address  NVARCHAR(200) NOT NULL,
-     deliver			NVARCHAR(50),
-     delivery_phone		VARCHAR(20) not null,
-     delivery_date		DATE,
-     received_date		DATE,
-     delivery_fee		MONEY,
-     note				NVARCHAR(max),
-     status				INT,
-	 id_bill			INT REFERENCES bill(id) not null,
+     id             INT IDENTITY(1,1) PRIMARY KEY,
+     received       NVARCHAR(50) not null,
+     received_phone VARCHAR(20) not null,
+     deliver        NVARCHAR(50),
+     delivery_phone VARCHAR(20) not null,
+     delivery_date  DATE,
+     received_date  DATE,
+     delivery_fee   MONEY,
+     note           NVARCHAR(max),
+     status         INT,
+	 id_bill        INT REFERENCES bill(id) not null,
   )
 
 --giỏ hàng
@@ -552,6 +553,37 @@ INSERT INTO [dbo].[product]
            ,1)
 GO
 
+INSERT INTO [dbo].[product]
+           ([code]
+           ,[nametv]
+           ,[price_import]
+           ,[price_export]
+           ,[quantity]
+           ,[guarantee]
+           ,[id_brand]
+           ,[id_origin]
+           ,[id_manufacture]
+           ,[id_color]
+           ,[id_type]
+           ,[id_size]
+           ,[id_resolution]
+           ,[active])
+     VALUES
+           ('SP03'
+           ,N'Sản phẩm 3'
+           ,20000
+           ,16000
+           ,80
+           ,2
+           ,'b1'
+           ,'o1'
+           ,'m1'
+           ,'c'
+           ,'t1'
+           ,'b1'
+           ,'b1'
+           ,1)
+GO
 
 
 INSERT INTO [dbo].[bill_product]
@@ -580,28 +612,4 @@ INSERT INTO [dbo].[bill_product]
            ,5
            ,500
            ,1)
-GO
-
-INSERT INTO [dbo].[delivery_notes]
-           ([received]
-           ,[received_phone]
-           ,[deliver]
-           ,[delivery_phone]
-           ,[delivery_date]
-           ,[received_date]
-           ,[delivery_fee]
-           ,[note]
-           ,[status]
-           ,[id_bill])
-     VALUES
-           ('Phạm đức oanh'
-           ,'0987778788'
-           ,'Phạm đức oanh'
-           ,'0987678778'
-           ,'2023-10-12'
-           ,'2023-10-15'
-           ,'100000000'
-           ,'Không'
-           ,1
-           ,2)
 GO
