@@ -3,6 +3,7 @@ package com.poly.entity.idClass;
 import com.poly.entity.Customer;
 import com.poly.entity.Voucher;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 

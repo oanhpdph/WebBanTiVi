@@ -32,6 +32,12 @@ public class DeliveryNotes {
     @Column(name = "delivery_phone")
     private String deliveryPhone;
 
+    @Column(name = "received_email")
+    private String deliveryEmail;
+
+    @Column(name = "receiving_address")
+    private String receivingAddress;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "delivery_date")
     private Date deliveryDate;

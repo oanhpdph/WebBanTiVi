@@ -39,10 +39,9 @@ public class VoucherCustomerController {
     @GetMapping("/voucherCustomer")
     public String voucherCustomer(HttpSession session, Model model) {
         session.setAttribute("pageView", "/admin/page/voucher/voucherCustomer.html");
-        session.setAttribute("active", "/blog");
+        session.setAttribute("active", "/voucherCustomer");
         session.setAttribute("listCustomer", this.customerService.findAll());
-        System.out.println(customerService.findAll());
-        session.setAttribute("listVoucher", this.voucherService.findAll());
+        session.setAttribute("listVoucher", this.voucherService.findAllList());
         model.addAttribute("listVoucherCustomer", this.voucherCustomerService.findAll());
         model.addAttribute("voucherCustomer", new VoucherCustomerRes());
         return "admin/layout";
@@ -60,28 +59,26 @@ public class VoucherCustomerController {
     }
 
     @GetMapping("/voucherCustomer/edit/{id_voucher}/{id_customer}")
-    public String editVoucherCustomer(@PathVariable("id_voucher") Integer id_voucher, @PathVariable("id_customer") Integer id_customer, Model model) {
+    public String editVoucherCustomer(HttpSession session,@PathVariable("id_voucher") Integer id_voucher, @PathVariable("id_customer") Integer id_customer, Model model) {
+        session.setAttribute("pageView", "/admin/page/voucher/voucherCustomerEdit.html");
+        session.setAttribute("active", "/voucherCustomer");
+        session.setAttribute("listCustomer", this.customerService.findAll());
+        session.setAttribute("listVoucher", this.voucherService.findAllList());
         VoucherCustomerId voucherCustomerId = new VoucherCustomerId();
         voucherCustomerId.setCustomer(customerService.findById(id_customer).orElse(null));
         voucherCustomerId.setVoucher(voucherService.findById(id_voucher).orElse(null));
-        VoucherCustomer voucher = voucherCustomerService.findById(voucherCustomerId)
+        VoucherCustomer voucherCustomer = voucherCustomerService.findById(voucherCustomerId)
                 .orElse(null);
         model.addAttribute("listVoucherCustomer", voucherCustomerService.findAll());
-        model.addAttribute("voucherCustomer", voucher);
+        model.addAttribute("voucherCustomer", voucherCustomer);
         return "admin/layout";
     }
 
     @PostMapping("/voucherCustomer/update/{id}")
-    public String updatevoucherCustomer(@PathVariable("id") Integer id, @Valid VoucherCustomerRes voucherCustomerRes, BindingResult result, Model model) {
+    public String updatevoucherCustomer(@PathVariable("id") Integer id, @Valid  VoucherCustomerRes voucherCustomerRes, BindingResult result, Model model) {
         this.voucherCustomerService.save(voucherCustomerRes);
         return "redirect:/admin/voucherCustomer";
     }
 
-//    @GetMapping("/voucherCustomer/delete/{id}")
-//    public String deletevoucherCustomer(@PathVariable("id") Integer id, Model model) {
-//        VoucherCustomer VoucherCustomer = this.voucherCustomerService.findById(id)
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-//        this.voucherCustomerService.delete(id);
-//        return "redirect:/admin/voucherCustomer";
-//    }
+
 }

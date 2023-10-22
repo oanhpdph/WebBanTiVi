@@ -1,7 +1,9 @@
 package com.poly.service.Impl;
 
+import com.poly.entity.Bill;
 import com.poly.entity.DeliveryNotes;
 import com.poly.repository.DeliveryNotesRepos;
+import com.poly.service.BillService;
 import com.poly.service.DeliveryNotesSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,9 @@ import java.util.Optional;
 public class DeliveryNotesImpl implements DeliveryNotesSevice {
     @Autowired
     private DeliveryNotesRepos deliveryNotesRepos;
+
+    @Autowired
+    private BillService billService;
 
     @Override
     public DeliveryNotes add(DeliveryNotes deliveryNotes) {
@@ -34,12 +39,11 @@ public class DeliveryNotesImpl implements DeliveryNotesSevice {
         if (optional.isPresent()) {
             DeliveryNotes deliveryNotesUpdate = optional.get();
             deliveryNotesUpdate.setNote(deliveryNotes.getNote());
-            deliveryNotesUpdate.setDeliveryPhone(deliveryNotes.getDeliveryPhone());
-            deliveryNotesUpdate.setReceived(deliveryNotesUpdate.getReceived());
-            deliveryNotesUpdate.setReceiverPhone(deliveryNotes.getReceiverPhone());
             deliveryNotesUpdate.setDeliver(deliveryNotes.getDeliver());
+            deliveryNotesUpdate.setDeliveryPhone(deliveryNotes.getDeliveryPhone());
             deliveryNotesUpdate.setStatus(deliveryNotesUpdate.getStatus());
             deliveryNotesUpdate.setDeliveryFee(deliveryNotes.getDeliveryFee());
+            deliveryNotesUpdate.setReceivingAddress(deliveryNotes.getReceivingAddress());
             return deliveryNotesRepos.save(deliveryNotesUpdate);
         }
         return null;
@@ -48,9 +52,11 @@ public class DeliveryNotesImpl implements DeliveryNotesSevice {
     @Override
     public DeliveryNotes getByIdBill(Integer idBill) {
         Optional<DeliveryNotes> optional = deliveryNotesRepos.getDeliveryNotesByIdBill(idBill);
-        if(optional.isPresent()){
+        System.out.println(optional);
+        if (optional.isPresent()) {
             return optional.get();
         }
         return null;
     }
+
 }

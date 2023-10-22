@@ -1,13 +1,13 @@
 package com.poly.service;
 
+import com.poly.dto.SearchBillDto;
 import com.poly.entity.Bill;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface BillService {
 
-    List<Bill> getALl();
+    Page<Bill> loadData(SearchBillDto searchBillDto, Pageable pageable);
 
     Bill add(Bill bill);
 
@@ -18,4 +18,5 @@ public interface BillService {
     Bill getOneById(Integer id);
 
     Bill getOneByIdCustomer(Integer idCustomer);
+
 }

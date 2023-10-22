@@ -4,11 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="" />
+=======
+    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/voucher/voucherCustomerEdit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/VoucherController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/VoucherController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/VoucherCustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/controller/admin/VoucherCustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/entity/VoucherCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/entity/VoucherCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/VoucherCustomerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/VoucherCustomerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/VoucherServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/Impl/VoucherServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/poly/service/VoucherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/poly/service/VoucherService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/page/customer/customer.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/customer/customer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/page/staff.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/staff.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/page/voucher/voucherAdd.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/page/voucher/voucherCustomer.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/page/voucher/voucherCustomer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/page/voucher/voucherDetail.html" beforeDir="false" />
+    </list>
+>>>>>>> 2a1818fcc8cf3abb438b90c04dc12b2cc95014ac
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="CompilerWorkspaceConfiguration">
     <option name="MAKE_PROJECT_ON_SAVE" value="true" />
@@ -18,8 +40,8 @@
       <list>
         <option value="CSS File" />
         <option value="Interface" />
-        <option value="HTML File" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -52,7 +74,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../authoriztion-server/authoriztion-server" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -60,13 +82,19 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+    <property name="settings.editor.selected.configurable" value="trusted.hosts" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.poly" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\static\image" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\templates\user\page" />
     </key>
@@ -120,6 +148,38 @@
       <workItem from="1696521007214" duration="3585000" />
       <workItem from="1696647203516" duration="15995000" />
       <workItem from="1696741410053" duration="15114000" />
+      <workItem from="1696816084155" duration="86000" />
+      <workItem from="1696823719872" duration="93000" />
+      <workItem from="1696863892932" duration="82000" />
+      <workItem from="1696864149600" duration="3602000" />
+      <workItem from="1696947527880" duration="2203000" />
+      <workItem from="1696949791537" duration="8402000" />
+      <workItem from="1696990538040" duration="453000" />
+      <workItem from="1697007077569" duration="642000" />
+      <workItem from="1697015301481" duration="98000" />
+      <workItem from="1697033407021" duration="9967000" />
+      <workItem from="1697080906781" duration="15870000" />
+      <workItem from="1697119737441" duration="2278000" />
+      <workItem from="1697124622815" duration="928000" />
+      <workItem from="1697172143663" duration="1055000" />
+      <workItem from="1697257555425" duration="8796000" />
+      <workItem from="1697352510152" duration="6447000" />
+      <workItem from="1697375706451" duration="619000" />
+      <workItem from="1697377021820" duration="67000" />
+      <workItem from="1697377131368" duration="206000" />
+      <workItem from="1697377475132" duration="691000" />
+      <workItem from="1697378207704" duration="165000" />
+      <workItem from="1697385147083" duration="103000" />
+      <workItem from="1697422432495" duration="727000" />
+      <workItem from="1697427371677" duration="296000" />
+      <workItem from="1697427856290" duration="1200000" />
+      <workItem from="1697449798579" duration="4000" />
+      <workItem from="1697527156381" duration="3692000" />
+      <workItem from="1697538099800" duration="199000" />
+      <workItem from="1697538943053" duration="463000" />
+      <workItem from="1697626646136" duration="144000" />
+      <workItem from="1697626876632" duration="435000" />
+      <workItem from="1697634363967" duration="5280000" />
     </task>
     <servers />
   </component>
@@ -127,6 +187,18 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+<<<<<<< HEAD
+=======
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+>>>>>>> 2a1818fcc8cf3abb438b90c04dc12b2cc95014ac
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
@@ -136,9 +208,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/admin/VoucherCustomerController.java</url>
-          <line>52</line>
-          <option name="timeStamp" value="31" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/admin/EvaluateController.java</url>
+          <line>79</line>
+          <option name="timeStamp" value="36" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

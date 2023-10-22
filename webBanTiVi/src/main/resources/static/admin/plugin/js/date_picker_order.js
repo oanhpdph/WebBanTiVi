@@ -1,5 +1,6 @@
 $('#date-seach-order').daterangepicker({
     alwaysShowCalendars: true,
+    autoUpdateInput: false,
     locale: {
         format: 'YYYY/MM/DD',
         cancelable: 'Clear'
@@ -15,6 +16,9 @@ $('#date-seach-order').daterangepicker({
         'Last 30 Days': [moment().subtract(29, 'days'), moment()]
     },
 });
-$('input[id="date-seach-order"]').on('cancel.daterangepicker', function(ev, picker) {
-    $(this).val(new Date().toLocaleDateString() +'-'+ new Date().toLocaleDateString());
+// $('input[id="date-seach-order"]').on('cancel.daterangepicker', function(ev, picker) {
+//     $(this).val("MM/dd/yyyy"-"MM/dd/yyyy");
+// });
+$('input[id="date-seach-order"]').on('apply.daterangepicker', function(ev, picker) {
+    $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
 });

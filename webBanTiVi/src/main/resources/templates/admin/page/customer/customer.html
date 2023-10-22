@@ -1,79 +1,76 @@
 <h4 class="fw-semibold py-3 mb-4"> Danh sách khách hàng </h4>
+
 <div class="mb-4">
-    <form th:action="@{/admin/customer/save}" method="post" th:object="${customer}">
-        <div >
-            <div >
+    <div class="row justify-content-end me-4">
+        <button type="button" class="btn btn-success mb-4 w-auto" data-bs-toggle="modal" data-bs-target="#largeModal">
+            <i class='tf-icon bx bx-plus-medical'></i> Add Customer
+        </button>
+    </div>
+    <form th:action="@{/admin/customer/save}" method="post" th:object="${customer}" enctype="multipart/form-data">
+        <div class="modal fade" th:id="largeModal" tabindex="-1"
+             aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Thông tin khách hàng</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="row">
+                        <div class="row g-3">
                             <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
-                                <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar" class="d-block rounded" height="100"
-                                     width="100" id="uploadedAvatar">
+                                <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar" class="d-block rounded"
+                                     height="100" width="100" id="uploadedAvatar">
                                 <br> <br>
-                                <label for="uploadedAvatar" class="btn btn-primary me-2 mb-4" tabindex="0">
-                                    <span class="d-none d-sm-block" style="padding-left: 10px">Upload new photo</span>
+                                <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                    <span class="d-none d-sm-block">Upload new photo</span>
                                     <i class="bx bx-upload d-block d-sm-none"></i>
-                                    <input type="file" id="uploadAvatar" class="account-file-input" hidden=""
-                                           accept="image/png, image/jpeg" th:field="*{avatar}">
+                                    <input type="file" id="upload" class="account-file-input" hidden=""
+                                           accept="image/png, image/jpeg"
+                                           name="image"
+                                    >
                                 </label>
                             </div>
                             <div class="row col-lg-8 col-xl-9">
-                                <div class="col-xl-4 col-lg-6 col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">Họ tên:</label>
-                                        <input type="text" class="form-control" th:field="*{name}">
+                                <div class="col-sm-4">
+                                    <label class="form-label">Họ tên:</label>
+                                    <input type="text" class="form-control" th:name="name">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Địa chỉ:</label>
+                                    <textarea style="height: 12px" type="text" class="form-control"
+                                              th:name="address"></textarea>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Số điện thoại</label>
+                                    <input type="text" class="form-control" th:name="phoneNumber">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Giới tính:</label>
+                                    <br>
+                                    <div class="form-check form-check-inline mt-3">
+                                        <input class="form-check-input" type="radio" th:name="gender"
+                                               id="inlineRadio1"
+                                               th:value="true">
+                                        <label class="form-check-label" for="inlineRadio1">Male</label>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">Địa chỉ:</label>
-                                        <textarea style="height: 12px" type="text" class="form-control"
-                                                  th:field="*{diachi}"></textarea>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" th:name="gender"
+                                               id="inlineRadio2"
+                                               th:value="false">
+                                        <label class="form-check-label" for="inlineRadio2">Female</label>
                                     </div>
                                 </div>
-                                <div class="col-xl-4 col-lg-6 col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label" >Số điện thoại</label>
-                                        <input type="text" class="form-control" th:field="*{phone_number}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label  class="form-label">Giới tính:</label>
-                                        <br>
-                                        <div class="form-check form-check-inline mt-3">
-                                            <input class="form-check-input" type="radio" th:field="*{gender}"
-                                                   id="inlineRadio1"
-                                                   th:value="true">
-                                            <label class="form-check-label" for="inlineRadio1">Male</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" th:field="*{gender}"
-                                                   id="inlineRadio2"
-                                                   th:value="false">
-                                            <label class="form-check-label" for="inlineRadio2">Female</label>
-                                        </div>
-                                    </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Ngày sinh</label>
+                                    <input class="form-control" type="date" th:name="birthday">
                                 </div>
-                                <div class="col-xl-4 col-lg-6 col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label" >Ngày sinh</label>
-                                        <input class="form-control" type="date" th:field="*{date}">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" >Email</label>
-                                        <input class="form-control" type="email" th:field="*{email}">
-                                    </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Email</label>
+                                    <input class="form-control" type="email" th:name="email">
                                 </div>
-                                <div class="col-xl-4 col-lg-6 col-md-6">
-                                    <div class="">
-                                        <label  class="form-label">Id Number:</label>
-                                        <input type="text" class="form-control" th:field="*{id_number}">
-                                    </div>
-                                    <div class="">
-                                        <label  class="form-label">Id Card:</label>
-                                        <input  type="text" class="form-control" th:field="*{id_card}"/>
-                                    </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Id Card:</label>
+                                    <input type="text" class="form-control" th:name="idCard"/>
                                 </div>
 
                             </div>
@@ -115,7 +112,7 @@
         <div class="row">
             <div class="col-md-2 d-flex align-items-center">
                 <p>Customer :
-                    <span th:text="${#lists.size(listCus)}"></span>
+                    <!--                    <span th:text="${#lists.size(listCus)}"></span>-->
                 </p>
             </div>
             <div class="col-md-10 text-end">
@@ -145,102 +142,156 @@
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                <tr th:each="cus : ${listCus}">
+                <tr th:each="customer : ${listCus}">
                     <!--                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>-->
-                    <td th:text="${cus.name}"></td>
-                    <td th:text="${cus.date}"></td>
-                    <td th:text="${cus.diachi}"></td>
-                    <td th:text="${cus.phone_number}"></td>
-                    <td th:text="${cus.email}"></td>
+                    <td th:text="${customer.name}"></td>
+                    <td th:text="${customer.birthday}"></td>
+                    <td th:text="${customer.address}"></td>
+                    <td th:text="${customer.phoneNumber}"></td>
+                    <td th:text="${customer.email}"></td>
                     <td>
-                        <span th:if="${cus.gender} == true" th:text="Male"/>
-                        <span th:if="${cus.gender} == false" th:text="Female"/>
+                        <span th:if="${customer.gender} == true" th:text="Male"/>
+                        <span th:if="${customer.gender} == false" th:text="Female"/>
                     </td>
                     <td><p>
-                        <img th:src="@{'/image/'+*{cus.avatar}}"
+                        <img th:src="@{'/image/'+*{customer.avatar}}"
                              style="height: 80px; width: 80px"/>
                     </p>
                     </td>
                     <td>
-                        <a class="btn btn-sm btn-primary" th:href="@{/admin/customer/edit/{id}(id=*{cus.id})}">Edit</a>
-                        <a class="btn btn-sm btn-danger"
-                           th:href="@{/admin/customer/delete/{id}(id=*{cus.id})}">Delete</a>
+                        <button type="button" class="btn btn-icon btn-primary" data-bs-toggle="modal"
+                                th:data-bs-target="|#modal${customer.id}|">
+                            <i class="bx bxs-edit-alt"></i>
+                        </button>
+
+                        <div class="modal fade" th:id="|modal${customer.id}|" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-xl" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Thông tin khách hàng</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form th:action="@{/admin/customer/update/{id}(id=${customer.id})}"
+                                              method="post" th:object="${customer}" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
+                                                    <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar"
+                                                         class="d-block rounded" height="100" width="100"
+                                                         id="uploadedAvatar">
+                                                    <br> <br>
+                                                    <label th:for="upload2" tabindex="0">
+                                                        <span class="d-none d-sm-block" style="padding-left: 10px">Upload new photo</span>
+                                                        <i class="bx bx-upload d-block d-sm-none"></i>
+                                                        <input type="file" th:id="upload2" class="account-file-input"
+                                                               accept="image/png, image/jpeg" name="image"
+                                                               th:name="avatar">
+                                                    </label>
+                                                </div>
+                                                <div class="row col-lg-8 col-xl-9">
+
+                                                    <div class="col-sm-4">
+                                                        <label class="form-label">Họ tên:</label>
+                                                        <input type="text" class="form-control" th:name="name"
+                                                               th:value="${customer.name}">
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="form-label">Địa chỉ:</label>
+                                                        <textarea style="height: 12px" type="text" class="form-control"
+                                                                  th:name="address" th:text="${customer.address}"
+
+                                                        ></textarea>
+                                                    </div>
+
+
+                                                    <div class="col-sm-4">
+                                                        <label class="form-label">Số điện thoại</label>
+                                                        <input type="text" class="form-control"
+                                                               th:name="phoneNumber"
+                                                               th:value="${customer.phoneNumber}">
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="form-label">Giới tính:</label>
+                                                        <br>
+                                                        <div class="form-check form-check-inline mt-3">
+                                                            <input class="form-check-input" type="radio"
+                                                                   th:id="|active${customer.id}|"
+                                                                   th:name="gender"
+                                                                   th:value="true"
+                                                                   th:checked="${customer.gender==true}">
+                                                            <label class="form-check-label"
+                                                                   th:for="|active${customer.id}|">Male</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                   th:id="|active${customer.id}|"
+                                                                   th:name="gender"
+                                                                   th:value="false"
+                                                                   th:checked="${customer.gender==false}">
+                                                            <label class="form-check-label"
+                                                                   th:for="|active${customer.id}|">Female</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <label class="form-label">Ngày sinh</label>
+                                                        <input class="form-control" type="date" th:name="birthday"
+                                                               th:value="${customer.birthday}">
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <label class="form-label">Email</label>
+                                                        <input class="form-control" type="email" th:name="email"
+                                                               th:value="${customer.email}">
+                                                    </div>
+
+                                                    <div class="col-sm-4">
+                                                        <label class="form-label">Id Card:</label>
+                                                        <input type="text" class="form-control" th:name="idCard"
+                                                               th:value="${customer.idCard}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row justify-content-xl-end">
+                                                <div class="w-auto">
+                                                    <button type="reset"
+                                                            class="btn btn-primary btn-control">
+                                                        Reset
+                                                    </button>
+                                                </div>
+                                                <div class="w-auto">
+                                                    <button type="submit"
+                                                            class="btn btn-primary btn-control"
+                                                            onclick="return confirm('Xác nhận cập nhật')">
+                                                        Update
+                                                    </button>
+                                                </div>
+                                                <div class="w-auto">
+                                                    <a th:href="@{/admin/customer/delete/{id}(id=${customer.id})}"
+                                                       onclick="return confirm('Xác nhận xóa')">
+                                                        <button type="button"
+                                                                class="btn btn-primary btn-control">
+                                                            Delete
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a th:href="@{/admin/customer/delete/{id}(id=*{customer.id})}"
+                           onclick="return confirm('Xác nhận xóa')">
+                            <button type="button" class="btn btn-icon btn-danger">
+                                <span class="bx bxs-trash"></span>
+                            </button>
+                        </a>
                     </td>
                 </tr>
                 </tbody>
             </table>
-
-<!--            <div class="modal fade" id="exLargeModal" tabindex="-1" style="display: none;" aria-hidden="true">-->
-<!--                <form th:action="@{/admin/customer/update/{id}(id=*{id})}" th:object="${cus}">-->
-<!--                    <div class="modal-dialog modal-xl" role="document">-->
-<!--                        <div class="modal-content">-->
-<!--                            <div class="modal-header">-->
-<!--                                <h5 class="modal-title" id="exampleModalLabel4">Thông tin khách hàng</h5>-->
-<!--                                <button type="button" class="btn-close" data-bs-dismiss="modal"-->
-<!--                                        aria-label="Close"></button>-->
-<!--                            </div>-->
-<!--                            <div class="modal-body">-->
-<!--                                <div class="row">-->
-<!--                                    <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">-->
-<!--                                        <img th:src="@{'/assets/'+*{avatar}}" src="" class="w-px-200">-->
-<!--                                    </div>-->
-<!--                                    <div class="row col-lg-8 col-xl-9">-->
-<!--                                        <div class="col-xl-4 col-lg-6 col-md-6">-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <label for="nameKH" class="form-label">Họ-->
-<!--                                                    tên:</label>-->
-<!--                                                <input type="text" class="form-control" id="nameKH" th:field="*{name}">-->
-<!--                                            </div>-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <label for="diachi" class="form-label">Địa chỉ:</label>-->
-<!--                                                <textarea type="text" class="form-control" id="diachi"-->
-<!--                                                          th:field="*{diachi}"></textarea>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="col-xl-4 col-lg-6 col-md-6">-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <label class="form-label" for="sdt">Số điện thoại</label>-->
-<!--                                                <input type="text" class="form-control" id="sdt"-->
-<!--                                                       th:field="*{phone_number}">-->
-<!--                                            </div>-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <label for="nameKH" class="form-label">Giới tính:</label>-->
-<!--                                                <select type="text" class="form-select" id="gioitinh"-->
-<!--                                                        th:field="*{gender}">-->
-<!--                                                    <option>-->
-<!--                                                        Nam-->
-<!--                                                    </option>-->
-<!--                                                    <option>-->
-<!--                                                        Nữ-->
-<!--                                                    </option>-->
-<!--                                                </select>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="col-xl-4 col-lg-6 col-md-6">-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <label class="form-label" for="ngaysinh">Ngày sinh</label>-->
-<!--                                                <input class="form-control" type="date" id="ngaysinh"-->
-<!--                                                       th:field="*{date}">-->
-<!--                                            </div>-->
-<!--                                            <div class="mb-3">-->
-<!--                                                <label class="form-label">Email</label>-->
-<!--                                                <input class="form-control" type="email" th:field="*{email}">-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="modal-footer">-->
-<!--                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">-->
-<!--                                    Close-->
-<!--                                </button>-->
-<!--                                <button type="button" class="btn btn-primary">Save changes</button>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--            </div>-->
-
         </div>
         <hr class="card-separator">
     </div>

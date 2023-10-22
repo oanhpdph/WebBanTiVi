@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "bill-status")
+@Table(name = "bill_status")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -16,6 +16,9 @@ public class BillStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name="code")
+    private String code;
 
     @Column(name="status")
     private String status;

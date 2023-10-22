@@ -1,5 +1,6 @@
 package com.poly.controller.admin;
 
+import com.poly.common.UploadFile;
 import com.poly.entity.Staff;
 import com.poly.service.StaffService;
 import jakarta.servlet.http.HttpSession;
@@ -7,12 +8,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 @Controller
 @RequestMapping("/admin")
 public class StaffController {
@@ -21,7 +22,8 @@ public class StaffController {
     StaffService staffService;
 
     @GetMapping("/staff")
-    public String loadStaff(HttpSession session, Model model) {
+    public String loadStaff(HttpSession session, Model model)  {
+
         session.setAttribute("pageView", "/admin/page/staff.html");
         session.setAttribute("active", "/staff");
         model.addAttribute("listStaff",staffService.findAll());
@@ -29,13 +31,24 @@ public class StaffController {
         return "admin/layout";
     }
 
+
     @PostMapping("/staff/add")
-    public String addStaff(Model model, @Valid Staff staff, BindingResult result) {
-        if (result.hasErrors()) {
-            model.addAttribute("message", "Vui long dien day du thong tin");
+    public String addStaff(Model model, @Valid @ModelAttribute("staff") Staff staff,BindingResult bindingResult, @RequestParam("image") MultipartFile file)  {
+
+        System.out.println(bindingResult.hasErrors());
+        if (bindingResult.hasErrors()) {
             return "admin/layout";
         }
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
+        staff.setAvatar(fileName);
         this.staffService.save(staff);
+        String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
+        try {
+            UploadFile.saveFile(uploadDir, fileName, file);
+        } catch (IOException e) {
+            //
+            e.printStackTrace();
+        }
         model.addAttribute("listStaff", staffService.findAll());
         return "redirect:/admin/staff";
     }
@@ -50,12 +63,31 @@ public class StaffController {
     }
 
     @PostMapping("/staff/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid Staff staff, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            staff.setId(id);
-            return "admin/layout";
+    public String updateUser(@PathVariable("id") Integer id,  @ModelAttribute("staff") Staff staff, Model model, @RequestParam("image") MultipartFile file) {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
+        Staff findStaff = staffService.findById(staff.getId()).orElse(null);
+
+        findStaff.setCode(staff.getCode());
+        findStaff.setName(staff.getName());
+        findStaff.setEmail(staff.getEmail());
+        findStaff.setGender(staff.isGender());
+        findStaff.setPassword(staff.getPassword());
+        findStaff.setPhone(staff.getPhone());
+        findStaff.setAddress(staff.getAddress());
+        findStaff.setPosition(staff.isPosition());
+        findStaff.setBirthday(staff.getBirthday());
+        if (!"".equals(fileName)) {
+            findStaff.setAvatar(fileName);
+            String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
+            try {
+                UploadFile.saveFile(uploadDir, fileName, file);
+            } catch (IOException e) {
+                //
+                e.printStackTrace();
+            }
         }
-        staffService.save(staff);
+           this.staffService.save(findStaff);
+        model.addAttribute("listStaff", staffService.findAll());
         return "redirect:/admin/staff";
     }
 

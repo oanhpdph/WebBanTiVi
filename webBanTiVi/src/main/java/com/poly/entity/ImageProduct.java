@@ -18,9 +18,12 @@ public class ImageProduct {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="id_product")
+    @JoinColumn(name = "id_product")
     private Product product;
 
-    @Column(name="name_image")
+    @Column(name = "name_image")
     private String nameImage;
+
+    @Column(name = "location")
+    private boolean location;
 }
