@@ -1,16 +1,23 @@
 package com.poly.service.Impl;
 
-import com.poly.entity.Bill;
+import com.poly.dto.SearchVoucherDto;
 import com.poly.entity.Voucher;
 import com.poly.repository.VoucherRepository;
 import com.poly.service.VoucherService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,33 +26,35 @@ public class VoucherServiceImpl implements VoucherService {
     @Autowired
     VoucherRepository voucherRepository;
 
-    @Override
-    public Page<Voucher> getPagination(Integer pageRequest, Integer sizeRequest) {
-        Pageable pageable = PageRequest.of(pageRequest, sizeRequest);
-        Page<Voucher> pagination = voucherRepository.findAll(pageable);
-        return pagination;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
-    public Page<Voucher> search(String data, String date, Integer page, Integer size) {
-        Pageable pageable = PageRequest.of(page - 1, size);
-        System.out.println(date);
-        Page<Voucher> pagination = null;
-        if ("".equals(date)) {
-            pagination = this.voucherRepository.searchByKey(data, pageable);
-            return pagination;
+    public Page<Voucher> loadData(SearchVoucherDto searchVoucherDto, Pageable pageable) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Voucher> voucherCriteriaQuery = criteriaBuilder.createQuery(Voucher.class);
+        Root<Voucher> voucherRoot = voucherCriteriaQuery.from(Voucher.class);
+
+        List<Predicate> list = new ArrayList<Predicate>();
+        if (!searchVoucherDto.getKey().isEmpty()) {
+            list.add(criteriaBuilder.or(
+                    criteriaBuilder.equal(voucherRoot.get("code"), searchVoucherDto.getKey()),
+                    criteriaBuilder.equal(voucherRoot.get("nameVoucher"), searchVoucherDto.getKey())));
         }
-        String date1 = date.substring(0, date.indexOf("-") - 1).replace("/", "-");
-        String date2 = date.substring(date.indexOf("-") + 1, date.length()).replace("/", "-");
-        System.out.println(date1 + date2);
-        Date dateStart = Date.valueOf(date1.trim());
-        Date dateEnd = Date.valueOf(date2.trim());
-        if ("".equals(data)) {
-            pagination = this.voucherRepository.searchByStartOrExpirationDate(dateStart, dateEnd, pageable);
-            return pagination;
+        if (!searchVoucherDto.getDate().isEmpty() ) {
+            String date1 = searchVoucherDto.getDate().substring(0, searchVoucherDto.getDate().indexOf("-") - 1).replace("/", "-");
+            String date2 = searchVoucherDto.getDate().substring(searchVoucherDto.getDate().indexOf("-") + 1, searchVoucherDto.getDate().length()).replace("/", "-");
+            System.out.println(date1 + date2);
+            Date dateStart = Date.valueOf(date1.trim());
+            Date dateEnd = Date.valueOf(date2.trim());
+            list.add(criteriaBuilder.and(criteriaBuilder.greaterThan(voucherRoot.get("startDay"),dateStart),
+                    criteriaBuilder.lessThan(voucherRoot.get("expirationDate"),dateEnd)));
         }
-        pagination = this.voucherRepository.searchKeyAndStartDateOrExDate(data, dateStart, dateEnd, pageable);
-        return pagination;
+        voucherCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
+        List<Voucher> result = entityManager.createQuery(voucherCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
+        List<Voucher> result2 = entityManager.createQuery(voucherCriteriaQuery).getResultList();
+        Page<Voucher> page = new PageImpl<>(result, pageable, result2.size());
+        return page;
     }
 
     @Override

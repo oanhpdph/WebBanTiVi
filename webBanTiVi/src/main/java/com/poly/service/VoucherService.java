@@ -1,6 +1,6 @@
 package com.poly.service;
 
-import com.poly.entity.Bill;
+import com.poly.dto.SearchVoucherDto;
 import com.poly.entity.Voucher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +22,5 @@ public interface VoucherService {
 
     List<Voucher> findAllList();
 
-    // chia page
-
-
-    Page<Voucher> getPagination(Integer page, Integer size);
-
-    Page<Voucher> search(String data,String date, Integer page, Integer size) ;
+    Page<Voucher> loadData(SearchVoucherDto searchVoucherDto, Pageable pageable);
 }

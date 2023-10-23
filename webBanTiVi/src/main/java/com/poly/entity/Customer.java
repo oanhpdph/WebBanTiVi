@@ -51,7 +51,7 @@ public class Customer {
     private String avatar;
 
     @Column(name="status")
-    private int status;
+    private boolean status;
 
     @OneToMany(mappedBy = "customer")
     private List<Bill> listBill;

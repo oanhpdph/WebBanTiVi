@@ -6,7 +6,6 @@
     .nav-item:hover {
         transform: scale(1.05);
     }
-
     h5 {
         color: #ffffff !important;
     }
@@ -25,9 +24,9 @@
              Hệ thống cửa hàng điện tử Big6store
                 </span>
                 </ul>
-                <ul class="navbar-nav ms-lg-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown" role="button"
+                <ul class="navbar-nav flex-row align-items-center ms-auto">
+                    <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                        <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0)" id="navbarDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             Ngôn ngữ
                         </a>
@@ -36,18 +35,44 @@
                             <li><a class="dropdown-item" href="javascript:void(0)">Tiếng anh</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0)">Tài khoản</a>
+                    <li class="nav-item" th:if="${session.accountLogged == null}" >
+                        <a class="nav-link" href="/login" >Đăng Nhập</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0)">Đăng xuất</a>
+                    <li  class="nav-item" th:if="${session.accountLogged != null}" >
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <!-- Place this tag where you want the button to render. -->
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img th:src="@{'/image/'+${session.image}}" alt="" class="w-px-5 h-px-5 rounded-circle">
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu" style="font-size: 15px">
+                                    <li>
+                                        <a class="dropdown-item"  th:href="@{/client/profile}">
+                                            <i class="bx bx-power-off me-2"  ></i>
+                                            <span class="align-middle"  >Thông tin tài khoản</span>
+                                        </a>
+                                        <a class="dropdown-item" th:href="@{/order}" >
+                                            <i class="bx bx-power-off me-2" ></i>
+                                            <span class="align-middle"  >Đơn Hàng</span>
+                                        </a>
+                                        <a class="dropdown-item" th:href="@{/logout}">
+                                            <i class="bx bx-power-off me-2 " ></i>
+                                            <span class="align-middle"   >Đăng Xuất</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+
+                            <li class="nav-item lh-1 me-3">
+                                <span >[(${session.username})]</span>
+                            </li>
+                        </ul>
+
                     </li>
-                    <!--                <li class="nav-item">-->
-                    <!--                    <a class="nav-link" href="javascript:void(0)">Đăng nhập | </a>-->
-                    <!--                </li>-->
-                    <!--                <li class="nav-item">-->
-                    <!--                    <a class="nav-link" href="javascript:void(0)">Đăng ký</a>-->
-                    <!--                </li>-->
                 </ul>
             </div>
         </div>

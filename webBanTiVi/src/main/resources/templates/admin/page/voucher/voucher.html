@@ -1,5 +1,5 @@
 <h4 class="fw-semibold py-3 mb-4"> Danh sách Voucher</h4>
-<form th:action="@{/admin/voucher/add}" method="post" th:object="${voucher}">
+<form th:action="@{/admin/voucher/add}" method="post" th:object="${voucher}" enctype="multipart/form-data">
     <div class="mb-4">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
             Thêm Voucher
@@ -16,7 +16,19 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-
+                            <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
+<!--                                <img th:src="@{'/image/'+*{image}}" alt="user-avatar" class="d-block rounded"-->
+<!--                                     height="100" width="100" id="uploadedAvatar">-->
+                                <br> <br>
+                                <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                    <span class="d-none d-sm-block">Upload new photo</span>
+                                    <i class="bx bx-upload d-block d-sm-none"></i>
+                                    <input type="file" id="upload" class="account-file-input" hidden=""
+                                           accept="image/png, image/jpeg"
+                                           name="image"
+                                    >
+                                </label>
+                            </div>
                             <div class="row col-lg-12 col-xl-9">
                                 <div class="col-xl-4 col-lg-6 col-md-6">
                                     <div class="mb-3">
@@ -98,7 +110,7 @@
 </form>
 <div class="card mb-3 ">
     <div class="card-header">
-        <form class="col-12 mt-2" th:action="@{/admin/voucher/list}" method="post" th:object="${search}">
+        <form class="col-12 mt-2" th:action="@{/admin/voucher/list}" method="get" th:object="${search}">
             <div class="col-12 row">
                 <div class="col-7">
                     <div class="form-check input-group input-group-merge">
@@ -184,6 +196,12 @@
                             <span th:if="${voucher.active} == true" th:text="Active"/>
                             <span th:if="${voucher.active} == false" th:text="ChưaActive"/>
                         </td>
+                        <td>
+                            <p>
+                                <img th:src="@{'/image/'+*{voucher.image}}"
+                                     style="height: 80px; width: 80px"/>
+                            </p>
+                        </td>
 
                         <td>
                             <div>
@@ -207,6 +225,19 @@
                                                       method="post"
                                                       th:object="${voucher}">
                                                     <div class="row">
+                                                        <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
+                                                            <img th:src="@{'/image/'+*{image}}" alt="user-avatar" class="d-block rounded"
+                                                                 height="100" width="100" id="uploadedAvatar">
+                                                            <br> <br>
+                                                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                                                <span class="d-none d-sm-block">Upload new photo</span>
+                                                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                                                <input type="file" id="upload" class="account-file-input" hidden=""
+                                                                       accept="image/png, image/jpeg"
+                                                                       name="image"
+                                                                >
+                                                            </label>
+                                                        </div>
                                                         <div class="row col-lg-12 col-xl-9">
                                                             <div class="col-xl- col-lg-6 col-md-6">
                                                                 <div class="mb-3">
