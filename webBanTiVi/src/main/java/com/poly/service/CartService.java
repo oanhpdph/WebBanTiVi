@@ -1,19 +1,26 @@
 package com.poly.service;
 
 import com.poly.entity.Cart;
-import com.poly.repository.CartRepos;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.poly.entity.CartProduct;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 public interface CartService {
+
+    public List<CartProduct> getitems();
+
     public List<Cart> getAll();
 
-    public void add(Cart cart);
+    public void add(Integer id, Date date);
 
-    public void delete(Integer id);
+    public void update(int id, int qty);
 
-    public Cart edit(Integer id);
+    public void delete(int id);
+
+    public void clear();
+
+    public int getTotal();
+
+    public int getAmount();
 }

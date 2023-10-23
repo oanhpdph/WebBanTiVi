@@ -1,53 +1,120 @@
 package com.poly.controller.user;
 
 import com.poly.entity.Cart;
+import com.poly.entity.CartProduct;
+import com.poly.entity.Product;
 import com.poly.service.CartProductService;
 import com.poly.service.Impl.CartSeviceImpl;
+import com.poly.service.Impl.ProductServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Controller
+//@RequestMapping("/user")
 public class CartController {
+
+    @Autowired
+    HttpSession session;
     @Autowired
     CartSeviceImpl cartService;
 
     @Autowired
-    CartProductService cpService;
+    ProductServiceImpl productService;
 
-    @GetMapping("/cart/index")
+    @ModelAttribute("cart")
+    CartSeviceImpl getCart() {
+        return cartService;
+    }
+
+    @GetMapping("/cart")
     public String index(Model model) {
-        model.addAttribute("list", cartService.getAll());
-        return "user/page/shoppingcart";
+        session.setAttribute("pageView", "/admin/page/product/pro_cart.html");
+        return "admin/layout";
     }
 
-    @PostMapping("/cart/add")
-    public String add(Cart cart) {
-        cartService.add(cart);
-        return "redirect:/cart/index";
+    @GetMapping("/detail")
+    public String de(Model model) {
+        session.setAttribute("pageView", "/admin/page/product/detail.html");
+        return "admin/layout";
     }
 
-    @GetMapping("/cart/delete/{id}")
-    public String delete(@PathVariable Integer id) {
+    @RequestMapping("/cart/add/{id}")
+    public String add(@PathVariable Integer id, Date date) {
+//        if (session.getAttribute("userCurrent") == null) {
+//            return "redirect:/login";
+//        }
+        cartService.add(id, date);
+        return "redirect:/cart";
+    }
+
+    @RequestMapping("/cart_add/{id}")
+    public String addCart(@PathVariable Integer id, Model model) {
+        Product product = productService.findById(id);
+        Cart c = new Cart();
+//        Date dateCreate =
+        CartProduct cartProduct = new CartProduct();
+        cartProduct.setProduct(product);
+        cartProduct.setCart(c);
+        cartProduct.setQuantity(1);
+        cartProduct.setCreateDate(cartProduct.getCreateDate());
+        cartProduct.setDateUpdate(c.getDateUpdate());
+
+        Cart cart = (Cart) session.getAttribute("cart");
+        if (cart == null) {
+            Cart cart1 = new Cart();
+            List<CartProduct> listcart = new ArrayList<>();
+            listcart.add(cartProduct);
+            cart1.setListCartPro(listcart);
+            session.setAttribute("cart", cart1);
+            System.out.println(cart1.getListCartPro().size());
+            System.out.println("chay duoc den day la 1 nua r");
+        } else {
+            Boolean check = false;
+            List<CartProduct> list = cart.getListCartPro();
+            for (CartProduct x : list) {
+                if (x.getProduct().getId() == id) {
+                    check = true;
+                    x.setQuantity(x.getQuantity() + 1);
+                }
+                if (check == false) {
+                    list.add(cartProduct);
+                }
+                cart.setListCartPro(list);
+                session.setAttribute("cart", cart);
+                System.out.println("chay lan 2 den day la ok");
+            }
+        }
+        return "redirect:/cart";
+    }
+
+    @RequestMapping("/cart/delete/{id}")
+    public String delete(@PathVariable int id) {
         cartService.delete(id);
-        return "redirect:/cart/index";
+        if (cartService.getTotal() == 0) {
+            return "redirect:/";
+        }
+        return "redirect:/cart";
     }
 
     @GetMapping("/cart/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
-        Cart cart = cartService.edit(id);
-        model.addAttribute("cart", cart);
-        return "redirect:/cart/index";
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
+        session.setAttribute("pageView", "/admin/page/product/detail.html");
+        return "admin/layout";
     }
 
-    @PostMapping("/cart/update/{id}")
-    public String updateAccount(@PathVariable Integer id, @ModelAttribute("cart") Cart cart, Model model) {
-        cartService.add(cart);
+    @RequestMapping("/cart/update/{id}")
+    public String update(@PathVariable Integer id, int qty) {
+        cartService.update(id, qty);
         System.out.println("sua thanh cong");
-        return "redirect:/cart/index";
+        return "redirect:/cart";
     }
 }

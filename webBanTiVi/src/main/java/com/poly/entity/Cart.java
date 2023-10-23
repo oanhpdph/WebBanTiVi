@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "bill_product")
@@ -30,4 +31,7 @@ public class Cart {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date_update")
     private Date dateUpdate;
+
+    @OneToMany(mappedBy = "cart")
+    private List<CartProduct> listCartPro;
 }
