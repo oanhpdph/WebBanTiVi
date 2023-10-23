@@ -202,6 +202,7 @@ CREATE TABLE image_evaluate
   )
 
 
+
 -- nhân viên
 CREATE TABLE staff
   (
@@ -245,7 +246,7 @@ CREATE TABLE bill
      id_customer      INT REFERENCES customer(id) not null,
      code             VARCHAR(10) not null unique,
      create_date      DATE NOT NULL,
-	 totalPrice		  Money,
+	 paid_money		  Money,
      payment_date     DATE not null,-- ngày thanh toán
      id_status        INT REFERENCES bill_status(id) not null,
      id_paymentmethod INT REFERENCES payment_method not null,
@@ -257,6 +258,7 @@ CREATE TABLE bill
 -- hoa don chi tiet
 CREATE TABLE bill_product
   (
+	 id int identity(1,1) primary key,
      id_bill		INT REFERENCES bill(id),
      id_product		INT REFERENCES product(id),
      quantity		INT not null,
@@ -264,7 +266,14 @@ CREATE TABLE bill_product
 	 reduced_money	money,
 	 status			bit,
 	 note			NVARCHAR(200)
-     PRIMARY KEY(id_bill, id_product)
+   --  PRIMARY KEY(id_bill, id_product)
+  )
+
+CREATE TABLE image_returned
+  (
+     id					INT IDENTITY(1, 1) PRIMARY KEY,
+     id_bill_product	 INT REFERENCES bill_product(id) not null,
+	 name_image			 varchar(200) not null
   )
 
 CREATE TABLE delivery_notes
@@ -321,15 +330,6 @@ INSERT INTO [dbo].[bill_status]
            ('PG'
            ,N'Đang chuẩn bị hàng'
            ,N'Cửa hàng chuẩn bị hàng, đóng gói hàng cho khách')
-GO
-INSERT INTO [dbo].[bill_status]
-           ([code]
-           ,[status]
-           ,[description])
-     VALUES
-           ('OS'
-           ,N'Hết hàng'
-           ,N'Cửa hàng hết sản phẩm trong kho')
 GO
 INSERT INTO [dbo].[bill_status]
            ([code]
@@ -470,7 +470,6 @@ INSERT INTO [dbo].[bill]
            ([id_customer]
            ,[code]
            ,[create_date]
-           ,[totalPrice]
            ,[payment_date]
            ,[id_status]
            ,[id_paymentmethod]
@@ -480,12 +479,50 @@ INSERT INTO [dbo].[bill]
            (1
            ,'HD1'
            ,'2023-10-15'
-           ,10000000
            ,'2023-10-15'
            ,1
            ,2
            ,1
            ,N'')
+GO
+
+INSERT INTO [dbo].[bill]
+           ([id_customer]
+           ,[code]
+           ,[create_date]
+           ,[payment_date]
+           ,[id_status]
+           ,[id_paymentmethod]
+           ,[payment_status]
+           ,[note])
+     VALUES
+           (1
+           ,'HD2'
+           ,'2023-1-15'
+           ,'2023-1-15'
+           ,1
+           ,2
+           ,1
+           ,N'Không có')
+GO
+INSERT INTO [dbo].[bill]
+           ([id_customer]
+           ,[code]
+           ,[create_date]
+           ,[payment_date]
+           ,[id_status]
+           ,[id_paymentmethod]
+           ,[payment_status]
+           ,[note])
+     VALUES
+           (1
+           ,'HD3'
+           ,'2023-1-15'
+           ,'2023-1-15'
+           ,1
+           ,2
+           ,1
+           ,N'Không có')
 GO
 
 
@@ -561,7 +598,7 @@ INSERT INTO [dbo].[bill_product]
            ,[price]
            ,[status])
      VALUES
-           (2
+           (1
            ,1
            ,5
            ,500
@@ -575,7 +612,7 @@ INSERT INTO [dbo].[bill_product]
            ,[price]
            ,[status])
      VALUES
-           (2
+           (1
            ,2
            ,5
            ,500
@@ -585,23 +622,27 @@ GO
 INSERT INTO [dbo].[delivery_notes]
            ([received]
            ,[received_phone]
+           ,[received_email]
            ,[deliver]
            ,[delivery_phone]
            ,[delivery_date]
            ,[received_date]
            ,[delivery_fee]
            ,[note]
+		     ,[receiving_address]
            ,[status]
            ,[id_bill])
      VALUES
            ('Phạm đức oanh'
            ,'0987778788'
+		   ,'oanh@gmail.com'
            ,'Phạm đức oanh'
            ,'0987678778'
            ,'2023-10-12'
            ,'2023-10-15'
            ,'100000000'
            ,'Không'
+		    ,'liên trì yên hòa'
            ,1
-           ,2)
+           ,1)
 GO
