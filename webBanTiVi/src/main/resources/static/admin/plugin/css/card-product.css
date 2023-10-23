@@ -1,0 +1,10 @@
+.item-product:hover {
+    transform: scale(1.05);
+}
+
+.card-title{
+    color: #566a7f;
+}
+.item-product:hover .card-title {
+    color: #03c3ec;
+}

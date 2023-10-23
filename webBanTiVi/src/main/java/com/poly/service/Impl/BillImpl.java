@@ -15,6 +15,7 @@ import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,6 @@ public class BillImpl implements BillService {
 
     @PersistenceContext
     private EntityManager entityManager;
-
 
     @Override
     public Page<Bill> loadData(SearchBillDto searchBillDto, Pageable pageable) {
@@ -61,7 +61,12 @@ public class BillImpl implements BillService {
         billCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
         List<Bill> result = entityManager.createQuery(billCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
         List<Bill> result2 = entityManager.createQuery(billCriteriaQuery).getResultList();
+        if (pageable.getPageSize() == 1) {
+            pageable = PageRequest.of(0, result2.size());
+            result = entityManager.createQuery(billCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
+        }
         Page<Bill> page = new PageImpl<>(result, pageable, result2.size());
+        System.out.println(page);
         return page;
     }
 
@@ -75,12 +80,18 @@ public class BillImpl implements BillService {
         Optional<Bill> optional = billRepos.findById(id);
         if (optional.isPresent()) {
             Bill billUpdate = optional.get();
-            billUpdate.setBillStatus(bill.getBillStatus());
-//            billUpdate.setPaymentMethod(bill.getPaymentMethod());
+            if (bill.getBillStatus() != null) {
+                billUpdate.setBillStatus(bill.getBillStatus());
+            }
+            if (bill.getPaymentMethod() != null) {
+                billUpdate.setPaymentMethod(bill.getPaymentMethod());
+            }
 //            billUpdate.setNote(bill.getNote());
 //            billUpdate.setCustomer(bill.getCustomer());
 //            billUpdate.setPaymentDate(bill.getPaymentDate());
-            billUpdate.setPaymentStatus(bill.getPaymentStatus());
+            if (bill.getPaymentStatus() != -1) {
+                billUpdate.setPaymentStatus(bill.getPaymentStatus());
+            }
             return billRepos.save(billUpdate);
         }
         return null;

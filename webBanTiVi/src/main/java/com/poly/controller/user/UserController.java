@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
 
 
-	@GetMapping("/")
+	@GetMapping("/a")
 	public String index(HttpSession session){
 		session.setAttribute("pageView", "/user/page/index.html");
 

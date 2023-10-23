@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,8 +47,10 @@ public class BillController {
         private int stt;
         private String code;
         private String name;
+        private String phoneNumber;
         private String dateCreate;
         private Long totalPrice;
+        private String product;
         private String billStatus;
         private String paymentStatus;
         private String note;
@@ -66,20 +69,20 @@ public class BillController {
     }
 
     @GetMapping("/bil_product/delete/{id}")
-    public String delete(BillProductId id) {
+    public String delete(Integer id) {
         billProductService.delete(id);
         return "redirect:/admin/bill_product";
     }
 
     @GetMapping("/bil_product/edit/{id}")
-    public String edit(@PathVariable BillProductId id, Model model) {
+    public String edit(@PathVariable Integer id, Model model) {
         BillProduct product = billProductService.edit(id);
         model.addAttribute("bill_product", product);
         return "redirect:/admin/bill_product";
     }
 
     @PostMapping("/bil_product/update/{id}")
-    public String updateUser(@PathVariable("id") BillProductId id, @ModelAttribute("billproduct") BillProduct billproduct) {
+    public String updateUser(@PathVariable("id") Integer id, @ModelAttribute("billproduct") BillProduct billproduct) {
         billProductService.save(billproduct);
         return "redirect:/admin/bill_product";
     }
@@ -98,11 +101,16 @@ public class BillController {
                            @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageRequest,
                            @RequestParam(name = "size", required = false, defaultValue = "10") Integer sizeRequest,
                            @ModelAttribute(name = "search") SearchBillDto search) {
-
         //set trang
         session.setAttribute("pageView", "/admin/page/bill/bill.html");
         session.setAttribute("active", "/bill/list_bill");
         // tìm kiếm
+        if (pageRequest <= 0) {
+            pageRequest = 1;
+        }
+        if (sizeRequest < 1 ) {
+            sizeRequest = 10;
+        }
         session.setAttribute("size", sizeRequest);
         session.setAttribute("page", pageRequest);
 
@@ -159,8 +167,33 @@ public class BillController {
             dataExportExcel.setStt(index);
             dataExportExcel.setCode(b.getCode());
             dataExportExcel.setName(b.getCustomer().getName());
+            dataExportExcel.setPhoneNumber(b.getCustomer().getPhoneNumber());
             dataExportExcel.setDateCreate(String.valueOf(b.getCreateDate()));
-            dataExportExcel.setTotalPrice(b.getTotalPrice().longValue());
+
+            BigDecimal totalPrice = b.getBillProducts().stream()
+                    .map(billProduct -> billProduct.getPrice().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal reduceMoney = b.getBillProducts().stream()
+                    .map(billProduct -> billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            BigDecimal totalAfter = new BigDecimal('0');
+            if (b.getVoucher() != null && b.getVoucher().isReducedForm() == true) {// giảm %
+                totalAfter = totalPrice.subtract(reduceMoney);
+                BigDecimal reduce = totalPrice.multiply(BigDecimal.valueOf(b.getVoucher().getValue() / 100));
+                if (reduce.compareTo(b.getVoucher().getMaximumDiscount()) >= 0) {
+                    reduce = b.getVoucher().getMaximumDiscount();
+                }
+                totalAfter = totalAfter.subtract(reduce);
+            }
+            if (b.getVoucher() != null && b.getVoucher().isReducedForm() == false) {
+                totalAfter = totalPrice.subtract(reduceMoney).subtract(BigDecimal.valueOf(b.getVoucher().getValue()));
+            }
+            if (b.getVoucher() == null) {
+                totalAfter = totalPrice.subtract(reduceMoney);
+            }
+            dataExportExcel.setTotalPrice(totalAfter.longValue());
+
+            dataExportExcel.setProduct(b.getBillProducts().stream().map(billProduct -> billProduct.getProduct().getCode()).reduce("", (o1, o2) -> o1 + o2 + ", "));
             dataExportExcel.setBillStatus(b.getBillStatus().getStatus());
             dataExportExcel.setPaymentStatus(b.getPaymentStatus() == 1 ? "Đã thanh toán" : b.getPaymentStatus() == 2 ? "Chưa thanh toán" : "Đã hoàn tiền");
             dataExportExcel.setNote(b.getNote());
@@ -174,8 +207,10 @@ public class BillController {
         header.add("Stt");
         header.add("Mã hóa đơn");
         header.add("Tên khách hàng");
+        header.add("Số điện thoại");
         header.add("Thời gian tạo");
         header.add("Tổng tiền");
+        header.add("Mã sản phẩm mua");
         header.add("Trạng thái hóa đơn");
         header.add("Trạng thái thanh toán");
         header.add("Ghi chú");
