@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -32,7 +33,7 @@ public class Product {
     @Column(name = "price_export")
     private BigDecimal price_export;
 
-    @Column(name="quantity")
+    @Column(name = "quantity")
     private Integer quantity;
 
     @ManyToOne
@@ -68,4 +69,10 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<ImageProduct> listImage;
+
+    @OneToMany(mappedBy = "product")
+    private List<Evaluate> listEvaluate;
+
+    @OneToMany(mappedBy = "product")
+    private Set<CartProduct> setCart;
 }
