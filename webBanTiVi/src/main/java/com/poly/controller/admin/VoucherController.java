@@ -98,11 +98,4 @@ public class VoucherController {
         this.voucherService.delete(id);
         return "redirect:/admin/voucher/list";
     }
-    @RequestMapping("/voucher/viewadd")
-    public String viewAdd(HttpSession session,Model model){
-        session.setAttribute("pageView", "/admin/page/voucher/voucherAdd.html");
-        session.setAttribute("active", "/voucher");
-        model.addAttribute("voucher", new Voucher());
-       return "admin/layout";
-    }
 }

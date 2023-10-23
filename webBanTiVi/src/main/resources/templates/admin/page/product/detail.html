@@ -1,0 +1,340 @@
+<div>
+    <section class="">
+        <div class="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="">
+                            <a href="/">Home</a>
+                            <a href="/shop">Shop</a>
+                            <span>Product Details</span>
+                        </div>
+                        <div class="container mt-5 mb-5">
+                            <!--                            <div class="row">-->
+                            <!--                                <div class="col-6">-->
+                            <!--                                    <img alt="" class="product-detail-image" src="data:image/jpeg;base64,">-->
+                            <!--                                    <span th:each="oanh:${product.listImage}" th:text="${oanh.name_image}"></span>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="col-6 mt-5">-->
+                            <!--                                    <div class="product-detail-title">-->
+                            <!--                                        <h4><span th:text="${product.name}"></span></h4>-->
+                            <!--                                    </div>-->
+                            <!--                                    <br>-->
+                            <!--                                    <table class="table">-->
+                            <!--                                        <tbody>-->
+                            <!--                                        <tr th:each="item : ${product}">-->
+                            <!--                                            <td>Id:</td>-->
+                            <!--                                            <td th:text="${item.id}"></td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        <tr th:each="item : ${product}">-->
+                            <!--                                            <td>Price Import:</td>-->
+                            <!--                                            <td><a href="#" th:text="${item.price_import}">Title ...</a></td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        <tr th:each="item : ${product}">-->
+                            <!--                                            <td>Price Export:</td>-->
+                            <!--                                            <td th:text="${item.price_export}">Text ...</td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        <tr th:each="item : ${product}">-->
+                            <!--                                            <td>Quantity:</td>-->
+                            <!--                                            <td th:text="${item.quantity}">1</td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        <tr th:each="item : ${product}">-->
+                            <!--                                            <td>Active:</td>-->
+                            <!--                                            <td th:text="${item.active==true?'Còn':'Hết'}"></td>-->
+                            <!--                                        </tr>-->
+                            <!--                                        </tbody>-->
+                            <!--                                    </table>-->
+                            <!--                                    <br>-->
+                            <!--                                    <a type="button" class="btn btn-secondary btn-sm" href="/">Quay lại</a>-->
+                            <!--                                    <a class="btn btn-primary" th:href="@{/cart/add/{id}(id=${product.id})}">Thêm vào-->
+                            <!--                                        giỏ-->
+                            <!--                                        hàng</a>-->
+                            <!--                                </div>-->
+                            <!--                                <div class="col-6">-->
+                            <!--                                    <h3>-->
+                            <!--                                        Thông số kỹ thuật <span th:text="${product.name}"></span>-->
+                            <!--                                    </h3><br>-->
+                            <!--                                    &lt;!&ndash;                                <div class="card">&ndash;&gt;-->
+                            <!--                                    &lt;!&ndash;                                    <h5 class="card-header">Striped rows</h5>&ndash;&gt;-->
+                            <!--                                    <div class="table-responsive text-nowrap">-->
+                            <!--                                        <table class="table table-striped" border="0px">-->
+                            <!--                                            <tbody class="table-border-bottom-0">-->
+                            <!--                                            <tr th:each="item : ${product.brand}">-->
+                            <!--                                                <td>Brand:</td>-->
+                            <!--                                                <td th:text="${item.namebrand}"></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                            </tr>-->
+                            <!--                                            <tr th:each="item : ${product.origin}">-->
+                            <!--                                                <td>Origin:</td>-->
+                            <!--                                                <td th:text="${item.nameorigin}"></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                            </tr>-->
+                            <!--                                            <tr th:each="item : ${product.manufacture}">-->
+                            <!--                                                <td>Manufacture:</td>-->
+                            <!--                                                <td th:text="${item.name_manufacture}"></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                            </tr>-->
+                            <!--                                            <tr th:each="item : ${product.color}">-->
+                            <!--                                                <td>Color:</td>-->
+                            <!--                                                <td th:text="${item.namecolor}"></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                            </tr>-->
+                            <!--                                            <tr th:each="item : ${product.type}">-->
+                            <!--                                                <td>Type:</td>-->
+                            <!--                                                <td th:text="${item.name_type}"></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                            </tr>-->
+                            <!--                                            <tr th:each="item : ${product.size}">-->
+                            <!--                                                <td>Size:</td>-->
+                            <!--                                                <td th:text="${item.nameSizeInch}"></td>-->
+                            <!--                                                <td th:text="${item.length}">px</td>-->
+                            <!--                                                <td th:text="${item.width}">px</td>-->
+                            <!--                                                <td th:text="${item.thickness}">cm</td>-->
+                            <!--                                            </tr>-->
+                            <!--                                            <tr th:each="item : ${product.resolution}">-->
+                            <!--                                                <td>Resolution:</td>-->
+                            <!--                                                <td th:text="${item.nameResolution}"></td>-->
+                            <!--                                                <td th:text="${item.screenLength}">px</td>-->
+                            <!--                                                <td th:text="${item.screenWidth}">px</td>-->
+                            <!--                                                <td></td>-->
+                            <!--                                            </tr>-->
+                            <!--                                            </tbody>-->
+                            <!--                                        </table>-->
+                            <!--                                    </div>-->
+                            <!--                                    &lt;!&ndash;                                </div>&ndash;&gt;-->
+                            <!--                                </div>-->
+                            <!--                                <br>-->
+                            <!--                                <div class="col-6">-->
+                            <!--                                    <div class="card">-->
+                            <!--                                        <h2>-->
+                            <!--                                            Đánh Giá <span th:text="${product.name}"></span>-->
+                            <!--                                            <span th:each="item : ${product.resolution}"-->
+                            <!--                                                  th:text="${item.nameResolution}"></span>-->
+                            <!--                                            <span th:each="item : ${product.size}"-->
+                            <!--                                                  th:text="${item.nameSizeInch}"></span>-->
+                            <!--                                        </h2>-->
+                            <!--                                        <br>-->
+                            <!--                                        <div class="card">-->
+                            <!--                                            <h5 class="card-header">Borderless Table</h5>-->
+                            <!--                                            <div class="table-responsive text-nowrap">-->
+                            <!--                                                <table class="table table-borderless">-->
+                            <!--                                                    <tbody>-->
+                            <!--                                                    <tr th:each="item: ${product.listEvaluate}">-->
+                            <!--                                                        <td th:text="${item.customer}"></td>-->
+                            <!--                                                    </tr>-->
+                            <!--                                                    <tr th:each="item: ${product.listEvaluate}">-->
+                            <!--                                                        <td th:text="${item.point}"></td>-->
+                            <!--                                                    </tr>-->
+                            <!--                                                    <tr th:each="item: ${product.listEvaluate}">-->
+                            <!--                                                        <td th:text="${item.comment}"></td>-->
+                            <!--                                                    </tr>-->
+                            <!--                                                    <tr th:each="item: ${product.listEvaluate}">-->
+                            <!--                                                        <i>-->
+                            <!--                                                            <td th:text="${item.dateCreate}"></td>-->
+                            <!--                                                        </i>-->
+                            <!--                                                    </tr>-->
+                            <!--                                                    <tr th:each="item: ${product.listEvaluate}">-->
+                            <!--                                                        <h5>-->
+                            <!--                                                            <td th:text="${item.dateCreate}"></td>-->
+                            <!--                                                        </h5>-->
+                            <!--                                                    </tr>-->
+                            <!--                                                    </tbody>-->
+                            <!--                                                </table>-->
+                            <!--                                            </div>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                        </div>
+                        <div class="container mt-5 mb-5">
+                            <div class="row">
+                                <div class="col-6">
+                                    <img alt="" class="product-detail-image"
+                                         src="data:image/jpeg;base64,${product.image}"/>
+                                </div>
+
+                                <div class="col-6 mt-5">
+                                    <div class="product-detail-title">TiVi Samsung</div>
+                                    <br/>
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td>Loại sản phẩm:</td>
+                                            <td>3D</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Giá bán:</td>
+                                            <td><b>10000000 ₫</b></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <br/>
+                                    <a class="btn btn-secondary" href="/">Quay lại</a>
+                                    <a class="btn btn-primary" th:href="@{/cart/add/{id}(id=${product.id})}">Thêm vào
+                                        giỏ hàng</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="related spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12" style="text-align: center">
+                    <h3 class="related-title">Related Product</h3>
+                </div>
+            </div>
+            <br>
+            <div class="row mb-5">
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100">
+                        <br>
+                        <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <div class="product__item__text">
+                                <h5 class="card-title">Ti Vi Samsung</h5>
+                                <div class="rating">
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                                <h5>$67.24</h5>
+                                <div class="product__color__select">
+                                    <label for="pc-1">
+                                        <input type="radio" id="pc-1">
+                                    </label>
+                                    <label class="active black" for="pc-2">
+                                        <input type="radio" id="pc-2">
+                                    </label>
+                                    <label class="grey" for="pc-3">
+                                        <input type="radio" id="pc-3">
+                                    </label>
+                                </div>
+                            </div>
+                            <br>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">+ Add To Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <div class="product__item__text">
+                                <h5 class="card-title">Ti Vi Samsung</h5>
+                                <div class="rating">
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                                <h5>$67.24</h5>
+                                <div class="product__color__select">
+                                    <label for="pc-1">
+                                        <input type="radio" id="pc-1">
+                                    </label>
+                                    <label class="active black" for="pc-2">
+                                        <input type="radio" id="pc-2">
+                                    </label>
+                                    <label class="grey" for="pc-3">
+                                        <input type="radio" id="pc-3">
+                                    </label>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">+ Add To Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <div class="product__item__text">
+                                <h5 class="card-title">Ti Vi Samsung</h5>
+                                <div class="rating">
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                                <h5>$67.24</h5>
+                                <div class="product__color__select">
+                                    <label for="pc-1">
+                                        <input type="radio" id="pc-1">
+                                    </label>
+                                    <label class="active black" for="pc-2">
+                                        <input type="radio" id="pc-2">
+                                    </label>
+                                    <label class="grey" for="pc-3">
+                                        <input type="radio" id="pc-3">
+                                    </label>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">+ Add To Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <div class="product__item__text">
+                                <h5 class="card-title">Ti Vi Samsung</h5>
+                                <div class="rating">
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                                <h5>$67.24</h5>
+                                <div class="product__color__select">
+                                    <label for="pc-1">
+                                        <input type="radio" id="pc-1">
+                                    </label>
+                                    <label class="active black" for="pc-2">
+                                        <input type="radio" id="pc-2">
+                                    </label>
+                                    <label class="grey" for="pc-3">
+                                        <input type="radio" id="pc-3">
+                                    </label>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">+ Add To Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+</div>
+
+<style>
+    .product-detail-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .product-detail-image {
+        max-width: 100%;
+        max-height: 400px;
+    }
+</style>

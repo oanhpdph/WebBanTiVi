@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "cart_product")
@@ -27,18 +28,18 @@ public class CartProduct {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    @Column(name="quantity")
+    @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name="note")
+    @Column(name = "note")
     private String note;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="create_date")
+    @Column(name = "create_date")
     private Date createDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_update")
+    @Column(name = "date_update")
     private Date dateUpdate;
 
 }
