@@ -6,6 +6,9 @@
     .nav-item:hover {
         transform: scale(1.05);
     }
+    h5 {
+        color: #ffffff !important;
+    }
 </style>
 <nav>
     <div class="navbar navbar-expand-lg navbar-light bg-navbar-theme bg-secondary"
@@ -70,20 +73,13 @@
                         </ul>
 
                     </li>
-
-
                 </ul>
-
-
-
-
-
             </div>
         </div>
     </div>
     <div class="navbar navbar-expand-lg navbar-light bg-navbar-theme" style="z-index: auto!important;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="javascript:void(0)"><img src="/image/logochuan-04.png" class="w-px-250"></a>
+            <a class="navbar-brand" href="/"><img src="/image/logochuan-04.png" class="w-px-250"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav2"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -91,13 +87,16 @@
             <div class="collapse navbar-collapse fs-5" id="nav2">
                 <ul class="navbar-nav me-lg-auto mb-2 mb-lg-0">
                     <li class="nav-item mx-3">
-                        <a class="nav-link active page" aria-current="page" href="/client">Trang chủ</a>
+                        <a class="nav-link active page" aria-current="page" href="/">Trang chủ</a>
                     </li>
                     <li class="nav-item mx-3">
-                        <a class="nav-link page" href="javascript:void(0)">Sản phẩm</a>
+                        <a class="nav-link page" href="/tivi">Tivi</a>
                     </li>
                     <li class="nav-item mx-3">
-                        <a class="nav-link page" href="javascript:void(0)">Đơn hàng</a>
+                        <a class="nav-link page" href="/accessory">Phụ kiện</a>
+                    </li>
+                    <li class="nav-item mx-3">
+                        <a class="nav-link page" href="/invoice">Đơn hàng</a>
                     </li>
                     <li class="nav-item mx-3">
                         <a class="nav-link page" href="javascript:void(0)">Khuyến mãi</a>
@@ -109,13 +108,13 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="javascript:void(0)">
-                            <i class='bx bx-cart bx-md'></i>
-                            <small class="badge bg-warning rounded-pill fs-tiny ms-n3"
-                                   style="vertical-align: super">4</small>
+                            <span class="position-relative">
+                                <i class='bx bx-cart bx-md'></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning " style="font-size: 60%">+9 </span>
+                            </span>
                         </a>
                     </li>
                 </ul>
-
             </div>
         </div>
     </div>
