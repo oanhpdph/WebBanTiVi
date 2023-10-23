@@ -69,16 +69,17 @@
                     <h4 class="mb-2">Chào mừng đến với Big6store! 👋</h4>
                     <p class="mb-4">Nhập email và mật khẩu để đăng nhập</p>
 
-                    <form id="" class="mb-3" method="POST">
+                    <form id="" class="mb-3" method="POST" th:action="@{/login}" th:object="${customer}">
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email hoặc tên tài khoản</label>
+                            <label for="email" class="form-label">Email</label>
                             <input
                                     type="text"
                                     class="form-control"
                                     id="email"
                                     name="email-username"
-                                    placeholder="Email/Tên tài khoản"
+                                    placeholder="Email"
                                     autofocus
+                                    th:field="*{email}"
                             />
                         </div>
                         <div class="mb-3 form-password-toggle">
@@ -96,6 +97,7 @@
                                         name="password"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                         aria-describedby="password"
+                                        th:field="*{password}"
                                 />
                                 <span class="input-group-text cursor-pointer"
                                 ><i class="bx bx-hide"></i

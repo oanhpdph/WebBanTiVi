@@ -1,11 +1,11 @@
 package com.poly.service.Impl;
 
+import com.poly.dto.CustomerDto;
 import com.poly.entity.Customer;
 import com.poly.repository.CustomerRepository;
 import com.poly.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,5 +34,17 @@ public class CustomerServiceImpl implements CustomerService {
     public Optional<Customer> findById(Integer id) {
         return this.customerRepository.findById(id);
     }
+
+    @Override
+    public Customer findByEmailAndPass(CustomerDto dto) {
+        Customer customer = null;
+       for(Customer cus : this.customerRepository.findAll()){
+           if(dto.getEmail().equals(cus.getEmail()) && dto.getPassword().equals(cus.getPassword())){
+               customer= cus;
+           }
+       }
+        return customer;
+    }
+
 
 }
