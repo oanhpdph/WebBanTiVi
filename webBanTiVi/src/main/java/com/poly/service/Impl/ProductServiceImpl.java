@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductServiceImpl  implements ProductService {
+public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
+
     @Override
     public Product save(Product product) {
         return productRepository.save(product);
@@ -29,7 +30,7 @@ public class ProductServiceImpl  implements ProductService {
     }
 
     @Override
-    public Optional<Product> findById(Integer id) {
-        return productRepository.findById(id);
+    public Product findById(Integer id) {
+        return productRepository.findById(id).get();
     }
 }
