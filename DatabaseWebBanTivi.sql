@@ -88,7 +88,7 @@ CREATE TABLE resolution
   )
   insert into resolution values('b1','HD','720','1280')
 insert into size values('b1','X','720','1280','4')
-
+select * from size
 -- size
 CREATE TABLE size
   (
@@ -135,8 +135,9 @@ CREATE TABLE image_product
      name_image varchar(200) not null,
 	 location bit
   )
-  insert into image_product(id_product, name_image) values(4,'anh 1')
+  insert into image_product(id_product, name_image,location) values(4,'anh 1',1)
   select * from image_product
+  drop table image_product
 
 -- chi tiết coupon
 CREATE TABLE coupon_product
@@ -198,7 +199,11 @@ CREATE TABLE evaluate
      point       INT not null,
      comment     NVARCHAR(max) ,
   )
-
+  select * from evaluate 
+  insert into evaluate values('7','1','10/19/2023',4,'ngon bo re')
+   select * from cart
+  insert into cart values('1','Cart1','10/19/2023')
+   select * from cart_product
 CREATE TABLE image_evaluate
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
@@ -616,16 +621,16 @@ INSERT INTO [dbo].[product]
            ,16000
            ,80
            ,2
-           ,'b1'
-           ,'o1'
-           ,'m1'
-           ,'c'
-           ,'t1'
-           ,'b1'
-           ,'b1'
+           ,'1'
+           ,'1'
+           ,'1'
+           ,'1'
+           ,'1'
+           ,'1'
+           ,'1'
            ,1)
 GO
-
+select * from product
 
 INSERT INTO [dbo].[bill_product]
            ([id_bill]
