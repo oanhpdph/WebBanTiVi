@@ -1,6 +1,6 @@
 package com.poly.repository;
 
-import com.poly.entity.Bill;
+import com.poly.dto.CouponRes;
 import com.poly.entity.Voucher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface VoucherRepository extends JpaRepository<Voucher,Integer> {
+
     @Query(value = "select * from Voucher b where b.id like %?1%", nativeQuery = true)
     Optional<Voucher> getVoucherByName(Integer id);
 

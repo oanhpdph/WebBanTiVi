@@ -1,6 +1,5 @@
 package com.poly.service.Impl;
 
-import com.poly.entity.Bill;
 import com.poly.entity.Voucher;
 import com.poly.repository.VoucherRepository;
 import com.poly.service.VoucherService;
