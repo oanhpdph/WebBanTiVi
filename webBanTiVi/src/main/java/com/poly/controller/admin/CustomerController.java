@@ -2,7 +2,6 @@ package com.poly.controller.admin;
 
 import com.poly.common.UploadFile;
 import com.poly.entity.Customer;
-import com.poly.entity.Staff;
 import com.poly.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -34,7 +33,7 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/save")
-    public String addCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult result,Model model, @RequestParam("image") MultipartFile file ) {
+    public String addCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult result, Model model, @RequestParam("image") MultipartFile file) {
 
         System.out.println(result.hasErrors());
         if (result.hasErrors()) {
@@ -66,10 +65,10 @@ public class CustomerController {
 
     @PostMapping("/customer/update/{id}")
     public String updateCustomer(@PathVariable("id") Integer id,
-                             @ModelAttribute("customer") Customer customer,
+                                 @ModelAttribute("customer") Customer customer,
                                  @RequestParam("image") MultipartFile file) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
-        Customer findCustomer  = this.customerService.findById(customer.getId()).orElse(null);
+        Customer findCustomer = this.customerService.findById(customer.getId()).orElse(null);
 
         findCustomer.setBirthday(customer.getBirthday());
         findCustomer.setName(customer.getName());
@@ -79,7 +78,8 @@ public class CustomerController {
         findCustomer.setPhoneNumber(customer.getPhoneNumber());
         findCustomer.setGender(customer.isGender());
         findCustomer.setIdCard(customer.getIdCard());
-        findCustomer.setStatus(customer.getStatus());
+        findCustomer.setStatus(customer.isStatus());
+        System.out.println(customer.getAvatar());
         if (!"".equals(fileName)) {
             findCustomer.setAvatar(fileName);
             String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
@@ -90,7 +90,7 @@ public class CustomerController {
                 e.printStackTrace();
             }
         }
-        customerService.save(customer);
+          customerService.save(findCustomer);
         return "redirect:/admin/customer/list";
     }
 

@@ -31,7 +31,7 @@ public class Voucher {
     private int value;
 
     @Column(name="reduced_form")
-    private boolean reducedForm;
+    private boolean reducedForm;// true = % false tiền mặt
 
     @Column(name="minimum_value")
     private BigDecimal minimumValue;
@@ -52,5 +52,8 @@ public class Voucher {
 
     @Column(name="active")
     private Boolean active;
+
+    @Column(name="image")
+    private String image;
 
 }

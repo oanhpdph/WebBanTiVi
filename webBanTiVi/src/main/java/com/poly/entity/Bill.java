@@ -50,6 +50,10 @@ public class Bill {
     @JoinColumn(name="id_paymentmethod")
     private PaymentMethod paymentMethod;
 
+    @ManyToOne
+    @JoinColumn(name="id_voucher")
+    private Voucher voucher;
+
     @Column(name="note")
     private String note;
 

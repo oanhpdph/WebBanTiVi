@@ -41,11 +41,15 @@
                 <div class="col-md-10 text-end">
                     <div class="btn-group" role="group" aria-label="First group">
                         <a th:href="@{/admin/bill/list_bill/download_excel}" type="button"
-                           class="btn btn-outline-secondary">
+                           class="btn btn-outline-secondary" data-bs-offset="0,4" data-bs-toggle="tooltip"
+                           data-bs-placement="bottom" data-bs-html="true" title=""
+                           data-bs-original-title="<span>Xuất danh sách excel theo danh sách hiển thị</span>" >
                             Excel
                         </a>
                         <a th:href="@{/admin/bill/list_bill/downloadpdf}" type="button"
-                           class="btn btn-outline-secondary">
+                           class="btn btn-outline-secondary" data-bs-offset="0,4" data-bs-toggle="tooltip"
+                           data-bs-placement="bottom" data-bs-html="true" title=""
+                           data-bs-original-title="<span>Xuất pdf theo danh sách hiển thị</span>">
                             PDF
                         </a>
                         <button type="button" class="btn btn-outline-secondary">In</button>
@@ -60,7 +64,7 @@
                         <th>#</th>
                         <th>Code bill</th>
                         <th>Name</th>
-                        <th>Total price</th>
+                        <th>Phone number</th>
                         <!--                <th><select class="form-select select2">-->
                         <!--                    <optgroup label="Source">-->
                         <!--                        <option selected>All</option>-->
@@ -86,7 +90,7 @@
                                 <option value="PG" th:selected="${session.defaultBillStatus== 'PG'}">Đang chuẩn bị
                                     hàng
                                 </option>
-                                <option value="OS" th:selected="${session.defaultBillStatus == 'OS'}">Hết hàng</option>
+                                <!--                                <option value="OS" th:selected="${session.defaultBillStatus == 'OS'}">Hết hàng</option>-->
                                 <option value="DE" th:selected="${ session.defaultBillStatus =='DE'}">Đang giao hàng
                                 </option>
                                 <option value="DEE" th:selected="${session.defaultBillStatus == 'DEE'}">Lỗi giao hàng
@@ -118,7 +122,7 @@
                         <td>
                             [(${listBill.customer.name})]
                         </td>
-                        <td> [( ${#numbers.formatDecimal(listBill.totalPrice, 0,'COMMA',0,'POINT')})]<u>đ</u></td>
+                        <td>[(${listBill.customer.phoneNumber})]</td>
                         <td>[(${listBill.createDate})]</td>
                         <td th:text="${listBill.paymentStatus == 1 ? 'Đã thanh toán' : listBill.paymentStatus == 2 ? 'Chưa thanh toán' : 'Đã hoàn tiền'}"></td>
                         <td>[(${listBill.billStatus.status})]</td>
@@ -139,6 +143,7 @@
                             <option value="20" th:selected="${session.size == 20}">20</option>
                             <option value="40" th:selected="${session.size == 40}">40</option>
                             <option value="80" th:selected="${session.size == 80}">80</option>
+                            <option value="1" th:selected="${session.size == 1}">All</option>
                         </select>
                     </div>
                 </div>

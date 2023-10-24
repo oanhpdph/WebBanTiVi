@@ -18,9 +18,8 @@ public class DeliveryNotesController {
     @Autowired
     private DeliveryNotesSevice deliveryNotesSevice;
 
-    @PostMapping("/bill/bill_detail/update_delivery_notes/{id}/{idBill}")
+    @PostMapping("/bill/bill_detail/update_delivery_notes/{id}")
     public String updateDelivery(@PathVariable("id") Integer idDelivery,
-                                 @PathVariable("idBill") Integer idBill,
                                  @RequestParam(name = "deliver") String deliver,
                                  @RequestParam(name = "deliveryPhone") String deliveryPhone,
                                  @RequestParam(name = "receivingAddress") String receivingAddress,
@@ -32,7 +31,7 @@ public class DeliveryNotesController {
         deliveryNotes.setReceivingAddress(receivingAddress);
         deliveryNotes.setDeliveryFee(deliveryFee);
         deliveryNotes.setNote(note);
-        deliveryNotesSevice.update(deliveryNotes, idDelivery);
-        return "redirect:/admin/bill/bill_detail/" + idBill;
+        DeliveryNotes deliveryNotes1 = deliveryNotesSevice.update(deliveryNotes, idDelivery);
+        return "redirect:/admin/bill/bill_detail/" + deliveryNotes1.getIdBill().getId();
     }
 }

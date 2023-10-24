@@ -69,9 +69,37 @@
                                     <input class="form-control" type="email" th:name="email">
                                 </div>
                                 <div class="col-sm-4">
+                                    <label class="form-label">Password</label>
+                                    <input class="form-control" type="text" th:name="password">
+                                </div>
+                                <div class="col-sm-4">
                                     <label class="form-label">Id Card:</label>
                                     <input type="text" class="form-control" th:name="idCard"/>
                                 </div>
+
+                                <div class="col-sm-4">
+                                    <label class="form-label">Trạng thái:</label>
+                                    <br>
+                                    <div class="form-check form-check-inline mt-3">
+                                        <input class="form-check-input" type="radio"
+
+                                               th:name="status"
+                                               th:value="true"
+                                        >
+                                        <label class="form-check-label"
+                                        >Hoạt Động</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio"
+
+                                               th:name="status"
+                                               th:value="false"
+                                        >
+                                        <label class="form-check-label"
+                                        >Khóa</label>
+                                    </div>
+                                </div>
+
 
                             </div>
                         </div>
@@ -177,16 +205,15 @@
                                               method="post" th:object="${customer}" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
-                                                    <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar"
-                                                         class="d-block rounded" height="100" width="100"
-                                                         id="uploadedAvatar">
+                                                    <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar" class="d-block rounded"
+                                                         height="100" width="100" id="uploadedAvatar">
                                                     <br> <br>
-                                                    <label th:for="upload2" tabindex="0">
-                                                        <span class="d-none d-sm-block" style="padding-left: 10px">Upload new photo</span>
+                                                    <label th:for="upload2" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                                        <span class="d-none d-sm-block">Upload new photo</span>
                                                         <i class="bx bx-upload d-block d-sm-none"></i>
-                                                        <input type="file" th:id="upload2" class="account-file-input"
-                                                               accept="image/png, image/jpeg" name="image"
-                                                               th:name="avatar">
+                                                        <input type="file" th:id="upload2" class="account-file-input" hidden=""
+                                                               accept="image/png, image/jpeg"
+                                                               name="image">
                                                     </label>
                                                 </div>
                                                 <div class="row col-lg-8 col-xl-9">
@@ -246,10 +273,41 @@
                                                     </div>
 
                                                     <div class="col-sm-4">
+                                                        <label class="form-label">Password</label>
+                                                        <input class="form-control" type="text" th:name="password"
+                                                               th:value="${customer.password}"
+                                                        >
+                                                    </div>
+
+                                                    <div class="col-sm-4">
                                                         <label class="form-label">Id Card:</label>
                                                         <input type="text" class="form-control" th:name="idCard"
                                                                th:value="${customer.idCard}"/>
                                                     </div>
+
+                                                    <div class="col-sm-4">
+                                                        <label class="form-label">Trạng thái :</label>
+                                                        <br>
+                                                        <div class="form-check form-check-inline mt-3">
+                                                            <input class="form-check-input" type="radio"
+                                                                   th:id="|active${customer.id}|"
+                                                                   th:name="status"
+                                                                   th:value="true"
+                                                                   th:checked="${customer.status==true}">
+                                                            <label class="form-check-label"
+                                                                   th:for="|active${customer.status}|">Hoạt Động</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                   th:id="|active${customer.id}|"
+                                                                   th:name="status"
+                                                                   th:value="false"
+                                                                   th:checked="${customer.status==false}">
+                                                            <label class="form-check-label"
+                                                                   th:for="|active${customer.id}|">Khóa</label>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <br>

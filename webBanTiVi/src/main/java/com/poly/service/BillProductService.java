@@ -14,7 +14,7 @@ public interface BillProductService {
 
     void save(BillProduct bp);
 
-    void delete(BillProductId id);
+    void delete(Integer id);
 
-    BillProduct edit(BillProductId id);
+    BillProduct edit(Integer id);
 }

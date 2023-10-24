@@ -58,8 +58,7 @@
                     </div>
                     <h4>Đăng ký để nhận nhiều ưu đãi!</h4>
                     <p>Đăng ký xong bạn có thể bổ sung thêm nhiều thông tin khác tại trang quản lý tài khoản!</p>
-                    <form
-                            id="formAuthentication"
+                    <form  th:action="@{/register/add}"  th:object="${registration}"
                             class="mb-3"
                             method="POST"
                     >
@@ -71,20 +70,20 @@
                                     id="email"
                                     name="email"
                                     placeholder="Nhập email"
+                                    th:field="*{email}"
                             />
                         </div>
                         <div class="mb-3">
-                            <label for="username" class="form-label">Tên đăng nhập</label>
+                            <label for="email" class="form-label">Số điện thoại</label>
                             <input
                                     type="text"
                                     class="form-control"
-                                    id="username"
-                                    name="username"
-                                    placeholder="Nhập tên đăng nhập"
-                                    autofocus
+                                    id="phoneNumber"
+                                    name="phoneNumber"
+                                    placeholder="Nhập số điện thoại"
+                                    th:field="*{phoneNumber}"
                             />
                         </div>
-
                         <div class="mb-3 form-password-toggle">
                             <label class="form-label" for="password">Mật khẩu</label>
                             <div class="input-group input-group-merge">
@@ -95,6 +94,7 @@
                                         name="password"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                         aria-describedby="password"
+                                        th:field="*{password}"
                                 />
                                 <span class="input-group-text cursor-pointer"
                                 ><i class="bx bx-hide"></i
@@ -103,16 +103,13 @@
                         </div>
                         <div class="mb-3 form-password-toggle">
                             <label class="form-label" for="password"
-                            >Nhập lại mật khẩu</label
-                            >
+                            >Nhập lại mật khẩu</label>
                             <div class="input-group input-group-merge">
                                 <input
                                         type="password"
                                         id="password1"
                                         class="form-control"
-                                        name="password"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password"
                                 />
                                 <span class="input-group-text cursor-pointer"
                                 ><i class="bx bx-hide"></i

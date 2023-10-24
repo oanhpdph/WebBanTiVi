@@ -25,12 +25,12 @@ public class BillProductServiceImpl implements BillProductService {
     }
 
     @Override
-    public void delete(BillProductId id) {
+    public void delete(Integer id) {
         repos.deleteById(id);
     }
 
     @Override
-    public BillProduct edit(BillProductId id) {
+    public BillProduct edit(Integer id) {
         return repos.findById(id).get();
     }
 }

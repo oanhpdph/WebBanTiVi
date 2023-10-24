@@ -3,7 +3,14 @@ const phoneDeliverInput = document.getElementById("deliveryPhone");
 const addressDeliverInput = document.getElementById("receivingAddress");
 const deliveryFeeInput = document.getElementById("deliveryFee");
 const noteInput = document.getElementById("note");
+const codeStatus = document.getElementById("codeStatus")
+if (codeStatus.value != 'WP' && codeStatus.value != 'PG') {
+    document.getElementById("btnEdit").hidden = true
+    document.getElementById("btnCancel").hidden = true
+    document.getElementById("btnSave").hidden = true
 
+
+}
 
 const listInput = [deliverInput, phoneDeliverInput, addressDeliverInput, deliveryFeeInput, noteInput]
 
@@ -25,9 +32,8 @@ $("#btnSave").click(function () {
         var $inputs = $form.find("input")
         var serializedData = $form.serialize();
         var id = $("#btnSave").val()
-        var idBill = $("#idBill").val()
 
-        $.post("/admin/bill/bill_detail/update_delivery_notes/" + id + "/" + idBill, serializedData, function (data, status) {
+        $.post("/admin/bill/bill_detail/update_delivery_notes/" + id, serializedData, function (data, status) {
             if (status == "success") {
                 alert("Cập nhật thành công")
                 changeBtn()
@@ -43,10 +49,11 @@ $("#btnEdit").click(function () {
 function update() {
     var $form = $("#formUpdateStatus");
     var serializedData = $form.serialize();
-    $.post('http://localhost:8080/admin/bill/bill_detail/update_status/' + $("#idBill").val(),
+    $.post('/admin/bill/bill_detail/update_status/' + $("#idBill").val(),
         serializedData, function (data, status) {
             if (status == "success") {
                 alert("Cập nhật thành công")
+                location.reload()
             }
         })
 }
