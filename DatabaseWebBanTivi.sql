@@ -79,7 +79,7 @@ CREATE TABLE resolution
      screen_length  FLOAT not null,-- chiều dài màn hình (pixel)
      screen_width   FLOAT not null,
   )
- 
+
 -- size
 CREATE TABLE size
   (
@@ -127,7 +127,6 @@ CREATE TABLE image_product
 	 location bit
   )
 
-
 -- chi tiết coupon
 CREATE TABLE coupon_product
   (
@@ -147,12 +146,30 @@ CREATE TABLE customer
      [address]         NVARCHAR(max),
      phone_number      VARCHAR(10) not null,
      email             VARCHAR(50) UNIQUE not null,
-	 password          VARCHAR(50),
+	 password          VARCHAR(max),
      gender            BIT,
      id_card           VARCHAR(15) UNIQUE,
      avatar            VARCHAR(50),
      status            bit not null,
   )
+
+  -- nhân viên
+CREATE TABLE staff
+  (
+     id          INT IDENTITY(1, 1) PRIMARY KEY,
+     [user_name] VARCHAR(30) not null unique,
+     [name]      NVARCHAR(50) not null,
+     gender      BIT,
+     birthday    DATE,
+     address     NVARCHAR(max),
+     email       VARCHAR(100) not null,
+     phone       VARCHAR(10) not null,
+     password    VARCHAR(max) not null,
+     active      BIT,
+     position	 BIT,
+     avatar      VARCHAR(100)
+  )
+
 
 CREATE TABLE voucher
   (
@@ -166,8 +183,10 @@ CREATE TABLE voucher
      quantity         INT not null, -- số lượng voucher
 	 start_day		  DATE not null,-- thời gian bắt đầu có hiệu lực
      expiration_date  DATE not null,-- thời gian mã giảm giá hết hiệu lực
-	 active			  BIT
+	 active			  BIT,
+	 image			  varchar(200)
   )
+
 
 CREATE TABLE voucher_customer
   (
@@ -188,13 +207,18 @@ CREATE TABLE evaluate
      point       INT not null,
      comment     NVARCHAR(max) ,
   )
-
+  select * from evaluate 
+  insert into evaluate values('7','1','10/19/2023',4,'ngon bo re')
+   select * from cart
+  insert into cart values('1','Cart1','10/19/2023')
+   select * from cart_product
 CREATE TABLE image_evaluate
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
      id_evaluate INT REFERENCES evaluate(id) not null,
 	 name_image varchar(200) not null
   )
+
 
 
 
@@ -209,7 +233,7 @@ CREATE TABLE staff
      address     NVARCHAR(max),
      email       VARCHAR(100) not null,
      phone       VARCHAR(10) not null,
-     password    VARCHAR(20) not null,
+     password    VARCHAR(max) not null,
      active      BIT,
      role varchar(30),
      avatar      VARCHAR(100)
@@ -437,238 +461,3 @@ INSERT INTO [dbo].[payment_method]
            ,N'Thanh toán trực tuyến qua Vn-pay')
 GO
 
-INSERT INTO [dbo].[customer]
-           ([name]
-           ,[date]
-           ,[address]
-           ,[phone_number]
-           ,[email]
-           ,[password]
-           ,[gender]
-           ,[id_card]
-           ,[avatar]
-           ,[status])
-     VALUES
-           (N'Phạm đức oanh'
-           ,'2003-12-13'
-           ,N'Liên trì 1, yên hòa, yên mô, ninh bình'
-           ,'0369921455'
-           ,'oanhpdph25707@fpt.edu.vn'
-           ,'123456'
-           ,1
-           ,'037203004908'
-           ,''
-           ,1)
-GO
-
-INSERT INTO [dbo].[bill]
-           ([id_customer]
-           ,[code]
-           ,[create_date]
-           ,[payment_date]
-           ,[id_status]
-           ,[id_paymentmethod]
-           ,[payment_status]
-           ,[note])
-     VALUES
-           (1
-           ,'HD1'
-           ,'2023-10-15'
-           ,'2023-10-15'
-           ,1
-           ,2
-           ,1
-           ,N'')
-GO
-
-INSERT INTO [dbo].[bill]
-           ([id_customer]
-           ,[code]
-           ,[create_date]
-           ,[payment_date]
-           ,[id_status]
-           ,[id_paymentmethod]
-           ,[payment_status]
-           ,[note])
-     VALUES
-           (1
-           ,'HD2'
-           ,'2023-1-15'
-           ,'2023-1-15'
-           ,1
-           ,2
-           ,1
-           ,N'Không có')
-GO
-INSERT INTO [dbo].[bill]
-           ([id_customer]
-           ,[code]
-           ,[create_date]
-           ,[payment_date]
-           ,[id_status]
-           ,[id_paymentmethod]
-           ,[payment_status]
-           ,[note])
-     VALUES
-           (1
-           ,'HD3'
-           ,'2023-1-15'
-           ,'2023-1-15'
-           ,1
-           ,2
-           ,1
-           ,N'Không có')
-GO
-
-
-INSERT INTO [dbo].[product]
-           ([code]
-           ,[nametv]
-           ,[price_import]
-           ,[price_export]
-           ,[quantity]
-           ,[guarantee]
-           ,[id_brand]
-           ,[id_origin]
-           ,[id_manufacture]
-           ,[id_color]
-           ,[id_type]
-           ,[id_size]
-           ,[id_resolution]
-           ,[active])
-     VALUES
-           ('SP01'
-           ,N'Sản phẩm 1'
-           ,10000
-           ,15000
-           ,100
-           ,3
-           ,null
-           ,null
-           ,null
-           ,null
-           ,null
-           ,null
-           ,null
-           ,1)
-GO
-INSERT INTO [dbo].[product]
-           ([code]
-           ,[nametv]
-           ,[price_import]
-           ,[price_export]
-           ,[quantity]
-           ,[guarantee]
-           ,[id_brand]
-           ,[id_origin]
-           ,[id_manufacture]
-           ,[id_color]
-           ,[id_type]
-           ,[id_size]
-           ,[id_resolution]
-           ,[active])
-     VALUES
-           ('SP02'
-           ,N'Sản phẩm 2'
-           ,10000
-           ,15000
-           ,100
-           ,3
-           ,null
-           ,null
-           ,null
-           ,null
-           ,null
-           ,null
-           ,null
-           ,1)
-GO
-
-INSERT INTO [dbo].[product]
-           ([code]
-           ,[nametv]
-           ,[price_import]
-           ,[price_export]
-           ,[quantity]
-           ,[guarantee]
-           ,[id_brand]
-           ,[id_origin]
-           ,[id_manufacture]
-           ,[id_color]
-           ,[id_type]
-           ,[id_size]
-           ,[id_resolution]
-           ,[active])
-     VALUES
-           ('SP03'
-           ,N'Sản phẩm 3'
-           ,20000
-           ,16000
-           ,80
-           ,2
-           ,'b1'
-           ,'o1'
-           ,'m1'
-           ,'c'
-           ,'t1'
-           ,'b1'
-           ,'b1'
-           ,1)
-GO
-
-
-INSERT INTO [dbo].[bill_product]
-           ([id_bill]
-           ,[id_product]
-           ,[quantity]
-           ,[price]
-           ,[status])
-     VALUES
-           (1
-           ,1
-           ,5
-           ,500
-           ,1)
-GO
-
-INSERT INTO [dbo].[bill_product]
-           ([id_bill]
-           ,[id_product]
-           ,[quantity]
-           ,[price]
-           ,[status])
-     VALUES
-           (1
-           ,2
-           ,5
-           ,500
-           ,1)
-GO
-
-INSERT INTO [dbo].[delivery_notes]
-           ([received]
-           ,[received_phone]
-           ,[received_email]
-           ,[deliver]
-           ,[delivery_phone]
-           ,[delivery_date]
-           ,[received_date]
-           ,[delivery_fee]
-           ,[note]
-		     ,[receiving_address]
-           ,[status]
-           ,[id_bill])
-     VALUES
-           ('Phạm đức oanh'
-           ,'0987778788'
-		   ,'oanh@gmail.com'
-           ,'Phạm đức oanh'
-           ,'0987678778'
-           ,'2023-10-12'
-           ,'2023-10-15'
-           ,'100000000'
-           ,'Không'
-		    ,'liên trì yên hòa'
-           ,1
-           ,1)
-GO

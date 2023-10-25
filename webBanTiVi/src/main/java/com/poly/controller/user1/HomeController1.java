@@ -25,7 +25,13 @@ public class HomeController1 {
     }
     @GetMapping("/invoice")
     public String loadInvoice(HttpSession session){
-        session.setAttribute("pageView","/user1/page/invoice/search_invoice.html");
+        session.setAttribute("pageView","/user1/page/invoice/invoice.html");
+        return "/user1/index";
+    }
+
+    @GetMapping("/invoice/invoice_detail")
+    public String loadInvoiceDetail(HttpSession session){
+        session.setAttribute("pageView","/user1/page/invoice/detail_invoice.html");
         return "/user1/index";
     }
 }
