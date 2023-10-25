@@ -13,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @AllArgsConstructor
 
 public class CustomerDto {
-  @Autowired
-private  CustomerServiceImpl customerService;
+
     private String email;
     private String password;
 }

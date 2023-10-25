@@ -32,13 +32,13 @@ public class HomeController {
         session.setAttribute("active", "/dashboard");
         return "admin/layout";
     }
-
-    @GetMapping("/position")
-    public String loadPosition(HttpSession session,Model model) {
-        session.setAttribute("pageView", "/admin/page/position.html");
-        session.setAttribute("active", "/position");
-        return "admin/layout";
-    }
+//
+//    @GetMapping("/position")
+//    public String loadPosition(HttpSession session,Model model) {
+//        session.setAttribute("pageView", "/admin/page/position.html");
+//        session.setAttribute("active", "/position");
+//        return "admin/layout";
+//    }
    //product
 
 
