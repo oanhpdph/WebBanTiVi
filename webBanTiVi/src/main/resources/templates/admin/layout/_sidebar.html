@@ -25,11 +25,9 @@
                 <div>Statistic</div>
             </a>
         </li>
-
         <li class="menu-header small text-uppercase">
             <span th:text="#{sidebar.management}"></span>
         </li>
-
         <li th:class="${#strings.equals(session.active,'/product')?'menu-item active':'menu-item'}">
             <a th:href="@{/admin/product}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-tv"></i>
@@ -42,8 +40,7 @@
                 <div th:text="#{sidebar.staff}">Staff</div>
             </a>
         </li>
-        <!--        <li th:class="${#strings.contains(session.active,'/bill')?'menu-item active open':'menu-item'}">-->
-        <li>
+        <li th:class="${#strings.contains(session.active,'/bill')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-receipt"></i>
                 <div th:text="#{sidebar.invoice}"></div>
@@ -61,23 +58,20 @@
                 </li>
             </ul>
         </li>
-        <!--        <li th:class="${#strings.contains(session.active,'customer')?'menu-item active open':'menu-item'}">-->
-        <li>
+        <li th:class="${#strings.contains(session.active,'customer')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-user-circle"></i>
                 <div th:text="#{sidebar.customer}"></div>
             </a>
             <ul class="menu-sub">
-                <!--                <li th:class="${#strings.equals(session.active,'/customer/list')?'menu-item active':'menu-item'}">-->
-                <li>
+                <li th:class="${#strings.equals(session.active,'/customer/list')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/customer/list}" class="menu-link">
                         <div th:text="#{sidebar.listCustomer}"></div>
                     </a>
                 </li>
             </ul>
         </li>
-        <!--        <li th:class="${#strings.contains(session.active,'evaluate')?'menu-item active open':'menu-item'}">-->
-        <li>
+        <li th:class="${#strings.contains(session.active,'evaluate')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-comment-dots"></i>
                 <div data-i18n="Customer">Evaluate</div>
@@ -90,8 +84,7 @@
                 </li>
             </ul>
         </li>
-        <li>
-            <!--        <li th:class="${#strings.contains(session.active,'voucher')?'menu-item active open':'menu-item'}">-->
+        <li th:class="${#strings.contains(session.active,'voucher')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bxs-coupon"></i>
                 <div th:text="#{sidebar.voucher}"></div>
@@ -102,16 +95,14 @@
                         <div th:text="#{sidebar.listVoucher}"></div>
                     </a>
                 </li>
-                <li>
-                    <!--                <li th:class="${#strings.equals(session.active,'/voucherCustomer')?'menu-item active':'menu-item'}">-->
+                <li th:class="${#strings.equals(session.active,'/voucherCustomer')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/voucherCustomer}" class="menu-link">
                         <div th:text="#{sidebar.listVoucherCustomer}">List voucher customer</div>
                     </a>
                 </li>
             </ul>
         </li>
-        <li>
-            <!--        <li th:class="${#strings.equals(session.active,'/blog')?'menu-item active':'menu-item'}">-->
+        <li th:class="${#strings.equals(session.active,'/blog')?'menu-item active':'menu-item'}">
             <a th:href="@{/admin/blog}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-receipt"></i>
                 <div data-i18n="Blog">Blog</div>

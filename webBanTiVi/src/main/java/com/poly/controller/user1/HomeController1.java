@@ -28,4 +28,10 @@ public class HomeController1 {
         session.setAttribute("pageView","/user1/page/invoice/invoice.html");
         return "/user1/index";
     }
+
+    @GetMapping("/invoice/invoice_detail")
+    public String loadInvoiceDetail(HttpSession session){
+        session.setAttribute("pageView","/user1/page/invoice/detail_invoice.html");
+        return "/user1/index";
+    }
 }

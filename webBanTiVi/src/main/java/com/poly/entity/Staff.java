@@ -41,7 +41,6 @@ public class Staff {
     @Column(name="address")
     private String  address;
 
-
     @NotBlank(message = "Email is not null")
     @Column(name="email")
     private String  email;
