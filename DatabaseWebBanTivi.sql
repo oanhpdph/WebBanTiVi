@@ -22,14 +22,7 @@ CREATE TABLE brand
      code      VARCHAR(10) not null,
      namebrand NVARCHAR(max) not null
   )
-  select * from brand 
-  insert into brand values('b1','SamSung')
-  insert into origin values('o1','VietNam')
-  insert into manufacture values('m1','manu1')
-  insert into color values('c1','Black')
-  insert into [type] values('t1','oled')
-  insert into feature values('f1','feature1')
-  insert into supplier values('s1','sup1')
+ 
 
 -- Xuất xứ
 CREATE TABLE origin
@@ -86,9 +79,7 @@ CREATE TABLE resolution
      screen_length  FLOAT not null,-- chiều dài màn hình (pixel)
      screen_width   FLOAT not null,
   )
-  insert into resolution values('b1','HD','720','1280')
-insert into size values('b1','X','720','1280','4')
-
+ 
 -- size
 CREATE TABLE size
   (
@@ -135,8 +126,7 @@ CREATE TABLE image_product
      name_image varchar(200) not null,
 	 location bit
   )
-  insert into image_product(id_product, name_image) values(4,'anh 1')
-  select * from image_product
+
 
 -- chi tiết coupon
 CREATE TABLE coupon_product
@@ -221,7 +211,7 @@ CREATE TABLE staff
      phone       VARCHAR(10) not null,
      password    VARCHAR(20) not null,
      active      BIT,
-     position	 BIT,
+     role varchar(30),
      avatar      VARCHAR(100)
   )
 
@@ -258,7 +248,7 @@ CREATE TABLE bill
 	 payment_status	  INT default 1,
      note             NVARCHAR(max)
   )
-  select * from bill b where b.create_date between '01/01/2023' and '01/02/2023'
+
 
 -- hoa don chi tiet
 CREATE TABLE bill_product

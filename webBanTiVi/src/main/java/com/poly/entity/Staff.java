@@ -15,7 +15,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Staff {
+public class Staff  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +24,7 @@ public class Staff {
 
     @NotBlank(message = "Code is not null")
     @Column(name="code")
-    private String code;
+    private String username;
 
     @NotBlank(message = "Name is not null")
     @Column(name="name")
@@ -57,8 +57,8 @@ public class Staff {
     @Column(name="active")
     private boolean active;
 
-    @Column(name="position")
-    private boolean position;
+    @Column(name="role")
+    private String role;
 
     @Column(name="avatar")
     private String avatar;

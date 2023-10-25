@@ -43,7 +43,7 @@
                 <a href="#" class="header-nav-item-link">HỎI ĐÁP</a>
             </li>
             <li class="header-nav-item">
-                <a href="/client" class="header-nav-item-link">QUAY LẠI</a>
+                <a href="/" class="header-nav-item-link">QUAY LẠI</a>
             </li>
         </ul>
     </nav>
@@ -66,20 +66,20 @@
                         </a>
                     </div>
                     <!-- /Logo -->
-                    <h4 class="mb-2">Chào mừng đến với Big6store! 👋</h4>
-                    <p class="mb-4">Chào mừng sự trở lại của quý khách hàng!</p>
+                    <h4 class="mb-2">Đăng nhập cổng thông tin nhân viên!</h4>
+                    <p class="mb-4">Truy cập an toàn cho nhân viên được ủy quyền.</p>
 
-                    <form id="" class="mb-3" method="POST" th:action="@{/login/user}" th:object="${customer}">
+                    <form id="" class="mb-3" method="POST" th:action="@{/login/staff}" th:object="${staff}">
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
+                            <label for="username" class="form-label">Tên tài khoản</label>
                             <input
                                     type="text"
                                     class="form-control"
-                                    id="email"
+                                    id="username"
                                     name="email-username"
                                     placeholder="Email"
                                     autofocus
-                                    th:field="*{email}"
+                                    th:field="*{username}"
                             />
                         </div>
                         <div class="mb-3 form-password-toggle">
@@ -123,12 +123,6 @@
                             </div>
                         </div>
                     </form>
-                    <p class="text-center">
-                        <span>Bạn muốn đăng ký tài khoản?</span>
-                        <a href="/register">
-                            <span>Tạo tài khoản mới</span>
-                        </a>
-                    </p>
                 </div>
             </div>
             <!-- /Register -->

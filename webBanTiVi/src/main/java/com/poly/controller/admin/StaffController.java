@@ -6,6 +6,7 @@ import com.poly.service.StaffService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -21,7 +22,9 @@ public class StaffController {
     @Autowired
     StaffService staffService;
 
+
     @GetMapping("/staff")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('user')")
     public String loadStaff(HttpSession session, Model model)  {
 
         session.setAttribute("pageView", "/admin/page/staff/staff.html");
@@ -33,9 +36,9 @@ public class StaffController {
 
 
     @PostMapping("/staff/add")
+    @PreAuthorize("hasAuthority('admin')")
     public String addStaff(Model model, @Valid @ModelAttribute("staff") Staff staff,BindingResult bindingResult, @RequestParam("image") MultipartFile file)  {
 
-        System.out.println(bindingResult.hasErrors());
         if (bindingResult.hasErrors()) {
             return "admin/layout";
         }
@@ -67,14 +70,14 @@ public class StaffController {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
         Staff findStaff = staffService.findById(staff.getId()).orElse(null);
 
-        findStaff.setCode(staff.getCode());
+        findStaff.setUsername(staff.getUsername());
         findStaff.setName(staff.getName());
         findStaff.setEmail(staff.getEmail());
         findStaff.setGender(staff.isGender());
         findStaff.setPassword(staff.getPassword());
         findStaff.setPhone(staff.getPhone());
         findStaff.setAddress(staff.getAddress());
-        findStaff.setPosition(staff.isPosition());
+        findStaff.setRole(staff.getRole());
         findStaff.setBirthday(staff.getBirthday());
         if (!"".equals(fileName)) {
             findStaff.setAvatar(fileName);
@@ -86,6 +89,7 @@ public class StaffController {
                 e.printStackTrace();
             }
         }
+
            this.staffService.save(findStaff);
         model.addAttribute("listStaff", staffService.findAll());
         return "redirect:/admin/staff";
