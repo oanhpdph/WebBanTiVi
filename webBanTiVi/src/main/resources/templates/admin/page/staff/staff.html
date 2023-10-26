@@ -20,8 +20,9 @@
                           enctype="multipart/form-data">
                         <div class="card-body">
                             <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
-                                <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar" class="d-block rounded image-preview"
-                                     height="100" width="100" >
+                                <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar"
+                                     class="d-block rounded image-preview"
+                                     height="100" width="100">
                                 <br> <br>
                                 <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                                     <span class="d-none d-sm-block">Upload new photo</span>
@@ -38,7 +39,7 @@
                                 <div class="row g-3">
                                     <div class="col-sm-6">
                                         <label class="form-label">Code</label>
-                                        <input class="form-control" type="text" th:name="code" placeholder="John"
+                                        <input class="form-control" type="text" th:name="username" placeholder="John"
                                                required>
 
                                     </div>
@@ -114,13 +115,13 @@
                                         <div class="mt-3">
                                             <div class="input-group">
                                                 <button type="button" class="btn btn-primary">
-                                                    Position
+                                                    Role
                                                 </button>
                                                 <select class="form-select"
                                                         aria-label="Example select with button addon"
-                                                        th:name="position">
-                                                    <option th:value="true">Admin</option>
-                                                    <option th:value="false">User</option>
+                                                        th:name="role">
+                                                    <option th:value="admin">Admin</option>
+                                                    <option th:value="user">User</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -160,7 +161,7 @@
                 <th>Birthday</th>
                 <th>Address</th>
                 <th>Phone</th>
-                <th>Position</th>
+                <th>Role</th>
                 <th>Image</th>
                 <th></th>
             </tr>
@@ -169,7 +170,7 @@
 
             <tr th:each="staff: ${listStaff}">
                 <td th:text="${staff.id}"></td>
-                <td th:text="${staff.code}"></td>
+                <td th:text="${staff.username}"></td>
                 <td th:text="${staff.name}"></td>
                 <td>
                     <span th:if="${staff.gender} == true" th:text="Male"/>
@@ -179,8 +180,8 @@
                 <td th:text="${staff.address}"></td>
                 <td th:text="${staff.phone}"></td>
                 <td>
-                    <span th:if="${staff.position} == true" th:text="Admin"/>
-                    <span th:if="${staff.position} == falses" th:text="User"/>
+                    <span th:if="${staff.role} == 'admin'" th:text="Admin"/>
+                    <span th:if="${staff.role} == 'user'" th:text="User"/>
 
                 </td>
                 <td><p>
@@ -217,7 +218,7 @@
                                                 <span class="d-none d-sm-block">Upload new photo</span>
                                                 <i class="bx bx-upload d-block d-sm-none"></i>
                                                 <input type="file" id="file-input" class="account-file-input file-input"
-                                                       name="image">
+                                                      hidden="" name="image">
                                             </label>
                                         </div>
                                     </div>
@@ -226,10 +227,10 @@
                                         <div class="row">
                                             <div class="row g-3">
                                                 <div class="col-sm-6">
-                                                    <label class="form-label">Code</label>
-                                                    <input class="form-control" type="text" th:name="code"
+                                                    <label class="form-label">Username</label>
+                                                    <input class="form-control" type="text" th:name="username"
                                                            placeholder="John"
-                                                           th:value="${staff.code}"
+                                                           th:value="${staff.username}"
                                                            required>
 
                                                 </div>
@@ -332,42 +333,42 @@
                                                     <div class="mt-3">
                                                         <div class="input-group">
                                                             <button type="button" class="btn btn-primary">
-                                                                Position
+                                                                Role
                                                             </button>
                                                             <select class="form-select"
                                                                     aria-label="Example select with button addon"
-                                                                    th:name="position">
-                                                                <option th:value="${staff.position}">Admin</option>
-                                                                <option th:value="${staff.position}">User</option>
+                                                                    th:name="role">
+                                                                <option th:value="admin"  th:selected="${staff.role=='admin'}">Admin</option>
+                                                                <option th:value="user" th:selected="${staff.role=='user'}">User</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row justify-content-xl-end">
-                                        <div class="w-auto">
-                                            <button type="reset"
-                                                    class="btn btn-primary btn-control">
-                                                Reset
-                                            </button>
-                                        </div>
-                                        <div class="w-auto">
-                                            <button type="submit"
-                                                    class="btn btn-primary btn-control"
-                                                    onclick="return confirm('Xác nhận cập nhật')">
-                                                Update
-                                            </button>
-                                        </div>
-                                        <div class="w-auto">
-                                            <a th:href="@{/admin/voucher/delete/{id}(id=${staff.id})}"
-                                               onclick="return confirm('Xác nhận xóa')">
-                                                <button type="button"
+                                        <div class="row justify-content-xl-end">
+                                            <div class="w-auto">
+                                                <button type="reset"
                                                         class="btn btn-primary btn-control">
-                                                    Delete
+                                                    Reset
                                                 </button>
-                                            </a>
+                                            </div>
+                                            <div class="w-auto">
+                                                <button type="submit"
+                                                        class="btn btn-primary btn-control"
+                                                        onclick="return confirm('Xác nhận cập nhật')">
+                                                    Update
+                                                </button>
+                                            </div>
+                                            <div class="w-auto">
+                                                <a th:href="@{/admin/voucher/delete/{id}(id=${staff.id})}"
+                                                   onclick="return confirm('Xác nhận xóa')">
+                                                    <button type="button"
+                                                            class="btn btn-primary btn-control">
+                                                        Delete
+                                                    </button>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>

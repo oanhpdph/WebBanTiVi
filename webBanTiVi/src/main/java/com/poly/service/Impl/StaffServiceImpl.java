@@ -1,12 +1,11 @@
 package com.poly.service.Impl;
 
-import com.poly.repository.StaffRepository;
+import com.poly.dto.StaffDto;
 import com.poly.entity.Staff;
+import com.poly.repository.StaffRepository;
 import com.poly.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,4 +35,20 @@ public class StaffServiceImpl implements StaffService {
     public Optional<Staff> findById(Integer id) {
         return staffRepository.findById(id);
     }
+
+    @Override
+    public Staff findByUsernameAndPassword(StaffDto dto) {
+        Staff staff=null;
+        for(Staff sta : this.staffRepository.findAll()){
+
+            if(dto.getUsername().equals(sta.getUsername()) && dto.getPassword().equals(sta.getPassword())){
+
+                staff= sta;
+                break;
+            }
+        }
+        return staff;
+    }
+
+
 }
