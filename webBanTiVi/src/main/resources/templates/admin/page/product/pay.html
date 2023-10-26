@@ -1,0 +1,269 @@
+<div class="container">
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <div class="content-wrapper">
+                <div class="container-xxl flex-grow-1 container-p-y">
+                    <div class="content-wrapper">
+                        <div class="container-xxl flex-grow-1 container-p-y">
+                            <div class="col-md-9">
+                                <div class="card mb-4">
+                                    <div class="col-lg-12">
+                                        <div class="">
+                                            <table class="table table-borderless"><br>
+                                                <tbody th:each="item:${session.list}">
+                                                <tr>
+                                                    <td>
+                                                        <div th:each="image:${item.product.listImage}">
+                                                            <div th:if="${image.location == true}">
+                                                                <img th:src="@{'/user/img/shopping-cart/'+image.nameImage}"
+                                                                     alt="">
+                                                                <span th:text="${item.product.name + ' '+item.product.code}"></span>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div>
+                                                            <span class="fs-5">$<span
+                                                                    th:text="${item.product.price_import}"></span>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="input-group">
+                                                            <div class="group-input">
+                                                                <button class="btn btn-icon btn-outline-secondary"><img
+                                                                        src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-remove.svg"
+                                                                        alt="remove-icon" width="20" height="20">
+                                                                </button>
+                                                                <input class="form-check-input mt-0" min="1"
+                                                                       type="number"
+                                                                       name="quantity"
+                                                                       style="width: 40px; height: 40px; text-align: center"
+                                                                       th:value="${item.quantity}"
+                                                                       onblur="this.form.submit()">
+                                                                <button class="btn btn-icon btn-outline-secondary"><img
+                                                                        src="https://frontend.tikicdn.com/_desktop-next/static/img/pdp_revamp_v2/icons-add.svg"
+                                                                        alt="add-icon" width="20" height="20"></button>
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <span style="color: #ff0000">
+                                                        $<span
+                                                                th:text="${item.product.price_export * item.quantity}"></span>
+                                                    </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fs-5">Tạm Tính: </span>
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>$<span
+                                                            th:text="${item.product.price_export * item.quantity}"></span>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <form action="/admin/staff/add" method="POST">
+                                        <div class="card-body">
+                                            <span class="fs-5">THÔNG TIN KHÁCH HÀNG</span>
+                                            <!--                                            ten, sdt-->
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <label class="form-label">Họ và Tên</label>
+                                                    <input class="form-control" type="text" placeholder="họ và tên"
+                                                           id="name" name="name" value="">
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label class="form-label">Số Điện Thoại</label>
+                                                    <input class="form-control" type="text" placeholder="VN (+84)
+" id="code" name="code" value="">
+
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <!--                                            Phuong thuc thanh toan-->
+                                            <span class="fs-5">Phương Thức Thanh Toán: </span>
+                                            <div class="row g-5">
+                                                <div class="col-lg-12">
+                                                    <div class="demo-inline-spacing mt-3">
+                                                        <div class="list-group list-group-horizontal-md text-md-center">
+                                                            <a class="list-group-item list-group-item-action active"
+                                                               id="home-list-item" data-bs-toggle="list"
+                                                               href="#horizontal-home">Thanh toán tiền mặt</a>
+                                                            <a class="list-group-item list-group-item-action"
+                                                               id="profile-list-item" data-bs-toggle="list"
+                                                               href="#horizontal-profile">Thanh toán trực tiếp qua
+                                                                VNPAY</a>
+                                                        </div>
+                                                        <div class="tab-content px-0 mt-0">
+                                                            <div class="tab-pane fade active show" id="horizontal-home">
+                                                                <span>Thanh toán trực tiếp bằng tiền mặt khi nhận hàng.</span>
+                                                                <br>
+                                                                <span>
+                                                                    Phí thu hộ: ₫0 VNĐ. Ưu đãi về phí vận chuyển (nếu có) áp dụng cả với phí thu hộ.
+                                                                </span>
+                                                            </div>
+                                                            <div class="tab-pane fade" id="horizontal-profile">
+                                                                <div class="row">
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="card shadow-none bg-transparent border border-primary mb-3">
+                                                                            <div class="card-body">
+                                                                                <span class="fs-5">Thông tin đơn
+                                                                                    hàng</span>
+                                                                                <hr>
+                                                                                <small class="text-muted">
+                                                                                    <span>Số tiền thanh toán</span>
+                                                                                </small><br>
+                                                                                <span class="fs-5"
+                                                                                      style="color: cornflowerblue">
+                                                                                    10.990.000VND</span>
+                                                                                <br>
+                                                                                <small class="text-muted">
+                                                                                    <span>Giá trị đơn hàng</span>
+                                                                                </small>
+                                                                                <h6 style="color: black">
+                                                                                    0VND
+                                                                                </h6>
+                                                                                <br>
+                                                                                <small class="text-muted">
+                                                                                    <span>Mã đơn hàng</span>
+                                                                                </small>
+                                                                                <h6 style="color: black">
+                                                                                    HD32H4J2B4VJ432JBN
+                                                                                </h6>
+                                                                                <br>
+                                                                                <small class="text-muted">
+                                                                                    <span>Nhà cung cấp</span>
+                                                                                </small>
+                                                                                <h6 style="color: black">
+                                                                                    CÔNG TY CỔ PHẦN THẾ GIỚI DI ĐỘNG
+                                                                                </h6>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="card shadow-none bg-transparent border border-secondary mb-3">
+                                                                            <div class="card-body">
+                                                                                <div class="container">
+                                                                                    <span class="fs-5">Quét mã qua
+                                                                                        ứng
+                                                                                        dung ngân hàng/ Ví điện tử</span>
+                                                                                    <img src="/image/qr.jpg"
+                                                                                         width="100%">
+                                                                                    <br> <br>
+                                                                                    <div class="row justify-content-end"
+                                                                                         style="text-align: center">
+                                                                                        <button type="button"
+                                                                                                class="btn btn-outline-success">
+                                                                                            Hủy thanh toán
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <!--                                                address-->
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <label class="form-label">Address</label>
+                                                        <input type="text" class="form-control" placeholder="Address"
+                                                               id="address" name="address" value="">
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <hr>
+                                                <!--                                                phieu giam gia-->
+                                                <div class="row">
+                                                    <div class="demo-inline-spacing">
+                                                        <button type="button" class="btn btn-outline-primary">
+                                                            <i class='bx bxs-coupon'></i>
+                                                            Sử dụng phiếu giảm giá:
+                                                        </button>
+                                                        <div class="card shadow-none bg-transparent border border-secondery mb-3">
+                                                            <nav class="navbar bg-body-tertiary">
+                                                                <div class="container-fluid">
+                                                                    <form class="d-flex" role="search">
+                                                                        <input class="form-control me-2" type="search"
+                                                                               placeholder="Nhập mã phiếu giảm giá"
+                                                                               aria-label="Search"
+                                                                               style="width: 50%">
+                                                                        <button class="btn btn-outline-success"
+                                                                                type="submit">
+                                                                            Áp Dụng
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </nav>
+                                                        </div>
+                                                        <br>
+                                                    </div>
+                                                    <hr>
+                                                    <!--                                            tong tien-->
+                                                    <div>
+                                                        <table class="table table-borderless">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td><span class="fs-5">Tổng tiền: </span></td>
+                                                                <td></td>
+                                                                <td><span>$<span
+                                                                        th:text="${cart.amount}"></span> </span></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Điểm tích lũy Quà Tặng VIP:</td>
+                                                                <td></td>
+                                                                <td><span><span
+                                                                        th:text="${cart.amount}"></span> Điểm</span>
+                                                                </td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <div class="form-check form-check-inline mt-3">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                   id="inlineCheckbox1"
+                                                                   value="option1">
+                                                            <label class="form-check-label" for="inlineCheckbox1">Tôi
+                                                                đồng ý
+                                                                với
+                                                                Chính sách xử lý dữ liệu cá nhân của Điện Máy
+                                                                Xanh</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <div class="d-grid gap-2 col-lg-12 mx-auto"
+                                                     style="text-align: center">
+                                                    <button class="btn btn-primary btn-lg" type="button">Đặt Hàng
+                                                    </button>
+                                                    <button class="btn btn-outline-secondary btn-lg" type="button">
+                                                        Trả
+                                                        Góp
+                                                    </button>
+                                                    <smal>Bạn có thể chọn hình thức thanh toán sau khi đặt hàng
+                                                    </smal>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
