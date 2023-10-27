@@ -1,10 +1,7 @@
 package com.poly.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "feature")
@@ -12,6 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Builder
 public class Feature {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,5 +20,5 @@ public class Feature {
     private String code;
 
     @Column(name = "name_feature")
-    private String nameFeature;
+    private String namefeature;
 }
