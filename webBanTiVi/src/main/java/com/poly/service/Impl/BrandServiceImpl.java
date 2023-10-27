@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BrandServiceImpl implements BrandService {
@@ -28,4 +29,10 @@ public class BrandServiceImpl implements BrandService {
     public List<Brand> getAll() {
         return brandRepository.findAll();
     }
+
+    @Override
+    public Optional<Brand> findById(Integer id) {
+        return this.brandRepository.findById(id);
+    }
+
 }
