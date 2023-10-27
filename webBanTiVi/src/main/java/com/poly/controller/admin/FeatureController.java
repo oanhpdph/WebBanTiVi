@@ -28,7 +28,7 @@ public class FeatureController {
         session.setAttribute("pageView","/admin/page/feature/feature.html");
         session.setAttribute("active","/feature/list");
         model.addAttribute("feature",new Feature());
-        model.addAttribute("listCou",this.featureService.findAll());
+        model.addAttribute("listFea",this.featureService.findAll());
         return "admin/layout";
     }
     @PostMapping("/feature/save")
@@ -37,7 +37,9 @@ public class FeatureController {
         if (result.hasErrors()) {
             return "admin/layout";
         }
+        this.featureService.save(feature);
         model.addAttribute("listFea", featureService.findAll());
+        System.out.println(featureService.findAll());
         return "redirect:/admin/feature/list";
     }
 
