@@ -71,20 +71,19 @@
 
                     <form id="" class="mb-3" method="POST" th:action="@{/login/staff}" th:object="${staff}">
                         <div class="mb-3">
-                            <label for="username" class="form-label">Tên tài khoản</label>
+                            <label  class="form-label">Tên tài khoản</label>
                             <input
                                     type="text"
                                     class="form-control"
-                                    id="username"
                                     name="email-username"
                                     placeholder="Email"
-                                    autofocus
                                     th:field="*{username}"
                             />
+                            <span th:if="${#fields.hasErrors('username')}"><small th:errors="*{username}" class="text-danger"></small></span>
                         </div>
                         <div class="mb-3 form-password-toggle">
                             <div class="d-flex justify-content-between">
-                                <label class="form-label" for="password">Mật khẩu</label>
+                                <label class="form-label">Mật khẩu</label>
                                 <a href="/forgot-password">
                                     <small>Quên mật khẩu?</small>
                                 </a>
@@ -92,13 +91,13 @@
                             <div class="input-group input-group-merge">
                                 <input
                                         type="password"
-                                        id="password"
                                         class="form-control"
                                         name="password"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                         aria-describedby="password"
                                         th:field="*{password}"
                                 />
+                                <p  th:errorclass="error" th:errors="*{password}" />
                                 <span class="input-group-text cursor-pointer"
                                 ><i class="bx bx-hide"></i
                                 ></span>
@@ -138,6 +137,8 @@
     </div>
 </div>
 
+
+</script>
 <script th:src="@{/admin/assets/vendor/libs/jquery/jquery.js}"></script>
 <script th:src="@{/admin/assets/vendor/libs/popper/popper.js}"></script>
 <script th:src="@{/admin/assets/vendor/js/bootstrap.js}"></script>

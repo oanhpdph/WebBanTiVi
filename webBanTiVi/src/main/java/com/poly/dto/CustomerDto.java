@@ -1,11 +1,9 @@
 package com.poly.dto;
 
-import com.poly.service.Impl.CustomerServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
 @Getter
@@ -14,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class CustomerDto {
 
-    private String email;
+    private String username;
+
     private String password;
 }

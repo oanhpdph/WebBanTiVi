@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
-import java.util.List;
 
 @Entity
 @Table(name="customer")
@@ -21,6 +20,10 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private Integer id;
+
+
+    @Column(name="username")
+    private String username;
 
     @Column(name="name")
     private String name;
@@ -53,8 +56,11 @@ public class Customer {
     @Column(name="status")
     private boolean status;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Bill> listBill;
+    @Column(name="role")
+    private String roles;
+//
+//    @OneToMany(mappedBy = "customer")
+//    private List<Bill> listBill;
 
 }
 

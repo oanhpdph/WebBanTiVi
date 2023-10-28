@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface StaffRepository extends JpaRepository<Staff,Integer> {
 
     Optional<Staff> findByUsername(String code);
+
+
+
 }
