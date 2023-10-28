@@ -142,6 +142,7 @@ CREATE TABLE coupon_product
 CREATE TABLE customer
   (
      id                INT IDENTITY(1, 1) PRIMARY KEY,
+	 username          NVARCHAR(50), 
      [name]            NVARCHAR(50),
      [date]            DATE,
      [address]         NVARCHAR(max),
@@ -151,6 +152,7 @@ CREATE TABLE customer
      gender            BIT,
      id_card           VARCHAR(15) UNIQUE,
      avatar            VARCHAR(50),
+	 role              varchar(20),
      status            bit not null,
   )
 

@@ -1,26 +1,25 @@
 package com.poly.service.Impl;
 
-import com.poly.dto.StaffUserDetails;
-import com.poly.entity.Staff;
-import com.poly.repository.StaffRepository;
+import com.poly.config.CustomerDtoDetail;
+import com.poly.entity.Customer;
+import com.poly.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-@Service
+@Component
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserDetailsService {
-    private final StaffRepository staffRepository;
+public class CustomerDetailServiceImpl implements UserDetailsService {
 
+    private  final CustomerRepository customerRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Staff> userInfo = staffRepository.findByUsername(username);
-        return userInfo.map(StaffUserDetails::new)
+        Optional<Customer> userInfo = customerRepository.findByUsername(username) ;
+        return userInfo.map(CustomerDtoDetail::new)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found " + username));
-
     }
 }

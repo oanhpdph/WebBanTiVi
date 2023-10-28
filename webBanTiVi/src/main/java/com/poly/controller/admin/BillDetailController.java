@@ -3,11 +3,9 @@ package com.poly.controller.admin;
 import com.poly.entity.Bill;
 import com.poly.entity.BillProduct;
 import com.poly.entity.BillStatus;
-import com.poly.entity.idClass.BillProductId;
 import com.poly.service.BillService;
 import com.poly.service.BillStatusService;
 import com.poly.service.DeliveryNotesSevice;
-import com.poly.service.Impl.DeliveryNotesImpl;
 import com.poly.service.PaymentMethodService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
+
 public class BillDetailController {
+
+
 
     @Autowired
     private BillService billService;

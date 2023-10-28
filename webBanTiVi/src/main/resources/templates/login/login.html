@@ -71,7 +71,7 @@
 
                     <form id="" class="mb-3" method="POST" th:action="@{/login/user}" th:object="${customer}">
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
+                            <label for="email" class="form-label">Tên tài khoản</label>
                             <input
                                     type="text"
                                     class="form-control"
@@ -79,7 +79,7 @@
                                     name="email-username"
                                     placeholder="Email"
                                     autofocus
-                                    th:field="*{email}"
+                                    th:field="*{username}"
                             />
                         </div>
                         <div class="mb-3 form-password-toggle">

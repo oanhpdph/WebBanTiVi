@@ -66,14 +66,12 @@
         </dependency>
 
 
-<!--        jwt-->
+        <!--        jwt-->
+        <!-- thymleaf security-->
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
         </dependency>
-
-
 
         <!-- data jpa, mssql-jdbc-->
         <dependency>
@@ -105,8 +103,6 @@
 
         <!--end-->
     </dependencies>
-
-
     <build>
         <plugins>
             <plugin>

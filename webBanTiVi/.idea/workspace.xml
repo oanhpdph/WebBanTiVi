@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/static/image/download.jpg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,9 +21,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="CSS File" />
         <option value="Interface" />
+        <option value="HTML File" />
         <option value="Class" />
       </list>
     </option>
@@ -57,7 +57,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../springboot_jwt" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Asg_Java5" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -70,7 +70,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="trusted.hosts" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
@@ -80,22 +80,13 @@
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\static\image" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\TGDD\OneDrive\Máy tính\WebBanTiVi\webBanTiVi\src\main\resources\templates\login" />
+      <recent name="C:\Users\TGDD\OneDrive\Máy tính\WebBanTiVi\webBanTiVi\src\main\java\com\poly\service\Impl" />
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\templates" />
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\templates\user\page" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="WebBanTiViApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="WebBanTiVi" />
       <extension name="coverage">
@@ -190,7 +181,17 @@
       <workItem from="1698128014929" duration="261000" />
       <workItem from="1698225323223" duration="6552000" />
       <workItem from="1698239802181" duration="11534000" />
-      <workItem from="1698251683270" duration="5307000" />
+      <workItem from="1698251683270" duration="5809000" />
+      <workItem from="1698284947157" duration="10827000" />
+      <workItem from="1698302149826" duration="8639000" />
+      <workItem from="1698310915157" duration="7303000" />
+      <workItem from="1698337136321" duration="6239000" />
+      <workItem from="1698343494876" duration="967000" />
+      <workItem from="1698371546974" duration="11003000" />
+      <workItem from="1698388967003" duration="15052000" />
+      <workItem from="1698411678226" duration="18737000" />
+      <workItem from="1698455024662" duration="18613000" />
+      <workItem from="1698500918176" duration="446000" />
     </task>
     <servers />
   </component>
@@ -230,11 +231,20 @@
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile" memberName="filename" />
+        <PinnedItemInfo parentTag="org.springframework.aop.framework.JdkDynamicAopProxy" memberName="advised" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="authenticationManager" language="JAVA" />
+        <watch expression="request" />
+        <watch expression="mavContainer" />
+        <watch expression="mavContainer" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1697354755279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1698342348305" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.poly.*</FILTER>
     </SUITE>
   </component>
