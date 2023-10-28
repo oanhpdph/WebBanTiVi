@@ -25,9 +25,11 @@
                 <div>Statistic</div>
             </a>
         </li>
+
         <li class="menu-header small text-uppercase">
             <span th:text="#{sidebar.management}"></span>
         </li>
+
         <li th:class="${#strings.equals(session.active,'/product')?'menu-item active':'menu-item'}">
             <a th:href="@{/admin/product}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-tv"></i>
@@ -110,8 +112,6 @@
         </li>
 
 
-
-
         <li th:class="${#strings.contains(session.active,'technical')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-user-circle"></i>
@@ -149,6 +149,7 @@
 
 
 
+
         <li class="menu-header small text-uppercase">
             <span>Other</span>
         </li>
@@ -178,5 +179,14 @@
                 <span class="align-middle" th:text="#{navbar.logOut}"></span>
             </a>
         </li>
+
+
+
+
+
+
+
+
+
     </ul>
 </aside>

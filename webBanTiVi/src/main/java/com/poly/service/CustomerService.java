@@ -1,6 +1,5 @@
 package com.poly.service;
 
-import com.poly.dto.CustomerDto;
 import com.poly.entity.Customer;
 
 import java.util.List;
@@ -16,7 +15,7 @@ public interface CustomerService {
 
     Optional<Customer> findById(Integer id);
 
-    Customer findByEmailAndPass(CustomerDto dto);
+//    Customer findByEmailAndPass(CustomerDto dto);
 
 
 }

@@ -40,9 +40,7 @@ public class StaffServiceImpl implements StaffService {
     public Staff findByUsernameAndPassword(StaffDto dto) {
         Staff staff=null;
         for(Staff sta : this.staffRepository.findAll()){
-
             if(dto.getUsername().equals(sta.getUsername()) && dto.getPassword().equals(sta.getPassword())){
-
                 staff= sta;
                 break;
             }

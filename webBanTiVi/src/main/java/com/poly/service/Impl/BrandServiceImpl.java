@@ -34,5 +34,4 @@ public class BrandServiceImpl implements BrandService {
     public Optional<Brand> findById(Integer id) {
         return this.brandRepository.findById(id);
     }
-
 }

@@ -1,10 +1,7 @@
 package com.poly.service.Impl;
 
 import com.poly.entity.Color;
-
-import com.poly.entity.Customer;
 import com.poly.repository.ColorRepository;
-
 import com.poly.service.ColorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

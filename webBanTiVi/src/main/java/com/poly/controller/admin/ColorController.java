@@ -48,7 +48,7 @@ public class ColorController {
             return "admin/layout";
         }
         this.colorService.add(color);
-        model.addAttribute("listStaff", colorService.findAll());
+        model.addAttribute("listColor", colorService.findAll());
         return "redirect:/admin/technical/color";
     }
 

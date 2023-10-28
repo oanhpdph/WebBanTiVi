@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -15,35 +16,41 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+
 @Controller
 @RequestMapping("/admin")
+
 public class StaffController {
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     StaffService staffService;
 
 
     @GetMapping("/staff")
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('user')")
-    public String loadStaff(HttpSession session, Model model)  {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String loadStaff(HttpSession session, Model model) {
 
         session.setAttribute("pageView", "/admin/page/staff/staff.html");
         session.setAttribute("active", "/staff");
-        model.addAttribute("listStaff",staffService.findAll());
+        model.addAttribute("listStaff", staffService.findAll());
         model.addAttribute("staff", new Staff());
         return "admin/layout";
     }
 
 
     @PostMapping("/staff/add")
-    @PreAuthorize("hasAuthority('admin')")
-    public String addStaff(Model model, @Valid @ModelAttribute("staff") Staff staff,BindingResult bindingResult, @RequestParam("image") MultipartFile file)  {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String addStaff(Model model, @Valid @ModelAttribute("staff") Staff staff, BindingResult bindingResult, @RequestParam("image") MultipartFile file) {
 
         if (bindingResult.hasErrors()) {
             return "admin/layout";
         }
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
         staff.setAvatar(fileName);
+        staff.setPassword(passwordEncoder.encode(staff.getPassword()));
         this.staffService.save(staff);
         String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
         try {
@@ -57,6 +64,7 @@ public class StaffController {
     }
 
     @GetMapping("/staff/edit/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         Staff staff = staffService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
@@ -66,7 +74,8 @@ public class StaffController {
     }
 
     @PostMapping("/staff/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id,  @ModelAttribute("staff") Staff staff, Model model, @RequestParam("image") MultipartFile file) {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String updateUser(@PathVariable("id") Integer id, @ModelAttribute("staff") Staff staff, Model model, @RequestParam("image") MultipartFile file) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
         Staff findStaff = staffService.findById(staff.getId()).orElse(null);
 
@@ -77,7 +86,7 @@ public class StaffController {
         findStaff.setPassword(staff.getPassword());
         findStaff.setPhone(staff.getPhone());
         findStaff.setAddress(staff.getAddress());
-        findStaff.setRole(staff.getRole());
+        findStaff.setRoles(staff.getRoles());
         findStaff.setBirthday(staff.getBirthday());
         if (!"".equals(fileName)) {
             findStaff.setAvatar(fileName);
@@ -89,13 +98,14 @@ public class StaffController {
                 e.printStackTrace();
             }
         }
-
-           this.staffService.save(findStaff);
+        findStaff.setPassword(passwordEncoder.encode(staff.getPassword()));
+        this.staffService.save(findStaff);
         model.addAttribute("listStaff", staffService.findAll());
         return "redirect:/admin/staff";
     }
 
     @GetMapping("/staff/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteUser(@PathVariable("id") Integer id, Model model) {
         Staff staff = staffService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));

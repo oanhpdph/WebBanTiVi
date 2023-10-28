@@ -1,23 +1,14 @@
 package com.poly.controller.admin;
 
 import com.poly.entity.Brand;
-
-
-import com.poly.entity.Color;
 import com.poly.service.Impl.BrandServiceImpl;
-import com.poly.service.Impl.ColorServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -66,7 +57,7 @@ public class BrandController {
 
 
         this.brandService.add(brand);
-        model.addAttribute("listColor", brandService.getAll());
+        model.addAttribute("listBrand", brandService.getAll());
         return "redirect:/admin/technical/brand";
     }
 

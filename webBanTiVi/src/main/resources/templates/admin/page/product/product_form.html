@@ -1,10 +1,11 @@
-<link rel="stylesheet" href="/admin/assets/css/app.css"/>
+<link rel="stylesheet" href="/admin/assets/css/app.css" xmlns:th="http://www.w3.org/1999/html"/>
 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">UI elements /</span> Product</h4>
 <form th:action="@{/admin/product/save}" method="post" th:object="${product}">
     <div class="row">
         <!-- Basic Badges -->
         <div class="col-lg">
             <div class="card mb-4"><h5 class="card-header">Basic Product</h5>
+
                 <div class="card-body">
                     <div class="row">
                         <!-- Basic Badges -->
@@ -582,7 +583,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Modal Backdrop -->
                     </div>
                 </div>

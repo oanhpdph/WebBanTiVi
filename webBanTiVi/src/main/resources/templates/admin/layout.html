@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html class="light-style layout-menu-fixed" xmlns:th="http://www.thymeleaf.org">
+<html class="light-style layout-menu-fixed" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -14,7 +15,7 @@
     <link rel="stylesheet" th:href="@{/admin/assets/vendor/css/bootstrap.css}"/>
     <link rel="stylesheet" th:href="@{/admin/assets/vendor/css/theme-default.css}"/>
     <link rel="stylesheet" th:href="@{/admin/assets/css/demo.css}"/>
-    <link rel="stylesheet" th:href="@{/admin/assets/css/select2.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin/assets/css/select2.css}"/>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
@@ -31,7 +32,7 @@
     <div class="layout-container">
         <aside th:replace="~{/admin/layout/_sidebar.html}">
         </aside>
-        <div class="layout-page">
+        <div class="layout-page" >
             <div th:replace="~{/admin/layout/_navbar.html}">
             </div>
             <div class="content-wrapper">
@@ -60,6 +61,7 @@
 
 <!--date range picker-->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <!--end date range picker-->
 <!-- Page JS -->

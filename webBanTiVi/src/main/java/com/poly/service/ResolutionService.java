@@ -13,5 +13,5 @@ public interface ResolutionService {
 
     List<Resolution> getAll();
 
-    Optional<Resolution>findById(Integer id);
+    Optional<Resolution> findById(Integer id);
 }

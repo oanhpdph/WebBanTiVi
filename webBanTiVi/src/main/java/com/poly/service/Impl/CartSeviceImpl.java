@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,8 +34,7 @@ public class CartSeviceImpl implements CartService {
     }
 
     @Override
-    public List<CartProduct> add(Integer id) {
-
+    public void add(Integer id, Date creDate) {
         CartProduct item = items
                 .stream()
                 .filter(it -> it.getProduct().getId() == id)
@@ -42,17 +42,16 @@ public class CartSeviceImpl implements CartService {
                 .orElse(null);
         if (item != null) {
             item.setQuantity(item.getQuantity() + 1);
-            return null;
+            return;
         }
 //        Date creDate = item.getCreateDate();
         Cart cart = new Cart();
         Product product = productService.findById(id);
         if (product != null) {
             items.add(
-                    new CartProduct(product, cart, 1, null, new Date(), cart.getDateUpdate())
+                    new CartProduct(product, cart, 1, null, creDate, cart.getDateUpdate())
             );
         }
-        return items;
     }
 
     @Override

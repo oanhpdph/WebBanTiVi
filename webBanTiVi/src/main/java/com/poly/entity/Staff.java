@@ -41,6 +41,7 @@ public class Staff  {
     @Column(name="address")
     private String  address;
 
+
     @NotBlank(message = "Email is not null")
     @Column(name="email")
     private String  email;
@@ -57,9 +58,8 @@ public class Staff  {
     private boolean active;
 
     @Column(name="role")
-    private String role;
+    private String roles;
 
     @Column(name="avatar")
     private String avatar;
-
 }

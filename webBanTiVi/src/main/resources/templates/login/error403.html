@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>Big6 Shop</title>
+
+    <meta name="description" content=""/>
+    <link rel="icon" type="image/x-icon" th:href="@{/image/logobig6-03.png}"/>
+
+    <link rel="stylesheet" th:href="@{/admin/assets/vendor/fonts/boxicons.css}"/>
+    <link rel="stylesheet" th:href="@{/admin/assets/vendor/css/bootstrap.css}" class="template-customizer-core-css"/>
+    <link rel="stylesheet" th:href="@{/admin/assets/vendor/css/theme-default.css}"
+          class="template-customizer-theme-css"/>
+    <link rel="stylesheet" th:href="@{/admin/assets/css/demo.css}"/>
+    <link rel="stylesheet" th:href="@{/admin/assets/vendor/css/pages/page-auth.css}"/>
+
+    <script th:src="@{/admin/assets/vendor/js/helpers.js}"></script>
+
+</head>
+
+<body>
+<!-- Content -->
+<div class="header">
+    <nav class="header-navbar">
+        <ul class="header-nav-list">
+            <li class="header-nav-item">Hệ thống cửa hàng tivi</li>
+            <li class="header-nav-item">
+                <a class="header-nav-item-link" href="/">LOGO</a>
+            </li>
+        </ul>
+
+        <ul class="header-nav-list">
+            <li class="header-nav-item">
+                <a href="#" class="header-nav-item-link">HỎI ĐÁP</a>
+            </li>
+            <li class="header-nav-item">
+                <a href="/client" class="header-nav-item-link">QUAY LẠI</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+
+<div class="container">
+
+    <div class="starter-template">
+        <h1>403 - Access is denied</h1>
+        <div th:inline="text">Hello ,
+            you do not have permission to access this page.</div>
+    </div>
+
+</div>
+<script th:src="@{/admin/assets/vendor/libs/jquery/jquery.js}"></script>
+<script th:src="@{/admin/assets/vendor/libs/popper/popper.js}"></script>
+<script th:src="@{/admin/assets/vendor/js/bootstrap.js}"></script>
+<script th:src="@{/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
+<script th:src="@{/admin/assets/vendor/js/menu.js}"></script>
+<script th:src="@{/admin/assets/js/main.js}"></script>
+
+<script async defer th:src="@{https://buttons.github.io/buttons.js}"></script>
+</body>
+</html>
