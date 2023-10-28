@@ -51,12 +51,12 @@ public class SecurityConfig {
                                 .requestMatchers("/admin/assets/**").permitAll()
                                 .requestMatchers("/image/**").permitAll()
                                 .requestMatchers("/").permitAll()
-                                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN","USER")
-                                .anyRequest().authenticated())
+//                                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN","USER")
+                                .anyRequest().permitAll())
                 .authenticationProvider(authenticationProvider())
                 .authenticationProvider(CustomerAuthenticationProvider())
-                .formLogin().loginPage("/login/staff")
-                .and()
+//                .formLogin().loginPage("/login/staff")
+//                .and()
                 .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler());
 
         return http.build();
