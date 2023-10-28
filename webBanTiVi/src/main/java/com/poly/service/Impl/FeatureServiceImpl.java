@@ -16,22 +16,21 @@ public class FeatureServiceImpl implements FeatureService {
 
     @Override
     public Feature save(Feature feature) {
-        return featureRepository.save(feature);
+        return this.featureRepository.save(feature);
     }
 
     @Override
-    public void delete(Integer id) {
-        featureRepository.delete(featureRepository.findById(id).get());
+    public void deleteById(Integer id) {
+        this.featureRepository.deleteById(id);
     }
 
     @Override
     public List<Feature> findAll() {
-        return featureRepository.findAll();
+        return this.featureRepository.findAll();
     }
 
     @Override
     public Optional<Feature> findById(Integer id) {
-        return featureRepository.findById(id);
+        return this.featureRepository.findById(id);
     }
 }
-
