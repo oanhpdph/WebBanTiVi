@@ -148,7 +148,6 @@ public class LoginController {
         }
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(staff.getUsername(),staff.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        session.setAttribute("staff",authentication);
         return "user1/index";
     }
 
