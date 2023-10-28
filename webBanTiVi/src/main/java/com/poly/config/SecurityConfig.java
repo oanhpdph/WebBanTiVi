@@ -55,8 +55,8 @@ public class SecurityConfig {
                                 .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
                 .authenticationProvider(CustomerAuthenticationProvider())
-//                .formLogin().loginPage("/login/staff")
-//                .and()
+                .formLogin().loginPage("/login/staff")
+                .and()
                 .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler());
 
         return http.build();
@@ -96,7 +96,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public AuthenticationManager authenticationManager() throws Exception {
         List<AuthenticationProvider> providers = new ArrayList<>();
         providers.add(CustomerAuthenticationProvider());
         providers.add(authenticationProvider());
