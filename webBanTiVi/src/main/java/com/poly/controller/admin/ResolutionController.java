@@ -1,22 +1,14 @@
 package com.poly.controller.admin;
 
-import com.poly.entity.Color;
 import com.poly.entity.Resolution;
-import com.poly.entity.Size;
-import com.poly.service.Impl.ColorServiceImpl;
 import com.poly.service.Impl.ResolutionServiceImpl;
-import com.poly.service.ResolutionService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -53,4 +45,21 @@ public class ResolutionController {
         resolutionService.delete(id);
         return "redirect:/admin/technical/resolution";
     }
+
+    @PostMapping("/technical/resolution/update/{id}")
+    public String updateColor(@PathVariable("id") Integer id,  @ModelAttribute("resolution") Resolution resolution, Model model) {
+
+        Resolution findResolution = resolutionService.findById(resolution.getId()).orElse(null);
+
+        findResolution.setCode(resolution.getCode());
+        findResolution.setNameResolution(resolution.getNameResolution());
+        findResolution.setScreenLength(resolution.getScreenLength());
+        findResolution.setScreenWidth(resolution.getScreenWidth());
+
+
+        this.resolutionService.add(resolution);
+        model.addAttribute("listResolution",resolutionService.getAll());
+        return "redirect:/admin/technical/resolution";
+    }
+
 }

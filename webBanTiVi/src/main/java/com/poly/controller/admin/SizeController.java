@@ -1,22 +1,15 @@
 package com.poly.controller.admin;
 
 
-import com.poly.entity.Color;
 import com.poly.entity.Size;
-
 import com.poly.service.Impl.SizeServiceImpl;
-import com.poly.service.SizeService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -49,6 +42,23 @@ public class SizeController {
         Size size = sizeService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         sizeService.delete(id);
+        return "redirect:/admin/technical/size";
+    }
+
+    @PostMapping("/technical/size/update/{id}")
+    public String updateColor(@PathVariable("id") Integer id,  @ModelAttribute("Size") Size size, Model model) {
+
+        Size findSize = sizeService.findById(size.getId()).orElse(null);
+
+        findSize.setCode(size.getCode());
+        findSize.setNameSizeInch(size.getNameSizeInch());
+        findSize.setLength(size.getLength());
+        findSize.setWidth(size.getWidth());
+        findSize.setThickness(size.getThickness());
+
+
+        this.sizeService.add(size);
+        model.addAttribute("listColor", sizeService.getAll());
         return "redirect:/admin/technical/size";
     }
 
