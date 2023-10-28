@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ManufactureServiceImpl implements ManufactureService {
@@ -27,10 +26,5 @@ public class ManufactureServiceImpl implements ManufactureService {
     @Override
     public List<Manufacture> getAll() {
         return  manufactureRepository.findAll();
-    }
-
-    @Override
-    public Optional<Manufacture> findById(Integer id) {
-        return this.manufactureRepository.findById(id);
     }
 }

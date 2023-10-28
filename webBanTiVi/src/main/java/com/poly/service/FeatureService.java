@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface FeatureService {
     Feature save(Feature feature);
 
-    void deleteById(Integer id);
+    void delete(Integer id);
 
     List<Feature> findAll();
 

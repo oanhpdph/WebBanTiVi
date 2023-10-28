@@ -3,18 +3,17 @@ package com.poly.controller.user;
 import com.poly.entity.Cart;
 import com.poly.entity.CartProduct;
 import com.poly.entity.Product;
+import com.poly.service.CartProductService;
 import com.poly.service.Impl.CartSeviceImpl;
 import com.poly.service.Impl.ProductServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -34,28 +33,24 @@ public class CartController {
         return cartService;
     }
 
-    @GetMapping("/pay")
-    public String pay(Model model) {
-        session.setAttribute("pageView", "/admin/page/product/pay.html");
-        return "user1/index";
-    }
-
     @GetMapping("/cart")
     public String index(Model model) {
         session.setAttribute("pageView", "/admin/page/product/pro_cart.html");
-        return "user1/index";
+        return "admin/layout";
     }
 
     @GetMapping("/detail")
     public String de(Model model) {
         session.setAttribute("pageView", "/admin/page/product/detail.html");
-        return "user1/index";
+        return "admin/layout";
     }
 
     @RequestMapping("/cart/add/{id}")
-    public String add(@PathVariable Integer id, HttpSession session) {
-        List<CartProduct> list = cartService.add(id);
-        session.setAttribute("list", list);
+    public String add(@PathVariable Integer id, Date date) {
+//        if (session.getAttribute("userCurrent") == null) {
+//            return "redirect:/login";
+//        }
+        cartService.add(id, date);
         return "redirect:/cart";
     }
 
@@ -78,7 +73,8 @@ public class CartController {
             listcart.add(cartProduct);
             cart1.setListCartPro(listcart);
             session.setAttribute("cart", cart1);
-
+            System.out.println(cart1.getListCartPro().size());
+            System.out.println("chay duoc den day la 1 nua r");
         } else {
             Boolean check = false;
             List<CartProduct> list = cart.getListCartPro();
@@ -112,7 +108,7 @@ public class CartController {
         Product product = productService.findById(id);
         model.addAttribute("product", product);
         session.setAttribute("pageView", "/admin/page/product/detail.html");
-        return "user1/index";
+        return "admin/layout";
     }
 
     @RequestMapping("/cart/update/{id}")

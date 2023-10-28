@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ResolutionServiceImpl implements ResolutionService {
@@ -27,10 +26,5 @@ public class ResolutionServiceImpl implements ResolutionService {
     @Override
     public List<Resolution> getAll() {
         return resolutionRepository.findAll();
-    }
-
-    @Override
-    public Optional<Resolution> findById(Integer id) {
-        return this.resolutionRepository.findById(id);
     }
 }

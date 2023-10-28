@@ -1,71 +1,45 @@
 package com.poly.controller.admin;
 
 
-import com.poly.entity.Color;
 import com.poly.entity.Manufacture;
 
-import com.poly.service.Impl.ColorServiceImpl;
 import com.poly.service.Impl.ManufactureServiceImpl;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@Controller
-@RequestMapping("/admin")
+@RestController
+@RequestMapping("/api/manufacture")
 public class ManufactureController {
     @Autowired
     ManufactureServiceImpl manufactureService;
 
 
 
-    @GetMapping("/technical/manufacture")
-    public String loadColor(HttpSession session, Model model) {
-        session.setAttribute("pageView", "/admin/page/technical/manufacture.html");
-        session.setAttribute("active", "/technical/manufacture");
-        model.addAttribute("manufacture", new Manufacture());
-        model.addAttribute("listManufacture", this.manufactureService.getAll());
-        return "admin/layout";
-    }
-
-    @PostMapping("/technical/manufacture/add")
-    public String addColor(Model model, @Valid @ModelAttribute("manufacture") Manufacture manufacture, BindingResult bindingResult)  {
-        if (bindingResult.hasErrors()) {
-            return "admin/layout";
+    @PostMapping("/add")
+    public ResponseEntity<?> add(@RequestBody @Valid Manufacture manufacture, BindingResult result){
+        if(result.hasErrors()){
+            return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
-        this.manufactureService.add(manufacture);
-        model.addAttribute("listManufacture", manufactureService.getAll());
-        return "redirect:/admin/technical/manufacture";
+        return new ResponseEntity<>(manufactureService.add(manufacture), HttpStatus.OK);
     }
 
 
-    @GetMapping("/technical/manufacture/delete/{id}")
-    public String deleteColor(@PathVariable("id") Integer id, Model model) {
-        Manufacture manufacture = manufactureService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Integer id){
+
         manufactureService.delete(id);
-        return "redirect:/admin/technical/manufacture";
     }
 
-    @PostMapping("/technical/manufacture/update/{id}")
-    public String updateColor(@PathVariable("id") Integer id,  @ModelAttribute("manufacture") Manufacture manufacture, Model model) {
+    @PutMapping("/update")
+    public Manufacture update(@RequestBody Manufacture manufacture){
 
-        Manufacture findManufacture = manufactureService.findById(manufacture.getId()).orElse(null);
-
-        findManufacture.setCode(manufacture.getCode());
-        findManufacture.setId(manufacture.getId());
-        findManufacture.setNameManufacture(manufacture.getNameManufacture());
-
-
-        this.manufactureService.add(manufacture);
-        model.addAttribute("listManufacture", manufactureService.getAll());
-        return "redirect:/admin/technical/manufacture";
+        return manufactureService.add(manufacture);
     }
 }

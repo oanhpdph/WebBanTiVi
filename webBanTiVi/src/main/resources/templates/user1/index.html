@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light-style" xmlns:th="http://www.thymeleaf.org">
+<html class="light-style" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,7 @@
     <link rel="stylesheet" th:href="@{/admin/plugin/css/select2-plugin.css}"/>
     <link rel="stylesheet" th:href="@{/admin/plugin/css/bill.css}"/>
 
-<!--    <link rel="stylesheet" th:href="@{/admin/plugin/css/profile.css}">-->
+    <link rel="stylesheet" th:href="@{/admin/plugin/css/profile.css}">
 
     <!-- Helpers -->
     <script th:src="@{/admin/assets/vendor/js/helpers.js}"></script>
@@ -50,7 +50,8 @@
             </div>
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y ">
-                    <div th:replace="~{${session.pageView}}"></div>
+                    <div  th:replace="~{${session.pageView}}"></div>
+<!--                  <input id="staffIndex" th:value="${jwt}" hidden="" >-->
                 </div>
                 <div th:replace="~{/user1/layout/_footer.html}"></div>
                 <div class="content-backdrop fade"></div>
@@ -64,11 +65,13 @@
     <div class="layout-overlay layout-menu-toggle"></div>
 </div>
 <!--build-->
+
 <script th:src="@{/admin/assets/vendor/libs/popper/popper.js}"></script>
 <script th:src="@{/admin/assets/vendor/js/bootstrap.js}"></script>
 <script th:src="@{/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
 <script th:src="@{/admin/assets/js/select2.min.js}"></script>
 <script th:src="@{/admin/assets/vendor/js/menu.js}"></script>
+
 <!-- end build -->
 
 <!-- Main JS -->
@@ -83,5 +86,16 @@
 
 <script th:src="@{/admin/plugin/js/date_picker_order.js}"></script>
 <script th:src="@{/admin/plugin/js/select2-plugin.js}"></script>
+<!--<script>-->
+<!--        if( document.getElementById("staffIndex").value !="") {-->
+<!--        $(document).ready(function () {-->
+<!--            const jwt=document.getElementById("staffIndex").value;-->
+<!--            localStorage.setItem("jwt", jwt);-->
+<!--            alert("Đăng nhập thành công!")-->
+<!--        })-->
+<!--    }-->
+<!--</script>-->
+
+
 </body>
 </html>

@@ -2,7 +2,6 @@ package com.poly.service.Impl;
 
 import com.poly.entity.Color;
 
-import com.poly.entity.Customer;
 import com.poly.repository.ColorRepository;
 
 import com.poly.service.ColorService;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -29,14 +27,13 @@ public class ColorServiceImpl implements ColorService {
     }
 
     @Override
-    public List<Color> findAll() {
+    public List<Color> getAll() {
         return colorRepository.findAll();
     }
 
 
-    @Override
-    public Optional<Color> findById(Integer id) {
-
-        return this.colorRepository.findById(id);
-    }
+//    @Override
+//    public Optional<Staff> findById(Integer id) {
+//        return staffRepository.findById(id);
+//    }
 }

@@ -32,6 +32,10 @@
                             </div>
                             <div class="row col-lg-8 col-xl-9">
                                 <div class="col-sm-4">
+                                    <label class="form-label">Tên đăng nhập:</label>
+                                    <input type="text" class="form-control" th:name="username">
+                                </div>
+                                <div class="col-sm-4">
                                     <label class="form-label">Họ tên:</label>
                                     <input type="text" class="form-control" th:name="name">
                                 </div>
@@ -178,8 +182,8 @@
                     <td th:text="${customer.phoneNumber}"></td>
                     <td th:text="${customer.email}"></td>
                     <td>
-                        <span th:if="${customer.gender} == true" th:text="Male"/>
-                        <span th:if="${customer.gender} == false" th:text="Female"/>
+                        <span th:if="${customer.gender} == true?'Male':'Femail'"/>
+
                     </td>
                     <td><p>
                         <img th:src="@{'/image/'+*{customer.avatar}}"
@@ -217,7 +221,11 @@
                                                     </label>
                                                 </div>
                                                 <div class="row col-lg-8 col-xl-9">
-
+                                                    <div class="col-sm-4">
+                                                        <label class="form-label">Họ tên:</label>
+                                                        <input type="text" class="form-control" th:name="username"
+                                                               th:value="${customer.username}">
+                                                    </div>
                                                     <div class="col-sm-4">
                                                         <label class="form-label">Họ tên:</label>
                                                         <input type="text" class="form-control" th:name="name"

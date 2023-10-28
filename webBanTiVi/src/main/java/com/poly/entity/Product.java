@@ -67,7 +67,7 @@ public class Product {
     @Column(name = "active")
     private Boolean active;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product")
     private List<ImageProduct> listImage;
 
     @OneToMany(mappedBy = "product")

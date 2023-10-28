@@ -1,6 +1,5 @@
 package com.poly.service.Impl;
 
-import com.poly.dto.CustomerDto;
 import com.poly.entity.Customer;
 import com.poly.repository.CustomerRepository;
 import com.poly.service.CustomerService;
@@ -35,16 +34,16 @@ public class CustomerServiceImpl implements CustomerService {
         return this.customerRepository.findById(id);
     }
 
-    @Override
-    public Customer findByEmailAndPass(CustomerDto dto) {
-        Customer customer = null;
-       for(Customer cus : this.customerRepository.findAll()){
-           if(dto.getEmail().equals(cus.getEmail()) && dto.getPassword().equals(cus.getPassword())){
-               customer= cus;
-           }
-       }
-        return customer;
-    }
+//    @Override
+//    public Customer findByEmailAndPass(CustomerDto dto) {
+//        Customer customer = null;
+//       for(Customer cus : this.customerRepository.findAll()){
+//           if(dto.getEmail().equals(cus.getEmail()) && dto.getPassword().equals(cus.getPassword())){
+//               customer= cus;
+//           }
+//       }
+//        return customer;
+//    }
 
 
 }

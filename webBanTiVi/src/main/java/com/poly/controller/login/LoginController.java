@@ -14,16 +14,22 @@ import com.poly.service.StaffService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/login")
+@RequiredArgsConstructor
 public class LoginController {
+    final AuthenticationManager authenticationManager;
 
     @Autowired
     private SendEmail sendEmail;
@@ -49,22 +55,14 @@ public class LoginController {
 
     @PostMapping("/user")
     private String submitLogin(Model model,
-                               @Valid @ModelAttribute("customer") CustomerDto customer, BindingResult result,
-                               HttpSession httpSession, RedirectAttributes redirectAttributes) {
-        Customer cus = this.customerService.findByEmailAndPass(customer);
-        if (result.hasErrors()) {
-            return "login/login";
+                               @Valid @ModelAttribute("customer") CustomerDto customer, BindingResult result
+                         ) {
+        if(result.hasErrors()){
+            return "login/login-system";
         }
-        if (cus == null) {
-            model.addAttribute("message", "Nhập sai thông tin");
-            return "login/login";
-        }
-        httpSession.setAttribute("accountLogged", cus);
-        httpSession.setAttribute("username", cus.getName());
-        httpSession.setAttribute("image", cus.getAvatar());
-        redirectAttributes.addFlashAttribute("message", "Đăng nhập thành công!");
-
-        return "redirect:/client";
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(customer.getUsername(),customer.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return "user1/index";
     }
 
     @GetMapping("/register")
@@ -76,7 +74,7 @@ public class LoginController {
     @PostMapping("/register/add")
     public String AddCustomer(Model model,
                               @ModelAttribute("registration") Customer customer,
-                              BindingResult bindingResult, RedirectAttributes attributes, HttpSession httpSession)
+                              BindingResult bindingResult, HttpSession httpSession)
             throws MessagingException {
         // validate
         if (bindingResult.hasErrors()) {
@@ -86,7 +84,6 @@ public class LoginController {
         if (customer != null) {
             Customer find = this.customerRepository.findByEmail(customer.getEmail());
             if (find != null) {
-                attributes.addFlashAttribute("message", "Email đã được đăng ký");
                 return "redirect:/register";
             }
             RandomNumber rand = new RandomNumber();
@@ -116,13 +113,13 @@ public class LoginController {
     }
 
     @PostMapping("/confirm-register")
-    public String accuracy(HttpSession httpSession, @RequestParam("verification-code") String code,
-                           RedirectAttributes attributes) {
+    public String accuracy(HttpSession httpSession, @RequestParam("verification-code") String code
+                           ) {
         Customer account = (Customer) httpSession.getAttribute("accountRegis");
+        account.setRoles("USER");
         int value = (int) httpSession.getAttribute("randomNumber");
         if (code.equals(String.valueOf(value))) {
             customerRepository.save(account);
-            attributes.addFlashAttribute("message", "Đăng ký thành công");
             httpSession.removeAttribute("accountRegis");
             httpSession.removeAttribute("randomNumber");
             return "redirect:/login";
@@ -144,19 +141,15 @@ public class LoginController {
     @PostMapping("/staff")
     public String LoginAdmin(Model model,
                              @Valid @ModelAttribute("staff") StaffDto staff, BindingResult result,
-                             HttpSession httpSession, RedirectAttributes redirectAttributes) {
-
-
-        Staff findStaff = this.staffService.findByUsernameAndPassword(staff);
-        if (result.hasErrors()) {
+                             HttpSession session
+                             ) {
+        if(result.hasErrors()){
             return "login/login-system";
         }
-
-        httpSession.setAttribute("staff", findStaff);
-        redirectAttributes.addFlashAttribute("message", "Đăng nhập thành công!");
-
-
-        return "redirect:/client";
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(staff.getUsername(),staff.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        session.setAttribute("staff",authentication);
+        return "user1/index";
     }
 
     @GetMapping("/staff")
@@ -164,6 +157,8 @@ public class LoginController {
         model.addAttribute("staff", new Staff());
         return "login/login-system";
     }
+
+
 
 }
 
