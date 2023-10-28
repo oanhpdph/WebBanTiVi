@@ -1,4 +1,4 @@
-package com.poly.controller.user1;
+package com.poly.controller.user;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -11,21 +11,26 @@ public class HomeController1 {
     @GetMapping("/")
     public String loadHome(HttpSession session){
         session.setAttribute("pageView","/user1/page/home/home.html");
-        return "/user1/index";
+        return "/user/index";
     }
     @GetMapping("/tivi")
     public String loadProduct(HttpSession session){
         session.setAttribute("pageView","/user1/page/product/tivi.html");
-        return "/user1/index";
+        return "/user/index";
     }
     @GetMapping("/accessory")
     public String loadAccessory(HttpSession session){
         session.setAttribute("pageView","/user1/page/product/accessory.html");
-        return "/user1/index";
+        return "/user/index";
     }
     @GetMapping("/invoice")
     public String loadInvoice(HttpSession session){
         session.setAttribute("pageView","/user1/page/invoice/search_invoice.html");
-        return "/user1/index";
+        return "/user/index";
+    }
+    @GetMapping("/profile")
+    public String profile(HttpSession session){
+        session.setAttribute("pageView","/user1/page/profile/profile.html");
+        return "/user/index";
     }
 }
