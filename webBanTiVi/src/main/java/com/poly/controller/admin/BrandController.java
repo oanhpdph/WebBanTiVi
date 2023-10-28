@@ -1,47 +1,68 @@
 package com.poly.controller.admin;
 
 import com.poly.entity.Brand;
-
-
-
 import com.poly.service.Impl.BrandServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("/api/brand")
+@Controller
+@RequestMapping("/admin")
 public class BrandController {
     @Autowired
     BrandServiceImpl brandService;
 
 
-    @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody @Valid Brand brand, BindingResult result) {
-        if (result.hasErrors()) {
-            return new ResponseEntity<>(result.getAllErrors(), HttpStatus.BAD_REQUEST);
+
+    @GetMapping("/technical/brand")
+    public String loadColor(HttpSession session, Model model) {
+        session.setAttribute("pageView", "/admin/page/technical/brand.html");
+        session.setAttribute("active", "/technical/brand");
+        model.addAttribute("brand", new Brand());
+        model.addAttribute("listBrand", this.brandService.getAll());
+        return "admin/layout";
+    }
+
+    @PostMapping("/technical/brand/add")
+    public String addColor(Model model, @Valid @ModelAttribute("brand") Brand brand, BindingResult bindingResult)  {
+        if (bindingResult.hasErrors()) {
+            return "admin/layout";
         }
-        return new ResponseEntity<>(brandService.add(brand), HttpStatus.OK);
+        this.brandService.add(brand);
+        model.addAttribute("listBrand", brandService.getAll());
+        return "redirect:/admin/technical/brand";
     }
 
 
-
-    @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Integer id) {
-
+    @GetMapping("/technical/brand/delete/{id}")
+    public String deleteColor(@PathVariable("id") Integer id, Model model) {
+        Brand brand = brandService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         brandService.delete(id);
+        return "redirect:/admin/technical/brand";
     }
 
-    @PutMapping("/update")
-    public Brand update(@RequestBody Brand brand) {
+    @PostMapping("/technical/brand/update/{id}")
+    public String updateColor(@PathVariable("id") Integer id,  @ModelAttribute("brand") Brand brand, Model model) {
 
-        return brandService.add(brand);
+        Brand findBrand = brandService.findById(brand.getId()).orElse(null);
+
+        findBrand.setCode(brand.getCode());
+        findBrand.setId(brand.getId());
+        findBrand.setNameBrand(brand.getNameBrand());
+
+
+        this.brandService.add(brand);
+        model.addAttribute("listBrand", brandService.getAll());
+        return "redirect:/admin/technical/brand";
     }
+
+
+
+
 
 }
