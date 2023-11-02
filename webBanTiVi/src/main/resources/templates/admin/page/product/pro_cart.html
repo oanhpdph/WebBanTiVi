@@ -1,6 +1,59 @@
+<style>
+    .buttons_added {
+        opacity: 1;
+        display: inline-block;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        white-space: nowrap;
+        vertical-align: top;
+    }
+
+    .is-form {
+        overflow: hidden;
+        position: relative;
+        background-color: #f9f9f9;
+        height: 2.2rem;
+        width: 1.9rem;
+        padding: 0;
+        text-shadow: 1px 1px 1px #fff;
+        border: 1px solid #ddd;
+    }
+
+    .is-form:focus, .input-text:focus {
+        outline: none;
+    }
+
+    .is-form.minus {
+        border-radius: 4px 0 0 4px;
+    }
+
+    .is-form.plus {
+        border-radius: 0 4px 4px 0;
+    }
+
+    .input-qty {
+        background-color: #fff;
+        height: 2.2rem;
+        text-align: center;
+        font-size: 1rem;
+        display: inline-block;
+        vertical-align: top;
+        margin: 0;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        border-left: 0;
+        border-right: 0;
+        padding: 0;
+    }
+
+    .input-qty::-webkit-outer-spin-button, .input-qty::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
 <div class="row">
-    <!--    <div class="col-lg-8 mb-4 order-0">-->
-    <div class="col-md-8">
+    <div class="col-lg-9 mb-4 order-0">
+        <!--    <div class="col-md-10">-->
         <div class="card"><br>
             <section class="breadcrumb-option">
                 <div class="container">
@@ -19,161 +72,150 @@
                 </div>
             </section>
             <br>
-            <section class="shopping-cart spad">
+            <section>
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-12">
                             <div class="shopping__cart__table">
                                 <table class="table table-borderless">
                                     <thead>
                                     <tr>
                                         <th>Product</th>
+                                        <th>Price</th>
                                         <th>Quantity</th>
                                         <th>Total</th>
                                         <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td class="product__cart__item">
-                                            <div class="product__cart__item__pic">
-                                                <img src="/user/img/shopping-cart/cart-1.jpg" alt="">
-                                                <span th:each="oanh:${product}"
-                                                      th:text="${oanh.listImage.name_image}"></span>
-                                            </div>
-                                            <div class="product__cart__item__text" th:each="item:${product}">
-                                                <h6><span th:text="${product.name}"></span></h6>
-                                                <h5><span th:text="${product.price_import}"></span>$98.49</h5>
-                                            </div>
-                                        </td>
-                                        <td class="quantity__item" th:each="item:${product}">
-                                            <div class="quantity">
-                                                <div class="pro-qty-2">
-                                                    <input type="text" value="1" th:text="${product.quantity}">
+                                    <tr th:each="item:${session.list}">
+                                        <form th:action="@{/cart/update/{id}(id=${item.product.id})}" method="post">
+                                            <td>
+                                                <div th:each="image:${item.product.listImage}">
+                                                    <div th:if="${image.location == true}">
+                                                        <img th:src="@{'/user/img/shopping-cart/'+image.nameImage}"
+                                                             alt="">
+                                                    </div>
+                                                    <span th:text="${item.product.name + ' '+item.product.code}"></span>
                                                 </div>
-                                            </div>
-                                        </td>
-                                        <td class="cart__price" th:each="item:${product}">$
-                                            <span th:text="${product.price_export * product.quantity}"></span></td>
-                                        <td class="cart__close"><i class="fa fa-close"></i></td>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <h5>$<span id="price-export" th:value="${item.product.price_export}"
+                                                               th:text="${item.product.price_export}"></span></h5>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="buttons_added">
+                                                    <input class="minus is-form" type="button" value="-" id="minus">
+                                                    <input aria-label="quantity" class="input-qty" max="10" min="1"
+                                                           name="quantity"
+                                                           type="number"
+                                                           id="quantity"
+                                                           th:value="${item.quantity}">
+                                                    <input class="plus is-form"
+                                                           type="button" value="+" id="plus">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <span th:text="${item.product.price_export * item.quantity}"
+                                                      id="total-price"></span>
+
+                                            </td>
+                                        </form>
                                     </tr>
                                     <hr>
-                                    <tr>
-                                        <td class="product__cart__item">
-                                            <div class="product__cart__item__pic">
-                                                <img src="/user/img/shopping-cart/cart-2.jpg" alt="">
-                                            </div>
-                                            <div class="product__cart__item__text">
-                                                <h6>Diagonal Textured Cap</h6>
-                                                <h5>$98.49</h5>
-                                            </div>
-                                        </td>
-                                        <td class="quantity__item">
-                                            <div class="quantity">
-                                                <div class="pro-qty-2">
-                                                    <input type="text" value="1">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="cart__price">$ 32.50</td>
-                                        <td class="cart__close"><i class="fa fa-close"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product__cart__item">
-                                            <div class="product__cart__item__pic">
-                                                <img src="/user/img/shopping-cart/cart-3.jpg" alt="">
-                                            </div>
-                                            <div class="product__cart__item__text">
-                                                <h6>Basic Flowing Scarf</h6>
-                                                <h5>$98.49</h5>
-                                            </div>
-                                        </td>
-                                        <td class="quantity__item">
-                                            <div class="quantity">
-                                                <div class="pro-qty-2">
-                                                    <input type="text" value="1">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="cart__price">$ 47.00</td>
-                                        <td class="cart__close"><i class="fa fa-close"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product__cart__item">
-                                            <div class="product__cart__item__pic">
-                                                <img src="/user/img/shopping-cart/cart-4.jpg" alt="">
-                                            </div>
-                                            <div class="product__cart__item__text">
-                                                <h6>Basic Flowing Scarf</h6>
-                                                <h5>$98.49</h5>
-                                            </div>
-                                        </td>
-                                        <td class="quantity__item">
-                                            <div class="quantity">
-                                                <div class="pro-qty-2">
-                                                    <input type="text" value="1">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="cart__price">$ 30.00</td>
-                                        <td class="cart__close"><i class="fa fa-close"></i></td>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="continue__btn">
-                                        <a href="/shop" type="submit" class="btn btn-lg btn-outline-primary">Quay
-                                            Lại</a>
-                                    </div>
+                                    <a href="/shop" type="submit" class="btn btn-lg btn-outline-primary">Quay
+                                        Lại</a>
                                 </div>
                                 <div class=" col-lg-6 col-md-6 col-sm-6">
-                                    <div class="continue__btn update__btn">
-                                        <!--                            <a th:href="@{/cart/update/{id}(id=${product.id})}"><i class="fa fa-spinner"></i> Update-->
-                                        <!--                                cart</a>-->
-                                        <!--                                        <a type="submit" class="btn btn-primary"><i class="fa fa-spinner"></i> Update-->
-                                        <!--                                            cart</a>-->
-                                        <button type="button" class="btn btn-lg btn-primary">Cập Nhật Giỏ Hàng</button>
-                                    </div>
+                                    <button type="button" class="btn btn-lg btn-primary">Cập Nhật Giỏ Hàng</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="cart__discount">
-                                <h6>Discount codes</h6>
-                                <form action="#">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Coupon code"
-                                               aria-label="Recipient's username" aria-describedby="button-addon2">
-                                        <button class="btn btn-outline-primary" type="button" id="button-addon2">
-                                            Apply
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                            <br>
-                            <div class="card shadow-none bg-transparent border border-secondary mb-3">
-                                <div class="card-header"><h5>Cart total</h5></div>
-                                <div class="card-body">
-                                    <p class="card-text">Subtotal: <span style="padding-left: 70px">$<span
-                                            th:text="${cart.amount}"></span> </span></p>
-                                    <p class="card-text">Total: <span style="padding-left: 90px">$<span
-                                            th:text="${cart.amount}"></span> </span></p>
-                                    <div style="text-align: center">
-                                        <button type="button" class="btn btn-primary">Thanh
-                                            Toán
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                     <hr>
                 </div>
             </section>
         </div>
     </div>
+
+    <div class="col-lg-3">
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <h6>Discount codes</h6>
+                    <form action="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Coupon code"
+                                   aria-label="Recipient's username" aria-describedby="button-addon2">
+                            <button class="btn btn-outline-primary" type="button" id="button-addon2">
+                                Apply
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <br>
+                <div class="card shadow-none bg-transparent border border-secondary mb-3">
+                    <div class="card-header"><h5>Cart total</h5></div>
+                    <div class="card-body">
+                        <p class="card-text">Subtotal: <span style="padding-left: 70px">$<span
+                                th:text="${cart.amount}" id="total-price"></span> </span></p>
+                        <p class="card-text">Total: <span style="padding-left: 90px">$<span
+                                th:text="${cart.total}" id="total-price"></span> </span></p>
+                        <div style="text-align: center">
+                            <a type="submit" class="btn btn-primary" th:href="@{/pay}">Thanh
+                                Toán
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script>//<![CDATA[
+$('input.input-qty').each(function () {
+    var $this = $(this),
+        qty = $this.parent().find('.is-form'),
+        min = Number($this.attr('min')),
+        max = Number($this.attr('max'))
+    if (min == 0) {
+        var d = 0
+    } else d = min
+    $(qty).on('click', function () {
+        if ($(this).hasClass('minus')) {
+            if (d > min) d += -1
+        } else if ($(this).hasClass('plus')) {
+            var x = Number($this.val()) + 1
+            if (x <= max) d += 1
+        }
+        $this.attr('value', d).val(d)
+    })
+})
+
+$("#plus").click(function () {
+    var quantity = $("#quantity").val()
+    var priceExport = $("#price-export").attr("value")
+    console.log(priceExport)
+    var totalPrice = quantity * priceExport
+    console.log(totalPrice)
+    $("#total-price").text(totalPrice)
+
+})
+$("#minus").click(function () {
+    var quantity = $("#quantity").val()
+    var priceExport = $("#price-export").attr("value")
+    console.log(priceExport)
+    var removePrice = quantity * priceExport
+    console.log(removePrice)
+    $("#total-price").text(removePrice)
+
+})
+//]]></script>
