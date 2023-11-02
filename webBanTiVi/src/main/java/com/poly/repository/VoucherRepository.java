@@ -9,8 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface VoucherRepository extends JpaRepository<Voucher,Integer> {
-    @Query(value = "select b from Voucher b where b.id = ?1 ")
-    Optional<Voucher> getVoucherById(Integer id);
+
 
 
 }

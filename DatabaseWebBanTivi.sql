@@ -251,7 +251,7 @@ CREATE TABLE bill
      note             NVARCHAR(max)
   )
 
-
+Alter table bill add id_voucher int references voucher(id)
 -- hoa don chi tiet
 CREATE TABLE bill_product
   (

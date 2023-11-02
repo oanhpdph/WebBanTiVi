@@ -8,7 +8,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StaffDto {
+public class LoginDto {
+
     @NotEmpty(message = "Please enter valid name.")
     private String username;
 

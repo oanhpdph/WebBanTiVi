@@ -1,6 +1,5 @@
 package com.poly.entity;
 
-import com.poly.entity.idClass.VoucherCustomerId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,16 +13,18 @@ import java.sql.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@IdClass(VoucherCustomerId.class)
+
 @Builder
 public class VoucherCustomer {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @ManyToOne
     @JoinColumn(name = "id_customer")
     private Customer customer;
 
-    @Id
     @ManyToOne
     @JoinColumn(name = "id_voucher")
     private Voucher voucher;
@@ -36,7 +37,7 @@ public class VoucherCustomer {
     @Column(name = "date_end")
     private Date dateEnd;
 
-    @Column(name="active")
+    @Column(name = "active")
     private boolean active;
 
 }

@@ -13,17 +13,21 @@
     <link rel="stylesheet" th:href="@{/admin/assets/vendor/fonts/boxicons.css}"/>
 
     <link rel="stylesheet" th:href="@{/admin/assets/vendor/css/bootstrap.css}"/>
+
     <link rel="stylesheet" th:href="@{/admin/assets/vendor/css/theme-default.css}"/>
+
     <link rel="stylesheet" th:href="@{/admin/assets/css/demo.css}"/>
+
     <link rel="stylesheet" th:href="@{/admin/assets/css/select2.min.css}"/>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 
     <link rel="stylesheet" th:href="@{/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css}"/>
+
+
     <link rel="stylesheet" th:href="@{/admin/plugin/css/select2-plugin.css}"/>
     <link rel="stylesheet" th:href="@{/admin/plugin/css/bill.css}"/>
 
-    <link rel="stylesheet" th:href="@{/admin/plugin/css/profile.css}">
 
     <!-- Helpers -->
     <script th:src="@{/admin/assets/vendor/js/helpers.js}"></script>
@@ -46,14 +50,13 @@
 <div class="layout-content-navbar layout-without-menu ">
     <div class="layout-container">
         <div class="layout-page">
-            <div th:replace="~{/user1/layout/_navbar.html}">
+            <div th:replace="~{/user/layout/_navbar.html}">
             </div>
             <div class="content-wrapper">
                 <div class="container-xxl flex-grow-1 container-p-y ">
                     <div  th:replace="~{${session.pageView}}"></div>
-<!--                  <input id="staffIndex" th:value="${jwt}" hidden="" >-->
                 </div>
-                <div th:replace="~{/user1/layout/_footer.html}"></div>
+                <div th:replace="~{/user/layout/_footer.html}"></div>
                 <div class="content-backdrop fade"></div>
             </div>
         </div>
@@ -79,22 +82,16 @@
 
 <!--date range picker-->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <!--end date range picker-->
 <!-- Page JS -->
 <script th:src="@{/admin/assets/js/pages-account-settings-account.js}"></script>
 
 <script th:src="@{/admin/plugin/js/date_picker_order.js}"></script>
+
 <script th:src="@{/admin/plugin/js/select2-plugin.js}"></script>
-<!--<script>-->
-<!--        if( document.getElementById("staffIndex").value !="") {-->
-<!--        $(document).ready(function () {-->
-<!--            const jwt=document.getElementById("staffIndex").value;-->
-<!--            localStorage.setItem("jwt", jwt);-->
-<!--            alert("Đăng nhập thành công!")-->
-<!--        })-->
-<!--    }-->
-<!--</script>-->
+
 
 
 </body>

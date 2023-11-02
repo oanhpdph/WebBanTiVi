@@ -7,8 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SearchVoucherDto {
-
-    public String date = "";
     public String key = "";
+    public String date="";
 
 }
