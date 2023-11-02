@@ -1,9 +1,8 @@
 <h4 class="fw-semibold py-3 mb-4"> Danh sách VoucherCustomer</h4>
-<div class="mb-4">
+<div class="row justify-content-end me-4">
     <form th:action="@{/admin/voucherCustomer/add}" method="post" th:object="${voucherCustomer}">
         <div class="row justify-content-end me-4">
-            <button type="button" class="btn btn-success mb-4 w-auto" data-bs-toggle="modal"
-                    data-bs-target="#largeModal">
+            <button type="button" class="btn btn-success mb-4 w-auto" data-bs-toggle="modal" data-bs-target="#largeModal">
                 <i class='tf-icon bx bx-plus-medical'></i> Add VoucherCustomer
             </button>
         </div>
@@ -23,7 +22,7 @@
                                         <div class="mb-3">
                                             <label class="form-label">Customer:</label>
                                             <br>
-                                            <select th:name="customer">
+                                            <select th:name="customer" class="form-select" aria-label="Default select example">
                                                 <option th:each="i:${session.listCustomer}" th:value="${i.id}"
                                                         th:text="${i.name}"></option>
                                             </select>
@@ -31,7 +30,7 @@
                                         <div class="mb-3">
                                             <label class="form-label">Voucher:</label>
                                             <br>
-                                            <select th:name="voucher">
+                                            <select th:name="voucher" class="form-select" aria-label="Default select example">
                                                 <option th:each="v:${session.listVoucher}" th:value="${v.id}"
                                                         th:text="${v.code}"></option>
                                             </select>
@@ -44,7 +43,7 @@
                                                    name="date_start">
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">Start Day:</label>
+                                            <label class="form-label">End Day:</label>
                                             <input type="date" class="form-control" th:name="dateEnd">
                                         </div>
                                     </div>
@@ -139,20 +138,118 @@
                     <td th:text="${voucherCustomer.voucher.code}"></td>
                     <td th:text="${voucherCustomer.dateStart}"></td>
                     <td th:text="${voucherCustomer.dateEnd}"></td>
-                    <td th:text="${voucherCustomer.active == true ? 'Active':'Inactive'}">
+                    <td th:text="${voucherCustomer.active == true ? 'Active':'Chưa active'}">
                     </td>
                     <td>
-                        <a th:href="@{/admin/voucherCustomer/edit/{id}/{idCustomer}(idCustomer=${voucherCustomer.customer.id},id=${voucherCustomer.voucher.id})}">
-                            <button type="button" class="btn btn-primary btn-control">
-                                <span class="bx bxs-edit-alt"></span>
+                        <div>
+                            <button type="button" class="btn btn-icon btn-primary" data-bs-toggle="modal"
+                                    th:data-bs-target="|#modal${voucherCustomer.id}">
+                                <i class="bx bxs-edit-alt"></i>
                             </button>
-                        </a>
-                        <a th:href="@{/admin/voucherCustomer/delete/{id}(id=${voucherCustomer.customer.id})}"
-                           onclick="return confirm('Xác nhận xóa')">
-                            <button type="button" class="btn btn-icon btn-danger">
-                                <span class="bx bxs-trash"></span>
-                            </button>
-                        </a>
+                            <div class="modal fade" th:id="|modal${voucherCustomer.id}|" tabindex="-1"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Thông tin voucher</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form th:action="@{/admin/voucherCustomer/update/{id}(id=${voucherCustomer.id})}"
+                                                  method="post" th:object="${voucherCustomer}">
+                                                <div class="row">
+                                                    <div class="row col-lg-12 col-xl-9">
+                                                        <div class="col-xl-4 col-lg-6 col-md-6">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Customer:</label>
+                                                                <br>
+                                                                <select th:name="customer" class="form-select" aria-label="Default select example">
+                                                                    <option th:each="i:${session.listCustomer}"
+                                                                            th:value="${i.id}"
+                                                                            th:text="${i.name}"
+                                                                            th:selected="${voucherCustomer.customer.id==i.id}"
+                                                                    ></option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb-3" >
+                                                                <label class="form-label">Voucher:</label>
+                                                                <br>
+                                                                <select  th:name="voucher" class="form-select" aria-label="Default select example">
+                                                                    <option th:each="v:${session.listVoucher}"
+                                                                            th:value="${v.id}"
+                                                                            th:text="${v.code}"
+                                                                            th:selected="${voucherCustomer.voucher.id==v.id}"
+                                                                    ></option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-4 col-lg-6 col-md-6">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Start
+                                                                    Day:</label>
+                                                                <input type="date"
+                                                                       class="form-control"
+                                                                       th:name="dateStart"
+                                                                       th:value="${voucherCustomer.dateStart}"
+                                                                       name="date_start">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label class="form-label">End Day:</label>
+                                                                <input type="date"
+                                                                       class="form-control"
+                                                                       th:name="dateEnd"
+                                                                       th:value="${voucherCustomer.dateEnd}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-4 col-lg-6 col-md-6">
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Active:</label>
+                                                                <br>
+                                                                <div class="form-check form-check-inline">
+                                                                    <input class="form-check-input"
+                                                                           type="radio"
+                                                                           th:id="|active${voucherCustomer.id}|"
+                                                                           th:name="active"
+                                                                           th:value="true"
+                                                                           th:checked="${voucherCustomer.active==true}">
+                                                                    <label class="form-check-label"
+                                                                           th:for="|active${voucherCustomer.id}|">Acitve</label>
+                                                                </div>
+                                                                <div class="form-check form-check-inline">
+                                                                    <input class="form-check-input"
+                                                                           type="radio"
+                                                                           th:id="|active${voucherCustomer.id}|"
+                                                                           th:name="active"
+                                                                           th:value="false"
+                                                                           th:checked="${voucherCustomer.active==false}">
+                                                                    <label class="form-check-label"
+                                                                           th:for="|active${voucherCustomer.id}|">Non-active</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                    <a th:href="@{/admin/voucherCustomer/add}">
+                                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                                            Quay lại
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a th:href="@{/admin/voucherCustomer/delete/{id}(id=${voucherCustomer.id})}"
+                               onclick="return confirm('Xác nhận xóa')">
+                                <button type="button" class="btn btn-icon btn-danger">
+                                    <span class="bx bxs-trash"></span>
+                                </button>
+                            </a>
+                        </div>
                     </td>
                 </tr>
                 </tbody>

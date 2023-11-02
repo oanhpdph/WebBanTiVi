@@ -98,7 +98,6 @@
                         <div th:text="#{sidebar.listVoucher}"></div>
                     </a>
                 </li>
-                <li>
                 <li th:class="${#strings.equals(session.active,'/voucherCustomer')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/voucherCustomer}" class="menu-link">
                         <div th:text="#{sidebar.listVoucherCustomer}">List voucher customer</div>
@@ -130,7 +129,7 @@
             </ul>
         </li>
         <li class="menu-item">
-            <a class="menu-link" href="/login">
+            <a class="menu-link" th:href="@{/login}">
                 <i class="menu-icon tf-icons bx bx-power-off me-2"></i>
                 <span class="align-middle" th:text="#{navbar.logOut}"></span>
             </a>

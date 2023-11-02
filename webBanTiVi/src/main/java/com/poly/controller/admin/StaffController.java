@@ -1,12 +1,19 @@
 package com.poly.controller.admin;
 
 import com.poly.common.UploadFile;
+import com.poly.dto.SearchStaffDto;
+import com.poly.dto.SearchVoucherDto;
 import com.poly.entity.Staff;
+import com.poly.entity.Voucher;
 import com.poly.service.StaffService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +26,8 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("/admin")
-
 public class StaffController {
+
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -31,19 +38,40 @@ public class StaffController {
 
     @GetMapping("/staff")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String loadStaff(HttpSession session, Model model) {
+    public String loadStaff(HttpSession session, Model model,
+                            @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageRequest,
+                            @RequestParam(name = "size", required = false, defaultValue = "2") Integer sizeRequest,
+                            @ModelAttribute(name = "search") SearchStaffDto search
+                            ) {
 
+        if(pageRequest<0){
+            pageRequest=1;
+        }
+        if(sizeRequest<=0){
+            sizeRequest=1;
+        }
+
+        session.setAttribute("size", sizeRequest);
+        session.setAttribute("page", pageRequest);
+
+        Pageable pageable = PageRequest.of(pageRequest - 1, sizeRequest);
+        Page<Staff> staffPage = staffService.loadData(search, pageable);
+
+        model.addAttribute("totalElements", staffPage.getTotalElements());
+        session.setAttribute("list", staffPage);
         session.setAttribute("pageView", "/admin/page/staff/staff.html");
-        session.setAttribute("active", "/staff");
-        model.addAttribute("listStaff", staffService.findAll());
-        model.addAttribute("staff", new Staff());
+        session.setAttribute("active", "/staff/list");
         return "admin/layout";
     }
 
 
     @PostMapping("/staff/add")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String addStaff(Model model, @Valid @ModelAttribute("staff") Staff staff, BindingResult bindingResult, @RequestParam("image") MultipartFile file) {
+    public String addStaff(Model model,
+                           HttpSession session,
+                           @Valid @ModelAttribute("staff") Staff staff, BindingResult bindingResult,
+                           @RequestParam("image") MultipartFile file
+                           ) {
 
         if (bindingResult.hasErrors()) {
             return "admin/layout";
@@ -59,7 +87,6 @@ public class StaffController {
             //
             e.printStackTrace();
         }
-        model.addAttribute("listStaff", staffService.findAll());
         return "redirect:/admin/staff";
     }
 
@@ -75,10 +102,13 @@ public class StaffController {
 
     @PostMapping("/staff/update/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String updateUser(@PathVariable("id") Integer id, @ModelAttribute("staff") Staff staff, Model model, @RequestParam("image") MultipartFile file) {
+    public String updateUser(@PathVariable("id") Integer id,
+                             HttpSession session,
+                             @ModelAttribute("staff") Staff staff, Model model,
+                             @RequestParam("image") MultipartFile file
+                             ) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
         Staff findStaff = staffService.findById(staff.getId()).orElse(null);
-
         findStaff.setUsername(staff.getUsername());
         findStaff.setName(staff.getName());
         findStaff.setEmail(staff.getEmail());
@@ -98,9 +128,13 @@ public class StaffController {
                 e.printStackTrace();
             }
         }
-        findStaff.setPassword(passwordEncoder.encode(staff.getPassword()));
+        String password=staff.getPassword();
+        if(password.startsWith("$2a$")&& password.contains("$")){
+            findStaff.setPassword(password);
+        }else{
+            findStaff.setPassword(passwordEncoder.encode(password));
+        }
         this.staffService.save(findStaff);
-        model.addAttribute("listStaff", staffService.findAll());
         return "redirect:/admin/staff";
     }
 

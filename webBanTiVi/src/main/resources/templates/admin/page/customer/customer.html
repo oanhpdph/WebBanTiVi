@@ -18,14 +18,14 @@
                     <div class="modal-body">
                         <div class="row g-3">
                             <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
-                                <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar" class="d-block rounded"
-                                     height="100" width="100" id="uploadedAvatar">
+                                <img th:src="@{'/image/default.jpg'}" alt="user-avatar"
+                                     class="d-block rounded image-preview"
+                                     height="200" width="200">
                                 <br> <br>
                                 <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                                     <span class="d-none d-sm-block">Upload new photo</span>
                                     <i class="bx bx-upload d-block d-sm-none"></i>
-                                    <input type="file" id="upload" class="account-file-input" hidden=""
-                                           accept="image/png, image/jpeg"
+                                    <input type="file" id="upload" class="file-input" hidden=""
                                            name="image"
                                     >
                                 </label>
@@ -110,36 +110,37 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Reset</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
 </div>
-<div class="card mb-3 ">
-    <div class="card-header">
-        <form class="col-12 mt-2">
-            <div class="col-12 row">
-                <div class="col-7">
-                    <div class="form-check input-group input-group-merge">
+<div class="card-header">
+    <form class="col-12 mt-2" th:action="@{/admin/customer/list}" method="get" th:object="${searchCustomer}">
+        <div class="col-12 row">
+            <div class="col-7">
+                <div class="form-check input-group input-group-merge">
                     <span class="input-group-text">
                         <i class="bx bx-search"></i>
                     </span>
-                        <input type="text" class="form-control" placeholder="Tìm tên, sđt">
-                        <button class="btn btn-primary" type="button">Search</button>
-                    </div>
-                </div>
-                <div class="col-1">
-                    <button class="btn btn-warning" data-bs-toggle="tooltip" data-bs-offset="0,4"
-                            data-bs-placement="bottom" data-bs-html="true" title=""
-                            data-bs-original-title="<span>Reset filter</span>" aria-describedby="tooltip91262">
-                        <i class='bx bx-reset'></i>
-                    </button>
+                    <input type="text" class="form-control" placeholder="Tìm tên, sđt" name="keywords"
+                           th:name="key" id="key" th:field="*{key}" autocomplete="off">
+                    <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </div>
-        </form>
-    </div>
+            <div class="col-1">
+                <button class="btn btn-warning" data-bs-toggle="tooltip" data-bs-offset="0,4"
+                        data-bs-placement="bottom" data-bs-html="true" title=""
+                        data-bs-original-title="<span>Reset filter</span>" aria-describedby="tooltip91262">
+                    <i class='bx bx-reset'></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="card mb-3 ">
     <div class="card-body">
         <div class="row">
             <div class="col-md-2 d-flex align-items-center">
@@ -174,7 +175,7 @@
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                <tr th:each="customer : ${listCus}">
+                <tr th:each="customer : ${session.list.content}">
                     <!--                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>-->
                     <td th:text="${customer.name}"></td>
                     <td th:text="${customer.birthday}"></td>
@@ -182,7 +183,7 @@
                     <td th:text="${customer.phoneNumber}"></td>
                     <td th:text="${customer.email}"></td>
                     <td>
-                        <span th:if="${customer.gender} == true?'Male':'Femail'"/>
+                        <span th:text="${customer.gender} == true?'Male':'Female'"/>
 
                     </td>
                     <td><p>
@@ -209,29 +210,30 @@
                                               method="post" th:object="${customer}" enctype="multipart/form-data">
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
-                                                    <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar" class="d-block rounded"
-                                                         height="100" width="100" id="uploadedAvatar">
+                                                    <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar"
+                                                         class="d-block rounded image-preview"
+                                                         height="200" width="200"
+                                                         id="image-preview">
                                                     <br> <br>
-                                                    <label th:for="upload2" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                                    <label for="file-input" class="btn btn-primary me-2 mb-4" tabindex="0">
                                                         <span class="d-none d-sm-block">Upload new photo</span>
                                                         <i class="bx bx-upload d-block d-sm-none"></i>
-                                                        <input type="file" th:id="upload2" class="account-file-input" hidden=""
-                                                               accept="image/png, image/jpeg"
-                                                               name="image">
+                                                        <input type="file" id="file-input" class="account-file-input file-input"
+                                                               hidden="" name="image">
                                                     </label>
                                                 </div>
-                                                <div class="row col-lg-8 col-xl-9">
-                                                    <div class="col-sm-4">
+                                                <div class="row mb-3 col-lg-8 col-xl-9">
+                                                    <div class="col-sm-4 p-3" >
                                                         <label class="form-label">Họ tên:</label>
                                                         <input type="text" class="form-control" th:name="username"
                                                                th:value="${customer.username}">
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 p-3">
                                                         <label class="form-label">Họ tên:</label>
                                                         <input type="text" class="form-control" th:name="name"
                                                                th:value="${customer.name}">
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 p-3">
                                                         <label class="form-label">Địa chỉ:</label>
                                                         <textarea style="height: 12px" type="text" class="form-control"
                                                                   th:name="address" th:text="${customer.address}"
@@ -240,13 +242,13 @@
                                                     </div>
 
 
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 p-3">
                                                         <label class="form-label">Số điện thoại</label>
                                                         <input type="text" class="form-control"
                                                                th:name="phoneNumber"
                                                                th:value="${customer.phoneNumber}">
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 p-3">
                                                         <label class="form-label">Giới tính:</label>
                                                         <br>
                                                         <div class="form-check form-check-inline mt-3">
@@ -269,31 +271,31 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 p-3">
                                                         <label class="form-label">Ngày sinh</label>
                                                         <input class="form-control" type="date" th:name="birthday"
                                                                th:value="${customer.birthday}">
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 p-3">
                                                         <label class="form-label">Email</label>
                                                         <input class="form-control" type="email" th:name="email"
                                                                th:value="${customer.email}">
                                                     </div>
 
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 p-3">
                                                         <label class="form-label">Password</label>
                                                         <input class="form-control" type="text" th:name="password"
                                                                th:value="${customer.password}"
                                                         >
                                                     </div>
 
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 p-3">
                                                         <label class="form-label">Id Card:</label>
                                                         <input type="text" class="form-control" th:name="idCard"
                                                                th:value="${customer.idCard}"/>
                                                     </div>
 
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 p-3">
                                                         <label class="form-label">Trạng thái :</label>
                                                         <br>
                                                         <div class="form-check form-check-inline mt-3">
@@ -361,42 +363,75 @@
         </div>
         <hr class="card-separator">
     </div>
-    <div class="card-footer">
-        <div class="d-inline-flex float-end">
-            <div class="mx-3 row" style="width: 180px">
-                <label for="select-view" class="col-form-label col-5 text-end">View:</label>
-                <div class="col-7">
-                    <select class="form-select text-start" id="select-view">
-                        <option>10</option>
-                        <option>20</option>
-                        <option>40</option>
-                        <option>80</option>
-                    </select>
-                </div>
+</div>
+<div class="card-footer">
+
+    <div class="d-inline-flex float-end">
+        <div class="mx-3 row" style="width: 180px; color: black">
+            <label for="select-view" class="col-form-label col-5 text-end">View:</label>
+            <div class="col-7">
+                <select class="form-select text-start" id="select-view">
+                    <option>10</option>
+                    <option>20</option>
+                    <option>40</option>
+                    <option>80</option>
+                </select>
             </div>
-            <div aria-label="Page pagination">
-                <ul class="pagination">
-                    <li class="page-item first">
-                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
-                    </li>
-                    <li class="page-item prev">
-                        <a class="page-link" href="javascript:void(0);"><i
-                                class="tf-icon bx bx-chevron-left"></i></a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="javascript:void(0);">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="javascript:void(0);">2</a>
-                    </li>
-                    <li class="page-item next">
-                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-                    </li>
-                    <li class="page-item last">
-                        <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
-                    </li>
-                </ul>
-            </div>
+        </div>
+        <div aria-label="Page pagination">
+            <ul class="pagination">
+                <li class="page-item first">
+                    <a class="page-link" th:href="@{'/admin/customer/list?page=1&size='+${session.size}}"><i
+                            class="tf-icon bx bx-chevrons-left"></i></a>
+                </li>
+                <li class="page-item prev">
+                    <a class="page-link"
+                       th:href="@{'/admin/customer/list?page='+${session.page==1? '1': session.page - 1}+'&size='+${session.size}}"><i
+                            class="tf-icon bx bx-chevron-left"></i></a>
+                </li>
+                <li class="page-item" th:each="pagination:${#numbers.sequence(1,session.list.totalPages)}">
+                    <a class="page-link"
+                       th:href="@{'/admin/customer/list?page='+${pagination}+'&size='+${session.size}}"
+                       th:text="${pagination}"></a>
+                </li>
+                <li class="page-item next">
+                    <a class="page-link"
+                       th:href="@{'/admin/customer/list?page='+${session.page < session.list.totalPages ? session.page + 1 : session.list.totalPages }+'&size='+${session.size}}"><i
+                            class="tf-icon bx bx-chevron-right"></i></a>
+                </li>
+                <li class="page-item last">
+                    <a class="page-link"
+                       th:href="@{'/admin/customer/list?page='+${session.list.totalPages}+'&size='+${session.size}}"><i
+                            class="tf-icon bx bx-chevrons-right"></i></a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
+<script>
+    const fileInputs = document.getElementsByClassName('file-input');
+    const imagePreviews = document.getElementsByClassName('image-preview');
+
+    for (let i = 0; i < fileInputs.length; i++) {
+        const fileInput = fileInputs[i];
+        const imagePreview = imagePreviews[i];
+
+        // Lắng nghe sự kiện khi người dùng chọn tệp
+        fileInput.addEventListener('change', function () {
+            const file = fileInput.files[0]; // Lấy tệp đã chọn
+
+            if (file) {
+                // Kiểm tra xem tệp đã chọn có phải là hình ảnh
+                if (file.type.startsWith('image/')) {
+                    // Tạo đường dẫn URL cho hình ảnh và hiển thị nó
+                    const imageURL = URL.createObjectURL(file);
+                    imagePreview.src = imageURL;
+
+                } else {
+                    alert('Vui lòng chọn một tệp hình ảnh.');
+                    fileInput.value = ''; // Đặt lại trường nhập
+                }
+            }
+        });
+    }
+</script>

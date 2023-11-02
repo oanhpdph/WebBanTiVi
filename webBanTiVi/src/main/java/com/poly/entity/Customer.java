@@ -1,6 +1,7 @@
 package com.poly.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +22,7 @@ public class Customer {
     @Column(name="id")
     private Integer id;
 
-
+    @NotBlank(message="Username not null")
     @Column(name="username")
     private String username;
 
@@ -35,12 +36,15 @@ public class Customer {
     @Column(name="address")
     private String address;
 
+    @NotBlank(message="Username not null")
     @Column(name="phone_number")
     private String phoneNumber;
 
+    @NotBlank(message="Username not null")
     @Column(name="email")
     private String email;
 
+    @NotBlank(message="Username not null")
     @Column(name = "password")
     private String password;
 

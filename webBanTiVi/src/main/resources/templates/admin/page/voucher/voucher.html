@@ -1,32 +1,33 @@
 <h4 class="fw-semibold py-3 mb-4"> Danh sách Voucher</h4>
-<form th:action="@{/admin/voucher/add}" method="post" th:object="${voucher}" enctype="multipart/form-data">
-    <div class="mb-4">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-            Thêm Voucher
-        </button>
-    </div>
-    <div class="mb-4">
-        <div class="modal fade" th:id="largeModal" tabindex="-1"
-             aria-hidden="true">
-            <div class="modal-dialog modal-xl" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Thông tin voucher</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+
+<div class="row justify-content-end me-4">
+    <button type="button" class="btn btn-success mb-4 w-auto" data-bs-toggle="modal" data-bs-target="#largeModal">
+        <i class='tf-icon bx bx-plus-medical'></i> Add Voucher
+    </button>
+</div>
+<div class="mb-4">
+    <div class="modal fade" th:id="largeModal" tabindex="-1"
+         aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông tin voucher</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form th:action="@{/admin/voucher/add}" method="post" th:object="${voucher}"
+                      enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
-<!--                                <img th:src="@{'/image/'+*{image}}" alt="user-avatar" class="d-block rounded"-->
-<!--                                     height="100" width="100" id="uploadedAvatar">-->
-                                <br> <br>
-                                <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                <img th:src="@{'/image/default.jpg'}" alt="user-avatar"
+                                     class="d-block rounded image-preview"
+                                     height="150" width="150">
+                                <br>
+                                <label  class="btn btn-primary me-2 mb-4" tabindex="0">
                                     <span class="d-none d-sm-block">Upload new photo</span>
                                     <i class="bx bx-upload d-block d-sm-none"></i>
-                                    <input type="file" id="upload" class="account-file-input" hidden=""
-                                           accept="image/png, image/jpeg"
-                                           name="image"
-                                    >
+                                    <input type="file" class="file-input" hidden=""
+                                           name="image">
                                 </label>
                             </div>
                             <div class="row col-lg-12 col-xl-9">
@@ -100,14 +101,13 @@
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Reset
                         </button>
                         <button type="submit" class="btn btn-primary" onclick="return confirm('Xác nhận thêm')">Save
-                            changes
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
-</form>
+</div>
 <div class="card mb-3 ">
     <div class="card-header">
         <form class="col-12 mt-2" th:action="@{/admin/voucher/list}" method="get" th:object="${search}">
@@ -193,12 +193,11 @@
                         <td th:text="${voucher.startDay}"></td>
                         <td th:text="${voucher.expirationDate}"></td>
                         <td>
-                            <span th:if="${voucher.active} == true" th:text="Active"/>
-                            <span th:if="${voucher.active} == false" th:text="ChưaActive"/>
+                            <span th:text="${voucher.active} == true?'Active':'Chưa Active'"/>
                         </td>
                         <td>
                             <p>
-                                <img th:src="@{'/image/'+*{voucher.image}}"
+                                <img th:src="@{'/image/'+*{voucher.avatar}}"
                                      style="height: 80px; width: 80px"/>
                             </p>
                         </td>
@@ -223,19 +222,19 @@
                                             <div class="modal-body">
                                                 <form th:action="@{/admin/voucher/update/{id}(id=${voucher.id})}"
                                                       method="post"
-                                                      th:object="${voucher}">
+                                                      th:object="${voucher}" enctype="multipart/form-data">
                                                     <div class="row">
                                                         <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
-                                                            <img th:src="@{'/image/'+*{image}}" alt="user-avatar" class="d-block rounded"
-                                                                 height="100" width="100" id="uploadedAvatar">
+                                                            <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar"
+                                                                 class="d-block rounded image-preview"
+                                                                 height="100" width="100"
+                                                                >
                                                             <br> <br>
-                                                            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                                            <label  class="btn btn-primary me-2 mb-4" tabindex="0">
                                                                 <span class="d-none d-sm-block">Upload new photo</span>
                                                                 <i class="bx bx-upload d-block d-sm-none"></i>
-                                                                <input type="file" id="upload" class="account-file-input" hidden=""
-                                                                       accept="image/png, image/jpeg"
-                                                                       name="image"
-                                                                >
+                                                                <input type="file"  class="account-file-input file-input"
+                                                                       hidden="" name="image">
                                                             </label>
                                                         </div>
                                                         <div class="row col-lg-12 col-xl-9">
@@ -251,7 +250,7 @@
                                                                     <label class="form-label">Name Voucher:</label>
                                                                     <input type="text" class="form-control"
                                                                            th:name="nameVoucher"
-                                                                           th:value="${voucher.code}"
+                                                                           th:value="${voucher.nameVoucher}"
                                                                     >
                                                                 </div>
                                                             </div>
@@ -414,12 +413,12 @@
                         </li>
                         <li class="page-item next">
                             <a class="page-link"
-                               th:href="@{'/admin/voucher/list?page='+${session.page < totalPage ? session.page + 1 : totalPage }+'&size='+${session.size}}"><i
+                               th:href="@{'/admin/voucher/list?page='+${session.page < session.list.totalPages ? session.page + 1 : session.list.totalPages }+'&size='+${session.size}}"><i
                                     class="tf-icon bx bx-chevron-right"></i></a>
                         </li>
                         <li class="page-item last">
                             <a class="page-link"
-                               th:href="@{'/admin/voucher/list?page='+${totalPage}+'&size='+${session.size}}"><i
+                               th:href="@{'/admin/voucher/list?page='+${session.list.totalPages}+'&size='+${session.size}}"><i
                                     class="tf-icon bx bx-chevrons-right"></i></a>
                         </li>
                     </ul>
@@ -428,3 +427,30 @@
         </div>
     </div>
 </div>
+<script>
+    const fileInputs = document.getElementsByClassName('file-input');
+    const imagePreviews = document.getElementsByClassName('image-preview');
+
+    for (let i = 0; i < fileInputs.length; i++) {
+        const fileInput = fileInputs[i];
+        const imagePreview = imagePreviews[i];
+
+        // Lắng nghe sự kiện khi người dùng chọn tệp
+        fileInput.addEventListener('change', function () {
+            const file = fileInput.files[0]; // Lấy tệp đã chọn
+
+            if (file) {
+                // Kiểm tra xem tệp đã chọn có phải là hình ảnh
+                if (file.type.startsWith('image/')) {
+                    // Tạo đường dẫn URL cho hình ảnh và hiển thị nó
+                    const imageURL = URL.createObjectURL(file);
+                    imagePreview.src = imageURL;
+
+                } else {
+                    alert('Vui lòng chọn một tệp hình ảnh.');
+                    fileInput.value = ''; // Đặt lại trường nhập
+                }
+            }
+        });
+    }
+</script>

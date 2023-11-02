@@ -4,6 +4,7 @@ import com.poly.entity.Product;
 import com.poly.entity.Supplier;
 import com.poly.service.Impl.SupplierServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
 public class SupplierController {
     @Autowired
     SupplierServiceImpl supplierService;

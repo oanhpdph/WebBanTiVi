@@ -20,7 +20,7 @@
                           enctype="multipart/form-data">
                         <div class="card-body">
                             <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3">
-                                <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar"
+                                <img th:src="@{'/image/default.jpg'}" alt="user-avatar"
                                      class="d-block rounded image-preview"
                                      height="100" width="100">
                                 <br> <br>
@@ -64,12 +64,12 @@
                                     <div class="col-sm-4">
                                         <label class="mb-1">Gender</label> <br>
                                         <div class="form-check form-check-inline mt-3">
-                                            <input class="form-check-input" type="radio" th:name="*{gender}"
+                                            <input class="form-check-input" type="radio" th:name="gender"
                                                    th:value="true">
                                             <label class="form-check-label">Male</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" th:name="*{gender}"
+                                            <input class="form-check-input" type="radio" th:name="gender"
 
                                                    th:value="false">
                                             <label class="form-check-label">Female</label>
@@ -120,8 +120,8 @@
                                                 <select class="form-select"
                                                         aria-label="Example select with button addon"
                                                         th:name="roles">
-                                                    <option th:value="admin">Admin</option>
-                                                    <option th:value="user">User</option>
+                                                    <option th:value="ADMIN">Admin</option>
+                                                    <option th:value="STAFF">User</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -146,8 +146,29 @@
     </div>
     <!-- /Account -->
 </div>
-<hr>
-
+<div class="card-header">
+    <form class="col-12 mt-2" th:action="@{/admin/staff}" method="get" th:object="${search}">
+        <div class="col-12 row">
+            <div class="col-7">
+                <div class="form-check input-group input-group-merge">
+                    <span class="input-group-text">
+                        <i class="bx bx-search"></i>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Tìm tên, sđt" name="keywords"
+                           th:name="key" id="key" th:field="*{key}" autocomplete="off">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
+            <div class="col-1">
+                <button class="btn btn-warning" data-bs-toggle="tooltip" data-bs-offset="0,4"
+                        data-bs-placement="bottom" data-bs-html="true" title=""
+                        data-bs-original-title="<span>Reset filter</span>" aria-describedby="tooltip91262">
+                    <i class='bx bx-reset'></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="card">
     <h5 class="card-header">Account</h5>
     <div class="table-responsive text-nowrap">
@@ -168,13 +189,13 @@
             </thead>
             <tbody>
 
-            <tr th:each="staff: ${listStaff}">
+            <tr th:each="staff: ${session.list.content}">
                 <td th:text="${staff.id}"></td>
                 <td th:text="${staff.username}"></td>
                 <td th:text="${staff.name}"></td>
                 <td>
-                    <span th:if="${staff.gender} == true" th:text="Male"/>
-                    <span th:if="${staff.gender} == false" th:text="Female"/>
+                    <span th:text="${staff.gender} == true?'Male':'Female'"></span>
+
                 </td>
                 <td th:text="${staff.birthday}"></td>
                 <td th:text="${staff.address}"></td>
@@ -184,11 +205,9 @@
                 <td><p>
                     <img th:src="@{'/image/'+*{staff.avatar}}"
                          style="height: 80px; width: 80px"/>
-
                 </p>
                 </td>
                 <td>
-
                     <button type="button" class="btn btn-icon btn-primary" data-bs-toggle="modal"
                             th:data-bs-target="|#modal${staff.id}|">
                         <i class="bx bxs-edit-alt"></i>
@@ -209,20 +228,20 @@
                                             <img th:src="@{'/image/'+*{avatar}}" alt="user-avatar"
                                                  class="d-block rounded image-preview"
                                                  height="100" width="100"
-                                                 id="image-preview">
+                                            >
                                             <br> <br>
-                                            <label for="file-input" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                            <label  class="btn btn-primary me-2 mb-4" tabindex="0">
                                                 <span class="d-none d-sm-block">Upload new photo</span>
                                                 <i class="bx bx-upload d-block d-sm-none"></i>
-                                                <input type="file" id="file-input" class="account-file-input file-input"
-                                                      hidden="" name="image">
+                                                <input type="file" class="account-file-input file-input"
+                                                       hidden="" name="image">
                                             </label>
                                         </div>
                                     </div>
                                     <hr class="my-0">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="row g-3">
+                                            <div class="row mb-3">
                                                 <div class="col-sm-6">
                                                     <label class="form-label">Username</label>
                                                     <input class="form-control" type="text" th:name="username"
@@ -254,7 +273,7 @@
                                                            required>
                                                 </div>
                                             </div>
-                                            <div class="row g-3">
+                                            <div class="row mb-3">
                                                 <div class="col-sm-4">
                                                     <label class="mb-1">Gender</label> <br>
                                                     <div class="form-check form-check-inline mt-3">
@@ -292,7 +311,7 @@
 
                                                 </div>
                                             </div>
-                                            <div class="row g-3">
+                                            <div class="row mb-3">
                                                 <div class="col-sm-4">
                                                     <label class="form-label">Phone Number</label>
                                                     <div class="input-group input-group-merge">
@@ -335,8 +354,12 @@
                                                             <select class="form-select"
                                                                     aria-label="Example select with button addon"
                                                                     th:name="roles">
-                                                                <option th:value="ADMIN"  th:selected="${staff.roles=='ADMIN'}">Admin</option>
-                                                                <option th:value="USER" th:selected="${staff.roles=='USER'}">User</option>
+                                                                <option th:value="ADMIN"
+                                                                        th:selected="${staff.roles=='ADMIN'}">Admin
+                                                                </option>
+                                                                <option th:value="STAFF"
+                                                                        th:selected="${staff.roles=='STAFF'}">User
+                                                                </option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -385,6 +408,49 @@
         </table>
     </div>
 </div>
+<div class="card-footer">
+
+    <div class="d-inline-flex float-end">
+        <div class="mx-3 row" style="width: 180px; color: black">
+            <label for="select-view" class="col-form-label col-5 text-end">View:</label>
+            <div class="col-7">
+                <select class="form-select text-start" id="select-view">
+                    <option>10</option>
+                    <option>20</option>
+                    <option>40</option>
+                    <option>80</option>
+                </select>
+            </div>
+        </div>
+        <div aria-label="Page pagination">
+            <ul class="pagination">
+                <li class="page-item first">
+                    <a class="page-link" th:href="@{'/admin/staff?page=1&size='+${session.size}}"><i
+                            class="tf-icon bx bx-chevrons-left"></i></a>
+                </li>
+                <li class="page-item prev">
+                    <a class="page-link"
+                       th:href="@{'/admin/staff?page='+${session.page==1? '1': session.page - 1}+'&size='+${session.size}}"><i
+                            class="tf-icon bx bx-chevron-left"></i></a>
+                </li>
+                <li class="page-item" th:each="pagination:${#numbers.sequence(1,session.list.totalPages)}">
+                    <a class="page-link"
+                       th:href="@{'/admin/staff?page='+${pagination}+'&size='+${session.size}}"
+                       th:text="${pagination}"></a>
+                </li>
+                <li class="page-item next">
+                    <a class="page-link"
+                       th:href="@{'/admin/staff?page='+${session.page < session.list.totalPages ? session.page + 1 : session.list.totalPages }+'&size='+${session.size}}"><i
+                            class="tf-icon bx bx-chevron-right"></i></a>
+                </li>
+                <li class="page-item last">
+                    <a class="page-link"
+                       th:href="@{'/admin/staff?page='+${session.list.totalPages}+'&size='+${session.size}}"><i
+                            class="tf-icon bx bx-chevrons-right"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 <script>
     const fileInputs = document.getElementsByClassName('file-input');
@@ -404,6 +470,7 @@
                     // Tạo đường dẫn URL cho hình ảnh và hiển thị nó
                     const imageURL = URL.createObjectURL(file);
                     imagePreview.src = imageURL;
+
                 } else {
                     alert('Vui lòng chọn một tệp hình ảnh.');
                     fileInput.value = ''; // Đặt lại trường nhập
@@ -411,26 +478,4 @@
             }
         });
     }
-
-    // const fileInput = document.getElementById('file-input');
-    // const imagePreview = document.getElementById('image-preview');
-    //
-    // fileInput.addEventListener('change', function() {
-    //     const file = fileInput.files[0]; // Lấy tệp đã chọn
-    //
-    //     if (file) {
-    //         // Kiểm tra xem tệp đã chọn có phải là hình ảnh
-    //         if (file.type.startsWith('image/')) {
-    //             // Tạo đường dẫn URL cho hình ảnh và hiển thị nó
-    //             const imageURL = URL.createObjectURL(file);
-    //             console.log(imageURL)
-    //             imagePreview.src = imageURL;
-    //             console.log()
-    //
-    //         } else {
-    //             alert('Vui lòng chọn một tệp hình ảnh.');
-    //             fileInput.value = ''; // Đặt lại trường nhập
-    //         }
-    //     }
-    // });
 </script>

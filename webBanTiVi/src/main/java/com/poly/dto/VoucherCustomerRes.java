@@ -13,8 +13,8 @@ import java.sql.Date;
 public class VoucherCustomerRes {
     Integer customer;
     Integer voucher;
-    Date date_start;
-    Date date_end;
+    Date dateStart;
+    Date dateEnd;
     Boolean active;
 
 }
