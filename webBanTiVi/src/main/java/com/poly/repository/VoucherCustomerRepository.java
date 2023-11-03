@@ -8,15 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-<<<<<<< HEAD
-public interface VoucherCustomerRepository extends JpaRepository<VoucherCustomer, VoucherCustomerId> {
+public interface VoucherCustomerRepository extends JpaRepository<VoucherCustomer, Integer> {
     @Query("select o from VoucherCustomer o where o.customer.id=?1 and o.voucher.id=?2")
     VoucherCustomer findByCustomerAndVoucher(Integer idcus, Integer idvou);
     @Query("select o from VoucherCustomer o where o.voucher.id=?1")
     List<VoucherCustomer> findAllByVoucher(Integer id);
-=======
-public interface VoucherCustomerRepository extends JpaRepository<VoucherCustomer, Integer> {
-
-
->>>>>>> 72c2e6de8117f04f47122b32ea494893d838d981
 }

@@ -35,15 +35,16 @@
                 <div class="mb-1"><span class="border mx-1 p-1">[(${product.getSize().getNameSizeInch()})]</span><span
                         class="border mx-1 p-1">[(${product.getResolution().getNameResolution()})]</span>
                 </div>
-                <div><span class="text-strike-through fs-big">[(${product.getPrice_import()})] <small
+                <div><span class="text-strike-through fs-big">[(${product.getPrice_export().intValue()})] <small
                         class="align-text-top">đ</small></span>
                 </div>
-                <div><span class="text-danger fs-large fw-bold">[(${product.getPrice_export()})] <small
-                        class="align-text-top">đ</small>
+                <div><span class="text-danger fs-large fw-bold">
+            [(${product.getPrice_export().intValue()-(product.getPrice_export().intValue()*giagiam/100)})]
+                    <small class="align-text-top">đ</small>
                 </span>
                 </div>
                 <div>
-                    <span class="border mx-1 p-1">Giảm thêm [(${couponres.getValue()})]%</span>
+                    <span class="border mx-1 p-1">Giảm đã giảm [(${couponres.getValue()})]%</span>
                 </div>
             </div>
         </div>

@@ -1,14 +1,18 @@
-package com.poly.controller.user1;
+package com.poly.controller.user;
 
+import com.poly.config.CustomerUserDetail;
 import com.poly.dto.CouponRes;
-import com.poly.dto.CustomerDto;
-import com.poly.entity.Customer;
+import com.poly.dto.VoucherCustomerRes;
 import com.poly.entity.Product;
 import com.poly.entity.Voucher;
 import com.poly.entity.VoucherCustomer;
 import com.poly.service.Impl.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,8 +44,8 @@ public class PromotionController {
 
         model.addAttribute("listcoupon", couponService.getAllCouponRes());
         model.addAttribute("listvoucher", voucherService.findAllList());
-        session.setAttribute("pageView", "/user1/page/promotion/promotions.html");
-        return "/user1/index";
+        session.setAttribute("pageView", "/user/page/promotion/promotions.html");
+        return "/user/index";
     }
 
     @GetMapping("/coupondetail/{id}")
@@ -88,13 +93,14 @@ public class PromotionController {
                 System.out.println(x.getImage());
             }
         }
-        System.out.println(couponRes.getId());
+        System.out.println(couponProductService.findAllByCouponId(id).get(0).getPrice_export().intValue());
         model.addAttribute("couponres", couponRes);
+        model.addAttribute("giagiam", Integer.parseInt(couponRes.getValue()));
         List<Product> listProduct = new ArrayList<>();
         System.out.println(couponProductService.findAllByCouponId(id).get(0).getBrand().getNameBrand());
         model.addAttribute("listproduct", couponProductService.findAllByCouponId(id));
-        session.setAttribute("pageView", "/user1/page/promotion/coupondetail.html");
-        return "/user1/index";
+        session.setAttribute("pageView", "/user/page/promotion/coupondetail.html");
+        return "/user/index";
     }
 
     @GetMapping("/voucherdetail/{id}")
@@ -107,8 +113,8 @@ public class PromotionController {
         }
         System.out.println(voucher.isReducedForm());
         model.addAttribute("voucher", voucher);
-        session.setAttribute("pageView", "/user1/page/promotion/voucherdetail.html");
-        return "/user1/index";
+        session.setAttribute("pageView", "/user/page/promotion/voucherdetail.html");
+        return "/user/index";
     }
 
     @Autowired
@@ -124,36 +130,45 @@ public class PromotionController {
         }
         System.out.println(voucher.isReducedForm());
         model.addAttribute("voucher", voucher);
-        String username = session.getAttribute("username").toString();
-        String pass = session.getAttribute("password").toString();
-        CustomerDto customerDto = new CustomerDto(customerService, username, pass);
-        Customer customer = customerService.findByEmailAndPass(customerDto);
+        LocalDate today = LocalDate.now();
         int soluong = voucherCustomerService.findAllByVoucher(id).size();
-        int check = 0;
-        for (VoucherCustomer x : voucherCustomerService.findAll()) {
-            if (x.getCustomer().getId() == customer.getId()) {
-                check = 0;
-                model.addAttribute("check", check);
-                model.addAttribute("thongbao", "Mỗi khách hàng chỉ được nhận mã voucher 1 lần, hẹn quý khách ở các chương trình khuyến mại sau!");
+        boolean check = false;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            CustomerUserDetail customerUserDetail = (CustomerUserDetail) userDetails;
+            for (VoucherCustomer x : voucherCustomerService.findAll()) {
+                if (x.getCustomer().getId() == customerUserDetail.getId()) {
 
-            } else {
-
-                if (username != null && soluong <= voucher.getQuantity()) {
-                    check = 1;
                     model.addAttribute("check", check);
-                    //add vouchercustomer;
-                } else if (username != null && soluong > voucher.getQuantity()) {
-                    check = 2;
-                    model.addAttribute("check", check);
-                    model.addAttribute("thongbao", "Số lượng voucher đã hết, hẹn quý khách ở các chương trình khuyến mại sau!");
-                } else {
-                    check = 3;
-                    model.addAttribute("check", check);
-                    model.addAttribute("thongbao", "Bạn cần đăng nhập để nhận voucher!");
+                    model.addAttribute("thongbao", "Mỗi khách hàng chỉ được nhận mã voucher 1 lần, hẹn quý khách ở các chương trình khuyến mại sau!");
+                    session.setAttribute("pageView", "/user/page/promotion/vouchertakecode.html");
+                    return "/user/index";
                 }
             }
+            if (soluong <= voucher.getQuantity()) {
+                check = true;
+                model.addAttribute("check", check);
+                //add vouchercustomer;
+                VoucherCustomerRes voucherCustomer = new VoucherCustomerRes();
+                voucherCustomer.setCustomer(customerUserDetail.getId());
+                voucherCustomer.setVoucher(id);
+                voucherCustomer.setDateStart(voucher.getStartDay());
+                voucherCustomer.setDateEnd(voucher.getExpirationDate());
+                voucherCustomer.setActive(voucher.getActive());
+                voucherCustomerService.save(voucherCustomer);
+            } else {
+                System.out.println("5");
+                check = false;
+                model.addAttribute("check", check);
+                model.addAttribute("thongbao", "Số lượng voucher đã hết, hẹn quý khách ở các chương trình khuyến mại sau!");
+            }
+        } else {
+            System.out.println("6");
+            model.addAttribute("check", check);
+            model.addAttribute("thongbao", "Bạn cần đăng nhập để nhận voucher!");
         }
-        session.setAttribute("pageView", "/user1/page/promotion/voucherdetail.html");
-        return "/user1/index";
+        session.setAttribute("pageView", "/user/page/promotion/vouchertakecode.html");
+        return "/user/index";
     }
 }

@@ -35,17 +35,13 @@ public class VoucherCustomerServiceImpl implements VoucherCustomerService {
 
     @Autowired
     VoucherRepository voucherRepository;
-<<<<<<< HEAD
     public List<VoucherCustomer> findAllByVoucher(Integer id){
         return  voucherCustomerRepository.findAllByVoucher(id);
     }
-=======
 
 
     @PersistenceContext
     private EntityManager entityManager;
-
->>>>>>> 72c2e6de8117f04f47122b32ea494893d838d981
     @Override
     public VoucherCustomer save(VoucherCustomerRes voucher) {
         Optional<Customer> optionalCustomer = customerRepository.findById(voucher.getCustomer());

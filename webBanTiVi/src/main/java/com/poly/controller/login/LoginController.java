@@ -17,10 +17,8 @@ import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.bouncycastle.asn1.x500.style.RFC4519Style;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,9 +31,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -168,7 +164,7 @@ public class LoginController {
             customer.setUsername(changeInforDto.getName());
             customer.setPhoneNumber(changeInforDto.getPhone());
             customer.setBirthday(changeInforDto.getBirthday());
-            customer.setGender(changeInforDto.isGender());
+//            customer.setGender(changeInforDto.isGender());
             if (!changeInforDto.getPassword().equals("")){
                 customer.setPassword(passwordEncoder.encode(changeInforDto.getPassword()));
             }else{

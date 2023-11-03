@@ -38,7 +38,7 @@
             <div th:each="voucher : ${listvoucher}">
                 <div class="col">
                     <div class="card">
-                        <img th:src="@{'/image/' + *{voucher.getImage()}}" class="card-img-top" alt="...">
+                        <img th:src="@{'/image/' + *{voucher.getAvatar()}}" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h4 class="card-title">[(${voucher.getNameVoucher()})]</h4>
                             <p class="card-text">Áp dụng từ: [(${voucher.getStartDay()})]</p>

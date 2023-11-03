@@ -2,10 +2,7 @@ package com.poly.controller.user;
 
 import com.poly.dto.ChangeInforDto;
 import jakarta.servlet.http.HttpSession;
-<<<<<<< HEAD
-=======
 import org.springframework.security.access.prepost.PreAuthorize;
->>>>>>> 72c2e6de8117f04f47122b32ea494893d838d981
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,14 +41,12 @@ public class UserController {
     @GetMapping("/invoice/invoice_detail")
     public String loadInvoiceDetail(HttpSession session){
         session.setAttribute("pageView","/user1/page/invoice/detail_invoice.html");
-
-<<<<<<< HEAD
-	@GetMapping("/a")
-	public String index(HttpSession session){
-		session.setAttribute("pageView", "/user/page/index.html");
-
 		return "user/layout";
 	}
+
+
+
+
 	@RequestMapping("/product")
 	public String product(HttpSession session){
 		session.setAttribute("pageView", "/user/page/products.html");
@@ -114,8 +109,4 @@ public class UserController {
 		session.setAttribute("pageView", "/user/page/membershipcard.html");
 		return "user/layout";
 	}
-=======
-        return "/user1/index";
-    }
->>>>>>> 72c2e6de8117f04f47122b32ea494893d838d981
 }
