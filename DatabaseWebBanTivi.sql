@@ -22,14 +22,7 @@ CREATE TABLE brand
      code      VARCHAR(10) not null,
      namebrand NVARCHAR(max) not null
   )
-  select * from brand 
-  insert into brand values('b1','SamSung')
-  insert into origin values('o1','VietNam')
-  insert into manufacture values('m1','manu1')
-  insert into color values('c1','Black')
-  insert into [type] values('t1','oled')
-  insert into feature values('f1','feature1')
-  insert into supplier values('s1','sup1')
+ 
 
 -- Xuất xứ
 CREATE TABLE origin
@@ -86,9 +79,7 @@ CREATE TABLE resolution
      screen_length  FLOAT not null,-- chiều dài màn hình (pixel)
      screen_width   FLOAT not null,
   )
-  insert into resolution values('b1','HD','720','1280')
-insert into size values('b1','X','720','1280','4')
-select * from size
+ 
 -- size
 CREATE TABLE size
   (
@@ -135,9 +126,7 @@ CREATE TABLE image_product
      name_image varchar(200) not null,
 	 location bit
   )
-  insert into image_product(id_product, name_image,location) values(4,'anh 1',1)
-  select * from image_product
-  drop table image_product
+
 
 -- chi tiết coupon
 CREATE TABLE coupon_product
@@ -153,6 +142,7 @@ CREATE TABLE coupon_product
 CREATE TABLE customer
   (
      id                INT IDENTITY(1, 1) PRIMARY KEY,
+	 username          NVARCHAR(50), 
      [name]            NVARCHAR(50),
      [date]            DATE,
      [address]         NVARCHAR(max),
@@ -162,6 +152,7 @@ CREATE TABLE customer
      gender            BIT,
      id_card           VARCHAR(15) UNIQUE,
      avatar            VARCHAR(50),
+	 role              varchar(20),
      status            bit not null,
   )
 
@@ -199,11 +190,7 @@ CREATE TABLE evaluate
      point       INT not null,
      comment     NVARCHAR(max) ,
   )
-  select * from evaluate 
-  insert into evaluate values('7','1','10/19/2023',4,'ngon bo re')
-   select * from cart
-  insert into cart values('1','Cart1','10/19/2023')
-   select * from cart_product
+
 CREATE TABLE image_evaluate
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
@@ -226,7 +213,7 @@ CREATE TABLE staff
      phone       VARCHAR(10) not null,
      password    VARCHAR(20) not null,
      active      BIT,
-     position	 BIT,
+     role varchar(30),
      avatar      VARCHAR(100)
   )
 
@@ -263,8 +250,8 @@ CREATE TABLE bill
 	 payment_status	  INT default 1,
      note             NVARCHAR(max)
   )
-  select * from bill b where b.create_date between '01/01/2023' and '01/02/2023'
 
+Alter table bill add id_voucher int references voucher(id)
 -- hoa don chi tiet
 CREATE TABLE bill_product
   (
@@ -622,16 +609,16 @@ INSERT INTO [dbo].[product]
            ,16000
            ,80
            ,2
-           ,'1'
-           ,'1'
-           ,'1'
-           ,'1'
-           ,'1'
-           ,'1'
-           ,'1'
+           ,'b1'
+           ,'o1'
+           ,'m1'
+           ,'c'
+           ,'t1'
+           ,'b1'
+           ,'b1'
            ,1)
 GO
-select * from product
+
 
 INSERT INTO [dbo].[bill_product]
            ([id_bill]

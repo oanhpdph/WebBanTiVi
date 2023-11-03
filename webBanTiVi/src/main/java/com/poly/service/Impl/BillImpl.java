@@ -50,6 +50,9 @@ public class BillImpl implements BillService {
         if (!searchBillDto.getBillStatus().isEmpty()) {
             list.add(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), searchBillDto.getBillStatus()));
         }
+//        if(!searchBillDto.getDate().isEmpty()){
+//            list.add(criteriaBuilder.equal(billRoot.get("paymentDate"),searchBillDto.getDate()));
+//        }
         if (!searchBillDto.getDate().isEmpty()) {
             String date1 = searchBillDto.getDate().substring(0, searchBillDto.getDate().indexOf("-") - 1).replace("/", "-");
             String date2 = searchBillDto.getDate().substring(searchBillDto.getDate().indexOf("-") + 1, searchBillDto.getDate().length()).replace("/", "-");

@@ -58,7 +58,7 @@
             </div>
             <hr>
             <div class="overflow-auto">
-                <table class="table table-hover table-bordered overflow-hidden">
+                <table class="table table-hover table-bordered overflow-hidden" id="myTable">
                     <thead>
                     <tr class="row-table">
                         <th>#</th>
@@ -73,7 +73,7 @@
                         <!--                    </optgroup>-->
                         <!--                </select></th>-->
                         <th>Time create</th>
-                        <th><select class="form-select select2" th:name="paymentStatus" id="paymentStatus"
+                        <th><select class="select2" th:name="paymentStatus" id="paymentStatus"
                                     th:field="*{paymentStatus}">
                             <optgroup th:label="#{invoice.pay}">
                                 <option selected value="-1" th:text="#{invoice.all}"></option>
@@ -82,7 +82,7 @@
                                 <option value="3" th:text="#{invoice.refund}"></option>
                             </optgroup>
                         </select></th>
-                        <th><select class="form-select select2" id="filterBillStatus" th:field="*{billStatus}"
+                        <th><select class=" select2" id="filterBillStatus" th:field="*{billStatus}"
                                     th:name="billStatus">
                             <optgroup label="Trạng thái đơn hàng">
                                 <option th:selected="${session.defaultBillStatus == ''}" value="">Tất cả</option>

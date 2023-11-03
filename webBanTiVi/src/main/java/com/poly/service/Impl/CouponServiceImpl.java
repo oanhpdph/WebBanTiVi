@@ -20,22 +20,21 @@ public class CouponServiceImpl implements CouponService {
     }
     @Override
     public Coupon save(Coupon coupon) {
-        return couponRepository.save(coupon);
+        return this.couponRepository.save(coupon);
     }
 
     @Override
-    public void delete(Integer id) {
-        couponRepository.delete(couponRepository.findById(id).get());
+    public void deleteById(Integer id) {
+        this.couponRepository.deleteById(id);
     }
 
     @Override
     public List<Coupon> findAll() {
-        return couponRepository.findAll();
+        return this.couponRepository.findAll();
     }
 
     @Override
     public Optional<Coupon> findById(Integer id) {
-        return couponRepository.findById(id);
+        return this.couponRepository.findById(id);
     }
 }
-

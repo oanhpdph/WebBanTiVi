@@ -3,7 +3,7 @@ package com.poly.controller.user;
 import com.poly.entity.Cart;
 import com.poly.entity.CartProduct;
 import com.poly.entity.Product;
-import com.poly.service.CartProductService;
+import com.poly.repository.CartRepos;
 import com.poly.service.Impl.CartSeviceImpl;
 import com.poly.service.Impl.ProductServiceImpl;
 import jakarta.servlet.http.HttpSession;
@@ -12,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -22,6 +20,8 @@ public class CartController {
 
     @Autowired
     HttpSession session;
+    @Autowired
+    CartRepos cartRepos;
     @Autowired
     CartSeviceImpl cartService;
 
@@ -33,66 +33,26 @@ public class CartController {
         return cartService;
     }
 
+    @GetMapping("/pay")
+    public String pay(Model model) {
+        session.setAttribute("pageView", "/admin/page/product/pay.html");
+        return "admin/layout";
+    }
+
     @GetMapping("/cart")
     public String index(Model model) {
         session.setAttribute("pageView", "/admin/page/product/pro_cart.html");
         return "admin/layout";
     }
 
-    @GetMapping("/detail")
-    public String de(Model model) {
-        session.setAttribute("pageView", "/admin/page/product/detail.html");
-        return "admin/layout";
-    }
 
     @RequestMapping("/cart/add/{id}")
-    public String add(@PathVariable Integer id, Date date) {
-//        if (session.getAttribute("userCurrent") == null) {
-//            return "redirect:/login";
-//        }
-        cartService.add(id, date);
+    public String add(@PathVariable Integer id, HttpSession session) {
+        List<CartProduct> list = cartService.add(id);
+        session.setAttribute("list", list);
         return "redirect:/cart";
     }
 
-    @RequestMapping("/cart_add/{id}")
-    public String addCart(@PathVariable Integer id, Model model) {
-        Product product = productService.findById(id);
-        Cart c = new Cart();
-//        Date dateCreate =
-        CartProduct cartProduct = new CartProduct();
-        cartProduct.setProduct(product);
-        cartProduct.setCart(c);
-        cartProduct.setQuantity(1);
-        cartProduct.setCreateDate(cartProduct.getCreateDate());
-        cartProduct.setDateUpdate(c.getDateUpdate());
-
-        Cart cart = (Cart) session.getAttribute("cart");
-        if (cart == null) {
-            Cart cart1 = new Cart();
-            List<CartProduct> listcart = new ArrayList<>();
-            listcart.add(cartProduct);
-            cart1.setListCartPro(listcart);
-            session.setAttribute("cart", cart1);
-            System.out.println(cart1.getListCartPro().size());
-            System.out.println("chay duoc den day la 1 nua r");
-        } else {
-            Boolean check = false;
-            List<CartProduct> list = cart.getListCartPro();
-            for (CartProduct x : list) {
-                if (x.getProduct().getId() == id) {
-                    check = true;
-                    x.setQuantity(x.getQuantity() + 1);
-                }
-                if (check == false) {
-                    list.add(cartProduct);
-                }
-                cart.setListCartPro(list);
-                session.setAttribute("cart", cart);
-                System.out.println("chay lan 2 den day la ok");
-            }
-        }
-        return "redirect:/cart";
-    }
 
     @RequestMapping("/cart/delete/{id}")
     public String delete(@PathVariable int id) {
@@ -103,18 +63,29 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    @GetMapping("/cart/edit/{id}")
+    @GetMapping("/cart/detail/{id}")
     public String edit(@PathVariable Integer id, Model model) {
         Product product = productService.findById(id);
         model.addAttribute("product", product);
         session.setAttribute("pageView", "/admin/page/product/detail.html");
+        model.addAttribute("listPro", this.productService.findAll());
         return "admin/layout";
     }
 
-    @RequestMapping("/cart/update/{id}")
-    public String update(@PathVariable Integer id, int qty) {
+    @PostMapping("/cart/update/{id}")
+    public String update(@PathVariable Integer id, Integer qty, Model model) {
         cartService.update(id, qty);
-        System.out.println("sua thanh cong");
+//        session.setAttribute("list", list);
+        int total = (int) cartService.getTotalProduct();
+        model.addAttribute("total", total);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/purchase")
+    public String pur(Model model) {
+        Cart cart = (Cart) session.getAttribute("cart");
+        cartRepos.save(cart);
+        session.removeAttribute("cart");
         return "redirect:/cart";
     }
 }

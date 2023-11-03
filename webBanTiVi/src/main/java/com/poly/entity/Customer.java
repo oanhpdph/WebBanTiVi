@@ -1,13 +1,13 @@
 package com.poly.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
-import java.util.List;
 
 @Entity
 @Table(name="customer")
@@ -22,6 +22,10 @@ public class Customer {
     @Column(name="id")
     private Integer id;
 
+    @NotBlank(message="Username not null")
+    @Column(name="username")
+    private String username;
+
     @Column(name="name")
     private String name;
 
@@ -32,12 +36,15 @@ public class Customer {
     @Column(name="address")
     private String address;
 
+    @NotBlank(message="Username not null")
     @Column(name="phone_number")
     private String phoneNumber;
 
+    @NotBlank(message="Username not null")
     @Column(name="email")
     private String email;
 
+    @NotBlank(message="Username not null")
     @Column(name = "password")
     private String password;
 
@@ -53,8 +60,11 @@ public class Customer {
     @Column(name="status")
     private boolean status;
 
-    @OneToMany(mappedBy = "customer")
-    private List<Bill> listBill;
+    @Column(name="role")
+    private String roles;
+//
+//    @OneToMany(mappedBy = "customer")
+//    private List<Bill> listBill;
 
 }
 

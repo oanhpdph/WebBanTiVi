@@ -11,10 +11,13 @@ import java.util.Optional;
 @Repository
 public interface VoucherRepository extends JpaRepository<Voucher,Integer> {
 
+<<<<<<< HEAD
     @Query(value = "select * from Voucher b where b.id like %?1%", nativeQuery = true)
     Optional<Voucher> getVoucherByName(Integer id);
     @Query(value = "select b from Voucher b where b.id = ?1 ")
     Optional<Voucher> getVoucherById(Integer id);
+=======
+>>>>>>> 72c2e6de8117f04f47122b32ea494893d838d981
 
 
 }

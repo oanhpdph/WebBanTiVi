@@ -17,6 +17,8 @@
     <link rel="icon" type="image/x-icon" th:href="@{/image/logobig6-03.png}"/>
 
     <link rel="stylesheet" th:href="@{/admin/assets/vendor/fonts/boxicons.css}"/>
+
+
     <link rel="stylesheet" th:href="@{/admin/assets/vendor/css/bootstrap.css}" class="template-customizer-core-css"/>
     <link rel="stylesheet" th:href="@{/admin/assets/vendor/css/theme-default.css}"
           class="template-customizer-theme-css"/>
@@ -34,7 +36,7 @@
         <ul class="header-nav-list">
             <li class="header-nav-item">Hệ thống cửa hàng tivi</li>
             <li class="header-nav-item">
-                <a class="header-nav-item-link" href="/">LOGO</a>
+                <a class="header-nav-item-link" href="/user">LOGO</a>
             </li>
         </ul>
 
@@ -43,7 +45,7 @@
                 <a href="#" class="header-nav-item-link">HỎI ĐÁP</a>
             </li>
             <li class="header-nav-item">
-                <a href="/" class="header-nav-item-link">QUAY LẠI</a>
+                <a href="/user" class="header-nav-item-link">QUAY LẠI</a>
             </li>
         </ul>
     </nav>
@@ -67,24 +69,21 @@
                     </div>
                     <!-- /Logo -->
                     <h4 class="mb-2">Chào mừng đến với Big6store! 👋</h4>
-                    <p class="mb-4">Nhập email và mật khẩu để đăng nhập</p>
+                    <p class="mb-4">Chào mừng sự trở lại của quý khách hàng!</p>
 
-                    <form id="" class="mb-3" method="POST" th:action="@{/login}" th:object="${customer}">
+                    <form  class="mb-3" method="post"  th:object="${login}" th:action="@{/login}">
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
+                            <label  class="form-label">Tên tài khoản</label>
                             <input
                                     type="text"
                                     class="form-control"
-                                    id="email"
-                                    name="email-username"
-                                    placeholder="Email"
-                                    autofocus
-                                    th:field="*{email}"
+                                    placeholder="Tên tài khoản"
+                                    th:field="*{username}"
                             />
                         </div>
                         <div class="mb-3 form-password-toggle">
                             <div class="d-flex justify-content-between">
-                                <label class="form-label" for="password">Mật khẩu</label>
+                                <label class="form-label" >Mật khẩu</label>
                                 <a href="/forgot-password">
                                     <small>Quên mật khẩu?</small>
                                 </a>
@@ -92,9 +91,7 @@
                             <div class="input-group input-group-merge">
                                 <input
                                         type="password"
-                                        id="password"
                                         class="form-control"
-                                        name="password"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                         aria-describedby="password"
                                         th:field="*{password}"
@@ -118,15 +115,14 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <button onclick="window.location.href='/'" class="btn btn-primary d-grid w-100">
-                                Đăng nhập
-                            </button>
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <button class="btn btn-primary w-px-150" type="submit">Đăng nhập</button>
+                            </div>
                         </div>
                     </form>
-
                     <p class="text-center">
                         <span>Bạn muốn đăng ký tài khoản?</span>
-                        <a href="/register">
+                        <a href="login/register">
                             <span>Tạo tài khoản mới</span>
                         </a>
                     </p>
@@ -144,6 +140,13 @@
         nhanh nhất.
     </div>
 </div>
+<!--<script async defer th:src="@{https://buttons.github.io/buttons.js}"></script>-->
+<!--<script th:src="@{/admin/assets/vendor/libs/jquery/jquery.js}"></script>-->
+<!--<script th:src="@{/admin/assets/vendor/libs/popper/popper.js}"></script>-->
+<!--<script th:src="@{/admin/assets/vendor/js/bootstrap.js}"></script>-->
+<!--<script th:src="@{/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>-->
+<!--<script th:src="@{/admin/assets/vendor/js/menu.js}"></script>-->
+<!--<script th:src="@{/admin/assets/js/main.js}"></script>-->
 
 <script th:src="@{/admin/assets/vendor/libs/jquery/jquery.js}"></script>
 <script th:src="@{/admin/assets/vendor/libs/popper/popper.js}"></script>
@@ -153,5 +156,6 @@
 <script th:src="@{/admin/assets/js/main.js}"></script>
 
 <script async defer th:src="@{https://buttons.github.io/buttons.js}"></script>
+
 </body>
 </html>

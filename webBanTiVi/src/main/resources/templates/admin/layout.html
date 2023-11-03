@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html class="light-style layout-menu-fixed" xmlns:th="http://www.thymeleaf.org">
+<html class="light-style layout-menu-fixed" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta charset="UTF-8">
@@ -14,24 +15,25 @@
     <link rel="stylesheet" th:href="@{/admin/assets/vendor/css/bootstrap.css}"/>
     <link rel="stylesheet" th:href="@{/admin/assets/vendor/css/theme-default.css}"/>
     <link rel="stylesheet" th:href="@{/admin/assets/css/demo.css}"/>
-    <link rel="stylesheet" th:href="@{/admin/assets/css/select2.min.css}"/>
+    <link rel="stylesheet" th:href="@{/admin/assets/css/select2.css}"/>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <link rel="stylesheet" th:href="@{/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css}"/>
     <link rel="stylesheet" th:href="@{/admin/plugin/css/select2-plugin.css}"/>
     <link rel="stylesheet" th:href="@{/admin/plugin/css/bill.css}"/>
-
+    <link rel="stylesheet" th:href="@{/admin/plugin/css/dashbroad.css}">
     <!-- Helpers -->
     <script th:src="@{/admin/assets/vendor/js/helpers.js}"></script>
     <script th:src="@{/admin/assets/vendor/libs/jquery/jquery.js}"></script>
+
 </head>
 <body>
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
         <aside th:replace="~{/admin/layout/_sidebar.html}">
         </aside>
-        <div class="layout-page">
+        <div class="layout-page" >
             <div th:replace="~{/admin/layout/_navbar.html}">
             </div>
             <div class="content-wrapper">
@@ -46,7 +48,7 @@
     <div class="layout-overlay layout-menu-toggle"></div>
 </div>
 <!--build-->
-
+<!--<script  th:src="@{/admin/plugin/js/loadImage.js}"></script>-->
 <script th:src="@{/admin/assets/vendor/libs/popper/popper.js}"></script>
 <script th:src="@{/admin/assets/vendor/js/bootstrap.js}"></script>
 <script th:src="@{/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js}"></script>
@@ -60,13 +62,16 @@
 
 <!--date range picker-->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<!--end date range picker-->
+
+end date range picker
 <!-- Page JS -->
 <script th:src="@{/admin/assets/js/pages-account-settings-account.js}"></script>
 
 <script th:src="@{/admin/plugin/js/date_picker_order.js}"></script>
 
 <script th:src="@{/admin/plugin/js/select2-plugin.js}"></script>
+
 </body>
 </html>
