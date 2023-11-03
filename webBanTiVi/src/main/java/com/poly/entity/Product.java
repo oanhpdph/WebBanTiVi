@@ -31,7 +31,7 @@ public class Product {
     private BigDecimal price_import;
 
     @Column(name = "price_export")
-    private BigDecimal price_export;
+    private Integer price_export;
 
     @Column(name = "quantity")
     private Integer quantity;
@@ -67,7 +67,7 @@ public class Product {
     @Column(name = "active")
     private Boolean active;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ImageProduct> listImage;
 
     @OneToMany(mappedBy = "product")

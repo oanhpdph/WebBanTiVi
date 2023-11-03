@@ -89,54 +89,55 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="item:${session.list}">
-                                        <form th:action="@{/cart/update/{id}(id=${item.product.id})}" method="post">
-                                            <td>
-                                                <div th:each="image:${item.product.listImage}">
-                                                    <div th:if="${image.location == true}">
-                                                        <img th:src="@{'/user/img/shopping-cart/'+image.nameImage}"
-                                                             alt="">
-                                                    </div>
-                                                    <span th:text="${item.product.name + ' '+item.product.code}"></span>
+                                        <td>
+                                            <div th:each="image:${item.product.listImage}">
+                                                <div th:if="${image.location == true}">
+                                                    <img th:src="@{'/user/img/shopping-cart/'+image.nameImage}"
+                                                         alt="">
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <div>
-                                                    <h5>$<span id="price-export" th:value="${item.product.price_export}"
-                                                               th:text="${item.product.price_export}"></span></h5>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="buttons_added">
-                                                    <input class="minus is-form" type="button" value="-" id="minus">
-                                                    <input aria-label="quantity" class="input-qty" max="10" min="1"
-                                                           name="quantity"
-                                                           type="number"
-                                                           id="quantity"
-                                                           th:value="${item.quantity}">
-                                                    <input class="plus is-form"
-                                                           type="button" value="+" id="plus">
-                                                </div>
-                                            </td>
-                                            <td>
+                                                <span th:text="${item.product.name + ' '+item.product.code}"></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <h5>$<span id="price-export" th:value="${item.product.price_export}"
+                                                           th:text="${item.product.price_export}"></span></h5>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="buttons_added">
+                                                <input class="minus is-form" type="button" value="-" id="minus">
+                                                <input aria-label="quantity" class="input-qty" max="10" min="1"
+                                                       name="quantity"
+                                                       type="number"
+                                                       id="quantity"
+                                                       th:value="${item.quantity}">
+                                                <input class="plus is-form"
+                                                       type="button" value="+" id="plus">
+                                            </div>
+                                        </td>
+                                        <td>
                                                 <span th:text="${item.product.price_export * item.quantity}"
                                                       id="total-price"></span>
 
-                                            </td>
-                                        </form>
+                                        </td>
+
                                     </tr>
                                     <hr>
                                     </tbody>
                                 </table>
                             </div>
                             <hr>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <a href="/shop" type="submit" class="btn btn-lg btn-outline-primary">Quay
-                                        Lại</a>
-                                </div>
-                                <div class=" col-lg-6 col-md-6 col-sm-6">
-                                    <button type="button" class="btn btn-lg btn-primary">Cập Nhật Giỏ Hàng</button>
-                                </div>
+                            <div class="row" th:each="item:${session.list}">
+                                <form th:action="@{/cart/update/{id}(id=${item.product.id})}" method="post">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <a href="/" type="submit" class="btn btn-lg btn-outline-primary">Quay
+                                            Lại</a>
+                                    </div>
+                                    <div class=" col-lg-6 col-md-6 col-sm-6">
+                                        <button type="submit" class="btn btn-lg btn-primary">Cập Nhật Giỏ Hàng</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -166,9 +167,9 @@
                     <div class="card-header"><h5>Cart total</h5></div>
                     <div class="card-body">
                         <p class="card-text">Subtotal: <span style="padding-left: 70px">$<span
-                                th:text="${cart.amount}" id="total-price"></span> </span></p>
+                                th:text="${amount}" id="total-price"></span> </span></p>
                         <p class="card-text">Total: <span style="padding-left: 90px">$<span
-                                th:text="${cart.total}" id="total-price"></span> </span></p>
+                                th:text="${amount}" id="total-price"></span> </span></p>
                         <div style="text-align: center">
                             <a type="submit" class="btn btn-primary" th:href="@{/pay}">Thanh
                                 Toán

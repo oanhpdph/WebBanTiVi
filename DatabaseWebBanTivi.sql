@@ -244,9 +244,9 @@ CREATE TABLE bill
      code             VARCHAR(10) not null unique,
      create_date      DATE NOT NULL,
 	 paid_money		  Money,
-     payment_date     DATE not null,-- ngày thanh toán
+     payment_date     DATE ,-- ngày thanh toán
      id_status        INT REFERENCES bill_status(id) not null,
-     id_paymentmethod INT REFERENCES payment_method not null,
+     id_paymentmethod INT REFERENCES payment_method(id) not null,
 	 payment_status	  INT default 1,
      note             NVARCHAR(max)
   )

@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 //@RequestMapping("/user")
@@ -36,20 +38,22 @@ public class CartController {
     @GetMapping("/pay")
     public String pay(Model model) {
         session.setAttribute("pageView", "/admin/page/product/pay.html");
-        return "admin/layout";
+        return "user/index";
     }
 
     @GetMapping("/cart")
     public String index(Model model) {
         session.setAttribute("pageView", "/admin/page/product/pro_cart.html");
-        return "admin/layout";
+        return "user/index";
     }
 
 
     @RequestMapping("/cart/add/{id}")
-    public String add(@PathVariable Integer id, HttpSession session) {
+    public String add(@PathVariable Integer id, HttpSession session, Model model) {
         List<CartProduct> list = cartService.add(id);
         session.setAttribute("list", list);
+        int amount = (int) cartService.getTotalProduct();
+        model.addAttribute("amount", amount);
         return "redirect:/cart";
     }
 
@@ -69,13 +73,13 @@ public class CartController {
         model.addAttribute("product", product);
         session.setAttribute("pageView", "/admin/page/product/detail.html");
         model.addAttribute("listPro", this.productService.findAll());
-        return "admin/layout";
+        return "user/index";
     }
 
     @PostMapping("/cart/update/{id}")
     public String update(@PathVariable Integer id, Integer qty, Model model) {
-        cartService.update(id, qty);
-//        session.setAttribute("list", list);
+        List<CartProduct> list = cartService.update(id, qty);
+        session.setAttribute("list", list);
         int total = (int) cartService.getTotalProduct();
         model.addAttribute("total", total);
         return "redirect:/cart";

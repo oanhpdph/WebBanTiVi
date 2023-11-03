@@ -60,7 +60,7 @@
                         <div class="container-xxl flex-grow-1 container-p-y">
                             <div class="col-md-9">
                                 <div class="card mb-4">
-                                    <div class="col-lg-12">
+                                    <div class="col-lg-12"><br>
                                         <table class="table table-borderless">
                                             <thead>
                                             <tr>
@@ -86,15 +86,16 @@
                                                     </td>
                                                     <td>
                                                         <div>
-                                                            <h5>$<span id="price-export"
-                                                                       th:value="${item.product.price_export}"
-                                                                       th:text="${item.product.price_export}"></span>
-                                                            </h5>
+                                                            <span class="fs-5">$<span id="price-export"
+                                                                                      th:value="${item.product.price_export}"
+                                                                                      th:text="${item.product.price_export}"></span>
+                                                            </span>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="buttons_added">
-                                                            <input class="minus is-form" type="button" value="-">
+                                                            <input class="minus is-form" type="button" value="-"
+                                                                   id="minus">
                                                             <input aria-label="quantity" class="input-qty" max="10"
                                                                    min="1"
                                                                    name="quantity"
@@ -112,84 +113,12 @@
                                                     </td>
                                                 </form>
                                             </tr>
-                                            <hr>
-                                            <!--                                    <tr>-->
-                                            <!--                                        <td class="product__cart__item">-->
-                                            <!--                                            <div class="product__cart__item__pic">-->
-                                            <!--                                                <img src="/user/img/shopping-cart/cart-2.jpg" alt="">-->
-                                            <!--                                            </div>-->
-                                            <!--                                            <div class="product__cart__item__text">-->
-                                            <!--                                                <h6>Diagonal Textured Cap</h6>-->
-                                            <!--                                                <h5>$98.49</h5>-->
-                                            <!--                                            </div>-->
-                                            <!--                                        </td>-->
-                                            <!--                                        <td></td>-->
-                                            <!--                                        <td>-->
-                                            <!--                                            <div class="buttons_added">-->
-                                            <!--                                                <input class="minus is-form" type="button" value="-">-->
-                                            <!--                                                <input aria-label="quantity" class="input-qty" max="10" min="1"-->
-                                            <!--                                                       name=""-->
-                                            <!--                                                       type="number" value="1">-->
-                                            <!--                                                <input class="plus is-form"-->
-                                            <!--                                                       type="button" value="+">-->
-                                            <!--                                            </div>-->
-                                            <!--                                        </td>-->
-                                            <!--                                        <td class="cart__price">$ 32.50</td>-->
-                                            <!--                                        <td class="cart__close"><i class="fa fa-close"></i></td>-->
-                                            <!--                                    </tr>-->
-                                            <!--                                    <tr>-->
-                                            <!--                                        <td class="product__cart__item">-->
-                                            <!--                                            <div class="product__cart__item__pic">-->
-                                            <!--                                                <img src="/user/img/shopping-cart/cart-3.jpg" alt="">-->
-                                            <!--                                            </div>-->
-                                            <!--                                            <div class="product__cart__item__text">-->
-                                            <!--                                                <h6>Basic Flowing Scarf</h6>-->
-                                            <!--                                                <h5>$98.49</h5>-->
-                                            <!--                                            </div>-->
-                                            <!--                                        </td>-->
-                                            <!--                                        <td></td>-->
-                                            <!--                                        <td>-->
-                                            <!--                                            <div class="buttons_added">-->
-                                            <!--                                                <input class="minus is-form" type="button" value="-">-->
-                                            <!--                                                <input aria-label="quantity" class="input-qty" max="10" min="1"-->
-                                            <!--                                                       name=""-->
-                                            <!--                                                       type="number" value="1">-->
-                                            <!--                                                <input class="plus is-form"-->
-                                            <!--                                                       type="button" value="+">-->
-                                            <!--                                            </div>-->
-                                            <!--                                        </td>-->
-                                            <!--                                        <td class="cart__price">$ 47.00</td>-->
-                                            <!--                                        <td class="cart__close"><i class="fa fa-close"></i></td>-->
-                                            <!--                                    </tr>-->
-                                            <!--                                    <tr>-->
-                                            <!--                                        <td class="product__cart__item">-->
-                                            <!--                                            <div class="product__cart__item__pic">-->
-                                            <!--                                                <img src="/user/img/shopping-cart/cart-4.jpg" alt="">-->
-                                            <!--                                            </div>-->
-                                            <!--                                            <div class="product__cart__item__text">-->
-                                            <!--                                                <h6>Basic Flowing Scarf</h6>-->
-                                            <!--                                                <h5>$98.49</h5>-->
-                                            <!--                                            </div>-->
-                                            <!--                                        </td>-->
-                                            <!--                                        <td></td>-->
-                                            <!--                                        <td>-->
-                                            <!--                                            <div class="buttons_added">-->
-                                            <!--                                                <input class="minus is-form" type="button" value="-">-->
-                                            <!--                                                <input aria-label="quantity" class="input-qty" max="10" min="1"-->
-                                            <!--                                                       name=""-->
-                                            <!--                                                       type="number" value="1">-->
-                                            <!--                                                <input class="plus is-form"-->
-                                            <!--                                                       type="button" value="+">-->
-                                            <!--                                            </div>-->
-                                            <!--                                        </td>-->
-                                            <!--                                        <td class="cart__price">$ 30.00</td>-->
-                                            <!--                                        <td class="cart__close"><i class="fa fa-close"></i></td>-->
-                                            <!--                                    </tr>-->
+                                            <!--                                            <hr>-->
                                             </tbody>
                                         </table>
                                     </div>
                                     <hr>
-                                    <h5 class="card-header">THÔNG TIN KHÁCH HÀNG</h5>
+                                    <span class="card-header"><span class="fs-5">THÔNG TIN KHÁCH HÀNG</span></span>
                                     <!-- Account -->
                                     <form action="/admin/staff/add" method="POST">
                                         <div class="card-body">
@@ -209,7 +138,7 @@
                                             </div>
                                             <br>
                                             <!--                                            Phuong thuc thanh toan-->
-                                            <h5>Phương Thức Thanh Toán: </h5>
+                                            <span class="fs-5">Phương Thức Thanh Toán: </span>
                                             <div class="row g-5">
                                                 <div class="col-lg-12">
                                                     <div class="demo-inline-spacing mt-3">
@@ -235,14 +164,15 @@
                                                                     <div class="col-md-6 col-12">
                                                                         <div class="card shadow-none bg-transparent border border-primary mb-3">
                                                                             <div class="card-body">
-                                                                                <h5 class="card-title">Thông tin đơn
-                                                                                    hàng</h5>
+                                                                                <span class="fs-5">Thông tin đơn
+                                                                                    hàng</span>
                                                                                 <hr>
                                                                                 <small class="text-muted">
                                                                                     <span>Số tiền thanh toán</span>
                                                                                 </small>
-                                                                                <h5 style="color: cornflowerblue">
-                                                                                    10.990.000VND</h5>
+                                                                                <span class="fs-5"
+                                                                                      style="color: cornflowerblue">
+                                                                                    10.990.000VND</span>
                                                                                 <!--                                                                                <br>-->
                                                                                 <small class="text-muted">
                                                                                     <span>Giá trị đơn hàng</span>
@@ -271,9 +201,9 @@
                                                                         <div class="card shadow-none bg-transparent border border-secondary mb-3">
                                                                             <div class="card-body">
                                                                                 <div class="container">
-                                                                                    <h5 class="card-title">Quét mã qua
+                                                                                    <span class="fs-5">Quét mã qua
                                                                                         ứng
-                                                                                        dung ngân hàng/ Ví điện tử</h5>
+                                                                                        dung ngân hàng/ Ví điện tử</span>
                                                                                     <img src="/image/qr.jpg"
                                                                                          width="100%">
                                                                                     <br> <br>
@@ -335,7 +265,7 @@
                                                         <table class="table table-borderless">
                                                             <tbody>
                                                             <tr>
-                                                                <td><h5>Tổng tiền: </h5></td>
+                                                                <td><span class="fs-5">Tổng tiền: </span></td>
                                                                 <td></td>
                                                                 <td><span>$<span
                                                                         th:text="${cart.amount}"></span> </span></td>
@@ -367,8 +297,7 @@
                                                     <button class="btn btn-primary btn-lg" type="button">Đặt Hàng
                                                     </button>
                                                     <button class="btn btn-outline-secondary btn-lg" type="button">
-                                                        Trả
-                                                        Góp
+                                                        Hủy
                                                     </button>
                                                     <smal>Bạn có thể chọn hình thức thanh toán sau khi đặt hàng
                                                     </smal>
@@ -414,6 +343,15 @@ $("#plus").click(function () {
     console.log(totalPrice)
     $("#total-price").text(totalPrice)
 
+
+})
+$("#minus").click(function () {
+    var quantity = $("#quantity").val()
+    var priceExport = $("#price-export").attr("value")
+    console.log(priceExport)
+    var removePrice = quantity * priceExport
+    console.log(removePrice)
+    $("#total-price").text(removePrice)
 
 })
 //]]></script>

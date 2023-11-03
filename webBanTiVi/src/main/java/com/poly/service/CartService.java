@@ -14,7 +14,7 @@ public interface CartService {
 
     public List<CartProduct> add(Integer id);
 
-    public void update(int id, Integer qty);
+    public List<CartProduct> update(int id, Integer qty);
 
     public void delete(int id);
 
