@@ -24,7 +24,9 @@ public class VoucherCustomerServiceImpl implements VoucherCustomerService {
 
     @Autowired
     VoucherRepository voucherRepository;
-
+    public List<VoucherCustomer> findAllByVoucher(Integer id){
+        return  voucherCustomerRepository.findAllByVoucher(id);
+    }
     @Override
     public VoucherCustomer save(VoucherCustomerRes voucher) {
         Optional<Customer> optionalCustomer = customerRepository.findById(voucher.getCustomer());

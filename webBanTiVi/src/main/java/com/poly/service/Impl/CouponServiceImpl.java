@@ -6,7 +6,6 @@ import com.poly.entity.Coupon;
 import com.poly.repository.CouponRepository;
 import com.poly.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +14,8 @@ import java.util.Optional;
 public class CouponServiceImpl implements CouponService {
     @Autowired
     CouponRepository couponRepository;
-    public Page<CouponRes> getAllCouponRes(){
+
+    public List<CouponRes> getAllCouponRes(){
         return couponRepository.getCouponRes();
     }
     @Override

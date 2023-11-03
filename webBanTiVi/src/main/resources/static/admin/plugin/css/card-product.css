@@ -3,7 +3,7 @@
 }
 
 .card-title{
-    color: #566a7f;
+    color: red;
 }
 .item-product:hover .card-title {
     color: #03c3ec;

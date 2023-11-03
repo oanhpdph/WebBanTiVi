@@ -1,17 +1,20 @@
 package com.poly.dto;
 
 import com.poly.entity.Product;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 import java.util.Date;
-import java.util.List;
 
 public interface CouponRes {
-    Integer getIdCoupon();
+    Integer getId();
     String getValue();
     String getImage();
     Boolean getActive();
-    Date getDateStart();
-    Date getDateEnd();
-    List<Product> getListProduct();
+    @Temporal(TemporalType.DATE)
+    Date getDate_Start();
+    @Temporal(TemporalType.DATE)
+    Date getDate_End();
+    Product getProduct();
 
 }
