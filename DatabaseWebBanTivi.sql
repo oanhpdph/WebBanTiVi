@@ -135,6 +135,7 @@ CREATE TABLE coupon_product
      id_product INT REFERENCES product(id),
      date_start DATE not null,
      date_end   DATE not null,
+	 status BIT not null,
      PRIMARY KEY(id_coupon, id_product)
   )
 

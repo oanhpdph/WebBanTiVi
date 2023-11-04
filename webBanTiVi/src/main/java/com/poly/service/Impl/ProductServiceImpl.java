@@ -1,18 +1,22 @@
 package com.poly.service.Impl;
 
+import com.poly.entity.Coupon;
 import com.poly.entity.Product;
+import com.poly.repository.CouponRepository;
 import com.poly.repository.ProductRepository;
 import com.poly.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    CouponRepository couponRepository;
 
     @Override
     public Product save(Product product) {
@@ -33,4 +37,17 @@ public class ProductServiceImpl implements ProductService {
     public Product findById(Integer id) {
         return productRepository.findById(id).get();
     }
+
+
+    @Override
+    public List<Coupon> getByIdCoupon(Integer id) {
+        return couponRepository.findAll();
+    }
+
+//    @Override
+//    public List<ProductDto> getProducts() {
+//        return productRepository.findAllByDTO();
+//    }
+
+
 }

@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CouponProductRepository extends JpaRepository<CouponProduct, CouponProductId> {
+//    @Query("select coupon from CouponProduct where product.id=?1 and dateEnd>=?2")
+//    Coupon findByProductId(Integer id, Date today);
 }

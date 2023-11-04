@@ -75,166 +75,49 @@
                     </button>
                 </div>
             </div>
+
             <div id="carouselProduct" class="carousel slide" data-bs-ride="false" data-bs-interval="false">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div class="row row-cols-1 row-cols-xl-6 row-cols-lg-4 row-cols-md-4 row-cols-sm-2 g-4">
-                            <div class="col">
+
+                            <div class="col" th:each="pro:${product}" name="id">
                                 <div class="card h-px-350 item-product">
-                                    <img class="card-img-top h-50"
-                                         src="/image/smart-tivi-toshiba-43-inch-43v31mp-01.jpg"
-                                         alt="Card image cap"/>
-                                    <div class="card-body">
-                                        <a href="#" class="stretched-link mb-2"><span
-                                                class="fs-4 fw-semibold card-title">
-                                                        Tên</span></a>
-                                        <div class="mb-1"><span class="border mx-1 p-1">43 inch</span><span
-                                                class="border mx-1 p-1">4k</span>
-                                        </div>
-                                        <div><span class="text-strike-through fs-big">5000 <small
-                                                class="align-text-top">đ</small></span>
-                                        </div>
-                                        <div><span class="text-danger fs-large fw-bold">5000 <small
-                                                class="align-text-top">đ</small></span>
-                                        </div>
-                                        <div>
-                                            <span>4.5<i class='bx bxs-star' style='color:#fee500'></i>(200)</span>
-                                        </div>
+
+                                    <div th:each="image:${pro.listImage}">
+                                        <img class="card-img-top h-50"
+                                             th:src="@{'/image/'+${image.nameImage}}"
+                                             alt="Card image cap"/>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card h-100 item-product">
-                                    <img class="card-img-top h-50"
-                                         src="/image/smart-tivi-toshiba-43-inch-43v31mp-02.jpg"
-                                         alt="Card image cap"/>
+
                                     <div class="card-body">
-                                        <a href="#" class="stretched-link mb-2"><span
-                                                class="fs-4 fw-semibold card-title">
-                                                        Tên</span></a>
-                                        <div class="mb-1"><span class="border mx-1 p-1">43 inch</span><span
-                                                class="border mx-1 p-1">4k</span>
-                                        </div>
-                                        <div><span class="text-strike-through fs-big">5000 <small
-                                                class="align-text-top">đ</small></span>
-                                        </div>
-                                        <div><span class="text-danger fs-large fw-bold">5000 <small
-                                                class="align-text-top">đ</small></span>
-                                        </div>
-                                        <div>
-                                            <span>4.5<i class='bx bxs-star' style='color:#fee500'></i>(200)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card h-px-350 item-product">
-                                    <img class="card-img-top h-50"
-                                         src="/image/smart-tivi-toshiba-43-inch-43v31mp-02.jpg"
-                                         alt="Card image cap"/>
-                                    <div class="card-body">
-                                        <a href="#" class="stretched-link mb-2"><span
-                                                class="fs-4 fw-semibold card-title">
-                                                        Tên</span></a>
-                                        <div class="mb-1"><span class="border mx-1 p-1">43 inch</span><span
-                                                class="border mx-1 p-1">4k</span>
-                                        </div>
-                                        <div><span class="text-strike-through fs-big">5000 <small
-                                                class="align-text-top">đ</small></span>
-                                        </div>
-                                        <div><span class="text-danger fs-large fw-bold">5000 <small
-                                                class="align-text-top">đ</small></span>
-                                        </div>
-                                        <div>
-                                            <span>4.5<i class='bx bxs-star' style='color:#fee500'></i>(200)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card h-px-350 item-product">
-                                    <img class="card-img-top h-50"
-                                         src="/image/smart-tivi-toshiba-43-inch-43v31mp-02.jpg"
-                                         alt="Card image cap"/>
-                                    <div class="card-body">
-                                        <a href="#" class="stretched-link mb-2"><span
-                                                class="fs-4 fw-semibold card-title">
-                                                        Tên</span></a>
-                                        <div class="mb-1"><span class="border mx-1 p-1">43 inch</span><span
-                                                class="border mx-1 p-1">4k</span>
-                                        </div>
-                                        <div><span class="text-strike-through fs-big">5000 <small
-                                                class="align-text-top">đ</small></span>
-                                        </div>
-                                        <div><span class="text-danger fs-large fw-bold">5000 <small
-                                                class="align-text-top">đ</small></span>
-                                        </div>
-                                        <div>
-                                            <span>4.5<i class='bx bxs-star' style='color:#fee500'></i>(200)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card h-px-350 item-product">
-                                    <img class="card-img-top h-50"
-                                         src="/image/smart-tivi-toshiba-43-inch-43v31mp-02.jpg"
-                                         alt="Card image cap"/>
-                                    <div class="card-body">
-                                        <a href="#" class="stretched-link mb-2"><span
-                                                class="fs-4 fw-semibold card-title">
-                                                        Tên</span></a>
-                                        <div class="mb-1"><span class="border mx-1 p-1">43 inch</span><span
-                                                class="border mx-1 p-1">4k</span>
-                                        </div>
-                                        <div><span class="text-strike-through fs-big">5000 <small
-                                                class="align-text-top">đ</small></span>
-                                        </div>
-                                        <div><span class="text-danger fs-large fw-bold">5000 <small
-                                                class="align-text-top">đ</small></span>
-                                        </div>
-                                        <div>
-                                            <span>4.5<i class='bx bxs-star' style='color:#fee500'></i>(200)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="row row-cols-1 row-cols-xl-6 row-cols-lg-4 row-cols-md-4 row-cols-sm-2 g-4">
-                            <div class="col">
-                                <div class="card h-px-350 item-product">
-                                    <img class="card-img-top h-50"
-                                         src="/image/staff1.jpg"
-                                         alt="Card image cap"/>
-                                    <div class="card-body">
-                                      <span class="fs-4 fw-semibold card-title mb-2">
-                                          Mã voucher</span>
+                                        <a href="#" class="stretched-link mb-2">
+                                            <span class="fs-5 fw-semibold card-title" th:text="${pro.name}"></span>
+                                        </a>
                                         <div class="mb-1">
-                                            <div class="progress h-auto" role="progressbar" aria-label="Success example"
-                                                 aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                                <div class="progress-bar progress-bar-striped h-px-20"
-                                                     style="width: calc(15/50*100%);">15
-                                                </div>
-                                            </div>
+                                            <span th:each="size:${pro.size}" class="border mx-1 p-1" th:text="${size.nameSizeInch}"></span>
+                                            <span th:each="resolution:${pro.resolution}" class="border mx-1 p-1"th:text="${resolution.nameResolution}"></span>
                                         </div>
-                                        <div><span class="fs-big">
-                                            giá trị giảm
-                                        </span>
+                                        <div class="mb-1">
+                                            <span th:each="origin:${pro.origin}" class="border mx-1 p-1" th:text="${origin.nameOrigin}"></span>
+                                            <span th:each="manufacture:${pro.manufacture}" class="border mx-1 p-1" th:text="${manufacture.nameManufacture}"></span>
                                         </div>
-                                        <div class="text-center">
-                                            <button class="btn btn-danger">
-                                                Lấy ngay
-                                            </button>
+
+                                        <div>
+                                            <span th:if="${pro.getCouponProduct()!=null}" ></span>
+                                            <span class=" text-strike-through fs-big" th:text="${pro.getCoupon()}" ></span>
+                                        </div>
+
+
+                                        <div>
+                                            <span class="text-danger fs-large fw-bold" th:text="${pro.price_export}">
+                                                <small class="align-text-top">đ</small>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <!--                </div>-->
+
             </div>
         </div>
     </section>
@@ -1041,7 +924,7 @@
         </div>
     </section>
     <section>
-        <img class="d-block w-100" src="/image/camera-360-do-01.jpg" >
+        <img class="d-block w-100" src="/image/camera-360-do-01.jpg">
     </section>
     <section class="mt-4">
         <div class="row row-cols-1 row-cols-xl-3 row-cols-lg-3 row-cols-md-2 row-cols-sm-2 g-4">

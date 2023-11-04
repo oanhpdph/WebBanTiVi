@@ -14,6 +14,10 @@ public class CouponServiceImpl implements CouponService {
     @Autowired
     CouponRepository couponRepository;
 
+//    public List<CouponRes> getAllCouponRes(){
+//        return couponRepository.getCouponRes();
+//    }
+
     @Override
     public Coupon save(Coupon coupon) {
         return this.couponRepository.save(coupon);

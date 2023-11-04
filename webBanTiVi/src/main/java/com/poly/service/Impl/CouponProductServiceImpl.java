@@ -14,6 +14,11 @@ import java.util.Optional;
 public class CouponProductServiceImpl implements CouponProductService {
     @Autowired
     CouponProductRepository productRepository;
+
+//    public Coupon findByProductId(Integer id, Date today){
+//        return productRepository.findByProductId(id,today);
+//    }
+
     @Override
     public CouponProduct save(CouponProduct couponProduct) {
         return productRepository.save(couponProduct);

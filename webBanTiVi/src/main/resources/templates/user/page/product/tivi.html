@@ -535,175 +535,45 @@
             </div>
         </div>
     </div>
+
     <div class="row row-cols-1 row-cols-xl-6 row-cols-lg-4 row-cols-md-4 row-cols-sm-2 g-4">
-        <div class="col">
+        <div class="col" th:each="pro:${product}" name="id">
             <div class="card h-px-350 item-product">
-                <img class="card-img-top h-50"
-                     src="/image/staff1.jpg"
-                     alt="Card image cap"/>
+
+                <div th:each="image:${pro.listImage}">
+                    <img class="card-img-top h-50"
+                         th:src="@{'/image/'+${image.nameImage}}"
+                         alt="Card image cap"/>
+                </div>
+
                 <div class="card-body">
-                    <a href="#" class="stretched-link mb-2"><span
-                            class="fs-4 fw-semibold card-title">
-                                                        Tên</span></a>
-                    <div class="mb-1"><span class="border mx-1 p-1">43 inch</span><span
-                            class="border mx-1 p-1">4k</span>
+                    <a href="#" class="stretched-link mb-2">
+                        <span class="fs-5 fw-semibold card-title" th:text="${pro.name}"></span>
+                    </a>
+                    <div class="mb-1">
+                        <span th:each="size:${pro.size}" class="border mx-1 p-1" th:text="${size.nameSizeInch}"></span>
+                        <span th:each="resolution:${pro.resolution}" class="border mx-1 p-1"th:text="${resolution.nameResolution}"></span>
                     </div>
-                    <div><span class="text-strike-through fs-big">5000 <small
-                            class="align-text-top">đ</small></span>
+                    <div class="mb-1">
+                        <span th:each="origin:${pro.origin}" class="border mx-1 p-1" th:text="${origin.nameOrigin}"></span>
+                        <span th:each="manufacture:${pro.manufacture}" class="border mx-1 p-1" th:text="${manufacture.nameManufacture}"></span>
                     </div>
-                    <div><span class="text-danger fs-large fw-bold">5000 <small
-                            class="align-text-top">đ</small></span>
-                    </div>
+
                     <div>
-                        <span>4.5<i class='bx bxs-star' style='color:#fee500'></i>(200)</span>
+                        <span th:if="${pro.getCouponProduct()!=null}" ></span>
+                        <span class=" text-strike-through fs-big" th:text="${pro.getCoupon()}" ></span>
+                    </div>
+
+
+                    <div>
+                                            <span class="text-danger fs-large fw-bold" th:text="${pro.price_export}">
+                                                <small class="align-text-top">đ</small>
+                                            </span>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card h-px-350 item-product">
-                <img class="card-img-top h-50"
-                     src="/image/staff1.jpg"
-                     alt="Card image cap"/>
-                <div class="card-body">
-                    <a href="#" class="stretched-link mb-2"><span
-                            class="fs-4 fw-semibold card-title">
-                                                        Tên</span></a>
-                    <div class="mb-1"><span class="border mx-1 p-1">43 inch</span><span
-                            class="border mx-1 p-1">4k</span>
-                    </div>
-                    <div><span class="text-strike-through fs-big">5000 <small
-                            class="align-text-top">đ</small></span>
-                    </div>
-                    <div><span class="text-danger fs-large fw-bold">5000 <small
-                            class="align-text-top">đ</small></span>
-                    </div>
-                    <div>
-                        <span>4.5<i class='bx bxs-star' style='color:#fee500'></i>(200)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-px-350 item-product">
-                <img class="card-img-top h-50"
-                     src="/image/staff1.jpg"
-                     alt="Card image cap"/>
-                <div class="card-body">
-                    <a href="#" class="stretched-link mb-2"><span
-                            class="fs-4 fw-semibold card-title">
-                                                        Tên</span></a>
-                    <div class="mb-1"><span class="border mx-1 p-1">43 inch</span><span
-                            class="border mx-1 p-1">4k</span>
-                    </div>
-                    <div><span class="text-strike-through fs-big">5000 <small
-                            class="align-text-top">đ</small></span>
-                    </div>
-                    <div><span class="text-danger fs-large fw-bold">5000 <small
-                            class="align-text-top">đ</small></span>
-                    </div>
-                    <div>
-                        <span>4.5<i class='bx bxs-star' style='color:#fee500'></i>(200)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-px-350 item-product">
-                <img class="card-img-top h-50"
-                     src="/image/staff1.jpg"
-                     alt="Card image cap"/>
-                <div class="card-body">
-                    <a href="#" class="stretched-link mb-2"><span
-                            class="fs-4 fw-semibold card-title">
-                                                        Tên</span></a>
-                    <div class="mb-1"><span class="border mx-1 p-1">43 inch</span><span
-                            class="border mx-1 p-1">4k</span>
-                    </div>
-                    <div><span class="text-strike-through fs-big">5000 <small
-                            class="align-text-top">đ</small></span>
-                    </div>
-                    <div><span class="text-danger fs-large fw-bold">5000 <small
-                            class="align-text-top">đ</small></span>
-                    </div>
-                    <div>
-                        <span>4.5<i class='bx bxs-star' style='color:#fee500'></i>(200)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-px-350 item-product">
-                <img class="card-img-top h-50"
-                     src="/image/staff1.jpg"
-                     alt="Card image cap"/>
-                <div class="card-body">
-                    <a href="#" class="stretched-link mb-2"><span
-                            class="fs-4 fw-semibold card-title">
-                                                        Tên</span></a>
-                    <div class="mb-1"><span class="border mx-1 p-1">43 inch</span><span
-                            class="border mx-1 p-1">4k</span>
-                    </div>
-                    <div><span class="text-strike-through fs-big">5000 <small
-                            class="align-text-top">đ</small></span>
-                    </div>
-                    <div><span class="text-danger fs-large fw-bold">5000 <small
-                            class="align-text-top">đ</small></span>
-                    </div>
-                    <div>
-                        <span>4.5<i class='bx bxs-star' style='color:#fee500'></i>(200)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-px-350 item-product">
-                <img class="card-img-top h-50"
-                     src="/image/staff1.jpg"
-                     alt="Card image cap"/>
-                <div class="card-body">
-                    <a href="#" class="stretched-link mb-2"><span
-                            class="fs-4 fw-semibold card-title">
-                                                        Tên</span></a>
-                    <div class="mb-1"><span class="border mx-1 p-1">43 inch</span><span
-                            class="border mx-1 p-1">4k</span>
-                    </div>
-                    <div><span class="text-strike-through fs-big">5000 <small
-                            class="align-text-top">đ</small></span>
-                    </div>
-                    <div><span class="text-danger fs-large fw-bold">5000 <small
-                            class="align-text-top">đ</small></span>
-                    </div>
-                    <div>
-                        <span>4.5<i class='bx bxs-star' style='color:#fee500'></i>(200)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-px-350 item-product">
-                <img class="card-img-top h-50"
-                     src="/image/staff1.jpg"
-                     alt="Card image cap"/>
-                <div class="card-body">
-                    <a href="#" class="stretched-link mb-2"><span
-                            class="fs-4 fw-semibold card-title">
-                                                        Tên</span></a>
-                    <div class="mb-1"><span class="border mx-1 p-1">43 inch</span><span
-                            class="border mx-1 p-1">4k</span>
-                    </div>
-                    <div><span class="text-strike-through fs-big">5000 <small
-                            class="align-text-top">đ</small></span>
-                    </div>
-                    <div><span class="text-danger fs-large fw-bold">5000 <small
-                            class="align-text-top">đ</small></span>
-                    </div>
-                    <div>
-                        <span>4.5<i class='bx bxs-star' style='color:#fee500'></i>(200)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
     <div class="text-center mt-4">
         <button class="btn btn-outline-secondary w-auto" id="loadMore">Xem thêm sản phẩm</button>
