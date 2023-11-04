@@ -310,6 +310,7 @@ CREATE TABLE cart_product
 	 date_update DATETIME
      PRIMARY KEY(cart_id, product_id)
   )
+GO
  INSERT INTO [dbo].[bill_status]
            ([code]
            ,[status]
@@ -674,3 +675,4 @@ INSERT INTO [dbo].[delivery_notes]
            ,1
            ,1)
 GO
+ALTER TABLE VOUCHER ADD image VARCHAR(200)
