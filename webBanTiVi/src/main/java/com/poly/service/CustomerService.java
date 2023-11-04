@@ -21,5 +21,5 @@ public interface CustomerService {
 
     Page<Customer> loadData(SearchStaffDto searchStaffDto, Pageable pageable);
 
-
+    Customer getCustomerByName(String username);
 }

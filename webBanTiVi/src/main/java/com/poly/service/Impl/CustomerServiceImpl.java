@@ -68,5 +68,7 @@ public class CustomerServiceImpl implements CustomerService {
         Page<Customer> page = new PageImpl<>(result, pageable, result2.size());
         return page;
     }
+    @Override
+    public Customer getCustomerByName(String username) { return customerRepository.getCustomerByName(username); }
 
 }
