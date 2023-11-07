@@ -1,0 +1,268 @@
+<style>
+    .buttons_added {
+        opacity: 1;
+        display: inline-block;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        white-space: nowrap;
+        vertical-align: top;
+    }
+
+    .is-form {
+        overflow: hidden;
+        position: relative;
+        background-color: #f9f9f9;
+        height: 2.2rem;
+        width: 1.9rem;
+        padding: 0;
+        text-shadow: 1px 1px 1px #fff;
+        border: 1px solid #ddd;
+    }
+
+    .is-form:focus, .input-text:focus {
+        outline: none;
+    }
+
+    .is-form.minus {
+        border-radius: 4px 0 0 4px;
+    }
+
+    .is-form.plus {
+        border-radius: 0 4px 4px 0;
+    }
+
+    .input-qty {
+        background-color: #fff;
+        height: 2.2rem;
+        text-align: center;
+        font-size: 1rem;
+        display: inline-block;
+        vertical-align: top;
+        margin: 0;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        border-left: 0;
+        border-right: 0;
+        padding: 0;
+    }
+
+    .input-qty::-webkit-outer-spin-button, .input-qty::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9 mb-4 order-0">
+            <!--    <div class="col-md-10">-->
+            <div class="card"><br>
+                <section class="breadcrumb-option">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="breadcrumb__text">
+                                    <h4>Shopping Cart</h4>
+                                    <div class="breadcrumb__links">
+                                        <a href="index.html">Home</a>
+                                        <a href="shop.html">Shop</a>
+                                        <span>Shopping Cart</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <br>
+                <section>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form th:action="@{/cart/update}" method="post">
+                                    <div class="">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="item:${session.list}">
+                                                <input th:value="${item.product.id}" name="id" hidden>
+                                                <td>
+                                                    <div th:each="image:${item.product.listImage}">
+                                                        <div th:if="${image.location == true}">
+                                                            <img th:src="@{'/user/img/shopping-cart/'+image.nameImage}"
+                                                                 alt="">
+                                                        </div>
+                                                        <span th:text="${item.product.name + ' '+item.product.code}"></span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                            <span class="fs-5">$<span class="price-export"
+                                                                                      th:value="${item.product.price_export}"
+                                                                                      th:text="${item.product.price_export}"></span>
+                                                            </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="buttons_added" th:id="${item.product.id}">
+                                                        <input class="minus is-form" type="button"
+                                                               value="-">
+                                                        <input aria-label="quantity" class="input-qty" max="10" min="1"
+                                                               name="qty"
+                                                               type="number"
+                                                               th:value="${item.quantity}">
+                                                        <input class="plus is-form plus"
+                                                               type="button" value="+">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span th:text="${item.product.price_export * item.quantity}"
+                                                          class="total-price"></span>
+                                                </td>
+                                            </tr>
+                                            <hr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <a href="/" type="submit" class="btn btn-lg btn-outline-primary">Quay
+                                                Lại</a>
+                                        </div>
+                                        <div class=" col-lg-6 col-md-6 col-sm-6">
+                                            <button type="submit" class="btn btn-lg btn-primary">Cập Nhật Giỏ Hàng
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <h6>Discount codes</h6>
+                        <form action="#">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Coupon code"
+                                       aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <button class="btn btn-outline-primary" type="button" id="button-addon2">
+                                    Apply
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <br>
+                    <div class="card shadow-none bg-transparent border border-secondary mb-3">
+                        <div class="card-header"><h5>Cart total</h5></div>
+                        <div class="card-body">
+                            <p class="card-text">Subtotal: <span style="padding-left: 70px">$<span
+                                    th:text="${amount}"></span> </span></p>
+                            <p class="card-text">Total: <span style="padding-left: 90px">$<span
+                                    th:text="${amount}"></span> </span></p>
+                            <div style="text-align: center">
+                                <a type="submit" class="btn btn-primary" th:href="@{/pay}">Thanh
+                                    Toán
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>//<![CDATA[
+// $('input.input-qty').each(function () {
+//     var $this = $(this),
+//         qty = $this.parent().find('.is-form'),
+//         min = Number($this.attr('min')),
+//         max = Number($this.attr('max'))
+//     if (min == 0) {
+//         var d = 0
+//     } else {
+//         d = min
+//     }
+//
+//     $(qty).on('click', function () {
+//         if ($(this).hasClass('minus')) {
+//             if (d > min) {
+//                 d += -1
+//             }
+//         }
+//         if ($(this).hasClass('plus')) {
+//             var x = Number($this.val()) + 1
+//             console.log(d)
+//
+//             if (x <= max) {
+//                 d += 1
+//             }
+//             console.log(d)
+//         }
+//         $this.attr('value', d).val(d)
+//     })
+// })
+
+const plus = document.querySelectorAll(".plus")
+const minus = document.querySelectorAll(".minus")
+
+$(document).ready(
+    $.each(plus, function (index, item) {
+        // var temp = index
+        item.addEventListener("click", function (e) {
+            var quantityForm = document.querySelectorAll(".input-qty")
+            const totalPriceForm = document.querySelectorAll(".total-price")
+            const priceExportForm = document.querySelectorAll(".price-export")
+
+            var valueInput = quantityForm[index].value
+
+            if (valueInput < Number(quantityForm[index].getAttribute('max'))) {
+                quantityForm[index].value = Number(valueInput) + 1
+                valueInput = Number(valueInput) + 1
+            }
+
+            // var quantity = quantityForm[index].value
+            var priceExport = priceExportForm[index].getAttribute("value")
+            var totalPrice = Number(valueInput) * Number(priceExport)
+
+            totalPriceForm[index].innerText = totalPrice
+        })
+    }),
+    $.each(minus, function (index, item) {
+        // var temp = index
+        item.addEventListener("click", function (e) {
+
+            const totalPriceForm = document.querySelectorAll(".total-price")
+            const priceExportForm = document.querySelectorAll(".price-export")
+            var quantityForm = document.querySelectorAll(".input-qty")
+
+            var valueInput = quantityForm[index].value// = 10
+
+            if (valueInput > Number(quantityForm[index].getAttribute('min'))) {
+                quantityForm[index].value = Number(valueInput) - 1
+                valueInput = Number(valueInput) - 1
+            }
+
+            var priceExport = priceExportForm[index].getAttribute("value")
+            var totalPrice = Number(valueInput) * Number(priceExport)
+
+            totalPriceForm[index].innerText = totalPrice
+        })
+    })
+)
+
+
+//]]></script>

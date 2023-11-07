@@ -21,11 +21,11 @@
       <list>
         <option value="CSS File" />
         <option value="HTML File" />
-        <option value="Class" />
         <option value="Interface" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -58,7 +58,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates/user/page/promotion" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -84,8 +84,12 @@
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\static\image" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\admin\OneDrive\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\product" />
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\templates" />
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\templates\user\page" />
+    </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="com.poly.service.Impl" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.poly.controller.user" />
@@ -93,19 +97,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="WebBanTiViApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="WebBanTiVi" />
       <extension name="coverage">
@@ -219,6 +210,10 @@
       <workItem from="1698511069371" duration="3327000" />
       <workItem from="1699007250129" duration="6153000" />
       <workItem from="1699019058892" duration="17067000" />
+      <workItem from="1699082036542" duration="3749000" />
+      <workItem from="1699104466604" duration="18658000" />
+      <workItem from="1699248301412" duration="4358000" />
+      <workItem from="1699357196164" duration="742000" />
     </task>
     <servers />
   </component>
@@ -283,6 +278,10 @@
           <line>422</line>
           <option name="timeStamp" value="39" />
         </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.springframework.beans.factory.UnsatisfiedDependencyException" package="org.springframework.beans.factory" />
+          <option name="timeStamp" value="54" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
@@ -290,6 +289,13 @@
         <PinnedItemInfo parentTag="org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile" memberName="filename" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="valueHolder" />
+        <watch expression="fallback" />
+        <watch expression="paramName" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1697354755279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
