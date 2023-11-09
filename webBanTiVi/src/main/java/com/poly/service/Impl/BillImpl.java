@@ -1,11 +1,15 @@
 package com.poly.service.Impl;
 
+import com.poly.dto.BillProRes;
 import com.poly.dto.SearchBillDto;
 import com.poly.entity.Bill;
 import com.poly.entity.BillStatus;
 import com.poly.entity.Product;
 import com.poly.repository.BillRepos;
 import com.poly.repository.BillStatusRepos;
+import com.poly.entity.BillProduct;
+import com.poly.entity.Product;
+import com.poly.repository.*;
 import com.poly.service.BillService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -25,16 +29,66 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class BillImpl implements BillService {
     @Autowired
     private BillRepos billRepos;
+    @Autowired
+    private BillProductRepos billProductRepos;
 
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    BillStatusRepos billStatusRepos;
 
+    @Autowired
+    ProductRepository productRepository;
+
+    @Autowired
+    CustomerRepository customerRepository;
+
+    @Autowired
+    PaymentMethodRepos paymentMethodRepos;
+
+    Random generator = new Random();
+
+    @Override
+    public Bill add(BillProRes bill) {
+
+        Bill bi = new Bill();
+        bi.setCustomer(bill.getCustomer());
+        bi.setCode("HD" + generator.nextInt(10) + 9);
+        bi.setCreateDate(new java.util.Date());
+        bi.setPaymentDate(new java.util.Date());
+        bi.setTotalPrice(bill.getTotalPrice());
+        bi.setPaymentStatus(1);
+        bi.setBillStatus(billStatusRepos.findByCode("WP").get());
+        bi.setPaymentMethod(paymentMethodRepos.findAll().get(0));
+//        bi.setVoucher(bill.getVoucher());
+//        bi.setNote(bill.getNote());
+        return this.billRepos.save(bi);
+    }
+
+    @Override
+    public void addBillPro(Bill bill, BillProRes billProRes) {
+        List<Optional<Product>> list = new ArrayList<>();
+        for (Integer id : billProRes.getProduct()) {
+            list.add(productRepository.findById(id));
+        }
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).isPresent()) {
+                BillProduct billProduct = new BillProduct();
+                billProduct.setBill(bill);
+                billProduct.setProduct(list.get(i).get());
+                billProduct.setPrice(list.get(i).get().getPrice_export());
+                billProduct.setQuantity(billProRes.getQuantity().get(i));
+                this.billProductRepos.save(billProduct);
+            }
+        }
+    }
     @Override
     public Page<Bill> loadData(SearchBillDto searchBillDto, Pageable pageable) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -53,9 +107,6 @@ public class BillImpl implements BillService {
         if (!searchBillDto.getBillStatus().isEmpty()) {
             list.add(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), searchBillDto.getBillStatus()));
         }
-//        if(!searchBillDto.getDate().isEmpty()){
-//            list.add(criteriaBuilder.equal(billRoot.get("paymentDate"),searchBillDto.getDate()));
-//        }
         if (!searchBillDto.getDate().isEmpty()) {
             String date1 = searchBillDto.getDate().substring(0, searchBillDto.getDate().indexOf("-") - 1).replace("/", "-");
             String date2 = searchBillDto.getDate().substring(searchBillDto.getDate().indexOf("-") + 1, searchBillDto.getDate().length()).replace("/", "-");

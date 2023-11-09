@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html class="light-style" xmlns:th="http://www.thymeleaf.org">
+
+<section class="ss1">
+    <div class="container">
+        <div class="row mb-4 pt-3 row-cols-lg-3 row-cols-md-3 row-cols-xl-3">
+            <h3 class="header col text-center bg-red  pt-2 pb-2 title px-3 text-uppercase fw-bold">
+                [(${voucher.getNameVoucher()})]
+            </h3>
+        </div>
+        <p>Chương trình bắt đầu: [(${voucher.getStartDay()})] - Kết thúc: [(${voucher.getExpirationDate()})]</p>
+        <hr>
+        <img th:src="@{'/image/' + *{voucher.getAvatar()}}" width="1000 px" height="auto" style="text-align: center">
+        <hr>
+        <p class="text-danger fs-large fw-bold">Giảm ngay [(${voucher.getValue()})]<span th:if="${voucher.isReducedForm()==true}" th:text="đ" />
+            <span th:if="${voucher.isReducedForm()==fasle}" th:text="%" />
+            trong hóa đơn khi:</p>
+        <p class="fw-bold">Mua đơn hàng có giá trị từ [(${voucher.getMinimumValue().intValue()})]đ
+            trở lên, Giảm theo % có giá trị tối đa [(${voucher.getMaximumDiscount().intValue()})]đ</p>
+        <hr>
+        <h3>Số lượng có hạn: chỉ [(${voucher.getQuantity()})] voucher</h3>
+        <a th:href="@{'/promotion/vouchercode/' + *{voucher.getId()}}"
+           class="btn btn-outline-danger">LẤY MÃ NGAY</a>
+        <hr>
+                <div th:if="${check == true}">
+                    <p class=" fs-large fw-bold">
+                        Mã voucher của bạn là: <span class="text-danger">
+                [(${voucher.getCode()})]
+            </span>
+                    </p>
+                    <p>Vui lòng nhập mã trên vào hóa đơn để được giảm tiền theo khuyến mại!</p>
+                </div>
+                <div th:if="${check == false}">
+                    <p class=" fs-large fw-bold"> [(${thongbao})]</p>
+                </div>
+            </div>
+</section>
+
+

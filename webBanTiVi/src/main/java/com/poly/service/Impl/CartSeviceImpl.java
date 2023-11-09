@@ -58,7 +58,7 @@ public class CartSeviceImpl implements CartService {
     }
 
     @Override
-    public void update(int id, Integer qty) {
+    public List<CartProduct> update(int id, Integer qty) {
         CartProduct item = items
                 .stream()
                 .filter(it -> it.getProduct().getId() == id)
@@ -67,6 +67,7 @@ public class CartSeviceImpl implements CartService {
         if (items != null) {
             item.setQuantity(qty);
         }
+        return items;
     }
 
     @Override
@@ -91,14 +92,14 @@ public class CartSeviceImpl implements CartService {
         return total;
     }
 
-    @Override
-    public int getTotalProduct() {
-        int total = 0;
-        for (CartProduct item : items) {
-//            total += item.getQuantity() * item.getProduct().getPrice_export();
-        }
-        return total;
-    }
+//    @Override
+//    public int getTotalProduct() {
+//        int total = 0;
+//        for (CartProduct item : items) {
+//            total += item.getQuantity().intValue() * item.getProduct().getPrice_export().intValue();
+//        }
+//        return total;
+//    }
 
     @Override
     public Serializable getAmount() {
@@ -112,13 +113,13 @@ public class CartSeviceImpl implements CartService {
         return amount;
     }
 
-//    @Override
-//    public Serializable getAmount() {
-//        int amount = 0;
-//        for (CartProduct item : items) {
+    @Override
+    public int getTotalProduct() {
+        int amount = 0;
+        for (CartProduct item : items) {
 //            amount += item.getQuantity() * item.getProduct().getPrice_export();
-//        }
-//        return amount;
-//    }
+        }
+        return amount;
+    }
 
 }

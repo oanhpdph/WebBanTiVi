@@ -196,14 +196,15 @@
                                         </h2>
                                         <br>
                                         <div class="table-responsive text-nowrap">
-                                            <h5 th:each="item: ${product.listEvaluate}"><strong
-                                                    th:text="${item.customer.name}"></strong></h5>
+                                            <span class="fs-5" th:each="item: ${product.listEvaluate}">
+                                                <strong th:text="${item.customer.name}"></strong>
+                                            </span>
                                             <p th:each="item: ${product.listEvaluate}">
-                                                <i class='bx bx-star' style="color: yellow"></i>
-                                                <i class='bx bx-star' style="color: yellow"></i>
-                                                <i class='bx bx-star' style="color: yellow"></i>
-                                                <i class='bx bx-star' style="color: yellow"></i>
-                                                <i class='bx bx-star'></i>
+                                                <i class='bx bxs-star' style='color:#ffff00'></i>
+                                                <i class='bx bxs-star' style='color:#ffff00'></i>
+                                                <i class='bx bxs-star' style='color:#ffff00'></i>
+                                                <i class='bx bxs-star' style='color:#ffff00'></i>
+                                                <i class='bx bxs-star-half' style='color:#ffff00'></i>
                                                 <span th:text="${item.point}"></span>
                                             </p>
                                             <p th:each="item: ${product.listEvaluate}">
@@ -245,12 +246,12 @@
                             <div class="">
                                 <br>
                                 <span th:each="image:${pro.listImage}" th:text="${image.nameImage}"></span>
-                                <h5 class="card-title">
-                                    <span th:text="${pro.name}"></span>
-                                </h5>
-                                <h5>
-                                    $<span th:text="${pro.price_import}"></span>
-                                </h5>
+                                <span class="fs-5">
+                                    <p th:text="${pro.name}"></p>
+                                </span>
+                                <span class="fs-5">
+                                    <p th:text="${pro.price_import}"></p>
+                                </span>
                                 <div class="product__color__select">
                                     <label for="pc-1">
                                         <input type="radio" id="pc-1">
@@ -263,11 +264,11 @@
                                     </label>
                                 </div>
                                 <div class="rating">
-                                    <i class='bx bx-star' style="color: yellow"></i>
-                                    <i class='bx bx-star' style="color: yellow"></i>
-                                    <i class='bx bx-star' style="color: yellow"></i>
-                                    <i class='bx bx-star' style="color: yellow"></i>
-                                    <i class='bx bx-star'></i>
+                                    <i class='bx bxs-star' style='color:#ffff00'></i>
+                                    <i class='bx bxs-star' style='color:#ffff00'></i>
+                                    <i class='bx bxs-star' style='color:#ffff00'></i>
+                                    <i class='bx bxs-star-half' style='color:#ffff00'></i>
+                                    <i class='bx bxs-star' undefined></i>
                                 </div>
                             </div>
                             <br>
@@ -281,7 +282,7 @@
                         <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap">
                         <div class="card-body">
                             <div class="product__item__text">
-                                <h5 class="card-title">Ti Vi Samsung</h5>
+                                <span class="fs-5">Ti Vi Samsung</span>
                                 <div class="rating">
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
@@ -289,7 +290,7 @@
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                 </div>
-                                <h5>$67.24</h5>
+                                <span class="fs-5">$67.24</span>
                                 <div class="product__color__select">
                                     <label for="pc-1">
                                         <input type="radio" id="pc-1">

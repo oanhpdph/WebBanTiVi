@@ -53,7 +53,7 @@ public class Voucher {
     @Column(name="active")
     private Boolean active;
 
-    @Column(name="avatar")
+    @Column(name="image")
     private String avatar;
 
 }

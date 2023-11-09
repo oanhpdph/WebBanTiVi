@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../src/main/resources/static/image/375974515_720913166716144_2769395343336097529_n.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/main/resources/static/image/download.jpg" beforeDir="false" />
-    </list>
+    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,9 +20,12 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="Interface" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Interface" />
+        <option value="Interface" />
+        <option value="HTML File" />
+        <option value="Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -59,7 +58,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/datn_new1/WebBanTiVi/webBanTiVi" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -72,32 +71,32 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="trusted.hosts" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.poly" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\promotion" />
+      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page\promotion" />
+      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page" />
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\static\image" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\admin\OneDrive\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\product" />
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\templates" />
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\templates\user\page" />
     </key>
+    <key name="ExtractSuperBase.RECENT_KEYS">
+      <recent name="com.poly.service.Impl" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.poly.controller.user" />
+      <recent name="com.poly.controller.user1" />
+    </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="WebBanTiViApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="WebBanTiVi" />
       <extension name="coverage">
@@ -177,6 +176,9 @@
       <workItem from="1697538943053" duration="463000" />
       <workItem from="1697626646136" duration="144000" />
       <workItem from="1697626876632" duration="435000" />
+      <workItem from="1697634363967" duration="5280000" />
+      <workItem from="1697991211389" duration="2702000" />
+      <workItem from="1698154339968" duration="5363000" />
       <workItem from="1697634363967" duration="5880000" />
       <workItem from="1697640833006" duration="1614000" />
       <workItem from="1697713010976" duration="736000" />
@@ -189,6 +191,15 @@
       <workItem from="1698042926308" duration="323000" />
       <workItem from="1698050592237" duration="82000" />
       <workItem from="1698075025216" duration="3550000" />
+      <workItem from="1698252668219" duration="4063000" />
+      <workItem from="1698326320003" duration="11482000" />
+      <workItem from="1698341410752" duration="11212000" />
+      <workItem from="1698401158580" duration="3512000" />
+      <workItem from="1698498023523" duration="2177000" />
+      <workItem from="1698500327035" duration="8115000" />
+      <workItem from="1698758517663" duration="9650000" />
+      <workItem from="1698851582911" duration="1449000" />
+      <workItem from="1699003480535" duration="2112000" />
       <workItem from="1698128014929" duration="261000" />
       <workItem from="1698225323223" duration="6552000" />
       <workItem from="1698239802181" duration="11534000" />
@@ -197,6 +208,12 @@
       <workItem from="1698465809472" duration="1466000" />
       <workItem from="1698507754181" duration="597000" />
       <workItem from="1698511069371" duration="3327000" />
+      <workItem from="1699007250129" duration="6153000" />
+      <workItem from="1699019058892" duration="17067000" />
+      <workItem from="1699082036542" duration="3749000" />
+      <workItem from="1699104466604" duration="18658000" />
+      <workItem from="1699248301412" duration="4358000" />
+      <workItem from="1699357196164" duration="742000" />
     </task>
     <servers />
   </component>
@@ -226,11 +243,45 @@
           <line>79</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user1/PromotionController.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user1/PromotionController.java</url>
+          <line>92</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java</url>
+          <line>126</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java</url>
+          <line>89</line>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java</url>
+          <line>94</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user/PromotionController.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/main/resources/templates/admin/page/staff.html</url>
           <line>422</line>
           <option name="timeStamp" value="39" />
         </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.springframework.beans.factory.UnsatisfiedDependencyException" package="org.springframework.beans.factory" />
+          <option name="timeStamp" value="54" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
@@ -238,6 +289,13 @@
         <PinnedItemInfo parentTag="org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile" memberName="filename" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="valueHolder" />
+        <watch expression="fallback" />
+        <watch expression="paramName" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1697354755279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
