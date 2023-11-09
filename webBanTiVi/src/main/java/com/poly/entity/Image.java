@@ -5,20 +5,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Entity
-@Table(name = "image_returned")
-@AllArgsConstructor
+@Table(name = "image")
+@Data
 @NoArgsConstructor
-public class Image_returned {
+@AllArgsConstructor
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "id_bill_product")
-    private BillProduct billProduct;
+    @JoinColumn(name = "id_product")
+    private ProductDetail product;
 
-    @Column(name = "name_image")
-    private String nameImage;
+    @Column(name = "link")
+    private String link;
+
+    @Column(name = "location")
+    private boolean location;
+
 }

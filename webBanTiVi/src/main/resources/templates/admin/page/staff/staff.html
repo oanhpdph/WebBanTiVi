@@ -70,7 +70,6 @@
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" th:name="gender"
-
                                                    th:value="false">
                                             <label class="form-check-label">Female</label>
                                         </div>
@@ -95,19 +94,19 @@
                                         <div class="input-group input-group-merge">
                                             <span class="input-group-text">VN (+84)</span>
                                             <input type="text" name="phoneNumber" class="form-control"
-                                                   placeholder="394 408 163 " th:name="phone">
+                                                   placeholder="394 408 163 " th:name="phoneNumber">
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <label class="mb-1">Active</label> <br>
                                         <div class="form-check form-check-inline mt-3">
                                             <input class="form-check-input" type="radio"
-                                                   value="true" th:name="active">
+                                                   value="true" th:name="status">
                                             <label class="form-check-label">Active</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio"
-                                                   value="false" th:name="active">
+                                                   value="false" th:name="status">
                                             <label class="form-check-label">Non-Active</label>
                                         </div>
                                     </div>
@@ -199,7 +198,7 @@
                 </td>
                 <td th:text="${staff.birthday}"></td>
                 <td th:text="${staff.address}"></td>
-                <td th:text="${staff.phone}"></td>
+                <td th:text="${staff.phoneNumber}"></td>
                 <td th:text="${staff.roles}">
                 </td>
                 <td><p>
@@ -278,21 +277,21 @@
                                                     <label class="mb-1">Gender</label> <br>
                                                     <div class="form-check form-check-inline mt-3">
                                                         <input class="form-check-input" type="radio"
-                                                               th:id="|active${staff.id}|"
+                                                               th:id="|gender${staff.id}t|"
                                                                th:name="gender"
                                                                th:value="true"
                                                                th:checked="${staff.gender==true}">
                                                         <label class="form-check-label"
-                                                               th:for="|active${staff.id}|">Male</label>
+                                                               th:for="|gender${staff.id}t|">Male</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                               th:id="|active${staff.id}|"
+                                                               th:id="|gender${staff.id}f|"
                                                                th:name="gender"
                                                                th:value="false"
                                                                th:checked="${staff.gender==false}">
                                                         <label class="form-check-label"
-                                                               th:for="|active${staff.id}|">Female</label>
+                                                               th:for="|gender${staff.id}f|">Female</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4">
@@ -318,8 +317,8 @@
                                                         <span class="input-group-text">VN (+84)</span>
                                                         <input type="text"
                                                                class="form-control"
-                                                               placeholder="394 408 163 " th:name="phone"
-                                                               th:value="${staff.phone}"
+                                                               placeholder="394 408 163 " th:name="phoneNumber"
+                                                               th:value="${staff.phoneNumber}"
                                                         >
                                                     </div>
                                                 </div>
@@ -327,22 +326,22 @@
                                                     <label class="mb-1">Active</label> <br>
                                                     <div class="form-check form-check-inline mt-3">
                                                         <input class="form-check-input" type="radio"
-                                                               th:id="|active${staff.id}|"
-                                                               th:name="active"
+                                                               th:id="|active${staff.id}t|"
+                                                               th:name="status"
                                                                th:value="true"
-                                                               th:checked="${staff.active==true}"
+                                                               th:checked="${staff.status==true}"
                                                         >
                                                         <label class="form-check-label"
-                                                               th:for="|active${staff.id}|">Active</label>
+                                                               th:for="|active${staff.id}t|">Active</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                               th:id="|active${staff.id}|"
-                                                               th:name="active"
+                                                               th:id="|active${staff.id}f|"
+                                                               th:name="status"
                                                                th:value="false"
-                                                               th:checked="${staff.active==false}">
+                                                               th:checked="${staff.status==false}">
                                                         <label class="form-check-label"
-                                                               th:for="|active${staff.id}|">Non-Active</label>
+                                                               th:for="|active${staff.id}f|">Non-Active</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4">

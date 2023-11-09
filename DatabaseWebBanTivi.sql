@@ -6,15 +6,8 @@ USE webbantivi
 
 go
 
-CREATE TABLE coupon
-  (
-     id      INT IDENTITY(1, 1) PRIMARY KEY,
-     code    VARCHAR(30) not null unique,
-     [value] VARCHAR(10) not null,
-	 image varchar(200),
-     active  BIT
-  )
 
+--- BỎ
 -- Hãng
 CREATE TABLE brand
   (
@@ -23,7 +16,6 @@ CREATE TABLE brand
      namebrand NVARCHAR(max) not null
   )
  
-
 -- Xuất xứ
 CREATE TABLE origin
   (
@@ -138,8 +130,45 @@ CREATE TABLE coupon_product
      PRIMARY KEY(id_coupon, id_product)
   )
 
--- khách hàng
-CREATE TABLE customer
+
+  -- nhân viên
+CREATE TABLE staff
+  (
+     id          INT IDENTITY(1, 1) PRIMARY KEY,
+     username    NVARCHAR(30) not null unique,
+     [name]      NVARCHAR(50) not null,
+     gender      BIT,
+     birthday    DATE,
+     address     NVARCHAR(max),
+     email       VARCHAR(100) not null,
+     phone       VARCHAR(10) not null,
+     password    VARCHAR(max) not null,
+     active      BIT,
+     role varchar(30),
+     avatar      VARCHAR(100)
+  )
+
+
+
+  -- đến đây
+
+
+
+
+
+
+
+CREATE TABLE coupon
+  (
+     id      INT IDENTITY(1, 1) PRIMARY KEY,
+     code    VARCHAR(30) not null unique,
+     [value] VARCHAR(10) not null,
+	 image varchar(200),
+     active  BIT
+  )
+
+-- tài khoản
+CREATE TABLE users
   (
      id                INT IDENTITY(1, 1) PRIMARY KEY,
 	 username          NVARCHAR(50), 
@@ -148,13 +177,13 @@ CREATE TABLE customer
      [address]         NVARCHAR(max),
      phone_number      VARCHAR(10) not null,
      email             VARCHAR(50) UNIQUE not null,
-	 password          VARCHAR(50),
+	 password          VARCHAR(max),
      gender            BIT,
-     id_card           VARCHAR(15) UNIQUE,
      avatar            VARCHAR(50),
 	 role              varchar(20),
      status            bit not null,
   )
+  
 
 CREATE TABLE voucher
   (
@@ -168,13 +197,14 @@ CREATE TABLE voucher
      quantity         INT not null, -- số lượng voucher
 	 start_day		  DATE not null,-- thời gian bắt đầu có hiệu lực
      expiration_date  DATE not null,-- thời gian mã giảm giá hết hiệu lực
-	 active			  BIT
+	 active			  BIT,
+	 image			  varchar(100)
   )
 
-CREATE TABLE voucher_customer
-  (
-     id_customer INT REFERENCES customer(id),
-     id_voucher  INT REFERENCES voucher(id),
+CREATE TABLE voucher_user
+  (	 id			 Int primary key,
+     id_user  INT references users(id),
+     id_voucher  INT references voucher(id),
      date_start  DATETIME not null,-- thời gian nhận
      date_end    DATETIME not null,-- thời gian hết hiệu lực
 	 active      BIT not null
@@ -185,10 +215,10 @@ CREATE TABLE evaluate
   (
 	 id          INT IDENTITY(1, 1) PRIMARY KEY,
      id_product  INT REFERENCES product(id) not null,
-     id_customer INT REFERENCES customer(id) not null,
+     id_user	INT REFERENCES users(id) not null,
      date_create DATETIME not null,
-     point       INT not null,
-     comment     NVARCHAR(max) ,
+     point       float not null,
+     comment     NVARCHAR(max),
   )
 
 CREATE TABLE image_evaluate
@@ -196,25 +226,6 @@ CREATE TABLE image_evaluate
      id          INT IDENTITY(1, 1) PRIMARY KEY,
      id_evaluate INT REFERENCES evaluate(id) not null,
 	 name_image varchar(200) not null
-  )
-
-
-
--- nhân viên
-CREATE TABLE staff
-  (
-     id          INT IDENTITY(1, 1) PRIMARY KEY,
-     code        NVARCHAR(30) not null unique,
-     [name]      NVARCHAR(50) not null,
-     gender      BIT,
-     birthday    DATE,
-     address     NVARCHAR(max),
-     email       VARCHAR(100) not null,
-     phone       VARCHAR(10) not null,
-     password    VARCHAR(20) not null,
-     active      BIT,
-     role varchar(30),
-     avatar      VARCHAR(100)
   )
 
 -- trạng thái hóa đơn
@@ -240,22 +251,23 @@ CREATE TABLE payment_method
 CREATE TABLE bill
   (
      id               INT IDENTITY(1, 1) PRIMARY KEY,
-     id_customer      INT REFERENCES customer(id) not null,
-     code             VARCHAR(10) not null unique,
+     id_user		  INT REFERENCES users(id) not null,
+     code             VARCHAR(20) not null unique,
      create_date      DATE NOT NULL,
-	 paid_money		  Money,
+	 total_price		  Money,
      payment_date     DATE not null,-- ngày thanh toán
      id_status        INT REFERENCES bill_status(id) not null,
-     id_paymentmethod INT REFERENCES payment_method not null,
+     id_paymentmethod INT REFERENCES payment_method(id) not null,
+	 id_voucher		  int references voucher(id),
+	 voucher_value	  money,
 	 payment_status	  INT default 1,
      note             NVARCHAR(max)
   )
 
-Alter table bill add id_voucher int references voucher(id)
 -- hoa don chi tiet
 CREATE TABLE bill_product
   (
-	 id int identity(1,1) primary key,
+	 id				int identity(1,1) primary key,
      id_bill		INT REFERENCES bill(id),
      id_product		INT REFERENCES product(id),
      quantity		INT not null,
@@ -294,11 +306,11 @@ CREATE TABLE delivery_notes
 CREATE TABLE cart
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
-     id_customer INT REFERENCES customer(id) not null,
+     id_users INT REFERENCES users(id) not null,
      code        NVARCHAR(30) unique,
      date_update DATETIME,
   )
-  select * from product
+
 -- giỏ hàng chi tiết
 CREATE TABLE cart_product
   (
@@ -337,24 +349,7 @@ INSERT INTO [dbo].[bill_status]
            ,N'Đang giao hàng'
            ,N'Sản phẩm đang được giao đến cho khách hàng')
 GO
-INSERT INTO [dbo].[bill_status]
-           ([code]
-           ,[status]
-           ,[description])
-     VALUES
-           ('DEE'
-           ,N'Lỗi giao hàng'
-           ,N'Xảy ra lỗi trong quá trình giao hàng')
-GO
-INSERT INTO [dbo].[bill_status]
-           ([code]
-           ,[status]
-           ,[description])
-     VALUES
-           ('CO'
-           ,N'Đã hoàn thành'
-           ,N'Đơn hàng giao thành công đến cho khách hàng')
-GO 
+
 INSERT INTO [dbo].[bill_status]
            ([code]
            ,[status]
@@ -412,7 +407,6 @@ INSERT INTO [dbo].[bill_status]
            ('RE'
            ,N'Đã trả hàng'
            ,N'Đã nhận lại được sản phẩm bị yêu cầu trả hàng')
-
 GO
 
 INSERT INTO [dbo].[payment_method]
@@ -439,238 +433,62 @@ INSERT INTO [dbo].[payment_method]
            ,N'Thanh toán trực tuyến qua Vn-pay')
 GO
 
-INSERT INTO [dbo].[customer]
-           ([name]
-           ,[date]
-           ,[address]
-           ,[phone_number]
-           ,[email]
-           ,[password]
-           ,[gender]
-           ,[id_card]
-           ,[avatar]
-           ,[status])
-     VALUES
-           (N'Phạm đức oanh'
-           ,'2003-12-13'
-           ,N'Liên trì 1, yên hòa, yên mô, ninh bình'
-           ,'0369921455'
-           ,'oanhpdph25707@fpt.edu.vn'
-           ,'123456'
-           ,1
-           ,'037203004908'
-           ,''
-           ,1)
-GO
-
-INSERT INTO [dbo].[bill]
-           ([id_customer]
-           ,[code]
-           ,[create_date]
-           ,[payment_date]
-           ,[id_status]
-           ,[id_paymentmethod]
-           ,[payment_status]
-           ,[note])
-     VALUES
-           (1
-           ,'HD1'
-           ,'2023-10-15'
-           ,'2023-10-15'
-           ,1
-           ,2
-           ,1
-           ,N'')
-GO
-
-INSERT INTO [dbo].[bill]
-           ([id_customer]
-           ,[code]
-           ,[create_date]
-           ,[payment_date]
-           ,[id_status]
-           ,[id_paymentmethod]
-           ,[payment_status]
-           ,[note])
-     VALUES
-           (1
-           ,'HD2'
-           ,'2023-1-15'
-           ,'2023-1-15'
-           ,1
-           ,2
-           ,1
-           ,N'Không có')
-GO
-INSERT INTO [dbo].[bill]
-           ([id_customer]
-           ,[code]
-           ,[create_date]
-           ,[payment_date]
-           ,[id_status]
-           ,[id_paymentmethod]
-           ,[payment_status]
-           ,[note])
-     VALUES
-           (1
-           ,'HD3'
-           ,'2023-1-15'
-           ,'2023-1-15'
-           ,1
-           ,2
-           ,1
-           ,N'Không có')
-GO
 
 
-INSERT INTO [dbo].[product]
-           ([code]
-           ,[nametv]
-           ,[price_import]
-           ,[price_export]
-           ,[quantity]
-           ,[guarantee]
-           ,[id_brand]
-           ,[id_origin]
-           ,[id_manufacture]
-           ,[id_color]
-           ,[id_type]
-           ,[id_size]
-           ,[id_resolution]
-           ,[active])
-     VALUES
-           ('SP01'
-           ,N'Sản phẩm 1'
-           ,10000
-           ,15000
-           ,100
-           ,3
-           ,null
-           ,null
-           ,null
-           ,null
-           ,null
-           ,null
-           ,null
-           ,1)
-GO
-INSERT INTO [dbo].[product]
-           ([code]
-           ,[nametv]
-           ,[price_import]
-           ,[price_export]
-           ,[quantity]
-           ,[guarantee]
-           ,[id_brand]
-           ,[id_origin]
-           ,[id_manufacture]
-           ,[id_color]
-           ,[id_type]
-           ,[id_size]
-           ,[id_resolution]
-           ,[active])
-     VALUES
-           ('SP02'
-           ,N'Sản phẩm 2'
-           ,10000
-           ,15000
-           ,100
-           ,3
-           ,null
-           ,null
-           ,null
-           ,null
-           ,null
-           ,null
-           ,null
-           ,1)
-GO
-
-INSERT INTO [dbo].[product]
-           ([code]
-           ,[nametv]
-           ,[price_import]
-           ,[price_export]
-           ,[quantity]
-           ,[guarantee]
-           ,[id_brand]
-           ,[id_origin]
-           ,[id_manufacture]
-           ,[id_color]
-           ,[id_type]
-           ,[id_size]
-           ,[id_resolution]
-           ,[active])
-     VALUES
-           ('SP03'
-           ,N'Sản phẩm 3'
-           ,20000
-           ,16000
-           ,80
-           ,2
-           ,'b1'
-           ,'o1'
-           ,'m1'
-           ,'c'
-           ,'t1'
-           ,'b1'
-           ,'b1'
-           ,1)
-GO
+create table group_product(
+  id int identity(1,1) primary key,
+  name_group nvarchar(100)
+)
 
 
-INSERT INTO [dbo].[bill_product]
-           ([id_bill]
-           ,[id_product]
-           ,[quantity]
-           ,[price]
-           ,[status])
-     VALUES
-           (1
-           ,1
-           ,5
-           ,500
-           ,1)
-GO
+CREATE TABLE [type]
+  (
+     id        INT IDENTITY(1, 1) PRIMARY KEY,
+     code      VARCHAR(10) not null,
+     name_type NVARCHAR(max) not null,
+	 group_product_id int references group_product(id)
+ )
 
-INSERT INTO [dbo].[bill_product]
-           ([id_bill]
-           ,[id_product]
-           ,[quantity]
-           ,[price]
-           ,[status])
-     VALUES
-           (1
-           ,2
-           ,5
-           ,500
-           ,1)
-GO
+Create table field(
+	id		int identity(1,1) primary key,
+	code	varchar(10),
+	name	nvarchar(100) not null
+)
 
-INSERT INTO [dbo].[delivery_notes]
-           ([received]
-           ,[received_phone]
-           ,[received_email]
-           ,[deliver]
-           ,[delivery_phone]
-           ,[delivery_date]
-           ,[received_date]
-           ,[delivery_fee]
-           ,[note]
-		     ,[receiving_address]
-           ,[status]
-           ,[id_bill])
-     VALUES
-           ('Phạm đức oanh'
-           ,'0987778788'
-		   ,'oanh@gmail.com'
-           ,'Phạm đức oanh'
-           ,'0987678778'
-           ,'2023-10-12'
-           ,'2023-10-15'
-           ,'100000000'
-           ,'Không'
-		    ,'liên trì yên hòa'
-           ,1
-           ,1)
-GO
+CREATE TABLE coupon_product
+  (
+     id_coupon  INT REFERENCES coupon(id),
+     id_product INT REFERENCES product(id),
+     date_start DATE not null,
+     date_end   DATE not null,
+     PRIMARY KEY(id_coupon, id_product)
+  )
+CREATE TABLE product
+  (
+     id             INT IDENTITY(1, 1) PRIMARY KEY,
+     sku            VARCHAR(40),
+	 name_product   nvarchar(200),
+	 type			int references type(id),
+     price_import   money,
+     price_export   money,
+     quantity       INT,
+	 description	nvarchar(1000),
+	 avg_point		float,
+	 same_product	varchar(10),
+     active         BIT
+)
+
+create table image (
+	id					int identity(1,1) primary key,
+	id_product			int references product(id),
+	link				varchar(1000),
+	location			int
+)
+
+create table product_field_value (
+	id					int	identity(1,1) primary key,
+	value				nvarchar(1000),
+	field_id			int references field(id),
+	product_id   int references product(id),
+	priority			int
+)

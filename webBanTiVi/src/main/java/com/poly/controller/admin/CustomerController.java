@@ -3,8 +3,6 @@ package com.poly.controller.admin;
 import com.poly.common.UploadFile;
 import com.poly.dto.SearchStaffDto;
 import com.poly.entity.Customer;
-import com.poly.entity.PaymentMethod;
-import com.poly.entity.Staff;
 import com.poly.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -106,7 +104,6 @@ public class CustomerController {
         findCustomer.setAddress(customer.getAddress());
         findCustomer.setPhoneNumber(customer.getPhoneNumber());
         findCustomer.setGender(customer.isGender());
-        findCustomer.setIdCard(customer.getIdCard());
         findCustomer.setStatus(customer.isStatus());
         System.out.println(customer.getAvatar());
         if (!"".equals(fileName)) {

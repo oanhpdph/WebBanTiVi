@@ -40,8 +40,8 @@ public class UserController {
     }
     @GetMapping("/invoice/invoice_detail")
     public String loadInvoiceDetail(HttpSession session){
-        session.setAttribute("pageView","/user1/page/invoice/detail_invoice.html");
+        session.setAttribute("pageView","/user/page/invoice/detail_invoice.html");
 
-        return "/user1/index";
+        return "/user/index";
     }
 }

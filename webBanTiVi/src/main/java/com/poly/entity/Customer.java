@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.sql.Date;
 
 @Entity
-@Table(name="customer")
+@Table(name="users")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -50,9 +50,6 @@ public class Customer {
 
     @Column(name="gender")
     private boolean gender;
-
-    @Column(name="id_card")
-    private String idCard;
 
     @Column(name="avatar")
     private String avatar;

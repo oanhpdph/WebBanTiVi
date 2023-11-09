@@ -1,7 +1,7 @@
 package com.poly.config;
 
 
-import com.poly.entity.Staff;
+import com.poly.entity.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,13 +44,13 @@ public class StaffUserDetail implements UserDetails {
 
     private List<GrantedAuthority> authorities;
 
-    public StaffUserDetail(Staff staff) {
+    public StaffUserDetail(Customer staff) {
         id=staff.getId();
         name = staff.getUsername();
         password = staff.getPassword();
         avatar=staff.getAvatar();
         roles=staff.getRoles();
-        phone=staff.getPhone();
+        phone=staff.getPhoneNumber();
         email=staff.getEmail();
         address=staff.getAddress();
         birthday=staff.getBirthday();
@@ -59,7 +59,6 @@ public class StaffUserDetail implements UserDetails {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
-
 
     public String getAvatar(){
         return avatar;

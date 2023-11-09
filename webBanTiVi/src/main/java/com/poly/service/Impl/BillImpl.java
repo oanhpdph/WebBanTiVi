@@ -2,9 +2,7 @@ package com.poly.service.Impl;
 
 import com.poly.dto.SearchBillDto;
 import com.poly.entity.Bill;
-import com.poly.entity.BillStatus;
 import com.poly.repository.BillRepos;
-import com.poly.repository.BillStatusRepos;
 import com.poly.service.BillService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -69,7 +67,6 @@ public class BillImpl implements BillService {
             result = entityManager.createQuery(billCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
         }
         Page<Bill> page = new PageImpl<>(result, pageable, result2.size());
-        System.out.println(page);
         return page;
     }
 

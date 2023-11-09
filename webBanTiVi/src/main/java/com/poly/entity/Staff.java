@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
-@Entity
-@Table(name="staff")
+//@Entity
+//@Table(name="staff")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +23,7 @@ public class Staff  {
     private Integer id;
 
     @NotBlank(message = "Code is not null")
-    @Column(name="code")
+    @Column(name="username")
     private String username;
 
     @NotBlank(message = "Name is not null")

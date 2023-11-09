@@ -1,7 +1,6 @@
 package com.poly.service.Impl;
 
 import com.poly.entity.BillProduct;
-import com.poly.entity.idClass.BillProductId;
 import com.poly.repository.BillProductRepos;
 import com.poly.service.BillProductService;
 import org.springframework.beans.factory.annotation.Autowired;

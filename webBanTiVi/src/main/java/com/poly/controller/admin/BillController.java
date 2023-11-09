@@ -5,7 +5,6 @@ import com.poly.common.SavePdf;
 import com.poly.dto.SearchBillDto;
 import com.poly.entity.Bill;
 import com.poly.entity.BillProduct;
-import com.poly.entity.idClass.BillProductId;
 import com.poly.service.BillProductService;
 import com.poly.service.BillService;
 import jakarta.servlet.http.HttpServletResponse;
