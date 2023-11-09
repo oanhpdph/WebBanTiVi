@@ -12,4 +12,8 @@ public interface DashBoardService {
    List<Bill> getBillByDate(Date date);
    List<Bill> getBillReturned(Date date);
    List<Bill> getBillByProccesing(Date date);
+   List<Bill> getAllBill();
+   List<Bill> getAllBillReturn();
+   List<Bill> getAllBillProcessing();
+   List<Bill> getAllBillDelivering();
 }
