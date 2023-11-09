@@ -8,6 +8,7 @@ import com.poly.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -15,8 +16,8 @@ public class CouponServiceImpl implements CouponService {
     @Autowired
     CouponRepository couponRepository;
 
-    public List<CouponRes> getAllCouponRes(){
-        return couponRepository.getCouponRes();
+    public List<CouponRes> getAllCouponRes(Date today){
+        return couponRepository.getCouponRes(today);
     }
     @Override
     public Coupon save(Coupon coupon) {

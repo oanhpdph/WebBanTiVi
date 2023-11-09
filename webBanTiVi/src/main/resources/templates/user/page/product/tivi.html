@@ -6,7 +6,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-style1">
             <li class="breadcrumb-item">
-                <a href="/client">Trang chủ</a>
+                <a href="/">Trang chủ</a>
             </li>
             <li class="breadcrumb-item active">Tivi</li>
         </ol>
@@ -26,196 +26,58 @@
                 <div class="dropdown-menu w-px-800 h-auto" style="overflow-x: hidden; max-height: 300px">
                     <div class="p-4 row row-cols-xl-4 row-cols-md-3">
                         <div class="col">
-                            <span class="fw-bold mb-3">Kích cỡ màn</span>
+                            <span class="fw-bold mb-3">Hãng</span>
+                            <div th:each="brand : ${brandList}">
+                                <div class="d-inline mx-3 ">
+                                    <div class="form-check form-check-inline w-auto pb-2">
+                                        <input type="checkbox" class="form-check-input">
+                                        <label class="form-check-label">  [(${brand.getNameBrand()})] </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="col">
+                                <span class="fw-bold mb-3">Loại</span>
+                                <div th:each="type : ${typeList}">
+                                    <div class="d-inline mx-3 ">
+                                        <div class="form-check form-check-inline w-auto pb-2">
+                                            <input type="checkbox" class="form-check-input">
+                                            <label class="form-check-label">  [(${type.getNameType()})] </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 00000000000 </label>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 55inch </label>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 60inch </label>
+                        <div class="col">
+                            <span class="fw-bold mb-3">Màu</span>
+                            <div th:each="color : ${colorList}">
+                                <div class="d-inline mx-3 ">
+                                    <div class="form-check form-check-inline w-auto pb-2">
+                                        <input type="checkbox" class="form-check-input">
+                                        <label class="form-check-label">  [(${color.getNameColor()})] </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col">
-                            <span class="fw-bold mb-3">Kích cỡ màn</span>
-
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 00000000000 </label>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 55inch </label>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 60inch </label>
+                            <span class="fw-bold mb-3">Kích cỡ</span>
+                            <div th:each="size : ${sizeList}">
+                                <div class="d-inline mx-3 ">
+                                    <div class="form-check form-check-inline w-auto pb-2">
+                                        <input type="checkbox" class="form-check-input">
+                                        <label class="form-check-label">  [(${size.getNameSizeInch()})] </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col">
-                            <span class="fw-bold mb-3">Kích cỡ màn</span>
+                            <span class="fw-bold mb-3">Kích cỡ</span>
 
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 00000000000 </label>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 55inch </label>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 60inch </label>
-                                </div>
-                            </div>
                         </div>
-                        <div class="col">
-                            <span class="fw-bold mb-3">Kích cỡ màn</span>
-
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 00000000000 </label>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 55inch </label>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 60inch </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <span class="fw-bold mb-3">Kích cỡ màn</span>
-
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 00000000000 </label>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 55inch </label>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class="form-check form-check-inline w-auto">
-                                    <input type="checkbox" class="form-check-input">
-                                    <label class="form-check-label"> 60inch </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="d-flex">
                         <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto">Tìm</button>
                     </div>
                 </div>
-            </div>
-            <div class="btn-group d-inline mx-3">
-                <button type="button" class="btn btn-outline-secondary dropdown-toggle w-auto mb-2"
-                        data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside"
-                        aria-haspopup="true" aria-expanded="true">
-                    Kích cỡ màn
-                </button>
-                <div class="dropdown-menu w-px-500 h-auto" style="overflow-x: hidden; max-height: 300px">
-                    <div class="pt-2 px-4 justify-content-between">
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto">Tìm</button>
-                    </div>
-                </div>
-                <!--                </div>-->
             </div>
             <div class="btn-group d-inline mx-3">
                 <button type="button" class="btn btn-outline-secondary dropdown-toggle w-auto mb-2"
@@ -226,302 +88,116 @@
                 </button>
                 <div class="dropdown-menu w-px-500 h-auto" style="overflow-x: hidden; max-height: 300px">
                     <div class="pt-2 px-4 justify-content-between">
+                        <div th:each="brand : ${brandList}">
                         <div class="d-inline mx-3 ">
                             <div class="form-check form-check-inline w-auto pb-2">
                                 <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
+                                <label class="form-check-label">  [(${brand.getNameBrand()})] </label>
                             </div>
                         </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
                         </div>
                     </div>
                     <div class="d-flex">
                         <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto">Tìm</button>
                     </div>
                 </div>
-                <!--                </div>-->
             </div>
-            <div class="btn-group d-inline mx-3">
-                <button type="button" class="btn btn-outline-secondary dropdown-toggle w-auto mb-2"
-                        data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside"
-                        aria-haspopup="true" aria-expanded="true">
-                    Độ phân giải
-                </button>
-                <div class="dropdown-menu w-px-500 h-auto" style="overflow-x: hidden; max-height: 300px">
-                    <div class="pt-2 px-4 justify-content-between">
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
+
+                <div class="btn-group d-inline mx-3">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle w-auto mb-2"
+                            data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside"
+                            aria-haspopup="true" aria-expanded="true">
+                        Loại TV
+                    </button>
+                    <div class="dropdown-menu w-px-500 h-auto" style="overflow-x: hidden; max-height: 300px">
+                        <div class="pt-2 px-4 justify-content-between">
+                            <div th:each="type : ${typeList}">
+                                <div class="d-inline mx-3 ">
+                                    <div class="form-check form-check-inline w-auto pb-2">
+                                        <input type="checkbox" class="form-check-input">
+                                        <label class="form-check-label">  [(${type.getNameType()})] </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
+                        <div class="d-flex">
+                            <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto">Tìm</button>
                         </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto">Tìm</button>
                     </div>
                 </div>
-                <!--                </div>-->
-            </div>
-            <div class="btn-group d-inline mx-3">
-                <button type="button" class="btn btn-outline-secondary dropdown-toggle w-auto mb-2"
-                        data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside"
-                        aria-haspopup="true" aria-expanded="true">
-                    Hệ điều hành
-                </button>
-                <div class="dropdown-menu w-px-500 h-auto" style="overflow-x: hidden; max-height: 300px">
-                    <div class="pt-2 px-4 justify-content-between">
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
+
+                <div class="btn-group d-inline mx-3">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle w-auto mb-2"
+                            data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside"
+                            aria-haspopup="true" aria-expanded="true">
+                        Màu
+                    </button>
+                    <div class="dropdown-menu w-px-500 h-auto" style="overflow-x: hidden; max-height: 300px">
+                        <div class="pt-2 px-4 justify-content-between">
+                            <div th:each="color : ${colorList}">
+                                <div class="d-inline mx-3 ">
+                                    <div class="form-check form-check-inline w-auto pb-2">
+                                        <input type="checkbox" class="form-check-input">
+                                        <label class="form-check-label">  [(${color.getNameColor()})] </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
+                        <div class="d-flex">
+                            <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto">Tìm</button>
                         </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto">Tìm</button>
                     </div>
                 </div>
-                <!--                </div>-->
-            </div>
-            <div class="btn-group d-inline mx-3">
-                <button type="button" class="btn btn-outline-secondary dropdown-toggle w-auto mb-2"
-                        data-bs-toggle="dropdown"
-                        data-bs-auto-close="outside"
-                        aria-haspopup="true" aria-expanded="true">
-                    Giá
-                </button>
-                <div class="dropdown-menu w-px-500 h-auto" style="overflow-x: hidden; max-height: 300px">
-                    <div class="pt-2 px-4 justify-content-between">
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
+
+                <div class="btn-group d-inline mx-3">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle w-auto mb-2"
+                            data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside"
+                            aria-haspopup="true" aria-expanded="true">
+                        Kích cỡ màn hình
+                    </button>
+                    <div class="dropdown-menu w-px-500 h-auto" style="overflow-x: hidden; max-height: 300px">
+                        <div class="pt-2 px-4 justify-content-between">
+                            <div th:each="size : ${sizeList}">
+                                <div class="d-inline mx-3 ">
+                                    <div class="form-check form-check-inline w-auto pb-2">
+                                        <input type="checkbox" class="form-check-input">
+                                        <label class="form-check-label">  [(${size.getNameSizeInch()})] </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
+                        <div class="d-flex">
+                            <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto">Tìm</button>
                         </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                        <div class="d-inline mx-3 ">
-                            <div class="form-check form-check-inline w-auto pb-2">
-                                <input type="checkbox" class="form-check-input">
-                                <label class="form-check-label"> 90inch </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto">Tìm</button>
                     </div>
                 </div>
-                <!--                </div>-->
-            </div>
-        </div>
+
+                <div class="btn-group d-inline mx-3">
+                    <button type="button" class="btn btn-outline-secondary dropdown-toggle w-auto mb-2"
+                            data-bs-toggle="dropdown"
+                            data-bs-auto-close="outside"
+                            aria-haspopup="true" aria-expanded="true">
+                        Độ phân giải
+                    </button>
+                    <div class="dropdown-menu w-px-500 h-auto" style="overflow-x: hidden; max-height: 300px">
+                        <div class="pt-2 px-4 justify-content-between">
+                            <div th:each="reso : ${resoList}">
+                                <div class="d-inline mx-3 ">
+                                    <div class="form-check form-check-inline w-auto pb-2">
+                                        <input type="checkbox" class="form-check-input">
+                                        <label class="form-check-label">  [(${reso.getNameResolution()})] </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto">Tìm</button>
+                        </div>
+                    </div>
+                </div>
         <div class="mb-3 px-4">
             <div class="d-inline">
                 Xếp theo:

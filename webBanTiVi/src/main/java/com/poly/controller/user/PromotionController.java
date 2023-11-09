@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,12 +38,16 @@ public class PromotionController {
     CouponProductServiceImpl couponProductService;
     @Autowired
     ProductServiceImpl productService;
-
+    LocalDate today = LocalDate.now();
+    LocalTime startTime = LocalTime.of(0, 0, 0);
+    ZoneId zoneId = ZoneId.of("GMT+7");
+    ZonedDateTime startDate = ZonedDateTime.of(today, startTime, zoneId);
+    Instant instant = startDate.toInstant();
+    Date thisdate = Date.from(instant);
     @GetMapping()
     public String index(HttpSession session, Model model, @RequestParam(defaultValue = "0") int p) {
-
-        model.addAttribute("listcoupon", couponService.getAllCouponRes());
-        model.addAttribute("listvoucher", voucherService.findAllList());
+        model.addAttribute("listcoupon", couponService.getAllCouponRes(thisdate));
+        model.addAttribute("listvoucher", voucherService.getAllByToday(thisdate));
         session.setAttribute("pageView", "/user/page/promotion/promotions.html");
         return "/user/index";
     }
@@ -86,7 +90,7 @@ public class PromotionController {
                 return null;
             }
         };
-        for (CouponRes x : couponService.getAllCouponRes()) {
+        for (CouponRes x : couponService.getAllCouponRes(thisdate)) {
             System.out.println(x.getId());
             if (x.getId() == id) {
                 couponRes = x;
@@ -130,7 +134,6 @@ public class PromotionController {
         }
         System.out.println(voucher.isReducedForm());
         model.addAttribute("voucher", voucher);
-        LocalDate today = LocalDate.now();
         int soluong = voucherCustomerService.findAllByVoucher(id).size();
         boolean check = false;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

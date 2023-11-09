@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,4 +16,6 @@ public interface VoucherRepository extends JpaRepository<Voucher,Integer> {
     Optional<Voucher> getVoucherByName(Integer id);
     @Query(value = "select b from Voucher b where b.id = ?1 ")
     Optional<Voucher> getVoucherById(Integer id);
+    @Query("select b from Voucher b where b.startDay <?1 and b.expirationDate>?1")
+    List<Voucher> getAllByToday(Date today);
 }
