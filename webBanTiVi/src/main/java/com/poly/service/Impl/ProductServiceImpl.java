@@ -1,6 +1,5 @@
 package com.poly.service.Impl;
 
-import com.poly.entity.Coupon;
 import com.poly.entity.Product;
 import com.poly.repository.CouponRepository;
 import com.poly.repository.ProductRepository;
@@ -38,11 +37,6 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(id).get();
     }
 
-
-    @Override
-    public List<Coupon> getByIdCoupon(Integer id) {
-        return couponRepository.findAll();
-    }
 
 //    @Override
 //    public List<ProductDto> getProducts() {

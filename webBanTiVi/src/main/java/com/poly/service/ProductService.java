@@ -1,6 +1,5 @@
 package com.poly.service;
 
-import com.poly.entity.Coupon;
 import com.poly.entity.Product;
 
 import java.util.List;
@@ -15,7 +14,4 @@ public interface ProductService {
 
     Product findById(Integer id);
 
-//    List<ProductDto>getProducts();
-
-    List<Coupon> getByIdCoupon(Integer id);
 }

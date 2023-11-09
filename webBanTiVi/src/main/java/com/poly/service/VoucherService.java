@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public interface VoucherService {
+public interface    VoucherService {
 
     Voucher save(Voucher voucher);
 

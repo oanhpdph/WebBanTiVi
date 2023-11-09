@@ -552,23 +552,26 @@
                     </a>
                     <div class="mb-1">
                         <span th:each="size:${pro.size}" class="border mx-1 p-1" th:text="${size.nameSizeInch}"></span>
-                        <span th:each="resolution:${pro.resolution}" class="border mx-1 p-1"th:text="${resolution.nameResolution}"></span>
+                        <span th:each="resolution:${pro.resolution}" class="border mx-1 p-1"
+                              th:text="${resolution.nameResolution}"></span>
                     </div>
                     <div class="mb-1">
-                        <span th:each="origin:${pro.origin}" class="border mx-1 p-1" th:text="${origin.nameOrigin}"></span>
-                        <span th:each="manufacture:${pro.manufacture}" class="border mx-1 p-1" th:text="${manufacture.nameManufacture}"></span>
+                        <span th:each="origin:${pro.origin}" class="border mx-1 p-1"
+                              th:text="${origin.nameOrigin}"></span>
+                        <span th:each="manufacture:${pro.manufacture}" class="border mx-1 p-1"
+                              th:text="${manufacture.nameManufacture}"></span>
                     </div>
 
                     <div>
-                        <span th:if="${pro.getCouponProduct()!=null}" ></span>
-                        <span class=" text-strike-through fs-big" th:text="${pro.getCoupon()}" ></span>
+                        <span th:if="${pro.getCouponProduct()!=null}"></span>
+                        <span class=" text-danger fs-large fw-bold" th:text="${pro.getCoupon()}"></span>
                     </div>
 
 
                     <div>
-                                            <span class="text-danger fs-large fw-bold" th:text="${pro.price_export}">
+                        <span class="text-strike-through fs-big" th:text="${pro.price_export}">
                                                 <small class="align-text-top">đ</small>
-                                            </span>
+                        </span>
                     </div>
                 </div>
             </div>
