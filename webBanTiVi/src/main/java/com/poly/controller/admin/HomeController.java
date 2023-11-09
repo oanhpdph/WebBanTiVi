@@ -35,19 +35,13 @@ public class HomeController {
     public String loadHome(HttpSession session, Model model) {
         session.setAttribute("pageView", "/admin/page/dashboard/dashboard.html");
         session.setAttribute("active", "/dashboard");
-//        List<Bill> billReturn=this.dashBoardService.getBillReturned(date);
-//        List<Bill> billProcessing=this.dashBoardService.getBillByProccesing(date);
-//        model.addAttribute("billReturn",billReturn);
-//        model.addAttribute("billProcessing",billProcessing);
+        model.addAttribute("billReturn",this.dashBoardService.getAllBillReturn());
+        model.addAttribute("billProcessing",this.dashBoardService.getAllBillProcessing());
+        model.addAttribute("billAll",this.dashBoardService.getAllBill());
+        model.addAttribute("billDelivering",this.dashBoardService.getAllBillDelivering());
         return "admin/layout";
     }
 
-    @GetMapping("/dashboard")
-    public String loadDashboard(HttpSession session,Model model) {
-        session.setAttribute("pageView", "/admin/page/dashboard/dashboard.html");
-        session.setAttribute("active", "/dashboard");
-        return "admin/layout";
-    }
 
     @GetMapping("/statistic")
     public String loadStatistic(HttpSession session, Model model) {

@@ -59,7 +59,7 @@ public class CartSeviceImpl implements CartService {
     }
 
     @Override
-    public void update(int id, Integer qty) {
+    public List<CartProduct> update(int id, Integer qty) {
         CartProduct item = items
                 .stream()
                 .filter(it -> it.getProduct().getId() == id)
@@ -68,14 +68,16 @@ public class CartSeviceImpl implements CartService {
         if (items != null) {
             item.setQuantity(qty);
         }
+        return items;
     }
 
     @Override
-    public void delete(int id) {
+    public List<CartProduct> delete(int id) {
         items = items
                 .stream()
                 .filter(it -> it.getProduct().getId() != id)
                 .collect(Collectors.toList());
+        return items;
     }
 
     @Override
@@ -92,14 +94,14 @@ public class CartSeviceImpl implements CartService {
         return total;
     }
 
-    @Override
-    public int getTotalProduct() {
-        int total = 0;
-        for (CartProduct item : items) {
-//            total += item.getQuantity() * item.getProduct().getPrice_export();
-        }
-        return total;
-    }
+//    @Override
+//    public int getTotalProduct() {
+//        int total = 0;
+//        for (CartProduct item : items) {
+//            total += item.getQuantity().intValue() * item.getProduct().getPrice_export().intValue();
+//        }
+//        return total;
+//    }
 
     @Override
     public Serializable getAmount() {
@@ -112,6 +114,7 @@ public class CartSeviceImpl implements CartService {
         }
         return amount;
     }
+
     @Override
     public Cart getOne(Integer id) {
         return cartRepos.findById(id).get();
@@ -124,4 +127,14 @@ public class CartSeviceImpl implements CartService {
 //        }
 //        return amount;
 //    }
+
+    @Override
+    public int getTotalProduct() {
+        int amount = 0;
+        for (CartProduct item : items) {
+//            amount += item.getQuantity() * item.getProduct().getPrice_export();
+        }
+        return amount;
+    }
+
 }

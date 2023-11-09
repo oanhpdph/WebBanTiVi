@@ -1,0 +1,441 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<style>
+    .buttons_added {
+        opacity: 1;
+        display: inline-block;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        white-space: nowrap;
+        vertical-align: top;
+    }
+
+    .is-form {
+        overflow: hidden;
+        position: relative;
+        background-color: #f9f9f9;
+        height: 2.2rem;
+        width: 1.9rem;
+        padding: 0;
+        text-shadow: 1px 1px 1px #fff;
+        border: 1px solid #ddd;
+    }
+
+    .is-form:focus, .input-text:focus {
+        outline: none;
+    }
+
+    .is-form.minus {
+        border-radius: 4px 0 0 4px;
+    }
+
+    .is-form.plus {
+        border-radius: 0 4px 4px 0;
+    }
+
+    .input-qty {
+        background-color: #fff;
+        height: 2.2rem;
+        text-align: center;
+        font-size: 1rem;
+        display: inline-block;
+        vertical-align: top;
+        margin: 0;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        border-left: 0;
+        border-right: 0;
+        padding: 0;
+    }
+
+    .input-qty::-webkit-outer-spin-button, .input-qty::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+<div>
+    <section class="">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="">
+                        <a href="/">Home</a> <a>/</a>
+                        <a href="/tivi">Shop</a> <a>/</a>
+                        <span>Product Details</span>
+                    </div>
+                    <div class="container mt-5 mb-5">
+                        <div class="row">
+                            <div class="col-6 mt-5 mb-5">
+                                <!--                                <input th:value="${product.id}" name="id" hidden>-->
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div id="carouselExample" class="carousel slide"
+                                             data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                <div th:class="|carousel-item ${image.location==true?'active':''}|"
+                                                     th:each="image:${product.listImage}">
+                                                    <div>
+                                                        <img th:src="@{'/image/'+${image.nameImage}}"
+                                                             alt="" class="d-block w-100">
+                                                    </div>
+                                                    <div class="carousel-caption d-none d-md-block">
+                                                        <h3>First slide</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExample"
+                                               role="button"
+                                               data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon"
+                                                              aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExample"
+                                               role="button"
+                                               data-bs-slide="next">
+                                                        <span class="carousel-control-next-icon"
+                                                              aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 mt-5 mb-5">
+                                <div class="product-detail-title">
+                                    <h3>
+                                        <b>
+                                            <span th:text="${product.name}"></span>
+                                            <span th:each="type:${product.type}" th:text="${type.nameType}"></span>
+                                            <span th:each="resolution:${product.resolution}"
+                                                  th:text="${resolution.nameResolution}"></span>
+                                            <span th:each="size:${product.size}" th:text="${size.nameSizeInch}"></span>inch
+                                            <span th:each="brand:${product.brand}" th:text="${brand.nameBrand}"></span>
+                                            <span th:text="${product.code}"></span>
+                                        </b>
+                                    </h3>
+                                </div>
+                                <br>
+                                <table class="table">
+                                    <tbody>
+                                    <tr th:each="item : ${product}">
+                                        <td>Price Export:</td>
+                                        <td th:text="${item.price_export}">Text ...</td>
+                                    </tr>
+                                    <tr th:each="item : ${product}">
+                                        <td>Quantity:</td>
+                                        <td th:text="${item.quantity}">1</td>
+                                    </tr>
+                                    <tr>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <br>
+                                <div class="buttons_added" th:id="${product.id}">
+                                    <input class="minus is-form" type="button"
+                                           value="-">
+                                    <input aria-label="quantity" class="input-qty" max="10" min="1"
+                                           name="qty"
+                                           type="number"
+                                           th:value="${product.quantity}" placeholder="1">
+                                    <input class="plus is-form"
+                                           type="button" value="+">
+                                </div>
+                                <div class="col-lg-4 col-md-6">
+                                    <div class="mt-3">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#basicModal">
+                                            Thêm vào giỏ hàng
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="basicModal" tabindex="-1" style="display: none;"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header"></div>
+                                                    <div class="modal-body text-center">
+                                                        <h3>Bạn Có Muốn Thêm Sản Phẩm Vòa Giỏ Hàng?</h3>
+                                                    </div>
+                                                    <div class="modal-footer text-center">
+                                                        <a type="button" class="btn btn-primary text-center"
+                                                           th:href="@{/cart/add/{id}(id=${product.id})}">
+                                                            Xác nhận
+                                                        </a>
+                                                        <button type="button" class="btn btn-danger"
+                                                                data-bs-dismiss="modal">
+                                                            Hủy
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="col-6">
+                                <h3>
+                                    Thông số kỹ thuật <span th:text="${product.name}"></span>
+                                </h3><br>
+                                <div class="table-responsive text-nowrap">
+                                    <table class="table table-striped" border="0px">
+                                        <tbody class="table-border-bottom-0">
+                                        <tr th:each="item : ${product.brand}">
+                                            <td>Brand:</td>
+                                            <td th:text="${item.nameBrand}"></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr th:each="item : ${product.origin}">
+                                            <td>Origin:</td>
+                                            <td th:text="${item.nameOrigin}"></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr th:each="item : ${product.manufacture}">
+                                            <td>Manufacture:</td>
+                                            <td th:text="${item.nameManufacture}"></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr th:each="item : ${product.color}">
+                                            <td>Color:</td>
+                                            <td th:text="${item.nameColor}"></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr th:each="item : ${product.type}">
+                                            <td>Type:</td>
+                                            <td th:text="${item.nameType}"></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr th:each="item : ${product.size}">
+                                            <td>Size:</td>
+                                            <td th:text="${item.nameSizeInch}"></td>
+                                            <td th:text="${item.length}">px</td>
+                                            <td th:text="${item.width}">px</td>
+                                            <td th:text="${item.thickness}">cm</td>
+                                        </tr>
+                                        <tr th:each="item : ${product.resolution}">
+                                            <td>Resolution:</td>
+                                            <td th:text="${item.nameResolution}"></td>
+                                            <td th:text="${item.screenLength}">px</td>
+                                            <td th:text="${item.screenWidth}">px</td>
+                                            <td></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div class="col-6">
+                                <div class="card"><br>
+                                    <div class="card-body">
+                                        <h2>
+                                            Đánh Giá <span th:text="${product.name}"></span>
+                                        </h2>
+                                        <br>
+                                        <div class="table-responsive text-nowrap">
+                                        <span class="fs-5" th:each="item: ${product.listEvaluate}">
+                                        <strong th:text="${item.customer.name}"></strong>
+                                        </span>
+                                            <p th:each="item: ${product.listEvaluate}">
+                                                <i class='bx bxs-star' style='color:#ffff00'></i>
+                                                <i class='bx bxs-star' style='color:#ffff00'></i>
+                                                <i class='bx bxs-star' style='color:#ffff00'></i>
+                                                <i class='bx bxs-star' style='color:#ffff00'></i>
+                                                <i class='bx bxs-star-half' style='color:#ffff00'></i>
+                                                <span th:text="${item.point}"></span>
+                                            </p>
+                                            <p th:each="item: ${product.listEvaluate}">
+                                                <span th:text="${item.comment}"></span> <br>
+                                                <small class="text-muted">
+                                                    <span th:text="${item.dateCreate}"></span>
+                                                </small>
+                                            </p>
+                                            <p th:each="item: ${product.listEvaluate}">
+                                                <i class='bx bx-like'></i>
+                                                <span>Hữu ích(6)</span>|
+                                                <small class="text-muted">
+                                                    <span th:text="${item.dateCreate}"></span>
+                                                </small>
+                                            </p>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="related spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12" style="text-align: center">
+                    <h3 class="related-title">Related Product</h3>
+                </div>
+            </div>
+            <br>
+            <div class="row mb-5">
+                <div class="col-md-6 col-lg-3 mb-5" th:each="pro:${listPro}">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="">
+                                <br>
+                                <span th:each="image:${pro.listImage}">
+                                    <img th:if="${image.location == true}"
+                                         th:src="@{'/image/'+${image.nameImage}}"
+                                         alt="" width="100%">
+                                </span>
+                                <span class="fs-5">
+                                    <p th:text="${pro.name}"></p>
+                                </span>
+                                <span class="fs-5">
+                                    <p th:text="${pro.price_import}"></p>
+                                </span>
+                                <div class="product__color__select">
+                                    <label for="pc-1">
+                                        <input type="radio" id="pc-1">
+                                    </label>
+                                    <label class="active black" for="pc-2">
+                                        <input type="radio" id="pc-2">
+                                    </label>
+                                    <label class="grey" for="pc-3">
+                                        <input type="radio" id="pc-3">
+                                    </label>
+                                </div>
+                                <div class="rating">
+                                    <i class='bx bxs-star' style='color:#ffff00'></i>
+                                    <i class='bx bxs-star' style='color:#ffff00'></i>
+                                    <i class='bx bxs-star' style='color:#ffff00'></i>
+                                    <i class='bx bxs-star-half' style='color:#ffff00'></i>
+                                    <i class='bx bxs-star' undefined></i>
+                                </div>
+                            </div>
+                            <br>
+                            <a th:href="@{/cart/add/{id}(id=${product.id})}" class="btn btn-outline-primary">+ Add To
+                                Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <div class="product__item__text">
+                                <span class="fs-5">Ti Vi Samsung</span>
+                                <div class="rating">
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                </div>
+                                <span class="fs-5">$67.24</span>
+                                <div class="product__color__select">
+                                    <label for="pc-1">
+                                        <input type="radio" id="pc-1">
+                                    </label>
+                                    <label class="active black" for="pc-2">
+                                        <input type="radio" id="pc-2">
+                                    </label>
+                                    <label class="grey" for="pc-3">
+                                        <input type="radio" id="pc-3">
+                                    </label>
+                                </div>
+                            </div>
+                            <a href="javascript:void(0)" class="btn btn-outline-primary">+ Add To Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+</div>
+</html>
+<style>
+    .product-detail-title {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .product-detail-image {
+        max-width: 100%;
+        max-height: 400px;
+    }
+</style>
+<script>//<![CDATA[
+const plus = document.querySelectorAll(".plus")
+const minus = document.querySelectorAll(".minus")
+
+$(document).ready(
+    $.each(plus, function (index, item) {
+        // var temp = index
+        item.addEventListener("click", function (e) {
+            var quantityForm = document.querySelectorAll(".input-qty")
+            const totalPriceForm = document.querySelectorAll(".total-price")
+            const priceExportForm = document.querySelectorAll(".price-export")
+
+            var valueInput = quantityForm[index].value
+
+            if (valueInput < Number(quantityForm[index].getAttribute('max'))) {
+                quantityForm[index].value = Number(valueInput) + 1
+                valueInput = Number(valueInput) + 1
+            }
+
+            // var quantity = quantityForm[index].value
+            var priceExport = priceExportForm[index].getAttribute("value")
+            var totalPrice = Number(valueInput) * Number(priceExport)
+
+            totalPriceForm[index].innerText = totalPrice
+
+        })
+    }),
+    $.each(minus, function (index, item) {
+        // var temp = index
+        item.addEventListener("click", function (e) {
+
+            const totalPriceForm = document.querySelectorAll(".total-price")
+            const priceExportForm = document.querySelectorAll(".price-export")
+            var quantityForm = document.querySelectorAll(".input-qty")
+
+            var valueInput = quantityForm[index].value// = 10
+
+            if (valueInput > Number(quantityForm[index].getAttribute('min'))) {
+                quantityForm[index].value = Number(valueInput) - 1
+                valueInput = Number(valueInput) - 1
+            }
+
+            var priceExport = priceExportForm[index].getAttribute("value")
+            var totalPrice = Number(valueInput) * Number(priceExport)
+
+            totalPriceForm[index].innerText = totalPrice
+        })
+    })
+)
+Swal.fire({
+    title: "Do you want to save the changes?",
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: "Save",
+    denyButtonText: `Don't save`
+}).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+        Swal.fire("Saved!", "", "success");
+    } else if (result.isDenied) {
+        Swal.fire("Changes are not saved", "", "info");
+    }
+});
+//]]></script>

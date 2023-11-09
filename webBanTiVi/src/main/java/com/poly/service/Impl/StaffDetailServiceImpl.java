@@ -17,8 +17,6 @@ public class StaffDetailServiceImpl implements UserDetailsService {
 
     private final  StaffRepository repository;
 
-
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Staff> userInfo = repository.findByUsername(username) ;
