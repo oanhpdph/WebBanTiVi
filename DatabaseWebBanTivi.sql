@@ -127,6 +127,7 @@ CREATE TABLE coupon_product
      id_product INT REFERENCES product(id),
      date_start DATE not null,
      date_end   DATE not null,
+	 status BIT not null,
      PRIMARY KEY(id_coupon, id_product)
   )
 
@@ -322,6 +323,7 @@ CREATE TABLE cart_product
 	 date_update DATETIME
      PRIMARY KEY(cart_id, product_id)
   )
+GO
  INSERT INTO [dbo].[bill_status]
            ([code]
            ,[status]
@@ -492,3 +494,4 @@ create table product_field_value (
 	product_id   int references product(id),
 	priority			int
 )
+

@@ -60,16 +60,17 @@ public class LoginController {
         model.addAttribute("login", new LoginDto());
         return "login/login";
     }
-//
-//    @PostMapping("/")
-//    public String LoginAdmin(@Valid @ModelAttribute("login") LoginDto login, BindingResult result) {
-//        if(result.hasErrors()){
-//            return "login/login";
-//        }
-//        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(),login.getPassword()));
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        return "user/index";
-//    }
+
+    //    @PostMapping("")
+    //    public String LoginAdmin(@Valid @ModelAttribute("login") LoginDto login, BindingResult result) {
+    //        if(result.hasErrors()){
+    //            System.out.println("hehe");
+    //            return "login/login";
+    //        }
+    //        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(),login.getPassword()));
+    //        SecurityContextHolder.getContext().setAuthentication(authentication);
+    //        return "user/index";
+    //    }
 
     @GetMapping("/register")
     public String register(Model model) {
@@ -160,7 +161,7 @@ public class LoginController {
             customer.setUsername(changeInforDto.getName());
             customer.setPhoneNumber(changeInforDto.getPhone());
             customer.setBirthday(changeInforDto.getBirthday());
-            customer.setGender(changeInforDto.isGender());
+//            customer.setGender(changeInforDto.isGender());
             if (!changeInforDto.getPassword().equals("")){
                 customer.setPassword(passwordEncoder.encode(changeInforDto.getPassword()));
             }else{
@@ -174,6 +175,7 @@ public class LoginController {
                 customer.setAvatar(fileName);
             }
             this.customerService.save(customer);
+
 
 //        } else {
 //            StaffUserDetail  staffUserDetail = (StaffUserDetail) userDetails;

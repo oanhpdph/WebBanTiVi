@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CPServiceImpl implements CartProductService {
@@ -32,5 +34,10 @@ public class CPServiceImpl implements CartProductService {
     @Override
     public CartProduct edit(CartProductId id) {
         return repos.findById(id).get();
+    }
+
+    @Override
+    public Optional<CartProduct> getOne(CartProductId id)  {
+        return repos.findById(id);
     }
 }

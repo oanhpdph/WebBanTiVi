@@ -15,4 +15,7 @@ public interface BillStatusService{
     BillStatus update(BillStatus billStatus, Integer id);
 
     Boolean delete(Integer id);
+
+    BillStatus findById(Integer id);
+
 }

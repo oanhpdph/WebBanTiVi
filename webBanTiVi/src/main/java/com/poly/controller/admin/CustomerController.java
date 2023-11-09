@@ -40,18 +40,18 @@ public class CustomerController {
                             @ModelAttribute(name = "searchCustomer") SearchStaffDto search
     ) {
 
-        if(pageRequest<0){
-            pageRequest=1;
+        if (pageRequest < 0) {
+            pageRequest = 1;
         }
-        if(sizeRequest<=0){
-            sizeRequest=1;
+        if (sizeRequest <= 0) {
+            sizeRequest = 1;
         }
 
         session.setAttribute("size", sizeRequest);
         session.setAttribute("page", pageRequest);
 
         Pageable pageable = PageRequest.of(pageRequest - 1, sizeRequest);
-        Page<Customer> staffs  = customerService.loadData(search, pageable);
+        Page<Customer> staffs = customerService.loadData(search, pageable);
 
         model.addAttribute("totalElements", staffs.getTotalElements());
         session.setAttribute("list", staffs);
@@ -69,6 +69,7 @@ public class CustomerController {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
         customer.setAvatar(fileName);
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        customer.setRoles("USER");
         this.customerService.save(customer);
         String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
         try {
@@ -105,6 +106,7 @@ public class CustomerController {
         findCustomer.setPhoneNumber(customer.getPhoneNumber());
         findCustomer.setGender(customer.isGender());
         findCustomer.setStatus(customer.isStatus());
+        findCustomer.setRoles(customer.getRoles());
         System.out.println(customer.getAvatar());
         if (!"".equals(fileName)) {
             findCustomer.setAvatar(fileName);
@@ -116,13 +118,13 @@ public class CustomerController {
                 e.printStackTrace();
             }
         }
-        String password=customer.getPassword();
-        if(password.startsWith("$2a$")&& password.contains("$")){
+        String password = customer.getPassword();
+        if (password.startsWith("$2a$") && password.contains("$")) {
             findCustomer.setPassword(password);
-        }else{
+        } else {
             findCustomer.setPassword(passwordEncoder.encode(password));
         }
-          customerService.save(findCustomer);
+        customerService.save(findCustomer);
         return "redirect:/admin/customer/list";
     }
 
