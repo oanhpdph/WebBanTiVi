@@ -1,0 +1,274 @@
+<style>
+    .buttons_added {
+        opacity: 1;
+        display: inline-block;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        white-space: nowrap;
+        vertical-align: top;
+    }
+
+    .is-form {
+        overflow: hidden;
+        position: relative;
+        background-color: #f9f9f9;
+        height: 2.2rem;
+        width: 1.9rem;
+        padding: 0;
+        text-shadow: 1px 1px 1px #fff;
+        border: 1px solid #ddd;
+    }
+
+    .is-form:focus, .input-text:focus {
+        outline: none;
+    }
+
+    .is-form.minus {
+        border-radius: 4px 0 0 4px;
+    }
+
+    .is-form.plus {
+        border-radius: 0 4px 4px 0;
+    }
+
+    .input-qty {
+        background-color: #fff;
+        height: 2.2rem;
+        text-align: center;
+        font-size: 1rem;
+        display: inline-block;
+        vertical-align: top;
+        margin: 0;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        border-left: 0;
+        border-right: 0;
+        padding: 0;
+    }
+
+    .input-qty::-webkit-outer-spin-button, .input-qty::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9 mb-4 order-0">
+            <!--    <div class="col-md-10">-->
+            <div class="card"><br>
+                <section class="breadcrumb-option">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="breadcrumb__text">
+                                    <h4>Shopping Cart</h4>
+                                    <div class="">
+                                        <a href="/">Home</a> <a>/</a>
+                                        <a href="/tivi">Shop</a> <a>/</a>
+                                        <span>Product Details</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <br>
+                <section>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form th:action="@{/cart/update}" method="post">
+                                    <div class="">
+                                        <table class="table table-borderless">
+                                            <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th></th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="item:${session.list}">
+                                                <input th:value="${item.product.id}" name="id" hidden>
+                                                <td>
+                                                    <div th:each="image:${item.product.listImage}">
+                                                        <!--                                                        <div>-->
+                                                        <img th:if="${image.location == true}"
+                                                             th:src="@{'/image/'+${image.nameImage}}"
+                                                             alt="" width="100px">
+                                                        <!--                                                        </div>-->
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="fs-5"
+                                                          th:text="${item.product.name + ' '+item.product.code}"></span>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                            <span class="fs-5">$<span class="price-export"
+                                                                                      th:value="${item.product.price_export}"
+                                                                                      th:text="${item.product.price_export}"></span>
+                                                            </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="buttons_added" th:id="${item.product.id}">
+                                                        <input class="minus is-form" type="button"
+                                                               value="-">
+                                                        <input aria-label="quantity" class="input-qty" max="10" min="1"
+                                                               name="qty"
+                                                               type="number"
+                                                               th:value="${item.quantity}">
+                                                        <input class="plus is-form plus"
+                                                               type="button" value="+">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span th:text="${item.product.price_export * item.quantity}"
+                                                          class="total-price"></span>
+                                                </td>
+                                                <td>
+                                                    <a type="button" class="btn btn-icon btn-danger"
+                                                       th:href="@{/cart/remove/{id}(id=${item.product.id})}"
+                                                       onclick="xoa(this)">
+                                                        <span class="tf-icons bx bx-trash"></span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <hr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr>
+                                    <div class="text-end">
+                                        <a href="/" type="submit" class="btn btn-lg btn-outline-primary">Quay
+                                            Lại</a>
+                                        <button type="submit" class="btn btn-lg btn-primary">Cập Nhật Giỏ Hàng
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <!--                    <div>-->
+                    <!--                        <h6>Discount codes</h6>-->
+                    <!--                        <form action="#">-->
+                    <!--                            <div class="input-group">-->
+                    <!--                                <input type="text" class="form-control" placeholder="Coupon code"-->
+                    <!--                                       aria-label="Recipient's username" aria-describedby="button-addon2">-->
+                    <!--                                <button class="btn btn-outline-primary" type="button" id="button-addon2">-->
+                    <!--                                    Apply-->
+                    <!--                                </button>-->
+                    <!--                            </div>-->
+                    <!--                        </form>-->
+                    <!--                    </div>-->
+                    <br>
+                    <div class="card shadow-none bg-transparent border border-secondary mb-3">
+                        <div class="card-header">
+                            <div class="card-body">
+                                <p class="card-text">Subtotal: <span style="padding-left: 70px">$<span
+                                        class="total-pro"></span> </span></p>
+                                <p class="card-text">Total: <span style="padding-left: 90px">$<span
+                                        th:text="${amount}"></span> </span></p>
+                                <div style="text-align: center">
+                                    <a type="submit" class="btn btn-primary" th:href="@{/pay}">Thanh
+                                        Toán
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>//<![CDATA[
+const plus = document.querySelectorAll(".plus")
+const minus = document.querySelectorAll(".minus")
+
+function tinhtong() {
+    const totalPriceForm = document.querySelectorAll(".total-price")
+    const totalProForm = document.querySelector(".total-pro")
+    var totalPro = 0;
+    for (let i = 0; i < totalPriceForm.length; i++) {
+        totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
+        console.log(totalPro);
+    }
+    totalProForm.innerText = totalPro
+}
+
+$(document).ready(
+    tinhtong(),
+    $.each(plus, function (index, item) {
+        // var temp = index
+        item.addEventListener("click", function (e) {
+            var quantityForm = document.querySelectorAll(".input-qty")
+            const totalPriceForm = document.querySelectorAll(".total-price")
+            const priceExportForm = document.querySelectorAll(".price-export")
+
+            var valueInput = quantityForm[index].value
+
+            if (valueInput < Number(quantityForm[index].getAttribute('max'))) {
+                quantityForm[index].value = Number(valueInput) + 1
+                valueInput = Number(valueInput) + 1
+            }
+
+            // var quantity = quantityForm[index].value
+            var priceExport = priceExportForm[index].getAttribute("value")
+            var totalPrice = Number(valueInput) * Number(priceExport)
+
+            totalPriceForm[index].innerText = totalPrice
+            const totalProForm = document.querySelector(".total-pro")
+            var totalPro = 0;
+            for (let i = 0; i < totalPriceForm.length; i++) {
+                totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
+                console.log(totalPro);
+            }
+
+            totalProForm.innerText = totalPro
+        })
+    }),
+    $.each(minus, function (index, item) {
+        // var temp = index
+        item.addEventListener("click", function (e) {
+
+            const totalPriceForm = document.querySelectorAll(".total-price")
+            const priceExportForm = document.querySelectorAll(".price-export")
+            var quantityForm = document.querySelectorAll(".input-qty")
+
+            var valueInput = quantityForm[index].value// = 10
+
+            if (valueInput > Number(quantityForm[index].getAttribute('min'))) {
+                quantityForm[index].value = Number(valueInput) - 1
+                valueInput = Number(valueInput) - 1
+            }
+
+            var priceExport = priceExportForm[index].getAttribute("value")
+            var totalPrice = Number(valueInput) * Number(priceExport)
+
+            totalPriceForm[index].innerText = totalPrice
+            tinhtong();
+        })
+    })
+)
+
+
+function xoa(x) {
+    var tr = x.parentElement.parentElement;
+    tr.remove();
+}
+
+
+//]]></script>
