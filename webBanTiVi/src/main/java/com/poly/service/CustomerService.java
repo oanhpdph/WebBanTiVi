@@ -26,5 +26,7 @@ public interface CustomerService {
     Customer findByEmail(String email);
 
 
+    Customer getCustomerByName(String username);
+
     Page<Customer> loadData(SearchStaffDto searchStaffDto, Pageable pageable);
 }
