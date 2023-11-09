@@ -21,11 +21,11 @@
       <list>
         <option value="CSS File" />
         <option value="HTML File" />
+        <option value="Class" />
         <option value="Interface" />
         <option value="Interface" />
+        <option value="Class" />
         <option value="HTML File" />
-        <option value="Class" />
-        <option value="Class" />
       </list>
     </option>
   </component>
@@ -58,7 +58,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates/admin/page/dashboard" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates/user/page/promotion" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -78,7 +78,6 @@
       <recent name="com.poly" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\admin\page\dashboard" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\promotion" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page\promotion" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page" />
@@ -220,9 +219,6 @@
       <workItem from="1698511069371" duration="3327000" />
       <workItem from="1699007250129" duration="6153000" />
       <workItem from="1699019058892" duration="17067000" />
-      <workItem from="1699103263275" duration="3196000" />
-      <workItem from="1699348005614" duration="23780000" />
-      <workItem from="1699536430907" duration="3151000" />
     </task>
     <servers />
   </component>
@@ -264,18 +260,23 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java</url>
-          <line>127</line>
+          <line>126</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java</url>
-          <line>90</line>
+          <line>89</line>
           <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java</url>
-          <line>95</line>
+          <line>94</line>
           <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user/PromotionController.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/main/resources/templates/admin/page/staff.html</url>

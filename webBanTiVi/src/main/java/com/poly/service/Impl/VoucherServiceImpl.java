@@ -15,7 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,9 +28,7 @@ public class VoucherServiceImpl implements VoucherService {
 
     @PersistenceContext
     private EntityManager entityManager;
-    public List<Voucher> getAllByToday(Date today){
-        return voucherRepository.getAllByToday(today);
-    }
+
     @Override
     public Page<Voucher> loadData(SearchVoucherDto searchVoucherDto, Pageable pageable) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -46,8 +45,8 @@ public class VoucherServiceImpl implements VoucherService {
             String date1 = searchVoucherDto.getDate().substring(0, searchVoucherDto.getDate().indexOf("-") - 1).replace("/", "-");
             String date2 = searchVoucherDto.getDate().substring(searchVoucherDto.getDate().indexOf("-") + 1, searchVoucherDto.getDate().length()).replace("/", "-");
             System.out.println(date1 + date2);
-            Date dateStart = java.sql.Date.valueOf(date1.trim());
-            Date dateEnd = java.sql.Date.valueOf(date2.trim());
+            Date dateStart = Date.valueOf(date1.trim());
+            Date dateEnd = Date.valueOf(date2.trim());
             list.add(criteriaBuilder.and(criteriaBuilder.greaterThan(voucherRoot.get("startDay"),dateStart),
                     criteriaBuilder.lessThan(voucherRoot.get("expirationDate"),dateEnd)));
         }

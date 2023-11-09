@@ -1,22 +1,24 @@
-<h4 class="fw-semibold py-3 mb-4"> Chọn thống kê:
-
+<h4 class="fw-semibold py-3 mb-4"> Thống kê đơn hàng theo ngày :
+    <br>
+    <br>
+    <input type="date" id="date" class="form-control w-px-200" th:value="${date}">
 </h4>
 
 <div class="row">
     <div class="col-md-6 col-lg-3 mb-4 ">
         <div class="card h-100 border-success" style="border-left: 5px solid;">
             <div class="card-header d-flex align-items-center justify-content-between pb-0 text-uppercase text-success ">
-                Doanh thu theo ngày
+                Doanh thu ngày
             </div>
-            <div class="card-body" >
-                <button class="fw-bold"  style="border : none" ></button>
+            <div class="card-body fw-bold">
+                20.000.000 <u>đ</u>
             </div>
         </div>
     </div>
     <div class="col-md-6 col-lg-3 mb-4">
         <div class="card h-100 border-primary" style="border-left: 5px solid">
             <div class="card-header d-flex align-items-center justify-content-between pb-0 text-uppercase text-primary">
-                Doanh thu theo tuần
+                Tổng đơn hàng
             </div>
             <div class="card-body" >
                 <button class="fw-bold" id="completed" style="border : none" ></button>
@@ -26,20 +28,20 @@
     <div class="col-md-6 col-lg-3 mb-4">
         <div class="card h-100 border-warning" style="border-left: 5px solid">
             <div class="card-header d-flex align-items-center justify-content-between pb-0 text-uppercase text-warning">
-                Doanh thu theo tháng
+                Đơn hoàn trả
             </div>
-            <div class="card-body" >
-                <button class="fw-bold"  style="border : none" ></button>
+            <div class="card-body">
+                <span class="fw-bold" id="return"></span>
             </div>
         </div>
     </div>
     <div class="col-md-6 col-lg-3 mb-4">
         <div class="card h-100 border-danger" style="border-left: 5px solid">
             <div class="card-header d-flex align-items-center justify-content-between pb-0 text-uppercase text-danger">
-                Doanh thu theo năm
+                Đơn chờ xử lý
             </div>
-            <div class="card-body" >
-                <button class="fw-bold"  style="border : none" ></button>
+            <div class="card-body">
+                <span class="fw-bold" id="processing"></span>
             </div>
         </div>
     </div>

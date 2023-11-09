@@ -19,7 +19,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -66,15 +65,15 @@ public class LoginController {
         return "login/login";
     }
 //
-    @PostMapping("/")
-    public String LoginAdmin(@Valid @ModelAttribute("login") LoginDto login, BindingResult result) {
-        if(result.hasErrors()){
-            return "login/login";
-        }
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(),login.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "user/index";
-    }
+//    @PostMapping("/")
+//    public String LoginAdmin(@Valid @ModelAttribute("login") LoginDto login, BindingResult result) {
+//        if(result.hasErrors()){
+//            return "login/login";
+//        }
+//        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(),login.getPassword()));
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        return "user/index";
+//    }
 
     @GetMapping("/register")
     public String register(Model model) {

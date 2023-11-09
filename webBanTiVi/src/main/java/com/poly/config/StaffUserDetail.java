@@ -59,6 +59,8 @@ public class StaffUserDetail implements UserDetails {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
+
+
     public String getAvatar(){
         return avatar;
     }

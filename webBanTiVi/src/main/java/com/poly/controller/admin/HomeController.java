@@ -1,6 +1,8 @@
 package com.poly.controller.admin;
 
+import com.poly.entity.Bill;
 import com.poly.service.DashBoardService;
+import com.poly.service.Impl.BillImpl;
 import com.poly.service.Impl.ProductServiceImpl;
 import com.poly.service.Impl.StaffServiceImpl;
 import jakarta.servlet.http.HttpSession;
@@ -10,6 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.sql.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -36,6 +42,19 @@ public class HomeController {
         return "admin/layout";
     }
 
+    @GetMapping("/dashboard")
+    public String loadDashboard(HttpSession session,Model model) {
+        session.setAttribute("pageView", "/admin/page/dashboard/dashboard.html");
+        session.setAttribute("active", "/dashboard");
+        return "admin/layout";
+    }
+
+    @GetMapping("/statistic")
+    public String loadStatistic(HttpSession session, Model model) {
+        session.setAttribute("pageView", "/admin/page/statistic/statistic.html");
+        session.setAttribute("active", "/statistic");
+        return "admin/layout";
+    }
 
     @GetMapping("/blog")
     public String loadBlog(HttpSession session, Model model) {

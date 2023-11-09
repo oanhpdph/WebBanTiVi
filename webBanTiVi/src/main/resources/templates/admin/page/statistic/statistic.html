@@ -9,50 +9,7 @@
             <span data-feather="calendar" class="align-text-bottom"></span>
             This week
         </button>
-
     </div>
-
-</div>
-<div>
-    <h1 class="h3">Doanh thu theo tháng:</h1>
-<div id="chart_div"></div>
 </div>
 
 <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
-
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-
-    // Load the Visualization API and the piechart package.
-    google.load('visualization', '1.0', {'packages':['corechart']});
-    google.setOnLoadCallback(drawChart);
-
-    function drawChart() {
-
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        // Create columns for the DataTable
-        data.addColumn('string');
-        data.addColumn('number', 'Devices');
-        // Create Rows with data
-        data.addRows([
-            ['SamSung', 21],
-            ['Apple', 14],
-            ['Huawei', 9],
-            ['LG', 4],
-            ['Xiaomi', 5],
-            ['ZTE', 5],
-            ['Other', 42]
-        ]);
-        //Create option for chart
-        var options = {
-            title: 'Global smartphone share Q2 2015',
-            'width': 800,
-            'height': 600
-        };
-
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-    }
-</script>
