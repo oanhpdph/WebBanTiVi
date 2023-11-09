@@ -1,6 +1,7 @@
 package com.poly.service.Impl;
 
 import com.poly.entity.CouponProduct;
+import com.poly.entity.Product;
 import com.poly.entity.idClass.CouponProductId;
 import com.poly.repository.CouponProductRepository;
 import com.poly.service.CouponProductService;
@@ -15,9 +16,9 @@ public class CouponProductServiceImpl implements CouponProductService {
     @Autowired
     CouponProductRepository productRepository;
 
-//    public Coupon findByProductId(Integer id, Date today){
-//        return productRepository.findByProductId(id,today);
-//    }
+    public List<Product> findAllByCouponId(Integer id){
+        return productRepository.findAllByCouponId(id);
+    }
 
     @Override
     public CouponProduct save(CouponProduct couponProduct) {

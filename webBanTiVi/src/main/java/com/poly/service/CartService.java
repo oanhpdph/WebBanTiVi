@@ -3,8 +3,9 @@ package com.poly.service;
 import com.poly.entity.Cart;
 import com.poly.entity.CartProduct;
 
-import java.util.Date;
+import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 public interface CartService {
 
@@ -12,15 +13,19 @@ public interface CartService {
 
     public List<Cart> getAll();
 
-    public void add(Integer id, Date date);
+    public List<CartProduct> add(Integer id);
 
-    public void update(int id, int qty);
+    public List<CartProduct> update(int id, Integer qty);
 
-    public void delete(int id);
+    public List<CartProduct> delete(Integer id);
 
     public void clear();
 
     public int getTotal();
 
-    public int getAmount();
+    public int getTotalProduct();
+
+    public Serializable getAmount();
+
+    Cart getOne(Integer id);
 }

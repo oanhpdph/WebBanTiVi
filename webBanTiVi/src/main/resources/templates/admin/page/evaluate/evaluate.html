@@ -1,8 +1,8 @@
 <h4 class="fw-semibold py-3 mb-4"> Danh sách Voucher</h4>
 <form th:action="@{/admin/evaluate/add}" method="post" th:object="${evaluate}">
-    <div class="mb-4">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
-            Thêm Evaluate
+    <div class="row justify-content-end me-4">
+        <button type="button" class="btn btn-success mb-4 w-auto" data-bs-toggle="modal" data-bs-target="#largeModal">
+            <i class='tf-icon bx bx-plus-medical'></i> Add Evaluate
         </button>
     </div>
     <div class="mb-4">
@@ -21,7 +21,7 @@
                                     <div class="mb-3">
                                         <label class="form-label">Customer:</label>
                                         <br>
-                                        <select th:name="customer" class="form-control">
+                                        <select th:name="customer" class="form-select" aria-label="Default select example">
                                             <option th:each="i:${listCustomer}" th:value="${i.id}"
                                                     th:text="${i.name}"></option>
                                         </select>
@@ -29,7 +29,7 @@
                                     <div class="mb-3">
                                         <label class="form-label">Product:</label>
                                         <br>
-                                        <select th:name="product" class="form-control">
+                                        <select th:name="product"class="form-select" aria-label="Default select example">
                                             <option th:each="i:${listProduct}" th:value="${i.id}"
                                                     th:text="${i.name}"></option>
                                         </select>
@@ -153,16 +153,16 @@
                                                             <div class="mb-3">
                                                                 <label class="form-label">Customer:</label>
                                                                 <br>
-                                                                <select th:name="customer" class="form-control">
+                                                                <select th:name="customer" class="form-select" aria-label="Default select example">
                                                                     <option th:each="i:${listCustomer}"
                                                                             th:value="${i.id}"
-                                                                            th:text="${i.name}"></option>
+                                                                            th:text="${evaluate.customer.name}"></option>
                                                                 </select>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label class="form-label">Product:</label>
                                                                 <br>
-                                                                <select th:name="product" class="form-control">
+                                                                <select th:name="product" class="form-select" aria-label="Default select example">
                                                                     <option th:each="i:${listProduct}"
                                                                             th:value="${i.id}"
                                                                             th:text="${i.name}"></option>

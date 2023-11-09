@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -19,11 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/admin")
+@PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
 public class FeatureController {
     @Autowired
     FeatureService featureService;
-    @GetMapping("/feature/list")
+    @GetMapping("/admin/feature/list")
     public String loadFeature(HttpSession session, Model model) {
         session.setAttribute("pageView","/admin/page/feature/feature.html");
         session.setAttribute("active","/feature/list");
@@ -31,7 +32,7 @@ public class FeatureController {
         model.addAttribute("listFea",this.featureService.findAll());
         return "admin/layout";
     }
-    @PostMapping("/feature/save")
+    @PostMapping("/admin/feature/save")
     public String addFeature(@Valid @ModelAttribute("feature") Feature feature, BindingResult result, Model model) {
         System.out.println(result.hasErrors());
         if (result.hasErrors()) {
@@ -43,7 +44,7 @@ public class FeatureController {
         return "redirect:/admin/feature/list";
     }
 
-    @GetMapping("/feature/edit/{id}")
+    @GetMapping("/admin/feature/edit/{id}")
     public String showUpdateFeature(Model model, @PathVariable("id")Integer id) {
         Feature fea = featureService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
@@ -51,7 +52,7 @@ public class FeatureController {
         model.addAttribute("listFea",featureService.findAll());
         return "admin/layout";
     }
-    @PostMapping("/feature/update/{id}")
+    @PostMapping("/admin/feature/update/{id}")
     public String updateFeature(@PathVariable("id") Integer id,
                                 @ModelAttribute("feature") Feature feature)
     {
@@ -63,7 +64,7 @@ public class FeatureController {
         featureService.save(findFeature);
         return "redirect:/admin/feature/list";
     }
-    @RequestMapping("/feature/delete/{id}")
+    @RequestMapping("/admin/feature/delete/{id}")
     public String deleteFeature(Model model, @PathVariable("id")Integer id) {
         Feature feature = featureService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));

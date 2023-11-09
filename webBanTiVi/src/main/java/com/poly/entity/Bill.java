@@ -36,7 +36,7 @@ public class Bill {
     @Column(name="payment_date")
     private Date paymentDate;
 
-    @Column(name = "totalPrice")
+    @Column(name = "paid_money")
     private BigDecimal totalPrice;
 
     @Column(name="payment_status")
@@ -59,4 +59,10 @@ public class Bill {
 
     @OneToMany(mappedBy = "bill",fetch = FetchType.EAGER)
     private List<BillProduct> billProducts;
+
+
+    @OneToMany(mappedBy = "idBill")
+    private List<DeliveryNotes> deliveryNotes;
+
 }
+

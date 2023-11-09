@@ -1,7 +1,6 @@
 package com.poly.config;
 
-
-import com.poly.entity.Staff;
+import com.poly.entity.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,42 +8,55 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by HachNV on 29/05/2023
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StaffDtoDetail implements UserDetails {
+public class CustomerUserDetail implements UserDetails {
+
+    private int id;
+
     private String name;
 
     private String password;
 
+    private String avatar;
+
     private String roles;
 
-    private String avatar;
+    private String phone;
+
+    private String email;
+
+    private String address;
+
+    private Date birthday;
+
+    private boolean gender;
 
     private List<GrantedAuthority> authorities;
 
-    public StaffDtoDetail(Staff staff) {
-        name = staff.getUsername();
-        password = staff.getPassword();
-        avatar=staff.getAvatar();
-        roles=staff.getRoles();
-        authorities = Arrays.stream(staff.getRoles().split(","))
+    public CustomerUserDetail(Customer customer) {
+        id=customer.getId();
+        name = customer.getUsername();
+        password = customer.getPassword();
+        roles = customer.getRoles();
+        avatar = customer.getAvatar();
+        email = customer.getEmail();
+        address = customer.getAddress();
+        birthday = customer.getBirthday();
+        phone = customer.getPhoneNumber();
+        gender = customer.isGender();
+        authorities = Arrays.stream(customer.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
 
-
-    public String getAvatar(){
-        return avatar;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

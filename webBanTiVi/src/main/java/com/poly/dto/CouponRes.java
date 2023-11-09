@@ -6,6 +6,7 @@ import jakarta.persistence.TemporalType;
 
 import java.sql.Date;
 
+
 public interface CouponRes {
     Integer getId();
     String getValue();

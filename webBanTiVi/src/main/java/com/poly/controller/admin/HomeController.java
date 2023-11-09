@@ -1,16 +1,25 @@
 package com.poly.controller.admin;
 
+import com.poly.entity.Bill;
+import com.poly.service.DashBoardService;
 import com.poly.service.Impl.BillImpl;
 import com.poly.service.Impl.ProductServiceImpl;
 import com.poly.service.Impl.StaffServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.sql.Date;
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin")
+@PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
 public class HomeController {
 
     @Autowired
@@ -19,27 +28,19 @@ public class HomeController {
     @Autowired
     ProductServiceImpl productService;
 
-    @GetMapping("")
-    public String loadHome(HttpSession session,Model model) {
-        session.setAttribute("pageView", "/admin/page/statistic/statistic.html");
-        session.setAttribute("active", "/dashboard");
-        return "admin/layout";
-    }
+    @Autowired
+    DashBoardService dashBoardService;
 
-    @GetMapping("/dashboard")
-    public String loadDashboard(HttpSession session,Model model) {
+    @GetMapping("")
+    public String loadHome(HttpSession session, Model model) {
         session.setAttribute("pageView", "/admin/page/dashboard/dashboard.html");
         session.setAttribute("active", "/dashboard");
+        model.addAttribute("billReturn",this.dashBoardService.getAllBillReturn());
+        model.addAttribute("billProcessing",this.dashBoardService.getAllBillProcessing());
+        model.addAttribute("billAll",this.dashBoardService.getAllBill());
+        model.addAttribute("billDelivering",this.dashBoardService.getAllBillDelivering());
         return "admin/layout";
     }
-//
-//    @GetMapping("/position")
-//    public String loadPosition(HttpSession session,Model model) {
-//        session.setAttribute("pageView", "/admin/page/position.html");
-//        session.setAttribute("active", "/position");
-//        return "admin/layout";
-//    }
-   //product
 
 
     @GetMapping("/statistic")

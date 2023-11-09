@@ -1,6 +1,7 @@
 package com.poly.service.Impl;
 
 
+import com.poly.dto.CouponRes;
 import com.poly.entity.Coupon;
 import com.poly.repository.CouponRepository;
 import com.poly.service.CouponService;
@@ -14,9 +15,10 @@ public class CouponServiceImpl implements CouponService {
     @Autowired
     CouponRepository couponRepository;
 
-//    public List<CouponRes> getAllCouponRes(){
-//        return couponRepository.getCouponRes();
-//    }
+
+    public List<CouponRes> getAllCouponRes(){
+        return couponRepository.getCouponRes();
+    }
 
     @Override
     public Coupon save(Coupon coupon) {

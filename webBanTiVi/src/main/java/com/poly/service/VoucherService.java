@@ -1,5 +1,6 @@
 package com.poly.service;
 
+import com.poly.dto.SearchStaffDto;
 import com.poly.dto.SearchVoucherDto;
 import com.poly.entity.Voucher;
 import org.springframework.data.domain.Page;
@@ -22,5 +23,5 @@ public interface    VoucherService {
 
     List<Voucher> findAllList();
 
-    Page<Voucher> loadData(SearchVoucherDto searchVoucherDto, Pageable pageable);
+    Page<Voucher> loadData(SearchVoucherDto search, Pageable pageable);
 }

@@ -1,11 +1,17 @@
 package com.poly.controller.admin;
 
 import com.poly.common.UploadFile;
+import com.poly.dto.SearchStaffDto;
 import com.poly.entity.Customer;
 import com.poly.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -18,29 +24,52 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("/admin")
+@PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
 public class CustomerController {
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     CustomerService customerService;
 
     @GetMapping("/customer/list")
-    public String loadCustomer(HttpSession session, Model model) {
+    public String loadStaff(HttpSession session, Model model,
+                            @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageRequest,
+                            @RequestParam(name = "size", required = false, defaultValue = "2") Integer sizeRequest,
+                            @ModelAttribute(name = "searchCustomer") SearchStaffDto search
+    ) {
+
+        if (pageRequest < 0) {
+            pageRequest = 1;
+        }
+        if (sizeRequest <= 0) {
+            sizeRequest = 1;
+        }
+
+        session.setAttribute("size", sizeRequest);
+        session.setAttribute("page", pageRequest);
+
+        Pageable pageable = PageRequest.of(pageRequest - 1, sizeRequest);
+        Page<Customer> staffs = customerService.loadData(search, pageable);
+
+        model.addAttribute("totalElements", staffs.getTotalElements());
+        session.setAttribute("list", staffs);
+
         session.setAttribute("pageView", "/admin/page/customer/customer.html");
         session.setAttribute("active", "/customer/list");
-        model.addAttribute("customer", new Customer());
-        model.addAttribute("listCus", this.customerService.findAll());
         return "admin/layout";
     }
 
     @PostMapping("/customer/save")
     public String addCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult result, Model model, @RequestParam("image") MultipartFile file) {
-
-        System.out.println(result.hasErrors());
         if (result.hasErrors()) {
             return "admin/layout";
         }
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
         customer.setAvatar(fileName);
+        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        customer.setRoles("USER");
         this.customerService.save(customer);
         String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
         try {
@@ -68,17 +97,16 @@ public class CustomerController {
                                  @ModelAttribute("customer") Customer customer,
                                  @RequestParam("image") MultipartFile file) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
-        Customer findCustomer = this.customerService.findById(customer.getId()).orElse(null);
+        Customer findCustomer = this.customerService.findById(id).orElse(null);
 
         findCustomer.setBirthday(customer.getBirthday());
         findCustomer.setName(customer.getName());
         findCustomer.setEmail(customer.getEmail());
         findCustomer.setAddress(customer.getAddress());
-        findCustomer.setPassword(customer.getPassword());
         findCustomer.setPhoneNumber(customer.getPhoneNumber());
         findCustomer.setGender(customer.isGender());
-        findCustomer.setIdCard(customer.getIdCard());
         findCustomer.setStatus(customer.isStatus());
+        findCustomer.setRoles(customer.getRoles());
         System.out.println(customer.getAvatar());
         if (!"".equals(fileName)) {
             findCustomer.setAvatar(fileName);
@@ -90,7 +118,13 @@ public class CustomerController {
                 e.printStackTrace();
             }
         }
-          customerService.save(findCustomer);
+        String password = customer.getPassword();
+        if (password.startsWith("$2a$") && password.contains("$")) {
+            findCustomer.setPassword(password);
+        } else {
+            findCustomer.setPassword(passwordEncoder.encode(password));
+        }
+        customerService.save(findCustomer);
         return "redirect:/admin/customer/list";
     }
 

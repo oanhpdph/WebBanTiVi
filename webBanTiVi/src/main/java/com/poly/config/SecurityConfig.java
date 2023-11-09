@@ -7,12 +7,10 @@ import com.poly.service.Impl.StaffDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -47,16 +45,19 @@ public class SecurityConfig {
                                 .requestMatchers("/error/**").permitAll()
                                 .requestMatchers("/user/assets/**").permitAll()
                                 .requestMatchers("/user/plugin/**").permitAll()
+//                                .requestMatchers("/user/**").permitAll()
                                 .requestMatchers("/admin/plugin/**").permitAll()
                                 .requestMatchers("/admin/assets/**").permitAll()
                                 .requestMatchers("/image/**").permitAll()
-                                .requestMatchers("/").permitAll()
-//                                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN","USER")
-                                .anyRequest().permitAll())
+                                .requestMatchers("/**").permitAll()
+                                .requestMatchers("/admin/dashboard/**").permitAll()
+//                                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "STAFF")
+                                .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
                 .authenticationProvider(CustomerAuthenticationProvider())
-//                .formLogin().loginPage("/login/staff")
-//                .and()
+                .formLogin()
+                .loginPage("/login")
+                .and()
                 .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler());
 
         return http.build();
@@ -78,7 +79,6 @@ public class SecurityConfig {
     }
 
     @Bean
-    @Order(1)
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService());
@@ -87,7 +87,6 @@ public class SecurityConfig {
     }
 
     @Bean
-    @Order(2)
     public AuthenticationProvider CustomerAuthenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(customerDetailsService());
@@ -102,8 +101,7 @@ public class SecurityConfig {
         providers.add(authenticationProvider());
 
         ProviderManager authenticationManager = new ProviderManager(providers);
-        authenticationManager.getProviders();
- return authenticationManager;
+        return authenticationManager;
     }
 
     @Bean

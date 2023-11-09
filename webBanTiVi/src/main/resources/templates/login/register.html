@@ -58,10 +58,21 @@
                     </div>
                     <h4>Đăng ký để nhận nhiều ưu đãi!</h4>
                     <p>Đăng ký xong bạn có thể bổ sung thêm nhiều thông tin khác tại trang quản lý tài khoản!</p>
-                    <form  th:action="@{/register/add}"  th:object="${registration}"
-                            class="mb-3"
-                            method="POST"
+                    <form th:action="@{/login/register/add}" th:object="${registration}"
+                          class="mb-3"
+                          method="POST"
                     >
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Tên đăng nhập</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="username"
+                                    name="username"
+                                    placeholder="Nhập username"
+                                    th:field="*{username}"
+                            />
+                        </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input
@@ -74,7 +85,7 @@
                             />
                         </div>
                         <div class="mb-3">
-                            <label for="email" class="form-label">Số điện thoại</label>
+                            <label for="phoneNumber" class="form-label">Số điện thoại</label>
                             <input
                                     type="text"
                                     class="form-control"
@@ -102,18 +113,16 @@
                             </div>
                         </div>
                         <div class="mb-3 form-password-toggle">
-                            <label class="form-label" for="password"
-                            >Nhập lại mật khẩu</label>
+                            <label class="form-label" for="password">Nhập lại mật khẩu</label>
                             <div class="input-group input-group-merge">
                                 <input
                                         type="password"
-                                        id="password1"
+                                        id="confirm_password"
+                                        name="confirm_password"
                                         class="form-control"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                 />
-                                <span class="input-group-text cursor-pointer"
-                                ><i class="bx bx-hide"></i
-                                ></span>
+                                <span id='message'></span>
                             </div>
                         </div>
 
@@ -133,7 +142,7 @@
                                 </label>
                             </div>
                         </div>
-                        <button class="btn btn-primary d-grid w-100">Đăng ký</button>
+                        <button  class="btn btn-primary d-grid w-100" id="dangky" name="dangky">Đăng ký</button>
                     </form>
 
                     <p class="text-center">
@@ -161,5 +170,16 @@
 <script th:src="@{/admin/assets/vendor/js/menu.js}"></script>
 <script th:src="@{/admin/assets/js/main.js}"></script>
 <script async defer th:src="@{https://buttons.github.io/buttons.js}"></script>
+<script>
+    $('#password, #confirm_password').on('keyup', function () {
+        if ($('#password').val() != $('#confirm_password').val()) {
+            $('#message').html('Not Matching').css('color', 'red');
+            $('#dangky').prop('disabled', true);
+        } else {
+            $('#message').html('Matching').css('color', 'green');
+            $('#dangky').prop('disabled', false);
+        }
+    });
+</script>
 </body>
 </html>
