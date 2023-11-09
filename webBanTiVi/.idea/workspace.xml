@@ -22,6 +22,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+
         <option value="CSS File" />
         <option value="Interface" />
         <option value="HTML File" />
@@ -31,6 +32,10 @@
         <option value="HTML File" />
         <option value="Interface" />
         <option value="Interface" />
+        <option value="JavaScript File" />
+        <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="Class" />
         <option value="HTML File" />
         <option value="Class" />
         <option value="Class" />
@@ -66,6 +71,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../sneat-1.0.0" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates/user/page/promotion" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../WebBanTiVi-main/webBanTiVi" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Website_selling_mens_sports_shoes/Website_Selling_Shoes_Men_Sport" />
@@ -247,6 +254,7 @@
       <workItem from="1699369723268" duration="1284000" />
       <workItem from="1699525594389" duration="7937000" />
       <workItem from="1698511069371" duration="3327000" />
+      <workItem from="1699539516058" duration="8019000" />
       <workItem from="1699282290164" duration="21723000" />
       <workItem from="1699332622005" duration="30649000" />
       <workItem from="1699452862584" duration="34103000" />
@@ -258,6 +266,7 @@
       <workItem from="1699357196164" duration="865000" />
       <workItem from="1699363061051" duration="15626000" />
       <workItem from="1699442159617" duration="7830000" />
+      <workItem from="1699515612710" duration="9883000" />
       <workItem from="1699515612710" duration="10459000" />
       <workItem from="1699540938406" duration="39000" />
       <workItem from="1699541184084" duration="914000" />

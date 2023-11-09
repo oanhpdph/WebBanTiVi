@@ -70,6 +70,11 @@
                         <div th:text="#{sidebar.paymentMethod}"></div>
                     </a>
                 </li>
+                <li th:class="${#strings.equals(session.active,'/bill/list_invoice_return')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/bill/list_invoice_return}" class="menu-link">
+                        <div>Invoice Return</div>
+                    </a>
+                </li>
             </ul>
         </li>
         <li th:class="${#strings.contains(session.active,'customer')?'menu-item active open':'menu-item'}">
