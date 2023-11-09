@@ -1,0 +1,161 @@
+<div class="mb-4">
+    <div class="mb-4">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#largeModal">
+            Thêm Voucher
+        </button>
+    </div>
+    <form th:action="@{/admin/technical/resolution/add}" method="post" th:object="${resolution}"
+          enctype="multipart/form-data">
+        <div class="modal fade" th:id="largeModal" tabindex="-1"
+             aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">kich co</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <div class="row col-lg-8 col-xl-9">
+
+                                <div class="col-sm-4">
+                                    <label class="form-label">code:</label>
+                                    <input type="text" class="form-control" th:name="code">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">NAMESize:</label>
+                                    <input type="text" class="form-control" th:name="nameResolution">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">LENGTH:</label>
+                                    <input type="text" class="form-control" th:name="screenLength">
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">WIDTH:</label>
+                                    <input type="text" class="form-control" th:name="screenWidth">
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Reset</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive text-nowrap">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <!--                    <th>#</th>-->
+                <th>ID</th>
+                <th>CODE</th>
+                <th>NAME</th>
+                <th>LENGTH</th>
+                <th>WIDTH</th>
+
+                <th></th>
+            </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+            <tr th:each="resolution: ${listResolution}">
+                <!--                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>1</strong></td>-->
+                <td th:text="${resolution.id}"></td>
+                <td th:text="${resolution.code}"></td>
+                <td th:text="${resolution.nameResolution}"></td>
+                <td th:text="${resolution.screenLength}"></td>
+                <td th:text="${resolution.screenWidth}"></td>
+
+
+                <td>
+                    <button type="button" class="btn btn-icon btn-primary" data-bs-toggle="modal"
+                            th:data-bs-target="|#modal${resolution.id}|">
+                        <i class="bx bxs-edit-alt"></i>
+                    </button>
+
+                    <div class="modal fade" th:id="|modal${resolution.id}|" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-xl" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">do phan giai</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form th:action="@{/admin/technical/resolution/update/{id}(id=${resolution.id})}"
+                                          method="post" th:object="${resolution}" enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="row col-lg-8 col-xl-9">
+
+                                                <div class="col-sm-4">
+                                                    <label class="form-label">ID:</label>
+                                                    <input type="text" class="form-control" th:name="id"
+                                                           th:value="${resolution.id}">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label class="form-label">Mã MS:</label>
+                                                    <input type="text" class="form-control" th:name="code"
+                                                           th:value="${resolution.code}">
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <label class="form-label">ten kc:</label>
+                                                    <input type="text" class="form-control" th:name="nameResolution"
+                                                           th:value="${resolution.nameResolution}">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label class="form-label">dai:</label>
+                                                    <input type="text" class="form-control" th:name="screenLength"
+                                                           th:value="${resolution.screenLength}">
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label class="form-label">rong:</label>
+                                                    <input type="text" class="form-control" th:name="screenWidth"
+                                                           th:value="${resolution.screenWidth}">
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row justify-content-xl-end">
+
+                                            <div class="w-auto">
+                                                <button type="submit"
+                                                        class="btn btn-primary btn-control"
+                                                        onclick="return confirm('Xác nhận cập nhật')">
+                                                    Update
+                                                </button>
+                                            </div>
+                                            <div class="w-auto">
+                                                <a th:href="@{/admin/technical/resolution/delete/{id}(id=${resolution.id})}"
+                                                   onclick="return confirm('Xác nhận xóa')">
+                                                    <button type="button"
+                                                            class="btn btn-primary btn-control">
+                                                        Delete
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a th:href="@{/admin/technical/resolution/delete/{id}(id=*{resolution.id})}"
+                       onclick="return confirm('Xác nhận xóa')">
+                        <button type="button" class="btn btn-icon btn-danger">
+                            <span class="bx bxs-trash"></span>
+                        </button>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

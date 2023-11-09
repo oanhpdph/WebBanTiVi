@@ -67,7 +67,6 @@
             </a>
             <ul class="menu-sub">
                 <li th:class="${#strings.equals(session.active,'/customer/list')?'menu-item active':'menu-item'}">
-                <li>
                     <a th:href="@{/admin/customer/list}" class="menu-link">
                         <div th:text="#{sidebar.listCustomer}"></div>
                     </a>
@@ -105,6 +104,52 @@
                 </li>
             </ul>
         </li>
+        <li th:class="${#strings.equals(session.active,'/blog')?'menu-item active':'menu-item'}">
+            <a th:href="@{/admin/blog}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <div data-i18n="Blog">Blog</div>
+            </a>
+        </li>
+
+
+        <li th:class="${#strings.contains(session.active,'technical')?'menu-item active open':'menu-item'}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                <div data-i18n="Technical">Technical</div>
+            </a>
+            <ul class="menu-sub">
+                <li th:class="${#strings.equals(session.active,'/technical/color')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/technical/color}" class="menu-link">
+                        <div data-i18n="list color">Color</div>
+                    </a>
+                </li>
+                <li th:class="${#strings.equals(session.active,'/size')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/technical/size}" class="menu-link">
+                        <div data-i18n="list size">Size</div>
+                    </a>
+                </li>
+                <li th:class="${#strings.equals(session.active,'/brand')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/technical/brand}" class="menu-link">
+                        <div data-i18n="list brand">Brand</div>
+                    </a>
+                </li>
+                <li th:class="${#strings.equals(session.active,'/resolution')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/technical/resolution}" class="menu-link">
+                        <div data-i18n="list resolution">Resolution</div>
+                    </a>
+                </li>
+                <li th:class="${#strings.equals(session.active,'/manufacture')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/technical/manufacture}" class="menu-link">
+                        <div data-i18n="list manufacture">Manufacture</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+
+
+
         <li class="menu-header small text-uppercase">
             <span>Other</span>
         </li>
@@ -134,5 +179,14 @@
                 <span class="align-middle" th:text="#{navbar.logOut}"></span>
             </a>
         </li>
+
+
+
+
+
+
+
+
+
     </ul>
 </aside>

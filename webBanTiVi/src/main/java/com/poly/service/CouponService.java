@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface CouponService {
     Coupon save(Coupon coupon);
 
-    void delete(Integer id);
+    void deleteById(Integer id);
 
     List<Coupon> findAll();
 
