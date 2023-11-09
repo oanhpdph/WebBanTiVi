@@ -71,7 +71,7 @@ public class CartSeviceImpl implements CartService {
     }
 
     @Override
-    public List<CartProduct> delete(int id) {
+    public List<CartProduct> delete(Integer id) {
         items = items
                 .stream()
                 .filter(it -> it.getProduct().getId() != id)

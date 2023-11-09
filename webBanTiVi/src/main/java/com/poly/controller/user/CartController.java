@@ -97,34 +97,35 @@ public class CartController {
 
 
     @RequestMapping("/cart/remove/{id}")
-    public String delete(@PathVariable Integer id) {
-        Product product = productService.findById(id);
-        Cart cart = (Cart) session.getAttribute("cart");
-        if (cart == null) {
-            return "redirect:/cart";
-        } else {
-            List<CartProduct> list = cart.getListCartPro();
-            List<CartProduct> list1 = new ArrayList<>();
-            for (CartProduct x : list) {
-                if (x.getProduct().getId() != id) {
-                    list1.add(x);
-                }
-            }
-            cart.setListCartPro(list1);
-            session.setAttribute("list", cart);
-            System.out.println("xoa thanh cong");
-            return "redirect:/cart";
+    public String delete(@PathVariable List<Integer> id) {
+//        Product product = productService.findById(id);
+//        Cart cart = (Cart) session.getAttribute("cart");
+//        if (cart == null) {
+//            return "redirect:/cart";
+//        } else {
+//            List<CartProduct> list = cart.getListCartPro();
+//            List<CartProduct> list1 = new ArrayList<>();
+//            for (CartProduct x : list) {
+//                if (x.getProduct().getId() != id) {
+//                    list1.add(x);
+//                }
+//            }
+//            cart.setListCartPro(list1);
+//            session.setAttribute("list", cart);
+//            System.out.println("xoa thanh cong");
+//            return "redirect:/cart";
+//        }
+        List<CartProduct> list = new ArrayList<>();
+//        List<CartProduct> list = cartService.add(id);
+//        cartService.delete(id);
+        for (int i = 0; i < id.size(); i++) {
+            list = cartService.delete(id.get(i));
         }
-//        List<CartProduct> list = new ArrayList<>();
-////        cartService.delete(id);
-//        for (int i = 0; i < id.size(); i++) {
-//            list = cartService.delete(id.get(i));
-//        }
-//        session.setAttribute("list", list);
-//        if (cartService.getTotal() == 0) {
-//            return "redirect:/";
-//        }
-//        return "redirect:/cart";
+        session.setAttribute("list", list);
+        if (cartService.getTotal() == 0) {
+            return "redirect:/";
+        }
+        return "redirect:/cart";
     }
 
     @GetMapping("/cart/detail/{id}")
