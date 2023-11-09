@@ -12,6 +12,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
     Optional<Customer> findByUsername(String username);
 
+    Customer getCustomerByName(String username);
 //    Customer findByEmail(String email);
 
     @Query(value = "select c from Customer c where c.email=?1")

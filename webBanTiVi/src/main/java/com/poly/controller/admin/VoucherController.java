@@ -2,7 +2,6 @@ package com.poly.controller.admin;
 
 import com.poly.common.UploadFile;
 import com.poly.dto.SearchVoucherDto;
-import com.poly.entity.Staff;
 import com.poly.entity.Voucher;
 import com.poly.service.VoucherService;
 import jakarta.servlet.http.HttpSession;
@@ -71,7 +70,7 @@ public class VoucherController {
             @RequestParam("image") MultipartFile file
             ) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        voucher.setAvatar(fileName);
+        voucher.setImage(fileName);
         this.voucherService.save(voucher);
         String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
         try {
@@ -107,7 +106,7 @@ public class VoucherController {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
         Voucher findVoucher = voucherService.findById(voucher.getId()).orElse(null);
         if (!"".equals(fileName)) {
-            findVoucher.setAvatar(fileName);
+            findVoucher.setImage(fileName);
             String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
             try {
                 UploadFile.saveFile(uploadDir, fileName, file);

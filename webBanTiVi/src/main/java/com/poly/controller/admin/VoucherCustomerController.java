@@ -1,9 +1,7 @@
 package com.poly.controller.admin;
 
 import com.poly.dto.VoucherCustomerRes;
-import com.poly.entity.VoucherCustomer;
 import com.poly.service.CustomerService;
-import com.poly.service.StaffService;
 import com.poly.service.VoucherCustomerService;
 import com.poly.service.VoucherService;
 import jakarta.servlet.http.HttpSession;
@@ -19,9 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
 public class VoucherCustomerController {
-    @Autowired
-    StaffService staffService;
-
     @Autowired
     CustomerService customerService;
 

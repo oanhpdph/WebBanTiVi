@@ -43,7 +43,7 @@
                         <a th:href="@{/admin/bill/list_bill/download_excel}" type="button"
                            class="btn btn-outline-secondary" data-bs-offset="0,4" data-bs-toggle="tooltip"
                            data-bs-placement="bottom" data-bs-html="true" title=""
-                           data-bs-original-title="<span>Xuất danh sách excel theo danh sách hiển thị</span>" >
+                           data-bs-original-title="<span>Xuất danh sách excel theo danh sách hiển thị</span>">
                             Excel
                         </a>
                         <a th:href="@{/admin/bill/list_bill/downloadpdf}" type="button"
@@ -82,7 +82,7 @@
                                 <option value="3" th:text="#{invoice.refund}"></option>
                             </optgroup>
                         </select></th>
-                        <th><select class=" select2" id="filterBillStatus" th:field="*{billStatus}"
+                        <th><select class="select2" id="filterBillStatus" th:field="*{billStatus}"
                                     th:name="billStatus">
                             <optgroup label="Trạng thái đơn hàng">
                                 <option th:selected="${session.defaultBillStatus == ''}" value="">Tất cả</option>

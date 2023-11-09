@@ -11,6 +11,8 @@ import java.util.List;
 
 @Repository
 public interface CouponProductRepository extends JpaRepository<CouponProduct, CouponProductId> {
+
     @Query("select product from CouponProduct where coupon.id=?1")
     List<Product> findAllByCouponId(Integer id);
+
 }

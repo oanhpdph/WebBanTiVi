@@ -13,7 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/api/size")
+@RequestMapping("/admin")
 @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
 public class SizeController {
     @Autowired

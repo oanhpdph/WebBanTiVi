@@ -11,7 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/resolution")
+@RequestMapping("/admin")
 @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
 public class ResolutionController {
     @Autowired

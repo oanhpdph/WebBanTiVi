@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
-@RequestMapping("/api/brand")
+@RequestMapping("/admin")
 public class BrandController {
     @Autowired
     BrandServiceImpl brandService;

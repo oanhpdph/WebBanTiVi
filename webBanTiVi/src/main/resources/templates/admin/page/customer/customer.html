@@ -211,15 +211,17 @@
                                                          height="200" width="200"
                                                          id="image-preview">
                                                     <br> <br>
-                                                    <label for="file-input" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                                    <label for="file-input" class="btn btn-primary me-2 mb-4"
+                                                           tabindex="0">
                                                         <span class="d-none d-sm-block">Upload new photo</span>
                                                         <i class="bx bx-upload d-block d-sm-none"></i>
-                                                        <input type="file" id="file-input" class="account-file-input file-input"
+                                                        <input type="file" id="file-input"
+                                                               class="account-file-input file-input"
                                                                hidden="" name="image">
                                                     </label>
                                                 </div>
                                                 <div class="row mb-3 col-lg-8 col-xl-9">
-                                                    <div class="col-sm-4 p-3" >
+                                                    <div class="col-sm-4 p-3">
                                                         <label class="form-label">Họ tên:</label>
                                                         <input type="text" class="form-control" th:name="username"
                                                                th:value="${customer.username}">
@@ -254,6 +256,7 @@
                                                                    th:value="true"
                                                                    th:checked="${customer.gender==true}">
                                                             <label class="form-check-label"
+
                                                                    th:for="|active${customer.id}|">Male</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">

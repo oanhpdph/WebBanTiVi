@@ -29,10 +29,10 @@
                                     <div class="mb-3">
                                         <label class="form-label">Product:</label>
                                         <br>
-                                        <select th:name="product"class="form-select" aria-label="Default select example">
-                                            <option th:each="i:${listProduct}" th:value="${i.id}"
-                                                    th:text="${i.name}"></option>
-                                        </select>
+<!--                                        <select th:name="product"class="form-select" aria-label="Default select example">-->
+<!--                                            <option th:each="i:${listProduct}" th:value="${i.id}"-->
+<!--                                                    th:text="${i.name}"></option>-->
+<!--                                        </select>-->
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-6 col-md-6">
@@ -125,7 +125,7 @@
                     <tbody>
                     <tr th:each="evaluate : ${list}">
 
-                        <td th:text="${evaluate.product.name}"></td>
+<!--                        <td th:text="${evaluate.product.name}"></td>-->
                         <td th:text="${evaluate.customer.name}"></td>
                         <td th:text="${evaluate.dateCreate}"></td>
                         <td th:text="${evaluate.point}"></td>
@@ -163,9 +163,9 @@
                                                                 <label class="form-label">Product:</label>
                                                                 <br>
                                                                 <select th:name="product" class="form-select" aria-label="Default select example">
-                                                                    <option th:each="i:${listProduct}"
-                                                                            th:value="${i.id}"
-                                                                            th:text="${i.name}"></option>
+<!--                                                                    <option th:each="i:${listProduct}"-->
+<!--                                                                            th:value="${i.id}"-->
+<!--                                                                            th:text="${i.name}"></option>-->
                                                                 </select>
                                                             </div>
                                                         </div>

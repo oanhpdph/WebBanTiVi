@@ -5,6 +5,7 @@ import com.poly.entity.CartProduct;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 public interface CartService {
 
@@ -16,7 +17,7 @@ public interface CartService {
 
     public List<CartProduct> update(int id, Integer qty);
 
-    public List<CartProduct> delete(int id);
+    public List<CartProduct> delete(Integer id);
 
     public void clear();
 
@@ -25,4 +26,6 @@ public interface CartService {
     public int getTotalProduct();
 
     public Serializable getAmount();
+
+    Cart getOne(Integer id);
 }

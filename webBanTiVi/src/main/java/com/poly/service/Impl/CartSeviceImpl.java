@@ -14,6 +14,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,7 +72,7 @@ public class CartSeviceImpl implements CartService {
     }
 
     @Override
-    public List<CartProduct> delete(int id) {
+    public List<CartProduct> delete(Integer id) {
         items = items
                 .stream()
                 .filter(it -> it.getProduct().getId() != id)
@@ -113,6 +114,19 @@ public class CartSeviceImpl implements CartService {
         }
         return amount;
     }
+
+    @Override
+    public Cart getOne(Integer id) {
+        return cartRepos.findById(id).get();
+    }
+//    @Override
+//    public Serializable getAmount() {
+//        int amount = 0;
+//        for (CartProduct item : items) {
+//            amount += item.getQuantity() * item.getProduct().getPrice_export();
+//        }
+//        return amount;
+//    }
 
     @Override
     public int getTotalProduct() {

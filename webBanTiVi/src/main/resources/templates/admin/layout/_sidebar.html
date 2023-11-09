@@ -30,11 +30,23 @@
             <span th:text="#{sidebar.management}"></span>
         </li>
 
-        <li th:class="${#strings.equals(session.active,'/product')?'menu-item active':'menu-item'}">
-            <a th:href="@{/admin/product}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-tv"></i>
-                <div th:text="#{sidebar.product}"></div>
+        <li th:class="${#strings.contains(session.active,'/product')?'menu-item active open':'menu-item'}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-receipt"></i>
+                <div>Product</div>
             </a>
+            <ul class="menu-sub">
+                <li th:class="${#strings.equals(session.active,'/product/list-product')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/product/list-product}" class="menu-link">
+                        <div>List product</div>
+                    </a>
+                </li>
+<!--                <li th:class="${#strings.equals(session.active,'/product/add-product')?'menu-item active':'menu-item'}">-->
+<!--                    <a th:href="@{/admin/product/add-product}" class="menu-link">-->
+<!--                        <div>Add product</div>-->
+<!--                    </a>-->
+<!--                </li>-->
+            </ul>
         </li>
         <li th:class="${#strings.equals(session.active,'/staff')?'menu-item active':'menu-item'}">
             <a th:href="@{/admin/staff}" class="menu-link">
@@ -109,14 +121,6 @@
                 </li>
             </ul>
         </li>
-        <li th:class="${#strings.equals(session.active,'/blog')?'menu-item active':'menu-item'}">
-            <a th:href="@{/admin/blog}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-receipt"></i>
-                <div data-i18n="Blog">Blog</div>
-            </a>
-        </li>
-
-
         <li th:class="${#strings.contains(session.active,'technical')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-user-circle"></i>
@@ -150,11 +154,6 @@
                 </li>
             </ul>
         </li>
-
-
-
-
-
         <li class="menu-header small text-uppercase">
             <span>Other</span>
         </li>
@@ -184,14 +183,5 @@
                 <span class="align-middle" th:text="#{navbar.logOut}"></span>
             </a>
         </li>
-
-
-
-
-
-
-
-
-
     </ul>
 </aside>

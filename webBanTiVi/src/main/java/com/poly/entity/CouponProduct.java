@@ -18,7 +18,7 @@ import java.util.Date;
 @IdClass(CouponProductId.class)
 public class CouponProduct {
     @Id
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_coupon")
     private Coupon coupon;
 
@@ -34,4 +34,6 @@ public class CouponProduct {
     @Temporal(TemporalType.DATE)
     @Column(name="date_end")
     private Date dateEnd;
+
+    private Integer status;
 }

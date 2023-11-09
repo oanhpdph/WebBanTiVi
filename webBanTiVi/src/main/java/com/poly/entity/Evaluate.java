@@ -21,10 +21,10 @@ public class Evaluate {
 
     @ManyToOne
     @JoinColumn(name="id_product")
-    private Product product;
+    private ProductDetail product;
 
     @ManyToOne
-    @JoinColumn(name="id_customer")
+    @JoinColumn(name="id_user")
     private Customer customer;
 
     @Temporal(TemporalType.DATE)

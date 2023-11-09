@@ -10,7 +10,7 @@ import java.sql.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "customer")
+@Table(name="users")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -47,7 +47,6 @@ public class Customer {
 
     @Column(name = "gender")
     private boolean gender;
-
 
     @Column(name="avatar")
     private String avatar;
