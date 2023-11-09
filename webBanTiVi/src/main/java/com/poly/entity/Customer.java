@@ -48,7 +48,8 @@ public class Customer {
     @Column(name = "gender")
     private boolean gender;
 
-    @Column(name = "avatar")
+
+    @Column(name="avatar")
     private String avatar;
 
     @Column(name = "status")

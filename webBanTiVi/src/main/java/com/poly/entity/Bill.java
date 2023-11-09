@@ -59,4 +59,10 @@ public class Bill {
 
     @OneToMany(mappedBy = "bill",fetch = FetchType.EAGER)
     private List<BillProduct> billProducts;
+
+
+    @OneToMany(mappedBy = "idBill")
+    private List<DeliveryNotes> deliveryNotes;
+
 }
+

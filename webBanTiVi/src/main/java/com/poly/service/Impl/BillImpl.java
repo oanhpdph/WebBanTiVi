@@ -3,12 +3,17 @@ package com.poly.service.Impl;
 import com.poly.dto.BillProRes;
 import com.poly.dto.SearchBillDto;
 import com.poly.entity.Bill;
+import com.poly.entity.BillStatus;
+import com.poly.entity.Product;
+import com.poly.repository.BillRepos;
+import com.poly.repository.BillStatusRepos;
 import com.poly.entity.BillProduct;
 import com.poly.entity.Product;
 import com.poly.repository.*;
 import com.poly.service.BillService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -35,7 +40,6 @@ public class BillImpl implements BillService {
 
     @PersistenceContext
     private EntityManager entityManager;
-
 
     @Autowired
     BillStatusRepos billStatusRepos;
@@ -85,8 +89,6 @@ public class BillImpl implements BillService {
             }
         }
     }
-
-
     @Override
     public Page<Bill> loadData(SearchBillDto searchBillDto, Pageable pageable) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -105,9 +107,6 @@ public class BillImpl implements BillService {
         if (!searchBillDto.getBillStatus().isEmpty()) {
             list.add(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), searchBillDto.getBillStatus()));
         }
-//        if(!searchBillDto.getDate().isEmpty()){
-//            list.add(criteriaBuilder.equal(billRoot.get("paymentDate"),searchBillDto.getDate()));
-//        }
         if (!searchBillDto.getDate().isEmpty()) {
             String date1 = searchBillDto.getDate().substring(0, searchBillDto.getDate().indexOf("-") - 1).replace("/", "-");
             String date2 = searchBillDto.getDate().substring(searchBillDto.getDate().indexOf("-") + 1, searchBillDto.getDate().length()).replace("/", "-");
@@ -182,5 +181,12 @@ public class BillImpl implements BillService {
         }
         return null;
     }
+
+    @Override
+    public List<Bill> findAllBillByUser(Integer id) {
+        List<Bill> dto= this.billRepos.findBillByUser(id);
+   return dto;
+    }
+
 
 }
