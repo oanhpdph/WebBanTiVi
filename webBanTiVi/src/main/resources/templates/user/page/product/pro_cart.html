@@ -62,10 +62,10 @@
                             <div class="col-lg-12">
                                 <div class="breadcrumb__text">
                                     <h4>Shopping Cart</h4>
-                                    <div class="breadcrumb__links">
-                                        <a href="index.html">Home</a>
-                                        <a href="shop.html">Shop</a>
-                                        <span>Shopping Cart</span>
+                                    <div class="">
+                                        <a href="/">Home</a> <a>/</a>
+                                        <a href="/tivi">Shop</a> <a>/</a>
+                                        <span>Product Details</span>
                                     </div>
                                 </div>
                             </div>
@@ -83,6 +83,7 @@
                                             <thead>
                                             <tr>
                                                 <th>Product</th>
+                                                <th></th>
                                                 <th>Price</th>
                                                 <th>Quantity</th>
                                                 <th>Total</th>
@@ -94,12 +95,16 @@
                                                 <input th:value="${item.product.id}" name="id" hidden>
                                                 <td>
                                                     <div th:each="image:${item.product.listImage}">
-                                                        <div th:if="${image.location == true}">
-                                                            <img th:src="@{'/user/img/shopping-cart/'+image.nameImage}"
-                                                                 alt="">
-                                                        </div>
-                                                        <span th:text="${item.product.name + ' '+item.product.code}"></span>
+                                                        <!--                                                        <div>-->
+                                                        <img th:if="${image.location == true}"
+                                                             th:src="@{'/image/'+${image.nameImage}}"
+                                                             alt="" width="100px">
+                                                        <!--                                                        </div>-->
                                                     </div>
+                                                </td>
+                                                <td>
+                                                    <span class="fs-5"
+                                                          th:text="${item.product.name + ' '+item.product.code}"></span>
                                                 </td>
                                                 <td>
                                                     <div>
@@ -125,21 +130,24 @@
                                                     <span th:text="${item.product.price_export * item.quantity}"
                                                           class="total-price"></span>
                                                 </td>
+                                                <td>
+                                                    <a type="button" class="btn btn-icon btn-danger"
+                                                       th:href="@{/cart/remove/{id}(id=${item.product.id})}"
+                                                       onclick="xoa(this)">
+                                                        <span class="tf-icons bx bx-trash"></span>
+                                                    </a>
+                                                </td>
                                             </tr>
                                             <hr>
                                             </tbody>
                                         </table>
                                     </div>
                                     <hr>
-                                    <div class="row">
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <a href="/" type="submit" class="btn btn-lg btn-outline-primary">Quay
-                                                Lại</a>
-                                        </div>
-                                        <div class=" col-lg-6 col-md-6 col-sm-6">
-                                            <button type="submit" class="btn btn-lg btn-primary">Cập Nhật Giỏ Hàng
-                                            </button>
-                                        </div>
+                                    <div class="text-end">
+                                        <a href="/" type="submit" class="btn btn-lg btn-outline-primary">Quay
+                                            Lại</a>
+                                        <button type="submit" class="btn btn-lg btn-primary">Cập Nhật Giỏ Hàng
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -153,30 +161,31 @@
         <div class="col-lg-3">
             <div class="card">
                 <div class="card-body">
-                    <div>
-                        <h6>Discount codes</h6>
-                        <form action="#">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Coupon code"
-                                       aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-primary" type="button" id="button-addon2">
-                                    Apply
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                    <!--                    <div>-->
+                    <!--                        <h6>Discount codes</h6>-->
+                    <!--                        <form action="#">-->
+                    <!--                            <div class="input-group">-->
+                    <!--                                <input type="text" class="form-control" placeholder="Coupon code"-->
+                    <!--                                       aria-label="Recipient's username" aria-describedby="button-addon2">-->
+                    <!--                                <button class="btn btn-outline-primary" type="button" id="button-addon2">-->
+                    <!--                                    Apply-->
+                    <!--                                </button>-->
+                    <!--                            </div>-->
+                    <!--                        </form>-->
+                    <!--                    </div>-->
                     <br>
                     <div class="card shadow-none bg-transparent border border-secondary mb-3">
-                        <div class="card-header"><h5>Cart total</h5></div>
-                        <div class="card-body">
-                            <p class="card-text">Subtotal: <span style="padding-left: 70px">$<span
-                                    th:text="${amount}"></span> </span></p>
-                            <p class="card-text">Total: <span style="padding-left: 90px">$<span
-                                    th:text="${amount}"></span> </span></p>
-                            <div style="text-align: center">
-                                <a type="submit" class="btn btn-primary" th:href="@{/pay}">Thanh
-                                    Toán
-                                </a>
+                        <div class="card-header">
+                            <div class="card-body">
+                                <p class="card-text">Subtotal: <span style="padding-left: 70px">$<span
+                                        class="total-pro"></span> </span></p>
+                                <p class="card-text">Total: <span style="padding-left: 90px">$<span
+                                        th:text="${amount}"></span> </span></p>
+                                <div style="text-align: center">
+                                    <a type="submit" class="btn btn-primary" th:href="@{/pay}">Thanh
+                                        Toán
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -186,40 +195,22 @@
     </div>
 </div>
 <script>//<![CDATA[
-// $('input.input-qty').each(function () {
-//     var $this = $(this),
-//         qty = $this.parent().find('.is-form'),
-//         min = Number($this.attr('min')),
-//         max = Number($this.attr('max'))
-//     if (min == 0) {
-//         var d = 0
-//     } else {
-//         d = min
-//     }
-//
-//     $(qty).on('click', function () {
-//         if ($(this).hasClass('minus')) {
-//             if (d > min) {
-//                 d += -1
-//             }
-//         }
-//         if ($(this).hasClass('plus')) {
-//             var x = Number($this.val()) + 1
-//             console.log(d)
-//
-//             if (x <= max) {
-//                 d += 1
-//             }
-//             console.log(d)
-//         }
-//         $this.attr('value', d).val(d)
-//     })
-// })
-
 const plus = document.querySelectorAll(".plus")
 const minus = document.querySelectorAll(".minus")
 
+function tinhtong() {
+    const totalPriceForm = document.querySelectorAll(".total-price")
+    const totalProForm = document.querySelector(".total-pro")
+    var totalPro = 0;
+    for (let i = 0; i < totalPriceForm.length; i++) {
+        totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
+        console.log(totalPro);
+    }
+    totalProForm.innerText = totalPro
+}
+
 $(document).ready(
+    tinhtong(),
     $.each(plus, function (index, item) {
         // var temp = index
         item.addEventListener("click", function (e) {
@@ -239,6 +230,14 @@ $(document).ready(
             var totalPrice = Number(valueInput) * Number(priceExport)
 
             totalPriceForm[index].innerText = totalPrice
+            const totalProForm = document.querySelector(".total-pro")
+            var totalPro = 0;
+            for (let i = 0; i < totalPriceForm.length; i++) {
+                totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
+                console.log(totalPro);
+            }
+
+            totalProForm.innerText = totalPro
         })
     }),
     $.each(minus, function (index, item) {
@@ -260,9 +259,16 @@ $(document).ready(
             var totalPrice = Number(valueInput) * Number(priceExport)
 
             totalPriceForm[index].innerText = totalPrice
+            tinhtong();
         })
     })
 )
+
+
+function xoa(x) {
+    var tr = x.parentElement.parentElement;
+    tr.remove();
+}
 
 
 //]]></script>

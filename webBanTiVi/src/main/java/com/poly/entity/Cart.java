@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "bill_product")
+@Table(name = "cart")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,10 +19,11 @@ public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
     @OneToOne
-    @JoinColumn(name = "customer")
+    @JoinColumn(name = "id_customer")
     private Customer customer;
 
     @Column(name = "code")
