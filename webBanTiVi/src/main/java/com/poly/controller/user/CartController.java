@@ -57,7 +57,7 @@ public class CartController {
         return "user/index";
     }
 
-    @PostMapping("/create_bill")
+    @PostMapping("/purchase")
     public String addBill(Model model,
                           String email,
                           Integer id,
@@ -96,13 +96,35 @@ public class CartController {
     }
 
 
-    @RequestMapping("/cart/delete/{id}")
-    public String delete(@PathVariable int id) {
-        cartService.delete(id);
-        if (cartService.getTotal() == 0) {
-            return "redirect:/";
+    @RequestMapping("/cart/remove/{id}")
+    public String delete(@PathVariable Integer id) {
+        Product product = productService.findById(id);
+        Cart cart = (Cart) session.getAttribute("cart");
+        if (cart == null) {
+            return "redirect:/cart";
+        } else {
+            List<CartProduct> list = cart.getListCartPro();
+            List<CartProduct> list1 = new ArrayList<>();
+            for (CartProduct x : list) {
+                if (x.getProduct().getId() != id) {
+                    list1.add(x);
+                }
+            }
+            cart.setListCartPro(list1);
+            session.setAttribute("list", cart);
+            System.out.println("xoa thanh cong");
+            return "redirect:/cart";
         }
-        return "redirect:/cart";
+//        List<CartProduct> list = new ArrayList<>();
+////        cartService.delete(id);
+//        for (int i = 0; i < id.size(); i++) {
+//            list = cartService.delete(id.get(i));
+//        }
+//        session.setAttribute("list", list);
+//        if (cartService.getTotal() == 0) {
+//            return "redirect:/";
+//        }
+//        return "redirect:/cart";
     }
 
     @GetMapping("/cart/detail/{id}")
@@ -123,16 +145,16 @@ public class CartController {
         }
 
         session.setAttribute("list", list);
-        int total = (int) cartService.getTotalProduct();
-        model.addAttribute("total", total);
+//        int total = (int) cartService.getTotalProduct();
+//        model.addAttribute("total", total);
         return "redirect:/cart";
     }
 
-    @PostMapping("/purchase")
-    public String pur(Model model) {
-        Cart cart = (Cart) session.getAttribute("cart");
-        cartRepos.save(cart);
-        session.removeAttribute("cart");
-        return "redirect:/cart";
-    }
+//    @PostMapping("/purchase")
+//    public String pur(Model model) {
+//        Cart cart = (Cart) session.getAttribute("cart");
+//        cartRepos.save(cart);
+//        session.removeAttribute("cart");
+//        return "redirect:/cart";
+//    }
 }
