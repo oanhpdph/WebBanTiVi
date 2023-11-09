@@ -71,6 +71,7 @@ public class CustomerController {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
         customer.setAvatar(fileName);
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        customer.setRoles("USER");
         this.customerService.save(customer);
         String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
         try {
@@ -106,8 +107,8 @@ public class CustomerController {
         findCustomer.setAddress(customer.getAddress());
         findCustomer.setPhoneNumber(customer.getPhoneNumber());
         findCustomer.setGender(customer.isGender());
-        findCustomer.setIdCard(customer.getIdCard());
         findCustomer.setStatus(customer.isStatus());
+        findCustomer.setRoles(customer.getRoles());
         System.out.println(customer.getAvatar());
         if (!"".equals(fileName)) {
             findCustomer.setAvatar(fileName);

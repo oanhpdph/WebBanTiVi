@@ -51,8 +51,6 @@ public class Customer {
     @Column(name="gender")
     private boolean gender;
 
-    @Column(name="id_card")
-    private String idCard;
 
     @Column(name="avatar")
     private String avatar;

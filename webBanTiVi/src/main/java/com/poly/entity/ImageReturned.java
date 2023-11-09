@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "image_returned")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Image_returned {
+public class ImageReturned {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -54,4 +54,9 @@ public class BillStatusImpl implements BillStatusService {
         }
         return false;
     }
+
+    @Override
+    public BillStatus findById(Integer id) {
+        return this.billStatusRepos.findById(id).get();
+    }
 }

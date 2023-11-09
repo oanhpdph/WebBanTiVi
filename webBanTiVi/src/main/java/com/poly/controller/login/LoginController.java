@@ -68,16 +68,17 @@ public class LoginController {
         model.addAttribute("login", new LoginDto());
         return "login/login";
     }
-//
-//    @PostMapping("/")
-//    public String LoginAdmin(@Valid @ModelAttribute("login") LoginDto login, BindingResult result) {
-//        if(result.hasErrors()){
-//            return "login/login";
-//        }
-//        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(),login.getPassword()));
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//        return "user/index";
-//    }
+
+    //    @PostMapping("")
+    //    public String LoginAdmin(@Valid @ModelAttribute("login") LoginDto login, BindingResult result) {
+    //        if(result.hasErrors()){
+    //            System.out.println("hehe");
+    //            return "login/login";
+    //        }
+    //        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(),login.getPassword()));
+    //        SecurityContextHolder.getContext().setAuthentication(authentication);
+    //        return "user/index";
+    //    }
 
     @GetMapping("/register")
     public String register(Model model) {
@@ -190,7 +191,7 @@ public class LoginController {
             staff.setPhone(changeInforDto.getPhone());
             staff.setBirthday(changeInforDto.getBirthday());
             staff.setGender(changeInforDto.isGender());
-            if (!staff.getPassword().equals("")){
+            if (!changeInforDto.getPassword().equals("")){
                 staff.setPassword(passwordEncoder.encode(changeInforDto.getPassword()));
             }else{
                 staff.setPassword(staff.getPassword());

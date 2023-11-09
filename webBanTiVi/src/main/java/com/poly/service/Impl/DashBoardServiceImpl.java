@@ -47,4 +47,44 @@ public class DashBoardServiceImpl implements DashBoardService {
         }
         return listBillPro;
     }
+
+    @Override
+    public List<Bill> getAllBill() {
+        return this.billRepos.findAll();
+    }
+
+    @Override
+    public List<Bill> getAllBillReturn() {
+        List<Bill> orders = this.billRepos.findAll();
+        List<Bill> listBillReturn = new ArrayList<>();
+        for(Bill bill : orders){
+            if(bill.getBillStatus().getCode().equals("RR")){
+                listBillReturn.add(bill);
+            }
+        }
+        return listBillReturn;
+    }
+
+    @Override
+    public List<Bill> getAllBillProcessing() {
+        List<Bill> orders = this.billRepos.findAll();
+        List<Bill> listBillPro = new ArrayList<>();
+        for(Bill bill : orders){
+            if(bill.getBillStatus().getCode().equals("WP")){
+                listBillPro.add(bill);
+            }
+        }
+        return listBillPro;
+    }
+    @Override
+    public List<Bill> getAllBillDelivering() {
+        List<Bill> orders = this.billRepos.findAll();
+        List<Bill> listBillPro = new ArrayList<>();
+        for(Bill bill : orders){
+            if(bill.getBillStatus().getCode().equals("DE")){
+                listBillPro.add(bill);
+            }
+        }
+        return listBillPro;
+    }
 }
