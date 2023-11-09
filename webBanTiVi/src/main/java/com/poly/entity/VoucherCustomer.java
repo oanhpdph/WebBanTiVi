@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import java.sql.Date;
 
 @Entity
-@Table(name = "voucher_customer")
+@Table(name = "voucher_user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,7 +22,7 @@ public class VoucherCustomer {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "id_customer")
+    @JoinColumn(name = "id_user")
     private Customer customer;
 
     @ManyToOne

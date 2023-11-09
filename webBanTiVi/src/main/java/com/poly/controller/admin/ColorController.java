@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
-@RequestMapping("/api/color")
+@RequestMapping("/admin")
 public class ColorController {
     @Autowired
     ColorServiceImpl colorService;

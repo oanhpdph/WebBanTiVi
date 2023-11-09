@@ -4,15 +4,11 @@ package com.poly.controller.login;
 import com.poly.common.RandomNumber;
 import com.poly.common.SendEmail;
 import com.poly.config.CustomerUserDetail;
-import com.poly.config.StaffUserDetail;
 import com.poly.dto.ChangeInforDto;
 import com.poly.dto.LoginDto;
 import com.poly.entity.Customer;
-import com.poly.entity.Staff;
 import com.poly.repository.CustomerRepository;
-import com.poly.repository.StaffRepository;
 import com.poly.service.CustomerService;
-import com.poly.service.StaffService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -49,11 +45,11 @@ public class LoginController {
     @Autowired
     CustomerService customerService;
 
-    @Autowired
-    StaffService staffService;
+//    @Autowired
+//    StaffService staffService;
 
-    @Autowired
-    StaffRepository staffRepository;
+//    @Autowired
+//    StaffRepository staffRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -159,7 +155,7 @@ public class LoginController {
         // Lấy UserDetails từ principal
         List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
          String role=roles.get(0).toString();
-        if (role.equals("USER")) {
+//        if (role.equals("USER")) {
             CustomerUserDetail  customerUserDetail = (CustomerUserDetail) userDetails;
             Customer customer  =this.customerService.findById(customerUserDetail.getId()).get();
             customer.setUsername(changeInforDto.getName());
@@ -180,27 +176,28 @@ public class LoginController {
             }
             this.customerService.save(customer);
 
-        } else {
-            StaffUserDetail  staffUserDetail = (StaffUserDetail) userDetails;
-            Staff staff  =this.staffService.findById(staffUserDetail.getId()).get();
-            staff.setUsername(changeInforDto.getName());
-            staff.setPhone(changeInforDto.getPhone());
-            staff.setBirthday(changeInforDto.getBirthday());
-            staff.setGender(changeInforDto.isGender());
-            if (!changeInforDto.getPassword().equals("")){
-                staff.setPassword(passwordEncoder.encode(changeInforDto.getPassword()));
-            }else{
-                staff.setPassword(staff.getPassword());
-            }
-            staff.setRoles(staffUserDetail.getRoles());
-            staff.setEmail(changeInforDto.getEmail());
-            staff.setAddress(changeInforDto.getAddress());
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            if(!"".equals(fileName)){
-                staff.setAvatar(fileName);
-            }
-            this.staffService.save(staff);
-        }
+
+//        } else {
+//            StaffUserDetail  staffUserDetail = (StaffUserDetail) userDetails;
+//            Staff staff  =this.staffService.findById(staffUserDetail.getId()).get();
+//            staff.setUsername(changeInforDto.getName());
+//            staff.setPhone(changeInforDto.getPhone());
+//            staff.setBirthday(changeInforDto.getBirthday());
+//            staff.setGender(changeInforDto.isGender());
+//            if (!staff.getPassword().equals("")){
+//                staff.setPassword(passwordEncoder.encode(changeInforDto.getPassword()));
+//            }else{
+//                staff.setPassword(staff.getPassword());
+//            }
+//            staff.setRoles(staffUserDetail.getRoles());
+//            staff.setEmail(changeInforDto.getEmail());
+//            staff.setAddress(changeInforDto.getAddress());
+//            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+//            if(!"".equals(fileName)){
+//                staff.setAvatar(fileName);
+//            }
+//            this.staffService.save(staff);
+//        }
         return "redirect:/login/logout";
     }
 }

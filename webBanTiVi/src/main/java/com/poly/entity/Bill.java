@@ -22,7 +22,7 @@ public class Bill {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name="id_customer")
+    @JoinColumn(name="id_user")
     private Customer customer;
 
     @Column(name="code")
@@ -36,7 +36,7 @@ public class Bill {
     @Column(name="payment_date")
     private Date paymentDate;
 
-    @Column(name = "paid_money")
+    @Column(name = "total_price")
     private BigDecimal totalPrice;
 
     @Column(name="payment_status")
@@ -53,6 +53,9 @@ public class Bill {
     @ManyToOne
     @JoinColumn(name="id_voucher")
     private Voucher voucher;
+
+    @Column(name="voucher_value")
+    private BigDecimal voucher_value;
 
     @Column(name="note")
     private String note;

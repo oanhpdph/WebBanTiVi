@@ -2,10 +2,8 @@ package com.poly.controller.admin;
 
 import com.poly.common.UploadFile;
 import com.poly.dto.SearchStaffDto;
-import com.poly.dto.SearchVoucherDto;
-import com.poly.entity.Staff;
-import com.poly.entity.Voucher;
-import com.poly.service.StaffService;
+import com.poly.entity.Customer;
+import com.poly.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,8 +30,7 @@ public class StaffController {
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    StaffService staffService;
-
+    CustomerService customerService;
 
     @GetMapping("/staff")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -42,20 +38,20 @@ public class StaffController {
                             @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageRequest,
                             @RequestParam(name = "size", required = false, defaultValue = "2") Integer sizeRequest,
                             @ModelAttribute(name = "search") SearchStaffDto search
-                            ) {
+    ) {
 
-        if(pageRequest<0){
-            pageRequest=1;
+        if (pageRequest < 0) {
+            pageRequest = 1;
         }
-        if(sizeRequest<=0){
-            sizeRequest=1;
+        if (sizeRequest <= 0) {
+            sizeRequest = 1;
         }
 
         session.setAttribute("size", sizeRequest);
         session.setAttribute("page", pageRequest);
 
         Pageable pageable = PageRequest.of(pageRequest - 1, sizeRequest);
-        Page<Staff> staffPage = staffService.loadData(search, pageable);
+        Page<Customer> staffPage = customerService.loadData(search, pageable);
 
         model.addAttribute("totalElements", staffPage.getTotalElements());
         session.setAttribute("list", staffPage);
@@ -69,9 +65,9 @@ public class StaffController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String addStaff(Model model,
                            HttpSession session,
-                           @Valid @ModelAttribute("staff") Staff staff, BindingResult bindingResult,
+                           @Valid @ModelAttribute("staff") Customer staff, BindingResult bindingResult,
                            @RequestParam("image") MultipartFile file
-                           ) {
+    ) {
 
         if (bindingResult.hasErrors()) {
             return "admin/layout";
@@ -79,7 +75,7 @@ public class StaffController {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
         staff.setAvatar(fileName);
         staff.setPassword(passwordEncoder.encode(staff.getPassword()));
-        this.staffService.save(staff);
+        this.customerService.save(staff);
         String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
         try {
             UploadFile.saveFile(uploadDir, fileName, file);
@@ -93,9 +89,9 @@ public class StaffController {
     @GetMapping("/staff/edit/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        Staff staff = staffService.findById(id)
+        Customer staff = customerService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        model.addAttribute("listStaff", staffService.findAll());
+        model.addAttribute("listStaff", customerService.findAll());
         model.addAttribute("staff", staff);
         return "redirect:/admin/staff";
     }
@@ -104,17 +100,16 @@ public class StaffController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String updateUser(@PathVariable("id") Integer id,
                              HttpSession session,
-                             @ModelAttribute("staff") Staff staff, Model model,
+                             @ModelAttribute("staff") Customer staff, Model model,
                              @RequestParam("image") MultipartFile file
-                             ) {
+    ) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
-        Staff findStaff = staffService.findById(staff.getId()).orElse(null);
+        Customer findStaff = customerService.findById(staff.getId()).orElse(null);
         findStaff.setUsername(staff.getUsername());
         findStaff.setName(staff.getName());
         findStaff.setEmail(staff.getEmail());
         findStaff.setGender(staff.isGender());
         findStaff.setPassword(staff.getPassword());
-        findStaff.setPhone(staff.getPhone());
         findStaff.setAddress(staff.getAddress());
         findStaff.setRoles(staff.getRoles());
         findStaff.setBirthday(staff.getBirthday());
@@ -128,22 +123,22 @@ public class StaffController {
                 e.printStackTrace();
             }
         }
-        String password=staff.getPassword();
-        if(password.startsWith("$2a$")&& password.contains("$")){
+        String password = staff.getPassword();
+        if (password.startsWith("$2a$") && password.contains("$")) {
             findStaff.setPassword(password);
-        }else{
+        } else {
             findStaff.setPassword(passwordEncoder.encode(password));
         }
-        this.staffService.save(findStaff);
+        this.customerService.save(findStaff);
         return "redirect:/admin/staff";
     }
 
     @GetMapping("/staff/delete/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteUser(@PathVariable("id") Integer id, Model model) {
-        Staff staff = staffService.findById(id)
+        Customer staff = customerService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        staffService.delete(id);
+        customerService.deleteById(id);
         return "redirect:/admin/staff";
     }
 }

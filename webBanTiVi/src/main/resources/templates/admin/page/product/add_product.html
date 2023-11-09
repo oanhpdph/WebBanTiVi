@@ -1,0 +1,233 @@
+<link rel="stylesheet" href="/admin/plugin/css/product.css">
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Sản phẩm/<a class="text-muted fw-light" href="/admin/product/list-product">Danh sách sản phẩm/</a></span> Thêm sản phẩm</h4>
+
+<div class="card mb-4" style="min-height: 40vh">
+    <div class="mt-3">
+        <div class="modal fade" id="attributes" tabindex="-1" style="display: none;"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalCenterTitle">Danh sách thuộc tính</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col mb-3">
+                                <div class="mb-3 text-end">
+                                    <button type="button"
+                                            class="btn btn-outline-secondary d-inline-flex"
+                                            data-bs-toggle="modal"
+                                            data-bs-dismiss="modal"
+                                            data-bs-target="#add-attribute-modal"
+                                            id="add-attributes"><span
+                                            class="">Thêm thuộc tính</span>
+                                    </button>
+                                </div>
+                                <input type="text" id="search-input"
+                                       class="form-control"
+                                       onkeyup="myFunction()" autocomplete="off"
+                                       placeholder="Enter Name">
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="table-responsive overflow-auto h-px-350" id="scroll">
+                                <table id="tableAttributes"
+                                       class="table table-bordered table-hover text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Tên thuộc tính</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                                id="close-add-attributes">
+                            Đóng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="add-attribute-modal" tabindex="-1"
+             style="display: none;"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add attribute</h5>
+                        <button type="button" class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label class="label">Tên thuộc tính</label>
+                        <input class="form-control" type="text" id="name-attribute">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary"
+                                id="submit-add-attribute">
+                            Thêm
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary"
+                                id="close-add-attribute"
+                                data-bs-toggle="modal"
+                                data-bs-target="#attributes"
+                                data-bs-dismiss="modal">
+                            Quay lại
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="mb-3">
+                    <label class="form-label" for="select-group">Nhóm sản phẩm</label>
+                    <div>
+                        <select class="form-select select2" id="select-group">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Loại sản phẩm</label>
+                    <div>
+                        <select class="form-select select2" id="select-type">
+                            <option></option>
+                        </select>
+                    </div>
+                </div>
+<!--                <div class="mb-3">-->
+<!--                    <label class="form-label">Mã sản phẩm giống </label>-->
+<!--                    <input class="form-control" id="sameProduct">-->
+<!--                    <span class="fst-italic">Để trống nếu không có sản phẩm giống</span>-->
+<!--                </div>-->
+            </div>
+            <div class="col-sm-6">
+                <div class="mb-3">
+                    <label class="form-label">Tên hiển thị</label>
+                    <textarea class="form-control" rows="2" disabled
+                              id="name-display">Loại sản phẩm + SKU</textarea>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <label class="accordion-button collapsed form-label bg-label-dark"
+                               data-bs-toggle="collapse"
+                               data-bs-target="#accordionOne"
+                               aria-controls="accordionOne">
+                            Thuộc tính
+                        </label>
+                    </h2>
+                    <div id="accordionOne" class="accordion-collapse collapse overflow-auto"
+                         data-bs-parent="#accordionExample" style="max-height: 600px">
+                        <div class="accordion-body">
+                            <div class="fst-italic">Nhấn enter để xác định 1 giá trị, click vào
+                                giá trị để xóa
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="item-content">
+                                    <div class="attributes mb-3">
+                                    </div>
+                                </div>
+                            </div>
+                            <!--thêm thuộc tính sản phẩm modal tạo sản phẩm-->
+                            <div>
+                                <button type="button"
+                                        class="btn btn-outline-secondary add-attri"
+                                        data-bs-toggle="modal" data-bs-target="#attributes"
+                                        data-bs-dismiss="modal">
+                                    Thêm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalDetail" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalLongTitle"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-bordered table-hover" id="table-detail-attributes">
+                            <thead>
+                            <tr>
+                                <th>Thuộc tính</th>
+                                <th>Giá trị</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>
+                                    kích cỡ
+                                </td>
+                                <td>Albert Cook</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal" id="delete-product">
+                        Xóa
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-header">
+        <div class="card-title">
+            <h5>Danh sách sản phẩm</h5>
+            <p class="fst-italic">Lưu ý: xóa đi những sản phẩm thừa</p>
+        </div>
+    </div>
+    <div class="card-body" id="detail-pro">
+        <div class="mb-3">
+            <table class="table table-hover table-bordered text-center table-product" id="table-product-detail">
+                <thead>
+                <tr class="row-table fw-semibold">
+                    <td>Tên hiển thị</td>
+                    <td>Mã Sku</td>
+                    <td>Số lượng</td>
+                    <td>Giá nhập</td>
+                    <td>Giá bán</td>
+                    <td>Hình ảnh</td>
+                    <td>Thao tác</td>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-3 text-end">
+            <button class="btn btn-success" type="button" id="save-product">Lưu sản phẩm</button>
+        </div>
+    </div>
+</div>
+<!--</div>-->
+<script src="/admin/plugin/js/product-add.js"></script>
+

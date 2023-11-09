@@ -15,9 +15,7 @@ import java.util.Optional;
 
 @Repository
 public interface BillRepos extends JpaRepository<Bill, Integer> {
-
-
-    @Query(value = "select * from Bill b where b.id_customer=?1", nativeQuery = true)
+    @Query(value = "select * from Bill b where b.id_user=?1", nativeQuery = true)
     Optional<Bill> getBillByCustomer(Integer idCustomer);
 
     @Query(value = "select  b from Bill b  where b.paymentDate =?1")

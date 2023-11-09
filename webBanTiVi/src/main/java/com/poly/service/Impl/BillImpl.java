@@ -3,6 +3,7 @@ package com.poly.service.Impl;
 import com.poly.dto.BillProRes;
 import com.poly.dto.SearchBillDto;
 import com.poly.entity.Bill;
+import com.poly.repository.BillRepos;
 import com.poly.entity.BillStatus;
 import com.poly.entity.Product;
 import com.poly.repository.BillRepos;
@@ -123,7 +124,6 @@ public class BillImpl implements BillService {
             result = entityManager.createQuery(billCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
         }
         Page<Bill> page = new PageImpl<>(result, pageable, result2.size());
-        System.out.println(page);
         return page;
     }
 

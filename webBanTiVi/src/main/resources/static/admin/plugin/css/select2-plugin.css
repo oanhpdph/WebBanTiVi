@@ -16,21 +16,19 @@
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    border-radius: 0.375rem;
+    border-radius: 0.375rem 0 0 0.375rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .select2-container--default.select2-container--focus .select2-selection {
-    border-color: #696cff; /* Thay đổi màu viền khi focus */
+    border-color:#696cff; /* Thay đổi màu viền khi focus */
 }
 
-.select2-container .select2-selection--single {
-    line-height: 1.53;
-    height: 2rem;
-    /*border-color: #696cff;*/
-}
-
-.select2-container--classic .select2-selection--single .select2-selection__arrow {
-    height: 2rem;
-
-}
+/*.select2-container .select2-selection--single {*/
+/*    line-height: 1.53;*/
+/*    height: 2rem;*/
+/*    !*border-color: #696cff;*!*/
+/*}*/
+/*.select2-container--classic .select2-selection--single .select2-selection__arrow {*/
+/*    height: 2rem;*/
+/*}*/

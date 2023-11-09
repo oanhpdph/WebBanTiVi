@@ -1,9 +1,8 @@
 package com.poly.config;
 
 import com.poly.repository.CustomerRepository;
-import com.poly.repository.StaffRepository;
+//import com.poly.repository.StaffRepository;
 import com.poly.service.Impl.CustomerDetailServiceImpl;
-import com.poly.service.Impl.StaffDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +30,7 @@ import java.util.List;
 public class SecurityConfig {
 
 
-    private final StaffRepository staffRepository;
+//    private final StaffRepository staffRepository;
 
     private final CustomerRepository customerRepository;
 
@@ -53,7 +52,7 @@ public class SecurityConfig {
                                 .requestMatchers("/admin/dashboard/**").permitAll()
 //                                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "STAFF")
                                 .anyRequest().authenticated())
-                .authenticationProvider(authenticationProvider())
+//                .authenticationProvider(authenticationProvider())
                 .authenticationProvider(CustomerAuthenticationProvider())
                 .formLogin()
                 .loginPage("/login")
@@ -67,24 +66,24 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new StaffDetailServiceImpl(staffRepository);
-    }
+//
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        return new StaffDetailServiceImpl(staffRepository);
+//    }
 
     @Bean
     public UserDetailsService customerDetailsService() {
         return new CustomerDetailServiceImpl(customerRepository);
     }
 
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
+//    @Bean
+//    public AuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//        authProvider.setUserDetailsService(userDetailsService());
+//        authProvider.setPasswordEncoder(passwordEncoder());
+//        return authProvider;
+//    }
 
     @Bean
     public AuthenticationProvider CustomerAuthenticationProvider() {
@@ -98,7 +97,7 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager() throws Exception {
         List<AuthenticationProvider> providers = new ArrayList<>();
         providers.add(CustomerAuthenticationProvider());
-        providers.add(authenticationProvider());
+//        providers.add(authenticationProvider());
 
         ProviderManager authenticationManager = new ProviderManager(providers);
         return authenticationManager;

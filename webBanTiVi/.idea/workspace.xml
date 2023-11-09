@@ -4,6 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" afterDir="false" />
+    </list>
     <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +23,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
+        <option value="Interface" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
         <option value="Class" />
         <option value="Interface" />
         <option value="HTML File" />
@@ -60,11 +66,9 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-<<<<<<< HEAD
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../WebBanTiVi-main/webBanTiVi" />
-=======
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Website_selling_mens_sports_shoes/Website_Selling_Shoes_Men_Sport" />
->>>>>>> 089f941cefa08a1d08a79d1d1a79de68361df3b0
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -77,6 +81,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
@@ -103,6 +108,19 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WebBanTiViApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="WebBanTiVi" />
       <extension name="coverage">
@@ -213,7 +231,6 @@
       <workItem from="1698420619950" duration="360000" />
       <workItem from="1698465809472" duration="1466000" />
       <workItem from="1698507754181" duration="597000" />
-<<<<<<< HEAD
       <workItem from="1698511069371" duration="3825000" />
       <workItem from="1698652412344" duration="8000" />
       <workItem from="1698759825396" duration="1987000" />
@@ -229,8 +246,10 @@
       <workItem from="1699356415760" duration="7526000" />
       <workItem from="1699369723268" duration="1284000" />
       <workItem from="1699525594389" duration="7937000" />
-=======
       <workItem from="1698511069371" duration="3327000" />
+      <workItem from="1699282290164" duration="21723000" />
+      <workItem from="1699332622005" duration="30649000" />
+      <workItem from="1699452862584" duration="34103000" />
       <workItem from="1699007250129" duration="6153000" />
       <workItem from="1699019058892" duration="17067000" />
       <workItem from="1699082036542" duration="3749000" />
@@ -242,7 +261,6 @@
       <workItem from="1699515612710" duration="10459000" />
       <workItem from="1699540938406" duration="39000" />
       <workItem from="1699541184084" duration="914000" />
->>>>>>> 089f941cefa08a1d08a79d1d1a79de68361df3b0
     </task>
     <servers />
   </component>
@@ -267,12 +285,17 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/admin/EvaluateController.java</url>
           <line>79</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/service/Impl/BillImpl.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user1/PromotionController.java</url>
           <line>42</line>
           <option name="timeStamp" value="41" />
@@ -307,6 +330,13 @@
           <line>422</line>
           <option name="timeStamp" value="39" />
         </line-breakpoint>
+        <breakpoint type="java-exception">
+          <properties class="java.io.IOException" package="java.io" />
+          <option name="timeStamp" value="42" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.StackOverflowError" package="java.lang" />
+          <option name="timeStamp" value="47" />
         <breakpoint enabled="true" type="java-exception">
           <properties class="org.springframework.beans.factory.UnsatisfiedDependencyException" package="org.springframework.beans.factory" />
           <option name="timeStamp" value="54" />
@@ -325,6 +355,10 @@
         <watch expression="paramName" />
       </configuration>
     </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1697354755279" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
