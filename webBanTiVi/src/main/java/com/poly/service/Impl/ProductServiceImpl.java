@@ -2,6 +2,7 @@ package com.poly.service.Impl;
 
 import com.poly.entity.Color;
 import com.poly.entity.Product;
+import com.poly.repository.CouponRepository;
 import com.poly.entity.ProductDetailView;
 import com.poly.repository.ColorRepository;
 import com.poly.repository.ProductRepository;
@@ -12,13 +13,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
     ProductRepository productRepository;
+
+
+    @Autowired
+    CouponRepository couponRepository;
+
+
     @Autowired
     ColorRepository colorRepository;
+
     @Override
     public Product save(Product product) {
         return productRepository.save(product);
@@ -38,6 +45,7 @@ public class ProductServiceImpl implements ProductService {
     public Product findById(Integer id) {
         return productRepository.findById(id).get();
     }
+
 
     @Override
     public ProductDetailView getProductDetailById(Integer id) {
@@ -69,4 +77,5 @@ public class ProductServiceImpl implements ProductService {
     public Product getOne(Integer id) {
         return productRepository.findById(id).get();
     }
+
 }

@@ -27,4 +27,10 @@ public class Coupon {
 
     @Column(name = "image")
     private String image;
+
+
+
+//    @ManyToOne
+//    @JoinColumn(name = "id_product")
+//    private Product product;
 }

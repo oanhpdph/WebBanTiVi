@@ -20,6 +20,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
+        <option value="Class" />
+        <option value="Interface" />
         <option value="HTML File" />
         <option value="Interface" />
         <option value="Interface" />
@@ -58,7 +60,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+<<<<<<< HEAD
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../WebBanTiVi-main/webBanTiVi" />
+=======
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Website_selling_mens_sports_shoes/Website_Selling_Shoes_Men_Sport" />
+>>>>>>> 089f941cefa08a1d08a79d1d1a79de68361df3b0
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -207,6 +213,23 @@
       <workItem from="1698420619950" duration="360000" />
       <workItem from="1698465809472" duration="1466000" />
       <workItem from="1698507754181" duration="597000" />
+<<<<<<< HEAD
+      <workItem from="1698511069371" duration="3825000" />
+      <workItem from="1698652412344" duration="8000" />
+      <workItem from="1698759825396" duration="1987000" />
+      <workItem from="1698761912165" duration="6931000" />
+      <workItem from="1698849069728" duration="7177000" />
+      <workItem from="1698897123433" duration="4674000" />
+      <workItem from="1698914809485" duration="6359000" />
+      <workItem from="1698930040709" duration="9373000" />
+      <workItem from="1698986060792" duration="23000" />
+      <workItem from="1699002088904" duration="12970000" />
+      <workItem from="1699071718274" duration="6871000" />
+      <workItem from="1699090592227" duration="21193000" />
+      <workItem from="1699356415760" duration="7526000" />
+      <workItem from="1699369723268" duration="1284000" />
+      <workItem from="1699525594389" duration="7937000" />
+=======
       <workItem from="1698511069371" duration="3327000" />
       <workItem from="1699007250129" duration="6153000" />
       <workItem from="1699019058892" duration="17067000" />
@@ -219,6 +242,7 @@
       <workItem from="1699515612710" duration="10459000" />
       <workItem from="1699540938406" duration="39000" />
       <workItem from="1699541184084" duration="914000" />
+>>>>>>> 089f941cefa08a1d08a79d1d1a79de68361df3b0
     </task>
     <servers />
   </component>
