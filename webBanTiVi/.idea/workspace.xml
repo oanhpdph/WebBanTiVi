@@ -19,6 +19,13 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+<<<<<<< HEAD
+=======
+        <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="Class" />
+        <option value="Interface" />
+>>>>>>> origin/khanhdqnew
         <option value="Interface" />
         <option value="JavaScript File" />
         <option value="CSS File" />
@@ -56,7 +63,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+<<<<<<< HEAD
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../sneat-1.0.0" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates/user/page/promotion" />
+>>>>>>> origin/khanhdqnew
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -69,18 +80,25 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="trusted.hosts" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.poly" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\promotion" />
+      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page\promotion" />
+      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page" />
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\static\image" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\templates" />
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\templates\user\page" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.poly.controller.user" />
+      <recent name="com.poly.controller.user1" />
     </key>
   </component>
   <component name="RunManager">
@@ -176,6 +194,9 @@
       <workItem from="1697538943053" duration="463000" />
       <workItem from="1697626646136" duration="144000" />
       <workItem from="1697626876632" duration="435000" />
+      <workItem from="1697634363967" duration="5280000" />
+      <workItem from="1697991211389" duration="2702000" />
+      <workItem from="1698154339968" duration="5363000" />
       <workItem from="1697634363967" duration="5880000" />
       <workItem from="1697640833006" duration="1614000" />
       <workItem from="1697713010976" duration="736000" />
@@ -188,6 +209,15 @@
       <workItem from="1698042926308" duration="323000" />
       <workItem from="1698050592237" duration="82000" />
       <workItem from="1698075025216" duration="3550000" />
+      <workItem from="1698252668219" duration="4063000" />
+      <workItem from="1698326320003" duration="11482000" />
+      <workItem from="1698341410752" duration="11212000" />
+      <workItem from="1698401158580" duration="3512000" />
+      <workItem from="1698498023523" duration="2177000" />
+      <workItem from="1698500327035" duration="8115000" />
+      <workItem from="1698758517663" duration="9650000" />
+      <workItem from="1698851582911" duration="1449000" />
+      <workItem from="1699003480535" duration="2112000" />
       <workItem from="1698128014929" duration="261000" />
       <workItem from="1698225323223" duration="6552000" />
       <workItem from="1698239802181" duration="11534000" />
@@ -196,7 +226,12 @@
       <workItem from="1698465809472" duration="1466000" />
       <workItem from="1698507754181" duration="597000" />
       <workItem from="1698511069371" duration="3327000" />
+<<<<<<< HEAD
       <workItem from="1699539516058" duration="8019000" />
+=======
+      <workItem from="1699007250129" duration="6153000" />
+      <workItem from="1699019058892" duration="17067000" />
+>>>>>>> origin/khanhdqnew
     </task>
     <servers />
   </component>
@@ -225,6 +260,36 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/admin/EvaluateController.java</url>
           <line>79</line>
           <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user1/PromotionController.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user1/PromotionController.java</url>
+          <line>92</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java</url>
+          <line>126</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java</url>
+          <line>89</line>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java</url>
+          <line>94</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user/PromotionController.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/main/resources/templates/admin/page/staff.html</url>
