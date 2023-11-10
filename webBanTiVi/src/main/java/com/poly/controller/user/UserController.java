@@ -77,10 +77,12 @@ public class UserController {
         model.addAttribute("changeInfo", new ChangeInforDto());
         return "/user/index";
     }
-    @GetMapping("/invoice/invoice_detail")
-    public String loadInvoiceDetail(HttpSession session){
-        session.setAttribute("pageView","/user/page/invoice/detail_invoice.html");
 
+    @GetMapping("/invoice/invoice_detail")
+    public String loadInvoiceDetail(HttpSession session) {
+        session.setAttribute("pageView", "/user/page/invoice/detail_invoice.html");
+        return "/user/index";
+    }
 
     @GetMapping("/invoice/invoice_detail/{id}")
     public String loadInvoiceDetail(HttpSession session, Model model, @PathVariable("id") Integer id) {
