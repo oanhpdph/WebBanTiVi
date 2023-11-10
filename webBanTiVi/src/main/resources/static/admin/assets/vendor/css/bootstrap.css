@@ -10107,6 +10107,11 @@ button.list-group-item-gray.active {
   --bs-bg-opacity: 1;
   background-color: #fff !important;
 }
+.bg-red {
+  --bs-bg-opacity: 1;
+  background-color: red !important;
+  color: white;
+}
 
 .bg-body {
   --bs-bg-opacity: 1;

@@ -1,29 +1,15 @@
 package com.poly.controller.admin;
 
-import com.poly.common.UploadFile;
 import com.poly.entity.Color;
-
-import com.poly.entity.Customer;
-import com.poly.entity.Size;
-import com.poly.entity.Staff;
 import com.poly.service.Impl.ColorServiceImpl;
-import com.poly.service.Impl.SizeServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.List;
 
 
 @Controller

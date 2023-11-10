@@ -23,4 +23,10 @@ public class Color {
 
     @Column(name = "namecolor")
     private String nameColor;
+
+    public Color(Integer id, String code, String nameColor, Brand brand) {
+        this.id = id;
+        this.code = code;
+        this.nameColor = nameColor;
+    }
 }

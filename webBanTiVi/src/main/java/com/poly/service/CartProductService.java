@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface CartProductService {
 
@@ -17,5 +19,8 @@ public interface CartProductService {
     public void delete(CartProductId id);
 
     public CartProduct edit(CartProductId id);
+
+    Optional<CartProduct> getOne(CartProductId id);
+
 }
 

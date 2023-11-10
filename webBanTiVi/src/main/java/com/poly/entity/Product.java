@@ -64,10 +64,14 @@ public class Product {
     @JoinColumn(name = "id_resolution")
     private Resolution resolution;
 
+
     @Column(name = "active")
     private Boolean active;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private List<CouponProduct> couponProducts;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<ImageProduct> listImage;
 
     @OneToMany(mappedBy = "product")
@@ -75,4 +79,28 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private Set<CartProduct> setCart;
+
+    public String getCouponProduct() {
+        List<CouponProduct> list = this.couponProducts;
+        for (CouponProduct x : list
+        ) {
+            if (x.getStatus() == 1) {
+                return x.getCoupon().getValue();
+            }
+        }
+        return null;
+
+    }
+
+    public BigDecimal getCoupon() {
+        if (this.getCouponProduct() != null) {
+            String ptkm = this.getCouponProduct().replace("%", "");
+            BigDecimal giasau = this.price_export.subtract(this.price_export.multiply(BigDecimal.valueOf(Double.parseDouble(ptkm))).divide(BigDecimal.valueOf(100)));
+            return giasau;
+        }
+        return BigDecimal.ZERO;
+    }
+
+//    @OneToMany(mappedBy = "product")
+//    private Set<Coupon> coupon;
 }

@@ -14,7 +14,7 @@
     <ul class="menu-inner py-1 " style="padding-bottom:100px !important;">
         <!-- Dashboard -->
         <li th:class="${#strings.equals(session.active,'/dashboard')?'menu-item active':'menu-item'}">
-            <a th:href="@{/admin/dashboard}" class="menu-link">
+            <a th:href="@{/admin}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div th:text="#{sidebar.dashboard}"></div>
             </a>
@@ -68,6 +68,11 @@
                 <li th:class="${#strings.equals(session.active,'/bill/payment_method')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/bill/payment_method}" class="menu-link">
                         <div th:text="#{sidebar.paymentMethod}"></div>
+                    </a>
+                </li>
+                <li th:class="${#strings.equals(session.active,'/bill/list_invoice_return')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/bill/list_invoice_return}" class="menu-link">
+                        <div>Invoice Return</div>
                     </a>
                 </li>
             </ul>

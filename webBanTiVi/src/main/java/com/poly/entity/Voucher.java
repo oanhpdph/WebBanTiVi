@@ -56,4 +56,5 @@ public class Voucher {
     @Column(name="image")
     private String image;
 
+
 }
