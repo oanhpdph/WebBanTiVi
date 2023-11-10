@@ -76,7 +76,6 @@ public class UserController {
         model.addAttribute("changeInfo", new ChangeInforDto());
         return "/user/index";
     }
-
     @GetMapping("/invoice/invoice_detail/{id}")
     public String loadInvoiceDetail(HttpSession session, Model model, @PathVariable("id") Integer id) {
         Bill bill = this.billService.getOneById(id);

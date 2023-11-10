@@ -7,6 +7,7 @@
     <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" afterDir="false" />
     </list>
+    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -108,15 +109,13 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -250,6 +249,7 @@
       <workItem from="1699539516058" duration="8019000" />
       <workItem from="1699282290164" duration="21723000" />
       <workItem from="1699332622005" duration="30649000" />
+      <workItem from="1699452862584" duration="38985000" />
       <workItem from="1699452862584" duration="34103000" />
       <workItem from="1699007250129" duration="6153000" />
       <workItem from="1699019058892" duration="17067000" />
@@ -339,6 +339,10 @@
         <breakpoint enabled="true" type="java-exception">
           <properties class="java.lang.StackOverflowError" package="java.lang" />
           <option name="timeStamp" value="47" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.springframework.beans.factory.UnsatisfiedDependencyException" package="org.springframework.beans.factory" />
+          <option name="timeStamp" value="54" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
