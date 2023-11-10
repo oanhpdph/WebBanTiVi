@@ -3,7 +3,7 @@ package com.poly.controller.login;
 
 import com.poly.common.RandomNumber;
 import com.poly.common.SendEmail;
-import com.poly.config.CustomerUserDetail;
+import com.poly.dto.UserDetailDto;
 import com.poly.dto.ChangeInforDto;
 import com.poly.dto.LoginDto;
 import com.poly.entity.Customer;
@@ -156,7 +156,7 @@ public class LoginController {
         List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
          String role=roles.get(0).toString();
 //        if (role.equals("USER")) {
-            CustomerUserDetail  customerUserDetail = (CustomerUserDetail) userDetails;
+            UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
             Customer customer  =this.customerService.findById(customerUserDetail.getId()).get();
             customer.setUsername(changeInforDto.getName());
             customer.setPhoneNumber(changeInforDto.getPhone());

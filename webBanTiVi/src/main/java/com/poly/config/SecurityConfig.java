@@ -2,7 +2,7 @@ package com.poly.config;
 
 import com.poly.repository.CustomerRepository;
 //import com.poly.repository.StaffRepository;
-import com.poly.service.Impl.CustomerDetailServiceImpl;
+import com.poly.service.Impl.UserDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -52,12 +52,12 @@ public class SecurityConfig {
                                 .requestMatchers("/admin/dashboard/**").permitAll()
 //                                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "STAFF")
                                 .anyRequest().authenticated())
-//                .authenticationProvider(authenticationProvider())
                 .authenticationProvider(CustomerAuthenticationProvider())
-                .formLogin()
-                .loginPage("/login")
-                .and()
-                .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler());
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .permitAll()
+                )
+                .exceptionHandling((exception)-> exception.accessDeniedHandler(myAccessDeniedHandler()));
 
         return http.build();
     }
@@ -66,24 +66,12 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-//
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        return new StaffDetailServiceImpl(staffRepository);
-//    }
+
 
     @Bean
     public UserDetailsService customerDetailsService() {
-        return new CustomerDetailServiceImpl(customerRepository);
+        return new UserDetailServiceImpl(customerRepository);
     }
-
-//    @Bean
-//    public AuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userDetailsService());
-//        authProvider.setPasswordEncoder(passwordEncoder());
-//        return authProvider;
-//    }
 
     @Bean
     public AuthenticationProvider CustomerAuthenticationProvider() {
@@ -97,7 +85,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager() throws Exception {
         List<AuthenticationProvider> providers = new ArrayList<>();
         providers.add(CustomerAuthenticationProvider());
-//        providers.add(authenticationProvider());
 
         ProviderManager authenticationManager = new ProviderManager(providers);
         return authenticationManager;

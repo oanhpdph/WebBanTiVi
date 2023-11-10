@@ -7,7 +7,7 @@ import com.poly.entity.idClass.CartProductId;
 import com.poly.service.CartProductService;
 import com.poly.service.Impl.CPServiceImpl;
 import com.poly.service.Impl.CartSeviceImpl;
-import com.poly.service.Impl.CustomerServiceImpl;
+import com.poly.service.Impl.UserServiceImpl;
 import com.poly.service.Impl.ProductServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
 @Controller
 public class AddToCartController {
     @Autowired
@@ -29,7 +23,7 @@ public class AddToCartController {
     @Autowired
     ProductServiceImpl productService;
     @Autowired
-    CustomerServiceImpl customerService;
+    UserServiceImpl customerService;
     @Autowired
     CartSeviceImpl cartSevice;
     @Autowired
