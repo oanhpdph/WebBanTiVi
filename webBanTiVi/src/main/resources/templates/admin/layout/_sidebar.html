@@ -48,12 +48,6 @@
 <!--                </li>-->
             </ul>
         </li>
-        <li th:class="${#strings.equals(session.active,'/staff')?'menu-item active':'menu-item'}">
-            <a th:href="@{/admin/staff}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user-pin"></i>
-                <div th:text="#{sidebar.staff}">Staff</div>
-            </a>
-        </li>
         <li th:class="${#strings.contains(session.active,'/bill')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-receipt"></i>

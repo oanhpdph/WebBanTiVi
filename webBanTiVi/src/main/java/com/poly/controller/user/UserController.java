@@ -1,7 +1,6 @@
 package com.poly.controller.user;
 
-import com.poly.config.CustomerUserDetail;
-import com.poly.config.StaffUserDetail;
+import com.poly.dto.UserDetailDto;
 import com.poly.dto.ChangeInforDto;
 import com.poly.dto.ImageReturnDto;
 import com.poly.dto.ReturnDto;
@@ -77,13 +76,6 @@ public class UserController {
         model.addAttribute("changeInfo", new ChangeInforDto());
         return "/user/index";
     }
-
-    @GetMapping("/invoice/invoice_detail")
-    public String loadInvoiceDetail(HttpSession session) {
-        session.setAttribute("pageView", "/user/page/invoice/detail_invoice.html");
-        return "/user/index";
-    }
-
     @GetMapping("/invoice/invoice_detail/{id}")
     public String loadInvoiceDetail(HttpSession session, Model model, @PathVariable("id") Integer id) {
         Bill bill = this.billService.getOneById(id);
@@ -108,14 +100,11 @@ public class UserController {
         List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
         String role = roles.get(0).toString();
         if (role.equals("USER")) {
-            CustomerUserDetail customerUserDetail = (CustomerUserDetail) userDetails;
+            UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
             List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
             Date today = new Date();
             model.addAttribute("today", today);
             model.addAttribute("bill", billList);
-        } else {
-            StaffUserDetail staffUserDetail = (StaffUserDetail) userDetails;
-            model.addAttribute("bill", this.billService.findAllBillByUser(staffUserDetail.getId()));
         }
         return "/user/index";
     }
