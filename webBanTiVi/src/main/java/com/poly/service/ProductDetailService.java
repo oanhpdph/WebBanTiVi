@@ -16,6 +16,8 @@ public interface ProductDetailService {
 
     Page<ProductDetail> findAll(ProductDetailDto productDetailDto, Pageable pageable);
 
+    List<ProductDetail> findAll();
+
     Boolean delete(Integer id);
 
     List<ProductDetail> update(List<ProductDetailDto> productDetailDto);

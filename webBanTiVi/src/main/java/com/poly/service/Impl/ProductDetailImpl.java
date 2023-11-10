@@ -142,6 +142,11 @@ public class ProductDetailImpl implements ProductDetailService {
     }
 
     @Override
+    public List<ProductDetail> findAll() {
+        return productDetailRepo.findAll();
+    }
+
+    @Override
     public Boolean delete(Integer id) {
         ProductDetail productDetail = findById(id);
         if (productDetail != null) {

@@ -16,7 +16,7 @@
         <li th:class="${#strings.equals(session.active,'/dashboard')?'menu-item active':'menu-item'}">
             <a th:href="@{/admin}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div th:text="#{sidebar.dashboard}"></div>
+                <div>Bảng điều khiển</div>
             </a>
         </li>
 <!--        <li th:class="${#strings.equals(session.active,'/statistic')?'menu-item active':'menu-item'}">-->
@@ -27,18 +27,18 @@
 <!--        </li>-->
 
         <li class="menu-header small text-uppercase">
-            <span th:text="#{sidebar.management}"></span>
+            <span>Quản lý</span>
         </li>
 
         <li th:class="${#strings.contains(session.active,'/product')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-receipt"></i>
-                <div>Product</div>
+                <i class='menu-icon tf-icons bx bx-package'></i>
+                <div>Sản phẩm</div>
             </a>
             <ul class="menu-sub">
                 <li th:class="${#strings.equals(session.active,'/product/list-product')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/product/list-product}" class="menu-link">
-                        <div>List product</div>
+                        <div>Danh sách sản phẩm</div>
                     </a>
                 </li>
 <!--                <li th:class="${#strings.equals(session.active,'/product/add-product')?'menu-item active':'menu-item'}">-->
@@ -48,25 +48,31 @@
 <!--                </li>-->
             </ul>
         </li>
+<!--        <li th:class="${#strings.equals(session.active,'/staff')?'menu-item active':'menu-item'}">-->
+<!--            <a th:href="@{/admin/staff}" class="menu-link">-->
+<!--                <i class="menu-icon tf-icons bx bx-user-pin"></i>-->
+<!--                <div>Nhân viên</div>-->
+<!--            </a>-->
+<!--        </li>-->
         <li th:class="${#strings.contains(session.active,'/bill')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-receipt"></i>
-                <div th:text="#{sidebar.invoice}"></div>
+                <div>Hóa đơn</div>
             </a>
             <ul class="menu-sub">
                 <li th:class="${#strings.equals(session.active,'/bill/list_bill')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/bill/list_bill}" class="menu-link">
-                        <div th:text="#{sidebar.listInvoice}"></div>
+                        <div>Danh sách hóa đơn</div>
                     </a>
                 </li>
-                <li th:class="${#strings.equals(session.active,'/bill/payment_method')?'menu-item active':'menu-item'}">
-                    <a th:href="@{/admin/bill/payment_method}" class="menu-link">
-                        <div th:text="#{sidebar.paymentMethod}"></div>
-                    </a>
-                </li>
+<!--                <li th:class="${#strings.equals(session.active,'/bill/payment_method')?'menu-item active':'menu-item'}">-->
+<!--                    <a th:href="@{/admin/bill/payment_method}" class="menu-link">-->
+<!--                        <div th:text="#{sidebar.paymentMethod}"></div>-->
+<!--                    </a>-->
+<!--                </li>-->
                 <li th:class="${#strings.equals(session.active,'/bill/list_invoice_return')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/bill/list_invoice_return}" class="menu-link">
-                        <div>Invoice Return</div>
+                        <div>Trả hàng</div>
                     </a>
                 </li>
             </ul>
@@ -74,12 +80,17 @@
         <li th:class="${#strings.contains(session.active,'customer')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-user-circle"></i>
-                <div th:text="#{sidebar.customer}"></div>
+                <div>Tài khoản</div>
             </a>
             <ul class="menu-sub">
-                <li th:class="${#strings.equals(session.active,'/customer/list')?'menu-item active':'menu-item'}">
-                    <a th:href="@{/admin/customer/list}" class="menu-link">
-                        <div th:text="#{sidebar.listCustomer}"></div>
+<!--                <li th:class="${#strings.equals(session.active,'/customer/list')?'menu-item active':'menu-item'}">-->
+<!--                    <a th:href="@{/admin/customer/list}" class="menu-link">-->
+<!--                        <div>Danh sách tài khoản khách hàng</div>-->
+<!--                    </a>-->
+<!--                </li>-->
+                <li th:class="${#strings.equals(session.active,'/staff')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/staff}" class="menu-link">
+                        <div >Danh sách tài khoản</div>
                     </a>
                 </li>
             </ul>
@@ -87,12 +98,12 @@
         <li th:class="${#strings.contains(session.active,'evaluate')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-comment-dots"></i>
-                <div data-i18n="Customer">Evaluate</div>
+                <div data-i18n="Customer">Đánh giá</div>
             </a>
             <ul class="menu-sub">
                 <li th:class="${#strings.equals(session.active,'/evaluate/list')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/evaluate/list}" class="menu-link">
-                        <div data-i18n="list customer">List evalute</div>
+                        <div data-i18n="list customer">Danh sách đánh giá</div>
                     </a>
                 </li>
             </ul>
@@ -100,12 +111,12 @@
         <li th:class="${#strings.contains(session.active,'voucher')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bxs-coupon"></i>
-                <div th:text="#{sidebar.voucher}"></div>
+                <div >Khuyến mãi</div>
             </a>
             <ul class="menu-sub">
                 <li th:class="${#strings.equals(session.active,'/voucher/list')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/voucher/list}" class="menu-link">
-                        <div th:text="#{sidebar.listVoucher}"></div>
+                        <div th:text="#{sidebar.listVoucher}">Voucher</div>
                     </a>
                 </li>
                 <li th:class="${#strings.equals(session.active,'/voucherCustomer')?'menu-item active':'menu-item'}">
@@ -151,30 +162,30 @@
         <li class="menu-header small text-uppercase">
             <span>Other</span>
         </li>
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class='menu-icon tf-icons bx bx-globe'></i>
-                <div th:text="#{lang.language}"></div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a class="menu-link" href="?lang=vi">
-                        <span><img class="w-px-20" src="/image/vietnam.png"></span>
-                        <span class="align-middle" th:text="#{lang.vietnamese}"></span>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a class="menu-link" href="?lang=en">
-                        <span><img class="w-px-20" src="/image/english.png"></span>
-                        <span class="align-middle" th:text="#{lang.english}"></span>
-                    </a>
-                </li>
-            </ul>
-        </li>
+<!--        <li class="menu-item">-->
+<!--            <a href="javascript:void(0);" class="menu-link menu-toggle">-->
+<!--                <i class='menu-icon tf-icons bx bx-globe'></i>-->
+<!--                <div th:text="#{lang.language}"></div>-->
+<!--            </a>-->
+<!--            <ul class="menu-sub">-->
+<!--                <li class="menu-item">-->
+<!--                    <a class="menu-link" href="?lang=vi">-->
+<!--                        <span><img class="w-px-20" src="/image/vietnam.png"></span>-->
+<!--                        <span class="align-middle" th:text="#{lang.vietnamese}"></span>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li class="menu-item">-->
+<!--                    <a class="menu-link" href="?lang=en">-->
+<!--                        <span><img class="w-px-20" src="/image/english.png"></span>-->
+<!--                        <span class="align-middle" th:text="#{lang.english}"></span>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </li>-->
         <li class="menu-item">
             <a class="menu-link" th:href="@{/login}">
                 <i class="menu-icon tf-icons bx bx-power-off me-2"></i>
-                <span class="align-middle" th:text="#{navbar.logOut}"></span>
+                <span class="align-middle">Đăng xuất</span>
             </a>
         </li>
     </ul>
