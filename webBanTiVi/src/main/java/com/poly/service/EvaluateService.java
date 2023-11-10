@@ -2,6 +2,7 @@ package com.poly.service;
 
 import com.poly.entity.Evaluate;
 import com.poly.dto.EvaluateRes;
+
 import java.util.List;
 
 public interface EvaluateService {
@@ -13,4 +14,6 @@ public interface EvaluateService {
     public void delete(Integer id);
 
     public Evaluate edit(Integer id);
+
+    Evaluate findById(Integer id);
 }
