@@ -1,6 +1,6 @@
 package com.poly.service.Impl;
 
-import com.poly.config.CustomerUserDetail;
+import com.poly.dto.UserDetailDto;
 import com.poly.entity.Customer;
 import com.poly.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,13 +13,13 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class CustomerDetailServiceImpl implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService {
 
     private  final CustomerRepository customerRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Customer> userInfo = customerRepository.findByUsername(username) ;
-        return userInfo.map(CustomerUserDetail::new)
+        return userInfo.map(UserDetailDto::new)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found " + username));
     }
 }

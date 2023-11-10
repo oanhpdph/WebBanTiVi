@@ -1,5 +1,4 @@
-package com.poly.config;
-
+package com.poly.dto;
 
 import com.poly.entity.Customer;
 import lombok.AllArgsConstructor;
@@ -15,22 +14,20 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by HachNV on 29/05/2023
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StaffUserDetail implements UserDetails {
+public class UserDetailDto implements UserDetails {
+
     private int id;
 
     private String name;
 
     private String password;
 
-    private String roles;
-
     private String avatar;
+
+    private String roles;
 
     private String phone;
 
@@ -44,25 +41,22 @@ public class StaffUserDetail implements UserDetails {
 
     private List<GrantedAuthority> authorities;
 
-    public StaffUserDetail(Customer staff) {
-        id=staff.getId();
-        name = staff.getUsername();
-        password = staff.getPassword();
-        avatar=staff.getAvatar();
-        roles=staff.getRoles();
-        phone=staff.getPhoneNumber();
-        email=staff.getEmail();
-        address=staff.getAddress();
-        birthday=staff.getBirthday();
-        gender =staff.isGender();
-        authorities = Arrays.stream(staff.getRoles().split(","))
+    public UserDetailDto(Customer customer) {
+        id=customer.getId();
+        name = customer.getUsername();
+        password = customer.getPassword();
+        roles = customer.getRoles();
+        avatar = customer.getAvatar();
+        email = customer.getEmail();
+        address = customer.getAddress();
+        birthday = customer.getBirthday();
+        phone = customer.getPhoneNumber();
+        gender = customer.isGender();
+        authorities = Arrays.stream(customer.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
 
-    public String getAvatar(){
-        return avatar;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

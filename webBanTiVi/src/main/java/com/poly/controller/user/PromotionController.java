@@ -1,6 +1,6 @@
 package com.poly.controller.user;
 
-import com.poly.config.CustomerUserDetail;
+import com.poly.dto.UserDetailDto;
 import com.poly.dto.CouponRes;
 import com.poly.dto.VoucherCustomerRes;
 import com.poly.entity.Product;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -118,7 +118,7 @@ public class PromotionController {
     }
 
     @Autowired
-    CustomerServiceImpl customerService;
+    UserServiceImpl customerService;
 
     @GetMapping("/vouchercode/{id}")
     public String vouchercode(HttpSession session, Model model, @PathVariable("id") Integer id) {
@@ -136,7 +136,7 @@ public class PromotionController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            CustomerUserDetail customerUserDetail = (CustomerUserDetail) userDetails;
+            UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
             for (VoucherCustomer x : voucherCustomerService.findAll()) {
                 if (x.getCustomer().getId() == customerUserDetail.getId()) {
 
