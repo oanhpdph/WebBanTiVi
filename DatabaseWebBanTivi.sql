@@ -452,7 +452,8 @@ CREATE TABLE [type]
 Create table field(
 	id		int identity(1,1) primary key,
 	code	varchar(10),
-	name	nvarchar(100) not null
+	name	nvarchar(100) not null,
+	variant bit
 )
 
 CREATE TABLE coupon_product
