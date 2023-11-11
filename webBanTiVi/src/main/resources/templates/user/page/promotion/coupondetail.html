@@ -10,7 +10,7 @@
         </div>
         <p>Chương trình bắt đầu: [(${couponres.getDate_Start()})] - Kết thúc: [(${couponres.getDate_End()})]</p>
         <hr>
-        <img th:src="@{'/image/' + *{couponres.getImage()}}" width="1000 px" height="auto" style="text-align: center">
+        <img th:src="@{'/image/' + *{couponres.getImage()}}" width="100%" height="auto"  display="block" style="text-align: center">
         <hr>
     </div>
 </section>
@@ -30,10 +30,10 @@
                 <a href="#" class="stretched-link mb-2"><span
                         class="fs-4 fw-semibold card-title">
                                                         [(${product.getName()})]</span></a>
-                <div class="fs-large fw-bold">Hãng: [(${product.getBrand().getNameBrand()})]</div>
+                <div class="fs-large fw-bold">Hãng: </div>
                 <hr>
-                <div class="mb-1"><span class="border mx-1 p-1">[(${product.getSize().getNameSizeInch()})]</span><span
-                        class="border mx-1 p-1">[(${product.getResolution().getNameResolution()})]</span>
+                <div class="mb-1"><span class="border mx-1 p-1">Full HD</span><span
+                        class="border mx-1 p-1">55inch</span>
                 </div>
                 <div><span class="text-strike-through fs-big">[(${product.getPrice_export().intValue()})] <small
                         class="align-text-top">đ</small></span>
