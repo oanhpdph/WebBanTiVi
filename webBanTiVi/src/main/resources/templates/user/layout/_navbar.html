@@ -50,7 +50,7 @@
                                    data-bs-toggle="dropdown">
                                     <!--                                    <div class="">-->
                                     <img th:src="@{'/image/'+${#authentication.principal.avatar}}" alt=""
-                                         class="w-px-5 h-px-5 rounded-circle">
+                                         class="w-px-30 h-px-30 rounded-circle">
 
                                     <!--                                    </div>-->
                                 </a>
@@ -64,7 +64,7 @@
                                             <i class='bx bxl-dropbox'></i>
                                             <span class="align-middle">Đơn Hàng</span>
                                         </a>
-                                        <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')}">
+                                        <div th:if="${#authorization.expression('hasAuthority(''ADMIN'')')|| #authorization.expression('hasAuthority(''STAFF'')')}">
                                             <a class="dropdown-item" th:href="@{/admin}">
                                                 <i class='bx bx-right-arrow-alt'></i>
                                                 <span class="align-middle">Trang quản trị</span>
@@ -81,7 +81,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <!--/ User -->
+                            <!--/ Users -->
 
                         </ul>
 

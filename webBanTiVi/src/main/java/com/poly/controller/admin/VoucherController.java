@@ -29,19 +29,18 @@ public class VoucherController {
     private VoucherService voucherService;
 
 
-
     // voucher
     @GetMapping("/voucher/list")
     public String voucher(HttpSession session, Model model,
                           @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageRequest,
                           @RequestParam(name = "size", required = false, defaultValue = "2") Integer sizeRequest,
                           @ModelAttribute(name = "search") SearchVoucherDto search
-                          ) {
-        if(pageRequest<0){
-            pageRequest=1;
+    ) {
+        if (pageRequest < 0) {
+            pageRequest = 1;
         }
-        if(sizeRequest<=0){
-            sizeRequest=1;
+        if (sizeRequest <= 0) {
+            sizeRequest = 1;
         }
 
         session.setAttribute("size", sizeRequest);
@@ -68,7 +67,7 @@ public class VoucherController {
             @Valid @ModelAttribute("voucher") Voucher voucher,
             BindingResult result,
             @RequestParam("image") MultipartFile file
-            ) {
+    ) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         voucher.setImage(fileName);
         this.voucherService.save(voucher);
@@ -93,18 +92,21 @@ public class VoucherController {
 
     @PostMapping("/voucher/update/{id}")
     public String updatevoucher(@PathVariable("id") Integer id,
-                                @Valid Voucher voucher,
+                                @Valid @ModelAttribute("voucher") Voucher voucher,
                                 BindingResult result,
                                 @RequestParam("image") MultipartFile file,
-                                @ModelAttribute(name = "search") SearchVoucherDto search
-
-
-                                ) {
-        if (result.hasErrors()) {
-            return "admin/layout";
-        }
+                                @ModelAttribute(name = "search") SearchVoucherDto search) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
         Voucher findVoucher = voucherService.findById(voucher.getId()).orElse(null);
+        findVoucher.setActive(voucher.getActive());
+        findVoucher.setNameVoucher(voucher.getNameVoucher());
+        findVoucher.setQuantity(voucher.getQuantity());
+        findVoucher.setCode(voucher.getCode());
+        findVoucher.setStartDay(voucher.getStartDay());
+        findVoucher.setExpirationDate(voucher.getExpirationDate());
+        findVoucher.setMinimumValue(voucher.getMinimumValue());
+        findVoucher.setValue(voucher.getValue());
+
         if (!"".equals(fileName)) {
             findVoucher.setImage(fileName);
             String uploadDir = "src/main/resources/static/image"; // đường dẫn upload

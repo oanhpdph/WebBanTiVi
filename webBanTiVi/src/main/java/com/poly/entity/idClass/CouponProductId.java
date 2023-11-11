@@ -8,7 +8,8 @@ import java.io.Serializable;
 
 @EqualsAndHashCode
 @Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class CouponProductId implements Serializable {
     private Coupon coupon;
     private Product product;

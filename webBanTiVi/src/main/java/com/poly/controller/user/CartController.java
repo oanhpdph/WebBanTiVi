@@ -68,7 +68,7 @@ public class CartController {
 //        if (result.hasErrors()) {
 //            return "user/index";
 //        }
-        Customer checkEmail = customerService.findByEmail(email);
+        Users checkEmail = customerService.findByEmail(email);
 
         if (checkEmail == null) {
             checkEmail = customerService.add(billProRes);

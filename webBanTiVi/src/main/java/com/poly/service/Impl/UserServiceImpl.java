@@ -2,7 +2,7 @@ package com.poly.service.Impl;
 
 import com.poly.dto.BillProRes;
 import com.poly.dto.SearchStaffDto;
-import com.poly.entity.Customer;
+import com.poly.entity.Users;
 import com.poly.repository.CustomerRepository;
 import com.poly.service.CustomerService;
 import jakarta.persistence.EntityManager;
@@ -34,8 +34,8 @@ public class UserServiceImpl implements CustomerService {
     CustomerRepository customerRepository;
 
     @Override
-    public Customer add(BillProRes customer) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        Customer cus = new Customer();
+    public Users add(BillProRes customer) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+        Users cus = new Users();
         MessageDigest md5 = MessageDigest.getInstance("MD5");
         byte[] emailHash = md5.digest(customer.getEmail().getBytes());
         byte[] phoneHash = md5.digest(customer.getPhoneNumber().getBytes());
@@ -57,7 +57,7 @@ public class UserServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer save(Customer customer) {
+    public Users save(Users customer) {
         return customerRepository.save(customer);
     }
 
@@ -67,18 +67,18 @@ public class UserServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> findAll() {
+    public List<Users> findAll() {
         return this.customerRepository.findAll();
     }
 
     @Override
-    public Optional<Customer> findById(Integer id) {
+    public Optional<Users> findById(Integer id) {
         return this.customerRepository.findById(id);
     }
 
     @Override
-    public Customer findByEmail(String email) {
-        Optional<Customer> customer = customerRepository.checkEmail(email);
+    public Users findByEmail(String email) {
+        Optional<Users> customer = customerRepository.checkEmail(email);
         if (customer.isPresent()) {
             return customerRepository.checkEmail(email).get();
         }
@@ -86,10 +86,10 @@ public class UserServiceImpl implements CustomerService {
     }
 
     @Override
-    public Page<Customer> loadData(SearchStaffDto searchStaffDto, Pageable pageable) {
+    public Page<Users> loadData(SearchStaffDto searchStaffDto, Pageable pageable) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Customer> customerCriteriaQuery = criteriaBuilder.createQuery(Customer.class);
-        Root<Customer> customerRoot = customerCriteriaQuery.from(Customer.class);
+        CriteriaQuery<Users> customerCriteriaQuery = criteriaBuilder.createQuery(Users.class);
+        Root<Users> customerRoot = customerCriteriaQuery.from(Users.class);
 
         List<Predicate> list = new ArrayList<Predicate>();
         if (!searchStaffDto.getKey().isEmpty()) {
@@ -98,14 +98,14 @@ public class UserServiceImpl implements CustomerService {
                     criteriaBuilder.equal(customerRoot.get("phoneNumber"), searchStaffDto.getKey())));
         }
         customerCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
-        List<Customer> result = entityManager.createQuery(customerCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
-        List<Customer> result2 = entityManager.createQuery(customerCriteriaQuery).getResultList();
-        Page<Customer> page = new PageImpl<>(result, pageable, result2.size());
+        List<Users> result = entityManager.createQuery(customerCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
+        List<Users> result2 = entityManager.createQuery(customerCriteriaQuery).getResultList();
+        Page<Users> page = new PageImpl<>(result, pageable, result2.size());
         return page;
     }
 
     @Override
-    public Customer getCustomerByName(String username) {
+    public Users getCustomerByName(String username) {
         return customerRepository.getCustomerByName(username);
     }
 

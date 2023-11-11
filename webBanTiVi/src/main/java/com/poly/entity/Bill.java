@@ -23,7 +23,7 @@ public class Bill {
 
     @ManyToOne
     @JoinColumn(name="id_user")
-    private Customer customer;
+    private Users customer;
 
     @Column(name="code")
     private String code;

@@ -10,7 +10,6 @@ for (let i = 0; i < fileInputs.length; i++) {
     // Lắng nghe sự kiện khi người dùng chọn tệp
     fileInput.addEventListener('change', function () {
         const file = fileInput.files[0]; // Lấy tệp đã chọn
-  
         if (file) {
             // Kiểm tra xem tệp đã chọn có phải là hình ảnh
             if (file.type.startsWith('image/')) {

@@ -1,7 +1,7 @@
 package com.poly.service.Impl;
 
 import com.poly.dto.EvaluateRes;
-import com.poly.entity.Customer;
+import com.poly.entity.Users;
 import com.poly.entity.Evaluate;
 import com.poly.entity.ProductDetail;
 import com.poly.repository.CustomerRepository;
@@ -37,7 +37,7 @@ public class EvaluateServiceImpl implements EvaluateService {
 
     @Override
     public void add(EvaluateRes evaluate) {
-        Optional<Customer> optionalCustomer = customerRepository.findById(evaluate.getCustomer());
+        Optional<Users> optionalCustomer = customerRepository.findById(evaluate.getCustomer());
         Optional<ProductDetail> optionalProduct = detailRepo.findById(evaluate.getProduct());
         Evaluate eval = new Evaluate();
         eval.setId(evaluate.getId());

@@ -1,6 +1,6 @@
 package com.poly.dto;
 
-import com.poly.entity.Customer;
+import com.poly.entity.Users;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,7 +41,7 @@ public class UserDetailDto implements UserDetails {
 
     private List<GrantedAuthority> authorities;
 
-    public UserDetailDto(Customer customer) {
+    public UserDetailDto(Users customer) {
         id=customer.getId();
         name = customer.getUsername();
         password = customer.getPassword();

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "coupon")
+@Table(name = "discount")
 @Getter
 @Setter
 @AllArgsConstructor

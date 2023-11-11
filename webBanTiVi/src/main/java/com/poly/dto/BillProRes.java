@@ -1,6 +1,6 @@
 package com.poly.dto;
 
-import com.poly.entity.Customer;
+import com.poly.entity.Users;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -22,5 +22,5 @@ public class BillProRes {
     BigDecimal totalPrice;
     Integer paymentMethod;
     Integer voucher;
-    Customer customer;
+    Users customer;
 }

@@ -1,6 +1,6 @@
 package com.poly.repository;
 
-import com.poly.entity.Customer;
+import com.poly.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,17 +8,17 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+public interface CustomerRepository extends JpaRepository<Users, Integer> {
 
-    Optional<Customer> findByUsername(String username);
+    Optional<Users> findByUsername(String username);
 
-    Customer getCustomerByName(String username);
+    Users getCustomerByName(String username);
 //    Customer findByEmail(String email);
 
-    @Query(value = "select c from Customer c where c.email=?1")
-    Optional<Customer> checkEmail(String email);
+    @Query(value = "select c from Users c where c.email=?1")
+    Optional<Users> checkEmail(String email);
 
-    @Query(value = "select c from Customer c where c.id=?1")
-    Optional<Customer> findId(Integer id);
+    @Query(value = "select c from Users c where c.id=?1")
+    Optional<Users> findId(Integer id);
 
 }

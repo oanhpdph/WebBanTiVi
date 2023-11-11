@@ -2,7 +2,7 @@ package com.poly.controller.admin;
 
 import com.poly.common.UploadFile;
 import com.poly.dto.SearchStaffDto;
-import com.poly.entity.Customer;
+import com.poly.entity.Users;
 import com.poly.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -37,7 +37,7 @@ public class CustomerController {
     public String loadStaff(HttpSession session, Model model,
                             @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageRequest,
                             @RequestParam(name = "size", required = false, defaultValue = "2") Integer sizeRequest,
-                            @ModelAttribute(name = "searchCustomer") SearchStaffDto search
+                            @ModelAttribute(name = "searchCustomer", binding = false) SearchStaffDto search
     ) {
 
         if (pageRequest < 0) {
@@ -51,7 +51,7 @@ public class CustomerController {
         session.setAttribute("page", pageRequest);
 
         Pageable pageable = PageRequest.of(pageRequest - 1, sizeRequest);
-        Page<Customer> staffs = customerService.loadData(search, pageable);
+        Page<Users> staffs = customerService.loadData(search, pageable);
 
         model.addAttribute("totalElements", staffs.getTotalElements());
         session.setAttribute("list", staffs);
@@ -62,7 +62,7 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/save")
-    public String addCustomer(@Valid @ModelAttribute("customer") Customer customer, BindingResult result, Model model, @RequestParam("image") MultipartFile file) {
+    public String addCustomer(@Valid @ModelAttribute("customer") Users customer, BindingResult result, Model model, @RequestParam("image") MultipartFile file) {
         if (result.hasErrors()) {
             return "admin/layout";
         }
@@ -84,7 +84,7 @@ public class CustomerController {
 
     @GetMapping("/customer/edit/{id}")
     public String showUpdateCustomer(@PathVariable("id") Integer id, Model model) {
-        Customer cus = customerService.findById(id)
+        Users cus = customerService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 
         model.addAttribute("customer", cus);
@@ -94,10 +94,10 @@ public class CustomerController {
 
     @PostMapping("/customer/update/{id}")
     public String updateCustomer(@PathVariable("id") Integer id,
-                                 @ModelAttribute("customer") Customer customer,
+                                 @ModelAttribute("customer") Users customer,
                                  @RequestParam("image") MultipartFile file) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
-        Customer findCustomer = this.customerService.findById(id).orElse(null);
+        Users findCustomer = this.customerService.findById(id).orElse(null);
 
         findCustomer.setBirthday(customer.getBirthday());
         findCustomer.setName(customer.getName());
@@ -106,6 +106,7 @@ public class CustomerController {
         findCustomer.setPhoneNumber(customer.getPhoneNumber());
         findCustomer.setGender(customer.isGender());
         findCustomer.setRoles(customer.getRoles());
+        findCustomer.setStatus(customer.isStatus());
         System.out.println(customer.getAvatar());
         if (!"".equals(fileName)) {
             findCustomer.setAvatar(fileName);
@@ -129,7 +130,7 @@ public class CustomerController {
 
     @GetMapping("/customer/delete/{id}")
     public String deleteCustomer(@PathVariable("id") Integer id, Model model) {
-        Customer customer = customerService.findById(id)
+        Users customer = customerService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         customerService.deleteById(id);
         return "redirect:/admin/customer/list";

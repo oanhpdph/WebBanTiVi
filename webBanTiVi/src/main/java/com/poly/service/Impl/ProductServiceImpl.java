@@ -1,10 +1,7 @@
 package com.poly.service.Impl;
 
 import com.poly.dto.ProductDetailDto;
-import com.poly.entity.Color;
 import com.poly.entity.Product;
-import com.poly.entity.ProductDetailView;
-import com.poly.repository.ColorRepository;
 import com.poly.repository.CouponRepository;
 import com.poly.repository.ProductRepository;
 import com.poly.service.ProductService;
@@ -27,9 +24,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     CouponRepository couponRepository;
-
-    @Autowired
-    ColorRepository colorRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -61,33 +55,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findById(Integer id) {
         return productRepository.findById(id).get();
-    }
-
-    @Override
-    public ProductDetailView getProductDetailById(Integer id) {
-        Product product = productRepository.findById(id).get();
-
-        ProductDetailView productDetailView = new ProductDetailView();
-
-        productDetailView.setId(productDetailView.getId());
-        productDetailView.setPrice_import(productDetailView.getPrice_import());
-        productDetailView.setPrice_export(productDetailView.getPrice_export());
-        productDetailView.setQuantity(productDetailView.getQuantity());
-        productDetailView.setBrand(productDetailView.getBrand());
-        productDetailView.setListImage(productDetailView.getListImage());
-        productDetailView.setSize(productDetailView.getSize());
-
-        Color color = colorRepository.findById(productDetailView.getColor().getId()).get();
-
-//        if (product != null && color != null) {
-//            productDetailView.setName(product.getName());
-//            productDetailView.setQuantity(product.getQuantity());
-//            productDetailView.setSize(product.getSize());
-//            productDetailView.setColor(color);
-//
-//        }
-
-        return productDetailView;
     }
 
     @Override

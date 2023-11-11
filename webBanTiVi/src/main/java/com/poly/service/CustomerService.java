@@ -2,7 +2,7 @@ package com.poly.service;
 
 import com.poly.dto.BillProRes;
 import com.poly.dto.SearchStaffDto;
-import com.poly.entity.Customer;
+import com.poly.entity.Users;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -13,20 +13,20 @@ import java.util.Optional;
 
 public interface CustomerService {
 
-    public Customer add(BillProRes customer) throws NoSuchAlgorithmException, UnsupportedEncodingException;
+    public Users add(BillProRes customer) throws NoSuchAlgorithmException, UnsupportedEncodingException;
 
-    Customer save(Customer customer);
+    Users save(Users customer);
 
     void deleteById(Integer id);
 
-    List<Customer> findAll();
+    List<Users> findAll();
 
-    Optional<Customer> findById(Integer id);
+    Optional<Users> findById(Integer id);
 
-    Customer findByEmail(String email);
+    Users findByEmail(String email);
 
 
-    Customer getCustomerByName(String username);
+    Users getCustomerByName(String username);
 
-    Page<Customer> loadData(SearchStaffDto searchStaffDto, Pageable pageable);
+    Page<Users> loadData(SearchStaffDto searchStaffDto, Pageable pageable);
 }

@@ -2,7 +2,6 @@ package com.poly.service;
 
 import com.poly.dto.ProductDetailDto;
 import com.poly.entity.Product;
-import com.poly.entity.ProductDetailView;
 
 import java.util.List;
 
@@ -17,7 +16,6 @@ public interface ProductService {
 
     Product findById(Integer id);
 
-    ProductDetailView getProductDetailById(Integer id);
 
     Product getOne(Integer id);
 

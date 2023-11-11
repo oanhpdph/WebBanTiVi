@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-
 @Entity
 @Table(name = "voucher_user")
 @Data
@@ -23,19 +21,11 @@ public class VoucherCustomer {
 
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private Customer customer;
+    private Users customer;
 
     @ManyToOne
     @JoinColumn(name = "id_voucher")
     private Voucher voucher;
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date_start")
-    private Date dateStart;
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "date_end")
-    private Date dateEnd;
 
     @Column(name = "active")
     private boolean active;

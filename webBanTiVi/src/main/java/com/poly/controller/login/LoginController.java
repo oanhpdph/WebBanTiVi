@@ -6,7 +6,7 @@ import com.poly.common.SendEmail;
 import com.poly.dto.UserDetailDto;
 import com.poly.dto.ChangeInforDto;
 import com.poly.dto.LoginDto;
-import com.poly.entity.Customer;
+import com.poly.entity.Users;
 import com.poly.repository.CustomerRepository;
 import com.poly.service.CustomerService;
 import jakarta.mail.MessagingException;
@@ -68,13 +68,13 @@ public class LoginController {
 
     @GetMapping("/register")
     public String register(Model model) {
-        model.addAttribute("registration", new Customer());
+        model.addAttribute("registration", new Users());
         return "login/register";
     }
 
     @PostMapping("/register/add")
     public String AddCustomer(Model model,
-                              @Valid @ModelAttribute("registration") Customer customer,
+                              @Valid @ModelAttribute("registration") Users customer,
                               BindingResult bindingResult, HttpSession httpSession)
             throws MessagingException {
         // validate
@@ -82,7 +82,7 @@ public class LoginController {
             return "login/register";
         }
         // suscess
-        for (Customer cus : this.customerService.findAll()) {
+        for (Users cus : this.customerService.findAll()) {
             if (cus.getUsername().equals(customer.getUsername())) {
                 return "redirect:login/register";
             }
@@ -113,7 +113,7 @@ public class LoginController {
     @PostMapping("/confirm-register")
     public String accuracy(HttpSession httpSession, @RequestParam("verification-code") String code
     ) {
-        Customer account = (Customer) httpSession.getAttribute("accountRegis");
+        Users account = (Users) httpSession.getAttribute("accountRegis");
         account.setRoles("USER");
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         account.setAvatar("default.jpg");
@@ -150,7 +150,7 @@ public class LoginController {
         List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
          String role=roles.get(0).toString();
             UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
-            Customer customer  =this.customerService.findById(customerUserDetail.getId()).get();
+            Users customer  =this.customerService.findById(customerUserDetail.getId()).get();
             customer.setUsername(changeInforDto.getName());
             customer.setPhoneNumber(changeInforDto.getPhone());
             customer.setBirthday(changeInforDto.getBirthday());
