@@ -7,6 +7,7 @@ import com.poly.service.BillService;
 import com.poly.service.CustomerService;
 import com.poly.service.Impl.CartSeviceImpl;
 import com.poly.service.Impl.ProductServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -68,11 +70,13 @@ public class CartController {
         Customer checkEmail = customerService.findByEmail(email);
 
         if (checkEmail == null) {
-            customerService.add(billProRes);
-            return "redirect:/pay";
+            checkEmail = customerService.add(billProRes);
+//            return "redirect:/pay";
         }
+
         billProRes.setCustomer(checkEmail);
         Bill bill1 = billService.add(billProRes);
+        billProRes.setProduct(Collections.singletonList(id));
         billService.addBillPro(bill1, billProRes);
         model.addAttribute("listCus", customerService.findAll());
         return "redirect:/confirm";
@@ -86,35 +90,19 @@ public class CartController {
     }
 
 
-    @RequestMapping("/cart/add/{id}")
-    public String add(@PathVariable Integer id, HttpSession session, Model model) {
-        List<CartProduct> list = cartService.add(id);
+    @PostMapping("/cart/detail/{id}")
+    public String add(@PathVariable Integer id, @RequestParam("qty") Integer qty, HttpSession session, Model model, HttpServletRequest request) {
+        String url = request.getRequestURI();
+        List<CartProduct> list = cartService.add(id, qty);
         session.setAttribute("list", list);
-        int amount = (int) cartService.getTotalProduct();
-        model.addAttribute("amount", amount);
-        return "redirect:/cart";
+        System.out.println(url);
+        return "redirect:" + url;
     }
 
 
     @RequestMapping("/cart/remove/{id}")
     public String delete(@PathVariable List<Integer> id) {
-//        Product product = productService.findById(id);
-//        Cart cart = (Cart) session.getAttribute("cart");
-//        if (cart == null) {
-//            return "redirect:/cart";
-//        } else {
-//            List<CartProduct> list = cart.getListCartPro();
-//            List<CartProduct> list1 = new ArrayList<>();
-//            for (CartProduct x : list) {
-//                if (x.getProduct().getId() != id) {
-//                    list1.add(x);
-//                }
-//            }
-//            cart.setListCartPro(list1);
-//            session.setAttribute("list", cart);
-//            System.out.println("xoa thanh cong");
-//            return "redirect:/cart";
-//        }
+
         List<CartProduct> list = new ArrayList<>();
 //        List<CartProduct> list = cartService.add(id);
 //        cartService.delete(id);

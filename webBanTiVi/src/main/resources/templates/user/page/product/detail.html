@@ -101,77 +101,80 @@
                                 </div>
                             </div>
                             <div class="col-6 mt-5 mb-5">
-                                <div class="product-detail-title">
-                                    <h3>
-                                        <b>
-                                            <span th:text="${product.name}"></span>
-                                            <span th:each="type:${product.type}" th:text="${type.nameType}"></span>
-                                            <span th:each="resolution:${product.resolution}"
-                                                  th:text="${resolution.nameResolution}"></span>
-                                            <span th:each="size:${product.size}" th:text="${size.nameSizeInch}"></span>inch
-                                            <span th:each="brand:${product.brand}" th:text="${brand.nameBrand}"></span>
-                                            <span th:text="${product.code}"></span>
-                                        </b>
-                                    </h3>
-                                </div>
-                                <br>
-                                <table class="table">
-                                    <tbody>
-                                    <tr th:each="item : ${product}">
-                                        <td>Price Export:</td>
-                                        <td th:text="${item.price_export}">Text ...</td>
-                                    </tr>
-                                    <tr th:each="item : ${product}">
-                                        <td>Quantity:</td>
-                                        <td th:text="${item.quantity}">1</td>
-                                    </tr>
-                                    <tr>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <br>
-                                <div class="buttons_added" th:id="${product.id}">
-                                    <input class="minus is-form" type="button"
-                                           value="-">
-                                    <input aria-label="quantity" class="input-qty" max="10" min="1"
-                                           name="qty"
-                                           type="number"
-                                           th:value="${product.quantity}" placeholder="1">
-                                    <input class="plus is-form"
-                                           type="button" value="+">
-                                </div>
-                                <div class="col-lg-4 col-md-6">
-                                    <div class="mt-3">
-                                        <!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#basicModal">
-                                            Thêm vào giỏ hàng
-                                        </button>
+                                <form th:action="@{/cart/detail/{id}(id=${product.id})}" method="post">
+                                    <div class="product-detail-title">
+                                        <h3>
+                                            <b>
+                                                <span th:text="${product.name}"></span>
+                                                <span th:each="type:${product.type}" th:text="${type.nameType}"></span>
+                                                <span th:each="resolution:${product.resolution}"
+                                                      th:text="${resolution.nameResolution}"></span>
+                                                <span th:each="size:${product.size}"
+                                                      th:text="${size.nameSizeInch}"></span>inch
+                                                <span th:each="brand:${product.brand}"
+                                                      th:text="${brand.nameBrand}"></span>
+                                                <span th:text="${product.code}"></span>
+                                            </b>
+                                        </h3>
+                                    </div>
+                                    <br>
+                                    <table class="table">
+                                        <tbody>
+                                        <tr th:each="item : ${product}">
+                                            <td>Price Export:</td>
+                                            <td th:text="${item.price_export}">Text ...</td>
+                                        </tr>
+                                        <tr th:each="item : ${product}">
+                                            <td>Quantity:</td>
+                                            <td th:text="${item.quantity}">1</td>
+                                        </tr>
+                                        <tr>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                    <div class="buttons_added" th:id="${product.id}">
+                                        <input class="minus is-form" type="button"
+                                               value="-">
+                                        <input aria-label="quantity" class="input-qty" max="10" min="1"
+                                               name="qty"
+                                               type="number"
+                                               value="1">
+                                        <input class="plus is-form"
+                                               type="button" value="+">
+                                    </div>
+                                    <div class="col-lg-4 col-md-6">
+                                        <div class="mt-3">
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#basicModal">
+                                                Thêm vào giỏ hàng
+                                            </button>
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="basicModal" tabindex="-1" style="display: none;"
-                                             aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header"></div>
-                                                    <div class="modal-body text-center">
-                                                        <h3>Bạn Có Muốn Thêm Sản Phẩm Vòa Giỏ Hàng?</h3>
-                                                    </div>
-                                                    <div class="modal-footer text-center">
-                                                        <a type="button" class="btn btn-primary text-center"
-                                                           th:href="@{/cart/add/{id}(id=${product.id})}">
-                                                            Xác nhận
-                                                        </a>
-                                                        <button type="button" class="btn btn-danger"
-                                                                data-bs-dismiss="modal">
-                                                            Hủy
-                                                        </button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="basicModal" tabindex="-1" style="display: none;"
+                                                 aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header"></div>
+                                                        <div class="modal-body text-center">
+                                                            <h3>Bạn Có Muốn Thêm Sản Phẩm Vòa Giỏ Hàng?</h3>
+                                                        </div>
+                                                        <div class="modal-footer text-center">
+                                                            <button type="submit" class="btn btn-primary text-center">
+                                                                Xác nhận
+                                                            </button>
+                                                            <button type="button" class="btn btn-danger"
+                                                                    data-bs-dismiss="modal">
+                                                                Hủy
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                             <hr>
                             <div class="col-6">

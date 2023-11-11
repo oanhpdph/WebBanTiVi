@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public interface CustomerService {
 
-    public void add(BillProRes customer) throws NoSuchAlgorithmException, UnsupportedEncodingException;
+    public Customer add(BillProRes customer) throws NoSuchAlgorithmException, UnsupportedEncodingException;
 
     Customer save(Customer customer);
 

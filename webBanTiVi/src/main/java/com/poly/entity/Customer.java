@@ -10,7 +10,7 @@ import java.sql.Date;
 import java.util.List;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -48,11 +48,8 @@ public class Customer {
     @Column(name = "gender")
     private boolean gender;
 
-    @Column(name="avatar")
+    @Column(name = "avatar")
     private String avatar;
-
-    @Column(name = "status")
-    private boolean status;
 
     @Column(name = "roles")
     private String roles;
