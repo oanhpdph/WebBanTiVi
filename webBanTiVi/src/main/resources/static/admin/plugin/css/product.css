@@ -43,6 +43,11 @@
     border-radius: 0.375rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-.pull-up:hover{
+
+.pull-up:hover {
     border-radius: 0px !important;
+}
+
+.larger-checkbox {
+    transform: scale(2); /* Tăng kích cỡ 1.5 lần */
 }

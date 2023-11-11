@@ -6,5 +6,4 @@ import lombok.Data;
 public class Attribute {
     private Integer id;
     private String value;
-    private Integer index;
 }

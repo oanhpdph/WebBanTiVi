@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "cart_product")
@@ -21,7 +20,7 @@ public class CartProduct {
     @Id
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Product product;
+    private ProductDetail product;
 
     @Id
     @ManyToOne

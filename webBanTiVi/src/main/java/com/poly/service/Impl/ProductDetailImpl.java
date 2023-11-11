@@ -4,10 +4,8 @@ import com.poly.common.RandomNumber;
 import com.poly.dto.Attribute;
 import com.poly.dto.ImageDto;
 import com.poly.dto.ProductDetailDto;
-import com.poly.entity.Image;
-import com.poly.entity.ProductDetail;
-import com.poly.entity.ProductFieldValue;
-import com.poly.repository.ImageRepo;
+import com.poly.dto.ProductDetailListDto;
+import com.poly.entity.*;
 import com.poly.repository.ProductDetailRepo;
 import com.poly.service.*;
 import jakarta.persistence.EntityManager;
@@ -32,8 +30,9 @@ public class ProductDetailImpl implements ProductDetailService {
     @Autowired
     private ProductDetailRepo productDetailRepo;
 
+
     @Autowired
-    private TypeProductService typeProductService;
+    private ProductService productService;
 
     @Autowired
     private ImageService imageService;
@@ -42,69 +41,76 @@ public class ProductDetailImpl implements ProductDetailService {
     private ProductFieldValueService productFieldValueService;
 
     @Autowired
+    private ProductDetailFieldService productDetailFieldService;
+
+    @Autowired
     private FieldService fieldService;
 
     @Autowired
-    private ImageRepo imageRepo;
+    private GroupProductService groupProductService;
 
     @PersistenceContext
     private EntityManager entityManager;
 
 
     @Override
-    public List<ProductDetail> saveList(List<ProductDetailDto> dto) {
+    public Product saveList(ProductDetailDto dto) {
         String sameProduct = "";
-        if (dto.get(0).getSameProduct() == null) {
+        if (dto.getSameProduct() == null) {
             do {
                 sameProduct = "PR" + RandomNumber.generateRandomString(5);
             }
-            while (!productDetailRepo.findBySameProduct(sameProduct).isEmpty());
-        } else if (dto.get(0).getSameProduct() != null && productDetailRepo.findBySameProduct(dto.get(0).getSameProduct()).isEmpty()) {
+            while (!productService.findSameProduct(sameProduct).isEmpty());
+        } else if (dto.getSameProduct() != null && productService.findSameProduct(dto.getSameProduct()).isEmpty()) {
             do {
                 sameProduct = "PR" + RandomNumber.generateRandomString(5);
             }
-            while (!productDetailRepo.findBySameProduct(sameProduct).isEmpty());
-        } else if (dto.get(0).getSameProduct() != null && !productDetailRepo.findBySameProduct(dto.get(0).getSameProduct()).isEmpty()) {
-            sameProduct = dto.get(0).getSameProduct();
+            while (!productService.findSameProduct(sameProduct).isEmpty());
+        } else if (dto.getSameProduct() != null && !productService.findSameProduct(dto.getSameProduct()).isEmpty()) {
+            sameProduct = dto.getSameProduct();
         }
-        List<ProductDetail> listSave = new ArrayList<>();
-        for (ProductDetailDto productDetailDto : dto) {
-            ProductDetail productDetail = new ProductDetail();
-            productDetail.setSku(productDetailDto.getSku());
-            productDetail.setNameProduct(productDetailDto.getNameProduct());
-            productDetail.setPriceExport(productDetailDto.getPriceExport());
-            productDetail.setPriceImport(productDetailDto.getPriceImport());
-            productDetail.setQuantity(productDetailDto.getQuantity());
-            productDetail.setActive(true);
-            productDetail.setType(typeProductService.findById(productDetailDto.getType()));
-            productDetail.setSameProduct(sameProduct);
-            ProductDetail productDetail1 = productDetailRepo.save(productDetail);
+        Product product = new Product();
+        product.setGroupProduct(groupProductService.findById(dto.getGroup()));
+        product.setNameProduct(dto.getNameProduct());
+        product.setSku(dto.getSku());
+        product.setSame(sameProduct);
+        product.setActive(true);
+        product.setAvgPoint(0);
+        productService.save(product);
+        for (int i = 0; i < dto.getProduct().size(); i++) {
+            ProductFieldValue productFieldValue = new ProductFieldValue();
+            productFieldValue.setField(fieldService.findById(dto.getProduct().get(i).getId()));
+            productFieldValue.setValue(dto.getProduct().get(i).getValue());
+            productFieldValue.setProduct(product);
+            productFieldValueService.save(productFieldValue);
+        }
 
-            for (ImageDto imageDto : productDetailDto.getImage()) {
+        for (ProductDetailListDto productFieldValue : dto.getListProduct()) {
+            ProductDetail productDetail = new ProductDetail();
+            productDetail.setQuantity(productFieldValue.getQuantity());
+            productDetail.setPriceExport(productFieldValue.getPriceExport());
+            productDetail.setPriceImport(productFieldValue.getPriceImport());
+            productDetail.setActive(productFieldValue.isActive());
+            productDetail.setProduct(product);
+            productDetail.setSku(productFieldValue.getSku());
+            productDetailRepo.save(productDetail);
+
+            for (Attribute attribute : productFieldValue.getListAttributes()) {
+                ProductDetailField productDetailField = new ProductDetailField();
+                productDetailField.setField(fieldService.findById(attribute.getId()));
+                productDetailField.setProductDetail(productDetail);
+                productDetailField.setValue(attribute.getValue());
+                productDetailFieldService.save(productDetailField);
+            }
+            for (ImageDto imageDto : productFieldValue.getImage()) {
                 Image image = new Image();
-                image.setLink(imageDto.getMultipartFile());
                 image.setLocation(imageDto.getLocation());
-                image.setProduct(productDetail1);
+                image.setProduct(productDetail);
+                image.setLink(imageDto.getMultipartFile());
                 imageService.add(image);
             }
-
-            for (Attribute attribute : productDetailDto.getListAttributes()) {
-                ProductFieldValue productFieldValue = new ProductFieldValue();
-                productFieldValue.setPriority(attribute.getIndex());
-                productFieldValue.setValue(attribute.getValue());
-                productFieldValue.setField(fieldService.findById(attribute.getId()));
-                productFieldValue.setProductDetail(productDetail1);
-                productFieldValueService.save(productFieldValue);
-            }
-
-            listSave.add(productDetail);
         }
-        return listSave;
-    }
-
-    @Override
-    public List<ProductDetail> getSameProduct(String sameCode) {
-        return productDetailRepo.findBySameProduct(sameCode);
+        return product;
     }
 
     @Override
@@ -123,9 +129,6 @@ public class ProductDetailImpl implements ProductDetailService {
         Root<ProductDetail> productDetailRoot = productCriteriaQuery.from(ProductDetail.class);
         List<Predicate> list = new ArrayList<Predicate>();
 
-        if (productDetailDto.getType() != 0) {
-            list.add(criteriaBuilder.equal(productDetailRoot.get("type"), productDetailDto.getType()));
-        }
         if (!productDetailDto.getSku().isEmpty()) {
             list.add(criteriaBuilder.equal(productDetailRoot.get("sku"), productDetailDto.getSku()));
         }
@@ -163,17 +166,17 @@ public class ProductDetailImpl implements ProductDetailService {
             ProductDetail productDetail = findById(productDetailDto1.getId());
             if (productDetail != null) {
                 productDetail.setActive(true);
-                productDetail.setPriceExport(productDetailDto1.getPriceExport());
-                productDetail.setSku(productDetailDto1.getSku());
-                productDetail.setPriceImport(productDetailDto1.getPriceImport());
-                productDetail.setQuantity(productDetailDto1.getQuantity());
-                for (ImageDto image : productDetailDto1.getImage()) {
-                    com.poly.entity.Image image1 = new com.poly.entity.Image();
-                    image1.setLink(image.getMultipartFile());
-                    image1.setProduct(productDetail);
-                    image1.setLocation(image.getLocation());
-                    imageRepo.save(image1);
-                }
+//                productDetail.setPriceExport(productDetailDto1.getPriceExport());
+//                productDetail.setSku(productDetailDto1.getSku());
+//                productDetail.setPriceImport(productDetailDto1.getPriceImport());
+//                productDetail.setQuantity(productDetailDto1.getQuantity());
+//                for (ImageDto image : productDetailDto1.getImage()) {
+//                    com.poly.entity.Image image1 = new com.poly.entity.Image();
+//                    image1.setLink(image.getMultipartFile());
+//                    image1.setProduct(productDetail);
+//                    image1.setLocation(image.getLocation());
+//                    imageRepo.save(image1);
+//                }
                 list.add(productDetailRepo.save(productDetail));
             }
         }

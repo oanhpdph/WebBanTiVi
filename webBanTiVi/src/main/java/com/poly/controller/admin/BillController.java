@@ -178,23 +178,23 @@ public class BillController {
                     .map(billProduct -> billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
             BigDecimal totalAfter = new BigDecimal('0');
-            if (b.getVoucher() != null && b.getVoucher().isReducedForm() == true) {// giảm %
-                totalAfter = totalPrice.subtract(reduceMoney);
-                BigDecimal reduce = totalPrice.multiply(BigDecimal.valueOf(b.getVoucher().getValue() / 100));
-                if (reduce.compareTo(b.getVoucher().getMaximumDiscount()) >= 0) {
-                    reduce = b.getVoucher().getMaximumDiscount();
-                }
-                totalAfter = totalAfter.subtract(reduce);
-            }
-            if (b.getVoucher() != null && b.getVoucher().isReducedForm() == false) {
-                totalAfter = totalPrice.subtract(reduceMoney).subtract(BigDecimal.valueOf(b.getVoucher().getValue()));
-            }
+//            if (b.getVoucher() != null && b.getVoucher().isReducedForm() == true) {// giảm %
+//                totalAfter = totalPrice.subtract(reduceMoney);
+//                BigDecimal reduce = totalPrice.multiply(BigDecimal.valueOf(b.getVoucher().getValue() / 100));
+//                if (reduce.compareTo(b.getVoucher().getMaximumDiscount()) >= 0) {
+//                    reduce = b.getVoucher().getMaximumDiscount();
+//                }
+//                totalAfter = totalAfter.subtract(reduce);
+//            }
+////            if (b.getVoucher() != null && b.getVoucher().isReducedForm() == false) {
+////                totalAfter = totalPrice.subtract(reduceMoney).subtract(BigDecimal.valueOf(b.getVoucher().getValue()));
+////            }
             if (b.getVoucher() == null) {
                 totalAfter = totalPrice.subtract(reduceMoney);
             }
             dataExportExcel.setTotalPrice(totalAfter.longValue());
 
-            dataExportExcel.setProduct(b.getBillProducts().stream().map(billProduct -> billProduct.getProduct().getCode()).reduce("", (o1, o2) -> o1 + o2 + ", "));
+//            dataExportExcel.setProduct(b.getBillProducts().stream().map(billProduct -> billProduct.getProduct().getCode()).reduce("", (o1, o2) -> o1 + o2 + ", "));
             dataExportExcel.setBillStatus(b.getBillStatus().getStatus());
             dataExportExcel.setPaymentStatus(b.getPaymentStatus() == 1 ? "Đã thanh toán" : b.getPaymentStatus() == 2 ? "Chưa thanh toán" : "Đã hoàn tiền");
             dataExportExcel.setNote(b.getNote());

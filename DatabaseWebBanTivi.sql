@@ -6,160 +6,7 @@ USE webbantivi
 
 go
 
-
---- BỎ
--- Hãng
-CREATE TABLE brand
-  (
-     id        INT IDENTITY(1, 1) PRIMARY KEY,
-     code      VARCHAR(10) not null,
-     namebrand NVARCHAR(max) not null
-  )
- 
--- Xuất xứ
-CREATE TABLE origin
-  (
-     id         INT IDENTITY(1, 1) PRIMARY KEY,
-     code       VARCHAR(10) not null,
-     nameorigin NVARCHAR(max) not null
-  )
-
--- nhà cung cấp
-CREATE TABLE manufacture
-  (
-     id               INT IDENTITY(1, 1) PRIMARY KEY,
-     code             VARCHAR(10) not null,
-     name_manufacture NVARCHAR(max) not null
-  )
-
--- màu sắc
-CREATE TABLE color
-  (
-     id        INT IDENTITY(1, 1) PRIMARY KEY,
-     code      VARCHAR(10) not null,
-     namecolor NVARCHAR(max) not null
-  )
-
--- Loại
-CREATE TABLE [type]
-  (
-     id        INT IDENTITY(1, 1) PRIMARY KEY,
-     code      VARCHAR(10) not null,
-     name_type NVARCHAR(max) not null
-  )
-
-CREATE TABLE feature
-  (
-     id           INT IDENTITY(1, 1) PRIMARY KEY,
-     code         VARCHAR(10) not null,
-     name_feature NVARCHAR(max) not null
-  )
-
-CREATE TABLE supplier
-  (
-     id            INT IDENTITY(1, 1) PRIMARY KEY,
-     code          VARCHAR(10) not null,
-     name_supplier NVARCHAR(max) not null
-  )
-
--- độ phân giải
-CREATE TABLE resolution
-  (
-     id             INT IDENTITY(1, 1) PRIMARY KEY,
-     code           VARCHAR(10) not null,
-     nameresolution NVARCHAR(max) not null, 
-     screen_length  FLOAT not null,-- chiều dài màn hình (pixel)
-     screen_width   FLOAT not null,
-  )
- 
--- size
-CREATE TABLE size
-  (
-     id           INT IDENTITY(1, 1) PRIMARY KEY,
-     code         VARCHAR(10) not null,
-     namesizeinch NVARCHAR(max) not null,
-     tv_length    FLOAT not null,-- chiều dài TV tính cả viền (cm)
-     tv_width     FLOAT not null,
-     thickness    FLOAT not null, -- độ dày TV
-  )
-
--- sản phẩm
-CREATE TABLE product
-  (
-     id             INT IDENTITY(1, 1) PRIMARY KEY,
-     code           VARCHAR(10) not null unique,
-     nametv         NVARCHAR(max) not null,
-     price_import   money not null,
-     price_export   money not null,
-     quantity       INT not null,
-     guarantee      INT not null,
-     id_brand       INT REFERENCES brand(id),
-     id_origin      INT REFERENCES origin(id),
-     id_manufacture INT REFERENCES manufacture(id),
-     id_color       INT REFERENCES color(id),
-     id_type        INT REFERENCES [type](id),
-     id_size        INT REFERENCES size(id),
-     id_resolution  INT REFERENCES resolution(id),
-	 id_supplier	INT REFERENCES supplier(id),
-     active         BIT
-  )
-
-CREATE TABLE product_feature
-  (
-     id_feature INT REFERENCES feature(id),
-     id_product INT REFERENCES product(id),
-     PRIMARY KEY(id_feature, id_product)
-  )
-
-CREATE TABLE image_product
-  (
-     id INT IDENTITY(1,1) primary key,
-	 id_product INT REFERENCES product(id) not null,
-     name_image varchar(200) not null,
-	 location bit
-  )
-
-
--- chi tiết coupon
-CREATE TABLE coupon_product
-  (
-     id_coupon  INT REFERENCES coupon(id),
-     id_product INT REFERENCES product(id),
-     date_start DATE not null,
-     date_end   DATE not null,
-	 status BIT not null,
-     PRIMARY KEY(id_coupon, id_product)
-  )
-
-
-  -- nhân viên
-CREATE TABLE staff
-  (
-     id          INT IDENTITY(1, 1) PRIMARY KEY,
-     username    NVARCHAR(30) not null unique,
-     [name]      NVARCHAR(50) not null,
-     gender      BIT,
-     birthday    DATE,
-     address     NVARCHAR(max),
-     email       VARCHAR(100) not null,
-     phone       VARCHAR(10) not null,
-     password    VARCHAR(max) not null,
-     active      BIT,
-     role varchar(30),
-     avatar      VARCHAR(100)
-  )
-
-
-
-  -- đến đây
-
-
-
-
-
-
-
-CREATE TABLE coupon
+CREATE TABLE discount
   (
      id      INT IDENTITY(1, 1) PRIMARY KEY,
      code    VARCHAR(30) not null unique,
@@ -167,6 +14,73 @@ CREATE TABLE coupon
 	 image varchar(200),
      active  BIT
   )
+
+create table group_product(
+  id int identity(1,1) primary key,
+  name_group nvarchar(100)
+)
+
+
+Create table field(
+	id		int identity(1,1) primary key,
+	code	varchar(10),
+	name	nvarchar(100) not null,
+	variant bit
+)
+
+CREATE TABLE product
+  (
+     id             INT IDENTITY(1, 1) PRIMARY KEY,
+     sku            VARCHAR(40),
+	 group_product	int references group_product(id),
+	 name_product   nvarchar(200),
+	 avg_point		float,
+	 same_product	varchar(10),
+     active         BIT
+)
+
+CREATE TABLE product_detail
+  (
+     id             INT IDENTITY(1, 1) PRIMARY KEY,
+	 product_id		int references product(id),
+     sku            VARCHAR(40),
+     price_import   money,
+     price_export   money,
+     quantity       INT,
+     active         BIT
+)
+
+
+create table product_field_value (
+	id					int	identity(1,1) primary key,
+	value				nvarchar(1000),
+	field_id			int references field(id),
+	product_id			int references product(id),
+)
+
+create table product_detail_field(
+	id				int identity(1,1) primary key,
+	field_id		int references field(id),
+	product_detail	int references product_detail(id),
+	value			nvarchar(1000)
+)
+
+
+CREATE TABLE discount_product
+  (
+     id_discount  INT REFERENCES discount(id),
+     id_product INT REFERENCES product_detail(id),
+     date_start DATE not null,
+     date_end   DATE not null,
+     PRIMARY KEY(id_discount, id_product)
+  )
+
+create table image (
+	id					int identity(1,1) primary key,
+	id_product			int references product_detail(id),
+	link				varchar(1000),
+	location			int
+)
 
 -- tài khoản
 CREATE TABLE users
@@ -192,7 +106,6 @@ CREATE TABLE voucher
      code             VARCHAR(30) not null unique,
      name_voucher     VARCHAR(100) not null,
      [value]          INT not null,
-     reduced_form     BIT not null,-- giảm theo % hoặc tiền trực tiếp
      minimum_value    MONEY not null,-- giá trị đơn hàng tối thiểu cần
      maximum_discount MONEY not null,--giá trị tối đa đơn hàng giảm
      quantity         INT not null, -- số lượng voucher
@@ -203,8 +116,8 @@ CREATE TABLE voucher
   )
 
 CREATE TABLE voucher_user
-  (	 id			 Int primary key,
-     id_user  INT references users(id),
+  (	 id			 Int identity(1,1) primary key,
+     id_user	 INT references users(id),
      id_voucher  INT references voucher(id),
      date_start  DATETIME not null,-- thời gian nhận
      date_end    DATETIME not null,-- thời gian hết hiệu lực
@@ -216,7 +129,7 @@ CREATE TABLE evaluate
   (
 	 id          INT IDENTITY(1, 1) PRIMARY KEY,
      id_product  INT REFERENCES product(id) not null,
-     id_user	INT REFERENCES users(id) not null,
+     id_user	 INT REFERENCES users(id) not null,
      date_create DATETIME not null,
      point       float not null,
      comment     NVARCHAR(max),
@@ -226,7 +139,7 @@ CREATE TABLE image_evaluate
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
      id_evaluate INT REFERENCES evaluate(id) not null,
-	 name_image varchar(200) not null
+	 name_image  varchar(200) not null
   )
 
 -- trạng thái hóa đơn
@@ -255,7 +168,7 @@ CREATE TABLE bill
      id_user		  INT REFERENCES users(id) not null,
      code             VARCHAR(20) not null unique,
      create_date      DATE NOT NULL,
-	 total_price		  Money,
+	 total_price	  Money,
      payment_date     DATE not null,-- ngày thanh toán
      id_status        INT REFERENCES bill_status(id) not null,
      id_paymentmethod INT REFERENCES payment_method(id) not null,
@@ -270,18 +183,20 @@ CREATE TABLE bill_product
   (
 	 id				int identity(1,1) primary key,
      id_bill		INT REFERENCES bill(id),
-     id_product		INT REFERENCES product(id),
+     id_product		INT REFERENCES product_detail(id),
      quantity		INT not null,
+     quantityReturn	INT not null,
+     reason 		nvarchar(max) not null,
      price			money not null,
 	 reduced_money	money,
-	 status			bit,
+	 status			int,
 	 note			NVARCHAR(200)
    --  PRIMARY KEY(id_bill, id_product)
   )
 
 CREATE TABLE image_returned
   (
-     id					INT IDENTITY(1, 1) PRIMARY KEY,
+     id					 INT IDENTITY(1, 1) PRIMARY KEY,
      id_bill_product	 INT REFERENCES bill_product(id) not null,
 	 name_image			 varchar(200) not null
   )
@@ -307,7 +222,7 @@ CREATE TABLE delivery_notes
 CREATE TABLE cart
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
-     id_users INT REFERENCES users(id) not null,
+     id_users	INT REFERENCES users(id) not null,
      code        NVARCHAR(30) unique,
      date_update DATETIME,
   )
@@ -316,7 +231,7 @@ CREATE TABLE cart
 CREATE TABLE cart_product
   (
      cart_id     INT REFERENCES cart(id),
-     product_id  INT REFERENCES product(id),
+     product_id  INT REFERENCES product_detail(id),
      quantity    INT not null,
      note        NVARCHAR(max),
      create_date DATETIME,
@@ -324,6 +239,12 @@ CREATE TABLE cart_product
      PRIMARY KEY(cart_id, product_id)
   )
 GO
+							
+
+insert into users(username, password,gender,role,status,phone_number,email)
+values('PDO','$2a$10$qHWKLl/DjkAuZaVcqOML4OsFYzLMPcD70E1xh9DA30K7takJbMRXO',0,'ADMIN',1,'0978973','oanh')
+
+
  INSERT INTO [dbo].[bill_status]
            ([code]
            ,[status]
@@ -435,64 +356,4 @@ INSERT INTO [dbo].[payment_method]
            ,N'Thanh toán trực tuyến qua Vn-pay')
 GO
 
-
-
-create table group_product(
-  id int identity(1,1) primary key,
-  name_group nvarchar(100)
-)
-
-
-CREATE TABLE [type]
-  (
-     id        INT IDENTITY(1, 1) PRIMARY KEY,
-     code      VARCHAR(10) not null,
-     name_type NVARCHAR(max) not null,
-	 group_product_id int references group_product(id)
- )
-
-Create table field(
-	id		int identity(1,1) primary key,
-	code	varchar(10),
-	name	nvarchar(100) not null,
-	variant bit
-)
-
-CREATE TABLE coupon_product
-  (
-     id_coupon  INT REFERENCES coupon(id),
-     id_product INT REFERENCES product(id),
-     date_start DATE not null,
-     date_end   DATE not null,
-     PRIMARY KEY(id_coupon, id_product)
-  )
-CREATE TABLE product
-  (
-     id             INT IDENTITY(1, 1) PRIMARY KEY,
-     sku            VARCHAR(40),
-	 name_product   nvarchar(200),
-	 type			int references type(id),
-     price_import   money,
-     price_export   money,
-     quantity       INT,
-	 description	nvarchar(1000),
-	 avg_point		float,
-	 same_product	varchar(10),
-     active         BIT
-)
-
-create table image (
-	id					int identity(1,1) primary key,
-	id_product			int references product(id),
-	link				varchar(1000),
-	location			int
-)
-
-create table product_field_value (
-	id					int	identity(1,1) primary key,
-	value				nvarchar(1000),
-	field_id			int references field(id),
-	product_id   int references product(id),
-	priority			int
-)
-
+		

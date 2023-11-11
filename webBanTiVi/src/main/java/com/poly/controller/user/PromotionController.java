@@ -93,11 +93,9 @@ public class PromotionController {
                 System.out.println(x.getImage());
             }
         }
-        System.out.println(couponProductService.findAllByCouponId(id).get(0).getPrice_export().intValue());
         model.addAttribute("couponres", couponRes);
         model.addAttribute("giagiam", Integer.parseInt(couponRes.getValue()));
         List<Product> listProduct = new ArrayList<>();
-        System.out.println(couponProductService.findAllByCouponId(id).get(0).getBrand().getNameBrand());
         model.addAttribute("listproduct", couponProductService.findAllByCouponId(id));
         session.setAttribute("pageView", "/user/page/promotion/coupondetail.html");
         return "/user/index";
@@ -111,7 +109,6 @@ public class PromotionController {
                 voucher = x;
             }
         }
-        System.out.println(voucher.isReducedForm());
         model.addAttribute("voucher", voucher);
         session.setAttribute("pageView", "/user/page/promotion/voucherdetail.html");
         return "/user/index";
@@ -128,7 +125,6 @@ public class PromotionController {
                 voucher = x;
             }
         }
-        System.out.println(voucher.isReducedForm());
         model.addAttribute("voucher", voucher);
         LocalDate today = LocalDate.now();
         int soluong = voucherCustomerService.findAllByVoucher(id).size();

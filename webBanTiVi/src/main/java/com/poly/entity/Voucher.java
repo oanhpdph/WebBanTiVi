@@ -30,9 +30,6 @@ public class Voucher {
     @Column(name="value")
     private int value;
 
-    @Column(name="reduced_form")
-    private boolean reducedForm;// true = % false tiền mặt
-
     @Column(name="minimum_value")
     private BigDecimal minimumValue;
 

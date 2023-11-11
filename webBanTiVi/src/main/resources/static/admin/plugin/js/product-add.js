@@ -2,11 +2,12 @@ var dataProductDetail = {}
 $(document).ready(function () {
     loadDataField()
     loadDataGroup()
+    loadVariant()
     // getProduct()
 })
-$("#select-group").change(function () {
-    loadDataType()
-})
+// $("#select-group").change(function () {
+//     loadDataType()
+// })
 $("#select-type").change(function () {
     changeTableProductDetail()
 })
@@ -41,61 +42,108 @@ function loadDataField() {
             // var dataTable = $('#tableAttributes tbody');
             $("#tableAttributes tbody").empty()
             $.each(data, function (index, item) {
-                var button = document.createElement('button');
-                button.innerHTML = 'Thêm'; // Đặt văn bản cho nút
-                button.className = "btn btn-outline-secondary addAttributes mx-2"
-                button.value = item.name
-                button.id = "_" + item.id
+                if (item.variant == false) {
+                    var button = document.createElement('button');
+                    button.innerHTML = 'Thêm'; // Đặt văn bản cho nút
+                    button.className = "btn btn-outline-secondary addAttributes mx-2"
+                    button.value = item.name
+                    button.id = "_" + item.id
 
-                var label = document.createElement('label')
-                button.appendChild(label)
-                // Tạo một ô trong bảng
-                var cell1 = document.createElement('td');
-                var cell2 = document.createElement('td');
-                var cell3 = document.createElement('td');
+                    var label = document.createElement('label')
+                    button.appendChild(label)
+                    // Tạo một ô trong bảng
+                    var cell1 = document.createElement('td');
+                    var cell2 = document.createElement('td');
+                    var cell3 = document.createElement('td');
 
-                cell1.innerText = index + 1
-                cell2.innerText = item.name
-                cell3.appendChild(button); // Thêm nút vào ô
-                // Lấy bảng theo ID
-                var tbody = document.getElementById('tableAttributes').getElementsByTagName('tbody')[0];
+                    var tbody = document.getElementById('tableAttributes').getElementsByTagName('tbody')[0];
 
-                // Thêm ô (cell) vào dòng (row) trong bảng
-                var row = tbody.insertRow(index); // Thay đổi chỉ số hàng theo ý muốn
-                row.appendChild(cell1);
-                row.appendChild(cell2);
-                row.appendChild(cell3);
+                    var indexRow = tbody.querySelectorAll("tr")
+
+                    cell1.innerText = document.getElementById('tableAttributes').rows.length
+                    cell2.innerText = item.name
+                    cell3.appendChild(button); // Thêm nút vào ô
+                    // Lấy bảng theo ID
+                    var indexRow = tbody.querySelectorAll("tr")
+
+                    // Thêm ô (cell) vào dòng (row) trong bảng
+                    var row = tbody.insertRow($("tableAttributes").rows); // Thay đổi chỉ số hàng theo ý muốn
+                    row.appendChild(cell1);
+                    row.appendChild(cell2);
+                    row.appendChild(cell3);
+                }
             });
         },
     })
 
 }
 
-function loadDataType() {
-    let value = $("#select-group").val()
+function loadVariant() {
     $.ajax({
-        url: "/type/all?group=" + value,
+        url: "/field/all",
         method: "get",
         success: function (data) {
-            var select = $('#select-type');
-            select.empty();
-            select.append($('<option>', {
-                disabled: true,
-                selected: true,
-                hidden: true,
-                value: -1,
-                text: "--Chưa chọn--"
-            }))
+            // var dataTable = $('#tableAttributes tbody');
+            $("#table-variant tbody").empty()
             $.each(data, function (index, item) {
-                select.append($('<option>', {
-                    value: item.id,
-                    text: item.nameType
-                }));
+                if (item.variant == true) {
+                    var button = document.createElement('button');
+                    button.innerHTML = 'Thêm'; // Đặt văn bản cho nút
+                    button.className = "btn btn-outline-secondary add-variant mx-2"
+                    button.value = item.name
+                    button.id = "_" + item.id
+
+                    var label = document.createElement('label')
+                    button.appendChild(label)
+                    // Tạo một ô trong bảng
+                    var cell1 = document.createElement('td');
+                    var cell2 = document.createElement('td');
+                    var cell3 = document.createElement('td');
+
+                    var tbody = document.getElementById('table-variant').getElementsByTagName('tbody')[0];
+
+
+                    cell1.innerText = document.getElementById('table-variant').rows.length
+                    cell2.innerText = item.name
+                    cell3.appendChild(button); // Thêm nút vào ô
+                    // Lấy bảng theo ID
+
+                    // Thêm ô (cell) vào dòng (row) trong bảng
+                    var row = tbody.insertRow($("table-variant").rows); // Thay đổi chỉ số hàng theo ý muốn
+                    row.appendChild(cell1);
+                    row.appendChild(cell2);
+                    row.appendChild(cell3);
+                }
             });
         },
     })
-
 }
+
+// function loadDataType() {
+//     let value = $("#select-group").val()
+//     $.ajax({
+//         url: "/type/all?group=" + value,
+//         method: "get",
+//         success: function (data) {
+//             var select = $('#select-type');
+//             select.empty();
+//             select.append($('<option>', {
+//                 disabled: true,
+//                 selected: true,
+//                 hidden: true,
+//                 value: -1,
+//                 text: "--Chưa chọn--"
+//             }))
+//             $.each(data, function (index, item) {
+//                 select.append($('<option>', {
+//                     value: item.id,
+//                     text: item.nameType
+//                 }));
+//             });
+//         },
+//     })
+//
+// }
 
 function loadDataGroup() {
     $.ajax({
@@ -104,13 +152,6 @@ function loadDataGroup() {
         success: function (data) {
             var select = $('#select-group');
             select.empty();
-            select.append($('<option>', {
-                disabled: true,
-                selected: true,
-                hidden: true,
-                value: -1,
-                text: "--Chưa chọn--"
-            }))
             $.each(data, function (index, item) {
                 select.append($('<option>', {
                     value: item.id,
@@ -120,6 +161,7 @@ function loadDataGroup() {
         },
     })
 }
+
 
 function clickImage() {
     if (this) {
@@ -165,16 +207,24 @@ function saveProduct() {
 }
 
 function clickSave() {
+    var valueReturn = validate()
+    if (valueReturn === false) {
+        return
+    }
     var sku = document.getElementsByClassName("sku")
     var priceImport = document.getElementsByClassName("priceImport")
     var priceExport = document.getElementsByClassName("priceExport")
     var quantity = document.getElementsByClassName("quantity")
-    var nameProduct = document.getElementsByClassName("name-product")
-    var id = document.getElementsByClassName("delete-product-detail")
-    var data = []
+    var checkActive = document.getElementsByClassName("check-active")
+
+    var data = {}
+    data.listProduct = []
+    data.product = []
+    console.log(document.getElementById("table-product-detail").rows)
 
     // set ảnh
-    $.each(id, function (index, item) {
+
+    $.each(checkActive, function (index, item) {
         var value = item.getAttribute("value")
         var image = "imageUpload" + value
         var arrImage = []
@@ -183,7 +233,6 @@ function clickSave() {
             // Lấy tệp từ trường chọn tệp
             var imageItem;
             var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
-
 // Trích xuất tên tệp từ đường dẫn
             var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
             if (lastIndex >= 0) {
@@ -203,21 +252,32 @@ function clickSave() {
             }
             arrImage.push(imageItem)
         })
-
+        console.log(sku[index])
         var temp = {
             sku: sku[index].value,
-            type: document.getElementById("select-type").value,
-            nameProduct: nameProduct[index].textContent.replace("+ mã sku", sku[index].value),
             priceImport: priceImport[index].value,
             priceExport: priceExport[index].value,
             quantity: quantity[index].value,
             image: arrImage,
             listAttributes: dataProductDetail.listAttributes[index],
-            // sameProduct: document.getElementById("sameProduct").value != "" ? document.getElementById("sameProduct").value : null
+            active: checkActive[index].checked
         }
-        data.push(temp)
+        data.listProduct.push(temp)
+        data.nameProduct = document.getElementById("name-display").value
+        data.sameProduct = $("sameProduct").value
+        data.sku = document.getElementById("sku-code").value
+        data.group = document.getElementById("select-group").value
     })
-
+    var inputAttributes = document.querySelectorAll(".input-data.data-attributes")
+    $.each(inputAttributes, function (index, item) {
+        // var arr = []
+        var allTag = document.querySelector("." + item.id)
+        data.product.push({
+            id: item.id.substring(2),
+            value: allTag.textContent,
+        })
+    })
+    console.log(data)
     uploadImage()
     $.ajax({
         url: "/product/save-product",
@@ -279,7 +339,6 @@ $("#submit-add-attribute").click(function () {
                         toast.addEventListener('mouseleave', Swal.resumeTimer)
                     }
                 })
-
                 Toast.fire({
                     icon: 'success',
                     title: 'Thêm thành công thuộc tính ' + data.name,
@@ -288,7 +347,103 @@ $("#submit-add-attribute").click(function () {
                     }
                 })
                 $("#name-attribute").val("")
-                loadDataField()
+
+                var button = document.createElement('button');
+                button.innerHTML = 'Thêm'; // Đặt văn bản cho nút
+                button.className = "btn btn-outline-secondary addAttributes mx-2"
+                button.value = data.name
+                button.id = "_" + data.id
+
+                var label = document.createElement('label')
+                button.appendChild(label)
+                // Tạo một ô trong bảng
+                var cell1 = document.createElement('td');
+                var cell2 = document.createElement('td');
+                var cell3 = document.createElement('td');
+
+                var tbody = document.getElementById('tableAttributes').getElementsByTagName('tbody')[0];
+
+
+                cell1.innerText = document.getElementById('table-variant').rows.length
+                cell2.innerText = data.name
+                cell3.appendChild(button); // Thêm nút vào ô
+                // Lấy bảng theo ID
+
+                // Thêm ô (cell) vào dòng (row) trong bảng
+                var row = tbody.insertRow($("tableAttributes").rows); // Thay đổi chỉ số hàng theo ý muốn
+                row.appendChild(cell1);
+                row.appendChild(cell2);
+                row.appendChild(cell3);
+
+            },
+            error: function (error) {
+                console.log('Lỗi trong quá trình POST yêu cầu:', error);
+            }
+        }
+    )
+})
+$("#submit-add-variant").click(function () {
+    var value = $("#name-variant").val()
+    var dataPost = {
+        name: value,
+        variant: 1
+    }
+    $.ajax(
+        {
+            url: "/field/add",
+            method: "post",
+            data: JSON.stringify(dataPost), // Chuyển đổi dữ liệu thành chuỗi JSON
+            contentType: 'application/json',
+            success: function (data) {
+                // $("#close-add-attribute").click()
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Thêm thành công biến thể ' + data.name,
+                    customClass: {
+                        container: 'alert' // Tên lớp tùy chỉnh
+                    }
+                })
+                $("#name-variant").val("")
+
+                var button = document.createElement('button');
+                button.innerHTML = 'Thêm'; // Đặt văn bản cho nút
+                button.className = "btn btn-outline-secondary add-variant mx-2"
+                button.value = data.name
+                button.id = "_" + data.id
+
+                var label = document.createElement('label')
+                button.appendChild(label)
+                // Tạo một ô trong bảng
+                var cell1 = document.createElement('td');
+                var cell2 = document.createElement('td');
+                var cell3 = document.createElement('td');
+
+                var tbody = document.getElementById('table-variant').getElementsByTagName('tbody')[0];
+
+
+                cell1.innerText = document.getElementById('table-variant').rows.length
+                cell2.innerText = data.name
+                cell3.appendChild(button); // Thêm nút vào ô
+                // Lấy bảng theo ID
+
+                // Thêm ô (cell) vào dòng (row) trong bảng
+                var row = tbody.insertRow($("table-variant").rows); // Thay đổi chỉ số hàng theo ý muốn
+                row.appendChild(cell1);
+                row.appendChild(cell2);
+                row.appendChild(cell3);
             },
             error: function (error) {
                 console.log('Lỗi trong quá trình POST yêu cầu:', error);
@@ -319,6 +474,28 @@ function myFunction() {
     }
 }
 
+function searchVariant() {
+    // Declare variables
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search-variant");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("table-variant");
+    tr = table.getElementsByTagName("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
 document.addEventListener('click', function (event) {
     if (event.target.classList.contains('addAttributes')) {
         var itemContentDiv = document.querySelector('.item-content');
@@ -326,19 +503,11 @@ document.addEventListener('click', function (event) {
         var attributesGroupDiv = document.createElement('div');
         attributesGroupDiv.className = 'attributes mb-3';
 
-        //tao checkbox
-        // <input className="form-check-input mx-2" type="checkbox">
-        var checkbox = document.createElement("input")
-        checkbox.className = "form-check-input mx-2 input-checkbox"
-        checkbox.type = "checkbox"
-        checkbox.value = event.target.value
-        checkbox.id = "chk" + event.target.id
-        attributesGroupDiv.appendChild(checkbox)
 // Tạo label
         var label = document.createElement("label")
         label.className = "col-form-label"
         label.innerText = event.target.value
-        label.setAttribute("for", "chk" + event.target.id)
+
         attributesGroupDiv.appendChild(label)
         // div input group
         var inputGroupDiv = document.createElement("div")
@@ -348,14 +517,14 @@ document.addEventListener('click', function (event) {
         inputDiv.className = "input-div col-sm-10"
         // tạo textarea
         var input = document.createElement("input")
-        input.className = "form-control input-data w-100"
+        input.className = "form-control input-data data-attributes w-100"
         input.rows = 1
         input.id = "_" + event.target.id
         inputDiv.appendChild(input)
         inputGroupDiv.appendChild(inputDiv)
 
         var deleteDiv = document.createElement('div');
-        deleteDiv.className = "col-sm-2 text-end"
+        deleteDiv.className = "col-sm-2 text-center"
         //tạo button delete
         var buttonDel = document.createElement('button')
         buttonDel.type = 'button';
@@ -371,7 +540,114 @@ document.addEventListener('click', function (event) {
         attributesGroupDiv.appendChild(inputGroupDiv)
         itemContentDiv.appendChild(attributesGroupDiv);
 
+        $.each($(".input-data"), function (index, item) {
+            item.addEventListener("keydown", function (e) {
+                if (e.key === "Enter" && e.target.value.trim() !== "") {
+                    // Tạo một thẻ span cho tag mới
+                    const inputValue = e.target.value.trim();
+                    const tagValue = inputValue.slice(0);
+                    var listValue = []
+                    var allTag = document.querySelectorAll("." + e.target.id)
 
+                    $.each(allTag, function (index, item) {
+                        listValue.push(item.textContent)
+                    })
+                    // thêm tag
+                    if (allTag.length > 0) {
+                        setTimeout(function () {
+                            Swal.fire({
+                                title: "Thuộc tính chỉ được thêm 1 giá trị",
+                                text: "Hãy xóa giá trị cũ nếu muốn thêm giá trị mới",
+                                icon: "warning",
+                                confirmButtonColor: "#3085d6",
+                                confirmButtonText: "Đã hiểu",
+                                customClass: {
+                                    container: "alert"
+                                }
+                            })
+                        }, 100);
+                        return
+                    }
+                    if (listValue.includes(tagValue)) {
+                        // Kiểm tra xem tag đã tồn tại chưa
+                        return;
+                    }
+                    e.target.value = "";
+
+                    const tag = document.createElement("div");
+                    tag.textContent = tagValue;
+                    tag.classList.add("tag", e.target.id);
+                    e.target.closest(".input-div").appendChild(tag);
+                    // Xử lý sự kiện khi người dùng nhấp vào tag để xóa
+
+                    tag.addEventListener("click", function () {
+                        removeTag(tagValue, tag, e);
+                        changeTableProductDetail()
+                    });
+                    // Ngăn chặn hành vi mặc định của Enter (ngăn xuống dòng)
+                    e.preventDefault();
+
+                    saveProduct()
+                    changeTableProductDetail()
+                }
+            })
+        });
+        event.target.hidden = true
+    }
+    if (event.target.classList.contains('delete-button')) {
+        // Xóa thẻ cha của nút "Xóa"
+        var id = event.target.value;
+        if (document.getElementById(id) != null) {
+            document.getElementById(id).hidden = false
+        }
+
+        var inputGroupDiv = event.target.closest('.attributes');
+        if (inputGroupDiv) {
+            inputGroupDiv.remove();
+        }
+        changeTableProductDetail()
+    }
+    if (event.target.classList.contains('add-variant')) {
+        var itemContentDiv = document.querySelector('.item-content-variant');
+// Tạo phần tử <div class="attributes">
+        var attributesGroupDiv = document.createElement('div');
+        attributesGroupDiv.className = 'variant mb-3';
+
+// Tạo label
+        var label = document.createElement("label")
+        label.className = "col-form-label"
+        label.innerText = event.target.value
+        attributesGroupDiv.appendChild(label)
+        // div input group
+        var inputGroupDiv = document.createElement("div")
+        inputGroupDiv.className = "input-group shadow-none"
+
+        var inputDiv = document.createElement("div")
+        inputDiv.className = "input-div col-sm-10"
+        // tạo textarea
+        var input = document.createElement("input")
+        input.className = "form-control input-data data-variant w-100"
+        input.rows = 1
+        input.id = "_" + event.target.id
+        inputDiv.appendChild(input)
+        inputGroupDiv.appendChild(inputDiv)
+
+        var deleteDiv = document.createElement('div');
+        deleteDiv.className = "col-sm-2 text-center"
+        //tạo button delete
+        var buttonDel = document.createElement('button')
+        buttonDel.type = 'button';
+        buttonDel.className = "btn btn-danger delete-button-variant";
+        buttonDel.value = event.target.id
+        var spanInBtn = document.createElement('span');
+        spanInBtn.className = "tf-icons bx bxs-trash delete-button-variant";
+        spanInBtn.value = event.target.id
+
+        buttonDel.appendChild(spanInBtn)
+        deleteDiv.appendChild(buttonDel)
+        inputGroupDiv.appendChild(deleteDiv)
+        attributesGroupDiv.appendChild(inputGroupDiv)
+        itemContentDiv.appendChild(attributesGroupDiv);
         $.each($(".input-data"), function (index, item) {
             item.addEventListener("keydown", function (e) {
                 if (e.key === "Enter" && e.target.value.trim() !== "") {
@@ -396,67 +672,34 @@ document.addEventListener('click', function (event) {
                     tag.classList.add("tag", e.target.id);
                     e.target.closest(".input-div").appendChild(tag);
                     // Xử lý sự kiện khi người dùng nhấp vào tag để xóa
+
                     tag.addEventListener("click", function () {
                         removeTag(tagValue, tag, e);
                         changeTableProductDetail()
                     });
                     // Ngăn chặn hành vi mặc định của Enter (ngăn xuống dòng)
                     e.preventDefault();
-
                     saveProduct()
                     changeTableProductDetail()
                 }
             })
         });
-        $.each($(".input-checkbox"), function (index, item) {
-            item.addEventListener("change", function (event) {
-                var valueTextArea = document.getElementById("name-display").textContent
-                var listValueTextArea = valueTextArea.split("+").map(function (item) {
-                    return item.trim()
-                })
-                var value = event.target.value
-                if (event.target.checked === false && listValueTextArea.includes(value.toLowerCase())) {
-                    var index = listValueTextArea.indexOf(value.toLocaleLowerCase())
-                    listValueTextArea.splice(index, 1)
-                }
-                if (event.target.checked === true && !listValueTextArea.includes(value.toLowerCase())) {
-                    listValueTextArea.splice(listValueTextArea.length - 1, 0, value.toLowerCase())
-                }
-                document.getElementById("name-display").innerText = "Loại sản phẩm + SKU"
-                document.getElementById("name-display").innerText = listValueTextArea.join(" + ")
-                changeTableProductDetail()
-            })
-        })
         event.target.hidden = true
     }
-})
-
-document.addEventListener('click', function (event) {
-    if (event.target.classList.contains('delete-button')) {
+    if (event.target.classList.contains('delete-button-variant')) {
         // Xóa thẻ cha của nút "Xóa"
         var id = event.target.value;
         if (document.getElementById(id) != null) {
             document.getElementById(id).hidden = false
         }
-        var checked = document.getElementById("chk" + id)
-        if (checked.checked === true) {
-            var valueTextArea = document.getElementById("name-display").textContent
-            var listValueTextArea = valueTextArea.split("+").map(function (item) {
-                return item.trim()
-            })
-            var value = checked.value
-
-            var index = listValueTextArea.indexOf(value.toLocaleLowerCase())
-            listValueTextArea.splice(index, 1)
-            document.getElementById("name-display").innerText = listValueTextArea.join(" + ")
-        }
-        var inputGroupDiv = event.target.closest('.attributes');
+        var inputGroupDiv = event.target.closest('.variant');
         if (inputGroupDiv) {
             inputGroupDiv.remove();
         }
         changeTableProductDetail()
     }
-});
+})
+
 
 function genProduct(listAttri, currentCombination, currentIndex, temp) {
     if (listAttri.length == currentIndex) {
@@ -465,8 +708,6 @@ function genProduct(listAttri, currentCombination, currentIndex, temp) {
         for (let i = 0; i < temp.length; i++) {
             var loop = {
                 id: temp[i].id,
-                name: temp[i].name,
-                index: temp[i].index,
                 value: currentCombination[i]
             }
             listAttributes.push(loop)
@@ -479,8 +720,6 @@ function genProduct(listAttri, currentCombination, currentIndex, temp) {
     $.each(listAttri, function (index, item) {
         var temp = {
             id: item.id,
-            name: item.name,
-            index: item.index
         }
         listTemp.push(temp)
     })
@@ -496,66 +735,43 @@ function genProduct(listAttri, currentCombination, currentIndex, temp) {
 
 function changeTableProductDetail() {
     var group = $("#select-group")
-    var type = $("#select-type")
-    var listAttributesForm = document.getElementsByClassName("input-data")
+    // var type = $("#select-type")
+    var listVariant = document.querySelectorAll(".input-data.data-variant")
     var data = {
         group: group.value,
-        type: type.value,
         listAttributes: []
     }
-
-    var valueTextArea = document.getElementById("name-display").textContent
-    var listValueTextArea = valueTextArea.split("+").map(function (item) {
-        return item.trim()
-    })
-    var inputCheckbox = document.getElementsByClassName("input-checkbox")
-    var listIndex = []
-    $.each(inputCheckbox, function (index1, item1) {
-        if (listValueTextArea.indexOf(item1.value.toLocaleLowerCase()) >= 0) {
-            listIndex.push(listValueTextArea.indexOf(item1.value.toLowerCase()))
-        } else {
-            listIndex.push("null")
-        }
-    })
-    $.each(listAttributesForm, function (index, item) {
+    $.each(listVariant, function (index, item) {
         var arr = []
         var allTag = document.querySelectorAll("." + item.id)
         $.each(allTag, function (index, value) {
             arr.push(value.textContent)
         })
-        var idTemp = "chk_" + item.id.substring(2)
         data.listAttributes.push({
             id: item.id.substring(2),
-            name: document.getElementById(idTemp).value,
             value: arr,
-            index: listIndex[index]
         })
     })
+
     dataProductDetail.listAttributes = []
     genProduct(data.listAttributes, [], 0, [])
     if (dataProductDetail.listAttributes.length !== 0) {
         $("#table-product-detail tbody").empty()
-        $.each(dataProductDetail.listAttributes, function (index, item) {
+        var list = dataProductDetail.listAttributes
+        $.each(list, function (index, item) {
             // lấy tên san phẩm
             if (item.length === 0) {
                 return
             }
             var temp = item
-            temp = temp.filter(function (a) {
-                return a.index !== "null";
-            });
-            temp = temp.sort(function (pr1, pr2) {
-                return pr1.index - pr2.index
-            })
             var nameProduct = []
             document.getElementById("select-type")
-            nameProduct.push($('#select-type option:selected').text())
             $.each(temp, function (index, itemTemp) {
                 nameProduct.push(itemTemp.value)
             })
-            nameProduct.push("+ mã sku")
             //end
 // Tạo một thẻ <tr>
+
             const tableRow = document.createElement("tr");
 
 // Tạo một thẻ <td> cho Tên hiển thị
@@ -577,9 +793,14 @@ function changeTableProductDetail() {
                     input.type = "text";
                 } else {
                     input.type = "number";
+                    input.value = 0
                 }
                 input.name = name[i]
+
+                var lable = document.createElement("span")
+                lable.className = "fst-italic text-danger " + "error-" + name[i]
                 inputCell.appendChild(input);
+                inputCell.appendChild(lable);
                 inputCells.push(inputCell);
             }
             tableRow.append(...inputCells);
@@ -620,138 +841,143 @@ function changeTableProductDetail() {
                 imageList.appendChild(listItem);
             }
 
+            var lable = document.createElement("span")
+            lable.className = "fst-italic text-danger " + "error-image"
             imageCell.appendChild(imageList);
+            imageCell.appendChild(lable)
             tableRow.appendChild(imageCell);
 
 // Tạo ô cho nút dropdown
-            const dropdownCell = document.createElement("td");
-            const dropdown = document.createElement("div");
-            dropdown.className = "dropdown";
+            const activeCell = document.createElement("td");
 
-            const dropdownButton = document.createElement("button");
-            dropdownButton.type = "button";
-            dropdownButton.className = "btn p-0 dropdown-toggle hide-arrow";
-            dropdownButton.setAttribute("data-bs-toggle", "dropdown");
-            dropdownButton.innerHTML = '<i class="bx bx-dots-vertical-rounded"></i>';
+            var check = document.createElement("input")
+            check.className = "form-check-input larger-checkbox check-active"
+            check.type = "checkbox"
+            check.value = index
 
-            const dropdownMenu = document.createElement("div");
-            dropdownMenu.className = "dropdown-menu dropdown-menu-end";
+            activeCell.appendChild(check);
+            tableRow.appendChild(activeCell);
 
-            const viewItem = document.createElement("a");
-            viewItem.className = "dropdown-item view-product";
-            viewItem.href = "javascript:void(0);";
-            viewItem.setAttribute("value", index)
-            viewItem.innerHTML = '<i class="bx bx-edit-alt me-1"></i> Xem';
-            viewItem.setAttribute("data-bs-toggle", "modal")
-            viewItem.setAttribute("data-bs-target", "#modalDetail")
-            viewItem.onclick = viewProduct
-
-            const deleteItem = document.createElement("a");
-            deleteItem.className = "dropdown-item delete-product-detail";
-            deleteItem.setAttribute("value", index)
-            deleteItem.href = "javascript:void(0);";
-            deleteItem.innerHTML = '<i class="bx bx-trash me-1"></i> Xóa';
-
-            dropdownMenu.appendChild(viewItem);
-            dropdownMenu.appendChild(deleteItem);
-
-            dropdown.appendChild(dropdownButton);
-            dropdown.appendChild(dropdownMenu);
-            dropdownCell.appendChild(dropdown);
-            tableRow.appendChild(dropdownCell);
-
-// Thêm thẻ <tr> vào bảngtail
+// Thêm thẻ <tr> vào bảng tail
             const table = document.querySelector(".table-product tbody"); // Điều chỉnh chọn bảng cụ thể
             table.appendChild(tableRow);
             document.getElementById("detail-pro").hidden = false
-
-            deleteItem.addEventListener("click", function (e) {
-                var i = e.target.closest("tr").rowIndex;
-                document.querySelector("#table-product-detail").deleteRow(i);
-                dataProductDetail.listAttributes.splice(i - 1, 0)
-                saveProduct()
-            })
         });
-        // loadImage()
     } else {
         document.getElementById("detail-pro").hidden = true
     }
 }
-
-function viewProduct() {
-    var index = this.getAttribute('value')
-    document.getElementById("delete-product").value = index
-
-    var product = dataProductDetail.listAttributes[index]
-    var temp = dataProductDetail.listAttributes[Number(index)].filter(function (a) {
-        return a.index !== "null";
-    });
-    temp = temp.sort(function (pr1, pr2) {
-        return pr1.index - pr2.index
-    })
-    var nameProduct = []
-    nameProduct.push("Thông tin sản phẩm")
-    document.getElementById("select-type")
-    nameProduct.push($('#select-type option:selected').text())
-    $.each(temp, function (index, itemTemp) {
-        nameProduct.push(itemTemp.value)
-    })
-    nameProduct.push("+ mã sku")
-    console.log(nameProduct)
-    document.getElementById("modalLongTitle").innerText = ""
-    document.getElementById("modalLongTitle").innerText = nameProduct.join(" ")
-
-    var type = dataProductDetail.type
-
-    $("#table-detail-attributes tbody").empty()
-    var cell1 = document.createElement('td');
-    var cell2 = document.createElement('td');
-
-    cell1.innerHTML = "Loại sản phẩm"
-    cell2.innerHTML = type
-
-    var tbody = document.getElementById('table-detail-attributes').getElementsByTagName('tbody')[0];
-    var row = tbody.insertRow(0);
-    row.appendChild(cell1)
-    row.appendChild(cell2)
-    $.each(product, function (index, item) {
-        var cell1 = document.createElement('td');
-        var cell2 = document.createElement('td');
-        cell1.innerHTML = item.name
-        cell2.innerHTML = item.value
-        var row = tbody.insertRow(index + 1);
-        row.appendChild(cell1)
-        row.appendChild(cell2)
-    })
-}
-
-document.getElementById("delete-product").addEventListener("click", function () {
-    var value = Number(this.value)
-    var index = value + 1
-    document.querySelector("#table-product-detail").deleteRow(index)
-    console.log(this.value)
-    dataProductDetail.listAttributes.splice(this.value - 1, 0)
-    saveProduct()
-})
 
 //remove tag input attribute
 function removeTag(tagValue, tagElement, e) {
     e.target.closest(".input-div").removeChild(tagElement);
 }
 
+
+function validate() {
+    var check = [];
+    var skuCode = document.getElementById("sku-code")
+    var listSku = document.getElementsByClassName("sku")
+    var listQuantity = document.getElementsByClassName("quantity")
+    var listPriceImport = document.getElementsByClassName("priceImport")
+    var listPriceExport = document.getElementsByClassName("priceExport")
+
+
+    $.each(listSku, function (index, item) {
+        var parentElement = item.closest('td');
+        var span = parentElement.querySelector("span.error-sku")
+        if (item.value === "") {
+            span.textContent = "Nhập mã sku cho biến thể"
+            check.sku = false
+        } else {
+            check.sku = true
+            span.textContent = ""
+        }
+    })
+    $.each(listQuantity, function (index, item) {
+        var parentElement = item.closest('td');
+        var span = parentElement.querySelector("span.error-quantity")
+        if (item.value === "" || Number(item.value) < 0) {
+            span.textContent = "Số lượng >=0"
+            check.quantity = false
+        } else {
+            check.quantity = true
+            span.textContent = ""
+        }
+    })
+    $.each(listPriceImport, function (index, item) {
+        var parentElement = item.closest('td');
+        var span = parentElement.querySelector("span.error-priceImport")
+        if (item.value === "" || Number(item.value) < 0) {
+            span.textContent = "Giá nhập >=0 "
+            check.priceImport = false
+        } else {
+            check.priceImport = true
+            span.textContent = ""
+        }
+    })
+    $.each(listPriceExport, function (index, item) {
+        var parentElement = item.closest('td');
+        var span = parentElement.querySelector("span.error-priceExport")
+        if (item.value === "" || Number(item.value) < 0) {
+            span.textContent = "Giá bán >=0"
+            check.priceExport = false
+        } else {
+            check.priceExport = true
+            span.textContent = ""
+        }
+    })
+
+    var checkActive = document.getElementsByClassName("check-active")
+
+    $.each(checkActive, function (index, item) {
+        var value = item.getAttribute("value")
+        var image = "imageUpload" + value
+        var listImage = document.getElementsByClassName(image)
+        $.each(listImage, function (index, item) {
+            var parentElement = item.closest('td');
+            var span = parentElement.querySelector("span.error-image")
+            // Lấy tệp từ trường chọn tệp
+            var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
+            var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
+            if (lastIndex >= 0) {
+                fileName = fileName.substr(lastIndex + 1);
+            }
+            if (fileName === "") {
+                span.textContent = "Chọn ảnh sản phẩm"
+            }
+        })
+
+        if (check.sku === false || check.quantity === false || check.priceExport === false || check.priceImport === false) {
+            return false
+        }
+        return true;
+    })
+}
+
 // clear form modal add product
 function clear() {
     loadDataGroup()
-    loadDataType()
     var container = document.querySelector(".item-content")
     while (container.firstChild) {
         container.removeChild(container.firstChild);
+    }
+    var containerVariant = document.querySelector(".item-content-variant")
+    while (containerVariant.firstChild) {
+        containerVariant.removeChild(containerVariant.firstChild);
     }
     $(".tag").remove()
     var buttonAdd = document.querySelectorAll(".addAttributes")
     $.each(buttonAdd, function (index, item) {
         item.hidden = false
     })
-    document.getElementById("name-display").innerText = "Loại sản phẩm + SKU"
+    var buttonAdd = document.querySelectorAll(".add-variant")
+    $.each(buttonAdd, function (index, item) {
+        item.hidden = false
+    })
+
+    document.getElementById("sku-code").value = ""
+    document.getElementById("name-display").value = ""
+    document.getElementById("sameProduct").value = ""
 }
 

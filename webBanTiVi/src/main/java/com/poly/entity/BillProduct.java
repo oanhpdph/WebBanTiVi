@@ -20,7 +20,7 @@ public class BillProduct {
 
     @ManyToOne
     @JoinColumn(name = "id_product")
-    private Product product;
+    private ProductDetail product;
 
     @ManyToOne
     @JoinColumn(name = "id_bill")
