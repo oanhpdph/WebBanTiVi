@@ -2,7 +2,7 @@ package com.poly.controller.user;
 
 import com.poly.dto.ProductDetailDto;
 import com.poly.entity.CartProduct;
-import com.poly.entity.Customer;
+import com.poly.entity.Users;
 import com.poly.entity.Product;
 import com.poly.entity.idClass.CartProductId;
 import com.poly.service.CartProductService;
@@ -42,7 +42,7 @@ public class AddToCartController {
 
         if (session.getAttribute("CustomerName") != null) {
             String username = (String) session.getAttribute("CustomerName");
-            Customer customer = customerService.getCustomerByName(username);
+            Users customer = customerService.getCustomerByName(username);
             var cart = cartSevice.getOne(customer.getId());
                 cart.setCode(cart.getCode());
                 cart.setDateUpdate(cart.getDateUpdate());
@@ -69,7 +69,7 @@ public class AddToCartController {
 
         if (session.getAttribute("CustomerName") != null) {
             String username = (String) session.getAttribute("CustomerName");
-            Customer customer = customerService.getCustomerByName(username);
+            Users customer = customerService.getCustomerByName(username);
 
             var cart = cartSevice.getOne(customer.getId());
 
@@ -90,7 +90,7 @@ public class AddToCartController {
             }
 
             String username = (String) session.getAttribute("CustomerName");
-            Customer customer = customerService.getCustomerByName(username);
+            Users customer = customerService.getCustomerByName(username);
 
             var cart = cartSevice.getOne(customer.getId());
 
@@ -104,7 +104,7 @@ public class AddToCartController {
     public String showCartItem(Model model) {
         if (session.getAttribute("CustomerName") != null) {
             String username = (String) session.getAttribute("CustomerName");
-            Customer customer = customerService.getCustomerByName(username);
+            Users customer = customerService.getCustomerByName(username);
             model.addAttribute("cart", cartSevice.getOne(customer.getId()));
             model.addAttribute("listCartDetail", cartProductService.getAll());
             model.addAttribute("listProductDetail", productService.findAll(new ProductDetailDto()));

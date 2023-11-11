@@ -2,7 +2,7 @@ package com.poly.controller.admin;
 
 import com.poly.common.UploadFile;
 import com.poly.dto.SearchStaffDto;
-import com.poly.entity.Customer;
+import com.poly.entity.Users;
 import com.poly.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -51,7 +51,7 @@ public class StaffController {
         session.setAttribute("page", pageRequest);
 
         Pageable pageable = PageRequest.of(pageRequest - 1, sizeRequest);
-        Page<Customer> staffPage = customerService.loadData(search, pageable);
+        Page<Users> staffPage = customerService.loadData(search, pageable);
 
         model.addAttribute("totalElements", staffPage.getTotalElements());
         session.setAttribute("list", staffPage);
@@ -65,7 +65,7 @@ public class StaffController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String addStaff(Model model,
                            HttpSession session,
-                           @Valid @ModelAttribute("staff") Customer staff, BindingResult bindingResult,
+                           @Valid @ModelAttribute("staff") Users staff, BindingResult bindingResult,
                            @RequestParam("image") MultipartFile file
     ) {
 
@@ -89,7 +89,7 @@ public class StaffController {
     @GetMapping("/staff/edit/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        Customer staff = customerService.findById(id)
+        Users staff = customerService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         model.addAttribute("listStaff", customerService.findAll());
         model.addAttribute("staff", staff);
@@ -100,11 +100,11 @@ public class StaffController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String updateUser(@PathVariable("id") Integer id,
                              HttpSession session,
-                             @ModelAttribute("staff") Customer staff, Model model,
+                             @ModelAttribute("staff") Users staff, Model model,
                              @RequestParam("image") MultipartFile file
     ) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
-        Customer findStaff = customerService.findById(staff.getId()).orElse(null);
+        Users findStaff = customerService.findById(staff.getId()).orElse(null);
         findStaff.setUsername(staff.getUsername());
         findStaff.setName(staff.getName());
         findStaff.setEmail(staff.getEmail());
@@ -136,7 +136,7 @@ public class StaffController {
     @GetMapping("/staff/delete/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteUser(@PathVariable("id") Integer id, Model model) {
-        Customer staff = customerService.findById(id)
+        Users staff = customerService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         customerService.deleteById(id);
         return "redirect:/admin/staff";

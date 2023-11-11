@@ -95,7 +95,7 @@ CREATE TABLE users
 	 password          VARCHAR(max),
      gender            BIT,
      avatar            VARCHAR(50),
-	 role              varchar(20),
+	 roles              varchar(20),
      status            bit not null,
   )
   
@@ -239,9 +239,8 @@ CREATE TABLE cart_product
      PRIMARY KEY(cart_id, product_id)
   )
 GO
-							
 
-insert into users(username, password,gender,role,status,phone_number,email)
+insert into users(username, password,gender,roles,status,phone_number,email)
 values('PDO','$2a$10$qHWKLl/DjkAuZaVcqOML4OsFYzLMPcD70E1xh9DA30K7takJbMRXO',0,'ADMIN',1,'0978973','oanh')
 
 

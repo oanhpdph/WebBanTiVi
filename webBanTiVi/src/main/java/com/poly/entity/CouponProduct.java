@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-@Table(name = "coupon_product")
+@Table(name = "discount_product")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,7 +19,7 @@ import java.util.Date;
 public class CouponProduct {
     @Id
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="id_coupon")
+    @JoinColumn(name="id_discount")
     private Coupon coupon;
 
     @Id

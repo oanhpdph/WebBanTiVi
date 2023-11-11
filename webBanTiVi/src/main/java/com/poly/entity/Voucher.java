@@ -33,9 +33,6 @@ public class Voucher {
     @Column(name="minimum_value")
     private BigDecimal minimumValue;
 
-    @Column(name="maximum_discount")
-    private BigDecimal maximumDiscount;
-
     @Column(name="quantity")
     private Integer quantity;
 

@@ -2,7 +2,7 @@ package com.poly.service.Impl;
 
 import com.poly.dto.SearchVoucherDto;
 import com.poly.dto.VoucherCustomerRes;
-import com.poly.entity.Customer;
+import com.poly.entity.Users;
 import com.poly.entity.Voucher;
 import com.poly.entity.VoucherCustomer;
 import com.poly.repository.CustomerRepository;
@@ -35,24 +35,24 @@ public class VoucherCustomerServiceImpl implements VoucherCustomerService {
 
     @Autowired
     VoucherRepository voucherRepository;
-    public List<VoucherCustomer> findAllByVoucher(Integer id){
-        return  voucherCustomerRepository.findAllByVoucher(id);
+
+    public List<VoucherCustomer> findAllByVoucher(Integer id) {
+        return voucherCustomerRepository.findAllByVoucher(id);
     }
 
 
     @PersistenceContext
     private EntityManager entityManager;
+
     @Override
     public VoucherCustomer save(VoucherCustomerRes voucher) {
-        Optional<Customer> optionalCustomer = customerRepository.findById(voucher.getCustomer());
+        Optional<Users> optionalCustomer = customerRepository.findById(voucher.getCustomer());
         Optional<Voucher> optionalVoucher = voucherRepository.findById(voucher.getVoucher());
         VoucherCustomer voucherCustomer = new VoucherCustomer();
         voucherCustomer.setCustomer(optionalCustomer.get());
         voucherCustomer.setVoucher(optionalVoucher.get());
-        voucherCustomer.setDateEnd(voucher.getDateEnd());
-        voucherCustomer.setDateStart(voucher.getDateStart());
         voucherCustomer.setActive(voucher.getActive());
-        return  this.voucherCustomerRepository.save(voucherCustomer);
+        return this.voucherCustomerRepository.save(voucherCustomer);
 
     }
 
@@ -84,14 +84,14 @@ public class VoucherCustomerServiceImpl implements VoucherCustomerService {
                     criteriaBuilder.equal(voucherCustomerRoot.get("customer"), searchVoucherDto.getKey()),
                     criteriaBuilder.equal(voucherCustomerRoot.get("voucher"), searchVoucherDto.getKey())));
         }
-        if (!searchVoucherDto.getDate().isEmpty() ) {
+        if (!searchVoucherDto.getDate().isEmpty()) {
             String date1 = searchVoucherDto.getDate().substring(0, searchVoucherDto.getDate().indexOf("-") - 1).replace("/", "-");
             String date2 = searchVoucherDto.getDate().substring(searchVoucherDto.getDate().indexOf("-") + 1, searchVoucherDto.getDate().length()).replace("/", "-");
             System.out.println(date1 + date2);
             Date dateStart = Date.valueOf(date1.trim());
             Date dateEnd = Date.valueOf(date2.trim());
-            list.add(criteriaBuilder.and(criteriaBuilder.greaterThan(voucherCustomerRoot.get("dateStart"),dateStart),
-                    criteriaBuilder.lessThan(voucherCustomerRoot.get("dateEnd"),dateEnd)));
+            list.add(criteriaBuilder.and(criteriaBuilder.greaterThan(voucherCustomerRoot.get("dateStart"), dateStart),
+                    criteriaBuilder.lessThan(voucherCustomerRoot.get("dateEnd"), dateEnd)));
         }
         voucherCustomerCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
         List<VoucherCustomer> result = entityManager.createQuery(voucherCustomerCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();

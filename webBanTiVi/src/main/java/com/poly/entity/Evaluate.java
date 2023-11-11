@@ -25,7 +25,7 @@ public class Evaluate {
 
     @ManyToOne
     @JoinColumn(name="id_user")
-    private Customer customer;
+    private Users customer;
 
     @Temporal(TemporalType.DATE)
     @Column(name="date_create")

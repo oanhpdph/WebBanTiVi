@@ -24,7 +24,7 @@ public class Cart {
 
     @OneToOne
     @JoinColumn(name = "id_customer")
-    private Customer customer;
+    private Users customer;
 
     @Column(name = "code")
     private String code;
