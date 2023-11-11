@@ -1,5 +1,6 @@
 package com.poly.service.Impl;
 
+import com.poly.common.RandomNumber;
 import com.poly.dto.BillProRes;
 import com.poly.dto.SearchBillDto;
 import com.poly.entity.Bill;
@@ -56,18 +57,19 @@ public class BillImpl implements BillService {
 
     @Override
     public Bill add(BillProRes bill) {
-
+        String code = "";
+        do {
+            code = RandomNumber.generateRandomString(10);
+        } while (billRepos.findByCode(code) == null);
         Bill bi = new Bill();
         bi.setCustomer(bill.getCustomer());
-        bi.setCode("HD" + generator.nextInt(10) + 9);
+        bi.setCode("HD" + code);
         bi.setCreateDate(new java.util.Date());
         bi.setPaymentDate(new java.util.Date());
         bi.setTotalPrice(bill.getTotalPrice());
         bi.setPaymentStatus(1);
         bi.setBillStatus(billStatusRepos.findByCode("WP").get());
         bi.setPaymentMethod(paymentMethodRepos.findAll().get(0));
-//        bi.setVoucher(bill.getVoucher());
-//        bi.setNote(bill.getNote());
         return this.billRepos.save(bi);
     }
 
@@ -83,7 +85,7 @@ public class BillImpl implements BillService {
                 billProduct.setBill(bill);
                 billProduct.setProduct(list.get(i).get());
                 billProduct.setPrice(list.get(i).get().getPriceExport());
-                billProduct.setQuantity(billProRes.getQuantity().get(i));
+                billProduct.setQuantity(list.get(i).get().getQuantity());
                 this.billProductRepos.save(billProduct);
             }
         }

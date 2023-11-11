@@ -23,8 +23,10 @@ public interface BillRepos extends JpaRepository<Bill, Integer> {
     @Query(value = "select  b from Bill b  where b.customer.id =?1")
     List<Bill> findBillByUser(Integer id);
 
-    @Query(value="select b from Bill b where b.billStatus.code=?1")
+    @Query(value = "select b from Bill b where b.billStatus.code=?1")
     List<Bill> findBillReturn(String code);
 
+    @Query(value = "select b from Bill b where b.code=?1")
+    Optional<Bill> findByCode(String code);
 
 }
