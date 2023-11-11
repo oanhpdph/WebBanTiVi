@@ -203,7 +203,7 @@ CREATE TABLE voucher
   )
 
 CREATE TABLE voucher_user
-  (	 id			 Int primary key,
+  (	 id			 Int IDENTITY(1, 1) primary key,
      id_user  INT references users(id),
      id_voucher  INT references voucher(id),
      date_start  DATETIME not null,-- thời gian nhận
