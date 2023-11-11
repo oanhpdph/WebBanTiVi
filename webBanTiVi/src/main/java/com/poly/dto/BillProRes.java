@@ -14,7 +14,7 @@ import java.util.List;
 public class BillProRes {
 
     List<Integer> product;
-    List<Integer> quantity;
+    Integer quantity;
     String name;
     String address;
     String phoneNumber;

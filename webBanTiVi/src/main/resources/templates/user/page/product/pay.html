@@ -285,8 +285,8 @@
                                                         <tr>
                                                             <td><span class="fs-5">Tổng tiền: </span></td>
                                                             <td></td>
-                                                            <td><span>$<span
-                                                                    th:text="${cart.amount}"></span> </span></td>
+                                                            <td><span style="color: red">$<span
+                                                                    class="total-pro"></span> </span></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -328,53 +328,81 @@
         </div>
     </div>
 </div>
-<script>
+<script>//<![CDATA[
+const plus = document.querySelectorAll(".plus")
+const minus = document.querySelectorAll(".minus")
 
-    const plus = document.querySelectorAll(".plus")
-    const minus = document.querySelectorAll(".minus")
+function tinhtong() {
+    const totalPriceForm = document.querySelectorAll(".total-price")
+    const totalProForm = document.querySelector(".total-pro")
+    var totalPro = 0;
+    for (let i = 0; i < totalPriceForm.length; i++) {
+        totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
+        console.log(totalPro);
+    }
+    totalProForm.innerText = totalPro
+}
 
-    $(document).ready(
-        $.each(plus, function (index, item) {
-            // var temp = index
-            item.addEventListener("click", function (e) {
-                var quantityForm = document.querySelectorAll(".input-qty")
-                const totalPriceForm = document.querySelectorAll(".total-price")
-                const priceExportForm = document.querySelectorAll(".price-export")
+$(document).ready(
+    tinhtong(),
+    $.each(plus, function (index, item) {
+        // var temp = index
+        item.addEventListener("click", function (e) {
+            var quantityForm = document.querySelectorAll(".input-qty")
+            const totalPriceForm = document.querySelectorAll(".total-price")
+            const priceExportForm = document.querySelectorAll(".price-export")
 
-                var valueInput = quantityForm[index].value
+            var valueInput = quantityForm[index].value
 
-                if (valueInput < Number(quantityForm[index].getAttribute('max'))) {
-                    quantityForm[index].value = Number(valueInput) + 1
-                    valueInput = Number(valueInput) + 1
-                }
+            if (valueInput < Number(quantityForm[index].getAttribute('max'))) {
+                quantityForm[index].value = Number(valueInput) + 1
+                valueInput = Number(valueInput) + 1
+            }
 
-                // var quantity = quantityForm[index].value
-                var priceExport = priceExportForm[index].getAttribute("value")
-                var totalPrice = Number(valueInput) * Number(priceExport)
+            // var quantity = quantityForm[index].value
+            var priceExport = priceExportForm[index].getAttribute("value")
+            var totalPrice = Number(valueInput) * Number(priceExport)
 
-                totalPriceForm[index].innerText = totalPrice
-            })
-        }),
-        $.each(minus, function (index, item) {
-            // var temp = index
-            item.addEventListener("click", function (e) {
+            totalPriceForm[index].innerText = totalPrice
+            const totalProForm = document.querySelector(".total-pro")
+            var totalPro = 0;
+            for (let i = 0; i < totalPriceForm.length; i++) {
+                totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
+                console.log(totalPro);
+            }
 
-                const totalPriceForm = document.querySelectorAll(".total-price")
-                const priceExportForm = document.querySelectorAll(".price-export")
-                var quantityForm = document.querySelectorAll(".input-qty")
-
-                var valueInput = quantityForm[index].value// = 10
-
-                if (valueInput > Number(quantityForm[index].getAttribute('min'))) {
-                    quantityForm[index].value = Number(valueInput) - 1
-                    valueInput = Number(valueInput) - 1
-                }
-
-                var priceExport = priceExportForm[index].getAttribute("value")
-                var totalPrice = Number(valueInput) * Number(priceExport)
-
-                totalPriceForm[index].innerText = totalPrice
-            })
+            totalProForm.innerText = totalPro
         })
-    )
-</script>
+    }),
+    $.each(minus, function (index, item) {
+        // var temp = index
+        item.addEventListener("click", function (e) {
+
+            const totalPriceForm = document.querySelectorAll(".total-price")
+            const priceExportForm = document.querySelectorAll(".price-export")
+            var quantityForm = document.querySelectorAll(".input-qty")
+
+            var valueInput = quantityForm[index].value// = 10
+
+            if (valueInput > Number(quantityForm[index].getAttribute('min'))) {
+                quantityForm[index].value = Number(valueInput) - 1
+                valueInput = Number(valueInput) - 1
+            }
+
+            var priceExport = priceExportForm[index].getAttribute("value")
+            var totalPrice = Number(valueInput) * Number(priceExport)
+
+            totalPriceForm[index].innerText = totalPrice
+            tinhtong();
+        })
+    })
+)
+
+
+function xoa(x) {
+    var tr = x.parentElement.parentElement;
+    tr.remove();
+}
+
+
+//]]></script>
