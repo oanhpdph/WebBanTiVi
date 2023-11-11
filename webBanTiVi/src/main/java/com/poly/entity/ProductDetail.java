@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "product_detail")
@@ -37,5 +38,7 @@ public class ProductDetail {
     @JoinColumn(name="product_id")
     private Product product;
 
+    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
+    private List<Image> listImage;
 
 }

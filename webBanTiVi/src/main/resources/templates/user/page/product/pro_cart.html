@@ -95,22 +95,19 @@
                                                 <input th:value="${item.product.id}" name="id" hidden>
                                                 <td>
                                                     <div th:each="image:${item.product.listImage}">
-                                                        <!--                                                        <div>-->
                                                         <img th:if="${image.location == true}"
-                                                             th:src="@{'/image/'+${image.nameImage}}"
+                                                             th:src="@{'/image/'+${image.link}}"
                                                              alt="" width="100px">
-                                                        <!--                                                        </div>-->
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <span class="fs-5"
-                                                          th:text="${item.product.name + ' '+item.product.code}"></span>
+                                                    <span class="fs-5" th:text="${item.product.product.nameProduct}"></span>
                                                 </td>
                                                 <td>
                                                     <div>
                                                             <span class="fs-5">$<span class="price-export"
-                                                                                      th:value="${item.product.price_export}"
-                                                                                      th:text="${item.product.price_export}"></span>
+                                                                                      th:value="${item.product.priceExport}"
+                                                                                      th:text="${item.product.priceExport}"></span>
                                                             </span>
                                                     </div>
                                                 </td>
@@ -127,7 +124,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <span th:text="${item.product.price_export * item.quantity}"
+                                                    <span th:text="${item.product.priceExport * item.quantity}"
                                                           class="total-price"></span>
                                                 </td>
                                                 <td>
@@ -177,9 +174,9 @@
                     <div class="card shadow-none bg-transparent border border-secondary mb-3">
                         <div class="card-header">
                             <div class="card-body">
-                                <p class="card-text">Subtotal: <span class="text-end" style="color: #f67a7a">$<span
+                                <p class="card-text">Subtotal: <span class="text-end text-danger">$<span
                                         class="total-pro"></span> </span></p>
-                                <p class="card-text">Total: <span class="text-end" style="color: red">$<span
+                                <p class="card-text">Total: <span class="text-end text-danger">$<span
                                         class=""></span> </span></p>
                                 <div style="text-align: center">
                                     <a type="submit" class="btn btn-primary" th:href="@{/pay}">Thanh

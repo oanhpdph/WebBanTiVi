@@ -74,7 +74,7 @@
                                                 <div th:class="|carousel-item ${image.location==true?'active':''}|"
                                                      th:each="image:${product.listImage}">
                                                     <div>
-                                                        <img th:src="@{'/image/'+${image.nameImage}}"
+                                                        <img th:src="@{'/image/'+${image.link}}"
                                                              alt="" class="d-block w-100">
                                                     </div>
                                                     <div class="carousel-caption d-none d-md-block">
@@ -101,31 +101,20 @@
                                 </div>
                             </div>
                             <div class="col-6 mt-5 mb-5">
-                                <form th:action="@{/cart/detail/{id}(id=${product.id})}" method="post">
+                                <form th:action="@{/product/detail/{id}(id=${product.id})}" method="post">
                                     <div class="product-detail-title">
-                                        <h3>
-                                            <b>
-                                                <span th:text="${product.name}"></span>
-                                                <span th:each="type:${product.type}" th:text="${type.nameType}"></span>
-                                                <span th:each="resolution:${product.resolution}"
-                                                      th:text="${resolution.nameResolution}"></span>
-                                                <span th:each="size:${product.size}"
-                                                      th:text="${size.nameSizeInch}"></span>inch
-                                                <span th:each="brand:${product.brand}"
-                                                      th:text="${brand.nameBrand}"></span>
-                                                <span th:text="${product.code}"></span>
-                                            </b>
+                                        <h3 th:text="${product.product.nameProduct}">
                                         </h3>
                                     </div>
                                     <br>
                                     <table class="table">
                                         <tbody>
                                         <tr th:each="item : ${product}">
-                                            <td>Price Export:</td>
-                                            <td th:text="${item.price_export}">Text ...</td>
+                                            <td>Giá:</td>
+                                            <td th:text="${item.priceExport}">Text ...</td>
                                         </tr>
                                         <tr th:each="item : ${product}">
-                                            <td>Quantity:</td>
+                                            <td>Số lượng:</td>
                                             <td th:text="${item.quantity}">1</td>
                                         </tr>
                                         <tr>
@@ -179,60 +168,60 @@
                             <hr>
                             <div class="col-6">
                                 <h3>
-                                    Thông số kỹ thuật <span th:text="${product.name}"></span>
+                                    Thông số kỹ thuật <span th:text="${product.product.nameProduct}"></span>
                                 </h3><br>
                                 <div class="table-responsive text-nowrap">
                                     <table class="table table-striped" border="0px">
                                         <tbody class="table-border-bottom-0">
-                                        <tr th:each="item : ${product.brand}">
-                                            <td>Brand:</td>
-                                            <td th:text="${item.nameBrand}"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr th:each="item : ${product.origin}">
-                                            <td>Origin:</td>
-                                            <td th:text="${item.nameOrigin}"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr th:each="item : ${product.manufacture}">
-                                            <td>Manufacture:</td>
-                                            <td th:text="${item.nameManufacture}"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr th:each="item : ${product.color}">
-                                            <td>Color:</td>
-                                            <td th:text="${item.nameColor}"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr th:each="item : ${product.type}">
-                                            <td>Type:</td>
-                                            <td th:text="${item.nameType}"></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr th:each="item : ${product.size}">
-                                            <td>Size:</td>
-                                            <td th:text="${item.nameSizeInch}"></td>
-                                            <td th:text="${item.length}">px</td>
-                                            <td th:text="${item.width}">px</td>
-                                            <td th:text="${item.thickness}">cm</td>
-                                        </tr>
-                                        <tr th:each="item : ${product.resolution}">
-                                            <td>Resolution:</td>
-                                            <td th:text="${item.nameResolution}"></td>
-                                            <td th:text="${item.screenLength}">px</td>
-                                            <td th:text="${item.screenWidth}">px</td>
-                                            <td></td>
-                                        </tr>
+<!--                                        <tr th:each="item : ${product.brand}">-->
+<!--                                            <td>Brand:</td>-->
+<!--                                            <td th:text="${item.nameBrand}"></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                        </tr>-->
+<!--                                        <tr th:each="item : ${product.origin}">-->
+<!--                                            <td>Origin:</td>-->
+<!--                                            <td th:text="${item.nameOrigin}"></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                        </tr>-->
+<!--                                        <tr th:each="item : ${product.manufacture}">-->
+<!--                                            <td>Manufacture:</td>-->
+<!--                                            <td th:text="${item.nameManufacture}"></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                        </tr>-->
+<!--                                        <tr th:each="item : ${product.color}">-->
+<!--                                            <td>Color:</td>-->
+<!--                                            <td th:text="${item.nameColor}"></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                        </tr>-->
+<!--                                        <tr th:each="item : ${product.type}">-->
+<!--                                            <td>Type:</td>-->
+<!--                                            <td th:text="${item.nameType}"></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                        </tr>-->
+<!--                                        <tr th:each="item : ${product.size}">-->
+<!--                                            <td>Size:</td>-->
+<!--                                            <td th:text="${item.nameSizeInch}"></td>-->
+<!--                                            <td th:text="${item.length}">px</td>-->
+<!--                                            <td th:text="${item.width}">px</td>-->
+<!--                                            <td th:text="${item.thickness}">cm</td>-->
+<!--                                        </tr>-->
+<!--                                        <tr th:each="item : ${product.resolution}">-->
+<!--                                            <td>Resolution:</td>-->
+<!--                                            <td th:text="${item.nameResolution}"></td>-->
+<!--                                            <td th:text="${item.screenLength}">px</td>-->
+<!--                                            <td th:text="${item.screenWidth}">px</td>-->
+<!--                                            <td></td>-->
+<!--                                        </tr>-->
                                         </tbody>
                                     </table>
                                 </div>
@@ -242,34 +231,34 @@
                                 <div class="card"><br>
                                     <div class="card-body">
                                         <h2>
-                                            Đánh Giá <span th:text="${product.name}"></span>
+                                            Đánh Giá <span th:text="${product.product.nameProduct}"></span>
                                         </h2>
                                         <br>
                                         <div class="table-responsive text-nowrap">
-                                        <span class="fs-5" th:each="item: ${product.listEvaluate}">
+                                        <span class="fs-5" th:each="item: ${product.product.listEvaluate}">
                                         <strong th:text="${item.customer.name}"></strong>
                                         </span>
-                                            <p th:each="item: ${product.listEvaluate}">
-                                                <i class='bx bxs-star' style='color:#ffff00'></i>
-                                                <i class='bx bxs-star' style='color:#ffff00'></i>
-                                                <i class='bx bxs-star' style='color:#ffff00'></i>
-                                                <i class='bx bxs-star' style='color:#ffff00'></i>
-                                                <i class='bx bxs-star-half' style='color:#ffff00'></i>
-                                                <span th:text="${item.point}"></span>
-                                            </p>
-                                            <p th:each="item: ${product.listEvaluate}">
-                                                <span th:text="${item.comment}"></span> <br>
-                                                <small class="text-muted">
-                                                    <span th:text="${item.dateCreate}"></span>
-                                                </small>
-                                            </p>
-                                            <p th:each="item: ${product.listEvaluate}">
-                                                <i class='bx bx-like'></i>
-                                                <span>Hữu ích(6)</span>|
-                                                <small class="text-muted">
-                                                    <span th:text="${item.dateCreate}"></span>
-                                                </small>
-                                            </p>
+<!--                                            <p th:each="item: ${product.listEvaluate}">-->
+<!--                                                <i class='bx bxs-star' style='color:#ffff00'></i>-->
+<!--                                                <i class='bx bxs-star' style='color:#ffff00'></i>-->
+<!--                                                <i class='bx bxs-star' style='color:#ffff00'></i>-->
+<!--                                                <i class='bx bxs-star' style='color:#ffff00'></i>-->
+<!--                                                <i class='bx bxs-star-half' style='color:#ffff00'></i>-->
+<!--                                                <span th:text="${item.point}"></span>-->
+<!--                                            </p>-->
+<!--                                            <p th:each="item: ${product.listEvaluate}">-->
+<!--                                                <span th:text="${item.comment}"></span> <br>-->
+<!--                                                <small class="text-muted">-->
+<!--                                                    <span th:text="${item.dateCreate}"></span>-->
+<!--                                                </small>-->
+<!--                                            </p>-->
+<!--                                            <p th:each="item: ${product.listEvaluate}">-->
+<!--                                                <i class='bx bx-like'></i>-->
+<!--                                                <span>Hữu ích(6)</span>|-->
+<!--                                                <small class="text-muted">-->
+<!--                                                    <span th:text="${item.dateCreate}"></span>-->
+<!--                                                </small>-->
+<!--                                            </p>-->
                                             <hr>
                                         </div>
                                     </div>
@@ -289,79 +278,79 @@
                 </div>
             </div>
             <br>
-            <div class="row mb-5">
-                <div class="col-md-6 col-lg-3 mb-5" th:each="pro:${listPro}">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="">
-                                <br>
-                                <span th:each="image:${pro.listImage}">
-                                    <img th:if="${image.location == true}"
-                                         th:src="@{'/image/'+${image.nameImage}}"
-                                         alt="" width="100%">
-                                </span>
-                                <span class="fs-5">
-                                    <p th:text="${pro.name}"></p>
-                                </span>
-                                <span class="fs-5">
-                                    <p th:text="${pro.price_import}"></p>
-                                </span>
-                                <div class="product__color__select">
-                                    <label for="pc-1">
-                                        <input type="radio" id="pc-1">
-                                    </label>
-                                    <label class="active black" for="pc-2">
-                                        <input type="radio" id="pc-2">
-                                    </label>
-                                    <label class="grey" for="pc-3">
-                                        <input type="radio" id="pc-3">
-                                    </label>
-                                </div>
-                                <div class="rating">
-                                    <i class='bx bxs-star' style='color:#ffff00'></i>
-                                    <i class='bx bxs-star' style='color:#ffff00'></i>
-                                    <i class='bx bxs-star' style='color:#ffff00'></i>
-                                    <i class='bx bxs-star-half' style='color:#ffff00'></i>
-                                    <i class='bx bxs-star' undefined></i>
-                                </div>
-                            </div>
-                            <br>
-                            <a th:href="@{/cart/add/{id}(id=${product.id})}" class="btn btn-outline-primary">+ Add To
-                                Cart</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card h-100">
-                        <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <div class="product__item__text">
-                                <span class="fs-5">Ti Vi Samsung</span>
-                                <div class="rating">
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                </div>
-                                <span class="fs-5">$67.24</span>
-                                <div class="product__color__select">
-                                    <label for="pc-1">
-                                        <input type="radio" id="pc-1">
-                                    </label>
-                                    <label class="active black" for="pc-2">
-                                        <input type="radio" id="pc-2">
-                                    </label>
-                                    <label class="grey" for="pc-3">
-                                        <input type="radio" id="pc-3">
-                                    </label>
-                                </div>
-                            </div>
-                            <a href="javascript:void(0)" class="btn btn-outline-primary">+ Add To Cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="row mb-5">-->
+<!--                <div class="col-md-6 col-lg-3 mb-5" th:each="pro:${listPro}">-->
+<!--                    <div class="card h-100">-->
+<!--                        <div class="card-body">-->
+<!--                            <div class="">-->
+<!--                                <br>-->
+<!--                                <span th:each="image:${pro.listImage}">-->
+<!--                                    <img th:if="${image.location == true}"-->
+<!--                                         th:src="@{'/image/'+${image.link}}"-->
+<!--                                         alt="" width="100%">-->
+<!--                                </span>-->
+<!--                                <span class="fs-5">-->
+<!--                                    <p th:text="${pro.product.nameProduct}"></p>-->
+<!--                                </span>-->
+<!--                                <span class="fs-5">-->
+<!--                                    <p th:text="${pro.priceImport}"></p>-->
+<!--                                </span>-->
+<!--                                <div class="product__color__select">-->
+<!--                                    <label for="pc-1">-->
+<!--                                        <input type="radio" >-->
+<!--                                    </label>-->
+<!--                                    <label class="active black" for="pc-2">-->
+<!--                                        <input type="radio" >-->
+<!--                                    </label>-->
+<!--                                    <label class="grey" for="pc-3">-->
+<!--                                        <input type="radio" >-->
+<!--                                    </label>-->
+<!--                                </div>-->
+<!--                                <div class="rating">-->
+<!--                                    <i class='bx bxs-star' style='color:#ffff00'></i>-->
+<!--                                    <i class='bx bxs-star' style='color:#ffff00'></i>-->
+<!--                                    <i class='bx bxs-star' style='color:#ffff00'></i>-->
+<!--                                    <i class='bx bxs-star-half' style='color:#ffff00'></i>-->
+<!--                                    <i class='bx bxs-star' undefined></i>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <br>-->
+<!--                            <a th:href="@{/cart/add/{id}(id=${product.id})}" class="btn btn-outline-primary">+ Add To-->
+<!--                                Cart</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-6 col-lg-3">-->
+<!--                    <div class="card h-100">-->
+<!--                        <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap">-->
+<!--                        <div class="card-body">-->
+<!--                            <div class="product__item__text">-->
+<!--                                <span class="fs-5">Ti Vi Samsung</span>-->
+<!--                                <div class="rating">-->
+<!--                                    <i class="fa fa-star-o"></i>-->
+<!--                                    <i class="fa fa-star-o"></i>-->
+<!--                                    <i class="fa fa-star-o"></i>-->
+<!--                                    <i class="fa fa-star-o"></i>-->
+<!--                                    <i class="fa fa-star-o"></i>-->
+<!--                                </div>-->
+<!--                                <span class="fs-5">$67.24</span>-->
+<!--                                <div class="product__color__select">-->
+<!--                                    <label for="pc-1">-->
+<!--                                        <input type="radio" id="pc-1">-->
+<!--                                    </label>-->
+<!--                                    <label class="active black" for="pc-2">-->
+<!--                                        <input type="radio" id="pc-2">-->
+<!--                                    </label>-->
+<!--                                    <label class="grey" for="pc-3">-->
+<!--                                        <input type="radio" id="pc-3">-->
+<!--                                    </label>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <a href="javascript:void(0)" class="btn btn-outline-primary">+ Add To Cart</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </section>
     <br>

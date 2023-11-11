@@ -21,7 +21,7 @@ public class Evaluate {
 
     @ManyToOne
     @JoinColumn(name="id_product")
-    private ProductDetail product;
+    private Product product;
 
     @ManyToOne
     @JoinColumn(name="id_user")

@@ -25,7 +25,6 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class BillImpl implements BillService {
@@ -52,8 +51,6 @@ public class BillImpl implements BillService {
 
     @Autowired
     PaymentMethodRepos paymentMethodRepos;
-
-    Random generator = new Random();
 
     @Override
     public Bill add(BillProRes bill) {
@@ -169,9 +166,6 @@ public class BillImpl implements BillService {
             if (bill.getPaymentMethod() != null) {
                 billUpdate.setPaymentMethod(bill.getPaymentMethod());
             }
-//            billUpdate.setNote(bill.getNote());
-//            billUpdate.setCustomer(bill.getCustomer());
-//            billUpdate.setPaymentDate(bill.getPaymentDate());
             if (bill.getPaymentStatus() != -1) {
                 billUpdate.setPaymentStatus(bill.getPaymentStatus());
             }
@@ -199,14 +193,6 @@ public class BillImpl implements BillService {
         return null;
     }
 
-    @Override
-    public Bill getOneByIdCustomer(Integer idCustomer) {
-        Optional<Bill> optional = billRepos.getBillByCustomer(idCustomer);
-        if (optional.isPresent()) {
-            return optional.get();
-        }
-        return null;
-    }
 
     @Override
     public List<Bill> findAllBillByUser(Integer id) {

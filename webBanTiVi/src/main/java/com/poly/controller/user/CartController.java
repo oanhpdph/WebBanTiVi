@@ -1,13 +1,16 @@
 package com.poly.controller.user;
 
 import com.poly.dto.BillProRes;
-import com.poly.dto.ProductDetailDto;
-import com.poly.entity.*;
+import com.poly.entity.Bill;
+import com.poly.entity.CartProduct;
+import com.poly.entity.ProductDetail;
+import com.poly.entity.Users;
 import com.poly.repository.CartRepos;
 import com.poly.service.BillService;
 import com.poly.service.CustomerService;
 import com.poly.service.Impl.CartSeviceImpl;
 import com.poly.service.Impl.ProductServiceImpl;
+import com.poly.service.ProductDetailService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +45,9 @@ public class CartController {
 
     @Autowired
     ProductServiceImpl productService;
+
+    @Autowired
+    private ProductDetailService productDetailService;
 
     @ModelAttribute("cart")
     CartSeviceImpl getCart() {
@@ -91,12 +97,11 @@ public class CartController {
     }
 
 
-    @PostMapping("/cart/detail/{id}")
+    @PostMapping("/product/detail/{id}")
     public String add(@PathVariable Integer id, @RequestParam("qty") Integer qty, HttpSession session, Model model, HttpServletRequest request) {
         String url = request.getRequestURI();
         List<CartProduct> list = cartService.add(id, qty);
         session.setAttribute("list", list);
-        System.out.println(url);
         return "redirect:" + url;
     }
 
@@ -117,12 +122,12 @@ public class CartController {
         return "redirect:/cart";
     }
 
-    @GetMapping("/cart/detail/{id}")
+    @GetMapping("/product/detail/{id}")
     public String edit(@PathVariable Integer id, Model model) {
-        Product product = productService.findById(id);
+        ProductDetail product = productDetailService.findById(id);
         model.addAttribute("product", product);
         session.setAttribute("pageView", "/user/page/product/detail.html");
-        model.addAttribute("listPro", this.productService.findAll(new ProductDetailDto()));
+        model.addAttribute("listPro", this.productDetailService.findAll());
         return "user/index";
     }
 
@@ -133,7 +138,6 @@ public class CartController {
         for (int i = 0; i < id.size(); i++) {
             list = cartService.update(id.get(i), qty.get(i));
         }
-
         session.setAttribute("list", list);
 //        int total = (int) cartService.getTotalProduct();
 //        model.addAttribute("total", total);
