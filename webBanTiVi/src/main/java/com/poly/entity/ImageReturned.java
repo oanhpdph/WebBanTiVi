@@ -21,4 +21,12 @@ public class ImageReturned {
 
     @Column(name = "name_image")
     private String nameImage;
+
+    @Override
+    public String toString(){
+        return "ImageReturned{" +
+                "id=" + id +
+                ", nameImage=" + nameImage +
+                '}';
+    }
 }

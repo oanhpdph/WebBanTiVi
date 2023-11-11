@@ -97,7 +97,6 @@ public class PromotionController {
         model.addAttribute("couponres", couponRes);
         model.addAttribute("giagiam", Integer.parseInt(couponRes.getValue()));
         List<Product> listProduct = new ArrayList<>();
-        System.out.println(couponProductService.findAllByCouponId(id).get(0).getBrand().getNameBrand());
         model.addAttribute("listproduct", couponProductService.findAllByCouponId(id));
         session.setAttribute("pageView", "/user/page/promotion/coupondetail.html");
         return "/user/index";

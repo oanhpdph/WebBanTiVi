@@ -67,5 +67,7 @@ public class Bill {
     @OneToMany(mappedBy = "idBill")
     private List<DeliveryNotes> deliveryNotes;
 
+
+
 }
 

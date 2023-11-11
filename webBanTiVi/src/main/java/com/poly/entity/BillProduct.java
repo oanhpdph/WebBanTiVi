@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "bill_product")
@@ -20,7 +21,7 @@ public class BillProduct {
 
     @ManyToOne
     @JoinColumn(name = "id_product")
-    private Product product;
+    private ProductDetail product;
 
     @ManyToOne
     @JoinColumn(name = "id_bill")
@@ -38,6 +39,15 @@ public class BillProduct {
     @Column(name="note")
     private String note;
 
+    @Column(name="reason")
+    private String reason;
+
+    @Column(name="quantityReturn")
+    private Integer quantityReturn;
+
     @Column(name="status")
-    private Boolean active;
+    private Boolean status;
+
+    @OneToMany(mappedBy="billProduct")
+    private List<ImageReturned> listImage;
 }

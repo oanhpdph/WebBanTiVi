@@ -61,7 +61,7 @@
                                 <img class="w-25 d-inline"
                                      src="/image/smart-tivi-toshiba-43-inch-43v31mp-04.jpg">
                                 <br>
-                                <span class="d-inline-flex" th:text="${bill.billProducts[0].product.name}"></span>
+                                <span class="d-inline-flex" th:text="${bill.billProducts[0].product.nameProduct}"></span>
                             </div>
                             <span class="col-sm-6 text-end ">
                                       Tổng tiền:
@@ -118,7 +118,7 @@
                                                                    th:class="|idBillProduct${bill.id} form-control|" disabled>
                                                         </td>
                                                         <td>
-                                                            <input type="text" th:value="${billProduct.product.name}"
+                                                            <input type="text" th:value="${billProduct.product.nameProduct}"
                                                                    th:class="|nameProduct${bill.id} form-control|" disabled>
                                                         </td>
                                                         <td>
@@ -304,7 +304,7 @@
         })
 
         $.ajax({
-            url: '/product/upload',
+            url: '/returnImage',
             type: 'POST',
             data: formData,
             processData: false,
@@ -316,7 +316,6 @@
                 console.error('Lỗi:', error);
             }
         });
-
     }
 
 

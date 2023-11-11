@@ -194,7 +194,7 @@ public class BillController {
             }
             dataExportExcel.setTotalPrice(totalAfter.longValue());
 
-            dataExportExcel.setProduct(b.getBillProducts().stream().map(billProduct -> billProduct.getProduct().getCode()).reduce("", (o1, o2) -> o1 + o2 + ", "));
+//            dataExportExcel.setProduct(b.getBillProducts().stream().map(billProduct -> billProduct.getProduct().getCode()).reduce("", (o1, o2) -> o1 + o2 + ", "));
             dataExportExcel.setBillStatus(b.getBillStatus().getStatus());
             dataExportExcel.setPaymentStatus(b.getPaymentStatus() == 1 ? "Đã thanh toán" : b.getPaymentStatus() == 2 ? "Chưa thanh toán" : "Đã hoàn tiền");
             dataExportExcel.setNote(b.getNote());
