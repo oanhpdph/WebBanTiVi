@@ -105,7 +105,6 @@ public class CustomerController {
         findCustomer.setAddress(customer.getAddress());
         findCustomer.setPhoneNumber(customer.getPhoneNumber());
         findCustomer.setGender(customer.isGender());
-        findCustomer.setStatus(customer.isStatus());
         findCustomer.setRoles(customer.getRoles());
         System.out.println(customer.getAvatar());
         if (!"".equals(fileName)) {
