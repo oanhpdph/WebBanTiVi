@@ -226,6 +226,7 @@ function clickSave() {
         contentType: "application/json",
         success: function () {
             $("#table-product-detail tbody").empty()
+            clear()
         }
     })
 }
@@ -746,7 +747,7 @@ function clear() {
     while (container.firstChild) {
         container.removeChild(container.firstChild);
     }
-
+    $(".tag").remove()
     var buttonAdd = document.querySelectorAll(".addAttributes")
     $.each(buttonAdd, function (index, item) {
         item.hidden = false

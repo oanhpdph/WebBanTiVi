@@ -1,12 +1,10 @@
 package com.poly.controller.admin;
 
 import com.poly.dto.EvaluateRes;
-import com.poly.entity.Customer;
 import com.poly.entity.Evaluate;
-import com.poly.repository.EvaluateRepos;
 import com.poly.service.CustomerService;
-import com.poly.service.EvaluateService;
 import com.poly.service.Impl.EvaluateServiceImpl;
+import com.poly.service.ProductDetailService;
 import com.poly.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -15,7 +13,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -26,7 +23,7 @@ public class EvaluateController {
     EvaluateServiceImpl evaluateService;
 
     @Autowired
-    EvaluateRepos evaluateRepos;
+    ProductDetailService productDetailService;
 
     @Autowired
     CustomerService customerService;
@@ -35,13 +32,13 @@ public class EvaluateController {
     ProductService productService;
 
     @GetMapping("/evaluate/list")
-    public String index(Model model,HttpSession httpSession) {
+    public String index(Model model, HttpSession httpSession) {
         model.addAttribute("list", evaluateService.getAll());
         httpSession.setAttribute("pageView", "/admin/page/evaluate/evaluate.html");
         httpSession.setAttribute("active", "/evaluate/list");
         model.addAttribute("evaluate", new EvaluateRes());
         model.addAttribute("listCustomer", this.customerService.findAll());
-        model.addAttribute("listProduct", this.productService.findAll());
+        model.addAttribute("listProduct", this.productDetailService.findAll());
         return "admin/layout";
 
     }
@@ -63,9 +60,7 @@ public class EvaluateController {
 
     @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        Evaluate evaluate = evaluateRepos.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-
+        Evaluate evaluate = evaluateService.findById(id);
         model.addAttribute("evaluate", evaluate);
         return "redirect:/admin/evaluate/list";
     }
