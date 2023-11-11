@@ -47,7 +47,7 @@ public class UserServiceImpl implements CustomerService {
 
 //         Tạo username từ kết quả kết hợp
         String username = new String(combinedHash, "UTF-8").substring(0, 8);
-        cus.setUsername("username");
+        cus.setUsername(username);
         cus.setName(customer.getName());
         cus.setEmail(customer.getEmail());
         cus.setPhoneNumber(customer.getPhoneNumber());

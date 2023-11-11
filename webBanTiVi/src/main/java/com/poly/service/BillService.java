@@ -28,4 +28,6 @@ public interface BillService {
     Bill getOneByIdCustomer(Integer idCustomer);
 
     List<Bill> findAllBillByUser(Integer idInteger);
+
+    List<Bill> findBillReturn(String code);
 }

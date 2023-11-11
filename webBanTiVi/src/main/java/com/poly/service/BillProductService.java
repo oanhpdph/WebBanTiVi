@@ -13,4 +13,6 @@ public interface BillProductService {
     void delete(Integer id);
 
     BillProduct edit(Integer id);
+
+   List<BillProduct> findBillProductReturn(Boolean status,Integer id);
 }

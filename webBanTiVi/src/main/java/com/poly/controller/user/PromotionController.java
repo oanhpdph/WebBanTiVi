@@ -97,7 +97,6 @@ public class PromotionController {
         model.addAttribute("couponres", couponRes);
         model.addAttribute("giagiam", Integer.parseInt(couponRes.getValue()));
         List<Product> listProduct = new ArrayList<>();
-        System.out.println(couponProductService.findAllByCouponId(id).get(0).getBrand().getNameBrand());
         model.addAttribute("listproduct", couponProductService.findAllByCouponId(id));
         session.setAttribute("pageView", "/user/page/promotion/coupondetail.html");
         return "/user/index";
@@ -113,6 +112,47 @@ public class PromotionController {
         }
         System.out.println(voucher.isReducedForm());
         model.addAttribute("voucher", voucher);
+        LocalDate today = LocalDate.now();
+        int soluong = voucherCustomerService.findAllByVoucher(id).size();
+        boolean check = false;
+        boolean check2= false;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
+            for (VoucherCustomer x : voucherCustomerService.findAll()) {
+                if (x.getCustomer().getId() == customerUserDetail.getId()) {
+                    check2= true;
+                    model.addAttribute("check", check);
+                    model.addAttribute("check2", check2);
+                    model.addAttribute("thongbao", "Voucher này chỉ được giảm cho một hóa đơn duy nhất, hẹn quý khách ở các chương trình khuyến mại sau!");
+                    session.setAttribute("pageView", "/user/page/promotion/voucherdetail.html");
+                    return "/user/index";
+                }
+            }
+            if (soluong <= voucher.getQuantity()) {
+                check = true;
+                model.addAttribute("check", check);
+                model.addAttribute ("check2", check2);
+                //add vouchercustomer;
+                VoucherCustomerRes voucherCustomer = new VoucherCustomerRes();
+                voucherCustomer.setCustomer(customerUserDetail.getId());
+                voucherCustomer.setVoucher(id);
+                voucherCustomer.setDateStart(voucher.getStartDay());
+                voucherCustomer.setDateEnd(voucher.getExpirationDate());
+                voucherCustomer.setActive(voucher.getActive());
+                voucherCustomerService.save(voucherCustomer);
+            } else {
+                check = false;
+                model.addAttribute("check", check);
+                model.addAttribute("check2", check2);
+                model.addAttribute("thongbao", "Số lượng voucher đã hết, hẹn quý khách ở các chương trình khuyến mại sau!");
+            }
+        } else {
+            model.addAttribute("check", check);
+            model.addAttribute("check2", check2);
+            model.addAttribute("thongbao", "Bạn cần đăng nhập để nhận voucher!");
+        }
         session.setAttribute("pageView", "/user/page/promotion/voucherdetail.html");
         return "/user/index";
     }
@@ -142,7 +182,7 @@ public class PromotionController {
 
                     model.addAttribute("check", check);
                     model.addAttribute("thongbao", "Mỗi khách hàng chỉ được nhận mã voucher 1 lần, hẹn quý khách ở các chương trình khuyến mại sau!");
-                    session.setAttribute("pageView", "/user/page/promotion/vouchertakecode.html");
+                    session.setAttribute("pageView", "/user/page/promotion/voucherdetail.html");
                     return "/user/index";
                 }
             }
@@ -168,7 +208,7 @@ public class PromotionController {
             model.addAttribute("check", check);
             model.addAttribute("thongbao", "Bạn cần đăng nhập để nhận voucher!");
         }
-        session.setAttribute("pageView", "/user/page/promotion/vouchertakecode.html");
+        session.setAttribute("pageView", "/user/page/promotion/voucherdetail.html");
         return "/user/index";
     }
 }
