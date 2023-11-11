@@ -40,7 +40,7 @@ public class CartSeviceImpl implements CartService {
     }
 
     @Override
-    public List<CartProduct> add(Integer id) {
+    public List<CartProduct> add(Integer id, Integer qty) {
 
         CartProduct item = items
                 .stream()
@@ -55,7 +55,7 @@ public class CartSeviceImpl implements CartService {
         ProductDetail product = productDetailService.findById(id);
         if (product != null) {
             items.add(
-                    new CartProduct(product, cart, 1, null, new Date(), cart.getDateUpdate())
+                    new CartProduct(product, cart, qty, null, new Date(), cart.getDateUpdate())
             );
         }
         return items;
@@ -97,15 +97,6 @@ public class CartSeviceImpl implements CartService {
         return total;
     }
 
-//    @Override
-//    public int getTotalProduct() {
-//        int total = 0;
-//        for (CartProduct item : items) {
-//            total += item.getQuantity().intValue() * item.getProduct().getPrice_export().intValue();
-//        }
-//        return total;
-//    }
-
     @Override
     public Serializable getAmount() {
         BigDecimal amount = null;
@@ -120,16 +111,8 @@ public class CartSeviceImpl implements CartService {
 
     @Override
     public Cart getOne(Integer id) {
-        return cartRepos.findById(id).get();
+        return null;
     }
-//    @Override
-//    public Serializable getAmount() {
-//        int amount = 0;
-//        for (CartProduct item : items) {
-//            amount += item.getQuantity() * item.getProduct().getPrice_export();
-//        }
-//        return amount;
-//    }
 
     @Override
     public int getTotalProduct() {

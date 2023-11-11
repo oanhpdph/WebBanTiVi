@@ -1,9 +1,10 @@
 package com.poly.controller.user;
 
-import com.poly.dto.UserDetailDto;
+import com.poly.common.UploadFile;
 import com.poly.dto.ChangeInforDto;
 import com.poly.dto.ImageReturnDto;
 import com.poly.dto.ReturnDto;
+import com.poly.dto.UserDetailDto;
 import com.poly.entity.Bill;
 import com.poly.entity.BillProduct;
 import com.poly.entity.BillStatus;
@@ -14,22 +15,21 @@ import com.poly.service.BillStatusService;
 import com.poly.service.ImageReturnService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class UserController {
@@ -97,15 +97,12 @@ public class UserController {
         session.setAttribute("pageView", "/user/page/profile/order.html");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-        String role = roles.get(0).toString();
-        if (role.equals("USER")) {
             UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
             List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
             Date today = new Date();
             model.addAttribute("today", today);
             model.addAttribute("bill", billList);
-        }
+
         return "/user/index";
     }
 
@@ -118,6 +115,9 @@ public class UserController {
             for (ImageReturnDto image : dto.getImage()) {
                 ImageReturned img = new ImageReturned();
                 BillProduct billProduct = this.billProductService.edit(image.getIdBillProduct());
+                billProduct.setStatus(false);
+                billProduct.setReason(dto.getReason());
+                billProduct.setQuantityReturn(Integer.parseInt(dto.getQuantityReturn()));
                 img.setBillProduct(billProduct);
                 img.setNameImage(image.getNameImage());
                 this.imageReturnService.save(img);
@@ -129,13 +129,13 @@ public class UserController {
         this.billService.add(bill);
         return "redirect:/order";
     }
-//    @PostMapping(path = "/return")
-//    public ResponseEntity<?> upload(@RequestParam(value = "images", required = false) List<MultipartFile> list) throws IOException {
-//        for (MultipartFile multipartFile : list) {
-//            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-//            UploadFile.saveFile("src/main/resources/static/image/product", fileName, multipartFile);
-//        }
-//        return ResponseEntity.ok(200);
-//    }
+    @PostMapping(path = "/returnImage")
+    public ResponseEntity<?> upload(@RequestParam(value = "images", required = false) List<MultipartFile> list) throws IOException {
+        for (MultipartFile multipartFile : list) {
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            UploadFile.saveFile("src/main/resources/static/image", fileName, multipartFile);
+        }
+        return ResponseEntity.ok(200);
+    }
 
 }

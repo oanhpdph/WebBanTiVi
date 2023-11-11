@@ -34,7 +34,7 @@ public class UserServiceImpl implements CustomerService {
     CustomerRepository customerRepository;
 
     @Override
-    public void add(BillProRes customer) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public Customer add(BillProRes customer) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         Customer cus = new Customer();
         MessageDigest md5 = MessageDigest.getInstance("MD5");
         byte[] emailHash = md5.digest(customer.getEmail().getBytes());
@@ -47,12 +47,13 @@ public class UserServiceImpl implements CustomerService {
 
 //         Tạo username từ kết quả kết hợp
         String username = new String(combinedHash, "UTF-8").substring(0, 8);
-        cus.setUsername("username");
+        cus.setUsername(username);
         cus.setName(customer.getName());
         cus.setEmail(customer.getEmail());
         cus.setPhoneNumber(customer.getPhoneNumber());
         cus.setAddress(customer.getAddress());
         this.customerRepository.save(cus);
+        return cus;
     }
 
     @Override
@@ -102,7 +103,10 @@ public class UserServiceImpl implements CustomerService {
         Page<Customer> page = new PageImpl<>(result, pageable, result2.size());
         return page;
     }
+
     @Override
-    public Customer getCustomerByName(String username) { return customerRepository.getCustomerByName(username); }
+    public Customer getCustomerByName(String username) {
+        return customerRepository.getCustomerByName(username);
+    }
 
 }

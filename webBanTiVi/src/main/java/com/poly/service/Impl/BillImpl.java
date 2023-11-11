@@ -212,5 +212,10 @@ public class BillImpl implements BillService {
         return dto;
     }
 
+    @Override
+    public List<Bill> findBillReturn(String code) {
+        return this.billRepos.findBillReturn(code);
+    }
+
 
 }

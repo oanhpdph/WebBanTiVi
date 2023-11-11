@@ -32,4 +32,9 @@ public class BillProductServiceImpl implements BillProductService {
     public BillProduct edit(Integer id) {
         return repos.findById(id).get();
     }
+
+    @Override
+    public List<BillProduct> findBillProductReturn(Boolean status, Integer id) {
+        return this.repos.findBillProductReturn(status,id);
+    }
 }
