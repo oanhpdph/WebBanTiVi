@@ -1,5 +1,10 @@
-<h4 class="fw-bold py-3 mb-4">List bill</h4>
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Hóa đơn/ </span>Danh sách hóa đơn</h4>
 <div class="card">
+    <!--    <div class="card-body text-center bg-black" th:if="${totalElements==0}">-->
+    <!--        <h3>-->
+    <!--            Chưa có hóa đơn-->
+    <!--        </h3>-->
+    <!--    </div>-->
     <form class="col-12 mt-2" th:action="@{/admin/bill/list_bill}" method="get" th:object="${search}" id="formBill">
         <div class="card-header">
             <div class="col-12 row">
@@ -8,13 +13,13 @@
                     <span class="input-group-text">
                         <i class="bx bx-search"></i>
                     </span>
-                        <input type="text" class="form-control" placeholder="Search order code, name, phone number"
+                        <input type="text" class="form-control" placeholder="Mã hóa đơn, tên khách hàng, số điện thoại"
                                name="key" id="search-input" th:field="*{key}" autocomplete="off">
-                        <button class="btn btn-primary" type="button" id="search">Search</button>
+                        <button class="btn btn-primary" type="button" id="search">Tìm kiếm</button>
                     </div>
                 </div>
                 <div class="col-1">
-                    <button class="btn btn-warning" data-bs-offset="0,4" data-bs-toggle="tooltip"
+                    <button class="btn btn-secondary" data-bs-offset="0,4" data-bs-toggle="tooltip"
                             data-bs-placement="bottom" data-bs-html="true" title=""
                             data-bs-original-title="<span>Reset form</span>" type="button" id="reset">
                         <i class='bx bx-reset'></i>
@@ -25,7 +30,7 @@
                 <div class="col-lg-9 col-xl-7 col-md-9 col-sm-8">
                     <div class="input-group form-check">
                         <div class="input-group input-group-merge input">
-                            <label for="date-seach-order" class="input-group-text">Select date:</label>
+                            <label for="date-seach-order" class="input-group-text">Chọn ngày:</label>
                             <input type="text" class="form-control" id="date-seach-order" name="date" th:field="*{date}"
                                    placeholder="MM/DD/YYYY-MM/DD/YYYY" autocomplete="off">
                         </div>
@@ -56,58 +61,74 @@
                     </div>
                 </div>
             </div>
+            <div class="row justify-content-between mt-3 mb-3 text-center fs-5">
+                <input hidden value="" id="status" name="billStatus">
+                <div class="d-inline col cursor-pointer status" value="cho">
+                    Chờ xử lý
+                </div>
+                <div class="d-inline col cursor-pointer  bg-label-dark status" value="chuanbi">
+                    Chuẩn bị hàng
+                </div>
+                <div class="d-inline col cursor-pointer status" value="danggiao">
+                    Đang giao
+                </div>
+                <div class="d-inline col cursor-pointer status" value="hoanthanh">
+                    Hoàn thành
+                </div>
+                <div class="d-inline col cursor-pointer status" value="donhuy">
+                    Đơn hủy
+                </div>
+                <div class="d-inline col cursor-pointer status" value="trahang">
+                    Trả hàng
+                </div>
+            </div>
+
             <hr>
             <div class="overflow-auto">
                 <table class="table table-hover table-bordered overflow-hidden" id="myTable">
                     <thead>
                     <tr class="row-table">
                         <th>#</th>
-                        <th>Code bill</th>
-                        <th>Name</th>
-                        <th>Phone number</th>
-                        <!--                <th><select class="form-select select2">-->
-                        <!--                    <optgroup label="Source">-->
-                        <!--                        <option selected>All</option>-->
-                        <!--                        <option>Web</option>-->
-                        <!--                        <option>Store</option>-->
-                        <!--                    </optgroup>-->
-                        <!--                </select></th>-->
-                        <th>Time create</th>
+                        <th>Mã hóa đơn</th>
+                        <th>Tên khách hàng</th>
+                        <th>Số điện thoại</th>
+                        <th>Ngày tạo</th>
                         <th><select class="select2" th:name="paymentStatus" id="paymentStatus"
                                     th:field="*{paymentStatus}">
                             <optgroup th:label="#{invoice.pay}">
-                                <option selected value="-1" th:text="#{invoice.all}"></option>
-                                <option value="1" th:text="#{invoice.paid}"></option>
-                                <option value="2" th:text="#{invoice.unpaid}"></option>
-                                <option value="3" th:text="#{invoice.refund}"></option>
+                                <option selected value="-1">Tất cả</option>
+                                <option value="1">Đã thanh toán</option>
+                                <option value="2">Chưa thanh toán</option>
+                                <option value="3">Đã hoàn tiền</option>
                             </optgroup>
                         </select></th>
-                        <th><select class="select2" id="filterBillStatus" th:field="*{billStatus}"
-                                    th:name="billStatus">
+                        <th><select class="select2" id="filterBillStatus">
                             <optgroup label="Trạng thái đơn hàng">
                                 <option th:selected="${session.defaultBillStatus == ''}" value="">Tất cả</option>
                                 <option value="WP" th:selected="${session.defaultBillStatus=='WP'}">Chờ xử lý</option>
+
                                 <option value="PG" th:selected="${session.defaultBillStatus== 'PG'}">Đang chuẩn bị
                                     hàng
                                 </option>
-                                <!--                                <option value="OS" th:selected="${session.defaultBillStatus == 'OS'}">Hết hàng</option>-->
+
                                 <option value="DE" th:selected="${ session.defaultBillStatus =='DE'}">Đang giao hàng
                                 </option>
-                                <option value="DEE" th:selected="${session.defaultBillStatus == 'DEE'}">Lỗi giao hàng
-                                </option>
+
                                 <option value="CO" th:selected="${ session.defaultBillStatus  == 'CO'}">Đã hoàn thành
                                 </option>
+
                                 <option value="SC" th:selected="${ session.defaultBillStatus ==  'SC'}">Shop hủy
                                 </option>
                                 <option value="CC" th:selected="${ session.defaultBillStatus  == 'CC'}">Khách hủy
                                 </option>
-                                <option value="RR" th:selected="${ session.defaultBillStatus == 'RR'}">Yêu cầu trả
-                                    hàng
+
+                                <option value="RR" th:selected="${ session.defaultBillStatus == 'RR'}">Yêu cầu trả hàng
                                 </option>
                                 <option value="WR" th:selected="${ session.defaultBillStatus  == 'WR'}">Chờ trả hàng
                                 </option>
                                 <option value="RE" th:selected="${session.defaultBillStatus  == 'RE'}">Đã trả hàng
                                 </option>
+
                             </optgroup>
                         </select>
                         </th>

@@ -57,17 +57,17 @@ public class BillDetailController {
         model.addAttribute("paymentMethod", paymentMethodService.getAll());
         model.addAttribute("totalReduceMoney", reduceMoney);
         BigDecimal totalAfter = BigDecimal.valueOf(0);
-        if (bill.getVoucher() != null && bill.getVoucher().isReducedForm() == true) {// giảm %
-            totalAfter = totalPrice.subtract(reduceMoney);
-            BigDecimal reduce = totalPrice.multiply(BigDecimal.valueOf(bill.getVoucher().getValue() / 100));
-            if (reduce.compareTo(bill.getVoucher().getMaximumDiscount()) >= 0) {
-                reduce = bill.getVoucher().getMaximumDiscount();
-            }
-            totalAfter = totalAfter.subtract(reduce);
-        }
-        if (bill.getVoucher() != null && bill.getVoucher().isReducedForm() == false) {
-            totalAfter = totalPrice.subtract(reduceMoney).subtract(BigDecimal.valueOf(bill.getVoucher().getValue()));
-        }
+//        if (bill.getVoucher() != null && bill.getVoucher().isReducedForm() == true) {// giảm %
+//            totalAfter = totalPrice.subtract(reduceMoney);
+//            BigDecimal reduce = totalPrice.multiply(BigDecimal.valueOf(bill.getVoucher().getValue() / 100));
+//            if (reduce.compareTo(bill.getVoucher().getMaximumDiscount()) >= 0) {
+//                reduce = bill.getVoucher().getMaximumDiscount();
+//            }
+//            totalAfter = totalAfter.subtract(reduce);
+//        }
+//        if (bill.getVoucher() != null && bill.getVoucher().isReducedForm() == false) {
+//            totalAfter = totalPrice.subtract(reduceMoney).subtract(BigDecimal.valueOf(bill.getVoucher().getValue()));
+//        }
         if (bill.getVoucher() == null) {
             totalAfter = totalPrice.subtract(reduceMoney);
         }

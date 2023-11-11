@@ -31,23 +31,12 @@
             </a>
             <ul class="menu-sub">
                 <li th:class="${#strings.equals(session.active,'/product/list-product')?'menu-item active':'menu-item'}">
-                    <a th:href="@{/admin/product/list-product}" class="menu-link">
+                    <a th:href="@{/admin/product/list}" class="menu-link">
                         <div>Danh sách sản phẩm</div>
                     </a>
                 </li>
-<!--                <li th:class="${#strings.equals(session.active,'/product/add-product')?'menu-item active':'menu-item'}">-->
-<!--                    <a th:href="@{/admin/product/add-product}" class="menu-link">-->
-<!--                        <div>Add product</div>-->
-<!--                    </a>-->
-<!--                </li>-->
             </ul>
         </li>
-<!--        <li th:class="${#strings.equals(session.active,'/staff')?'menu-item active':'menu-item'}">-->
-<!--            <a th:href="@{/admin/staff}" class="menu-link">-->
-<!--                <i class="menu-icon tf-icons bx bx-user-pin"></i>-->
-<!--                <div>Nhân viên</div>-->
-<!--            </a>-->
-<!--        </li>-->
         <li th:class="${#strings.contains(session.active,'/bill')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-receipt"></i>
@@ -77,13 +66,8 @@
                 <div>Tài khoản</div>
             </a>
             <ul class="menu-sub">
-<!--                <li th:class="${#strings.equals(session.active,'/customer/list')?'menu-item active':'menu-item'}">-->
-<!--                    <a th:href="@{/admin/customer/list}" class="menu-link">-->
-<!--                        <div>Danh sách tài khoản khách hàng</div>-->
-<!--                    </a>-->
-<!--                </li>-->
-                <li th:class="${#strings.equals(session.active,'/staff')?'menu-item active':'menu-item'}">
-                    <a th:href="@{/admin/staff}" class="menu-link">
+                <li th:class="${#strings.equals(session.active,'/customer/list')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/customer/list}" class="menu-link">
                         <div >Danh sách tài khoản</div>
                     </a>
                 </li>

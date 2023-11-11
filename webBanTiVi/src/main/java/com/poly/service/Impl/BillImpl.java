@@ -4,7 +4,7 @@ import com.poly.dto.BillProRes;
 import com.poly.dto.SearchBillDto;
 import com.poly.entity.Bill;
 import com.poly.entity.BillProduct;
-import com.poly.entity.Product;
+import com.poly.entity.ProductDetail;
 import com.poly.repository.*;
 import com.poly.service.BillService;
 import jakarta.persistence.EntityManager;
@@ -30,6 +30,7 @@ import java.util.Random;
 public class BillImpl implements BillService {
     @Autowired
     private BillRepos billRepos;
+
     @Autowired
     private BillProductRepos billProductRepos;
 
@@ -41,6 +42,9 @@ public class BillImpl implements BillService {
 
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    ProductDetailRepo productDetailRepo;
 
     @Autowired
     CustomerRepository customerRepository;
@@ -69,23 +73,47 @@ public class BillImpl implements BillService {
 
     @Override
     public void addBillPro(Bill bill, BillProRes billProRes) {
-        List<Optional<Product>> list = new ArrayList<>();
+        List<Optional<ProductDetail>> list = new ArrayList<>();
         for (Integer id : billProRes.getProduct()) {
-            list.add(productRepository.findById(id));
+            list.add(productDetailRepo.findById(id));
         }
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isPresent()) {
                 BillProduct billProduct = new BillProduct();
                 billProduct.setBill(bill);
-//                billProduct.setProduct(list.get(i).get());
-                billProduct.setPrice(list.get(i).get().getPrice_export());
+                billProduct.setProduct(list.get(i).get());
+                billProduct.setPrice(list.get(i).get().getPriceExport());
                 billProduct.setQuantity(billProRes.getQuantity().get(i));
                 this.billProductRepos.save(billProduct);
             }
         }
     }
+
     @Override
     public Page<Bill> loadData(SearchBillDto searchBillDto, Pageable pageable) {
+        List<String> billStatus = new ArrayList<>();
+        if (searchBillDto.getBillStatus().equals("cho")) {
+            billStatus.add("WP");
+        }
+        if (searchBillDto.getBillStatus().equals("chuanbi")) {
+            billStatus.add("PG");
+        }
+        if (searchBillDto.getBillStatus().equals("danggiao")) {
+            billStatus.add("DE");
+        }
+        if (searchBillDto.getBillStatus().equals("hoanthanh")) {
+            billStatus.add("CO");
+        }
+        if (searchBillDto.getBillStatus().equals("donhuy")) {
+            billStatus.add("SC");
+            billStatus.add("CC");
+        }
+        if (searchBillDto.getBillStatus().equals("trahang")) {
+            billStatus.add("RR");
+            billStatus.add("RE");
+            billStatus.add("WR");
+        }
+
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Bill> billCriteriaQuery = criteriaBuilder.createQuery(Bill.class);
         Root<Bill> billRoot = billCriteriaQuery.from(Bill.class);
@@ -100,7 +128,9 @@ public class BillImpl implements BillService {
             list.add(criteriaBuilder.equal(billRoot.get("paymentStatus"), searchBillDto.getPaymentStatus()));
         }
         if (!searchBillDto.getBillStatus().isEmpty()) {
-            list.add(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), searchBillDto.getBillStatus()));
+            for (String s : billStatus) {
+                list.add(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), s));
+            }
         }
         if (!searchBillDto.getDate().isEmpty()) {
             String date1 = searchBillDto.getDate().substring(0, searchBillDto.getDate().indexOf("-") - 1).replace("/", "-");
@@ -178,8 +208,8 @@ public class BillImpl implements BillService {
 
     @Override
     public List<Bill> findAllBillByUser(Integer id) {
-        List<Bill> dto= this.billRepos.findBillByUser(id);
-   return dto;
+        List<Bill> dto = this.billRepos.findBillByUser(id);
+        return dto;
     }
 
     @Override

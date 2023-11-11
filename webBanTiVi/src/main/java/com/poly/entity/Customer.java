@@ -55,6 +55,7 @@ public class Customer {
     @Column(name = "status")
     private boolean status;
 
+
    @Column(name = "roles")
     private String roles;
 

@@ -23,6 +23,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
+        <option value="HTML File" />
         <option value="Interface" />
         <option value="JavaScript File" />
         <option value="Interface" />
@@ -32,9 +33,10 @@
         <option value="JavaScript File" />
         <option value="CSS File" />
         <option value="HTML File" />
-        <option value="Class" />
         <option value="HTML File" />
         <option value="Class" />
+        <option value="Class" />
+        <option value="Interface" />
         <option value="Class" />
         <option value="HTML File" />
         <option value="Class" />
@@ -103,12 +105,28 @@
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="com.poly.service.Impl" />
     </key>
+    <key name="MoveInnerDialog.RECENTS_KEY">
+      <recent name="com.poly.dto" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.poly.controller.user" />
       <recent name="com.poly.controller.user1" />
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WebBanTiViApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="WebBanTiVi" />
       <extension name="coverage">
@@ -252,6 +270,7 @@
       <workItem from="1699515612710" duration="10459000" />
       <workItem from="1699540938406" duration="39000" />
       <workItem from="1699541184084" duration="914000" />
+      <workItem from="1699634350612" duration="30696000" />
       <workItem from="1699710032488" duration="27000" />
       <workItem from="1699710135379" duration="1133000" />
       <workItem from="1699634249934" duration="2571000" />
@@ -297,6 +316,8 @@
           <option name="timeStamp" value="42" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user/PromotionController.java</url>
+          <line>131</line>
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java</url>
           <line>123</line>
           <option name="timeStamp" value="48" />
@@ -365,6 +386,7 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1699688221253" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
     <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1699640028991" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
     <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1699594989642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.poly.*</FILTER>

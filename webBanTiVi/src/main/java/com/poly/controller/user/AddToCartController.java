@@ -1,5 +1,6 @@
 package com.poly.controller.user;
 
+import com.poly.dto.ProductDetailDto;
 import com.poly.entity.CartProduct;
 import com.poly.entity.Customer;
 import com.poly.entity.Product;
@@ -50,7 +51,7 @@ public class AddToCartController {
                 cartProduct.setQuantity(1);
                 cartProduct.setNote(cartProduct.getNote());
                 cartProduct.setCart(cart);
-                cartProduct.setProduct(product);
+//                cartProduct.setProduct(product);
                 cartProductService.save(cartProduct);
             }
 
@@ -106,7 +107,7 @@ public class AddToCartController {
             Customer customer = customerService.getCustomerByName(username);
             model.addAttribute("cart", cartSevice.getOne(customer.getId()));
             model.addAttribute("listCartDetail", cartProductService.getAll());
-            model.addAttribute("listProductDetail", productService.findAll());
+            model.addAttribute("listProductDetail", productService.findAll(new ProductDetailDto()));
         }
         model.addAttribute("view", "/user/page/product/pro_cart.html");
         return "/user/index";

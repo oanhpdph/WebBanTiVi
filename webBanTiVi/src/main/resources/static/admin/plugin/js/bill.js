@@ -2,11 +2,20 @@ function oncl(id) {
     window.location.href = "http://localhost:8080/admin/bill/bill_detail/" + id
 }
 
+$.each(document.getElementsByClassName("status"), function (index, item) {
+    console.log(item)
+    item.addEventListener("click", function () {
+        document.getElementById("status").value = item.getAttribute("value")
+        setAttributes()
+        $("#search").click()
+    })
+})
+
 function setAttributes() {
     // let size = document.getElementById("select-view");
     let key = document.getElementById("search-input");
     let date = document.getElementById("date-seach-order");
-    let billStatus = document.getElementById("filterBillStatus");
+    let billStatus = document.getElementById("status");
     let paymentStatus = document.getElementById("paymentStatus");
     if (key) {
         if (key.value === null || key.value.trim() == "") {
@@ -18,9 +27,11 @@ function setAttributes() {
             date.name = ""
         }
     }
+
     if (billStatus.value === null || billStatus.value.trim() == "") {
         billStatus.name = ""
     }
+
     if (paymentStatus.value == -1) {
         paymentStatus.name = ""
     }
@@ -72,6 +83,7 @@ $("#reset").click(function () {
 $("#filterBillStatus").change(function () {
     document.getElementById("search").click();
 })
+
 $("#first").click(function () {
     let temp = document.getElementById("first")
     $("#pageInput").val(temp.getAttribute("value"))
@@ -92,9 +104,10 @@ $("#last").click(function () {
     $("#pageInput").val(temp.getAttribute("value"))
     document.getElementById("search").click();
 })
-$("#filterBillStatus").change(function () {
-    $("#search").click()
-})
+// $("#filterBillStatus").change(function () {
+//     $("#search").click()
+// })
+
 $("#paymentStatus").change(function () {
     $("#search").click()
 })

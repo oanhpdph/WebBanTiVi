@@ -2,9 +2,10 @@ package com.poly.service.Impl;
 
 import com.poly.entity.Cart;
 import com.poly.entity.CartProduct;
-import com.poly.entity.Product;
+import com.poly.entity.ProductDetail;
 import com.poly.repository.CartRepos;
 import com.poly.service.CartService;
+import com.poly.service.ProductDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public class CartSeviceImpl implements CartService {
     CartRepos cartRepos;
     @Autowired
     ProductServiceImpl productService;
+
+    @Autowired
+    ProductDetailService productDetailService;
 
     List<CartProduct> items = new ArrayList<>();
 
@@ -48,7 +52,7 @@ public class CartSeviceImpl implements CartService {
             return items;
         }
         Cart cart = new Cart();
-        Product product = productService.findById(id);
+        ProductDetail product = productDetailService.findById(id);
         if (product != null) {
             items.add(
                     new CartProduct(product, cart, qty, null, new Date(), cart.getDateUpdate())
@@ -98,7 +102,7 @@ public class CartSeviceImpl implements CartService {
         BigDecimal amount = null;
         for (CartProduct item : items) {
             BigDecimal qty = new BigDecimal(item.getQuantity());
-            BigDecimal price = new BigDecimal(String.valueOf(item.getProduct().getPrice_export()));
+            BigDecimal price = new BigDecimal(String.valueOf(item.getProduct().getPriceExport()));
             BigDecimal result = qty.multiply(price);
             amount = result.setScale(2, RoundingMode.HALF_EVEN);
         }

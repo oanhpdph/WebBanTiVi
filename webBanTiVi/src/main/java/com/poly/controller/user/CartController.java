@@ -1,6 +1,7 @@
 package com.poly.controller.user;
 
 import com.poly.dto.BillProRes;
+import com.poly.dto.ProductDetailDto;
 import com.poly.entity.*;
 import com.poly.repository.CartRepos;
 import com.poly.service.BillService;
@@ -121,7 +122,7 @@ public class CartController {
         Product product = productService.findById(id);
         model.addAttribute("product", product);
         session.setAttribute("pageView", "/user/page/product/detail.html");
-        model.addAttribute("listPro", this.productService.findAll());
+        model.addAttribute("listPro", this.productService.findAll(new ProductDetailDto()));
         return "user/index";
     }
 

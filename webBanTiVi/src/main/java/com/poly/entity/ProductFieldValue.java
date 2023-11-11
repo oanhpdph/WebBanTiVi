@@ -21,23 +21,19 @@ public class ProductFieldValue {
     @JoinColumn(name = "field_id")
     private Field field;
 
-    @Column(name="value")
+    @Column(name = "value")
     private String value;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name="product_id")
-    private ProductDetail productDetail;
-
-    @Column(name="priority")
-    private Integer priority;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Override
     public String toString() {
         return "ProductFieldValue{" +
                 "id=" + id +
                 ", value='" + value + '\'' +
-                ", priority=" + priority +
                 '}';
     }
 }

@@ -178,17 +178,17 @@ public class BillController {
                     .map(billProduct -> billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
             BigDecimal totalAfter = new BigDecimal('0');
-            if (b.getVoucher() != null && b.getVoucher().isReducedForm() == true) {// giảm %
-                totalAfter = totalPrice.subtract(reduceMoney);
-                BigDecimal reduce = totalPrice.multiply(BigDecimal.valueOf(b.getVoucher().getValue() / 100));
-                if (reduce.compareTo(b.getVoucher().getMaximumDiscount()) >= 0) {
-                    reduce = b.getVoucher().getMaximumDiscount();
-                }
-                totalAfter = totalAfter.subtract(reduce);
-            }
-            if (b.getVoucher() != null && b.getVoucher().isReducedForm() == false) {
-                totalAfter = totalPrice.subtract(reduceMoney).subtract(BigDecimal.valueOf(b.getVoucher().getValue()));
-            }
+//            if (b.getVoucher() != null && b.getVoucher().isReducedForm() == true) {// giảm %
+//                totalAfter = totalPrice.subtract(reduceMoney);
+//                BigDecimal reduce = totalPrice.multiply(BigDecimal.valueOf(b.getVoucher().getValue() / 100));
+//                if (reduce.compareTo(b.getVoucher().getMaximumDiscount()) >= 0) {
+//                    reduce = b.getVoucher().getMaximumDiscount();
+//                }
+//                totalAfter = totalAfter.subtract(reduce);
+//            }
+////            if (b.getVoucher() != null && b.getVoucher().isReducedForm() == false) {
+////                totalAfter = totalPrice.subtract(reduceMoney).subtract(BigDecimal.valueOf(b.getVoucher().getValue()));
+////            }
             if (b.getVoucher() == null) {
                 totalAfter = totalPrice.subtract(reduceMoney);
             }

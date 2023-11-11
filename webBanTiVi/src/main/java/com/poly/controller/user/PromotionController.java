@@ -93,7 +93,6 @@ public class PromotionController {
                 System.out.println(x.getImage());
             }
         }
-        System.out.println(couponProductService.findAllByCouponId(id).get(0).getPrice_export().intValue());
         model.addAttribute("couponres", couponRes);
         model.addAttribute("giagiam", Integer.parseInt(couponRes.getValue()));
         List<Product> listProduct = new ArrayList<>();
@@ -110,7 +109,6 @@ public class PromotionController {
                 voucher = x;
             }
         }
-        System.out.println(voucher.isReducedForm());
         model.addAttribute("voucher", voucher);
         LocalDate today = LocalDate.now();
         int soluong = voucherCustomerService.findAllByVoucher(id).size();
@@ -168,7 +166,6 @@ public class PromotionController {
                 voucher = x;
             }
         }
-        System.out.println(voucher.isReducedForm());
         model.addAttribute("voucher", voucher);
         LocalDate today = LocalDate.now();
         int soluong = voucherCustomerService.findAllByVoucher(id).size();

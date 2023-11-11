@@ -20,7 +20,7 @@ public class ProductControllerDetail {
     private ProductDetailService productDetailService;
 
     @PostMapping("/save-product")
-    public ResponseEntity<?> saveProductDetail(@RequestBody List<ProductDetailDto> productDetailDto) {
+    public ResponseEntity<?> saveProductDetail(@RequestBody ProductDetailDto productDetailDto) {
         return ResponseEntity.ok(productDetailService.saveList(productDetailDto));
     }
 
@@ -33,14 +33,8 @@ public class ProductControllerDetail {
         return ResponseEntity.ok(200);
     }
 
-    @GetMapping(path = "/same-product")
-    public ResponseEntity<?> getSameProduct(@RequestParam("same-code") String sameCode) {
-        return ResponseEntity.ok(productDetailService.getSameProduct(sameCode));
-    }
-
-//    @GetMapping(path = "/get-all")
-//    public ResponseEntity<?> getAll() {
-//        return ResponseEntity.ok(productDetailService.findAll());
+//    @GetMapping(path = "/same-product")
+//    public ResponseEntity<?> getSameProduct(@RequestParam("same-code") String sameCode) {
+//        return ResponseEntity.ok(productDetailService.getSameProduct(sameCode));
 //    }
-
 }

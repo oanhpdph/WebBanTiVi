@@ -20,4 +20,7 @@ public class Field {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name="variant")
+    private boolean variant;
 }
