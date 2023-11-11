@@ -3,25 +3,34 @@
 
 <section class="ss1">
     <div class="container">
-        <div class="row mb-4 pt-3 row-cols-lg-3 row-cols-md-3 row-cols-xl-3">
+        <div class="row mb-4 pt-3 ow-cols-lg-3 row-cols-md-3 row-cols-xl-3">
             <h3 class="header col text-center bg-red  pt-2 pb-2 title px-3 text-uppercase fw-bold">
                 [(${voucher.getNameVoucher()})]
             </h3>
         </div>
         <p>Chương trình bắt đầu: [(${voucher.getStartDay()})] - Kết thúc: [(${voucher.getExpirationDate()})]</p>
         <hr>
-        <img th:src="@{'/image/' + *{voucher.getImage()}}" width="1000 px" height="auto" style="text-align: center">
+        <img th:src="@{'/image/' + *{voucher.getImage()}}" width="100%" height="auto"  display="block"  style="text-align: center">
         <hr>
-        <p class="text-danger fs-large fw-bold">Giảm ngay [(${voucher.getValue()})]<span th:if="${voucher.isReducedForm()==true}" th:text="đ" />
-            <span th:if="${voucher.isReducedForm()==fasle}" th:text="%" />
-            trong hóa đơn khi:</p>
-        <p class="fw-bold">Mua đơn hàng có giá trị từ [(${voucher.getMinimumValue().intValue()})]đ
-            trở lên, Giảm theo % có giá trị tối đa [(${voucher.getMaximumDiscount().intValue()})]đ</p>
-        <hr>
-        <h3>Số lượng có hạn: chỉ [(${voucher.getQuantity()})] voucher</h3>
-        <a type="button"
-           class="btn btn-outline-danger" data-bs-toggle="modal"
-           data-bs-target="#modalVoucher">LẤY MÃ NGAY</a>
+        <div class="row">
+        <div  class="alert alert-warning col-6">
+        <p class="text-danger fs-xlarge fw-bold">Giảm ngay [(${voucher.getValue()})]đ trong hóa đơn</p>
+            <hr>
+            <p class="fw-bold text-black">Khi mua đơn hàng có giá trị từ [(${voucher.getMinimumValue().intValue()})]đ
+                trở lên</p>
+        </div>
+            <div class="alert alert-danger col-6">
+                <p class="text-danger fs-xlarge fw-bold">Số lượng có hạn: chỉ [(${voucher.getQuantity()})] voucher</p>
+                <hr>
+                <a type="button"
+                   class="btn btn-outline-danger" data-bs-toggle="modal"
+                   data-bs-target="#modalVoucher">LẤY MÃ NGAY</a>
+            </div>
+
+        </div>
+
+
+
 <!--        th:href="@{'/promotion/vouchercode/' + *{voucher.getId()}}"-->
         <div class="modal" th:id="modalVoucher"
         >
@@ -40,7 +49,7 @@
                     <p class="text-center">Mã voucher sẽ tự động nhập vào hóa đơn gần nhất để giảm tiền theo khuyến mại!</p>
                 </div>
                 <div th:if="${check == false && check2 == false}">
-                    <p class=" fs-large fw-bold text-center">[(${thongbao})]</p>
+                    <p class=" fs-large fw-bold text-center text-danger">[(${thongbao})]</p>
                 </div>
                 <div th:if="${check == false && check2 == true}">
                     <p class=" fs-large fw-bold text-center">
@@ -48,7 +57,7 @@
                 [(${voucher.getCode()})]
             </span>
                     </p>
-                    <p class="text-center">Bạn đã nhận mã voucher 1 lần. <br>
+                    <p class="text-center text-danger">Bạn đã nhận mã voucher 1 lần. <br>
                         [(${thongbao})]</p>
                 </div>
                 <div class="modal-footer">
