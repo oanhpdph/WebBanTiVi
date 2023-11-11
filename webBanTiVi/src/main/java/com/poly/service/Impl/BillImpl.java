@@ -3,18 +3,12 @@ package com.poly.service.Impl;
 import com.poly.dto.BillProRes;
 import com.poly.dto.SearchBillDto;
 import com.poly.entity.Bill;
-import com.poly.repository.BillRepos;
-import com.poly.entity.BillStatus;
-import com.poly.entity.Product;
-import com.poly.repository.BillRepos;
-import com.poly.repository.BillStatusRepos;
 import com.poly.entity.BillProduct;
 import com.poly.entity.Product;
 import com.poly.repository.*;
 import com.poly.service.BillService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -83,7 +77,7 @@ public class BillImpl implements BillService {
             if (list.get(i).isPresent()) {
                 BillProduct billProduct = new BillProduct();
                 billProduct.setBill(bill);
-                billProduct.setProduct(list.get(i).get());
+//                billProduct.setProduct(list.get(i).get());
                 billProduct.setPrice(list.get(i).get().getPrice_export());
                 billProduct.setQuantity(billProRes.getQuantity().get(i));
                 this.billProductRepos.save(billProduct);
@@ -186,6 +180,11 @@ public class BillImpl implements BillService {
     public List<Bill> findAllBillByUser(Integer id) {
         List<Bill> dto= this.billRepos.findBillByUser(id);
    return dto;
+    }
+
+    @Override
+    public List<Bill> findBillReturn(String code) {
+        return this.billRepos.findBillReturn(code);
     }
 
 
