@@ -1,3 +1,4 @@
+<html xmlns:th="http://www.thymeleaf.org">
 <style>
     .buttons_added {
         opacity: 1;
@@ -57,43 +58,40 @@
             <div class="container-xxl flex-grow-1 container-p-y">
                 <div class="content-wrapper">
                     <form th:action="@{/purchase}" method="post" th:object="${billProduct}">
-                        <div class="row">
-                            <div class="col-md-6 mb-5">
+                        <div class="row justify-content-center">
+                            <div class="col-md-7 mb-5">
                                 <div class="card mb-4">
-                                    <span class="card-header"><span class="fs-5">THÔNG TIN KHÁCH HÀNG</span></span>
+                                    <span class="card-header text-uppercase fs-5">THÔNG TIN KHÁCH HÀNG</span>
                                     <div class="card-body" th:id="add">
                                         <!--                                            ten, sdt-->
-                                        <div class="row">
-                                            <div class="col-sm-6">
+                                        <div class="row justify-content-between">
+                                            <div class="col">
                                                 <label class="form-label">Họ và Tên</label>
                                                 <input class="form-control" type="text" placeholder="họ và tên"
                                                        id="name" th:name="name">
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col">
                                                 <label class="form-label">Số Điện Thoại</label>
-                                                <input class="form-control" type="text" placeholder="VN (+84)
-" id="phoneNumber" th:name="phoneNumber">
+                                                <input class="form-control" type="text" placeholder="VN (+84)"
+                                                       id="phoneNumber" th:name="phoneNumber">
                                             </div>
                                         </div>
                                         <br>
                                         <!--                                                email-->
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label class="form-label">Email</label>
-                                                <input type="email" class="form-control" placeholder="Email"
-                                                       id="email" th:name="email">
-                                            </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" class="form-control" placeholder="Email"
+                                                   id="email" th:name="email">
                                         </div>
                                         <br>
                                         <!--                                                address-->
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label class="form-label">Address</label>
-                                                <input type="text" class="form-control" placeholder="Address"
-                                                       id="address" th:name="address">
-                                            </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Address</label>
+                                            <input type="text" class="form-control" placeholder="Address"
+                                                   id="address" th:name="address">
                                         </div>
-                                        <div class="col-lg-12"><br>
+
+                                        <div class="mb-3 table-responsive">
                                             <table class="table table-borderless">
                                                 <thead>
                                                 <tr>
@@ -108,23 +106,19 @@
                                                 <tr th:each="item:${session.list}">
                                                     <input th:value="${item.product.id}" name="id" hidden>
                                                     <td>
-                                                        <div th:each="image:${item.product.listImage}">
-                                                            <!--                                                        <div>-->
-                                                            <img th:if="${image.location == true}"
-                                                                 th:src="@{'/image/'+${image.nameImage}}"
+                                                        <div class="mb-3">
+                                                            <img th:each="image:${item.product.listImage}"
+                                                                 th:if="${image.location == true}"
+                                                                 th:src="@{'/image/'+${image.link}}"
                                                                  alt="" width="100px">
-                                                            <!--                                                        </div>-->
                                                         </div>
-                                                        <span th:text="${item.product.name + ' '+item.product.code}"></span>
+                                                        <span th:text="${item.product.product.nameProduct}"></span>
                                                     </td>
-                                                    <!--                                                    <td>-->
-
-                                                    <!--                                                    </td>-->
                                                     <td>
                                                         <div>
                                                             <span class="fs-5">$<span class="price-export"
-                                                                                      th:value="${item.product.price_export}"
-                                                                                      th:text="${item.product.price_export}"></span>
+                                                                                      th:value="${item.product.priceExport}"
+                                                                                      th:text="${item.product.priceExport}"></span>
                                                             </span>
                                                         </div>
                                                     </td>
@@ -143,7 +137,7 @@
                                                     </td>
                                                     <td>
                                                         <span class="fs-5">
-                                                             <span th:text="${item.product.price_export * item.quantity}"
+                                                             <span th:text="${item.product.priceExport * item.quantity}"
                                                                    class="total-price"></span>
                                                         </span>
                                                     </td>
@@ -151,171 +145,40 @@
                                                 <hr>
                                                 </tbody>
                                             </table>
-                                            <div class=" col-lg-6 col-md-6 col-sm-6">
-                                                <button type="submit" class="btn btn-lg btn-primary">Cập
-                                                    Nhật Giỏ Hàng
-                                                </button>
-                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-5">
-                                <div class="card mb-4">
-                                    <!--                                            Phuong thuc thanh toan-->
-                                    <div class="card-header">
-                                        <span class="fs-5">Phương Thức Thanh Toán: </span>
-                                        <div class="row g-5">
-                                            <div class="col-lg-12">
-                                                <div class="demo-inline-spacing mt-3">
-                                                    <div class="list-group list-group-horizontal-md text-md-center">
-                                                        <a class="list-group-item list-group-item-action active"
-                                                           id="home-list-item" data-bs-toggle="list"
-                                                           href="#horizontal-home">Thanh toán tiền mặt</a>
-                                                        <a class="list-group-item list-group-item-action"
-                                                           id="profile-list-item" data-bs-toggle="list"
-                                                           href="#horizontal-profile">Thanh toán trực tiếp qua
-                                                            VNPAY</a>
-                                                    </div>
-                                                    <div class="tab-content px-0 mt-0">
-                                                        <div class="tab-pane fade active show" id="horizontal-home">
-                                                            <span>Thanh toán trực tiếp bằng tiền mặt khi nhận hàng.</span>
-                                                            <br>
-                                                            <span>
-                                                                    Phí thu hộ: ₫0 VNĐ. Ưu đãi về phí vận chuyển (nếu có) áp dụng cả với phí thu hộ.
-                                                                </span>
-                                                        </div>
-                                                        <div class="tab-pane fade" id="horizontal-profile">
-                                                            <div class="row">
-                                                                <div class="col-md-6 col-12">
-                                                                    <div class="card shadow-none bg-transparent border border-primary mb-3">
-                                                                        <div class="card-body">
-                                                                                <span class="fs-5">Thông tin đơn
-                                                                                    hàng</span>
-                                                                            <hr>
-                                                                            <small class="text-muted">
-                                                                                <span>Số tiền thanh toán</span>
-                                                                            </small>
-                                                                            <span class="fs-5"
-                                                                                  style="color: cornflowerblue">
-                                                                                    10.990.000VND</span>
-                                                                            <!--                                                                                <br>-->
-                                                                            <small class="text-muted">
-                                                                                <span>Giá trị đơn hàng</span>
-                                                                            </small>
-                                                                            <h6 style="color: black">
-                                                                                0VND
-                                                                            </h6>
-                                                                            <br>
-                                                                            <small class="text-muted">
-                                                                                <span>Mã đơn hàng</span>
-                                                                            </small>
-                                                                            <h6 style="color: black">
-                                                                                HD32H4J2B4VJ432JBN
-                                                                            </h6>
-                                                                            <br>
-                                                                            <small class="text-muted">
-                                                                                <span>Nhà cung cấp</span>
-                                                                            </small>
-                                                                            <h6 style="color: black">
-                                                                                CÔNG TY CỔ PHẦN THẾ GIỚI DI ĐỘNG
-                                                                            </h6>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6 col-12">
-                                                                    <div class="card shadow-none bg-transparent border border-secondary mb-3">
-                                                                        <div class="card-body">
-                                                                            <div class="container">
-                                                                                    <span class="fs-5">Quét mã qua
-                                                                                        ứng
-                                                                                        dung ngân hàng/ Ví điện tử</span>
-                                                                                <img src="/image/qr.jpg"
-                                                                                     width="100%">
-                                                                                <br> <br>
-                                                                                <div class="row justify-content-end"
-                                                                                     style="text-align: center">
-                                                                                    <button type="button"
-                                                                                            class="btn btn-outline-success">
-                                                                                        Hủy thanh toán
-                                                                                    </button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                        <div class="row justify-content-center">
+                                            <span class="col fs-5">Tổng tiền: </span>
+                                            <span class="col text-danger text-center">$<span
+                                                    class="total-pro"></span> </span>
+                                        </div>
+                                        <hr>
+                                        <span class="text-uppercase fs-5">Phương Thức Thanh Toán: </span>
+                                        <div class="g-5">
+                                            <div class="demo-inline-spacing mt-3">
+                                                <div class="list-group list-group-horizontal-md text-md-center">
+                                                    <a class="list-group-item list-group-item-action active"
+                                                       id="home-list-item" data-bs-toggle="list"
+                                                       href="#horizontal-home">Thanh toán tiền mặt</a>
+                                                    <a class="list-group-item list-group-item-action"
+                                                       id="profile-list-item" data-bs-toggle="list"
+                                                       href="#horizontal-profile">Thanh toán trực tiếp qua
+                                                        VNPAY</a>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <hr>
-                                    <!-- Account -->
-                                    <div class="card-body">
-                                        <div class="row g-5">
-                                            <!--                                                phieu giam gia-->
-                                            <div class="row">
-                                                <div class="demo-inline-spacing">
-                                                    <button type="button" class="btn btn-outline-primary">
-                                                        <i class='bx bxs-coupon'></i>
-                                                        Sử dụng phiếu giảm giá:
-                                                    </button>
-                                                    <div class="card shadow-none bg-transparent border border-secondery mb-3">
-                                                        <nav class="navbar bg-body-tertiary">
-                                                            <div class="container-fluid">
-                                                                <form class="d-flex" role="search"
-                                                                      style="text-align: right">
-                                                                    <input class="form-control me-2" type="search"
-                                                                           placeholder="Nhập mã phiếu giảm giá"
-                                                                           aria-label="Search"
-                                                                           style="width: 100%">
-                                                                </form>
-                                                            </div>
-                                                        </nav>
-                                                    </div>
-                                                    <br>
-                                                </div>
-                                                <hr>
-                                                <!--                                            tong tien-->
-                                                <div>
-                                                    <table class="table table-borderless">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td><span class="fs-5">Tổng tiền: </span></td>
-                                                            <td></td>
-                                                            <td><span style="color: red">$<span
-                                                                    class="total-pro"></span> </span></td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <div class="form-check form-check-inline mt-3">
-                                                        <input class="form-check-input" type="checkbox"
-                                                               id="inlineCheckbox1"
-                                                               value="option1">
-                                                        <label class="form-check-label" for="inlineCheckbox1">Tôi
-                                                            đồng ý
-                                                            với
-                                                            Chính sách xử lý dữ liệu cá nhân của Điện Máy
-                                                            Xanh</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="d-grid gap-2 col-lg-12 mx-auto"
-                                                 style="text-align: center">
-                                                <button class="btn btn-primary btn-lg" type="submit"
-                                                        onclick="return confirm('Xác nhận tạo hóa đơn')">
-                                                    Đặt Hàng
-                                                </button>
-                                                <button class="btn btn-outline-secondary btn-lg" type="button"
-                                                        formaction="/cart">
-                                                    Hủy
-                                                </button>
-                                                <smal>Bạn có thể chọn hình thức thanh toán sau khi đặt hàng
-                                                </smal>
-                                            </div>
+
+                                        <div class="d-grid gap-2 col-lg-12 mx-auto mt-4"
+                                             style="text-align: center">
+                                            <button class="btn btn-primary btn-lg" type="submit"
+                                                    onclick="return confirm('Xác nhận tạo hóa đơn')">
+                                                Đặt Hàng
+                                            </button>
+                                            <button class="btn btn-outline-secondary btn-lg" type="button"
+                                                    formaction="/cart">
+                                                Hủy
+                                            </button>
+                                            <smal>Bạn có thể chọn hình thức thanh toán sau khi đặt hàng
+                                            </smal>
                                         </div>
                                     </div>
                                 </div>
@@ -328,81 +191,80 @@
         </div>
     </div>
 </div>
-<script>//<![CDATA[
-const plus = document.querySelectorAll(".plus")
-const minus = document.querySelectorAll(".minus")
+<script>
+    const plus = document.querySelectorAll(".plus")
+    const minus = document.querySelectorAll(".minus")
 
-function tinhtong() {
-    const totalPriceForm = document.querySelectorAll(".total-price")
-    const totalProForm = document.querySelector(".total-pro")
-    var totalPro = 0;
-    for (let i = 0; i < totalPriceForm.length; i++) {
-        totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
-        console.log(totalPro);
+    function tinhtong() {
+        const totalPriceForm = document.querySelectorAll(".total-price")
+        const totalProForm = document.querySelector(".total-pro")
+        var totalPro = 0;
+        for (let i = 0; i < totalPriceForm.length; i++) {
+            totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
+            console.log(totalPro);
+        }
+        totalProForm.innerText = totalPro
     }
-    totalProForm.innerText = totalPro
-}
 
-$(document).ready(
-    tinhtong(),
-    $.each(plus, function (index, item) {
-        // var temp = index
-        item.addEventListener("click", function (e) {
-            var quantityForm = document.querySelectorAll(".input-qty")
-            const totalPriceForm = document.querySelectorAll(".total-price")
-            const priceExportForm = document.querySelectorAll(".price-export")
+    $(document).ready(
+        tinhtong(),
+        $.each(plus, function (index, item) {
+            // var temp = index
+            item.addEventListener("click", function (e) {
+                var quantityForm = document.querySelectorAll(".input-qty")
+                const totalPriceForm = document.querySelectorAll(".total-price")
+                const priceExportForm = document.querySelectorAll(".price-export")
 
-            var valueInput = quantityForm[index].value
+                var valueInput = quantityForm[index].value
 
-            if (valueInput < Number(quantityForm[index].getAttribute('max'))) {
-                quantityForm[index].value = Number(valueInput) + 1
-                valueInput = Number(valueInput) + 1
-            }
+                if (valueInput < Number(quantityForm[index].getAttribute('max'))) {
+                    quantityForm[index].value = Number(valueInput) + 1
+                    valueInput = Number(valueInput) + 1
+                }
 
-            // var quantity = quantityForm[index].value
-            var priceExport = priceExportForm[index].getAttribute("value")
-            var totalPrice = Number(valueInput) * Number(priceExport)
+                // var quantity = quantityForm[index].value
+                var priceExport = priceExportForm[index].getAttribute("value")
+                var totalPrice = Number(valueInput) * Number(priceExport)
 
-            totalPriceForm[index].innerText = totalPrice
-            const totalProForm = document.querySelector(".total-pro")
-            var totalPro = 0;
-            for (let i = 0; i < totalPriceForm.length; i++) {
-                totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
-                console.log(totalPro);
-            }
+                totalPriceForm[index].innerText = totalPrice
+                const totalProForm = document.querySelector(".total-pro")
+                var totalPro = 0;
+                for (let i = 0; i < totalPriceForm.length; i++) {
+                    totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
+                    console.log(totalPro);
+                }
 
-            totalProForm.innerText = totalPro
+                totalProForm.innerText = totalPro
+            })
+        }),
+        $.each(minus, function (index, item) {
+            // var temp = index
+            item.addEventListener("click", function (e) {
+
+                const totalPriceForm = document.querySelectorAll(".total-price")
+                const priceExportForm = document.querySelectorAll(".price-export")
+                var quantityForm = document.querySelectorAll(".input-qty")
+
+                var valueInput = quantityForm[index].value// = 10
+
+                if (valueInput > Number(quantityForm[index].getAttribute('min'))) {
+                    quantityForm[index].value = Number(valueInput) - 1
+                    valueInput = Number(valueInput) - 1
+                }
+
+                var priceExport = priceExportForm[index].getAttribute("value")
+                var totalPrice = Number(valueInput) * Number(priceExport)
+
+                totalPriceForm[index].innerText = totalPrice
+                tinhtong();
+            })
         })
-    }),
-    $.each(minus, function (index, item) {
-        // var temp = index
-        item.addEventListener("click", function (e) {
-
-            const totalPriceForm = document.querySelectorAll(".total-price")
-            const priceExportForm = document.querySelectorAll(".price-export")
-            var quantityForm = document.querySelectorAll(".input-qty")
-
-            var valueInput = quantityForm[index].value// = 10
-
-            if (valueInput > Number(quantityForm[index].getAttribute('min'))) {
-                quantityForm[index].value = Number(valueInput) - 1
-                valueInput = Number(valueInput) - 1
-            }
-
-            var priceExport = priceExportForm[index].getAttribute("value")
-            var totalPrice = Number(valueInput) * Number(priceExport)
-
-            totalPriceForm[index].innerText = totalPrice
-            tinhtong();
-        })
-    })
-)
+    )
 
 
-function xoa(x) {
-    var tr = x.parentElement.parentElement;
-    tr.remove();
-}
-
-
-//]]></script>
+    function xoa(x) {
+        var tr = x.parentElement.parentElement;
+        tr.remove();
+    }
+</script>
+</html>

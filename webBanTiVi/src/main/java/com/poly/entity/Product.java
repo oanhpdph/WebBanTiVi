@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "product")
 @Getter
@@ -35,5 +37,8 @@ public class Product {
 
     @Column(name = "same_product")
     private String same;
+
+   @OneToMany(mappedBy = "product")
+    private List<Evaluate> listEvaluate;
 
 }

@@ -24,9 +24,6 @@ public interface BillService {
 
     Bill getOneById(Integer id);
 
-
-    Bill getOneByIdCustomer(Integer idCustomer);
-
     List<Bill> findAllBillByUser(Integer idInteger);
 
     List<Bill> findBillReturn(String code);
