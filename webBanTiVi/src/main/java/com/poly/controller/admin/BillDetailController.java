@@ -49,13 +49,13 @@ public class BillDetailController {
                 .map(billProduct -> billProduct.getPrice().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        BigDecimal reduceMoney = billProducts.stream()
-                .map(billProduct -> billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+//        BigDecimal reduceMoney = billProducts.stream()
+//                .map(billProduct -> billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
+//                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("paymentMethod", paymentMethodService.getAll());
-        model.addAttribute("totalReduceMoney", reduceMoney);
+//        model.addAttribute("totalReduceMoney", reduceMoney);
         BigDecimal totalAfter = BigDecimal.valueOf(0);
 //        if (bill.getVoucher() != null && bill.getVoucher().isReducedForm() == true) {// giảm %
 //            totalAfter = totalPrice.subtract(reduceMoney);
@@ -68,9 +68,9 @@ public class BillDetailController {
 //        if (bill.getVoucher() != null && bill.getVoucher().isReducedForm() == false) {
 //            totalAfter = totalPrice.subtract(reduceMoney).subtract(BigDecimal.valueOf(bill.getVoucher().getValue()));
 //        }
-        if (bill.getVoucher() == null) {
-            totalAfter = totalPrice.subtract(reduceMoney);
-        }
+//        if (bill.getVoucher() == null) {
+//            totalAfter = totalPrice.subtract(reduceMoney);
+//        }
         model.addAttribute("totalAfter", totalAfter);
         List<BillStatus> billStatusList = billStatus(billStatusService.getAll(), bill.getBillStatus().getCode());
         model.addAttribute("billStatus", billStatusList);

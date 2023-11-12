@@ -148,8 +148,9 @@
                 <div class="col-lg-9 col-xl-7 col-md-9 col-sm-8">
                     <div class="input-group form-check">
                         <div class="input-group input-group-merge input">
-                            <label for="date-seach-order" class="input-group-text">Select date:</label>
-                            <input type="text" class="form-control" id="date-seach-order" name="date" th:field="*{date}"
+                            <label for="date-seach-voucher" class="input-group-text">Select date:</label>
+                            <input type="text" class="form-control" id="date-seach-voucher" name="date"
+                                   th:field="*{date}"
                                    placeholder="MM/DD/YYYY-MM/DD/YYYY" autocomplete="off">
                         </div>
                     </div>
@@ -181,22 +182,26 @@
                 <thead>
                 <tr>
                     <!--                    <th>code</th>-->
-                    <th>Name Voucher</th>
-                    <th>Value</th>
-                    <th>Minimum Value</th>
-                    <th>Quantity</th>
-                    <th>Start Day</th>
-                    <th>Expiration Date</th>
-                    <th>Active</th>
+                    <!--                    <th>Tên Voucher</th>-->
+                    <th>#</th>
+                    <th>Mã voucher</th>
+                    <th>Giá trị</th>
+                    <th>Số lượng</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
+                    <th>Hoạt động</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="voucher : ${session.list.content}">
+                <tr th:each="voucher,Stat : ${session.list.content}">
                     <!--                    <td th:text="${voucher.code}"></td>-->
-                    <td th:text="${voucher.nameVoucher}"></td>
+                    <!--                    <td th:text="${voucher.nameVoucher}"></td>-->
+                    <td th:text="${Stat.index+1}"></td>
+
+                    <td th:text="${voucher.code}"></td>
                     <td th:text="${voucher.value}"></td>
-                    <td th:text="${voucher.minimumValue}"></td>
+
                     <td th:text="${voucher.quantity}"></td>
                     <td th:text="${voucher.startDay}"></td>
                     <td th:text="${voucher.expirationDate}"></td>

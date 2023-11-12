@@ -33,7 +33,7 @@ public class VoucherController {
     @GetMapping("/voucher/list")
     public String voucher(HttpSession session, Model model,
                           @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageRequest,
-                          @RequestParam(name = "size", required = false, defaultValue = "2") Integer sizeRequest,
+                          @RequestParam(name = "size", required = false, defaultValue = "10") Integer sizeRequest,
                           @ModelAttribute(name = "search") SearchVoucherDto search
     ) {
         if (pageRequest < 0) {
