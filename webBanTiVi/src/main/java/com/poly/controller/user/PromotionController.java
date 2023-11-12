@@ -113,14 +113,14 @@ public class PromotionController {
         LocalDate today = LocalDate.now();
         int soluong = voucherCustomerService.findAllByVoucher(id).size();
         boolean check = false;
-        boolean check2= false;
+        boolean check2 = false;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
             for (VoucherCustomer x : voucherCustomerService.findAll()) {
                 if (x.getCustomer().getId() == customerUserDetail.getId()) {
-                    check2= true;
+                    check2 = true;
                     model.addAttribute("check", check);
                     model.addAttribute("check2", check2);
                     model.addAttribute("thongbao", "Voucher này chỉ được giảm cho một hóa đơn duy nhất, hẹn quý khách ở các chương trình khuyến mại sau!");
@@ -131,13 +131,11 @@ public class PromotionController {
             if (soluong <= voucher.getQuantity()) {
                 check = true;
                 model.addAttribute("check", check);
-                model.addAttribute ("check2", check2);
+                model.addAttribute("check2", check2);
                 //add vouchercustomer;
                 VoucherCustomerRes voucherCustomer = new VoucherCustomerRes();
                 voucherCustomer.setCustomer(customerUserDetail.getId());
                 voucherCustomer.setVoucher(id);
-                voucherCustomer.setDateStart(voucher.getStartDay());
-                voucherCustomer.setDateEnd(voucher.getExpirationDate());
                 voucherCustomer.setActive(voucher.getActive());
                 voucherCustomerService.save(voucherCustomer);
             } else {

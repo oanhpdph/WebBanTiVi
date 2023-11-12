@@ -32,12 +32,13 @@
                             <hr>
                             <div class="col-4 col-md-5 col-xl-4">
                                 <img th:each="image:${billProduct.product.listImage}"
-                                     th:src="@{'/image/'+ ${image.location == true ? image.nameImage:''}}" src=""
+                                     th:if="${image.location == true }"
+                                     th:src="@{'/image/'+ ${ image.link}}" src=""
                                      class="w-px-200" alt="Lỗi hiển thị">
                             </div>
                             <div class="col-8 col-md-7 col-xl-8">
                                 <div class="col-12 mb-4 fs-4"><p><b>Tên sản phẩm:</b>
-                                    <a th:href="@{/admin/product/abcxyz}" class="text-decoration-none">[(${billProduct.product.name})]</a>
+                                    <a th:href="@{/admin/product/abcxyz}" class="text-decoration-none">[(${billProduct.product.product.nameProduct})]</a>
                                 </p></div>
                                 <div class="row mb-4">
                                     <span class="col-8 text-left"><b>Số lượng:</b></span>
@@ -49,7 +50,6 @@
                                 </div>
                                 <div class="row mb-4">
                                     <span class="col-7 text-start"><b>Giá khuyến mãi:</b></span>
-                                    <span class="col-5 text-end">[(${#numbers.formatDecimal(billProduct.quantity *billProduct.reducedMoney, 0,'COMMA',0,'POINT')})] <u>đ</u></span>
                                 </div>
                             </div>
                         </div>
@@ -268,7 +268,8 @@
         </form>
         <div class="card">
             <div class="d-flex align-items-end row">
-                <form th:action="@{/admin/bill/bill_detail/update_status/{id}(id=${billDetail.id})}" method="post" id="updatePay">
+                <form th:action="@{/admin/bill/bill_detail/update_status/{id}(id=${billDetail.id})}" method="post"
+                      id="updatePay">
                     <div class="card-body">
                     <span class="card-title mt-3 mb-3">
                          <b>Tổng tiền</b>
@@ -323,7 +324,9 @@
                             <!--                            </div>-->
                         </div>
                         <div class="col-12 text-center" th:if="${billDetail.paymentStatus==2}">
-                            <button class="btn btn-warning mt-4" id="pay" type="submit" value="1" name="paymentStatus">Thanh toán</button>
+                            <button class="btn btn-warning mt-4" id="pay" type="submit" value="1" name="paymentStatus">
+                                Thanh toán
+                            </button>
                         </div>
                     </div>
                 </form>
