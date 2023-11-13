@@ -47,6 +47,7 @@ CREATE TABLE product_detail
      price_import   money,
      price_export   money,
      quantity       INT,
+	 date_create    datetime,
      active         BIT
 )
 
@@ -119,8 +120,6 @@ CREATE TABLE voucher_user
   (	 id			 Int identity(1,1) primary key,
      id_user	 INT references users(id),
      id_voucher  INT references voucher(id),
-     date_start  DATETIME not null,-- thời gian nhận
-     date_end    DATETIME not null,-- thời gian hết hiệu lực
 	 active      BIT not null
   )
 

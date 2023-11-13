@@ -1,11 +1,59 @@
 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Hóa đơn/ </span>Danh sách hóa đơn</h4>
 <div class="card">
-    <!--    <div class="card-body text-center bg-black" th:if="${totalElements==0}">-->
-    <!--        <h3>-->
-    <!--            Chưa có hóa đơn-->
-    <!--        </h3>-->
-    <!--    </div>-->
+
     <form class="col-12 mt-2" th:action="@{/admin/bill/list_bill}" method="get" th:object="${search}" id="formBill">
+        <input hidden th:value="*{billStatus}" id="status" name="billStatus">
+        <ul class="nav nav-tabs nav-fill fs-5" role="tablist">
+            <li class="nav-item">
+                <button type="button" th:class="|nav-link status *{billStatus=='doncho' ? 'active':''}|"
+                        data-bs-toggle="tab" value="doncho"
+                        aria-selected="false">
+                    Chờ xử lý
+                </button>
+            </li>
+            <li class="nav-item">
+                <button type="button" th:class="|nav-link status *{billStatus=='chuanbi' ? 'active':''}|"
+                        data-bs-toggle="tab" value="chuanbi"
+                        aria-selected="true">
+                    Chuẩn bị hàng
+                </button>
+            </li>
+            <li class="nav-item">
+                <button type="button" th:class="|nav-link status *{billStatus=='danggiao' ? 'active':''}|"
+                        data-bs-toggle="tab" value="danggiao"
+                        aria-selected="false">
+                    Đang giao
+                </button>
+            </li>
+            <li class="nav-item">
+                <button type="button" th:class="|nav-link status *{billStatus=='hoanthanh' ? 'active':''}|"
+                        data-bs-toggle="tab" value="hoanthanh"
+                        aria-selected="false">
+                    Hoàn thành
+                </button>
+            </li>
+            <li class="nav-item">
+                <button type="button" th:class="|nav-link status *{billStatus=='donhuy' ? 'active':''}|"
+                        data-bs-toggle="tab" value="donhuy"
+                        aria-selected="false">
+                    Đơn hủy
+                </button>
+            </li>
+            <li class="nav-item">
+                <button type="button" th:class="|nav-link status *{billStatus=='dontra' ? 'active':''}|"
+                        data-bs-toggle="tab" value="dontra"
+                        aria-selected="false">
+                    Đơn trả
+                </button>
+            </li>
+            <li class="nav-item">
+                <button type="button" th:class="|nav-link status *{billStatus=='donhoan' ? 'active':''}|"
+                        data-bs-toggle="tab" value="donhoan"
+                        aria-selected="false">
+                    Đơn hoàn
+                </button>
+            </li>
+        </ul>
         <div class="card-header">
             <div class="col-12 row">
                 <div class="col-7">
@@ -39,9 +87,17 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="row">
-                <div class="form-check col-md-2 d-flex align-items-center">
-                    <span><b class="text-danger">[(${totalElements})]</b>  Hóa đơn</span>
+            <div class="row mb-5">
+                <div class="mx-3 row" style="width: 180px">
+                    <label for="select-size" class="col-form-label col-5 text-end">View:</label>
+                    <div class="col-7">
+                        <select class="form-select text-start" id="select-size" th:name="size">
+                            <option value="10" th:selected="${session.size == 10}">10</option>
+                            <option value="20" th:selected="${session.size == 20}">20</option>
+                            <option value="40" th:selected="${session.size == 40}">40</option>
+                            <option value="80" th:selected="${session.size == 80}">80</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="col-md-10 text-end">
                     <div class="btn-group" role="group" aria-label="First group">
@@ -61,29 +117,6 @@
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-between mt-3 mb-3 text-center fs-5">
-                <input hidden value="" id="status" name="billStatus">
-                <div class="d-inline col cursor-pointer status" value="cho">
-                    Chờ xử lý
-                </div>
-                <div class="d-inline col cursor-pointer  bg-label-dark status" value="chuanbi">
-                    Chuẩn bị hàng
-                </div>
-                <div class="d-inline col cursor-pointer status" value="danggiao">
-                    Đang giao
-                </div>
-                <div class="d-inline col cursor-pointer status" value="hoanthanh">
-                    Hoàn thành
-                </div>
-                <div class="d-inline col cursor-pointer status" value="donhuy">
-                    Đơn hủy
-                </div>
-                <div class="d-inline col cursor-pointer status" value="trahang">
-                    Trả hàng
-                </div>
-            </div>
-
-            <hr>
             <div class="overflow-auto">
                 <table class="table table-hover table-bordered overflow-hidden" id="myTable">
                     <thead>
@@ -102,40 +135,40 @@
                                 <option value="3">Đã hoàn tiền</option>
                             </optgroup>
                         </select></th>
-                        <th><select class="select2" id="filterBillStatus">
-                            <optgroup label="Trạng thái đơn hàng">
-                                <option th:selected="${session.defaultBillStatus == ''}" value="">Tất cả</option>
-                                <option value="WP" th:selected="${session.defaultBillStatus=='WP'}">Chờ xử lý</option>
+                        <!--                        <th><select class="select2" id="filterBillStatus">-->
+                        <!--                            <optgroup label="Trạng thái đơn hàng">-->
+                        <!--                                <option th:selected="${session.defaultBillStatus == ''}" value="">Tất cả</option>-->
+                        <!--                                <option value="WP" th:selected="${session.defaultBillStatus=='WP'}">Chờ xử lý</option>-->
 
-                                <option value="PG" th:selected="${session.defaultBillStatus== 'PG'}">Đang chuẩn bị
-                                    hàng
-                                </option>
+                        <!--                                <option value="PG" th:selected="${session.defaultBillStatus== 'PG'}">Đang chuẩn bị-->
+                        <!--                                    hàng-->
+                        <!--                                </option>-->
 
-                                <option value="DE" th:selected="${ session.defaultBillStatus =='DE'}">Đang giao hàng
-                                </option>
+                        <!--                                <option value="DE" th:selected="${ session.defaultBillStatus =='DE'}">Đang giao hàng-->
+                        <!--                                </option>-->
 
-                                <option value="CO" th:selected="${ session.defaultBillStatus  == 'CO'}">Đã hoàn thành
-                                </option>
+                        <!--                                <option value="CO" th:selected="${ session.defaultBillStatus  == 'CO'}">Đã hoàn thành-->
+                        <!--                                </option>-->
 
-                                <option value="SC" th:selected="${ session.defaultBillStatus ==  'SC'}">Shop hủy
-                                </option>
-                                <option value="CC" th:selected="${ session.defaultBillStatus  == 'CC'}">Khách hủy
-                                </option>
+                        <!--                                <option value="SC" th:selected="${ session.defaultBillStatus ==  'SC'}">Shop hủy-->
+                        <!--                                </option>-->
+                        <!--                                <option value="CC" th:selected="${ session.defaultBillStatus  == 'CC'}">Khách hủy-->
+                        <!--                                </option>-->
 
-                                <option value="RR" th:selected="${ session.defaultBillStatus == 'RR'}">Yêu cầu trả hàng
-                                </option>
-                                <option value="WR" th:selected="${ session.defaultBillStatus  == 'WR'}">Chờ trả hàng
-                                </option>
-                                <option value="RE" th:selected="${session.defaultBillStatus  == 'RE'}">Đã trả hàng
-                                </option>
+                        <!--                                <option value="RR" th:selected="${ session.defaultBillStatus == 'RR'}">Yêu cầu trả hàng-->
+                        <!--                                </option>-->
+                        <!--                                <option value="WR" th:selected="${ session.defaultBillStatus  == 'WR'}">Chờ trả hàng-->
+                        <!--                                </option>-->
+                        <!--                                <option value="RE" th:selected="${session.defaultBillStatus  == 'RE'}">Đã trả hàng-->
+                        <!--                                </option>-->
 
-                            </optgroup>
-                        </select>
-                        </th>
+                        <!--                            </optgroup>-->
+                        <!--                        </select>-->
+                        <!--                        </th>-->
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    <tr th:each="listBill,billStat: ${session.list.content}" th:onclick="|oncl(${ listBill.id })|">
+                    <tr th:each="listBill,billStat: ${listBill.content}" th:onclick="|oncl(${ listBill.id })|">
                         <td>
                             <strong>[(${billStat.index+1})]</strong>
                         </td>
@@ -146,30 +179,18 @@
                         <td>[(${listBill.customer.phoneNumber})]</td>
                         <td>[(${listBill.createDate})]</td>
                         <td th:text="${listBill.paymentStatus == 1 ? 'Đã thanh toán' : listBill.paymentStatus == 2 ? 'Chưa thanh toán' : 'Đã hoàn tiền'}"></td>
-                        <td>[(${listBill.billStatus.status})]</td>
+                        <!--                        <td>[(${listBill.billStatus.status})]</td>-->
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <div class="card-footer">
-            <div class="d-inline-flex float-end">
-                <div class="mx-3 row" style="width: 180px">
-                    <label for="select-size" class="col-form-label col-5 text-end">View:</label>
-                    <div class="col-7">
-                        <select class="form-select text-start" id="select-size" th:name="size"
-                        >
-                            <option value="10" th:selected="${session.size == 10}">10</option>
-                            <option value="20" th:selected="${session.size == 20}">20</option>
-                            <option value="40" th:selected="${session.size == 40}">40</option>
-                            <option value="80" th:selected="${session.size == 80}">80</option>
-                            <option value="1" th:selected="${session.size == 1}">All</option>
-                        </select>
-                    </div>
-                </div>
+        <div class="card-footer ">
+            <!--            <div class="d-inline-flex">-->
+            <div>
                 <div aria-label="Page pagination">
-                    <ul class="pagination">
+                    <ul class="pagination justify-content-end">
                         <li class="page-item first">
                             <a class="page-link" id="first" th:value="1" type="button">
                                 <i class="tf-icon bx bx-chevrons-left"></i>
@@ -185,24 +206,25 @@
                                        th:onblur="|blurInputPage(${session.page},${session.size})|"
                                        th:onkeydown="|keydownPage(event,${session.page},${session.size})|"
                                        th:value="${session.page}">
-                                <span class="input-group-text">/[(${session.list.totalPages})]</span>
-                                <input id="totalPage" value="${session.list.totalPages}" hidden="hidden">
+                                <span class="input-group-text">/[(${listBill.totalPages})]</span>
+                                <!--                                <input id="totalPage" value="${session.list.totalPages}" hidden="hidden">-->
                             </div>
                         </li>
                         <li class="page-item next">
                             <a class="page-link" id="next"
-                               th:value="${session.page < session.list.totalPages ? session.page + 1 : session.list.totalPages }">
+                               th:value="${session.page < listBill.totalPages ? session.page + 1 : listBill.totalPages }">
                                 <i class="tf-icon bx bx-chevron-right"></i>
                             </a>
                         </li>
                         <li class="page-item last">
-                            <a class="page-link" id="last" th:value="${session.list.totalPages}">
+                            <a class="page-link" id="last" th:value="${listBill.totalPages}">
                                 <i class="tf-icon bx bx-chevrons-right"></i>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
+            <!--            </div>-->
         </div>
     </form>
 </div>
