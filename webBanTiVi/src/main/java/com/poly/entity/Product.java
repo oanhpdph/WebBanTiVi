@@ -1,11 +1,14 @@
 package com.poly.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,6 +17,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +42,11 @@ public class Product {
     @Column(name = "same_product")
     private String same;
 
-   @OneToMany(mappedBy = "product")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name="date_create")
+    private Date createDate;
+
+    @OneToMany(mappedBy = "product")
     private List<Evaluate> listEvaluate;
 
 }
