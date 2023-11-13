@@ -96,12 +96,16 @@ public class UserController {
         session.setAttribute("pageView", "/user/page/profile/order.html");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
+            List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
+            Date today = new Date();
+            model.addAttribute("today", today);
+            model.addAttribute("bill", billList);
         UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
         List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
         Date today = new Date();
         model.addAttribute("today", today);
         model.addAttribute("bill", billList);
-
         return "/user/index";
     }
 
@@ -109,7 +113,6 @@ public class UserController {
     public String returnProduct(HttpSession session,
                                 @PathVariable("id") Integer id,
                                 @RequestBody List<ReturnDto> returnDto) {
-
         for (ReturnDto dto : returnDto) {
             for (ImageReturnDto image : dto.getImage()) {
                 ImageReturned img = new ImageReturned();
