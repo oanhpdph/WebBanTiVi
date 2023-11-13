@@ -12,6 +12,10 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -39,17 +43,31 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findAll(ProductDetailDto productDetailDto) {
+    public Page<Product> findAll(ProductDetailDto productDetailDto) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> productCriteriaQuery = criteriaBuilder.createQuery(Product.class);
         Root<Product> productRoot = productCriteriaQuery.from(Product.class);
         List<Predicate> list = new ArrayList<Predicate>();
-        if (productDetailDto.getSku()!="") {
+        if (productDetailDto.getSku() != "") {
             list.add(criteriaBuilder.equal(productRoot.get("sku"), productDetailDto.getSku()));
         }
         productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
-        List<Product> result = entityManager.createQuery(productCriteriaQuery).getResultList();
-        return result;
+        if (productDetailDto.getSort() == 1) {
+            productCriteriaQuery.orderBy(criteriaBuilder.desc(productRoot.get("createDate")));
+        }else{
+            productCriteriaQuery.orderBy(criteriaBuilder.asc(productRoot.get("createDate")));
+        }
+        Pageable pageable = PageRequest.of(productDetailDto.getPage()-1, productDetailDto.getSize());
+        List<Product> result = entityManager.createQuery(productCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
+
+        List<Product> result1 = entityManager.createQuery(productCriteriaQuery).getResultList();
+        Page<Product> page = new PageImpl<>(result, pageable, result1.size());
+        return page;
+    }
+
+    @Override
+    public List<Product> findAll() {
+        return productRepository.findAll();
     }
 
     @Override

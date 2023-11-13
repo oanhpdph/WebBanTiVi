@@ -59,6 +59,9 @@ public class ExportExcel<T> {
         int index = 0;
         for (Object temp : list) {
             Cell cell = row.createCell(index);
+            if(temp==null){
+                temp="Không lấy được dữ liệu";
+            }
             if (temp instanceof Integer) {
                 cell.setCellValue((Integer) temp);
             } else if (temp instanceof Long) {

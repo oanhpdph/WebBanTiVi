@@ -57,6 +57,8 @@ public class BillController {
         private String note;
     }
 
+    Page<Bill> bills;
+
     @GetMapping("/bill_product")
     public String index(Model model) {
         model.addAttribute("bill_product", billProductService.getAll());
@@ -109,27 +111,29 @@ public class BillController {
         if (pageRequest <= 0) {
             pageRequest = 1;
         }
-        if (sizeRequest < 1 ) {
+        if (sizeRequest < 1) {
             sizeRequest = 10;
         }
         session.setAttribute("size", sizeRequest);
         session.setAttribute("page", pageRequest);
 
-        session.setAttribute("defaultBillStatus", search.getBillStatus());
+        if (search.getBillStatus().isEmpty()) {
+            search.setBillStatus("doncho");
+        }
         Pageable pageable = PageRequest.of(pageRequest - 1, sizeRequest);
-        Page<Bill> bills = billService.loadData(search, pageable);
-        session.setAttribute("list", bills);
+        bills = billService.loadData(search, pageable);
+        model.addAttribute("listBill", bills);
         model.addAttribute("totalElements", bills.getTotalElements());
         return "/admin/layout";
     }
 
     @GetMapping("/bill/list_bill/download_excel")
-    public void exportIntoExcelFile(HttpServletResponse response, HttpSession session) {
+    public void exportIntoExcelFile(HttpServletResponse response, HttpSession session, Model model) {
         response.setContentType("application/octet-stream");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         String currentDateTime = dateFormatter.format(new Date());
 
-        Page<Bill> bills = (Page<Bill>) session.getAttribute("list");
+//        bills = (Page<Bill>) model.getAttribute("listBill");
 
         List<String> header = listHeader();
 
@@ -145,7 +149,7 @@ public class BillController {
 
     @GetMapping("/bill/list_bill/downloadpdf")
     public void exportPdf(HttpServletResponse response, HttpSession session) throws IOException {
-        Page<Bill> bills = (Page<Bill>) session.getAttribute("list");
+//        Page<Bill> bills = (Page<Bill>) session.getAttribute("listBill");
         List<String> header = listHeader();
 
         List<DataExportExcel> dataExport = new ArrayList<>();
