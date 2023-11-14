@@ -49,4 +49,6 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Evaluate> listEvaluate;
 
+    @OneToMany(mappedBy = "product")
+    private List<ProductDetail> productDetails;
 }

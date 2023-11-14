@@ -46,7 +46,6 @@ public class UserController {
     BillProductService billProductService;
 
 
-
     @GetMapping("/tivi")
     public String loadProduct(HttpSession session, Model model) {
         session.setAttribute("pageView", "/user/page/product/tivi.html");

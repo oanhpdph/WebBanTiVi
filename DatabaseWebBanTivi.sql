@@ -35,10 +35,10 @@ CREATE TABLE product
 	 group_product	int references group_product(id),
 	 name_product   nvarchar(200),
 	 avg_point		float,
+	 date_create    datetime,
 	 same_product	varchar(10),
      active         BIT
 )
-
 CREATE TABLE product_detail
   (
      id             INT IDENTITY(1, 1) PRIMARY KEY,

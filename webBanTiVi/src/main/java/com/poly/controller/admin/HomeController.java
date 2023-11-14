@@ -28,10 +28,10 @@ public class HomeController {
     public String loadHome(HttpSession session, Model model) {
         session.setAttribute("pageView", "/admin/page/dashboard/dashboard.html");
         session.setAttribute("active", "/dashboard");
-        model.addAttribute("billReturn",this.dashBoardService.getAllBillReturn());
-        model.addAttribute("billProcessing",this.dashBoardService.getAllBillProcessing());
-        model.addAttribute("billAll",this.dashBoardService.getAllBill());
-        model.addAttribute("billDelivering",this.dashBoardService.getAllBillDelivering());
+        model.addAttribute("billReturn", this.dashBoardService.getAllBillReturn());
+        model.addAttribute("billProcessing", this.dashBoardService.getAllBillProcessing());
+        model.addAttribute("billAll", this.dashBoardService.getAllBill());
+        model.addAttribute("billDelivering", this.dashBoardService.getAllBillDelivering());
         return "admin/layout";
     }
 
@@ -51,5 +51,10 @@ public class HomeController {
         return "admin/layout";
     }
 
-
+    @GetMapping("/product/directSales")
+    public String load(HttpSession session) {
+//        session.setAttribute("pageView", "/admin/page/product/add_product.html");
+//        session.setAttribute("active", "/product/add-product");
+        return "admin/page/direct_sales/directSales";
+    }
 }
