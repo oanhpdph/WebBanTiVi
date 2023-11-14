@@ -29,3 +29,10 @@ document.getElementById("select-size").addEventListener("change", function () {
 document.getElementById("sort").addEventListener("change", function () {
     $("#form-product").submit()
 })
+document.getElementById("pageInput").addEventListener("blur", function () {
+    if (document.getElementById("pageInput").value < Number(document.getElementById("total").getAttribute("value")) && document.getElementById("pageInput").value>0) {
+        $("#form-product").submit()
+    }else{
+        document.getElementById("pageInput").value
+    }
+})

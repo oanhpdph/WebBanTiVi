@@ -33,12 +33,12 @@
         <option value="HTML File" />
         <option value="HTML File" />
         <option value="Class" />
-        <option value="Class" />
         <option value="Interface" />
         <option value="Class" />
         <option value="HTML File" />
         <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -113,19 +113,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="WebBanTiViApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="WebBanTiVi" />
       <extension name="coverage">
@@ -281,6 +268,8 @@
       <workItem from="1699702375538" duration="3036000" />
       <workItem from="1699713756527" duration="12078000" />
       <workItem from="1699752351244" duration="3632000" />
+      <workItem from="1699894502974" duration="604000" />
+      <workItem from="1699937423408" duration="8386000" />
     </task>
     <servers />
   </component>

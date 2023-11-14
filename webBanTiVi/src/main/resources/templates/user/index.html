@@ -47,14 +47,14 @@
     </style>
 </head>
 <body>
-<div class="layout-content-navbar layout-without-menu ">
+<div class="layout-content-navbar layout-without-menu">
     <div class="layout-container">
         <div class="layout-page">
             <div th:replace="~{/user/layout/_navbar.html}">
             </div>
             <div class="content-wrapper">
-                <div class="container-xxl flex-grow-1 container-p-y ">
-                    <div  th:replace="~{${session.pageView}}"></div>
+                <div class=" flex-grow-1 container-p-y ">
+                    <div th:replace="~{${session.pageView}}"></div>
                 </div>
                 <div th:replace="~{/user/layout/_footer.html}"></div>
                 <div class="content-backdrop fade"></div>
@@ -91,7 +91,6 @@
 <script th:src="@{/admin/plugin/js/date_picker_order.js}"></script>
 
 <script th:src="@{/admin/plugin/js/select2-plugin.js}"></script>
-
 
 
 </body>
