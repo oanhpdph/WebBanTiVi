@@ -46,7 +46,7 @@ public class BillProduct {
     private Integer quantityReturn;
 
     @Column(name="status")
-    private Boolean status;
+    private Integer status;
 
     @OneToMany(mappedBy="billProduct")
     private List<ImageReturned> listImage;

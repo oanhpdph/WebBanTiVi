@@ -192,10 +192,18 @@ public class BillImpl implements BillService {
         return dto;
     }
 
+
     @Override
-    public List<Bill> findBillReturn(String code) {
+    public Bill findByCode(String code) {
+        return this.billRepos.findByCode(code).get();
+    }
+
+    @Override
+    public List<Bill> findBillReturnByStatus(String code) {
         return this.billRepos.findBillReturn(code);
     }
+
+
 
 
 }
