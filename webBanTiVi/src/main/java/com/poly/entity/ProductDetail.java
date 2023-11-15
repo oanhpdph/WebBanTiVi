@@ -46,6 +46,10 @@ public class ProductDetail {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @ManyToOne
+    @JoinColumn(name = "id_discount")
+    private Coupon coupon;
+
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<Image> listImage;
 

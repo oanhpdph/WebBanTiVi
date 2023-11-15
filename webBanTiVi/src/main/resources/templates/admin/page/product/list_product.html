@@ -1,3 +1,12 @@
+<style>
+    div.swal2-container {
+        z-index: 1100;
+    }
+
+    .larger-checkbox {
+        transform: scale(2); /* Tăng kích cỡ 1.5 lần */
+    }
+</style>
 <h4 class="fw-bold py-3 mb-4">
     <span class="text-muted fw-light">Sản phẩm/</span> Danh sách sản phẩm
 </h4>
@@ -57,9 +66,13 @@
             </div>
             <div class="card-body table-responsive">
                 <table class="table table-hover" id="table-all-product">
+                    <caption class="ms-4">
+                        Từ [(${listProduct.number * listProduct.size +1})] đến [(${(listProduct.number*
+                        listProduct.size)+listProduct.numberOfElements})]
+                    </caption>
                     <thead>
-                    <tr class="fw-semibold">
-<!--                        <th>#</th>-->
+                    <tr class="fw-semibold row-table text-center">
+                        <!--                        <th>#</th>-->
                         <th>Sản phẩm</th>
                         <th>Sku</th>
                         <th>Điểm trung bình</th>
@@ -70,13 +83,15 @@
                     </thead>
                     <tbody>
                     <tr th:each="product,productStat:${listProduct}">
-<!--                        <td th:text="${productStat.index+1}"></td>-->
+                        <!--                        <td th:text="${productStat.index+1}"></td>-->
                         <td th:text="${product.nameProduct}"></td>
                         <td th:text="${product.sku}"></td>
                         <td th:text="${product.avgPoint}"></td>
                         <td th:text="${product.same}"></td>
-                        <td class="form-switch text-center"><input class="form-check-input" type="checkbox"
-                                                                   th:checked="${product.active}"></td>
+                        <td class="form-switch text-center"><input class="form-check-input update-active-product"
+                                                                   type="checkbox"
+                                                                   th:checked="${product.active}"
+                                                                   th:value="${product.id}"></td>
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -84,16 +99,66 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="javascript:void(0);"><i
-                                            class="bx bx-edit-alt me-1"></i> Edit</a>
-                                    <a class="dropdown-item" href="javascript:void(0);"><i
-                                            class="bx bx-trash me-1"></i> Delete</a>
+                                    <a class="dropdown-item edit-product" href="javascript:void(0);"
+                                       th:value="${product.id}"><i
+                                            class="bx bx-edit-alt me-1"></i> Chỉnh sửa</a>
+                                    <a class="dropdown-item delete-product" href="javascript:void(0);"
+                                       th:value="${product.id}"><i
+                                            class="bx bx-trash me-1"></i> Xóa</a>
                                 </div>
                             </div>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" id="active"
+                        data-bs-target="#modalActiveProduct" hidden>
+                    active
+                </button>
+                <div class="modal fade" id="modalActiveProduct" data-bs-backdrop="static" tabindex="-1"
+                     style="display: none;" aria-modal="true"
+                     role="dialog">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel4">Chọn sản phẩm bày bán</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" id="closeActive"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive text-nowrap">
+                                    <table class="table" id="table-active">
+                                        <caption class="ms-4">
+                                            List of Projects
+                                        </caption>
+                                        <thead>
+                                        <tr>
+                                            <th>Sản phẩm</th>
+                                            <th>Mã sku</th>
+                                            <th>Giá bán</th>
+                                            <th>Số lượng</th>
+                                            <th>Bày bán</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                                        id="cancelActive">
+                                    Hủy
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                                        id="cancel2" hidden>
+                                    Hủy
+                                </button>
+                                <button type="button" class="btn btn-primary" id="saveActive">Xác nhận</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <div>
@@ -105,14 +170,14 @@
                                 </a>
                             </li>
                             <li class="page-item prev">
-                                <a class="page-link" id="prev" ><i class="tf-icon bx bx-chevron-left"></i></a>
+                                <a class="page-link" id="prev"><i class="tf-icon bx bx-chevron-left"></i></a>
                             </li>
                             <li class="page-item mx-2">
                                 <div class="input-group input-group-merge">
                                     <input class="form-control inputPage" id="pageInput" type="number" name="page"
                                            th:value="*{page}">
                                     <span class="input-group-text" id="total" th:value="${listProduct.totalPages}">/[(${listProduct.totalPages})]</span>
-<!--                                                                    <input id="totalPage" value="${session.list.totalPages}" hidden="hidden">-->
+                                    <!--                                                                    <input id="totalPage" value="${session.list.totalPages}" hidden="hidden">-->
                                 </div>
                             </li>
                             <li class="page-item next">

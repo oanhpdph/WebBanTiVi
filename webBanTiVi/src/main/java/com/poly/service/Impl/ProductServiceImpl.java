@@ -2,7 +2,9 @@ package com.poly.service.Impl;
 
 import com.poly.dto.ProductDetailDto;
 import com.poly.entity.Product;
+import com.poly.entity.ProductDetail;
 import com.poly.repository.CouponRepository;
+import com.poly.repository.ProductDetailRepo;
 import com.poly.repository.ProductRepository;
 import com.poly.service.ProductService;
 import jakarta.persistence.EntityManager;
@@ -29,8 +31,12 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     CouponRepository couponRepository;
 
+    @Autowired
+    private ProductDetailRepo productDetailRepo;
+
     @PersistenceContext
     private EntityManager entityManager;
+
 
     @Override
     public Product save(Product product) {
@@ -82,8 +88,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getOne(Integer id) {
-        return productRepository.findById(id).get();
+    public Product update(Integer id, ProductDetailDto product) {
+        Product product1 = findById(id);
+        if (findById(id) != null) {
+            if (product.isActive() == false) {
+                product1.setActive(product.isActive());
+                for (ProductDetail productDetail : product1.getProductDetails()) {
+                    productDetail.setActive(false);
+                    productDetailRepo.save(productDetail);
+                }
+            } else {
+                product1.setActive(product.isActive());
+            }
+            productRepository.save(product1);
+        }
+        return null;
     }
 
     @Override

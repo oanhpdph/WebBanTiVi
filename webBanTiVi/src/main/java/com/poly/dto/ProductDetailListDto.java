@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDetailListDto {
+    Integer id;
     List<ImageDto> image;
     List<Attribute> listAttributes;
     BigDecimal priceImport;

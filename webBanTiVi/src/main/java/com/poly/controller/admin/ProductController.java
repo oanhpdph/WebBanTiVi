@@ -62,4 +62,5 @@ public class ProductController {
         model.addAttribute("listProductDetail", page);
         return "/admin/layout";
     }
+
 }

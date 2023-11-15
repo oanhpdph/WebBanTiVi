@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/accessory")
-    public String loadAccessory(HttpSession session,Model model) {
+    public String loadAccessory(HttpSession session, Model model) {
         session.setAttribute("pageView", "/user/page/product/accessory.html");
         model.addAttribute("active", "accesory");
         return "/user/index";
@@ -95,11 +95,11 @@ public class UserController {
         session.setAttribute("pageView", "/user/page/profile/order.html");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
-            List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
-            Date today = new Date();
-            model.addAttribute("today", today);
-            model.addAttribute("bill", billList);
+        UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
+        List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
+        Date today = new Date();
+        model.addAttribute("today", today);
+        model.addAttribute("bill", billList);
         return "/user/index";
     }
 
