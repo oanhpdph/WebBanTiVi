@@ -26,5 +26,7 @@ public interface BillService {
 
     List<Bill> findAllBillByUser(Integer idInteger);
 
-    List<Bill> findBillReturn(String code);
+    List<Bill> findBillReturnByStatus(String code);
+
+    Bill findByCode(String code);
 }

@@ -27,7 +27,7 @@
     <div class="nav-align-left mb-4">
         <ul class="nav nav-tabs col-lg-3" role="tablist">
             <li class="nav-item">
-                <a type="button" class="nav-link pb-3 pt-35 fs-5" role="tab"
+                <a type="button" class="nav-link pb-3 pt-35 fs-5 te" role="tab"
                    aria-controls="navs-top-home" aria-selected="false"
                    th:href="@{/profile}">
                     Thông tin tài khoản
@@ -61,7 +61,7 @@
                                 <img class="w-25 d-inline"
                                      src="/image/smart-tivi-toshiba-43-inch-43v31mp-04.jpg">
                                 <br>
-                                <span class="d-inline-flex" th:text="${bill.billProducts[0].product.nameProduct}"></span>
+                                <span class="d-inline-flex" th:text="${bill.billProducts[0].product.product.nameProduct}"></span>
                             </div>
                             <span class="col-sm-6 text-end ">
                                       Tổng tiền:
@@ -118,7 +118,7 @@
                                                                    th:class="|idBillProduct${bill.id} form-control|" disabled>
                                                         </td>
                                                         <td>
-                                                            <input type="text" th:value="${billProduct.product.nameProduct}"
+                                                            <input type="text" th:value="${billProduct.product.product.nameProduct}"
                                                                    th:class="|nameProduct${bill.id} form-control|" disabled>
                                                         </td>
                                                         <td>
@@ -182,7 +182,7 @@
                                             </div>
                                             <div class="mb-3 text-center">
                                                 <button type="submit" class="btn btn-primary">
-                                                    <a class="px-3 text-end" onclick="clickSave()">Hoàn tất</a>
+                                                    <a class="px-3 text-end" onclick="clickSave()" >Hoàn tất</a>
                                                 </button>
                                             </div>
 <!--                                        </form>-->
@@ -246,7 +246,6 @@
                 var arrImage = []
                 var listImage = document.getElementsByClassName(image)
                 $.each(listImage, function (index, itm) {
-                    // Lấy tệp từ trường chọn tệp
                     var imageItem;
                     var fileName = itm.value; // Lấy đường dẫn đầy đủ của tệp
                     var imageName;
@@ -280,6 +279,7 @@
             }
         })
         console.log(data)
+        uploadImage();
         $.ajax({
             url: "/return/"+idBill,
             method: "post",

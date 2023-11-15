@@ -28,10 +28,10 @@
             <tbody>
             <tr th:each="billProduct : ${listBillReturn}">
                 <td>
-                    <input type="checkbox" class="checkbox" readonly="readonly" th:name="checkbox">
+                    <input type="checkbox" class="checkbox" readonly="readonly">
                 </td>
                 <td>
-                    <input type="text" th:value="${billProduct.product.nameProduct}" th:name="nameProduct"
+                    <input type="text" th:value="${billProduct.product.product.nameProduct}" th:name="nameProduct"
                            th:class="|nameProduct form-control|" disabled>
                 </td>
                 <td>
@@ -39,7 +39,7 @@
                 </td>
                 <td>
                             <textarea name="" id="" cols=""
-                                      rows="2" th:value="${billProduct.reason}"
+                                      rows="2" th:text="${billProduct.reason}"
                                       th:class="|reason form-control|" th:name="reason" disabled></textarea>
                 </td>
                 <td>

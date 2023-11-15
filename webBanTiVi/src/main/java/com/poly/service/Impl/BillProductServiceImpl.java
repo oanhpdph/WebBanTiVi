@@ -34,7 +34,12 @@ public class BillProductServiceImpl implements BillProductService {
     }
 
     @Override
-    public List<BillProduct> findBillProductReturn(Boolean status, Integer id) {
+    public List<BillProduct> findBillProductReturn(Integer status, Integer id) {
         return this.repos.findBillProductReturn(status,id);
+    }
+
+    @Override
+    public List<BillProduct> findBillByStatus(Integer status) {
+        return this.repos.findBillByStatus(status);
     }
 }
