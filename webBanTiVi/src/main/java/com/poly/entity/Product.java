@@ -38,7 +38,7 @@ public class Product {
     @Column(name = "same_product")
     private String same;
 
-   @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product")
     private List<Evaluate> listEvaluate;
 
 }

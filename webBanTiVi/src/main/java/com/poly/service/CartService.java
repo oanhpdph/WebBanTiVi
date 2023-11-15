@@ -3,7 +3,7 @@ package com.poly.service;
 import com.poly.entity.Cart;
 import com.poly.entity.CartProduct;
 
-import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CartService {
@@ -24,7 +24,7 @@ public interface CartService {
 
     public int getTotalProduct();
 
-    public Serializable getAmount();
+    public BigDecimal getAmount();
 
     Cart getOne(Integer id);
 }

@@ -16,7 +16,6 @@ public interface ProductService {
 
     Product findById(Integer id);
 
-
     Product getOne(Integer id);
 
     List<Product> findSameProduct(String same);

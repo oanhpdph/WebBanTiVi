@@ -26,17 +26,17 @@ public class DeliveryNotes {
     @Column(name = "received_phone")
     private String receiverPhone;
 
+    @Column(name = "received_email")
+    private String receivedEmail;
+
+    @Column(name = "receiving_address")
+    private String receivingAddress;
+
     @Column(name = "deliver")
     private String deliver;
 
     @Column(name = "delivery_phone")
     private String deliveryPhone;
-
-    @Column(name = "received_email")
-    private String deliveryEmail;
-
-    @Column(name = "receiving_address")
-    private String receivingAddress;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "delivery_date")

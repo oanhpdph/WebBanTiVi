@@ -182,4 +182,5 @@ public class ProductDetailImpl implements ProductDetailService {
         }
         return list;
     }
+
 }

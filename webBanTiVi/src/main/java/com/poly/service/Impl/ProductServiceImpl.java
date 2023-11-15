@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
         CriteriaQuery<Product> productCriteriaQuery = criteriaBuilder.createQuery(Product.class);
         Root<Product> productRoot = productCriteriaQuery.from(Product.class);
         List<Predicate> list = new ArrayList<Predicate>();
-        if (productDetailDto.getSku()!="") {
+        if (productDetailDto.getSku() != "") {
             list.add(criteriaBuilder.equal(productRoot.get("sku"), productDetailDto.getSku()));
         }
         productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
@@ -66,5 +66,6 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findSameProduct(String same) {
         return productRepository.findBySameProduct(same);
     }
+
 
 }

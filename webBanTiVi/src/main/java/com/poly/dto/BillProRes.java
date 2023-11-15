@@ -1,9 +1,11 @@
 package com.poly.dto;
 
+import com.poly.entity.Bill;
 import com.poly.entity.Users;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Builder
@@ -14,6 +16,7 @@ import java.util.List;
 public class BillProRes {
 
     List<Integer> product;
+    Bill bill;
     Integer quantity;
     String name;
     String address;
@@ -23,4 +26,11 @@ public class BillProRes {
     Integer paymentMethod;
     Integer voucher;
     Users customer;
+    //delivery
+    String deliver;
+    Date deliveryDate;
+    Date receivedDate;
+    BigDecimal deliveryFee;
+    String note;
+    Integer status;
 }

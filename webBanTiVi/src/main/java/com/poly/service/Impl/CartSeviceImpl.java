@@ -3,13 +3,13 @@ package com.poly.service.Impl;
 import com.poly.entity.Cart;
 import com.poly.entity.CartProduct;
 import com.poly.entity.ProductDetail;
+import com.poly.repository.CartProductRepos;
 import com.poly.repository.CartRepos;
 import com.poly.service.CartService;
 import com.poly.service.ProductDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -21,6 +21,8 @@ import java.util.stream.Collectors;
 public class CartSeviceImpl implements CartService {
     @Autowired
     CartRepos cartRepos;
+    @Autowired
+    CartProductRepos cartProductRepos;
     @Autowired
     ProductServiceImpl productService;
 
@@ -98,7 +100,7 @@ public class CartSeviceImpl implements CartService {
     }
 
     @Override
-    public Serializable getAmount() {
+    public BigDecimal getAmount() {
         BigDecimal amount = null;
         for (CartProduct item : items) {
             BigDecimal qty = new BigDecimal(item.getQuantity());
@@ -116,11 +118,11 @@ public class CartSeviceImpl implements CartService {
 
     @Override
     public int getTotalProduct() {
-        int amount = 0;
+        int totalProduct = 0;
         for (CartProduct item : items) {
-//            amount += item.getQuantity() * item.getProduct().getPrice_export();
+            totalProduct += item.getQuantity() * item.getProduct().getPriceExport().intValue();
         }
-        return amount;
+        return totalProduct;
     }
 
 }
