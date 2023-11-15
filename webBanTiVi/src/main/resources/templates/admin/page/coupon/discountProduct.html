@@ -1,5 +1,4 @@
-<h4 class="fw-semibold py-3 mb-4"> Danh sách khách hàng đã nhận voucher:
-    [(${voucher.getNameVoucher()})]</h4>
+<h4 class="fw-semibold py-3 mb-4"> Danh sách sản phẩm được giảm [(${voucher.getValue()})]%</h4>
 <div class="row justify-content-end me-4">
 <!--    <form th:action="@{/admin/voucherCustomer/add}" method="post" th:object="${voucherCustomer}">-->
 <!--        <div class="row justify-content-end me-4">-->
@@ -90,7 +89,7 @@
                     <span class="input-group-text">
                         <i class="bx bx-search"></i>
                     </span>
-                        <input type="text" class="form-control" th:name="keyword" th:value="${param.keyword}" placeholder="Tìm theo tên, email, sđt">
+                        <input type="text" class="form-control" th:name="keyword" th:value="${param.keyword}" placeholder="Tìm theo tên sản phẩm">
                         <button class="btn btn-primary" type="submit">Search</button>
                     </div>
                 </div>
@@ -101,7 +100,7 @@
         <div class="row">
             <div>
                 <p>Số lượng:
-                                        <span th:text="${listVoucherCustomer.size()}"></span>
+                                        <span th:text="${listProduct.size()}"></span>
                 </p>
             </div>
         </div>
@@ -110,10 +109,10 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th>Tên khách hàng</th>
-                    <th>Email</th>
-                    <th>Số điện thoại</th>
-                    <th>Tên voucher</th>
+                    <th>Sản phẩm</th>
+                    <th>Sku</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
                     <!--                    <th>Date Start</th>-->
                     <!--                    <th>Date End</th>-->
                     <th>Trạng thái</th>
@@ -121,87 +120,49 @@
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                <tr th:each="voucherCustomer : ${listVoucherCustomer}">
-                    <td th:text="${voucherCustomer.customer.name}"></td>
-                    <td th:text="${voucherCustomer.customer.email}"></td>
-                    <td th:text="${voucherCustomer.customer.phoneNumber}"></td>
-                    <td th:text="${voucherCustomer.voucher.nameVoucher}"></td>
-                    <td th:text="${voucherCustomer.active == true ? 'Hoạt động':'Không hoạt động'}">
+                <tr th:each="discountPro : ${listCouponProduct}">
+                    <td th:text="${discountPro.getProductDetail().getProduct().getNameProduct()}"></td>
+                    <td th:text="${discountPro.getProductDetail().getSku()}"></td>
+                    <td th:text="${discountPro.getDateStart()}"></td>
+                    <td th:text="${discountPro.getDateEnd()}"></td>
                     </td>
                     <td>
 
                         <button type="button" class="btn btn-icon btn-primary" data-bs-toggle="modal"
-                                th:data-bs-target="|#modal${voucherCustomer.id}">
+                                th:data-bs-target="|#modal${discountPro.id}">
                             <i class="bx bxs-edit-alt"></i>
                         </button>
-                        <div class="modal fade" th:id="|modal${voucherCustomer.id}|" tabindex="-1"
+                        <div class="modal fade" th:id="|modal${discountPro.id}|" tabindex="-1"
                              aria-hidden="true">
                             <div class="modal-dialog modal-sm" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Thông tin voucher</h5>
+                                        <h5 class="modal-title">Thông tin discount</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form th:action="@{/admin/vouchercustomer/update/{id}(id=${voucherCustomer.id})}"
-                                              method="post" th:object="${voucherCustomer}">
+                                        <form th:action="@{/admin/couponproduct/update/{id}(id=${discountPro.id})}"
+                                              method="post" th:object="${discountPro}">
                                             <div class="row">
                                                 <div class="row col-lg-12 col-xl-9">
                                                     <div class="">
                                                         <div class="">
-                                                            <label class="form-label">Customer:</label>
+                                                            <label class="form-label">Thay đổi sản phẩm giảm:</label>
                                                             <br>
-                                                            <select th:name="customer" class="form-select"
+                                                            <select th:name="getProductDetail()" class="form-select"
                                                                     aria-label="Default select example">
-                                                                <option th:each="i:${session.listCustomer}"
-                                                                        th:value="${i.id}"
-                                                                        th:text="${i.name}"
-                                                                        th:selected="${voucherCustomer.customer.id==i.id}"
-                                                                ></option>
-                                                            </select>
-                                                        </div>
-                                                        <div >
-                                                            <label class="form-label">Voucher:</label>
-                                                            <br>
-                                                            <select th:name="voucher" class="form-select"
-                                                                    aria-label="Default select example">
-                                                                <option th:each="v:${session.listVoucher}"
-                                                                        th:value="${v.id}"
-                                                                        th:text="${v.code}"
-                                                                        th:selected="${voucherCustomer.voucher.id==v.id}"
+                                                                <option th:each="i:${session.listproduct}"
+                                                                        th:value="${i.getId()}"
+                                                                        th:text="${i.getProduct().getNameProduct()}"
+                                                                        th:selected="${discountPro.getProductDetail().getId()==i.getId()}"
                                                                 ></option>
                                                             </select>
                                                         </div>
                                                     </div>
 
                                                 </div>
-                                                <div >
-                                                    <div>
-                                                        <label class="form-label">Active:</label>
-                                                        <br>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input"
-                                                                   type="radio"
-                                                                   th:id="|active${voucherCustomer.id}|"
-                                                                   th:name="active"
-                                                                   th:value="true"
-                                                                   th:checked="${voucherCustomer.active==true}">
-                                                            <label class="form-check-label"
-                                                                   th:for="|active${voucherCustomer.id}|">Acitve</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input"
-                                                                   type="radio"
-                                                                   th:id="|active${voucherCustomer.id}|"
-                                                                   th:name="active"
-                                                                   th:value="false"
-                                                                   th:checked="${voucherCustomer.active==false}">
-                                                            <label class="form-check-label"
-                                                                   th:for="|active${voucherCustomer.id}|">Non-active</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
+
                                             </div>
                                     </div>
                                     <div class="modal-footer">
@@ -213,7 +174,7 @@
                             </div>
                         </div>
 
-                        <a th:href="@{/admin/vouchercustomer/delete/{id}(id=${voucherCustomer.id})}"
+                        <a th:href="@{/admin/couponproduct/delete/{id}(id=${discountPro.getProductDetail().getId()})}"
                            onclick="return confirm('Xác nhận xóa')">
                             <button type="button" class="btn btn-icon btn-danger">
                                 <span class="bx bxs-trash"></span>
