@@ -64,7 +64,7 @@ public class CartController {
 
     @GetMapping("/pay")
     public String pay(Model model) {
-        int total = cartService.getTotalProduct();
+        BigDecimal total = cartService.getAmount();
         model.addAttribute("total", total);
         session.setAttribute("pageView", "/user/page/product/pay.html");
         return "user/index";
@@ -77,9 +77,7 @@ public class CartController {
     }
 
     @PostMapping("/purchase")
-    public String addBill(BigDecimal orderTotal,
-                          String orderInfo,
-                          HttpServletRequest request,
+    public String addBill(HttpServletRequest request,
                           Model model,
                           String email,
                           Integer id,
@@ -89,8 +87,9 @@ public class CartController {
         if (checkEmail == null) {
             checkEmail = customerService.add(billProRes);
         }
-        int total = cartService.getTotalProduct();
+        BigDecimal total = cartService.getAmount();
         billProRes.setCustomer(checkEmail);
+        billProRes.setTotalPrice(total);
         Bill bill1 = billService.add(billProRes);
         billProRes.setBill(bill1);
         DeliveryNotes notes = deliveryNotes.save(billProRes);
@@ -98,6 +97,8 @@ public class CartController {
             //VNPAY
             String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
             String vnpayUrl = vnPayService.createOrder(total, bill1.getCode(), baseUrl);
+            billProRes.setProduct(Collections.singletonList(id));
+            billService.addBillPro(bill1, billProRes);
             cartService.clear();
             return "redirect:" + vnpayUrl;
         } else {
@@ -115,7 +116,7 @@ public class CartController {
             session.setAttribute("pageView", "/user/page/product/cart_null.html");
             return "user/index";
         }
-        int total = cartService.getTotalProduct();
+        BigDecimal total = cartService.getAmount();
         model.addAttribute("total", total);
         session.setAttribute("pageView", "/user/page/product/pro_cart.html");
         UserDetailDto userDetailDto = checkLogin.checkLogin();
