@@ -1,8 +1,12 @@
 package com.poly.controller.user;
 
+import com.poly.common.CheckLogin;
 import com.poly.dto.ProductDetailDto;
+import com.poly.dto.UserDetailDto;
+import com.poly.entity.Cart;
 import com.poly.entity.Product;
 import com.poly.entity.ProductDetail;
+import com.poly.service.CartService;
 import com.poly.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,11 @@ import java.util.Iterator;
 
 @Controller
 public class HomeUserController {
+    @Autowired
+    CartService cartService;
+
+    @Autowired
+    private CheckLogin checkLogin;
 
     @Autowired
     private ProductService productService;
@@ -45,6 +54,7 @@ public class HomeUserController {
         productDetailDto.setGroup(2);
 
         Page<Product> phuKien = productService.findAll(productDetailDto);
+
         for (Product product : phuKien.getContent()) {
             Iterator<ProductDetail> iterator = product.getProductDetails().iterator();
             while (iterator.hasNext()) {
@@ -53,6 +63,11 @@ public class HomeUserController {
                     iterator.remove();
                 }
             }
+        }
+        UserDetailDto userDetailDto = checkLogin.checkLogin();
+        if (userDetailDto != null) {
+            Cart cart = cartService.getOneByUser(userDetailDto.getId());
+            session.setAttribute("list", cart.getListCartPro());
         }
         model.addAttribute("listPhuKien", phuKien);
         return "/user/index";

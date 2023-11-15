@@ -223,7 +223,7 @@ CREATE TABLE cart
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
      id_users	INT REFERENCES users(id) not null,
-     code        NVARCHAR(30) unique,
+     code        NVARCHAR(30),
      date_update DATETIME,
   )
 

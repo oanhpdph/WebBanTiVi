@@ -31,7 +31,6 @@ public class ProductDetailImpl implements ProductDetailService {
     @Autowired
     private ProductDetailRepo productDetailRepo;
 
-
     @Autowired
     private ProductService productService;
 
@@ -174,26 +173,12 @@ public class ProductDetailImpl implements ProductDetailService {
     }
 
     @Override
-    public List<ProductDetail> update(List<ProductDetailDto> productDetailDto) {
-        List<ProductDetail> list = new ArrayList<>();
-        for (ProductDetailDto productDetailDto1 : productDetailDto) {
-            ProductDetail productDetail = findById(productDetailDto1.getId());
-            if (productDetail != null) {
-                productDetail.setActive(true);
-//                productDetail.setPriceExport(productDetailDto1.getPriceExport());
-//                productDetail.setSku(productDetailDto1.getSku());
-//                productDetail.setPriceImport(productDetailDto1.getPriceImport());
-//                productDetail.setQuantity(productDetailDto1.getQuantity());
-//                for (ImageDto image : productDetailDto1.getImage()) {
-//                    com.poly.entity.Image image1 = new com.poly.entity.Image();
-//                    image1.setLink(image.getMultipartFile());
-//                    image1.setProduct(productDetail);
-//                    image1.setLocation(image.getLocation());
-//                    imageRepo.save(image1);
-//                }
-                list.add(productDetailRepo.save(productDetail));
-            }
+    public ProductDetail update(ProductDetailListDto productDetailListDto) {
+        ProductDetail productDetail = findById(productDetailListDto.getId());
+        if (productDetail != null) {
+            productDetail.setActive(productDetailListDto.isActive());
+            productDetailRepo.save(productDetail);
         }
-        return list;
+        return productDetail;
     }
 }

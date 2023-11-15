@@ -1,24 +1,23 @@
 package com.poly.service;
 
+import com.poly.dto.CartDto;
 import com.poly.entity.CartProduct;
 import com.poly.entity.idClass.CartProductId;
-import com.poly.repository.CartProductRepos;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 public interface CartProductService {
 
-    public List<CartProduct> getAll();
+    List<CartProduct> getAll();
 
-    public void save(CartProduct cp);
+    CartProduct save(CartDto cp);
 
-    public void delete(CartProductId id);
+    CartProduct update(CartProduct cp);
 
-    public CartProduct edit(CartProductId id);
+    Boolean delete(CartProductId id);
+
+    CartProduct edit(CartProductId id);
 
     Optional<CartProduct> getOne(CartProductId id);
 

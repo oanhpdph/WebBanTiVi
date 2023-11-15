@@ -58,8 +58,6 @@ function loadDataField() {
 
                     var tbody = document.getElementById('tableAttributes').getElementsByTagName('tbody')[0];
 
-                    var indexRow = tbody.querySelectorAll("tr")
-
                     cell1.innerText = document.getElementById('tableAttributes').rows.length
                     cell2.innerText = item.name
                     cell3.appendChild(button); // Thêm nút vào ô

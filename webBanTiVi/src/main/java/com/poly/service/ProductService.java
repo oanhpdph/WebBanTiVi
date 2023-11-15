@@ -19,7 +19,7 @@ public interface ProductService {
 
     Product findById(Integer id);
 
-    Product getOne(Integer id);
+    Product update(Integer id,ProductDetailDto product);
 
     List<Product> findSameProduct(String same);
 
