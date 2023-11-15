@@ -1,6 +1,6 @@
 package com.poly.service.Impl;
 
-import com.poly.entity.Bill;
+import com.poly.dto.BillProRes;
 import com.poly.entity.DeliveryNotes;
 import com.poly.repository.DeliveryNotesRepos;
 import com.poly.service.BillService;
@@ -58,5 +58,24 @@ public class DeliveryNotesImpl implements DeliveryNotesSevice {
         }
         return null;
     }
+
+    @Override
+    public DeliveryNotes save(BillProRes deliveryNotes) {
+        DeliveryNotes notes = new DeliveryNotes();
+        notes.setIdBill(deliveryNotes.getBill());
+        notes.setReceived(deliveryNotes.getName());
+        notes.setReceivedEmail(deliveryNotes.getEmail());
+        notes.setReceiverPhone(deliveryNotes.getPhoneNumber());
+        notes.setReceivingAddress(deliveryNotes.getAddress());
+        notes.setDeliver("0");
+        notes.setDeliveryPhone(deliveryNotes.getPhoneNumber());
+        notes.setDeliveryDate(new java.util.Date());
+        notes.setDeliveryFee(deliveryNotes.getDeliveryFee());
+        notes.setReceivedDate(new java.util.Date());
+        notes.setNote("kaka");
+        notes.setStatus(0);
+        return this.deliveryNotesRepos.save(notes);
+    }
+
 
 }

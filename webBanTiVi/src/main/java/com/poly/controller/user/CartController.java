@@ -1,16 +1,16 @@
 package com.poly.controller.user;
 
 import com.poly.dto.BillProRes;
-import com.poly.entity.Bill;
-import com.poly.entity.CartProduct;
-import com.poly.entity.ProductDetail;
-import com.poly.entity.Users;
+import com.poly.entity.*;
+import com.poly.repository.BillRepos;
 import com.poly.repository.CartRepos;
 import com.poly.service.BillService;
 import com.poly.service.CustomerService;
 import com.poly.service.Impl.CartSeviceImpl;
+import com.poly.service.Impl.DeliveryNotesImpl;
 import com.poly.service.Impl.ProductServiceImpl;
 import com.poly.service.ProductDetailService;
+import com.poly.service.VNPayService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +36,9 @@ public class CartController {
     CartRepos cartRepos;
 
     @Autowired
+    BillRepos billRepos;
+
+    @Autowired
     CartSeviceImpl cartService;
 
     @Autowired
@@ -49,6 +53,12 @@ public class CartController {
     @Autowired
     private ProductDetailService productDetailService;
 
+    @Autowired
+    private VNPayService vnPayService;
+
+    @Autowired
+    private DeliveryNotesImpl deliveryNotes;
+
     @ModelAttribute("cart")
     CartSeviceImpl getCart() {
         return cartService;
@@ -56,6 +66,8 @@ public class CartController {
 
     @GetMapping("/pay")
     public String pay(Model model) {
+        int total = cartService.getTotalProduct();
+        model.addAttribute("total", total);
         session.setAttribute("pageView", "/user/page/product/pay.html");
         return "user/index";
     }
@@ -67,31 +79,46 @@ public class CartController {
     }
 
     @PostMapping("/purchase")
-    public String addBill(Model model,
+    public String addBill(BigDecimal orderTotal,
+                          String orderInfo,
+                          HttpServletRequest request,
+                          Model model,
                           String email,
                           Integer id,
                           @ModelAttribute("billProduct") BillProRes billProRes) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-//        if (result.hasErrors()) {
-//            return "user/index";
-//        }
         Users checkEmail = customerService.findByEmail(email);
 
         if (checkEmail == null) {
             checkEmail = customerService.add(billProRes);
-//            return "redirect:/pay";
         }
-
+        int total = cartService.getTotalProduct();
         billProRes.setCustomer(checkEmail);
         Bill bill1 = billService.add(billProRes);
-        billProRes.setProduct(Collections.singletonList(id));
-        billService.addBillPro(bill1, billProRes);
-        model.addAttribute("listCus", customerService.findAll());
-        return "redirect:/confirm";
+        billProRes.setBill(bill1);
+        DeliveryNotes notes = deliveryNotes.save(billProRes);
+        if (billProRes.getPaymentMethod() == 2) {
+            //VNPAY
+            String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+            String vnpayUrl = vnPayService.createOrder(total, bill1.getCode(), baseUrl);
+            cartService.clear();
+            return "redirect:" + vnpayUrl;
+        } else {
+            billProRes.setProduct(Collections.singletonList(id));
+            billService.addBillPro(bill1, billProRes);
+            cartService.clear();
+            return "redirect:/confirm";
+        }
 
     }
 
     @GetMapping("/cart")
     public String index(Model model) {
+        if (cartService.getTotal() == 0) {
+            session.setAttribute("pageView", "/user/page/product/cart_null.html");
+            return "user/index";
+        }
+        int total = cartService.getTotalProduct();
+        model.addAttribute("total", total);
         session.setAttribute("pageView", "/user/page/product/pro_cart.html");
         return "user/index";
     }
@@ -110,14 +137,13 @@ public class CartController {
     public String delete(@PathVariable List<Integer> id) {
 
         List<CartProduct> list = new ArrayList<>();
-//        List<CartProduct> list = cartService.add(id);
-//        cartService.delete(id);
         for (int i = 0; i < id.size(); i++) {
             list = cartService.delete(id.get(i));
         }
         session.setAttribute("list", list);
         if (cartService.getTotal() == 0) {
-            return "redirect:/";
+            session.setAttribute("pageView", "/user/page/product/cart_null.html");
+            return "user/index";
         }
         return "redirect:/cart";
     }
@@ -144,11 +170,4 @@ public class CartController {
         return "redirect:/cart";
     }
 
-//    @PostMapping("/purchase")
-//    public String pur(Model model) {
-//        Cart cart = (Cart) session.getAttribute("cart");
-//        cartRepos.save(cart);
-//        session.removeAttribute("cart");
-//        return "redirect:/cart";
-//    }
 }
