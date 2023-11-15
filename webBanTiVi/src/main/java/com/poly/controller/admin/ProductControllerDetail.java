@@ -32,6 +32,4 @@ public class ProductControllerDetail {
         }
         return ResponseEntity.ok(200);
     }
-
-
 }

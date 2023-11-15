@@ -32,7 +32,9 @@
         <option value="HTML File" />
         <option value="Interface" />
         <option value="HTML File" />
-        <option value="HTML File" />
+        <option value="Class" />
+        <option value="Interface" />
+        <option value="Class" />
         <option value="Class" />
         <option value="Class" />
         <option value="Class" />
@@ -111,15 +113,13 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
       <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -282,6 +282,10 @@
       <workItem from="1699894502974" duration="604000" />
       <workItem from="1699937423408" duration="17721000" />
       <workItem from="1700024088222" duration="28639000" />
+      <workItem from="1699888464488" duration="1821000" />
+      <workItem from="1699890457512" duration="20890000" />
+      <workItem from="1699978596584" duration="3953000" />
+      <workItem from="1700050435892" duration="7536000" />
     </task>
     <servers />
   </component>

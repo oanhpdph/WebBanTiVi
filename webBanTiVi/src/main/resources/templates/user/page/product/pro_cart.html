@@ -98,7 +98,6 @@
                                                           th:text="${item.product.product.nameProduct}"></span></div>
                                                     </a>
                                                 </td>
-
                                                 <td>
                                                     <span class="fs-5"><span class="price-export"
                                                                              th:value="${item.product.priceExport}"
@@ -167,10 +166,10 @@
                     <div class="card shadow-none bg-transparent border border-secondary mb-3">
                         <div class="card-header">
                             <div class="card-body">
-                                <p class="card-text">Tổng tiền: <span class="text-end text-danger"><span
-                                        class="total-pro"></span> </span></p>
-                                <p class="card-text">Total: <span class="text-end text-danger"><span
-                                        class=""></span> </span></p>
+
+                                <p class="card-text">Tổng tiền: <span class="text-end text-danger">
+                                    <span class="total-pro" th:text="${total}"></span>
+                                </span></p>
                                 <div style="text-align: center">
                                     <a type="submit" class="btn btn-primary" th:href="@{/pay}">Thanh
                                         Toán

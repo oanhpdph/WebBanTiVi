@@ -3,7 +3,6 @@ package com.poly.service;
 import com.poly.entity.Cart;
 import com.poly.entity.CartProduct;
 
-import java.io.Serializable;
 import java.util.List;
 
 public interface CartService {
@@ -25,8 +24,6 @@ public interface CartService {
     int getTotal();
 
     int getTotalProduct();
-
-    Serializable getAmount();
 
     Cart getOneByUser(Integer id);
 }

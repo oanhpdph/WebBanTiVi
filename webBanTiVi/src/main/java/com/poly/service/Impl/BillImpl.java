@@ -65,7 +65,7 @@ public class BillImpl implements BillService {
         bi.setTotalPrice(bill.getTotalPrice());
         bi.setPaymentStatus(1);
         bi.setBillStatus(billStatusRepos.findByCode("WP").get());
-        bi.setPaymentMethod(paymentMethodRepos.findAll().get(0));
+        bi.setPaymentMethod(paymentMethodRepos.findById(bill.getPaymentMethod()).get());
         return this.billRepos.save(bi);
     }
 
@@ -82,6 +82,9 @@ public class BillImpl implements BillService {
                 billProduct.setProduct(list.get(i).get());
                 billProduct.setPrice(list.get(i).get().getPriceExport());
                 billProduct.setQuantity(list.get(i).get().getQuantity());
+                billProduct.setQuantityReturn(list.get(i).get().getQuantity());
+                billProduct.setReason("like");
+//                billProduct.setReducedMoney();
                 this.billProductRepos.save(billProduct);
             }
         }

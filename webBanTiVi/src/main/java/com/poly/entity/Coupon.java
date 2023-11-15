@@ -3,6 +3,8 @@ package com.poly.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "discount")
 @Getter
@@ -27,6 +29,15 @@ public class Coupon {
 
     @Column(name = "image")
     private String image;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_start")
+    private Date dateStart;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "date_end")
+    private Date dateEnd;
+
 
 
 

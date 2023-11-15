@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @GetMapping("/accessory")
-    public String loadAccessory(HttpSession session,Model model) {
+    public String loadAccessory(HttpSession session, Model model) {
         session.setAttribute("pageView", "/user/page/product/accessory.html");
         model.addAttribute("active", "accesory");
         return "/user/index";
@@ -100,7 +100,6 @@ public class UserController {
         Date today = new Date();
         model.addAttribute("today", today);
         model.addAttribute("bill", billList);
-
         return "/user/index";
     }
 
@@ -108,7 +107,6 @@ public class UserController {
     public String returnProduct(HttpSession session,
                                 @PathVariable("id") Integer id,
                                 @RequestBody List<ReturnDto> returnDto) {
-
         for (ReturnDto dto : returnDto) {
             for (ImageReturnDto image : dto.getImage()) {
                 ImageReturned img = new ImageReturned();

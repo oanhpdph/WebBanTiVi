@@ -20,4 +20,8 @@ public interface ProductDetailService {
     Boolean delete(Integer id);
 
     ProductDetail update(ProductDetailListDto productDetailListDto);
+
+//    List<ProductDetail> update(List<ProductDetailDto> productDetailDto);
+
+
 }

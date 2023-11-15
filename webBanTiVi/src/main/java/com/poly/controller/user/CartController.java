@@ -7,6 +7,8 @@ import com.poly.entity.*;
 import com.poly.entity.idClass.CartProductId;
 import com.poly.repository.CartRepos;
 import com.poly.service.*;
+import com.poly.service.Impl.DeliveryNotesImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +36,7 @@ public class CartController {
     @Autowired
     CartService cartService;
 
+
     @Autowired
     CustomerService customerService;
 
@@ -51,9 +55,17 @@ public class CartController {
     @Autowired
     private CheckLogin checkLogin;
 
+    @Autowired
+    private VNPayService vnPayService;
+
+    @Autowired
+    private DeliveryNotesImpl deliveryNotes;
+
 
     @GetMapping("/pay")
     public String pay(Model model) {
+        int total = cartService.getTotalProduct();
+        model.addAttribute("total", total);
         session.setAttribute("pageView", "/user/page/product/pay.html");
         return "user/index";
     }
@@ -65,7 +77,10 @@ public class CartController {
     }
 
     @PostMapping("/purchase")
-    public String addBill(Model model,
+    public String addBill(BigDecimal orderTotal,
+                          String orderInfo,
+                          HttpServletRequest request,
+                          Model model,
                           String email,
                           Integer id,
                           @ModelAttribute("billProduct") BillProRes billProRes) throws UnsupportedEncodingException, NoSuchAlgorithmException {
@@ -73,20 +88,35 @@ public class CartController {
 
         if (checkEmail == null) {
             checkEmail = customerService.add(billProRes);
-//            return "redirect:/pay";
         }
-
+        int total = cartService.getTotalProduct();
         billProRes.setCustomer(checkEmail);
         Bill bill1 = billService.add(billProRes);
-        billProRes.setProduct(Collections.singletonList(id));
-        billService.addBillPro(bill1, billProRes);
-        model.addAttribute("listCus", customerService.findAll());
-        return "redirect:/confirm";
+        billProRes.setBill(bill1);
+        DeliveryNotes notes = deliveryNotes.save(billProRes);
+        if (billProRes.getPaymentMethod() == 2) {
+            //VNPAY
+            String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+            String vnpayUrl = vnPayService.createOrder(total, bill1.getCode(), baseUrl);
+            cartService.clear();
+            return "redirect:" + vnpayUrl;
+        } else {
+            billProRes.setProduct(Collections.singletonList(id));
+            billService.addBillPro(bill1, billProRes);
+            cartService.clear();
+            return "redirect:/confirm";
+        }
 
     }
 
     @GetMapping("/cart")
     public String index(Model model) {
+        if (cartService.getTotal() == 0) {
+            session.setAttribute("pageView", "/user/page/product/cart_null.html");
+            return "user/index";
+        }
+        int total = cartService.getTotalProduct();
+        model.addAttribute("total", total);
         session.setAttribute("pageView", "/user/page/product/pro_cart.html");
         UserDetailDto userDetailDto = checkLogin.checkLogin();
         if (userDetailDto != null) {
@@ -116,7 +146,8 @@ public class CartController {
             }
             session.setAttribute("list", list);
             if (cartService.getTotal() == 0) {
-                return "redirect:/";
+                session.setAttribute("pageView", "/user/page/product/cart_null.html");
+                return "user/index";
             }
         }
         return "redirect:/cart";
