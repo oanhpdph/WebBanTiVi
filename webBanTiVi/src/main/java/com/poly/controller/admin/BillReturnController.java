@@ -37,7 +37,7 @@ public class BillReturnController {
     public String getListInvoice(HttpSession session, Model model){
         session.setAttribute("pageView", "/admin/page/bill/invoice_return.html");
         session.setAttribute("active", "/bill/invoice_return");
-        List<Bill> ListB =this.billService.findBillReturn("RR");
+        List<Bill> ListB =this.billService.findBillReturnByStatus("RR");
         model.addAttribute("listBill",ListB);
         model.addAttribute("formReturnDto", new formReturnDto());
         return "admin/layout";
@@ -46,8 +46,7 @@ public class BillReturnController {
     public String getInvoiceReturn(HttpSession session, Model model, @PathVariable("id") Integer id){
         session.setAttribute("pageView", "/admin/page/bill/billProduct_return.html");
         session.setAttribute("active", "/bill/invoice_return");
-        Boolean status=false;
-        List<BillProduct> product=this.billProductService.findBillProductReturn(status,id);
+        List<BillProduct> product=this.billProductService.findBillProductReturn(1,id);
         if(product.size()==0){
             Bill bill = this.billService.getOneById(id);
             BillStatus  billStatus =this.billStatusService.getOneBycode("CO ");
@@ -66,7 +65,7 @@ public class BillReturnController {
                             ){
         BillProduct billProduct =this.billProductService.edit(id);
         billProduct.setNote(dto.getNote());
-        billProduct.setStatus(true);
+        billProduct.setStatus(2); // tu choi tra hang
         this.billProductService.save(billProduct);
         return "redirect:/admin/invoice_return/"+billProduct.getBill().getId();
     }
@@ -78,8 +77,21 @@ public class BillReturnController {
     ){
         BillProduct billProduct =this.billProductService.edit(id);
         billProduct.setNote(dto.getNote());
-        billProduct.setStatus(true);
+        billProduct.setQuantityReturn(Integer.parseInt(dto.getQuantity()));
+        billProduct.setStatus(3); //dong y
         return "redirect:/admin/invoice_return/"+billProduct.getBill().getId();
+    }
+    @GetMapping("/agree")
+    public String getViewAgree(HttpSession session,Model model){
+        session.setAttribute("pageView", "/admin/page/bill/agree_bill_return.html");
+        model.addAttribute("listAgree",this.billProductService.findBillByStatus(3));
+        return "admin/layout";
+    }
+    @GetMapping("/refuse")
+    public String getViewRefuse(HttpSession session,Model model){
+        session.setAttribute("pageView", "/admin/page/bill/refuse_bill_return.html");
+        model.addAttribute("listRefuse",this.billProductService.findBillByStatus(2));
+        return "admin/layout";
     }
 
 }

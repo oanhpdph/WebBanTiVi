@@ -14,5 +14,8 @@ public interface BillProductService {
 
     BillProduct edit(Integer id);
 
-   List<BillProduct> findBillProductReturn(Boolean status,Integer id);
+
+   List<BillProduct> findBillProductReturn(Integer status,Integer id);
+
+   List<BillProduct> findBillByStatus(Integer status);
 }

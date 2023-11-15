@@ -2,9 +2,7 @@ package com.poly.service;
 
 import com.poly.dto.SearchVoucherDto;
 import com.poly.dto.VoucherCustomerRes;
-import com.poly.entity.Voucher;
 import com.poly.entity.VoucherCustomer;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;

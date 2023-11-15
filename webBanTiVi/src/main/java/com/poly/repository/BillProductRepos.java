@@ -13,6 +13,9 @@ public interface BillProductRepos extends JpaRepository<BillProduct, Integer> {
     Optional<BillProduct> findByBill(Integer idBill, Integer idPro);
 
     @Query(value="select b from BillProduct b inner join Bill  a on b.bill.id=a.id where  b.status=?1 and a.id=?2")
-    List<BillProduct> findBillProductReturn (Boolean status, Integer id);
+    List<BillProduct> findBillProductReturn (Integer status, Integer id);
+
+    @Query(value="select b from BillProduct  b where b.status=?1 ")
+    List<BillProduct> findBillByStatus(Integer status);
 
 }

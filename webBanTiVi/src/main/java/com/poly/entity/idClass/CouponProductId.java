@@ -1,7 +1,7 @@
 package com.poly.entity.idClass;
 
 import com.poly.entity.Coupon;
-import com.poly.entity.Product;
+import com.poly.entity.ProductDetail;
 import lombok.*;
 
 import java.io.Serializable;
@@ -12,6 +12,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class CouponProductId implements Serializable {
     private Coupon coupon;
-    private Product product;
+    private ProductDetail productDetail;
 
 }

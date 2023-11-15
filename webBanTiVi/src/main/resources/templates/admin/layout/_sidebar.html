@@ -97,11 +97,6 @@
                         <div>Danh sách voucher</div>
                     </a>
                 </li>
-                <li th:class="${#strings.equals(session.active,'/voucherCustomer')?'menu-item active':'menu-item'}">
-                    <a th:href="@{/admin/voucherCustomer}" class="menu-link">
-                        <div>Chi tiết voucher</div>
-                    </a>
-                </li>
             </ul>
         </li>
         <li th:class="${#strings.contains(session.active,'coupon')?'menu-item active open':'menu-item'}">

@@ -111,7 +111,7 @@ public class UserController {
             for (ImageReturnDto image : dto.getImage()) {
                 ImageReturned img = new ImageReturned();
                 BillProduct billProduct = this.billProductService.edit(image.getIdBillProduct());
-                billProduct.setStatus(false);
+                billProduct.setStatus(1); // yêu cầu trả hàng
                 billProduct.setReason(dto.getReason());
                 billProduct.setQuantityReturn(Integer.parseInt(dto.getQuantityReturn()));
                 img.setBillProduct(billProduct);
@@ -133,6 +133,19 @@ public class UserController {
             UploadFile.saveFile("src/main/resources/static/image", fileName, multipartFile);
         }
         return ResponseEntity.ok(200);
+    }
+
+    @GetMapping("/search_order")
+    public String getSearch(HttpSession session){
+        session.setAttribute("pageView", "/user/page/search/search_order.html");
+        return "/user/index";
+    }
+
+    @PostMapping("/search_order_user")
+    public String getSearchOder(@ModelAttribute("search") String search,HttpSession session){
+         Bill bill =  this.billService.findByCode(search);
+         session.setAttribute("bill",bill);
+        return "redirect:/search_order";
     }
 
 }

@@ -3,8 +3,8 @@
     Hóa đơn trả hàng</h4>
 <div class="nav-align-top mb-4">
     <ul class="nav nav-pills mb-3" role="tablist">
-        <li class="nav-item w-px-250">
-            <a type="button" class="nav-link active text-center"
+        <li class="nav-item w-px-250 ">
+            <a type="button" class="nav-link "
                th:href="@{/admin/bill/list_invoice_return}"
             >
                 Chờ xác nhận trả hàng
@@ -19,7 +19,7 @@
             </a>
         </li>
         <li class="nav-item w-px-250">
-            <a type="button" class="nav-link"
+            <a type="button" class="nav-link active text-center"
                th:href="@{/admin/refuse}"
             >
                 Từ chối trả hàng
@@ -27,7 +27,7 @@
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane show active" id="navs-pills-top-home">
+        <div class="tab-pane show active" id="navs-pills-top-home" >
             <h5 class="mb-4">Hóa Đơn Yêu Cầu Hoàn Trả</h5>
             <div class="table-responsive text-nowrap">
                 <table class="table card-table text-center">
@@ -35,21 +35,18 @@
                     <tr>
                         <th>#</th>
                         <th>Mã Hóa Đơn</th>
-                        <th>Người gửi</th>
-                        <th>Actions</th>
+                        <th>Tên Sản Phẩm</th>
+                        <th>Ghi chú</th>
+                        <th>Lí do trả hàng</th>
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0 text-left">
-                    <tr th:each="billReturn : ${listBill}">
+                    <tr th:each="billReturn : ${listRefuse}">
                         <td>1</td>
-                        <td>[(${billReturn.code})]</td>
-                        <td>
-                            <a th:href="@{/admin/invoice_return/{id}(id=*{billReturn.id})}">
-                                <button type="button" class="btn btn-icon btn-primary return">
-                                    <i class="bx bxs-edit-alt"></i>
-                                </button>
-                            </a>
-                        </td>
+                        <td>[(${billReturn.bill.id})]</td>
+                        <td>[(${billReturn.product.product.nameProduct})]</td>
+                        <td>[(${billReturn.note})]</td>
+                        <td>[(${billReturn.reason})]</td>
                     </tr>
                     </tbody>
                 </table>
