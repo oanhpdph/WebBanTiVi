@@ -16,5 +16,7 @@ public class ProductDetailDto {
     String sameProduct;
     List<ProductDetailListDto> listProduct;
     List<Attribute> product;
-
+    Integer page = 1;
+    Integer size = 10;
+    Integer sort = 1;
 }

@@ -33,10 +33,11 @@
         <option value="Interface" />
         <option value="HTML File" />
         <option value="Class" />
-        <option value="Class" />
+        <option value="Interface" />
         <option value="Class" />
         <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -118,6 +119,8 @@
         </value>
       </option>
       <option name="TEST_OBJECT" value="class" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -340,6 +343,11 @@
           <line>49</line>
           <option name="timeStamp" value="59" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user/UserController.java</url>
+          <line>96</line>
+          <option name="timeStamp" value="60" />
+        </line-breakpoint>
         <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user1/PromotionController.java</url>
           <line>42</line>
@@ -353,10 +361,6 @@
         <breakpoint type="java-exception">
           <properties class="java.io.IOException" package="java.io" />
           <option name="timeStamp" value="42" />
-        </breakpoint>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.StackOverflowError" package="java.lang" />
-          <option name="timeStamp" value="47" />
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
