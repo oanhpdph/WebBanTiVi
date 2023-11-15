@@ -3,6 +3,9 @@ package com.poly.controller.admin;
 import com.poly.entity.CouponProduct;
 import com.poly.entity.idClass.CouponProductId;
 import com.poly.service.Impl.CouponProductServiceImpl;
+import com.poly.service.Impl.CouponServiceImpl;
+import com.poly.service.ProductDetailService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -15,25 +18,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
 public class CouponProductController {
     @Autowired
-    CouponProductServiceImpl productService;
-    @RequestMapping("/admin/coupon_product")
-    public String CouponProduct(Model model) {
-        productService.findAll();
-        return "admin/coupon_product";
+    CouponProductServiceImpl couponProductService;
+    @Autowired
+    CouponServiceImpl couponService;
+    @Autowired
+    ProductDetailService productDetailService;
+    @RequestMapping("/admin/couponproduct/{id}")
+    public String CouponProduct(HttpSession session,Model model,@PathVariable("id")Integer id) {
+        model.addAttribute("listCouponProduct",couponProductService.getAllCouponProductByCouponId(id));
+        model.addAttribute("listproduct",productDetailService.findAll());
+        model.addAttribute("discount",couponService.findById(id).get());
+        session.setAttribute("pageView", "/admin/page/coupon/discountProduct.html");
+        return "admin/layout";
     }
-    @RequestMapping("/admin/coupon_product/save")
+    @RequestMapping("/admin/couponproduct/save")
     public String saveCouponProduct(Model model, @ModelAttribute("item") CouponProduct couponProduct) {
-        productService.save(couponProduct);
+        couponProductService.save(couponProduct);
         return "admin/coupon_product";
     }
-    @RequestMapping("/admin/coupon_product/edit/{id}")
+    @RequestMapping("/admin/couponproduct/edit/{id}")
     public String editCouponProduct(Model model, @PathVariable("id") CouponProductId id) {
-        productService.findById(id);
+        couponProductService.findById(id);
         return "admin/coupon_product";
     }
-    @RequestMapping("/admin/coupon_product/delete/{id}")
+    @RequestMapping("/admin/couponproduct/delete/{id}")
     public String deleteCouponProduct(Model model, @PathVariable("id")CouponProductId id) {
-        productService.delete(id);
+        couponProductService.delete(id);
         return "admin/coupon_product";
     }
 }

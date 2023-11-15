@@ -21,8 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -38,12 +39,13 @@ public class PromotionController {
     CouponProductServiceImpl couponProductService;
     @Autowired
     ProductServiceImpl productService;
-
+    LocalDate localDate = LocalDate.now();
+    Date date = (Date) Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
     @GetMapping()
     public String index(HttpSession session, Model model, @RequestParam(defaultValue = "0") int p) {
 
-        model.addAttribute("listcoupon", couponService.getAllCouponRes());
-        model.addAttribute("listvoucher", voucherService.findAllList());
+        model.addAttribute("listcoupon", couponService.getAllByActive());
+        model.addAttribute("listvoucher", voucherService.findAllByDate(date));
         session.setAttribute("pageView", "/user/page/promotion/promotions.html");
         return "/user/index";
     }
@@ -86,13 +88,14 @@ public class PromotionController {
                 return null;
             }
         };
-        for (CouponRes x : couponService.getAllCouponRes()) {
+        for (CouponRes x : couponService.getAllCouponRes(date)) {
             System.out.println(x.getId());
             if (x.getId() == id) {
                 couponRes = x;
                 System.out.println(x.getImage());
             }
         }
+
         model.addAttribute("couponres", couponRes);
         model.addAttribute("giagiam", Integer.parseInt(couponRes.getValue()));
         List<Product> listProduct = new ArrayList<>();
@@ -118,7 +121,7 @@ public class PromotionController {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
-            for (VoucherCustomer x : voucherCustomerService.findAll()) {
+            for (VoucherCustomer x : voucherCustomerService.findAllByVoucher(id)) {
                 if (x.getCustomer().getId() == customerUserDetail.getId()) {
                     check2 = true;
                     model.addAttribute("check", check);
@@ -155,55 +158,4 @@ public class PromotionController {
 
     @Autowired
     UserServiceImpl customerService;
-
-    @GetMapping("/vouchercode/{id}")
-    public String vouchercode(HttpSession session, Model model, @PathVariable("id") Integer id) {
-        Voucher voucher = new Voucher();
-        for (Voucher x : voucherService.findAllList()) {
-            if (x.getId() == id) {
-                voucher = x;
-            }
-        }
-        model.addAttribute("voucher", voucher);
-        LocalDate today = LocalDate.now();
-        int soluong = voucherCustomerService.findAllByVoucher(id).size();
-        boolean check = false;
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
-            for (VoucherCustomer x : voucherCustomerService.findAll()) {
-                if (x.getCustomer().getId() == customerUserDetail.getId()) {
-
-                    model.addAttribute("check", check);
-                    model.addAttribute("thongbao", "Mỗi khách hàng chỉ được nhận mã voucher 1 lần, hẹn quý khách ở các chương trình khuyến mại sau!");
-                    session.setAttribute("pageView", "/user/page/promotion/voucherdetail.html");
-                    return "/user/index";
-                }
-            }
-            if (soluong <= voucher.getQuantity()) {
-                check = true;
-                model.addAttribute("check", check);
-                //add vouchercustomer;
-                VoucherCustomerRes voucherCustomer = new VoucherCustomerRes();
-                voucherCustomer.setCustomer(customerUserDetail.getId());
-                voucherCustomer.setVoucher(id);
-                voucherCustomer.setDateStart(voucher.getStartDay());
-                voucherCustomer.setDateEnd(voucher.getExpirationDate());
-                voucherCustomer.setActive(voucher.getActive());
-                voucherCustomerService.save(voucherCustomer);
-            } else {
-                System.out.println("5");
-                check = false;
-                model.addAttribute("check", check);
-                model.addAttribute("thongbao", "Số lượng voucher đã hết, hẹn quý khách ở các chương trình khuyến mại sau!");
-            }
-        } else {
-            System.out.println("6");
-            model.addAttribute("check", check);
-            model.addAttribute("thongbao", "Bạn cần đăng nhập để nhận voucher!");
-        }
-        session.setAttribute("pageView", "/user/page/promotion/voucherdetail.html");
-        return "/user/index";
-    }
 }

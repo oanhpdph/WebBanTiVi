@@ -7,9 +7,7 @@
             <h3 class="header col text-center bg-red pt-2 pb-2 title px-3 text-uppercase fw-bold">
                 Giảm ngay [(${couponres.getValue()})]% từ sản phẩm
             </h3>
-        </div>
-        <p>Chương trình bắt đầu: [(${couponres.getDate_Start()})] - Kết thúc: [(${couponres.getDate_End()})]</p>
-        <hr>
+        </div><hr>
         <img th:src="@{'/image/' + *{couponres.getImage()}}" width="100%" height="auto"  display="block" style="text-align: center">
         <hr>
     </div>
@@ -24,27 +22,22 @@
         <div th:each="product : ${listproduct}">
             <div class="col">
         <div class="card h-100 item-product">
-            <img class="card-img-top" th:src="@{'/image/' + *{product.getListImage().get(0).getNameImage()}}"
+            <img class="card-img-top" th:src="@{'/image/' + *{product.getListImage().get(0).getLink()}}"
                  alt="Card image cap"/>
             <div class="card-body">
-                <a href="#" class="stretched-link mb-2"><span
+                <a  th:href="@{'/product/detail/' + *{product.getId()}}" class="stretched-link mb-2"><span
                         class="fs-4 fw-semibold card-title">
-                                                        [(${product.getName()})]</span></a>
-                <div class="fs-large fw-bold">Hãng: </div>
+                                                        [(${product.getProduct().getNameProduct()})]</span></a>
                 <hr>
-                <div class="mb-1"><span class="border mx-1 p-1">Full HD</span><span
-                        class="border mx-1 p-1">55inch</span>
-                </div>
-                <div><span class="text-strike-through fs-big">[(${product.getPrice_export().intValue()})] <small
+                <div><span class="text-strike-through fs-big">[(${product.getPriceExport().intValue()})]<small
                         class="align-text-top">đ</small></span>
                 </div>
                 <div><span class="text-danger fs-large fw-bold">
-            [(${product.getPrice_export().intValue()-(product.getPrice_export().intValue()*giagiam/100)})]
-                    <small class="align-text-top">đ</small>
+            [(${product.getPriceExport().intValue()-(product.getPriceExport().intValue()*giagiam/100)})]<small class="align-text-top">đ</small>
                 </span>
                 </div>
                 <div>
-                    <span class="border mx-1 p-1">Giảm đã giảm [(${couponres.getValue()})]%</span>
+                    <span class="border mx-1 p-1">Giá đã giảm [(${couponres.getValue()})]%</span>
                 </div>
             </div>
         </div>

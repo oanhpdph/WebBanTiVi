@@ -16,8 +16,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,8 +45,8 @@ public class VoucherServiceImpl implements VoucherService {
             String date1 = searchVoucherDto.getDate().substring(0, searchVoucherDto.getDate().indexOf("-") - 1).replace("/", "-");
             String date2 = searchVoucherDto.getDate().substring(searchVoucherDto.getDate().indexOf("-") + 1, searchVoucherDto.getDate().length()).replace("/", "-");
             System.out.println(date1 + date2);
-            Date dateStart = Date.valueOf(date1.trim());
-            Date dateEnd = Date.valueOf(date2.trim());
+            java.sql.Date dateStart = java.sql.Date.valueOf(date1.trim());
+            java.sql.Date dateEnd = java.sql.Date.valueOf(date2.trim());
             list.add(criteriaBuilder.and(criteriaBuilder.greaterThan(voucherRoot.get("startDay"),dateStart),
                     criteriaBuilder.lessThan(voucherRoot.get("expirationDate"),dateEnd)));
         }
@@ -80,5 +80,8 @@ public class VoucherServiceImpl implements VoucherService {
     @Override
     public List<Voucher> findAllList() {
         return this.voucherRepository.findAll();
+    }
+    public List<Voucher> findAllByDate(Date date){
+        return voucherRepository.findAllByExpirationDate(date);
     }
 }

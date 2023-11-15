@@ -71,7 +71,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Website_selling_mens_sports_shoes/Website_Selling_Shoes_Men_Sport" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates/admin/page/coupon" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -91,6 +91,7 @@
       <recent name="com.poly" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\admin\page\coupon" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\promotion" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page\promotion" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page" />
@@ -113,6 +114,17 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WebBanTiViApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="WebBanTiVi" />
       <extension name="coverage">
@@ -268,6 +280,12 @@
       <workItem from="1699702375538" duration="3036000" />
       <workItem from="1699713756527" duration="12078000" />
       <workItem from="1699752351244" duration="3632000" />
+      <workItem from="1699765500397" duration="481000" />
+      <workItem from="1699868164389" duration="12959000" />
+      <workItem from="1699960355361" duration="1468000" />
+      <workItem from="1699961932290" duration="7876000" />
+      <workItem from="1699973892291" duration="7275000" />
+      <workItem from="1700053762569" duration="8168000" />
     </task>
     <servers />
   </component>
@@ -311,11 +329,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java</url>
           <line>91</line>
           <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user/PromotionController.java</url>
-          <line>175</line>
-          <option name="timeStamp" value="52" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/admin/BillReturnController.java</url>
