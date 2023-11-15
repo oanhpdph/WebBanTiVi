@@ -16,6 +16,7 @@ public interface ProductService {
     Page<Product> findAll(ProductDetailDto productDetailDto);
 
     List<Product> findAll();
+
     Product findById(Integer id);
 
     Product getOne(Integer id);

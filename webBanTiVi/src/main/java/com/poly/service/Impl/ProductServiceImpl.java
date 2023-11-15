@@ -51,13 +51,19 @@ public class ProductServiceImpl implements ProductService {
         if (productDetailDto.getSku() != "") {
             list.add(criteriaBuilder.equal(productRoot.get("sku"), productDetailDto.getSku()));
         }
+        if (productDetailDto.getGroup() != 0) {
+            list.add(criteriaBuilder.equal(productRoot.get("groupProduct").get("id"), productDetailDto.getGroup()));
+        }
+        if (productDetailDto.isActive() == true) {
+            list.add(criteriaBuilder.equal(productRoot.get("active"), true));
+        }
         productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
         if (productDetailDto.getSort() == 1) {
             productCriteriaQuery.orderBy(criteriaBuilder.desc(productRoot.get("createDate")));
-        }else{
+        } else {
             productCriteriaQuery.orderBy(criteriaBuilder.asc(productRoot.get("createDate")));
         }
-        Pageable pageable = PageRequest.of(productDetailDto.getPage()-1, productDetailDto.getSize());
+        Pageable pageable = PageRequest.of(productDetailDto.getPage() - 1, productDetailDto.getSize());
         List<Product> result = entityManager.createQuery(productCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
 
         List<Product> result1 = entityManager.createQuery(productCriteriaQuery).getResultList();
@@ -84,5 +90,6 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> findSameProduct(String same) {
         return productRepository.findBySameProduct(same);
     }
+
 
 }

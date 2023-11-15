@@ -102,15 +102,6 @@
                     <!--                    <span th:text="${#lists.size(listCou)}"></span>-->
                 </p>
             </div>
-            <div class="col-md-10 text-end">
-                <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-outline-secondary">Excel
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary">PDF
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary">In</button>
-                </div>
-            </div>
         </div>
         <hr>
         <div class="table-responsive text-nowrap">
@@ -134,6 +125,7 @@
                              class="w-px-100"/>
                     </p>
                     </td>
+                    <td> <span th:text="${coupon.active} == true?'Hoạt động':'Không hoạt động'"/></td>
                     <td>
                         <button type="button" class="btn btn-icon btn-primary" data-bs-toggle="modal"
                                 th:data-bs-target="|#modal${coupon.id}|">
@@ -205,6 +197,10 @@
                                             </div>
                                             <br>
                                             <div class="row justify-content-xl-end">
+                                                <div class="w-auto">
+                                                    <a th:href="@{'/admin/couponproduct/' + *{id}}"
+                                                       class="btn btn-primary btn-control">Các sản phẩm được giảm</a>
+                                                </div>
                                                 <div class="w-auto">
                                                     <button type="reset"
                                                             class="btn btn-primary btn-control">

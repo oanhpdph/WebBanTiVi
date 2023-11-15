@@ -39,16 +39,21 @@ public class ProductDetail {
     private boolean active;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_create")
+    @Column(name = "date_create")
     private Date createDate;
 
     @ManyToOne
-    @JoinColumn(name="product_id")
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<Image> listImage;
 
     @OneToMany(mappedBy = "productDetail")
     private List<ProductDetailField> fieldList;
+
+    @Override
+    public String toString() {
+        return "";
+    }
 }

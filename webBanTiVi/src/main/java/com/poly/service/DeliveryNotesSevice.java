@@ -1,5 +1,6 @@
 package com.poly.service;
 
+import com.poly.dto.BillProRes;
 import com.poly.entity.DeliveryNotes;
 
 public interface DeliveryNotesSevice {
@@ -10,4 +11,6 @@ public interface DeliveryNotesSevice {
     DeliveryNotes update(DeliveryNotes deliveryNotes, Integer id);
 
     DeliveryNotes getByIdBill(Integer idBill);
+
+    DeliveryNotes save(BillProRes deliveryNotes);
 }

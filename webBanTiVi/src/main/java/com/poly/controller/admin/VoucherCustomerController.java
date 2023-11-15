@@ -2,7 +2,7 @@ package com.poly.controller.admin;
 
 import com.poly.dto.VoucherCustomerRes;
 import com.poly.service.CustomerService;
-import com.poly.service.VoucherCustomerService;
+import com.poly.service.Impl.VoucherCustomerServiceImpl;
 import com.poly.service.VoucherService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -23,40 +23,59 @@ public class VoucherCustomerController {
 
     @Autowired
     VoucherService voucherService;
-
     @Autowired
-    VoucherCustomerService voucherCustomerService;
+    VoucherCustomerServiceImpl voucherCustomerService;
 
 
     // voucherCustomer
-    @GetMapping("/voucherCustomer")
-    public String voucherCustomer(HttpSession session, Model model) {
-        session.setAttribute("pageView", "/admin/page/voucher/voucherCustomer.html");
+    @GetMapping("/vouchercustomer/{id}")
+    public String voucherCustomer(HttpSession session, Model model,
+                                  @PathVariable("id")Integer id,@RequestParam(defaultValue="") String keyword) {
+        model.addAttribute("voucher",voucherService.findById(id).get());
         session.setAttribute("active", "/voucherCustomer");
         session.setAttribute("listCustomer", this.customerService.findAll());
         session.setAttribute("listVoucher", this.voucherService.findAllList());
-        model.addAttribute("listVoucherCustomer", this.voucherCustomerService.findAll());
         model.addAttribute("voucherCustomer", new VoucherCustomerRes());
+        if(keyword.isEmpty()) {
+            model.addAttribute("listVoucherCustomer", voucherCustomerService.findAllByVoucher(id));
+        }
+        else {
+            // TODO: Search
+            model.addAttribute("listVoucherCustomer", voucherCustomerService.findAllByKeyword(keyword, id));
+        }
+        session.setAttribute("pageView", "/admin/page/voucher/voucherCustomer.html");
         return "admin/layout";
     }
 
-    @PostMapping("/voucherCustomer/add")
-    public String addVoucherCustomer(Model model, @Valid @ModelAttribute("voucherCustomer") VoucherCustomerRes voucherCustomerRes, BindingResult result) {
-        if (result.hasErrors()) {
-            model.addAttribute("message", "Vui long dien day du thong tin");
-            return "admin/layout";
-        }
-        this.voucherCustomerService.save(voucherCustomerRes);
-        model.addAttribute("listVoucherCustomer", this.voucherCustomerService.findAll());
-        return "redirect:/admin/voucherCustomer";
+//    @PostMapping("/voucherCustomer/add")
+//    public String addVoucherCustomer(Model model, @Valid @ModelAttribute("voucherCustomer") VoucherCustomerRes voucherCustomerRes, BindingResult result) {
+//        if (result.hasErrors()) {
+//            model.addAttribute("message", "Vui long dien day du thong tin");
+//            return "admin/layout";
+//        }
+//        this.voucherCustomerService.save(voucherCustomerRes);
+//        model.addAttribute("listVoucherCustomer", this.voucherCustomerService.findAll());
+//        rmodel.addAttribute("voucher",voucherService.findById(id).get());
+//        session.setAttribute("active", "/voucherCustomer");
+//        session.setAttribute("listCustomer", this.customerService.findAll());
+//        session.setAttribute("listVoucher", this.voucherService.findAllList());
+//        model.addAttribute("listVoucherCustomer", voucherCustomerService.findAllByVoucher(id));
+//        model.addAttribute("voucherCustomer", new VoucherCustomerRes());
+//        session.setAttribute("pageView", "/admin/page/voucher/discountProduct.html");
+//        return "admin/layout";
+//    }
+
+
+    @RequestMapping("/vouchercustomer/update/{id}")
+    public String updatevoucherCustomer(HttpSession session,@PathVariable("id") Integer id, @Valid @ModelAttribute("voucherCustomer")  VoucherCustomerRes voucherCustomerRes, BindingResult result, Model model) {
+        this.voucherCustomerService.updateById(voucherCustomerRes,id);
+        return "redirect:/admin/vouchercustomer/"+voucherCustomerService.findById(id).get().getVoucher().getId();
     }
-
-
-    @PostMapping("/voucherCustomer/update/{id}")
-    public String updatevoucherCustomer(@PathVariable("id") Integer id, @Valid @ModelAttribute("voucherCustomer")  VoucherCustomerRes voucherCustomerRes, BindingResult result, Model model) {
-        this.voucherCustomerService.save(voucherCustomerRes);
-        return "redirect:/admin/voucherCustomer";
+    @GetMapping("/vouchercustomer/delete/{id}")
+    public String deleteVoucherCustomer(HttpSession session,@PathVariable("id") Integer id, @Valid @ModelAttribute("voucherCustomer")  VoucherCustomerRes voucherCustomerRes, BindingResult result, Model model) {
+        int idvoucher = voucherCustomerService.findById(id).get().getVoucher().getId();
+        this.voucherCustomerService.delete(id);
+        return "redirect:/admin/vouchercustomer/"+idvoucher;
     }
-
 
 }

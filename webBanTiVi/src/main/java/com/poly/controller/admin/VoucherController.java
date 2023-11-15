@@ -85,7 +85,7 @@ public class VoucherController {
     public String showVoucher(HttpSession session, @PathVariable("id") Integer id, Model model) {
         Voucher voucher = this.voucherService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        model.addAttribute("voucher", voucher);
+        model.addAttribute("voucher",voucher);
 //        model.addAttribute("listVoucher", this.voucherService.findAll(pageable));
         return "admin/layout";
     }
