@@ -56,7 +56,7 @@ public class Users {
     private boolean status;
 
 
-   @Column(name = "roles")
+   @Column(name = "role")
     private String roles;
 
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)

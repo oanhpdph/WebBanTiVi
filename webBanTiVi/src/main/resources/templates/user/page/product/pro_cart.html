@@ -101,7 +101,8 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <span class="fs-5" th:text="${item.product.product.nameProduct}"></span>
+                                                    <span class="fs-5"
+                                                          th:text="${item.product.product.nameProduct}"></span>
                                                 </td>
                                                 <td>
                                                     <div>
@@ -174,8 +175,10 @@
                     <div class="card shadow-none bg-transparent border border-secondary mb-3">
                         <div class="card-header">
                             <div class="card-body">
-                                <p class="card-text">Subtotal: <span class="text-end text-danger">$<span
-                                        class="total-pro"></span> </span></p>
+                                <p class="card-text">Subtotal: <span class="text-end text-danger">$
+                                    <!--                                    <span class="total-pro"></span>-->
+                                    <span class="total-pro" th:text="${total}"></span>
+                                </span></p>
                                 <p class="card-text">Total: <span class="text-end text-danger">$<span
                                         class=""></span> </span></p>
                                 <div style="text-align: center">

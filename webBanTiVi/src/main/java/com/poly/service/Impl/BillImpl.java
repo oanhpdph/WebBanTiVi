@@ -17,7 +17,6 @@ import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -65,8 +64,8 @@ public class BillImpl implements BillService {
         bi.setPaymentDate(new java.util.Date());
         bi.setTotalPrice(bill.getTotalPrice());
         bi.setPaymentStatus(1);
-        bi.setBillStatus(billStatusRepos.findByCode("WP").get());
-        bi.setPaymentMethod(paymentMethodRepos.findAll().get(0));
+        bi.setBillStatus(billStatusRepos.findByCode("WR").get());
+        bi.setPaymentMethod(paymentMethodRepos.findById(bill.getPaymentMethod()).get());
         return this.billRepos.save(bi);
     }
 
@@ -83,6 +82,9 @@ public class BillImpl implements BillService {
                 billProduct.setProduct(list.get(i).get());
                 billProduct.setPrice(list.get(i).get().getPriceExport());
                 billProduct.setQuantity(list.get(i).get().getQuantity());
+                billProduct.setQuantityReturn(list.get(i).get().getQuantity());
+                billProduct.setReason("like");
+//                billProduct.setReducedMoney();
                 this.billProductRepos.save(billProduct);
             }
         }
@@ -90,34 +92,32 @@ public class BillImpl implements BillService {
 
     @Override
     public Page<Bill> loadData(SearchBillDto searchBillDto, Pageable pageable) {
-        List<String> billStatus = new ArrayList<>();
-        if (searchBillDto.getBillStatus().equals("cho")) {
-            billStatus.add("WP");
-        }
-        if (searchBillDto.getBillStatus().equals("chuanbi")) {
-            billStatus.add("PG");
-        }
-        if (searchBillDto.getBillStatus().equals("danggiao")) {
-            billStatus.add("DE");
-        }
-        if (searchBillDto.getBillStatus().equals("hoanthanh")) {
-            billStatus.add("CO");
-        }
-        if (searchBillDto.getBillStatus().equals("donhuy")) {
-            billStatus.add("SC");
-            billStatus.add("CC");
-        }
-        if (searchBillDto.getBillStatus().equals("trahang")) {
-            billStatus.add("RR");
-            billStatus.add("RE");
-            billStatus.add("WR");
-        }
-
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Bill> billCriteriaQuery = criteriaBuilder.createQuery(Bill.class);
         Root<Bill> billRoot = billCriteriaQuery.from(Bill.class);
 
         List<Predicate> list = new ArrayList<Predicate>();
+        List<String> billStatus = new ArrayList<>();
+        if (searchBillDto.getBillStatus().equals("doncho")&&searchBillDto.getBillStatus().equals("")) {
+            billStatus.add("WP");
+        } else if (searchBillDto.getBillStatus().equals("chuanbi")) {
+            billStatus.add("PG");
+        } else if (searchBillDto.getBillStatus().equals("danggiao")) {
+            billStatus.add("DE");
+        } else if (searchBillDto.getBillStatus().equals("hoanthanh")) {
+            billStatus.add("CO");
+        } else if (searchBillDto.getBillStatus().equals("donhuy")) {
+            list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "SC"),
+                    criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "CC")));
+        } else if (searchBillDto.getBillStatus().equals("trahang")) {
+            billStatus.add("RR");
+        } else if (searchBillDto.getBillStatus().equals("donhoan")) {
+            billStatus.add("oanh");
+        } else {
+            billStatus.add("WP");
+        }
+
+
         if (!searchBillDto.getKey().isEmpty()) {
             list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("code"), searchBillDto.getKey()),
                     criteriaBuilder.equal(billRoot.get("customer").get("name"), searchBillDto.getKey()),
@@ -126,11 +126,10 @@ public class BillImpl implements BillService {
         if (searchBillDto.getPaymentStatus() != -1) {
             list.add(criteriaBuilder.equal(billRoot.get("paymentStatus"), searchBillDto.getPaymentStatus()));
         }
-        if (!searchBillDto.getBillStatus().isEmpty()) {
             for (String s : billStatus) {
-                list.add(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), s));
+                list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), s)));
             }
-        }
+
         if (!searchBillDto.getDate().isEmpty()) {
             String date1 = searchBillDto.getDate().substring(0, searchBillDto.getDate().indexOf("-") - 1).replace("/", "-");
             String date2 = searchBillDto.getDate().substring(searchBillDto.getDate().indexOf("-") + 1, searchBillDto.getDate().length()).replace("/", "-");
@@ -142,10 +141,6 @@ public class BillImpl implements BillService {
         billCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
         List<Bill> result = entityManager.createQuery(billCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
         List<Bill> result2 = entityManager.createQuery(billCriteriaQuery).getResultList();
-        if (pageable.getPageSize() == 1) {
-            pageable = PageRequest.of(0, result2.size());
-            result = entityManager.createQuery(billCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
-        }
         Page<Bill> page = new PageImpl<>(result, pageable, result2.size());
         return page;
     }

@@ -148,25 +148,38 @@
                                         </div>
                                         <div class="row justify-content-center">
                                             <span class="col fs-5">Tổng tiền: </span>
-                                            <span class="col text-danger text-center">$<span
-                                                    class="total-pro"></span> </span>
+                                            <span class="col text-danger text-center">$
+                                                                                    <span th:text="${total}"
+                                                                                          name="totalPrice"></span>
+                                                <!--                                                                                                <input th:value="${total}"-->
+                                                <!--                                                                                                       disabled-->
+                                                <!--                                                                                                       style="background-color: white"-->
+                                                <!--                                                                                                       name="totalPrice">-->
+                                            </span>
                                         </div>
                                         <hr>
                                         <span class="text-uppercase fs-5">Phương Thức Thanh Toán: </span>
-                                        <div class="g-5">
-                                            <div class="demo-inline-spacing mt-3">
-                                                <div class="list-group list-group-horizontal-md text-md-center">
-                                                    <a class="list-group-item list-group-item-action active"
-                                                       id="home-list-item" data-bs-toggle="list"
-                                                       href="#horizontal-home">Thanh toán tiền mặt</a>
-                                                    <a class="list-group-item list-group-item-action"
-                                                       id="profile-list-item" data-bs-toggle="list"
-                                                       href="#horizontal-profile">Thanh toán trực tiếp qua
-                                                        VNPAY</a>
+                                        <div class="card-body">
+                                            <div class="row gy-3">
+                                                <div class="col-md">
+                                                    <div class="form-check form-check-inline mt-3">
+                                                        <input class="form-check-input" type="radio"
+                                                               name="paymentMethod" id="inlineRadio1"
+                                                               th:value="1" checked>
+                                                        <label class="form-check-label" for="inlineRadio1">Thanh toán
+                                                            tiền mặt</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio"
+                                                               name="paymentMethod" id="inlineRadio2"
+                                                               th:value="2">
+                                                        <label class="form-check-label" for="inlineRadio2">Thanh toán
+                                                            trực tiếp qua
+                                                            VNPAY</label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="d-grid gap-2 col-lg-12 mx-auto mt-4"
                                              style="text-align: center">
                                             <button class="btn btn-primary btn-lg" type="submit"
@@ -203,7 +216,7 @@
             totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
             console.log(totalPro);
         }
-        totalProForm.innerText = totalPro
+        totalProForm.value = totalPro
     }
 
     $(document).ready(

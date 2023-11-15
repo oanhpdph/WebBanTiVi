@@ -13,4 +13,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 //        List<ProductDto> findAllByDTO();
     @Query(value = "select p from Product p where p.same=?1")
     List<Product> findBySameProduct(String sameProduct);
+
+
 }

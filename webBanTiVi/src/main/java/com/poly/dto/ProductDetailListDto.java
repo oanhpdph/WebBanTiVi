@@ -20,4 +20,7 @@ public class ProductDetailListDto {
     Integer quantity;
     String sku = "";
     boolean active;
+    Integer page = 1;
+    Integer size = 10;
+    Integer sort = 1;
 }

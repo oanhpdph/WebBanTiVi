@@ -1,9 +1,38 @@
-// $(document).ready(function (){
-//     $.ajax({
-//         url:"/product/get-all",
-//         method:"get",
-//         success:function (data){
-//             document.querySelector("#table-all-product tbody")
-//         }
-//     })
-// })
+document.getElementById("prev").addEventListener("click", function () {
+    if (document.getElementById("pageInput").value > 1) {
+        document.getElementById("pageInput").value = Number(document.getElementById("pageInput").value) - 1
+        $("#form-product").submit()
+
+    }
+})
+document.getElementById("next").addEventListener("click", function () {
+    if (document.getElementById("pageInput").value < Number(document.getElementById("total").getAttribute("value"))) {
+        document.getElementById("pageInput").value = Number(document.getElementById("pageInput").value) + 1
+        $("#form-product").submit()
+    }
+})
+document.getElementById("last").addEventListener("click", function () {
+    if (document.getElementById("pageInput").value < Number(document.getElementById("total").getAttribute("value"))) {
+        document.getElementById("pageInput").value = Number(document.getElementById("total").getAttribute("value"))
+        $("#form-product").submit()
+    }
+})
+document.getElementById("first").addEventListener("click", function () {
+    if (document.getElementById("pageInput").value > 1) {
+        document.getElementById("pageInput").value = 1
+        $("#form-product").submit()
+    }
+})
+document.getElementById("select-size").addEventListener("change", function () {
+    $("#form-product").submit()
+})
+document.getElementById("sort").addEventListener("change", function () {
+    $("#form-product").submit()
+})
+document.getElementById("pageInput").addEventListener("blur", function () {
+    if (document.getElementById("pageInput").value < Number(document.getElementById("total").getAttribute("value")) && document.getElementById("pageInput").value>0) {
+        $("#form-product").submit()
+    }else{
+        document.getElementById("pageInput").value
+    }
+})
