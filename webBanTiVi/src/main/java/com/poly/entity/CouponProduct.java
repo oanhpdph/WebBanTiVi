@@ -25,7 +25,7 @@ public class CouponProduct {
     @Id
     @ManyToOne
     @JoinColumn(name="id_product")
-    private Product product;
+    private ProductDetail productDetail;
 
     @Temporal(TemporalType.DATE)
     @Column(name="date_start")
@@ -35,5 +35,4 @@ public class CouponProduct {
     @Column(name="date_end")
     private Date dateEnd;
 
-    private Integer status;
 }

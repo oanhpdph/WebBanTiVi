@@ -6,7 +6,6 @@ import com.poly.service.DashBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,6 @@ public class DashBoardServiceImpl implements DashBoardService {
         }
         return listBillReturn;
     }
-
     @Override
     public List<Bill> getBillByProccesing(Date date) {
         List<Bill> orders = billRepos.findBillByDate(date);
@@ -64,7 +62,6 @@ public class DashBoardServiceImpl implements DashBoardService {
         }
         return listBillReturn;
     }
-
     @Override
     public List<Bill> getAllBillProcessing() {
         List<Bill> orders = this.billRepos.findAll();

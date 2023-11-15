@@ -161,18 +161,9 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-2 d-flex align-items-center">
-                <p>Voucher :
-                    <!--                        <span th:text="${#lists.size(list.content)}"></span>-->
+                <p>Voucher:
+
                 </p>
-            </div>
-            <div class="col-md-10 text-end">
-                <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-outline-secondary">Excel
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary">PDF
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary">In</button>
-                </div>
             </div>
         </div>
         <hr>
@@ -184,27 +175,25 @@
                     <!--                    <th>code</th>-->
                     <!--                    <th>Tên Voucher</th>-->
                     <th>#</th>
-                    <th>Mã voucher</th>
+                    <th>Tên voucher</th>
+                    <th>Ảnh</th>
                     <th>Giá trị</th>
                     <th>Số lượng</th>
-                    <th>Ngày bắt đầu</th>
-                    <th>Ngày kết thúc</th>
                     <th>Hoạt động</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="voucher,Stat : ${session.list.content}">
-                    <!--                    <td th:text="${voucher.code}"></td>-->
-                    <!--                    <td th:text="${voucher.nameVoucher}"></td>-->
                     <td th:text="${Stat.index+1}"></td>
-
-                    <td th:text="${voucher.code}"></td>
+                    <td th:text="${voucher.nameVoucher}"></td>
+                    <td><p>
+                        <img th:src="@{'/image/'+*{voucher.image}}"
+                             class="w-px-100"/>
+                    </p>
+                    </td>
                     <td th:text="${voucher.value}"></td>
-
                     <td th:text="${voucher.quantity}"></td>
-                    <td th:text="${voucher.startDay}"></td>
-                    <td th:text="${voucher.expirationDate}"></td>
                     <td>
                         <span th:text="${voucher.active} == true?'Hoạt động':'Không hoạt động'"/>
                     </td>
@@ -341,6 +330,11 @@
                                         <div class="modal-footer">
                                             <div class="row justify-content-xl-end">
                                                 <div class="w-auto">
+                                                    <a th:href="@{'/admin/vouchercustomer/' + *{id}}"
+                                                       class="btn btn-primary btn-control">Xem chi tiết</a>
+                                                </div>
+
+                                                <div class="w-auto">
                                                     <button type="reset"
                                                             class="btn btn-primary btn-control">
                                                         Làm mới
@@ -369,12 +363,12 @@
                                 </div>
                             </div>
                         </div>
-                        <a th:href="@{/admin/voucher/delete/{id}(id=*{voucher.id})}"
-                           onclick="return confirm('Xác nhận xóa')">
-                            <button type="button" class="btn btn-icon btn-danger">
-                                <span class="bx bxs-trash"></span>
-                            </button>
-                        </a>
+<!--                        <a th:href="@{/admin/voucher/delete/{id}(id=*{voucher.id})}"-->
+<!--                           onclick="return confirm('Xác nhận xóa')">-->
+<!--                            <button type="button" class="btn btn-icon btn-danger">-->
+<!--                                <span class="bx bxs-trash"></span>-->
+<!--                            </button>-->
+<!--                        </a>-->
                     </td>
                 </tr>
                 </tbody>
@@ -385,17 +379,6 @@
     <div class="card-footer">
 
         <div class="d-inline-flex float-end">
-            <div class="mx-3 row" style="width: 180px; color: black">
-                <label for="select-view" class="col-form-label col-5 text-end">View:</label>
-                <div class="col-7">
-                    <select class="form-select text-start" id="select-view">
-                        <option>10</option>
-                        <option>20</option>
-                        <option>40</option>
-                        <option>80</option>
-                    </select>
-                </div>
-            </div>
             <div aria-label="Page pagination">
                 <ul class="pagination">
                     <li class="page-item first">

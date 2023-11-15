@@ -2,9 +2,7 @@
     transform: scale(1.05);
 }
 
-.card-title{
-    color: red;
-}
 .item-product:hover .card-title {
-    color: #03c3ec;
+    color: #496469;
 }
+

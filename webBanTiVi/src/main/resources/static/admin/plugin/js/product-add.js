@@ -58,8 +58,6 @@ function loadDataField() {
 
                     var tbody = document.getElementById('tableAttributes').getElementsByTagName('tbody')[0];
 
-                    var indexRow = tbody.querySelectorAll("tr")
-
                     cell1.innerText = document.getElementById('tableAttributes').rows.length
                     cell2.innerText = item.name
                     cell3.appendChild(button); // Thêm nút vào ô
@@ -264,7 +262,7 @@ function clickSave() {
         }
         data.listProduct.push(temp)
         data.nameProduct = document.getElementById("name-display").value
-        data.sameProduct = $("sameProduct").value
+        data.sameProduct = document.getElementById("sameProduct").value
         data.sku = document.getElementById("sku-code").value
         data.group = document.getElementById("select-group").value
     })
@@ -853,6 +851,7 @@ function changeTableProductDetail() {
             var check = document.createElement("input")
             check.className = "form-check-input larger-checkbox check-active"
             check.type = "checkbox"
+            check.checked=true
             check.value = index
 
             activeCell.appendChild(check);

@@ -2,7 +2,9 @@ package com.poly.service.Impl;
 
 import com.poly.dto.ProductDetailDto;
 import com.poly.entity.Product;
+import com.poly.entity.ProductDetail;
 import com.poly.repository.CouponRepository;
+import com.poly.repository.ProductDetailRepo;
 import com.poly.repository.ProductRepository;
 import com.poly.service.ProductService;
 import jakarta.persistence.EntityManager;
@@ -12,6 +14,10 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,8 +31,12 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     CouponRepository couponRepository;
 
+    @Autowired
+    private ProductDetailRepo productDetailRepo;
+
     @PersistenceContext
     private EntityManager entityManager;
+
 
     @Override
     public Product save(Product product) {
@@ -39,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findAll(ProductDetailDto productDetailDto) {
+    public Page<Product> findAll(ProductDetailDto productDetailDto) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Product> productCriteriaQuery = criteriaBuilder.createQuery(Product.class);
         Root<Product> productRoot = productCriteriaQuery.from(Product.class);
@@ -47,9 +57,29 @@ public class ProductServiceImpl implements ProductService {
         if (productDetailDto.getSku() != "") {
             list.add(criteriaBuilder.equal(productRoot.get("sku"), productDetailDto.getSku()));
         }
+        if (productDetailDto.getGroup() != 0) {
+            list.add(criteriaBuilder.equal(productRoot.get("groupProduct").get("id"), productDetailDto.getGroup()));
+        }
+        if (productDetailDto.isActive() == true) {
+            list.add(criteriaBuilder.equal(productRoot.get("active"), true));
+        }
         productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
-        List<Product> result = entityManager.createQuery(productCriteriaQuery).getResultList();
-        return result;
+        if (productDetailDto.getSort() == 1) {
+            productCriteriaQuery.orderBy(criteriaBuilder.desc(productRoot.get("createDate")));
+        } else {
+            productCriteriaQuery.orderBy(criteriaBuilder.asc(productRoot.get("createDate")));
+        }
+        Pageable pageable = PageRequest.of(productDetailDto.getPage() - 1, productDetailDto.getSize());
+        List<Product> result = entityManager.createQuery(productCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
+
+        List<Product> result1 = entityManager.createQuery(productCriteriaQuery).getResultList();
+        Page<Product> page = new PageImpl<>(result, pageable, result1.size());
+        return page;
+    }
+
+    @Override
+    public List<Product> findAll() {
+        return productRepository.findAll();
     }
 
     @Override
@@ -58,8 +88,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getOne(Integer id) {
-        return productRepository.findById(id).get();
+    public Product update(Integer id, ProductDetailDto product) {
+        Product product1 = findById(id);
+        if (findById(id) != null) {
+            if (product.isActive() == false) {
+                product1.setActive(product.isActive());
+                for (ProductDetail productDetail : product1.getProductDetails()) {
+                    productDetail.setActive(false);
+                    productDetailRepo.save(productDetail);
+                }
+            } else {
+                product1.setActive(product.isActive());
+            }
+            productRepository.save(product1);
+        }
+        return null;
     }
 
     @Override

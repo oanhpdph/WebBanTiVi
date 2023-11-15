@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,6 @@ import java.util.Optional;
 public class ProductDetailImpl implements ProductDetailService {
     @Autowired
     private ProductDetailRepo productDetailRepo;
-
 
     @Autowired
     private ProductService productService;
@@ -74,7 +74,12 @@ public class ProductDetailImpl implements ProductDetailService {
         product.setNameProduct(dto.getNameProduct());
         product.setSku(dto.getSku());
         product.setSame(sameProduct);
-        product.setActive(true);
+        if (!dto.getListProduct().isEmpty()) {
+            product.setActive(true);
+        } else {
+            product.setActive(false);
+        }
+        product.setCreateDate(new Date());
         product.setAvgPoint(0);
         productService.save(product);
         for (int i = 0; i < dto.getProduct().size(); i++) {
@@ -92,6 +97,7 @@ public class ProductDetailImpl implements ProductDetailService {
             productDetail.setPriceImport(productFieldValue.getPriceImport());
             productDetail.setActive(productFieldValue.isActive());
             productDetail.setProduct(product);
+            productDetail.setCreateDate(new Date());
             productDetail.setSku(productFieldValue.getSku());
             productDetailRepo.save(productDetail);
 
@@ -123,23 +129,30 @@ public class ProductDetailImpl implements ProductDetailService {
     }
 
     @Override
-    public Page<ProductDetail> findAll(ProductDetailDto productDetailDto, Pageable pageable) {
+    public Page<ProductDetail> findAll(ProductDetailListDto productDetailListDto) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<ProductDetail> productCriteriaQuery = criteriaBuilder.createQuery(ProductDetail.class);
         Root<ProductDetail> productDetailRoot = productCriteriaQuery.from(ProductDetail.class);
         List<Predicate> list = new ArrayList<Predicate>();
 
-        if (!productDetailDto.getSku().isEmpty()) {
-            list.add(criteriaBuilder.equal(productDetailRoot.get("sku"), productDetailDto.getSku()));
+        if (!productDetailListDto.getSku().isEmpty()) {
+            list.add(criteriaBuilder.equal(productDetailRoot.get("sku"), productDetailListDto.getSku()));
         }
-
+        if (productDetailListDto.getSort() == 1) {
+            productCriteriaQuery.orderBy(criteriaBuilder.desc(productDetailRoot.get("createDate")));
+        } else {
+            productCriteriaQuery.orderBy(criteriaBuilder.asc(productDetailRoot.get("createDate")));
+        }
         productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
+        Pageable pageable = PageRequest.of(productDetailListDto.getPage() - 1, productDetailListDto.getSize());
+
         List<ProductDetail> result = entityManager.createQuery(productCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
         List<ProductDetail> result2 = entityManager.createQuery(productCriteriaQuery).getResultList();
-        if (pageable.getPageSize() == 1) {
-            pageable = PageRequest.of(0, result2.size());
-            result = entityManager.createQuery(productCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
-        }
+//        if (pageable.getPageSize() == 1) {
+//            pageable = PageRequest.of(0, result2.size());
+//            result = entityManager.createQuery(productCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
+//        }
+
         Page<ProductDetail> page = new PageImpl<>(result, pageable, result2.size());
         return page;
     }
@@ -160,27 +173,18 @@ public class ProductDetailImpl implements ProductDetailService {
     }
 
     @Override
-    public List<ProductDetail> update(List<ProductDetailDto> productDetailDto) {
-        List<ProductDetail> list = new ArrayList<>();
-        for (ProductDetailDto productDetailDto1 : productDetailDto) {
-            ProductDetail productDetail = findById(productDetailDto1.getId());
-            if (productDetail != null) {
-                productDetail.setActive(true);
-//                productDetail.setPriceExport(productDetailDto1.getPriceExport());
-//                productDetail.setSku(productDetailDto1.getSku());
-//                productDetail.setPriceImport(productDetailDto1.getPriceImport());
-//                productDetail.setQuantity(productDetailDto1.getQuantity());
-//                for (ImageDto image : productDetailDto1.getImage()) {
-//                    com.poly.entity.Image image1 = new com.poly.entity.Image();
-//                    image1.setLink(image.getMultipartFile());
-//                    image1.setProduct(productDetail);
-//                    image1.setLocation(image.getLocation());
-//                    imageRepo.save(image1);
-//                }
-                list.add(productDetailRepo.save(productDetail));
-            }
+    public ProductDetail update(ProductDetailListDto productDetailListDto) {
+        ProductDetail productDetail = findById(productDetailListDto.getId());
+        if (productDetail != null) {
+            productDetail.setActive(productDetailListDto.isActive());
+            productDetailRepo.save(productDetail);
         }
-        return list;
+        return productDetail;
     }
+
+//    @Override
+//    public List<ProductDetail> update(List<ProductDetailDto> productDetailDto) {
+//        return null;
+//    }
 
 }

@@ -40,8 +40,10 @@
     <div class="text-center">
         <h4 class="fw-bold">Kiểm tra đơn hàng của bạn</h4>
         <div class="text-center">
-            <input type="text" class="form-control w-px-500 d-inline" id="search_invoice" placeholder="HD93849">
+            <form th:action="@{/search_order_user}" method="post">
+            <input type="text" class="form-control w-px-500 d-inline" id="search_invoice" placeholder="HD93849" th:name="search">
             <button class="btn btn-danger">Tìm kiếm</button>
+            </form>
         </div>
     </div>
 </section>

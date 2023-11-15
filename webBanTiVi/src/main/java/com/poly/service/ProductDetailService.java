@@ -1,10 +1,10 @@
 package com.poly.service;
 
 import com.poly.dto.ProductDetailDto;
+import com.poly.dto.ProductDetailListDto;
 import com.poly.entity.Product;
 import com.poly.entity.ProductDetail;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -13,12 +13,15 @@ public interface ProductDetailService {
 
     ProductDetail findById(Integer id);
 
-    Page<ProductDetail> findAll(ProductDetailDto productDetailDto, Pageable pageable);
+    Page<ProductDetail> findAll(ProductDetailListDto productDetailListDto);
 
     List<ProductDetail> findAll();
 
     Boolean delete(Integer id);
 
-    List<ProductDetail> update(List<ProductDetailDto> productDetailDto);
+    ProductDetail update(ProductDetailListDto productDetailListDto);
+
+//    List<ProductDetail> update(List<ProductDetailDto> productDetailDto);
+
 
 }

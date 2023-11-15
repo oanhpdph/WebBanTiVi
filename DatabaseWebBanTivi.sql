@@ -8,11 +8,13 @@ go
 
 CREATE TABLE discount
   (
-     id      INT IDENTITY(1, 1) PRIMARY KEY,
-     code    VARCHAR(30) not null unique,
-     [value] VARCHAR(10) not null,
-	 image varchar(200),
-     active  BIT
+     id			 INT IDENTITY(1, 1) PRIMARY KEY,
+     code		 VARCHAR(30) not null unique,
+     [value]	 VARCHAR(10) not null,
+	 image		 varchar(200),
+	 date_start  DATE not null,
+     date_end	 DATE not null,
+     active		 BIT
   )
 
 create table group_product(
@@ -35,10 +37,10 @@ CREATE TABLE product
 	 group_product	int references group_product(id),
 	 name_product   nvarchar(200),
 	 avg_point		float,
+	 date_create    datetime,
 	 same_product	varchar(10),
      active         BIT
 )
-
 CREATE TABLE product_detail
   (
      id             INT IDENTITY(1, 1) PRIMARY KEY,
@@ -47,6 +49,8 @@ CREATE TABLE product_detail
      price_import   money,
      price_export   money,
      quantity       INT,
+	 date_create    datetime,
+	 id_discount	int references discount(id),
      active         BIT
 )
 
@@ -64,16 +68,6 @@ create table product_detail_field(
 	product_detail	int references product_detail(id),
 	value			nvarchar(1000)
 )
-
-
-CREATE TABLE discount_product
-  (
-     id_discount  INT REFERENCES discount(id),
-     id_product INT REFERENCES product_detail(id),
-     date_start DATE not null,
-     date_end   DATE not null,
-     PRIMARY KEY(id_discount, id_product)
-  )
 
 create table image (
 	id					int identity(1,1) primary key,
@@ -107,7 +101,6 @@ CREATE TABLE voucher
      name_voucher     VARCHAR(100) not null,
      [value]          INT not null,
      minimum_value    MONEY not null,-- giá trị đơn hàng tối thiểu cần
-     maximum_discount MONEY not null,--giá trị tối đa đơn hàng giảm
      quantity         INT not null, -- số lượng voucher
 	 start_day		  DATE not null,-- thời gian bắt đầu có hiệu lực
      expiration_date  DATE not null,-- thời gian mã giảm giá hết hiệu lực
@@ -119,8 +112,6 @@ CREATE TABLE voucher_user
   (	 id			 Int identity(1,1) primary key,
      id_user	 INT references users(id),
      id_voucher  INT references voucher(id),
-     date_start  DATETIME not null,-- thời gian nhận
-     date_end    DATETIME not null,-- thời gian hết hiệu lực
 	 active      BIT not null
   )
 
@@ -224,7 +215,7 @@ CREATE TABLE cart
   (
      id          INT IDENTITY(1, 1) PRIMARY KEY,
      id_users	INT REFERENCES users(id) not null,
-     code        NVARCHAR(30) unique,
+     code        NVARCHAR(30),
      date_update DATETIME,
   )
 

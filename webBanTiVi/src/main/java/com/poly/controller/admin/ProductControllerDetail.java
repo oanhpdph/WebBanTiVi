@@ -32,9 +32,4 @@ public class ProductControllerDetail {
         }
         return ResponseEntity.ok(200);
     }
-
-//    @GetMapping(path = "/same-product")
-//    public ResponseEntity<?> getSameProduct(@RequestParam("same-code") String sameCode) {
-//        return ResponseEntity.ok(productDetailService.getSameProduct(sameCode));
-//    }
 }

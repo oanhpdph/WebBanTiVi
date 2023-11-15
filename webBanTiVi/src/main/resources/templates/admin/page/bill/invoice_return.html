@@ -4,28 +4,30 @@
 <div class="nav-align-top mb-4">
     <ul class="nav nav-pills mb-3" role="tablist">
         <li class="nav-item w-px-250">
-            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#navs-pills-top-home" aria-controls="navs-pills-top-home" aria-selected="true">
+            <a type="button" class="nav-link active text-center"
+               th:href="@{/admin/bill/list_invoice_return}"
+            >
                 Chờ xác nhận trả hàng
-            </button>
+            </a>
         </li>
         <li class="nav-item w-px-250">
-            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#navs-pills-top-profile" aria-controls="navs-pills-top-profile"
-                    aria-selected="flase">
+            <a type="button" class="nav-link"
+               aria-selected="flase"
+               th:href="@{/admin/agree}"
+            >
                 Trả hàng thành công
-            </button>
+            </a>
         </li>
         <li class="nav-item w-px-250">
-            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                    data-bs-target="#navs-pills-top-messages" aria-controls="navs-pills-top-messages"
-                    aria-selected="false">
+            <a type="button" class="nav-link"
+               th:href="@{/admin/refuse}"
+            >
                 Từ chối trả hàng
-            </button>
+            </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane show active" id="navs-pills-top-home" >
+        <div class="tab-pane show active" id="navs-pills-top-home">
             <h5 class="mb-4">Hóa Đơn Yêu Cầu Hoàn Trả</h5>
             <div class="table-responsive text-nowrap">
                 <table class="table card-table text-center">
@@ -34,7 +36,6 @@
                         <th>#</th>
                         <th>Mã Hóa Đơn</th>
                         <th>Người gửi</th>
-                        <th></th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -42,7 +43,6 @@
                     <tr th:each="billReturn : ${listBill}">
                         <td>1</td>
                         <td>[(${billReturn.code})]</td>
-                        <td>[(${billReturn.deliveryNotes[0].received})]</td>
                         <td>
                             <a th:href="@{/admin/invoice_return/{id}(id=*{billReturn.id})}">
                                 <button type="button" class="btn btn-icon btn-primary return">

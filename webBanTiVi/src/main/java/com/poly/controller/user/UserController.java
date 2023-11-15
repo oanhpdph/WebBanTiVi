@@ -45,21 +45,18 @@ public class UserController {
     @Autowired
     BillProductService billProductService;
 
-    @GetMapping("/")
-    public String loadHome(HttpSession session) {
-        session.setAttribute("pageView", "/user/page/home/home.html");
-        return "/user/index";
-    }
 
     @GetMapping("/tivi")
-    public String loadProduct(HttpSession session) {
+    public String loadProduct(HttpSession session, Model model) {
         session.setAttribute("pageView", "/user/page/product/tivi.html");
+        model.addAttribute("active", "tivi");
         return "/user/index";
     }
 
     @GetMapping("/accessory")
-    public String loadAccessory(HttpSession session) {
+    public String loadAccessory(HttpSession session, Model model) {
         session.setAttribute("pageView", "/user/page/product/accessory.html");
+        model.addAttribute("active", "accesory");
         return "/user/index";
     }
 
@@ -76,6 +73,7 @@ public class UserController {
         model.addAttribute("changeInfo", new ChangeInforDto());
         return "/user/index";
     }
+
     @GetMapping("/invoice/invoice_detail/{id}")
     public String loadInvoiceDetail(HttpSession session, Model model, @PathVariable("id") Integer id) {
         Bill bill = this.billService.getOneById(id);
@@ -97,12 +95,11 @@ public class UserController {
         session.setAttribute("pageView", "/user/page/profile/order.html");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
-            List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
-            Date today = new Date();
-            model.addAttribute("today", today);
-            model.addAttribute("bill", billList);
-
+        UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
+        List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
+        Date today = new Date();
+        model.addAttribute("today", today);
+        model.addAttribute("bill", billList);
         return "/user/index";
     }
 
@@ -110,12 +107,11 @@ public class UserController {
     public String returnProduct(HttpSession session,
                                 @PathVariable("id") Integer id,
                                 @RequestBody List<ReturnDto> returnDto) {
-
         for (ReturnDto dto : returnDto) {
             for (ImageReturnDto image : dto.getImage()) {
                 ImageReturned img = new ImageReturned();
                 BillProduct billProduct = this.billProductService.edit(image.getIdBillProduct());
-                billProduct.setStatus(false);
+                billProduct.setStatus(1); // yêu cầu trả hàng
                 billProduct.setReason(dto.getReason());
                 billProduct.setQuantityReturn(Integer.parseInt(dto.getQuantityReturn()));
                 img.setBillProduct(billProduct);
@@ -129,6 +125,7 @@ public class UserController {
         this.billService.add(bill);
         return "redirect:/order";
     }
+
     @PostMapping(path = "/returnImage")
     public ResponseEntity<?> upload(@RequestParam(value = "images", required = false) List<MultipartFile> list) throws IOException {
         for (MultipartFile multipartFile : list) {
@@ -136,6 +133,19 @@ public class UserController {
             UploadFile.saveFile("src/main/resources/static/image", fileName, multipartFile);
         }
         return ResponseEntity.ok(200);
+    }
+
+    @GetMapping("/search_order")
+    public String getSearch(HttpSession session){
+        session.setAttribute("pageView", "/user/page/search/search_order.html");
+        return "/user/index";
+    }
+
+    @PostMapping("/search_order_user")
+    public String getSearchOder(@ModelAttribute("search") String search,HttpSession session){
+         Bill bill =  this.billService.findByCode(search);
+         session.setAttribute("bill",bill);
+        return "redirect:/search_order";
     }
 
 }

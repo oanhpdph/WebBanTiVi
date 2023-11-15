@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDetailListDto {
+    Integer id;
     List<ImageDto> image;
     List<Attribute> listAttributes;
     BigDecimal priceImport;
@@ -20,4 +21,7 @@ public class ProductDetailListDto {
     Integer quantity;
     String sku = "";
     boolean active;
+    Integer page = 1;
+    Integer size = 10;
+    Integer sort = 1;
 }

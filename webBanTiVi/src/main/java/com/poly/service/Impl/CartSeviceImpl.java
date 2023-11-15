@@ -3,18 +3,19 @@ package com.poly.service.Impl;
 import com.poly.entity.Cart;
 import com.poly.entity.CartProduct;
 import com.poly.entity.ProductDetail;
+import com.poly.entity.Users;
 import com.poly.repository.CartProductRepos;
 import com.poly.repository.CartRepos;
 import com.poly.service.CartService;
+import com.poly.service.CustomerService;
 import com.poly.service.ProductDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +26,9 @@ public class CartSeviceImpl implements CartService {
     CartProductRepos cartProductRepos;
     @Autowired
     ProductServiceImpl productService;
+
+    @Autowired
+    CustomerService customerService;
 
     @Autowired
     ProductDetailService productDetailService;
@@ -42,6 +46,11 @@ public class CartSeviceImpl implements CartService {
     }
 
     @Override
+    public Cart save(Cart cart) {
+        return cartRepos.save(cart);
+    }
+
+    @Override
     public List<CartProduct> add(Integer id, Integer qty) {
 
         CartProduct item = items
@@ -50,7 +59,7 @@ public class CartSeviceImpl implements CartService {
                 .findFirst()
                 .orElse(null);
         if (item != null) {
-            item.setQuantity(item.getQuantity() + 1);
+            item.setQuantity(item.getQuantity() + qty);
             return items;
         }
         Cart cart = new Cart();
@@ -100,19 +109,14 @@ public class CartSeviceImpl implements CartService {
     }
 
     @Override
-    public BigDecimal getAmount() {
-        BigDecimal amount = null;
-        for (CartProduct item : items) {
-            BigDecimal qty = new BigDecimal(item.getQuantity());
-            BigDecimal price = new BigDecimal(String.valueOf(item.getProduct().getPriceExport()));
-            BigDecimal result = qty.multiply(price);
-            amount = result.setScale(2, RoundingMode.HALF_EVEN);
+    public Cart getOneByUser(Integer id) {
+        Optional<Users> user = customerService.findById(id);
+        if (user.isPresent()) {
+            Optional<Cart> cart = cartRepos.getByUser(user.get());
+            if (cart.isPresent()) {
+                return cart.get();
+            }
         }
-        return amount;
-    }
-
-    @Override
-    public Cart getOne(Integer id) {
         return null;
     }
 
@@ -124,5 +128,6 @@ public class CartSeviceImpl implements CartService {
         }
         return totalProduct;
     }
+
 
 }

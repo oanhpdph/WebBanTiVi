@@ -4,7 +4,7 @@ import com.poly.entity.Product;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
-import java.sql.Date;
+import java.util.Date;
 
 
 public interface CouponRes {

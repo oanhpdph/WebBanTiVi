@@ -3,28 +3,27 @@ package com.poly.service;
 import com.poly.entity.Cart;
 import com.poly.entity.CartProduct;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface CartService {
 
-    public List<CartProduct> getitems();
+    List<CartProduct> getitems();
 
-    public List<Cart> getAll();
+    List<Cart> getAll();
 
-    public List<CartProduct> add(Integer id, Integer qty);
+    Cart save(Cart cart);
 
-    public List<CartProduct> update(int id, Integer qty);
+    List<CartProduct> add(Integer id, Integer qty);
 
-    public List<CartProduct> delete(Integer id);
+    List<CartProduct> update(int id, Integer qty);
 
-    public void clear();
+    List<CartProduct> delete(Integer id);
 
-    public int getTotal();
+    void clear();
 
-    public int getTotalProduct();
+    int getTotal();
 
-    public BigDecimal getAmount();
+    int getTotalProduct();
 
-    Cart getOne(Integer id);
+    Cart getOneByUser(Integer id);
 }

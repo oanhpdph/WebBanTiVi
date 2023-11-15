@@ -5,7 +5,7 @@ function oncl(id) {
 $.each(document.getElementsByClassName("status"), function (index, item) {
     console.log(item)
     item.addEventListener("click", function () {
-        document.getElementById("status").value = item.getAttribute("value")
+        document.getElementById("status").value = item.value
         setAttributes()
         $("#search").click()
     })
