@@ -43,7 +43,7 @@ public class CartSeviceImpl implements CartService {
 
     @Override
     public Cart save(Cart cart) {
-        return null;
+        return cartRepos.save(cart);
     }
 
     @Override

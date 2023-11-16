@@ -3,10 +3,7 @@ package com.poly.controller.user;
 import com.poly.common.CheckLogin;
 import com.poly.dto.ProductDetailDto;
 import com.poly.dto.UserDetailDto;
-<<<<<<< HEAD
-=======
 import com.poly.entity.*;
->>>>>>> 0221d4753df46e713173c50e6e630c111090edb0
 import com.poly.entity.Product;
 import com.poly.entity.ProductDetail;
 import com.poly.service.CartService;
@@ -137,15 +134,10 @@ public class HomeUserController {
         model.addAttribute("listPhuKien", listPhuKien);
       
         UserDetailDto userDetailDto = checkLogin.checkLogin();
-<<<<<<< HEAD
-//        if (userDetailDto != null) {
-//            Cart cart = cartService.getOneByUser(userDetailDto.getId());
-//            session.setAttribute("list", cart.getListCartPro());
-//        }
-=======
         if (userDetailDto != null) {
             Cart cart = cartService.getOneByUser(userDetailDto.getId());
             if (cart == null) {
+                cart= new Cart();
                 Optional<Users> optional = customerService.findById(userDetailDto.getId());
                 if (optional.isPresent()) {
                     cart.setCustomer(optional.get());
@@ -154,8 +146,6 @@ public class HomeUserController {
             }
             session.setAttribute("list", cart.getListCartPro());
         }
->>>>>>> 0221d4753df46e713173c50e6e630c111090edb0
-        model.addAttribute("listPhuKien", phuKien);
         return "/user/index";
     }
 }

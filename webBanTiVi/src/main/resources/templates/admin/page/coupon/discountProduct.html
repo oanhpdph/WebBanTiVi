@@ -2,13 +2,13 @@
 <div class="row justify-content-end me-4">
           <!-- Nội dung của menu item -->
     </div>
-    <form class="row justify-content-end me-4">
+    <form class="justify-content-end me-4">
         <label>Thêm sản phẩm giảm giá:</label>
             <input type="text" class="form-control" th:name="keyword"
                    th:value="${param.keyword}" placeholder="Tìm theo SKU sản phẩm">
     </form>
         <form th:action="@{/admin/couponproduct/add}" method="post" th:object="${discountproduct}">
-            <div class="row justify-content-end me-4">
+            <div class="justify-content-end me-4">
                 <select id="products"  th:name="id" class="form-select">
                     <option th:each="product : ${listallproduct}" th:value="${product.id}"
                             th:text="${product.sku}"></option>
