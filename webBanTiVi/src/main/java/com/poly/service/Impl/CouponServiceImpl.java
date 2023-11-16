@@ -3,6 +3,7 @@ package com.poly.service.Impl;
 
 import com.poly.dto.CouponRes;
 import com.poly.entity.Coupon;
+import com.poly.entity.ProductDetail;
 import com.poly.repository.CouponRepository;
 import com.poly.service.CouponService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,9 @@ public class CouponServiceImpl implements CouponService {
     @Autowired
     CouponRepository couponRepository;
 
-
+    public List<ProductDetail> getAllByIdAndKeyword(Integer id, String keyword){
+    return couponRepository.getAllByIdAndKeyword(id,keyword);
+    }
     public List<CouponRes> getAllCouponRes(Date date){
         return couponRepository.getCouponRes(date);
     }

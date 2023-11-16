@@ -29,12 +29,12 @@
         <option value="CSS File" />
         <option value="Class" />
         <option value="HTML File" />
-        <option value="HTML File" />
         <option value="Interface" />
         <option value="HTML File" />
         <option value="Class" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -117,6 +117,19 @@
         </value>
       </option>
       <option name="TEST_OBJECT" value="CLASS" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -291,6 +304,8 @@
       <workItem from="1699890457512" duration="20890000" />
       <workItem from="1699978596584" duration="3953000" />
       <workItem from="1700050435892" duration="13013000" />
+      <workItem from="1700064957246" duration="10067000" />
+      <workItem from="1700145790064" duration="9115000" />
     </task>
     <servers />
   </component>
@@ -379,7 +394,7 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1700031787743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1700071710036" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.poly.*</FILTER>
     </SUITE>
   </component>

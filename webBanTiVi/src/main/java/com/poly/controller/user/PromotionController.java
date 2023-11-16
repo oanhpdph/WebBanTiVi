@@ -36,8 +36,6 @@ public class PromotionController {
     @Autowired
     CouponServiceImpl couponService;
     @Autowired
-    CouponProductServiceImpl couponProductService;
-    @Autowired
     ProductServiceImpl productService;
     LocalDate localDate = LocalDate.now();
     Date date = (Date) Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -99,7 +97,7 @@ public class PromotionController {
         model.addAttribute("couponres", couponRes);
         model.addAttribute("giagiam", Integer.parseInt(couponRes.getValue()));
         List<Product> listProduct = new ArrayList<>();
-        model.addAttribute("listproduct", couponProductService.findAllByCouponId(id));
+        model.addAttribute("listproduct", couponService.findById(id).get().getProductDetailList());
         session.setAttribute("pageView", "/user/page/promotion/coupondetail.html");
         return "/user/index";
     }
