@@ -75,15 +75,16 @@ public class BillImpl implements BillService {
         for (Integer id : billProRes.getProduct()) {
             list.add(productDetailRepo.findById(id));
         }
+
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isPresent()) {
                 BillProduct billProduct = new BillProduct();
                 billProduct.setBill(bill);
                 billProduct.setProduct(list.get(i).get());
                 billProduct.setPrice(list.get(i).get().getPriceExport());
-                billProduct.setQuantity(list.get(i).get().getQuantity());
+                billProduct.setQuantity(billProRes.getQty());
                 billProduct.setQuantityReturn(list.get(i).get().getQuantity());
-                billProduct.setReason("like");
+                billProduct.setReason("");
 //                billProduct.setReducedMoney();
                 this.billProductRepos.save(billProduct);
             }
@@ -98,7 +99,7 @@ public class BillImpl implements BillService {
 
         List<Predicate> list = new ArrayList<Predicate>();
         List<String> billStatus = new ArrayList<>();
-        if (searchBillDto.getBillStatus().equals("doncho")&&searchBillDto.getBillStatus().equals("")) {
+        if (searchBillDto.getBillStatus().equals("doncho") && searchBillDto.getBillStatus().equals("")) {
             billStatus.add("WP");
         } else if (searchBillDto.getBillStatus().equals("chuanbi")) {
             billStatus.add("PG");
@@ -126,9 +127,9 @@ public class BillImpl implements BillService {
         if (searchBillDto.getPaymentStatus() != -1) {
             list.add(criteriaBuilder.equal(billRoot.get("paymentStatus"), searchBillDto.getPaymentStatus()));
         }
-            for (String s : billStatus) {
-                list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), s)));
-            }
+        for (String s : billStatus) {
+            list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), s)));
+        }
 
         if (!searchBillDto.getDate().isEmpty()) {
             String date1 = searchBillDto.getDate().substring(0, searchBillDto.getDate().indexOf("-") - 1).replace("/", "-");
@@ -205,8 +206,6 @@ public class BillImpl implements BillService {
     public List<Bill> findBillReturnByStatus(String code) {
         return this.billRepos.findBillReturn(code);
     }
-
-
 
 
 }

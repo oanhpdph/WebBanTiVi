@@ -5,7 +5,8 @@
         <input hidden th:value="*{billStatus}" id="status" name="billStatus">
         <ul class="nav nav-tabs nav-fill fs-5" role="tablist">
             <li class="nav-item">
-                <button type="button" th:class="|nav-link status *{billStatus=='doncho' ? 'active':''}|"
+                <button type="button"
+                        th:class="|nav-link status *{billStatus == 'doncho' ? 'active' : ''}|"
                         data-bs-toggle="tab" value="doncho"
                         aria-selected="false">
                     Chờ xử lý
@@ -87,19 +88,19 @@
             </div>
         </div>
         <div class="card-body">
-            <div class="row mb-5">
-                <div class="mx-3 row" style="width: 180px">
-                    <label for="select-size" class="col-form-label col-5 text-end">View:</label>
-                    <div class="col-7">
-                        <select class="form-select text-start" id="select-size" th:name="size">
-                            <option value="10" th:selected="${session.size == 10}">10</option>
-                            <option value="20" th:selected="${session.size == 20}">20</option>
-                            <option value="40" th:selected="${session.size == 40}">40</option>
-                            <option value="80" th:selected="${session.size == 80}">80</option>
+            <div class="row mb-2 justify-content-between">
+                <div class="mx-3 col-md-2">
+                    <div class="input-group ">
+                        <label class="input-group-text" for="select-size">Xem:</label>
+                        <select class="form-select text-start" id="select-size" name="size">
+                            <option value="10" selected="selected">10</option>
+                            <option value="20">20</option>
+                            <option value="40">40</option>
+                            <option value="80">80</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-md-10 text-end">
+                <div class="col-md-5 text-end">
                     <div class="btn-group" role="group" aria-label="First group">
                         <a th:href="@{/admin/bill/list_bill/download_excel}" type="button"
                            class="btn btn-outline-secondary" data-bs-offset="0,4" data-bs-toggle="tooltip"

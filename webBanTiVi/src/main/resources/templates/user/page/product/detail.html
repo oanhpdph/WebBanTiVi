@@ -53,6 +53,7 @@
     }
 </style>
 <div class="container-xl">
+    <span hidden id="message">[(${message})]</span>
     <section class="row">
         <div class="col-lg-7 col-sm-12 mt-5 mb-5">
             <div class="card">
@@ -63,13 +64,12 @@
                             <div th:class="|carousel-item ${image.location==true?'active':''}|"
                                  th:each="image:${product.listImage}">
                                 <div>
-                                    <img th:src="@{'/image/'+${image?.link}}"
+                                    <img th:src="@{'/image/product/'+${image?.link}}"
                                          alt="" class="d-block w-100">
                                 </div>
                             </div>
                         </div>
-                        <a class="carousel-control-prev" href="#carouselExample"
-                           role="button"
+                        <a class="carousel-control-prev" href="#carouselExample" role="button"
                            data-bs-slide="prev">
                                                         <span class="carousel-control-prev-icon"
                                                               aria-hidden="true"></span>
@@ -89,26 +89,37 @@
         <div class="col-lg-5 mt-5 mb-5">
             <form th:action="@{/product/detail/{id}(id=${product.id})}" method="post">
                 <div class="product-detail-title">
-                    <h3 th:text="${product.product.nameProduct}">
-                    </h3>
+                    <h2 th:text="${product.product.nameProduct +' '+product.product.sku}">
+                    </h2>
                 </div>
-                <br>
                 <table class="table">
                     <tbody>
-                    <tr>
-                        <td>Giá:</td>
-                        <td th:text="${product.priceExport}">Text ...</td>
+                    <tr th:if="${reduceMoney!=0}">
+                        <td class="fs-5 text-strike-through"
+                            th:text="|${#numbers.formatDecimal(product.priceExport,0,'COMMA',0,'POINT')} (VNĐ)|"></td>
                     </tr>
-                    <tr>
-                        <td>Số lượng:</td>
-                        <td th:text="${product.quantity}">1</td>
+                    <tr th:if="${reduceMoney!=0}">
+                        <td class="fs-4"
+                            th:text="|${#numbers.formatDecimal(reduceMoney,0,'COMMA',0,'POINT')} (VNĐ)|"></td>
                     </tr>
-                    <tr>
+                    <tr th:if="${reduceMoney==0}">
+                        <td class="fs-4"
+                            th:text="|${#numbers.formatDecimal(product.priceExport,0,'COMMA',0,'POINT')} (VNĐ)|"></td>
+                    </tr>
+                    <tr th:if="${product.active==true}">
+                        <td class="fs-5" th:text="|Số lượng: ${product.quantity}|"></td>
                     </tr>
                     </tbody>
                 </table>
-                <br>
-                <div class="buttons_added" th:id="${product.id}">
+                <div class="mb-3">
+                    <a th:class="|border border-2 p-2 mb-3 mx-2 text-black ${product.id==productAll.id ? 'bg-label-primary':''}|"
+                       th:each="productAll:${productAll.productDetails}"
+                       th:href="@{'/product/detail/'+${productAll.id}}" th:if="${productAll.active==true}">
+                        <span th:each="field:${productAll.fieldList}" class="mx-2"><span
+                                th:text="|${field.value}|"></span></span>
+                    </a>
+                </div>
+                <div class="buttons_added mt-4 " th:id="${product.id}">
                     <input class="minus is-form" type="button"
                            value="-">
                     <input aria-label="quantity" class="input-qty" max="10" min="1"
@@ -118,36 +129,39 @@
                     <input class="plus is-form"
                            type="button" value="+">
                 </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="mt-3">
-                        <!-- Button trigger modal -->
-                        <button type="submit" class="btn btn-primary" th:if="${product.quantity!=0}">
-                            Thêm vào giỏ hàng
-                        </button>
+                <!--                <div class="col-lg-4 col-md-6">-->
+                <div class="mt-3">
+                    <!-- Button trigger modal -->
+                    <button type="submit" class="btn btn-primary w-auto"
+                            th:if="${product.quantity!=0 && product.active==true}">
+                        Thêm vào giỏ hàng
+                    </button>
+                    <span class="fs-5 text-danger" th:if="${product.quantity==0 && product.active==true}">Sản phẩm hiện chưa có hàng</span>
+                    <span class="fs-5 text-danger"
+                          th:if="${product.active!=true}">Sản phẩm đang ngừng bán</span>
 
-                        <!-- Modal -->
-                        <!--                                        <div class="modal fade" id="basicModal" tabindex="-1" style="display: none;"-->
-                        <!--                                             aria-hidden="true">-->
-                        <!--                                            <div class="modal-dialog" role="document">-->
-                        <!--                                                <div class="modal-content">-->
-                        <!--                                                    <div class="modal-header"></div>-->
-                        <!--                                                    <div class="modal-body text-center">-->
-                        <!--                                                        <h3>Thêm sản phẩm vào giỏ hàng?</h3>-->
-                        <!--                                                    </div>-->
-                        <!--                                                    <div class="modal-footer text-center">-->
-                        <!--                                                        <button type="submit" class="btn btn-primary text-center"-->
-                        <!--                                                                autofocus>-->
-                        <!--                                                            Xác nhận-->
-                        <!--                                                        </button>-->
-                        <!--                                                        <button type="button" class="btn btn-danger"-->
-                        <!--                                                                data-bs-dismiss="modal">-->
-                        <!--                                                            Hủy-->
-                        <!--                                                        </button>-->
-                        <!--                                                    </div>-->
-                        <!--                                                </div>-->
-                        <!--                                            </div>-->
-                        <!--                                        </div>-->
-                    </div>
+                    <!-- Modal -->
+                    <!--                                        <div class="modal fade" id="basicModal" tabindex="-1" style="display: none;"-->
+                    <!--                                             aria-hidden="true">-->
+                    <!--                                            <div class="modal-dialog" role="document">-->
+                    <!--                                                <div class="modal-content">-->
+                    <!--                                                    <div class="modal-header"></div>-->
+                    <!--                                                    <div class="modal-body text-center">-->
+                    <!--                                                        <h3>Thêm sản phẩm vào giỏ hàng?</h3>-->
+                    <!--                                                    </div>-->
+                    <!--                                                    <div class="modal-footer text-center">-->
+                    <!--                                                        <button type="submit" class="btn btn-primary text-center"-->
+                    <!--                                                                autofocus>-->
+                    <!--                                                            Xác nhận-->
+                    <!--                                                        </button>-->
+                    <!--                                                        <button type="button" class="btn btn-danger"-->
+                    <!--                                                                data-bs-dismiss="modal">-->
+                    <!--                                                            Hủy-->
+                    <!--                                                        </button>-->
+                    <!--                                                    </div>-->
+                    <!--                                                </div>-->
+                    <!--                                            </div>-->
+                    <!--                                        </div>-->
                 </div>
             </form>
         </div>
@@ -158,56 +172,17 @@
             </h3><br>
             <div class="table-responsive text-nowrap">
                 <table class="table table-striped" border="0px">
+                    <!--                    <thead>-->
+                    <!--                    <tr>-->
+                    <!--                        <td>Thông số</td>-->
+                    <!--                        <td>Giá trị</td>-->
+                    <!--                    </tr>-->
+                    <!--                    </thead>-->
                     <tbody class="table-border-bottom-0">
-                    <!--                                        <tr th:each="item : ${product.brand}">-->
-                    <!--                                            <td>Brand:</td>-->
-                    <!--                                            <td th:text="${item.nameBrand}"></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                        </tr>-->
-                    <!--                                        <tr th:each="item : ${product.origin}">-->
-                    <!--                                            <td>Origin:</td>-->
-                    <!--                                            <td th:text="${item.nameOrigin}"></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                        </tr>-->
-                    <!--                                        <tr th:each="item : ${product.manufacture}">-->
-                    <!--                                            <td>Manufacture:</td>-->
-                    <!--                                            <td th:text="${item.nameManufacture}"></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                        </tr>-->
-                    <!--                                        <tr th:each="item : ${product.color}">-->
-                    <!--                                            <td>Color:</td>-->
-                    <!--                                            <td th:text="${item.nameColor}"></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                        </tr>-->
-                    <!--                                        <tr th:each="item : ${product.type}">-->
-                    <!--                                            <td>Type:</td>-->
-                    <!--                                            <td th:text="${item.nameType}"></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                        </tr>-->
-                    <!--                                        <tr th:each="item : ${product.size}">-->
-                    <!--                                            <td>Size:</td>-->
-                    <!--                                            <td th:text="${item.nameSizeInch}"></td>-->
-                    <!--                                            <td th:text="${item.length}">px</td>-->
-                    <!--                                            <td th:text="${item.width}">px</td>-->
-                    <!--                                            <td th:text="${item.thickness}">cm</td>-->
-                    <!--                                        </tr>-->
-                    <!--                                        <tr th:each="item : ${product.resolution}">-->
-                    <!--                                            <td>Resolution:</td>-->
-                    <!--                                            <td th:text="${item.nameResolution}"></td>-->
-                    <!--                                            <td th:text="${item.screenLength}">px</td>-->
-                    <!--                                            <td th:text="${item.screenWidth}">px</td>-->
-                    <!--                                            <td></td>-->
-                    <!--                                        </tr>-->
+                    <tr th:each="item : ${product.product.productFieldValues}">
+                        <td>[(${item.field.name})]:</td>
+                        <td>[(${item.value})]</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -251,149 +226,156 @@
             </div>
         </div>
     </section>
-    <section class="related spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12" style="text-align: center">
-                    <h3 class="related-title">Related Product</h3>
-                </div>
-            </div>
-            <br>
-            <!--            <div class="row mb-5">-->
-            <!--                <div class="col-md-6 col-lg-3 mb-5" th:each="pro:${listPro}">-->
-            <!--                    <div class="card h-100">-->
-            <!--                        <div class="card-body">-->
-            <!--                            <div class="">-->
-            <!--                                <br>-->
-            <!--                                <span th:each="image:${pro.listImage}">-->
-            <!--                                    <img th:if="${image.location == true}"-->
-            <!--                                         th:src="@{'/image/'+${image.link}}"-->
-            <!--                                         alt="" width="100%">-->
-            <!--                                </span>-->
-            <!--                                <span class="fs-5">-->
-            <!--                                    <p th:text="${pro.product.nameProduct}"></p>-->
-            <!--                                </span>-->
-            <!--                                <span class="fs-5">-->
-            <!--                                    <p th:text="${pro.priceImport}"></p>-->
-            <!--                                </span>-->
-            <!--                                <div class="product__color__select">-->
-            <!--                                    <label for="pc-1">-->
-            <!--                                        <input type="radio" >-->
-            <!--                                    </label>-->
-            <!--                                    <label class="active black" for="pc-2">-->
-            <!--                                        <input type="radio" >-->
-            <!--                                    </label>-->
-            <!--                                    <label class="grey" for="pc-3">-->
-            <!--                                        <input type="radio" >-->
-            <!--                                    </label>-->
-            <!--                                </div>-->
-            <!--                                <div class="rating">-->
-            <!--                                    <i class='bx bxs-star' style='color:#ffff00'></i>-->
-            <!--                                    <i class='bx bxs-star' style='color:#ffff00'></i>-->
-            <!--                                    <i class='bx bxs-star' style='color:#ffff00'></i>-->
-            <!--                                    <i class='bx bxs-star-half' style='color:#ffff00'></i>-->
-            <!--                                    <i class='bx bxs-star' undefined></i>-->
-            <!--                                </div>-->
-            <!--                            </div>-->
-            <!--                            <br>-->
-            <!--                            <a th:href="@{/cart/add/{id}(id=${product.id})}" class="btn btn-outline-primary">+ Add To-->
-            <!--                                Cart</a>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--                <div class="col-md-6 col-lg-3">-->
-            <!--                    <div class="card h-100">-->
-            <!--                        <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap">-->
-            <!--                        <div class="card-body">-->
-            <!--                            <div class="product__item__text">-->
-            <!--                                <span class="fs-5">Ti Vi Samsung</span>-->
-            <!--                                <div class="rating">-->
-            <!--                                    <i class="fa fa-star-o"></i>-->
-            <!--                                    <i class="fa fa-star-o"></i>-->
-            <!--                                    <i class="fa fa-star-o"></i>-->
-            <!--                                    <i class="fa fa-star-o"></i>-->
-            <!--                                    <i class="fa fa-star-o"></i>-->
-            <!--                                </div>-->
-            <!--                                <span class="fs-5">$67.24</span>-->
-            <!--                                <div class="product__color__select">-->
-            <!--                                    <label for="pc-1">-->
-            <!--                                        <input type="radio" id="pc-1">-->
-            <!--                                    </label>-->
-            <!--                                    <label class="active black" for="pc-2">-->
-            <!--                                        <input type="radio" id="pc-2">-->
-            <!--                                    </label>-->
-            <!--                                    <label class="grey" for="pc-3">-->
-            <!--                                        <input type="radio" id="pc-3">-->
-            <!--                                    </label>-->
-            <!--                                </div>-->
-            <!--                            </div>-->
-            <!--                            <a href="javascript:void(0)" class="btn btn-outline-primary">+ Add To Cart</a>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
-        </div>
-    </section>
+    <!--    <section class="related spad mt-5">-->
+    <!--        <div class="container">-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-lg-12" style="text-align: center">-->
+    <!--                    <h3 class="related-title">Related Product</h3>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <br>-->
+    <!--            &lt;!&ndash;            <div class="row mb-5">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                <div class="col-md-6 col-lg-3 mb-5" th:each="pro:${listPro}">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    <div class="card h-100">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        <div class="card-body">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                            <div class="">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                <br>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                <span th:each="image:${pro.listImage}">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <img th:if="${image.location == true}"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                         th:src="@{'/image/'+${image.link}}"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                         alt="" width="100%">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                </span>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                <span class="fs-5">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <p th:text="${pro.product.nameProduct}"></p>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                </span>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                <span class="fs-5">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <p th:text="${pro.priceImport}"></p>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                </span>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                <div class="product__color__select">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <label for="pc-1">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                        <input type="radio" >&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    </label>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <label class="active black" for="pc-2">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                        <input type="radio" >&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    </label>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <label class="grey" for="pc-3">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                        <input type="radio" >&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    </label>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                </div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                <div class="rating">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <i class='bx bxs-star' style='color:#ffff00'></i>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <i class='bx bxs-star' style='color:#ffff00'></i>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <i class='bx bxs-star' style='color:#ffff00'></i>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <i class='bx bxs-star-half' style='color:#ffff00'></i>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <i class='bx bxs-star' undefined></i>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                </div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                            </div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                            <br>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                            <a th:href="@{/cart/add/{id}(id=${product.id})}" class="btn btn-outline-primary">+ Add To&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                Cart</a>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        </div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    </div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                </div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                <div class="col-md-6 col-lg-3">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    <div class="card h-100">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        <img class="card-img-top" src="../assets/img/elements/2.jpg" alt="Card image cap">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        <div class="card-body">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                            <div class="product__item__text">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                <span class="fs-5">Ti Vi Samsung</span>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                <div class="rating">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <i class="fa fa-star-o"></i>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <i class="fa fa-star-o"></i>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <i class="fa fa-star-o"></i>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <i class="fa fa-star-o"></i>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <i class="fa fa-star-o"></i>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                </div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                <span class="fs-5">$67.24</span>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                <div class="product__color__select">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <label for="pc-1">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                        <input type="radio" id="pc-1">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    </label>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <label class="active black" for="pc-2">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                        <input type="radio" id="pc-2">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    </label>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    <label class="grey" for="pc-3">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                        <input type="radio" id="pc-3">&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                    </label>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                                </div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                            </div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                            <a href="javascript:void(0)" class="btn btn-outline-primary">+ Add To Cart</a>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                        </div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    </div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;                </div>&ndash;&gt;-->
+    <!--            &lt;!&ndash;            </div>&ndash;&gt;-->
+    <!--        </div>-->
+    <!--    </section>-->
 </div>
 <br>
 </html>
-<style>
-    .product-detail-title {
-        font-size: 24px;
-        font-weight: bold;
+<script>
+    if (document.getElementById("message").textContent == 'true') {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "success",
+            title: "Thêm thành công"
+        });
     }
 
-    .product-detail-image {
-        max-width: 100%;
-        max-height: 400px;
-    }
-</style>
-<script>//<![CDATA[
-const plus = document.querySelectorAll(".plus")
-const minus = document.querySelectorAll(".minus")
+    const plus = document.querySelectorAll(".plus")
+    const minus = document.querySelectorAll(".minus")
 
-$(document).ready(
-    $.each(plus, function (index, item) {
-        // var temp = index
-        item.addEventListener("click", function (e) {
-            var quantityForm = document.querySelectorAll(".input-qty")
-            const totalPriceForm = document.querySelectorAll(".total-price")
-            const priceExportForm = document.querySelectorAll(".price-export")
+    $(document).ready(
+        $.each(plus, function (index, item) {
+            // var temp = index
+            item.addEventListener("click", function (e) {
+                var quantityForm = document.querySelectorAll(".input-qty")
+                const totalPriceForm = document.querySelectorAll(".total-price")
+                const priceExportForm = document.querySelectorAll(".price-export")
 
-            var valueInput = quantityForm[index].value
+                var valueInput = quantityForm[index].value
 
-            if (valueInput < Number(quantityForm[index].getAttribute('max'))) {
-                quantityForm[index].value = Number(valueInput) + 1
-                valueInput = Number(valueInput) + 1
-            }
+                if (valueInput < Number(quantityForm[index].getAttribute('max'))) {
+                    quantityForm[index].value = Number(valueInput) + 1
+                    valueInput = Number(valueInput) + 1
+                }
 
-            // var quantity = quantityForm[index].value
-            var priceExport = priceExportForm[index].getAttribute("value")
-            var totalPrice = Number(valueInput) * Number(priceExport)
+                // var quantity = quantityForm[index].value
+                var priceExport = priceExportForm[index].getAttribute("value")
+                var totalPrice = Number(valueInput) * Number(priceExport)
 
-            totalPriceForm[index].innerText = totalPrice
+                totalPriceForm[index].innerText = totalPrice
 
+            })
+        }),
+        $.each(minus, function (index, item) {
+            // var temp = index
+            item.addEventListener("click", function (e) {
+
+                const totalPriceForm = document.querySelectorAll(".total-price")
+                const priceExportForm = document.querySelectorAll(".price-export")
+                var quantityForm = document.querySelectorAll(".input-qty")
+
+                var valueInput = quantityForm[index].value// = 10
+
+                if (valueInput > Number(quantityForm[index].getAttribute('min'))) {
+                    quantityForm[index].value = Number(valueInput) - 1
+                    valueInput = Number(valueInput) - 1
+                }
+
+                var priceExport = priceExportForm[index].getAttribute("value")
+                var totalPrice = Number(valueInput) * Number(priceExport)
+
+                totalPriceForm[index].innerText = totalPrice
+            })
         })
-    }),
-    $.each(minus, function (index, item) {
-        // var temp = index
-        item.addEventListener("click", function (e) {
-
-            const totalPriceForm = document.querySelectorAll(".total-price")
-            const priceExportForm = document.querySelectorAll(".price-export")
-            var quantityForm = document.querySelectorAll(".input-qty")
-
-            var valueInput = quantityForm[index].value// = 10
-
-            if (valueInput > Number(quantityForm[index].getAttribute('min'))) {
-                quantityForm[index].value = Number(valueInput) - 1
-                valueInput = Number(valueInput) - 1
-            }
-
-            var priceExport = priceExportForm[index].getAttribute("value")
-            var totalPrice = Number(valueInput) * Number(priceExport)
-
-            totalPriceForm[index].innerText = totalPrice
-        })
-    })
-)</script>
+    )</script>

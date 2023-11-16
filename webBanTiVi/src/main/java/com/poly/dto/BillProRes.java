@@ -17,7 +17,7 @@ public class BillProRes {
 
     List<Integer> product;
     Bill bill;
-    Integer quantity;
+    Integer qty;
     String name;
     String address;
     String phoneNumber;

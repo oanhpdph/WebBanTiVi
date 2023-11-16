@@ -66,13 +66,6 @@
                             Thông tin khách hàng
                         </button>
                     </li>
-                    <li class="nav-item">
-                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                data-bs-target="#navs-top-image-video-returns" aria-controls="navs-top-messages"
-                                aria-selected="false">
-                            Ảnh/Video trả hàng
-                        </button>
-                    </li>
                 </ul>
                 <div class="tab-content" style="z-index: initial">
                     <div class="tab-pane fade active show" id="navs-top-info-customer" role="tabpanel">
@@ -116,7 +109,7 @@
                                         <td><strong>Email:</strong>
                                         </td>
                                         <td>
-                                            <p id="emailCustomerText" th:text="${deliveryNote?.deliveryEmail}"></p></td>
+                                            <p id="emailCustomerText" th:text="${deliveryNote?.receivedEmail}"></p></td>
                                     </tr>
                                     <tr>
                                         <td><strong>Tên người nhận:</strong>
@@ -168,67 +161,6 @@
                                 </table>
                             </div>
                         </form>
-                    </div>
-                    <div class="tab-pane fade" id="navs-top-image-video-returns" role="tabpanel">
-                        <small>(Click tên sản phẩm để hiển thị hình ảnh)</small>
-                        <div class="me-1" type="button" data-bs-toggle="collapse"
-                             data-bs-target="#collapseExample"
-                             aria-expanded="true" aria-controls="collapseExample">
-                            <strong>Tên sản phẩm:</strong> Tivi LG 230 Lưu ý rằng phiên bản của DatePicker. <br>
-                            <strong>Số lượng: </strong> <span>1</span>
-                        </div>
-                        <div class="collapse" id="collapseExample" style="">
-                            <div class="d-grid d-sm-flex p-3 border">
-                                <div class="row mt-4">
-                                    <div class="col-4">
-                                        <img th:src="@{/admin/assets/img/elements/11.jpg}" src=""
-                                             data-bs-toggle="modal"
-                                             data-bs-target="#maTraHang"
-                                             style="width: 90%" alt="">
-                                        <div class="modal fade" id="maTraHang" tabindex="-1" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog" role="document">
-                                                <div class="modal-content"
-                                                     style="background-color: transparent; box-shadow: none">
-                                                    <div class="col-md">
-                                                        <div id="carouselExample" class="carousel"
-                                                             data-bs-ride="carousel">
-                                                            <div class="px-5">
-                                                                <ol class="carousel-indicators">
-                                                                    <li data-bs-target="#carouselExample"
-                                                                        data-bs-slide-to="0" class=""></li>
-                                                                </ol>
-                                                                <div class="carousel-inner">
-                                                                    <div class="carousel-item">
-                                                                        <video class="d-block w-100 " controls>
-                                                                            <source th:src="@{/admin/assets/img/elements/WIN_20230905_12_44_01_Pro.mp4}"
-                                                                            >
-                                                                        </video>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <a class="carousel-control-prev"
-                                                               href="#carouselExample"
-                                                               role="button" data-bs-slide="prev">
-                                                                    <span class="carousel-control-prev-icon"
-                                                                          aria-hidden="true"></span>
-                                                                <span class="visually-hidden">Previous</span>
-                                                            </a>
-                                                            <a class="carousel-control-next"
-                                                               href="#carouselExample"
-                                                               role="button" data-bs-slide="next">
-                                                                    <span class="carousel-control-next-icon"
-                                                                          aria-hidden="true"></span>
-                                                                <span class="visually-hidden">Next</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

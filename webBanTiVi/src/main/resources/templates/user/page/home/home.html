@@ -381,7 +381,7 @@
 <section>
     <img class="d-block w-100" src="/image/tv-xiaomi-thang-9-1200x200.jpg" alt="Second slide">
 </section>
-<section class="container-xxl" th:if="${listTivi.totalElements>0}">
+<section class="container-xxl" th:if="${#lists.size(listTivi)>0}">
     <div class="mb-4">
         <div class="row mb-4 pt-3 row-cols-lg-3 row-cols-md-3 row-cols-xl-3"><h3
                 class="header col text-center bg-white pt-2 pb-2 title px-3 text-uppercase fw-bold">Tivi</h3>
@@ -393,27 +393,27 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <div class="row row-cols-1 row-cols-md-5 row-cols-sm-2 g-4">
-                        <div class="col" th:each="tivi,Stat:${listTivi}" th:if="${Stat.index<10 && tivi.active==true}">
+                        <div class="col" th:each="tivi,Stat:${listTivi}" th:if="${Stat.index<10}">
                             <div class="card h-100 item-product">
-                                <img class="img-fluid d-flex mx-auto my-4"
-                                     th:each="image:${tivi.productDetails[0].listImage}" th:if="${image.location==true}"
-                                     th:src="|/image/${image.link}|"
-                                     alt="Hình ảnh bị lỗi"/>
+
                                 <div class="card-body">
-                                    <a th:href="@{'/product/detail/'+${tivi.productDetails[0].id}}"
+                                    <img class="img-fluid d-flex mx-auto my-4"
+                                         th:src="|/image/product/${tivi.image}|"
+                                         alt="Hình ảnh bị lỗi"/>
+                                    <a th:href="@{'/product/detail/'+${tivi.id}}"
                                        class="stretched-link mb-2 text-black">
                                             <span class="fs-5 fw-semibold card-title"
-                                                  th:text="${tivi.nameProduct +' '+tivi.sku}">
+                                                  th:text="${tivi.nameProduct}">
                                                         </span></a>
-                                    <div><span class="text-strike-through fs-6 "> 5000<small
+                                    <div th:if="${tivi.price!=0}"><span class="text-strike-through fs-6 "> [(${tivi.price)]<small
                                             class="align-text-top">đ</small></span>
                                     </div>
                                     <div><span class="text-danger fs-6 fw-bold"
-                                    >[(${#numbers.formatDecimal(tivi.productDetails[0].priceExport,0,'COMMA',0,'POINT')})] <small
+                                    >[(${#numbers.formatDecimal(tivi.reduceMoney,0,'COMMA',0,'POINT')})] <small
                                             class="align-text-top">đ</small></span>
                                     </div>
                                     <div>
-                                        <span>[(${tivi.avgPoint})]<i class='bx bxs-star' style='color:#fee500'></i>([(${#lists.size(tivi.listEvaluate)})])</span>
+                                        <span>[(${tivi.point})]<i class='bx bxs-star' style='color:#fee500'></i>([(${tivi.quantityEvalute})])</span>
                                     </div>
                                 </div>
                             </div>
@@ -423,26 +423,26 @@
                 <div class="carousel-item">
                     <div class="row row-cols-1 row-cols-md-5 row-cols-sm-2 g-4">
                         <div class="col" th:each="tivi,Stat:${listTivi}"
-                             th:if="${Stat.index>=10 && Stat.index<20 && tivi.active==true}">
+                             th:if="${Stat.index>=10 && Stat.index<20}">
                             <div class="card h-100 item-product">
-                                <img class="img-fluid d-flex mx-auto my-4"
-                                     th:each="image:${tivi.productDetails[0].listImage}" th:if="${image.location==true}"
-                                     th:src="|/image/${image.link}|"
-                                     alt="Hình ảnh bị lỗi"/>
                                 <div class="card-body">
-                                    <a th:href="@{'/product/detail/'+${tivi.productDetails[0].id}}"
+                                    <img class="img-fluid d-flex mx-auto my-4"
+                                         th:src="|/image/product/${tivi.image}|"
+                                         alt="Hình ảnh bị lỗi"/>
+                                    <a th:href="@{'/product/detail/'+${tivi.id}}"
                                        class="stretched-link mb-2 text-black">
                                             <span class="fs-5 fw-semibold card-title"
-                                                  th:text="${tivi.nameProduct + ' '+ tivi.sku}">
+                                                  th:text="${tivi.nameProduct}">
                                                         </span></a>
-                                    <div><span class="text-strike-through fs-6 ">5000 <small
+                                    <div th:if="${tivi.price!=0}"><span class="text-strike-through fs-6 "> [(${tivi.price)]<small
                                             class="align-text-top">đ</small></span>
                                     </div>
-                                    <div><span class="text-danger fs-6 fw-bold">5000 <small
+                                    <div><span class="text-danger fs-6 fw-bold"
+                                    >[(${#numbers.formatDecimal(tivi.reduceMoney,0,'COMMA',0,'POINT')})] <small
                                             class="align-text-top">đ</small></span>
                                     </div>
                                     <div>
-                                        <span>[(${tivi.avgPoint})]<i class='bx bxs-star' style='color:#fee500'></i>([(${#lists.size(tivi.listEvaluate)})])</span>
+                                        <span>[(${tivi.point})]<i class='bx bxs-star' style='color:#fee500'></i>([(${tivi.quantityEvalute)})])</span>
                                     </div>
                                 </div>
                             </div>
@@ -464,7 +464,7 @@
         </div>
     </div>
 </section>
-<section class="container-xxl" th:if="${listPhuKien.totalElements>0}">
+<section class="container-xxl" th:if="${#lists.size(listPhuKien)>0}">
     <div class="mb-4">
         <!--            <div class="">-->
         <div class="row mb-4 pt-3 row-cols-lg-3 row-cols-md-3 row-cols-xl-3"><h3
@@ -478,28 +478,26 @@
                 <div class="carousel-item active">
                     <div class="row row-cols-1 row-cols-md-5 row-cols-sm-2 g-4">
                         <div class="col" th:each="phuKien,Stat:${listPhuKien}"
-                             th:if="${Stat.index<10 && phuKien.active==true}">
+                             th:if="${Stat.index<10}">
                             <div class="card h-100 item-product">
-                                <img class="img-fluid d-flex mx-auto my-4"
-                                     th:each="image:${phuKien.productDetails[0].listImage}"
-                                     th:if="${image.location==true}"
-                                     th:src="|/image/${image.link}|"
-                                     alt="Hình ảnh bị lỗi"/>
                                 <div class="card-body">
-                                    <a th:href="@{'/product/detail/'+${phuKien.productDetails[0].id}}"
+                                    <img class="img-fluid d-flex mx-auto my-4"
+                                         th:src="|/image/product/${phuKien.image}|"
+                                         alt="Hình ảnh bị lỗi"/>
+                                    <a th:href="@{'/product/detail/'+${phuKien.id}}"
                                        class="stretched-link mb-2 text-black">
                                             <span class="fs-5 fw-semibold card-title"
-                                                  th:text="${phuKien.nameProduct +' '+phuKien.sku}">
+                                                  th:text="${phuKien.nameProduct}">
                                                         </span></a>
-                                    <div><span class="text-strike-through fs-6 "> 5000<small
+                                    <div th:if="${phuKien.price!=0}"><span class="text-strike-through fs-6"> [(${phuKien.price})]<small
                                             class="align-text-top">đ</small></span>
                                     </div>
                                     <div><span class="text-danger fs-6 fw-bold"
-                                    >[(${#numbers.formatDecimal(phuKien.productDetails[0].priceExport,0,'COMMA',0,'POINT')})] <small
+                                    >[(${#numbers.formatDecimal(phuKien.reduceMoney,0,'COMMA',0,'POINT')})] <small
                                             class="align-text-top">đ</small></span>
                                     </div>
                                     <div>
-                                        <span>[(${phuKien.avgPoint})]<i class='bx bxs-star' style='color:#fee500'></i>([(${#lists.size(phuKien.listEvaluate)})])</span>
+                                        <span>[(${phuKien.point})]<i class='bx bxs-star' style='color:#fee500'></i>([(${phuKien.quantityEvalute})])</span>
                                     </div>
                                 </div>
                             </div>
@@ -509,27 +507,27 @@
                 <div class="carousel-item">
                     <div class="row row-cols-1 row-cols-md-5 row-cols-sm-2 g-4">
                         <div class="col" th:each="phuKien,Stat:${listPhuKien}"
-                             th:if="${Stat.index>=10 && Stat.index<20 && phuKien.active==true}">
+                             th:if="${Stat.index>=10 && Stat.index<20}">
                             <div class="card h-100 item-product">
-                                <img class="img-fluid d-flex mx-auto my-4"
-                                     th:each="image:${phuKien.productDetails[0].listImage}"
-                                     th:if="${image.location==true}"
-                                     th:src="|/image/${image.link}|"
-                                     alt="Hình ảnh bị lỗi"/>
+
                                 <div class="card-body">
-                                    <a th:href="@{'/product/detail/'+${phuKien.productDetails[0].id}}"
+                                    <img class="img-fluid d-flex mx-auto my-4"
+                                         th:src="|/image/product/${phuKien.image}|"
+                                         alt="Hình ảnh bị lỗi"/>
+                                    <a th:href="@{'/product/detail/'+${phuKien.id}}"
                                        class="stretched-link mb-2 text-black">
                                             <span class="fs-5 fw-semibold card-title"
-                                                  th:text="${phuKien.nameProduct + ' '+ phuKien.sku}">
+                                                  th:text="${phuKien.nameProduct}">
                                                         </span></a>
-                                    <div><span class="text-strike-through fs-6 ">5000 <small
+                                    <div th:if="${phuKien.price!=0}"><span class="text-strike-through fs-6"> [(${phuKien.price})]<small
                                             class="align-text-top">đ</small></span>
                                     </div>
-                                    <div><span class="text-danger fs-6 fw-bold">5000 <small
+                                    <div><span class="text-danger fs-6 fw-bold"
+                                    >[(${#numbers.formatDecimal(phuKien.reduceMoney,0,'COMMA',0,'POINT')})] <small
                                             class="align-text-top">đ</small></span>
                                     </div>
                                     <div>
-                                        <span>[(${phuKien.avgPoint})]<i class='bx bxs-star' style='color:#fee500'></i>([(${#lists.size(phuKien.listEvaluate)})])</span>
+                                        <span>[(${phuKien.point})]<i class='bx bxs-star' style='color:#fee500'></i>([(${phuKien.quantityEvalute})])</span>
                                     </div>
                                 </div>
                             </div>
