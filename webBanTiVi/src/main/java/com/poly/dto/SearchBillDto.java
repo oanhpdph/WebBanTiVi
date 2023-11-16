@@ -9,6 +9,6 @@ public class SearchBillDto {
 
     public String date = "";
     public String key = "";
-    public String billStatus="cho";
+    public String billStatus = "";
     public Integer paymentStatus = -1;
 }

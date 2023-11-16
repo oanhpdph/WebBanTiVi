@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="" />
+    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,13 +29,13 @@
         <option value="Interface" />
         <option value="JavaScript File" />
         <option value="CSS File" />
-        <option value="Class" />
         <option value="HTML File" />
         <option value="HTML File" />
         <option value="Interface" />
         <option value="HTML File" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
+        <option value="Class" />
         <option value="Class" />
       </list>
     </option>
@@ -117,6 +119,19 @@
         </value>
       </option>
       <option name="TEST_OBJECT" value="CLASS" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -290,7 +305,9 @@
       <workItem from="1699888464488" duration="1821000" />
       <workItem from="1699890457512" duration="20890000" />
       <workItem from="1699978596584" duration="3953000" />
-      <workItem from="1700050435892" duration="13013000" />
+      <workItem from="1700050435892" duration="7536000" />
+      <workItem from="1700065229738" duration="16774000" />
+      <workItem from="1700113799391" duration="20147000" />
     </task>
     <servers />
   </component>
@@ -357,11 +374,9 @@
       </pinned-members>
     </pin-to-top-manager>
     <watches-manager>
-      <configuration name="SpringBootApplicationConfigurationType">
-        <watch expression="valueHolder" />
-        <watch expression="fallback" />
-        <watch expression="paramName" />
-      </configuration>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/com/poly/controller/user/ProductDetailUserController.java" line="49">
+        <watch expression="model" language="JAVA" />
+      </inline-watch>
     </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">

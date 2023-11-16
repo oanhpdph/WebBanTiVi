@@ -101,6 +101,7 @@ CREATE TABLE voucher
      name_voucher     VARCHAR(100) not null,
      [value]          INT not null,
      minimum_value    MONEY not null,-- giá trị đơn hàng tối thiểu cần
+     maximum_discount MONEY not null,--giá trị tối đa đơn hàng giảm
      quantity         INT not null, -- số lượng voucher
 	 start_day		  DATE not null,-- thời gian bắt đầu có hiệu lực
      expiration_date  DATE not null,-- thời gian mã giảm giá hết hiệu lực
@@ -311,8 +312,8 @@ INSERT INTO [dbo].[bill_status]
            ('WR'
            ,N'Chờ trả hàng'
            ,N'Chờ sản phẩm gửi về khi yêu cầu trả hàng được xác nhận')
-
 GO
+
 INSERT INTO [dbo].[bill_status]
            ([code]
            ,[status]
@@ -346,5 +347,8 @@ INSERT INTO [dbo].[payment_method]
            ,1
            ,N'Thanh toán trực tuyến qua Vn-pay')
 GO
+
+insert into group_product values('Tivi')
+insert into group_product values(N'Phụ kiện')
 
 		

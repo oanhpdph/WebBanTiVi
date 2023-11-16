@@ -51,4 +51,7 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<ProductDetail> productDetails;
+
+    @OneToMany(mappedBy = "product")
+    private List<ProductFieldValue> productFieldValues;
 }

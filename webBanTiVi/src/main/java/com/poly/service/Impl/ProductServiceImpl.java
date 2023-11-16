@@ -1,11 +1,14 @@
 package com.poly.service.Impl;
 
+import com.poly.dto.Attribute;
 import com.poly.dto.ProductDetailDto;
 import com.poly.entity.Product;
 import com.poly.entity.ProductDetail;
+import com.poly.entity.ProductFieldValue;
 import com.poly.repository.CouponRepository;
 import com.poly.repository.ProductDetailRepo;
 import com.poly.repository.ProductRepository;
+import com.poly.service.ProductFieldValueService;
 import com.poly.service.ProductService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -33,6 +36,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductDetailRepo productDetailRepo;
+
+    @Autowired
+    private ProductFieldValueService productFieldValueService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -99,6 +105,17 @@ public class ProductServiceImpl implements ProductService {
                 }
             } else {
                 product1.setActive(product.isActive());
+            }
+            List<ProductFieldValue> productFieldValue = productFieldValueService.findByProduct(product1);
+            if (!productFieldValue.isEmpty()) {
+                for (int i = 0; i < productFieldValue.size(); i++) {
+                    for (Attribute attribute : product.getProduct()) {
+                        if (attribute.getId() == productFieldValue.get(i).getId()) {
+                            productFieldValue.get(i).setValue(attribute.getValue());
+                            productFieldValueService.save(productFieldValue.get(i));
+                        }
+                    }
+                }
             }
             productRepository.save(product1);
         }

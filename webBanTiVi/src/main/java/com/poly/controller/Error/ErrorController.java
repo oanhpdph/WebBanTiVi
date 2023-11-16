@@ -8,7 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/error")
 public class ErrorController {
     @GetMapping("/403")
-    public String getError(){
+    public String getError() {
+        return "login/error403";
+    }
+
+    @GetMapping("/404")
+    public String error404() {
+        return "login/error403";
+    }
+    @GetMapping("/500")
+    public String error500() {
         return "login/error403";
     }
 

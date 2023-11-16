@@ -75,6 +75,7 @@ public class BillImpl implements BillService {
         for (Integer id : billProRes.getProduct()) {
             list.add(productDetailRepo.findById(id));
         }
+
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isPresent()) {
                 BillProduct billProduct = new BillProduct();
@@ -83,7 +84,7 @@ public class BillImpl implements BillService {
                 billProduct.setPrice(list.get(i).get().getPriceExport());
                 billProduct.setQuantity(billProRes.getQty());
                 billProduct.setQuantityReturn(list.get(i).get().getQuantity());
-                billProduct.setReason("like");
+                billProduct.setReason("");
 //                billProduct.setReducedMoney();
                 this.billProductRepos.save(billProduct);
             }

@@ -285,6 +285,21 @@ function clickSave() {
         success: function () {
             $("#table-product-detail tbody").empty()
             clear()
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "Thêm sản phẩm thành công"
+            });
         }
     })
 }
