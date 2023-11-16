@@ -53,10 +53,12 @@ public class CartProductImpl implements CartProductService {
             cartProduct.setCart(cart1);
         } else {
             cartProduct.setCart(cart);
-            for (CartProduct product : cart.getListCartPro()) {
-                if (product.getProduct().getId() == productDetail.getId()) {
-                    product.setQuantity(product.getQuantity() + dto.getQuantity());
-                    return update(product);
+            if(cart.getListCartPro() !=null) {
+                for (CartProduct product : cart.getListCartPro()) {
+                    if (product.getProduct().getId() == productDetail.getId()) {
+                        product.setQuantity(product.getQuantity() + dto.getQuantity());
+                        return update(product);
+                    }
                 }
             }
         }
