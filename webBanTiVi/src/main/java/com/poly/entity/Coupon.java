@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "discount")
@@ -38,10 +39,6 @@ public class Coupon {
     @Column(name = "date_end")
     private Date dateEnd;
 
-
-
-
-//    @ManyToOne
-//    @JoinColumn(name = "id_product")
-//    private Product product;
+    @OneToMany(mappedBy = "coupon", fetch = FetchType.EAGER)
+    private List<ProductDetail> productDetailList;
 }

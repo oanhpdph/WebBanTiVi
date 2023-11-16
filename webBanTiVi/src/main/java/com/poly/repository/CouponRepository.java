@@ -2,6 +2,7 @@ package com.poly.repository;
 
 import com.poly.dto.CouponRes;
 import com.poly.entity.Coupon;
+import com.poly.entity.ProductDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,4 +17,7 @@ public interface CouponRepository extends JpaRepository<Coupon, Integer> {
     List<CouponRes> getCouponRes(Date date);
     @Query("select c from Coupon c where c.active=true")
     List<Coupon> getAllByActive();
+    @Query("select p from Coupon c join ProductDetail p on c.id = p.coupon.id " +
+            "where c.id=?1 and p.sku like ?2")
+    List<ProductDetail> getAllByIdAndKeyword(Integer id, String keyword);
 }

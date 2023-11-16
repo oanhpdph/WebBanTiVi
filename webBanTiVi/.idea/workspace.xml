@@ -30,13 +30,16 @@
         <option value="JavaScript File" />
         <option value="CSS File" />
         <option value="HTML File" />
-        <option value="HTML File" />
         <option value="Interface" />
         <option value="HTML File" />
         <option value="Interface" />
         <option value="Class" />
+<<<<<<< HEAD
+        <option value="HTML File" />
+=======
         <option value="Class" />
         <option value="Class" />
+>>>>>>> 0221d4753df46e713173c50e6e630c111090edb0
       </list>
     </option>
   </component>
@@ -305,9 +308,15 @@
       <workItem from="1699888464488" duration="1821000" />
       <workItem from="1699890457512" duration="20890000" />
       <workItem from="1699978596584" duration="3953000" />
+<<<<<<< HEAD
+      <workItem from="1700050435892" duration="13013000" />
+      <workItem from="1700064957246" duration="10067000" />
+      <workItem from="1700145790064" duration="9115000" />
+=======
       <workItem from="1700050435892" duration="7536000" />
       <workItem from="1700065229738" duration="16774000" />
       <workItem from="1700113799391" duration="20147000" />
+>>>>>>> 0221d4753df46e713173c50e6e630c111090edb0
     </task>
     <servers />
   </component>
@@ -384,7 +393,11 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+<<<<<<< HEAD
+    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1700071710036" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+=======
     <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1699688221253" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+>>>>>>> 0221d4753df46e713173c50e6e630c111090edb0
       <FILTER>com.poly.*</FILTER>
     </SUITE>
   </component>
