@@ -1,8 +1,10 @@
 package com.poly.config;
 
 import com.poly.repository.CustomerRepository;
-//import com.poly.repository.StaffRepository;
 import com.poly.service.Impl.UserDetailServiceImpl;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,12 +16,17 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,22 +51,33 @@ public class SecurityConfig {
                                 .requestMatchers("/error/**").permitAll()
                                 .requestMatchers("/user/assets/**").permitAll()
                                 .requestMatchers("/user/plugin/**").permitAll()
-//                                .requestMatchers("/user/**").permitAll()
                                 .requestMatchers("/admin/plugin/**").permitAll()
                                 .requestMatchers("/admin/assets/**").permitAll()
                                 .requestMatchers("/image/**").permitAll()
                                 .requestMatchers("/**").permitAll()
                                 .requestMatchers("/admin/dashboard/**").permitAll()
-//                                .requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "STAFF")
                                 .anyRequest().authenticated())
                 .authenticationProvider(CustomerAuthenticationProvider())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
+                        .failureHandler(new MyFailureHandler())
                         .permitAll()
                 )
-                .exceptionHandling((exception)-> exception.accessDeniedHandler(myAccessDeniedHandler()));
+                .exceptionHandling((exception) -> exception.accessDeniedHandler(myAccessDeniedHandler()));
 
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
+        return new AuthenticationSuccessHandler() {
+            @Override
+            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+
+                // Chuyển hướng người dùng đến trang chủ
+                response.sendRedirect("/");
+            }
+        };
     }
 
     @Bean
@@ -93,7 +111,14 @@ public class SecurityConfig {
     @Bean
     public AccessDeniedHandler myAccessDeniedHandler() {
         return new MyAccessDeniedHandler();
-    }
+    };
 
+    public class MyFailureHandler implements AuthenticationFailureHandler {
+        @Override
+        public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws ServletException, IOException {
+            request.getSession().setAttribute("error", exception.getMessage());
+            response.sendRedirect(request.getContextPath() + "/login");
+        }
+    }
 
 }

@@ -46,7 +46,7 @@
                     <tr th:each="billReturn : ${listAgree}">
                         <td>1</td>
                         <td>[(${billReturn.bill.id})]</td>
-                        <td>[(${billReturn.product.productnameProduct})]</td>
+                        <td>[(${billReturn.product.product.nameProduct})]</td>
                         <td>[(${billReturn.quantityReturn})]</td>
                         <td>[(${billReturn.note})]</td>
                         <td>[(${billReturn.reason})]</td>
