@@ -106,13 +106,15 @@ public class ProductServiceImpl implements ProductService {
             } else {
                 product1.setActive(product.isActive());
             }
-            List<ProductFieldValue> productFieldValue = productFieldValueService.findByProduct(product1);
-            if (!productFieldValue.isEmpty()) {
-                for (int i = 0; i < productFieldValue.size(); i++) {
-                    for (Attribute attribute : product.getProduct()) {
-                        if (attribute.getId() == productFieldValue.get(i).getId()) {
-                            productFieldValue.get(i).setValue(attribute.getValue());
-                            productFieldValueService.save(productFieldValue.get(i));
+            if (product.getProduct()!= null) {
+                List<ProductFieldValue> productFieldValue = productFieldValueService.findByProduct(product1);
+                if (!productFieldValue.isEmpty()) {
+                    for (int i = 0; i < productFieldValue.size(); i++) {
+                        for (Attribute attribute : product.getProduct()) {
+                            if (attribute.getId() == productFieldValue.get(i).getField().getId()) {
+                                productFieldValue.get(i).setValue(attribute.getValue());
+                                productFieldValueService.save(productFieldValue.get(i));
+                            }
                         }
                     }
                 }

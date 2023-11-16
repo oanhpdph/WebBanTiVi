@@ -180,7 +180,6 @@ $.each(document.getElementsByClassName("update-active-product"), function (index
                                 }
                             })
 
-
                             var data = {
                                 id: item.value,
                                 active: item.checked
@@ -300,6 +299,7 @@ $.each(document.getElementsByClassName("edit-product"), function (index, item) {
             data: data,
             // contentType: "application/json",
             success: function (data) {
+                var localData = data
                 document.getElementById("save").value = data.id
                 var table = document.querySelector("#table-detail-modal tbody")
                 $("#table-detail-modal tbody").empty()
@@ -327,26 +327,27 @@ $.each(document.getElementsByClassName("edit-product"), function (index, item) {
                     var data = {}
                     data.product = []
                     data.id = $("#save").val()
+                    data.active = localData.active
                     $.each($(".attributes-update"), function (index, item) {
                         var attri = {
                             id: item.id.substring(2, item.id.length),
-                            value: item.value
+                            value: item.value,
+
                         }
                         data.product.push(attri)
                     })
                     console.log(data)
+                    console.log(data)
                     $.ajax({
                         url: "/product/update-product",
-                        method: "port",
+                        method: "post",
                         data: JSON.stringify(data),
                         contentType: "application/json",
                         success: function (data) {
-
                         }
                     })
                 })
             }
         })
     })
-
 })
