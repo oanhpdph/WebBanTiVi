@@ -79,7 +79,7 @@ public class CartController {
             session.setAttribute("list", cart.getListCartPro());
             return "user/index";
         }
-        int total = cartService.getTotalProduct();
+        BigDecimal total = cartService.getAmount();
         model.addAttribute("total", total);
         return "user/index";
     }
@@ -91,9 +91,7 @@ public class CartController {
     }
 
     @PostMapping("/purchase")
-    public String addBill(BigDecimal orderTotal,
-                          String orderInfo,
-                          HttpServletRequest request,
+    public String addBill(HttpServletRequest request,
                           Model model,
                           Integer id,
                           @ModelAttribute(value = "billProduct") BillProRes billProRes) throws UnsupportedEncodingException, NoSuchAlgorithmException {
@@ -118,7 +116,9 @@ public class CartController {
             }
 
         }
-        int total = cartService.getTotalProduct();
+        BigDecimal total = cartService.getAmount();
+//         billProRes.setCustomer(checkEmail);
+        billProRes.setTotalPrice(total);
         Bill bill1 = billService.add(billProRes);
         billProRes.setBill(bill1);
 
@@ -127,10 +127,14 @@ public class CartController {
             //VNPAY
             String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
             String vnpayUrl = vnPayService.createOrder(total, bill1.getCode(), baseUrl);
+            billProRes.setProduct(Collections.singletonList(id));
+            billProRes.setQty(qty);
+            billService.addBillPro(bill1, billProRes);
             cartService.clear();
             return "redirect:" + vnpayUrl;
         } else {
             billProRes.setProduct(Collections.singletonList(id));
+            billProRes.setQty(qty);
             billService.addBillPro(bill1, billProRes);
             cartService.clear();
             return "redirect:/confirm";
@@ -157,11 +161,11 @@ public class CartController {
             session.setAttribute("list", cart.getListCartPro());
             return "user/index";
         }
-        if (cartService.getTotal() == 0) {
+   if (cartService.getTotal() == 0) {
             session.setAttribute("pageView", "/user/page/product/cart_null.html");
             return "user/index";
         }
-        int total = cartService.getTotalProduct();
+        BigDecimal total = cartService.getAmount();
         model.addAttribute("total", total);
 
         return "user/index";

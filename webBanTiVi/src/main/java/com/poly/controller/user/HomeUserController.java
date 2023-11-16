@@ -4,6 +4,8 @@ import com.poly.common.CheckLogin;
 import com.poly.dto.ProductDetailDto;
 import com.poly.dto.UserDetailDto;
 import com.poly.entity.*;
+import com.poly.entity.Product;
+import com.poly.entity.ProductDetail;
 import com.poly.service.CartService;
 import com.poly.service.CustomerService;
 import com.poly.service.ProductService;
@@ -130,6 +132,7 @@ public class HomeUserController {
             }
         }
         model.addAttribute("listPhuKien", listPhuKien);
+      
         UserDetailDto userDetailDto = checkLogin.checkLogin();
         if (userDetailDto != null) {
             Cart cart = cartService.getOneByUser(userDetailDto.getId());
@@ -142,7 +145,7 @@ public class HomeUserController {
             }
             session.setAttribute("list", cart.getListCartPro());
         }
-
+        model.addAttribute("listPhuKien", phuKien);
         return "/user/index";
     }
 }
