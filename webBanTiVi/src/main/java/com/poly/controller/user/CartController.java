@@ -320,13 +320,11 @@ public class CartController {
             String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
             String vnpayUrl = vnPayService.createOrder(total, bill1.getCode(), baseUrl);
             billProRes.setProduct(Collections.singletonList(id));
-            billProRes.setQty(qty);
             billService.addBillPro(bill1, billProRes);
             cartService.clear();
             return "redirect:" + vnpayUrl;
         } else {
             billProRes.setProduct(Collections.singletonList(id));
-            billProRes.setQty(qty);
             billService.addBillPro(bill1, billProRes);
             cartService.clear();
             return "redirect:/confirm";
@@ -342,7 +340,7 @@ public class CartController {
             Cart cart = cartService.getOneByUser(userDetailDto.getId());
             if (cart.getListCartPro().size() == 0) {
                 session.setAttribute("pageView", "/user/page/product/cart_null.html");
-                session.setAttribute("list",null);
+                session.setAttribute("list", null);
                 return "user/index";
             }
             BigDecimal total = new BigDecimal(0);
@@ -353,7 +351,7 @@ public class CartController {
             session.setAttribute("list", cart.getListCartPro());
             return "user/index";
         }
-   if (cartService.getTotal() == 0) {
+        if (cartService.getTotal() == 0) {
             session.setAttribute("pageView", "/user/page/product/cart_null.html");
             return "user/index";
         }
@@ -418,7 +416,7 @@ public class CartController {
             }
             session.setAttribute("list", list);
         }
-        redirectAttributes.addFlashAttribute("message","update-success");
+        redirectAttributes.addFlashAttribute("message", "update-success");
         return "redirect:/cart";
     }
 }
