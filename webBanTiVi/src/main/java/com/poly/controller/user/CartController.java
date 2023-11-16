@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -64,9 +65,22 @@ public class CartController {
 
     @GetMapping("/pay")
     public String pay(Model model) {
+        session.setAttribute("pageView", "/user/page/product/pay.html");
+        model.addAttribute("billProduct", new BillProRes());
+
+        UserDetailDto userDetailDto = checkLogin.checkLogin();
+        if (userDetailDto != null) {
+            Cart cart = cartService.getOneByUser(userDetailDto.getId());
+            BigDecimal total = new BigDecimal(0);
+            for (CartProduct product : cart.getListCartPro()) {
+                total = total.add(product.getProduct().getPriceExport().multiply(BigDecimal.valueOf(product.getQuantity())));
+            }
+            model.addAttribute("total", total);
+            session.setAttribute("list", cart.getListCartPro());
+            return "user/index";
+        }
         int total = cartService.getTotalProduct();
         model.addAttribute("total", total);
-        session.setAttribute("pageView", "/user/page/product/pay.html");
         return "user/index";
     }
 
@@ -81,18 +95,33 @@ public class CartController {
                           String orderInfo,
                           HttpServletRequest request,
                           Model model,
-                          String email,
                           Integer id,
-                          @ModelAttribute("billProduct") BillProRes billProRes) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        Users checkEmail = customerService.findByEmail(email);
+                          @ModelAttribute(value = "billProduct") BillProRes billProRes) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+
+        Users checkEmail = customerService.findByEmail(billProRes.getEmail());
+        UserDetailDto userDetailDto = checkLogin.checkLogin();
 
         if (checkEmail == null) {
             checkEmail = customerService.add(billProRes);
+            billProRes.setCustomer(checkEmail);
+        } else if (checkEmail != null && checkEmail.getRoles() == null) {
+            billProRes.setCustomer(checkEmail);
+        } else if (checkEmail != null && checkEmail.getRoles() != null && checkEmail.getRoles().equals("USER")) {
+            if (userDetailDto == null) {
+                return "user/index";
+            }
+            if (userDetailDto.getEmail() != billProRes.getEmail()) {
+                // thông báo lỗi email của người khác k thể dùng để mua hàng
+                return "user/index";
+            } else {
+                billProRes.setCustomer(checkEmail);
+            }
+
         }
         int total = cartService.getTotalProduct();
-        billProRes.setCustomer(checkEmail);
         Bill bill1 = billService.add(billProRes);
         billProRes.setBill(bill1);
+
         DeliveryNotes notes = deliveryNotes.save(billProRes);
         if (billProRes.getPaymentMethod() == 2) {
             //VNPAY
@@ -106,28 +135,40 @@ public class CartController {
             cartService.clear();
             return "redirect:/confirm";
         }
-
     }
 
     @GetMapping("/cart")
     public String index(Model model) {
+        session.setAttribute("pageView", "/user/page/product/pro_cart.html");
+
+        UserDetailDto userDetailDto = checkLogin.checkLogin();
+        if (userDetailDto != null) {
+            Cart cart = cartService.getOneByUser(userDetailDto.getId());
+            if (cart.getListCartPro().size() == 0) {
+                session.setAttribute("pageView", "/user/page/product/cart_null.html");
+                session.setAttribute("list",null);
+                return "user/index";
+            }
+            BigDecimal total = new BigDecimal(0);
+            for (CartProduct product : cart.getListCartPro()) {
+                total = total.add(product.getProduct().getPriceExport().multiply(BigDecimal.valueOf(product.getQuantity())));
+            }
+            model.addAttribute("total", total);
+            session.setAttribute("list", cart.getListCartPro());
+            return "user/index";
+        }
         if (cartService.getTotal() == 0) {
             session.setAttribute("pageView", "/user/page/product/cart_null.html");
             return "user/index";
         }
         int total = cartService.getTotalProduct();
         model.addAttribute("total", total);
-        session.setAttribute("pageView", "/user/page/product/pro_cart.html");
-        UserDetailDto userDetailDto = checkLogin.checkLogin();
-        if (userDetailDto != null) {
-            Cart cart = cartService.getOneByUser(userDetailDto.getId());
-            session.setAttribute("list", cart.getListCartPro());
-        }
+
         return "user/index";
     }
 
     @RequestMapping("/cart/remove/{id}")
-    public String delete(@PathVariable List<Integer> id) {
+    public String delete(@PathVariable List<Integer> id, RedirectAttributes redirectAttributes) {
         UserDetailDto userDetailDto = checkLogin.checkLogin();
         if (userDetailDto != null) {
             Cart cart = cartService.getOneByUser(userDetailDto.getId());
@@ -145,17 +186,14 @@ public class CartController {
                 list = cartService.delete(id.get(i));
             }
             session.setAttribute("list", list);
-            if (cartService.getTotal() == 0) {
-                session.setAttribute("pageView", "/user/page/product/cart_null.html");
-                return "user/index";
-            }
         }
+        redirectAttributes.addFlashAttribute("message", "xoathanhcong");
         return "redirect:/cart";
     }
 
 
     @PostMapping("/cart/update")
-    public String update(@RequestParam(value = "id", required = false) List<Integer> id, @RequestParam("qty") List<Integer> qty, Model model) {
+    public String update(@RequestParam(value = "id", required = false) List<Integer> id, @RequestParam("qty") List<Integer> qty, Model model, RedirectAttributes redirectAttributes) {
 
         UserDetailDto userDetailDto = checkLogin.checkLogin();
 
@@ -184,6 +222,7 @@ public class CartController {
             }
             session.setAttribute("list", list);
         }
+        redirectAttributes.addFlashAttribute("message","update-success");
         return "redirect:/cart";
     }
 }

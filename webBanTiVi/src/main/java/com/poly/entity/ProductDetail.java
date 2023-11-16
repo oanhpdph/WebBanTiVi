@@ -53,7 +53,7 @@ public class ProductDetail {
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<Image> listImage;
 
-    @OneToMany(mappedBy = "productDetail")
+    @OneToMany(mappedBy = "productDetail",fetch = FetchType.EAGER)
     private List<ProductDetailField> fieldList;
 
     @Override

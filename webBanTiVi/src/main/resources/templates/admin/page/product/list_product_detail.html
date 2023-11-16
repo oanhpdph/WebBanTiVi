@@ -1,3 +1,10 @@
+<style>
+    div.swal2-container {
+        z-index: 1100;
+    }
+
+</style>
+
 <h4 class="fw-bold py-3 mb-4">
     <span class="text-muted fw-light">Sản phẩm/</span> Danh sách sản phẩm
 </h4>
@@ -79,7 +86,8 @@
                         <!--                    <td th:text="${product.priceImport}"></td>-->
                         <td th:text="${#numbers.formatDecimal(product.priceExport,0,'COMMA',2,'POINT')}"></td>
                         <td th:text="${product.quantity}"></td>
-                        <td class="form-switch text-center"><input class="form-check-input" type="checkbox"
+                        <td class="form-switch text-center"><input class="form-check-input active-product-detail"
+                                                                   type="checkbox" th:value="${product.id}"
                                                                    th:checked="${product.active}"></td>
                         <td>
                             <div class="dropdown">
@@ -152,7 +160,7 @@
                             </li>
                             <li class="page-item mx-2">
                                 <div class="input-group input-group-merge">
-                                    <input class="form-control inputPage" id="pageInput" type="number" name="page"
+                                    <input class="form-control inputPage" id="pageInput" type="number" name="page" th:temp="*{page}"
                                            th:value="*{page}">
                                     <span class="input-group-text" id="total"
                                           th:value="${listProductDetail.totalPages}">/[(${listProductDetail.totalPages})]</span>
