@@ -3,6 +3,7 @@ package com.poly.service;
 import com.poly.entity.Cart;
 import com.poly.entity.CartProduct;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CartService {
@@ -23,7 +24,7 @@ public interface CartService {
 
     int getTotal();
 
-    int getTotalProduct();
+    BigDecimal getAmount();
 
     Cart getOneByUser(Integer id);
 }

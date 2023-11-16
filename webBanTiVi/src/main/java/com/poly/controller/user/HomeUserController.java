@@ -2,8 +2,6 @@ package com.poly.controller.user;
 
 import com.poly.common.CheckLogin;
 import com.poly.dto.ProductDetailDto;
-import com.poly.dto.UserDetailDto;
-import com.poly.entity.Cart;
 import com.poly.entity.Product;
 import com.poly.entity.ProductDetail;
 import com.poly.service.CartService;
@@ -64,11 +62,11 @@ public class HomeUserController {
                 }
             }
         }
-        UserDetailDto userDetailDto = checkLogin.checkLogin();
-        if (userDetailDto != null) {
-            Cart cart = cartService.getOneByUser(userDetailDto.getId());
-            session.setAttribute("list", cart.getListCartPro());
-        }
+//        UserDetailDto userDetailDto = checkLogin.checkLogin();
+//        if (userDetailDto != null) {
+//            Cart cart = cartService.getOneByUser(userDetailDto.getId());
+//            session.setAttribute("list", cart.getListCartPro());
+//        }
         model.addAttribute("listPhuKien", phuKien);
         return "/user/index";
     }

@@ -81,6 +81,7 @@ public class CartController {
                           Model model,
                           String email,
                           Integer id,
+                          Integer qty,
                           @ModelAttribute("billProduct") BillProRes billProRes) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         Users checkEmail = customerService.findByEmail(email);
 
@@ -98,11 +99,13 @@ public class CartController {
             String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
             String vnpayUrl = vnPayService.createOrder(total, bill1.getCode(), baseUrl);
             billProRes.setProduct(Collections.singletonList(id));
+            billProRes.setQty(qty);
             billService.addBillPro(bill1, billProRes);
             cartService.clear();
             return "redirect:" + vnpayUrl;
         } else {
             billProRes.setProduct(Collections.singletonList(id));
+            billProRes.setQty(qty);
             billService.addBillPro(bill1, billProRes);
             cartService.clear();
             return "redirect:/confirm";
