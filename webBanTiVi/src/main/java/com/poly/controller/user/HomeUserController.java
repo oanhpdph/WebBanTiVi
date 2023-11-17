@@ -31,6 +31,7 @@ public class HomeUserController {
 
     @Autowired
     private CustomerService customerService;
+
     @Autowired
     private ProductService productService;
 
@@ -44,7 +45,6 @@ public class HomeUserController {
         productDetailDto.setActive(true);
 
         productDetailDto.setGroup(1);
-
 
         Page<Product> page = productService.findAll(productDetailDto);
         List<ProductDetailDto> listProduct = new ArrayList<>();

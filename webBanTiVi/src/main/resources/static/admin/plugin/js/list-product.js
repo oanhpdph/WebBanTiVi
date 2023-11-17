@@ -297,9 +297,9 @@ $.each(document.getElementsByClassName("edit-product"), function (index, item) {
             url: "/product/get-product-by-id",
             method: "get",
             data: data,
-            // contentType: "application/json",
             success: function (data) {
                 var localData = data
+                document.getElementById("evaluate").href = "/admin/evaluate/" + data.id
                 document.getElementById("save").value = data.id
                 var table = document.querySelector("#table-detail-modal tbody")
                 $("#table-detail-modal tbody").empty()

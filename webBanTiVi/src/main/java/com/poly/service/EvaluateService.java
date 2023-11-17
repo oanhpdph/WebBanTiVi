@@ -2,12 +2,11 @@ package com.poly.service;
 
 import com.poly.entity.Evaluate;
 import com.poly.dto.EvaluateRes;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface EvaluateService {
 
-    public List<Evaluate> getAll();
+    public Page<Evaluate> getAll(EvaluateRes evaluateRes);
 
     public void add(EvaluateRes evaluate);
 
