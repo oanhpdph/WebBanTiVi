@@ -11,11 +11,12 @@ import java.sql.Date;
 @Getter
 @Setter
 public class EvaluateRes {
-     Integer id;
+    Integer id;
     Integer customer;
     Integer product;
     Date dateCreate;
     Integer point;
     String comment;
-
+    Integer page = 1;
+    Integer size = 10;
 }

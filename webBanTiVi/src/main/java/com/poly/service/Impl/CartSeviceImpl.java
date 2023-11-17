@@ -3,9 +3,11 @@ package com.poly.service.Impl;
 import com.poly.entity.Cart;
 import com.poly.entity.CartProduct;
 import com.poly.entity.ProductDetail;
+import com.poly.entity.Users;
 import com.poly.repository.CartProductRepos;
 import com.poly.repository.CartRepos;
 import com.poly.service.CartService;
+import com.poly.service.CustomerService;
 import com.poly.service.ProductDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +28,8 @@ public class CartSeviceImpl implements CartService {
     CartProductRepos cartProductRepos;
     @Autowired
     ProductServiceImpl productService;
-
+    @Autowired
+    CustomerService customerService;
     @Autowired
     ProductDetailService productDetailService;
 
@@ -43,7 +47,7 @@ public class CartSeviceImpl implements CartService {
 
     @Override
     public Cart save(Cart cart) {
-        return null;
+        return cartRepos.save(cart);
     }
 
     @Override
@@ -130,6 +134,13 @@ public class CartSeviceImpl implements CartService {
 
     @Override
     public Cart getOneByUser(Integer id) {
+        Optional<Users> user = customerService.findById(id);
+        if (user.isPresent()) {
+            Optional<Cart> cart = cartRepos.getByUser(user.get());
+            if (cart.isPresent()) {
+                return cart.get();
+            }
+        }
         return null;
     }
 

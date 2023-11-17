@@ -79,6 +79,7 @@ public class BillReturnController {
         billProduct.setNote(dto.getNote());
         billProduct.setQuantityReturn(Integer.parseInt(dto.getQuantity()));
         billProduct.setStatus(3); //dong y
+        this.billProductService.save(billProduct);
         return "redirect:/admin/invoice_return/"+billProduct.getBill().getId();
     }
     @GetMapping("/agree")

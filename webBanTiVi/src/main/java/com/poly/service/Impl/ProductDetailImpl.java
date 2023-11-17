@@ -51,8 +51,12 @@ public class ProductDetailImpl implements ProductDetailService {
 
     @PersistenceContext
     private EntityManager entityManager;
-
-
+    public void addProductDiscount(Coupon coupon, Integer id){
+        productDetailRepo.addProductDiscount(coupon,id);
+    };
+    public List<ProductDetail> findBySku(String keyword){
+        return productDetailRepo.findbySku(keyword);
+    }
     @Override
     public Product saveList(ProductDetailDto dto) {
         String sameProduct = "";
@@ -181,10 +185,9 @@ public class ProductDetailImpl implements ProductDetailService {
         }
         return productDetail;
     }
+    public void deleteProductDiscount(Integer id){
+        productDetailRepo.deleteProductDiscount(id);
+    };
 
-//    @Override
-//    public List<ProductDetail> update(List<ProductDetailDto> productDetailDto) {
-//        return null;
-//    }
 
 }

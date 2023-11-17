@@ -69,12 +69,12 @@ public class ProductServiceImpl implements ProductService {
         if (productDetailDto.isActive() == true) {
             list.add(criteriaBuilder.equal(productRoot.get("active"), true));
         }
-        productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
         if (productDetailDto.getSort() == 1) {
             productCriteriaQuery.orderBy(criteriaBuilder.desc(productRoot.get("createDate")));
         } else {
             productCriteriaQuery.orderBy(criteriaBuilder.asc(productRoot.get("createDate")));
         }
+        productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
         Pageable pageable = PageRequest.of(productDetailDto.getPage() - 1, productDetailDto.getSize());
         List<Product> result = entityManager.createQuery(productCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
 
@@ -106,13 +106,15 @@ public class ProductServiceImpl implements ProductService {
             } else {
                 product1.setActive(product.isActive());
             }
-            List<ProductFieldValue> productFieldValue = productFieldValueService.findByProduct(product1);
-            if (!productFieldValue.isEmpty()) {
-                for (int i = 0; i < productFieldValue.size(); i++) {
-                    for (Attribute attribute : product.getProduct()) {
-                        if (attribute.getId() == productFieldValue.get(i).getId()) {
-                            productFieldValue.get(i).setValue(attribute.getValue());
-                            productFieldValueService.save(productFieldValue.get(i));
+            if (product.getProduct()!= null) {
+                List<ProductFieldValue> productFieldValue = productFieldValueService.findByProduct(product1);
+                if (!productFieldValue.isEmpty()) {
+                    for (int i = 0; i < productFieldValue.size(); i++) {
+                        for (Attribute attribute : product.getProduct()) {
+                            if (attribute.getId() == productFieldValue.get(i).getField().getId()) {
+                                productFieldValue.get(i).setValue(attribute.getValue());
+                                productFieldValueService.save(productFieldValue.get(i));
+                            }
                         }
                     }
                 }

@@ -1,5 +1,5 @@
-package com.poly.controller.user;
 
+package com.poly.controller.user;
 import com.poly.common.CheckLogin;
 import com.poly.dto.BillProRes;
 import com.poly.dto.UserDetailDto;
@@ -188,7 +188,6 @@ public class CartController {
             session.setAttribute("list", cart.getListCartPro());
             return "user/index";
         }
-
         List<CartProduct> listCart = (List<CartProduct>) session.getAttribute("list");
         BigDecimal reduceMoney = BigDecimal.valueOf(0);
         if (cartService.getTotal() == 0) {

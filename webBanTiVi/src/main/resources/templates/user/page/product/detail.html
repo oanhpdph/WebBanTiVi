@@ -166,10 +166,11 @@
             </form>
         </div>
         <hr>
-        <div class="col-6">
-            <h3>
-                Thông số kỹ thuật <span th:text="${product.product.nameProduct}"></span>
-            </h3><br>
+        <div class="col-md-6">
+            <h3 class="mb-3">
+                Thông số kỹ thuật
+                <!--                <span th:text="${product.product.nameProduct}"></span>-->
+            </h3>
             <div class="table-responsive text-nowrap">
                 <table class="table table-striped" border="0px">
                     <!--                    <thead>-->
@@ -188,39 +189,67 @@
             </div>
 
         </div>
-        <div class="col-6">
+        <div class="col-md-6">
             <div class="card"><br>
-                <div class="card-body">
-                    <h2>
+                <div class="card-header">
+                    <h3>
                         Đánh Giá <span th:text="${product.product.nameProduct}"></span>
-                    </h2>
-                    <br>
-                    <div class="table-responsive text-nowrap">
-                                        <span class="fs-5" th:each="item: ${product.product.listEvaluate}">
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <span class="fs-5" th:each="item: ${product.product.listEvaluate}">
                                         <strong th:text="${item.customer.name}"></strong>
                                         </span>
-                        <!--                                            <p th:each="item: ${product.listEvaluate}">-->
-                        <!--                                                <i class='bx bxs-star' style='color:#ffff00'></i>-->
-                        <!--                                                <i class='bx bxs-star' style='color:#ffff00'></i>-->
-                        <!--                                                <i class='bx bxs-star' style='color:#ffff00'></i>-->
-                        <!--                                                <i class='bx bxs-star' style='color:#ffff00'></i>-->
-                        <!--                                                <i class='bx bxs-star-half' style='color:#ffff00'></i>-->
-                        <!--                                                <span th:text="${item.point}"></span>-->
-                        <!--                                            </p>-->
-                        <!--                                            <p th:each="item: ${product.listEvaluate}">-->
-                        <!--                                                <span th:text="${item.comment}"></span> <br>-->
-                        <!--                                                <small class="text-muted">-->
-                        <!--                                                    <span th:text="${item.dateCreate}"></span>-->
-                        <!--                                                </small>-->
-                        <!--                                            </p>-->
-                        <!--                                            <p th:each="item: ${product.listEvaluate}">-->
-                        <!--                                                <i class='bx bx-like'></i>-->
-                        <!--                                                <span>Hữu ích(6)</span>|-->
-                        <!--                                                <small class="text-muted">-->
-                        <!--                                                    <span th:text="${item.dateCreate}"></span>-->
-                        <!--                                                </small>-->
-                        <!--                                            </p>-->
-                        <hr>
+                    <p th:each="item: ${product.product.listEvaluate}">
+                        <i class='bx bxs-star' style='color:#ffff00'></i>
+                        <i class='bx bxs-star' style='color:#ffff00'></i>
+                        <i class='bx bxs-star' style='color:#ffff00'></i>
+                        <i class='bx bxs-star' style='color:#ffff00'></i>
+                        <i class='bx bxs-star-half' style='color:#ffff00'></i>
+                        <span th:text="${item.point}"></span>
+                    </p>
+                    <p th:each="item: ${product.product.listEvaluate}">
+                        <span th:text="${item.comment}"></span> <br>
+                        <small class="text-muted">
+                            <span th:text="${item.dateCreate}"></span>
+                        </small>
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                    <button class="btn btn-primary w-50" data-bs-target="#writeEvaluate" data-bs-toggle="modal">Viết đánh giá</button>
+                    <div class="modal fade" id="writeEvaluate" tabindex="-1" aria-modal="true" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel1">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col mb-3">
+                                            <label for="nameBasic" class="form-label">Name</label>
+                                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name">
+                                        </div>
+                                    </div>
+                                    <div class="row g-2">
+                                        <div class="col mb-0">
+                                            <label for="emailBasic" class="form-label">Email</label>
+                                            <input type="text" id="emailBasic" class="form-control" placeholder="xxxx@xxx.xx">
+                                        </div>
+                                        <div class="col mb-0">
+                                            <label for="dobBasic" class="form-label">DOB</label>
+                                            <input type="text" id="dobBasic" class="form-control" placeholder="DD / MM / YY">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                        Close
+                                    </button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

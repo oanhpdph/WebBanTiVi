@@ -110,8 +110,11 @@ public class BillImpl implements BillService {
         } else if (searchBillDto.getBillStatus().equals("donhuy")) {
             list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "SC"),
                     criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "CC")));
-        } else if (searchBillDto.getBillStatus().equals("trahang")) {
-            billStatus.add("RR");
+        } else if (searchBillDto.getBillStatus().equals("dontra")) {
+            list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "RR"),
+                    criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "WR"),
+                    criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "RE")
+                    ));
         } else if (searchBillDto.getBillStatus().equals("donhoan")) {
             billStatus.add("oanh");
         } else {

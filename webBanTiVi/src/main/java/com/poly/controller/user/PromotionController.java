@@ -1,9 +1,7 @@
 package com.poly.controller.user;
 
 import com.poly.dto.UserDetailDto;
-import com.poly.dto.CouponRes;
 import com.poly.dto.VoucherCustomerRes;
-import com.poly.entity.Product;
 import com.poly.entity.Voucher;
 import com.poly.entity.VoucherCustomer;
 import com.poly.service.Impl.*;
@@ -22,9 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequestMapping("/promotion")
@@ -35,8 +31,6 @@ public class PromotionController {
     VoucherCustomerServiceImpl voucherCustomerService;
     @Autowired
     CouponServiceImpl couponService;
-    @Autowired
-    CouponProductServiceImpl couponProductService;
     @Autowired
     ProductServiceImpl productService;
     LocalDate localDate = LocalDate.now();
@@ -52,54 +46,11 @@ public class PromotionController {
 
     @GetMapping("/coupondetail/{id}")
     public String coupondetail(HttpSession session, Model model, @PathVariable("id") Integer id) {
-        CouponRes couponRes = new CouponRes() {
-            @Override
-            public Integer getId() {
-                return null;
-            }
-
-            @Override
-            public String getValue() {
-                return null;
-            }
-
-            @Override
-            public String getImage() {
-                return null;
-            }
-
-            @Override
-            public Boolean getActive() {
-                return null;
-            }
-
-            @Override
-            public Date getDate_Start() {
-                return null;
-            }
-
-            @Override
-            public Date getDate_End() {
-                return null;
-            }
-
-            @Override
-            public Product getProduct() {
-                return null;
-            }
-        };
-        for (CouponRes x : couponService.getAllCouponRes(date)) {
-            System.out.println(x.getId());
-            if (x.getId() == id) {
-                couponRes = x;
-                System.out.println(x.getImage());
-            }
-        }
-
-        model.addAttribute("couponres", couponRes);
-        model.addAttribute("giagiam", Integer.parseInt(couponRes.getValue()));
-        List<Product> listProduct = new ArrayList<>();
-        model.addAttribute("listproduct", couponProductService.findAllByCouponId(id));
+        Integer giam = Integer.parseInt(couponService.findById(id).get().getValue());
+        model.addAttribute("giam",giam);
+        model.addAttribute("discount",couponService.findById(id).get());
+        model.addAttribute("listproduct", couponService.findById(id).get().getProductDetailList());
+        couponService.findById(id).get().getProductDetailList().get(0).getPriceExport().intValue();
         session.setAttribute("pageView", "/user/page/promotion/coupondetail.html");
         return "/user/index";
     }

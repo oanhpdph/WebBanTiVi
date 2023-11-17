@@ -1,85 +1,24 @@
-<h4 class="fw-semibold py-3 mb-4"> Danh sách sản phẩm được giảm [(${voucher.getValue()})]%</h4>
+<h4 class="fw-semibold py-3 mb-4"> Danh sách sản phẩm được giảm [(${discount.getValue()})]%</h4>
 <div class="row justify-content-end me-4">
-<!--    <form th:action="@{/admin/voucherCustomer/add}" method="post" th:object="${voucherCustomer}">-->
-<!--        <div class="row justify-content-end me-4">-->
-<!--            <button type="button" class="btn btn-success mb-4 w-auto"-->
-<!--                    data-bs-toggle="modal" data-bs-target="#largeModal">-->
-<!--                <i class='tf-icon bx bx-plus-medical'></i> Add VoucherCustomer-->
-<!--            </button>-->
-<!--        </div>-->
-<!--        <div class="mb-4">-->
-<!--            <div class="modal fade" th:id="largeModal" tabindex="-1"-->
-<!--                 aria-hidden="true">-->
-<!--                <div class="modal-dialog modal-xl" role="document">-->
-<!--                    <div class="modal-content">-->
-<!--                        <div class="modal-header">-->
-<!--                            <h5 class="modal-title">Thông tin VoucherCustomer</h5>-->
-<!--                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                        </div>-->
-<!--                        <div class="modal-body">-->
-<!--                            <div class="row">-->
-<!--                                <div class="row col-lg-12 col-xl-9">-->
-<!--                                    <div class="col-xl-4 col-lg-6 col-md-6">-->
-<!--                                        <div class="mb-3">-->
-<!--                                            <label class="form-label">Customer:</label>-->
-<!--                                            <br>-->
-<!--                                            <select th:name="customer" class="form-select"-->
-<!--                                                    aria-label="Default select example">-->
-<!--                                                <option th:each="i:${session.listCustomer}" th:value="${i.id}"-->
-<!--                                                        th:text="${i.name}"></option>-->
-<!--                                            </select>-->
-<!--                                        </div>-->
-<!--                                        <div class="mb-3">-->
-<!--                                            <label class="form-label">Voucher:</label>-->
-<!--                                            <br>-->
-<!--                                            <select th:name="voucher" class="form-select"-->
-<!--                                                    aria-label="Default select example">-->
-<!--                                                <option th:each="v:${session.listVoucher}" th:value="${v.id}"-->
-<!--                                                        th:text="${v.code}"></option>-->
-<!--                                            </select>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    &lt;!&ndash;                                    <div class="col-xl-4 col-lg-6 col-md-6">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                        <div class="mb-3">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                            <label class="form-label">Start Day:</label>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                            <input type="date" class="form-control" th:name="dateStart"&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                                   name="date_start">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                        </div>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                        <div class="mb-3">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                            <label class="form-label">End Day:</label>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                            <input type="date" class="form-control" th:name="dateEnd">&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                        </div>&ndash;&gt;-->
-<!--                                    &lt;!&ndash;                                    </div>&ndash;&gt;-->
-<!--                                    <div class="col-xl-4 col-lg-6 col-md-6">-->
-<!--                                        <div class="mb-3">-->
-<!--                                            <label class="form-label">Active:</label>-->
-<!--                                            <br>-->
-<!--                                            <div class="form-check form-check-inline">-->
-<!--                                                <input class="form-check-input" type="radio" th:name="active"-->
-<!--                                                       th:value="true" checked>-->
-<!--                                                <label class="form-check-label">Acitve</label>-->
-<!--                                            </div>-->
-<!--                                            <div class="form-check form-check-inline">-->
-<!--                                                <input class="form-check-input" type="radio" th:name="active"-->
-<!--                                                       th:value="false">-->
-<!--                                                <label class="form-check-label">Non-active</label>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="modal-footer">-->
-<!--                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Reset-->
-<!--                            </button>-->
-<!--                            <button type="submit" class="btn btn-primary">Save changes</button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </form>-->
-</div>
+          <!-- Nội dung của menu item -->
+    </div>
+    <form class="justify-content-end me-4">
+        <label>Thêm sản phẩm giảm giá:</label>
+            <input type="text" class="form-control" th:name="keyword"
+                   th:value="${param.keyword}" placeholder="Tìm theo SKU sản phẩm">
+    </form>
+        <form th:action="@{/admin/couponproduct/add}" method="post" th:object="${discountproduct}">
+            <div class="justify-content-end me-4">
+                <select id="products"  th:name="id" class="form-select">
+                    <option th:each="product : ${listallproduct}" th:value="${product.id}"
+                            th:text="${product.sku}"></option>
+                </select>
+                <input type="text" th:name="coupon" th:value="${discount.id}" hidden>
+                <button type="submit" class="btn btn-success mb-4 w-auto">
+                    <i class='tf-icon bx bx-plus-medical'></i> Thêm
+                </button>
+            </div>
+        </form>
 <div class="card mb-3 ">
     <div class="card-header">
         <form class="col-12 mt-2">
@@ -89,7 +28,8 @@
                     <span class="input-group-text">
                         <i class="bx bx-search"></i>
                     </span>
-                        <input type="text" class="form-control" th:name="keyword" th:value="${param.keyword}" placeholder="Tìm theo tên sản phẩm">
+                        <input type="text" class="form-control" th:name="keyword2"
+                               th:value="${param.keyword2}" placeholder="Tìm theo SKU sản phẩm">
                         <button class="btn btn-primary" type="submit">Search</button>
                     </div>
                 </div>
@@ -99,8 +39,7 @@
     <div class="card-body">
         <div class="row">
             <div>
-                <p>Số lượng:
-                                        <span th:text="${listProduct.size()}"></span>
+                <p>Số lượng: <span th:text="${listproduct.size()}"></span>
                 </p>
             </div>
         </div>
@@ -111,70 +50,19 @@
                 <tr>
                     <th>Sản phẩm</th>
                     <th>Sku</th>
-                    <th>Ngày bắt đầu</th>
-                    <th>Ngày kết thúc</th>
                     <!--                    <th>Date Start</th>-->
                     <!--                    <th>Date End</th>-->
-                    <th>Trạng thái</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                <tr th:each="discountPro : ${listCouponProduct}">
-                    <td th:text="${discountPro.getProductDetail().getProduct().getNameProduct()}"></td>
-                    <td th:text="${discountPro.getProductDetail().getSku()}"></td>
-                    <td th:text="${discountPro.getDateStart()}"></td>
-                    <td th:text="${discountPro.getDateEnd()}"></td>
-                    </td>
+                <tr th:each="listproduct : ${listproduct}">
+                    <td>[(${listproduct.getProduct().getNameProduct()})]</td>
+                    <td>[(${listproduct.getSku()})]</td>
                     <td>
 
-                        <button type="button" class="btn btn-icon btn-primary" data-bs-toggle="modal"
-                                th:data-bs-target="|#modal${discountPro.id}">
-                            <i class="bx bxs-edit-alt"></i>
-                        </button>
-                        <div class="modal fade" th:id="|modal${discountPro.id}|" tabindex="-1"
-                             aria-hidden="true">
-                            <div class="modal-dialog modal-sm" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Thông tin discount</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form th:action="@{/admin/couponproduct/update/{id}(id=${discountPro.id})}"
-                                              method="post" th:object="${discountPro}">
-                                            <div class="row">
-                                                <div class="row col-lg-12 col-xl-9">
-                                                    <div class="">
-                                                        <div class="">
-                                                            <label class="form-label">Thay đổi sản phẩm giảm:</label>
-                                                            <br>
-                                                            <select th:name="getProductDetail()" class="form-select"
-                                                                    aria-label="Default select example">
-                                                                <option th:each="i:${session.listproduct}"
-                                                                        th:value="${i.getId()}"
-                                                                        th:text="${i.getProduct().getNameProduct()}"
-                                                                        th:selected="${discountPro.getProductDetail().getId()==i.getId()}"
-                                                                ></option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
 
-                                                </div>
-
-                                            </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Update</button>
-
-                                    </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
-                        <a th:href="@{/admin/couponproduct/delete/{id}(id=${discountPro.getProductDetail().getId()})}"
+                        <a th:href="@{/admin/couponproduct/delete/{id}(id=${listproduct.getId()})}"
                            onclick="return confirm('Xác nhận xóa')">
                             <button type="button" class="btn btn-icon btn-danger">
                                 <span class="bx bxs-trash"></span>
