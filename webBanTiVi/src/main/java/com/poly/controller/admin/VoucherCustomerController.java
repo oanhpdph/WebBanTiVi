@@ -41,7 +41,7 @@ public class VoucherCustomerController {
         }
         else {
             // TODO: Search
-            model.addAttribute("listVoucherCustomer", voucherCustomerService.findAllByKeyword(keyword, id));
+            model.addAttribute("listVoucherCustomer", voucherCustomerService.findAllByKeyword("%"+keyword+"%", id));
         }
         session.setAttribute("pageView", "/admin/page/voucher/voucherCustomer.html");
         return "admin/layout";

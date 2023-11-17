@@ -30,12 +30,9 @@
         <option value="JavaScript File" />
         <option value="CSS File" />
         <option value="HTML File" />
-        <option value="HTML File" />
         <option value="Interface" />
         <option value="HTML File" />
         <option value="Interface" />
-        <option value="Class" />
-        <option value="Class" />
         <option value="Class" />
       </list>
     </option>
@@ -308,7 +305,6 @@
       <workItem from="1700050435892" duration="7536000" />
       <workItem from="1700065229738" duration="16774000" />
       <workItem from="1700113799391" duration="20147000" />
-      <workItem from="1700192959513" duration="766000" />
     </task>
     <servers />
   </component>
@@ -386,7 +382,7 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1700031787743" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1700071710036" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.poly.*</FILTER>
     </SUITE>
   </component>
