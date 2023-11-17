@@ -19,7 +19,10 @@ for (let i = 0; i < fileInputs.length; i++) {
             } else {
                 alert('Vui lòng chọn một tệp hình ảnh.');
                 fileInput.value = ''; // Đặt lại trường nhập
+
             }
+        } else {
+            imagePreview.src = ""
         }
     });
 }

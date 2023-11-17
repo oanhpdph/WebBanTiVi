@@ -26,9 +26,11 @@ public class ProductControllerDetail {
 
     @PostMapping(path = "/upload")
     public ResponseEntity<?> upload(@RequestParam(value = "images", required = false) List<MultipartFile> list) throws IOException {
-        for (MultipartFile multipartFile : list) {
-            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-            UploadFile.saveFile("src/main/resources/static/image/product", fileName, multipartFile);
+        if (list != null) {
+            for (MultipartFile multipartFile : list) {
+                String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+                UploadFile.saveFile("src/main/resources/static/image/product", fileName, multipartFile);
+            }
         }
         return ResponseEntity.ok(200);
     }

@@ -540,13 +540,13 @@
         <div class="row row-cols-1 row-cols-md-5 row-cols-sm-2 g-4">
             <div class="col" th:each="tivi,Stat:${listTivi}">
                 <div class="card h-100 item-product">
-                    <div class="card-body">
+                    <div class="card-body mb-4 mt-3">
                         <img class="img-fluid d-flex mx-auto my-4"
                              th:src="|/image/product/${tivi.image}|"
                              alt="Hình ảnh bị lỗi"/>
                         <a th:href="@{'/product/detail/'+${tivi.id}}"
                            class="stretched-link mb-2 text-black">
-                                            <span class="fs-5 fw-semibold card-title"
+                                            <span class="fs-5  card-title"
                                                   th:text="${tivi.nameProduct}">
                                                         </span></a>
                         <div th:if="${tivi.price!=0}"><span class="text-strike-through fs-6 "> [(${tivi.price})]<small

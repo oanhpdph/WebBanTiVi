@@ -3,6 +3,7 @@ package com.poly.dto;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.List;
 
 
 @Builder
@@ -17,6 +18,7 @@ public class EvaluateRes {
     Date dateCreate;
     Integer point;
     String comment;
+    List<String> image;
     Integer page = 1;
     Integer size = 10;
 }

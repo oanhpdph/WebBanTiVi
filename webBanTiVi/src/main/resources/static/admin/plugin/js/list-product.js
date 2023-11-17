@@ -332,7 +332,6 @@ $.each(document.getElementsByClassName("edit-product"), function (index, item) {
                         var attri = {
                             id: item.id.substring(2, item.id.length),
                             value: item.value,
-
                         }
                         data.product.push(attri)
                     })

@@ -97,10 +97,9 @@
                                 </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                       data-bs-target="#modalDetailProduct"><i
-                                            class="bx bx-edit-alt me-1"></i> Edit</a>
+                                       data-bs-target="#modalDetailProduct"><i class='bx bxs-show me-1'></i>Xem</a>
                                     <a class="dropdown-item" href="javascript:void(0);"><i
-                                            class="bx bx-trash me-1"></i> Delete</a>
+                                            class="bx bx-trash me-1"></i> Xóa</a>
                                 </div>
                             </div>
                         </td>
@@ -109,7 +108,7 @@
                 </table>
             </div>
             <div class="modal fade" id="modalDetailProduct" tabindex="-1" style="display: none">
-                <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel4">Chi tiết sản phẩm</h5>
@@ -119,29 +118,56 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col mb-3">
-                                    <label for="nameExLarge" class="form-label">Name</label>
-                                    <input type="text" id="nameExLarge" class="form-control"
-                                           placeholder="Enter Name">
+                                    <label class="form-label">sku</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col mb-3">
+                                    <label class="form-label">Số lượng</label>
+                                    <input type="number" class="form-control">
                                 </div>
                             </div>
-                            <div class="row g-2">
-                                <div class="col mb-0">
-                                    <label for="emailExLarge" class="form-label">Email</label>
-                                    <input type="text" id="emailExLarge" class="form-control"
-                                           placeholder="xxxx@xxx.xx">
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label class="form-label">Giá nhập</label>
+                                    <input type="number" class="form-control">
                                 </div>
-                                <div class="col mb-0">
-                                    <label for="dobExLarge" class="form-label">DOB</label>
-                                    <input type="text" id="dobExLarge" class="form-control"
-                                           placeholder="DD / MM / YY">
+                                <div class="col mb-3">
+                                    <label class="form-label">Giá bán</label>
+                                    <input type="number" class="form-control">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <label class="form-label">Ngày tạo</label>
+                                    <input type="datetime-local" class="form-control">
+                                </div>
+                                <div class="col mb-3">
+                                    <div class="col-md">
+                                        <label class="d-block form-label">Bày bán</label>
+                                        <div class="form-check form-check-inline mt-3">
+                                            <input class="form-check-input" type="radio" name="active"
+                                                   id="active" value="true">
+                                            <label class="form-check-label" for="active">Bày bán</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="active"
+                                                   id="inactive" value="false">
+                                            <label class="form-check-label" for="inactive">Không bán</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col mb-3">
+                                    <div class="col-md">
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Close
-                            </button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-primary" id="save-product-detail">Lưu</button>
                         </div>
                     </div>
                 </div>
@@ -160,7 +186,8 @@
                             </li>
                             <li class="page-item mx-2">
                                 <div class="input-group input-group-merge">
-                                    <input class="form-control inputPage" id="pageInput" type="number" name="page" th:temp="*{page}"
+                                    <input class="form-control inputPage" id="pageInput" type="number" name="page"
+                                           th:temp="*{page}"
                                            th:value="*{page}">
                                     <span class="input-group-text" id="total"
                                           th:value="${listProductDetail.totalPages}">/[(${listProductDetail.totalPages})]</span>

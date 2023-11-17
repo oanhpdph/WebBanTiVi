@@ -39,11 +39,8 @@ public class EvaluateController {
         model.addAttribute("list", evaluates);
         httpSession.setAttribute("pageView", "/admin/page/evaluate/evaluate.html");
         httpSession.setAttribute("active", "/evaluate/list");
-//        model.addAttribute("evaluate", new EvaluateRes());
-//        model.addAttribute("listCustomer", this.customerService.findAll());
         model.addAttribute("product", productService.findById(id));
         return "admin/layout";
-
     }
 
     @PostMapping("/evaluate/add")
