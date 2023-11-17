@@ -26,7 +26,7 @@ public class CouponController {
     @GetMapping("/coupon/list")
     public String loadCoupon(HttpSession session, Model model) {
         session.setAttribute("pageView", "/admin/page/coupon/coupon.html");
-        session.setAttribute("active", "/coupon/list");
+        session.setAttribute("active", "/promotion/coupon");
         model.addAttribute("coupon", new Coupon());
         model.addAttribute("listCou", this.couponService.findAll());
         return "admin/layout";

@@ -86,32 +86,37 @@
                 </li>
             </ul>
         </li>
-        <li th:class="${#strings.contains(session.active,'voucher')?'menu-item active open':'menu-item'}">
+        <li th:class="${#strings.contains(session.active,'promotion')?'menu-item active open':'menu-item'}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bxs-coupon"></i>
                 <div>Khuyến mãi</div>
             </a>
             <ul class="menu-sub">
-                <li th:class="${#strings.equals(session.active,'/voucher/list')?'menu-item active':'menu-item'}">
+                <li th:class="${#strings.equals(session.active,'/promotion/voucher')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/voucher/list}" class="menu-link">
-                        <div>Danh sách voucher</div>
+                        <div>Voucher</div>
                     </a>
                 </li>
-            </ul>
-        </li>
-        <li th:class="${#strings.contains(session.active,'coupon')?'menu-item active open':'menu-item'}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-user-circle"></i>
-                <div>Giảm giá</div>
-            </a>
-            <ul class="menu-sub">
-                <li th:class="${#strings.equals(session.active,'/coupon/list')?'menu-item active':'menu-item'}">
+                <li th:class="${#strings.equals(session.active,'/promotion/coupon')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/coupon/list}" class="menu-link">
-                        <div>Danh sách giảm giá</div>
+                        <div>Giảm giá sản phẩm</div>
                     </a>
                 </li>
             </ul>
         </li>
+        <!--        <li th:class="${#strings.contains(session.active,'coupon')?'menu-item active open':'menu-item'}">-->
+        <!--            <a href="javascript:void(0);" class="menu-link menu-toggle">-->
+        <!--                <i class="menu-icon tf-icons bx bx-user-circle"></i>-->
+        <!--                <div>Giảm giá</div>-->
+        <!--            </a>-->
+        <!--            <ul class="menu-sub">-->
+        <!--                <li th:class="${#strings.equals(session.active,'/coupon/list')?'menu-item active':'menu-item'}">-->
+        <!--                    <a th:href="@{/admin/coupon/list}" class="menu-link">-->
+        <!--                        <div>Danh sách giảm giá</div>-->
+        <!--                    </a>-->
+        <!--                </li>-->
+        <!--            </ul>-->
+        <!--        </li>-->
         <li class="menu-header small text-uppercase">
             <span>Other</span>
         </li>

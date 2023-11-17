@@ -89,7 +89,6 @@ public class HomeUserController {
         model.addAttribute("listTivi", listProduct);
 
 
-
         productDetailDto.setGroup(2);
 
         Page<Product> phuKien = productService.findAll(productDetailDto);
@@ -132,12 +131,12 @@ public class HomeUserController {
             }
         }
         model.addAttribute("listPhuKien", listPhuKien);
-      
+
         UserDetailDto userDetailDto = checkLogin.checkLogin();
         if (userDetailDto != null) {
             Cart cart = cartService.getOneByUser(userDetailDto.getId());
             if (cart == null) {
-                cart= new Cart();
+                cart = new Cart();
                 Optional<Users> optional = customerService.findById(userDetailDto.getId());
                 if (optional.isPresent()) {
                     cart.setCustomer(optional.get());
@@ -145,6 +144,9 @@ public class HomeUserController {
                 }
             }
             session.setAttribute("list", cart.getListCartPro());
+            session.setAttribute("user", true);
+        } else {
+            session.setAttribute("user", false);
         }
         return "/user/index";
     }

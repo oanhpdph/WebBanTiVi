@@ -193,7 +193,7 @@ function onchangeImage() {
                     this.value = ''; // Đặt lại trường nhập
                 }
             } else {
-                imageElement.src = ""
+                imageElement.src = "/oanh"
             }
         }
     }

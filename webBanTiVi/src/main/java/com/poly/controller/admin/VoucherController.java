@@ -53,7 +53,7 @@ public class VoucherController {
         session.setAttribute("list", vouchers);
 
         session.setAttribute("pageView", "/admin/page/voucher/voucher.html");
-        session.setAttribute("active", "/voucher/list");
+        session.setAttribute("active", "/promotion/voucher");
 //        if (vouchers.getTotalPages() < pageRequest) {
 //            return "redirect:/admin/voucher/list?page=" + vouchers.getTotalPages() + "&size=" + sizeRequest;
 //        }

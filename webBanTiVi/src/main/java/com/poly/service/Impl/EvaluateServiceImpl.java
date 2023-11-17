@@ -2,12 +2,10 @@ package com.poly.service.Impl;
 
 import com.poly.dto.EvaluateRes;
 import com.poly.entity.Evaluate;
+import com.poly.entity.ImageEvaluate;
 import com.poly.entity.Product;
 import com.poly.entity.Users;
-import com.poly.repository.CustomerRepository;
-import com.poly.repository.EvaluateRepos;
-import com.poly.repository.ProductDetailRepo;
-import com.poly.repository.ProductRepository;
+import com.poly.repository.*;
 import com.poly.service.EvaluateService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -23,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +29,7 @@ import java.util.Optional;
 public class EvaluateServiceImpl implements EvaluateService {
 
     @Autowired
-    EvaluateRepos evaluateRepos;
+    private EvaluateRepos evaluateRepos;
 
     @Autowired
     CustomerRepository customerRepository;
@@ -40,6 +39,9 @@ public class EvaluateServiceImpl implements EvaluateService {
 
     @Autowired
     ProductDetailRepo detailRepo;
+
+    @Autowired
+    private ImageEvaluateRepo imageEvaluateRepo;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -53,9 +55,12 @@ public class EvaluateServiceImpl implements EvaluateService {
         List<Predicate> list = new ArrayList<Predicate>();
 
         if (evaluateRes.getProduct() != null) {
-            list.add(criteriaBuilder.equal(evaluateRoot.get("product").get("id"),evaluateRes.getProduct()));
+            list.add(criteriaBuilder.equal(evaluateRoot.get("product").get("id"), evaluateRes.getProduct()));
         }
+        evaluateCriteriaQuery.orderBy(criteriaBuilder.desc(evaluateRoot.get("dateCreate")));
+
         evaluateCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
+
 
         Pageable pageable = PageRequest.of(evaluateRes.getPage() - 1, evaluateRes.getSize());
 
@@ -67,17 +72,36 @@ public class EvaluateServiceImpl implements EvaluateService {
     }
 
     @Override
-    public void add(EvaluateRes evaluate) {
+    public Evaluate add(EvaluateRes evaluate) {
         Optional<Users> optionalCustomer = customerRepository.findById(evaluate.getCustomer());
         Optional<Product> optionalProduct = productRepository.findById(evaluate.getProduct());
         Evaluate eval = new Evaluate();
-        eval.setId(evaluate.getId());
-        eval.setCustomer(optionalCustomer.get());
-        eval.setProduct(optionalProduct.get());
-        eval.setDateCreate(evaluate.getDateCreate());
+        if (optionalCustomer.isPresent()) {
+            eval.setCustomer(optionalCustomer.get());
+        }
+        if (optionalProduct.isPresent()) {
+            eval.setProduct(optionalProduct.get());
+        }
+
+        eval.setDateCreate(new Date());
         eval.setPoint(evaluate.getPoint());
         eval.setComment(evaluate.getComment());
-        this.evaluateRepos.save(eval);
+        eval = this.evaluateRepos.save(eval);
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            float avgPoint = evaluateRepos.avgPoint(product);
+            float roundedNumber = (float) (Math.round(avgPoint * 10.0) / 10.0);
+            product.setAvgPoint(roundedNumber);
+            productRepository.save(product);
+        }
+        for (String s : evaluate.getImage()) {
+            ImageEvaluate imageEvaluate = new ImageEvaluate();
+            imageEvaluate.setEvaluate(eval);
+            imageEvaluate.setNameImage(s);
+            imageEvaluateRepo.save(imageEvaluate);
+        }
+
+        return eval;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.poly.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -46,6 +47,7 @@ public class Product {
     @Column(name="date_create")
     private Date createDate;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<Evaluate> listEvaluate;
 

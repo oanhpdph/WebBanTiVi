@@ -2,22 +2,19 @@ package com.poly.controller.user;
 
 import com.poly.common.CheckLogin;
 import com.poly.dto.CartDto;
+import com.poly.dto.EvaluateRes;
 import com.poly.dto.UserDetailDto;
 import com.poly.entity.CartProduct;
+import com.poly.entity.Evaluate;
 import com.poly.entity.ProductDetail;
-import com.poly.service.CartProductService;
-import com.poly.service.CartService;
-import com.poly.service.CustomerService;
-import com.poly.service.ProductDetailService;
+import com.poly.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
@@ -39,6 +36,12 @@ public class ProductDetailUserController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    EvaluateService evaluateService;
+
+    @Autowired
+    ProductService productService;
 
     @Autowired
     private CheckLogin checkLogin;
@@ -75,4 +78,15 @@ public class ProductDetailUserController {
         return "redirect:" + url;
     }
 
+    @GetMapping("/product/evaluate/{id}")
+    public String index(@ModelAttribute(name = "evaluate") EvaluateRes evaluateDto, @PathVariable Integer id, Model model, HttpSession httpSession) {
+        evaluateDto.setProduct(id);
+        evaluateDto.setPage(1);
+        evaluateDto.setSize(10000);
+        Page<Evaluate> evaluates = evaluateService.getAll(evaluateDto);
+        model.addAttribute("list", evaluates);
+        httpSession.setAttribute("pageView", "/user/page/product/evaluate.html");
+        model.addAttribute("product", productService.findById(id));
+        return "user/index";
+    }
 }

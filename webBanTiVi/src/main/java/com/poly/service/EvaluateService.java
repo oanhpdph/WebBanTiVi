@@ -8,7 +8,7 @@ public interface EvaluateService {
 
     public Page<Evaluate> getAll(EvaluateRes evaluateRes);
 
-    public void add(EvaluateRes evaluate);
+    public Evaluate add(EvaluateRes evaluate);
 
     public void delete(Integer id);
 
