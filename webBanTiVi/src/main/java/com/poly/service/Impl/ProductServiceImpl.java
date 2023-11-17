@@ -69,12 +69,12 @@ public class ProductServiceImpl implements ProductService {
         if (productDetailDto.isActive() == true) {
             list.add(criteriaBuilder.equal(productRoot.get("active"), true));
         }
-        productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
         if (productDetailDto.getSort() == 1) {
             productCriteriaQuery.orderBy(criteriaBuilder.desc(productRoot.get("createDate")));
         } else {
             productCriteriaQuery.orderBy(criteriaBuilder.asc(productRoot.get("createDate")));
         }
+        productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
         Pageable pageable = PageRequest.of(productDetailDto.getPage() - 1, productDetailDto.getSize());
         List<Product> result = entityManager.createQuery(productCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
 

@@ -3,7 +3,6 @@
 go
 
 USE webbantivi
-
 go
 
 CREATE TABLE discount

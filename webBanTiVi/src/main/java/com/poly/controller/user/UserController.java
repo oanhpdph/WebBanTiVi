@@ -46,19 +46,9 @@ public class UserController {
     BillProductService billProductService;
 
 
-    @GetMapping("/tivi")
-    public String loadProduct(HttpSession session, Model model) {
-        session.setAttribute("pageView", "/user/page/product/tivi.html");
-        model.addAttribute("active", "tivi");
-        return "/user/index";
-    }
 
-    @GetMapping("/accessory")
-    public String loadAccessory(HttpSession session, Model model) {
-        session.setAttribute("pageView", "/user/page/product/accessory.html");
-        model.addAttribute("active", "accesory");
-        return "/user/index";
-    }
+
+
 
     @GetMapping("/invoice")
     public String loadInvoice(HttpSession session) {

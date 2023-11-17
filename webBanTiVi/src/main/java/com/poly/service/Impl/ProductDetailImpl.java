@@ -189,9 +189,5 @@ public class ProductDetailImpl implements ProductDetailService {
         productDetailRepo.deleteProductDiscount(id);
     };
 
-//    @Override
-//    public List<ProductDetail> update(List<ProductDetailDto> productDetailDto) {
-//        return null;
-//    }
 
 }

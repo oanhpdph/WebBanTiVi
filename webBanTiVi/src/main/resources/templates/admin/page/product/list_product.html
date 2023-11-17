@@ -182,49 +182,44 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                    Close
-                                </button>
+                                <a type="button" class="btn btn-primary" id="evaluate">Xem đánh giá</a>
                                 <button type="button" class="btn btn-primary" id="save">Lưu</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="card-footer">
-                <div>
-                    <div aria-label="Page pagination">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item first">
-                                <a class="page-link" id="first" th:value="1" type="button">
-                                    <i class="tf-icon bx bx-chevrons-left"></i>
-                                </a>
-                            </li>
-                            <li class="page-item prev">
-                                <a class="page-link" id="prev"><i class="tf-icon bx bx-chevron-left"></i></a>
-                            </li>
-                            <li class="page-item mx-2">
-                                <div class="input-group input-group-merge">
-                                    <input class="form-control inputPage" id="pageInput" type="number" name="page"
-                                           th:temp="*{page}"
-                                           th:value="*{page}">
-                                    <span class="input-group-text" id="total" th:value="${listProduct.totalPages}">/[(${listProduct.totalPages})]</span>
-                                    <!--                                                                    <input id="totalPage" value="${session.list.totalPages}" hidden="hidden">-->
-                                </div>
-                            </li>
-                            <li class="page-item next">
-                                <a class="page-link" id="next">
-                                    <i class="tf-icon bx bx-chevron-right"></i>
-                                </a>
-                            </li>
-                            <li class="page-item last">
-                                <a class="page-link" id="last" th:value="${listProduct.totalPages}">
-                                    <i class="tf-icon bx bx-chevrons-right"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                <div aria-label="Page pagination">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item first">
+                            <a class="page-link" id="first" th:value="1" type="button">
+                                <i class="tf-icon bx bx-chevrons-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item prev">
+                            <a class="page-link" id="prev"><i class="tf-icon bx bx-chevron-left"></i></a>
+                        </li>
+                        <li class="page-item mx-2">
+                            <div class="input-group input-group-merge">
+                                <input class="form-control inputPage" id="pageInput" type="number" name="page"
+                                       th:temp="*{page}"
+                                       th:value="*{page}">
+                                <span class="input-group-text" id="total" th:value="${listProduct.totalPages}">/[(${listProduct.totalPages})]</span>
+                                <!--                                                                    <input id="totalPage" value="${session.list.totalPages}" hidden="hidden">-->
+                            </div>
+                        </li>
+                        <li class="page-item next">
+                            <a class="page-link" id="next">
+                                <i class="tf-icon bx bx-chevron-right"></i>
+                            </a>
+                        </li>
+                        <li class="page-item last">
+                            <a class="page-link" id="last" th:value="${listProduct.totalPages}">
+                                <i class="tf-icon bx bx-chevrons-right"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>

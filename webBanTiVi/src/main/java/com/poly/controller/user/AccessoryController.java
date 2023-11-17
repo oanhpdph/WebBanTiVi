@@ -17,20 +17,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class TiviController {
-
+public class AccessoryController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/tivi")
-    public String loadProduct(HttpSession session, Model model, ProductDetailDto productDetailDto) {
+    @GetMapping("/accessory")
+    public String loadAccessory(HttpSession session, Model model, ProductDetailDto productDetailDto) {
         productDetailDto.setSize(20);
         productDetailDto.setActive(true);
-        productDetailDto.setGroup(1);
-
-        Page<Product> page = productService.findAll(productDetailDto);
-        List<ProductDetailDto> listProduct = new ArrayList<>();
-        for (Product product : page.getContent()) {
+        productDetailDto.setGroup(2);
+        Page<Product> phuKien = productService.findAll(productDetailDto);
+        List<ProductDetailDto> listPhuKien = new ArrayList<>();
+        for (Product product : phuKien.getContent()) {
             ProductDetailDto productDetailDto1 = new ProductDetailDto();
             productDetailDto1.setNameProduct(product.getNameProduct() + " " + product.getSku());
             //name
@@ -64,14 +62,14 @@ public class TiviController {
                 }
             }
             if (temp == 1) {
-                listProduct.add(productDetailDto1);
+                listPhuKien.add(productDetailDto1);
             }
         }
+        model.addAttribute("listPhuKien", listPhuKien);
 
-        model.addAttribute("listTivi", listProduct);
 
-        session.setAttribute("pageView", "/user/page/product/tivi.html");
-        model.addAttribute("active", "tivi");
+        session.setAttribute("pageView", "/user/page/product/accessory.html");
+        model.addAttribute("active", "accesory");
         return "/user/index";
     }
 }
