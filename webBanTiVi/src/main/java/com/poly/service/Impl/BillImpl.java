@@ -82,8 +82,8 @@ public class BillImpl implements BillService {
                 billProduct.setBill(bill);
                 billProduct.setProduct(list.get(i).get());
                 billProduct.setPrice(list.get(i).get().getPriceExport());
-                billProduct.setQuantity(billProRes.getQty());
-                billProduct.setQuantityReturn(list.get(i).get().getQuantity());
+                billProduct.setQuantity(billProRes.getQuantity().get(i));
+                billProduct.setQuantityReturn(0);
                 billProduct.setReason("");
                 billProduct.setReducedMoney(billProRes.getReducedMoney().get(i));
                 this.billProductRepos.save(billProduct);
@@ -114,7 +114,7 @@ public class BillImpl implements BillService {
             list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "RR"),
                     criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "WR"),
                     criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "RE")
-                    ));
+            ));
         } else if (searchBillDto.getBillStatus().equals("donhoan")) {
             billStatus.add("oanh");
         } else {

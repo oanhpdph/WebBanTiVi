@@ -62,8 +62,6 @@ public class CartProductImpl implements CartProductService {
                 }
             }
         }
-
-
         cartProduct.setProduct(productDetail);
         cartProduct.setQuantity(dto.getQuantity());
         return cartProductRepos.save(cartProduct);

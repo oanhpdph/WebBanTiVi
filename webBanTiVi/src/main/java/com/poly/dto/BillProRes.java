@@ -27,6 +27,7 @@ public class BillProRes {
     Integer voucher;
     List<BigDecimal> reducedMoney;
     Users customer;
+    List<Integer> quantity;
     //delivery
     String deliver;
     Date deliveryDate;

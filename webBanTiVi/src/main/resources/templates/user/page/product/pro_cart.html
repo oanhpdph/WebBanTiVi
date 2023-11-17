@@ -106,17 +106,18 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <div th:if="${reduceMoney[itemStat.index]!=0}">
+                                                    <div th:if="${reduceMoney[itemStat.index]!=item.product.priceExport}">
+                                                        <pan class="fs-5 text-strike-through"
+                                                             th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}|"></pan>
+                                                    </div>
+                                                    <div th:if="${reduceMoney[itemStat.index]!=item.product.priceExport}">
                                                         <span class="fs-4" >[(${#numbers.formatDecimal(reduceMoney[itemStat.index],0,'COMMA',0,'POINT')})]</span>
                                                     </div>
-                                                    <div th:if="${reduceMoney[itemStat.index]==0}">
+                                                    <div th:if="${reduceMoney[itemStat.index]==item.product.priceExport}">
                                                         <pan class="fs-4"
-                                                             th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')} (VNĐ)|"></pan>
+                                                             th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}|"></pan>
                                                     </div>
-                                                    <div th:if="${reduceMoney[itemStat.index]!=0}">
-                                                        <pan class="fs-5 text-strike-through"
-                                                             th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')} (VNĐ)|"></pan>
-                                                    </div>
+
                                                 </td>
                                                 <td>
                                                     <div class="buttons_added" th:id="${item.product.id}">

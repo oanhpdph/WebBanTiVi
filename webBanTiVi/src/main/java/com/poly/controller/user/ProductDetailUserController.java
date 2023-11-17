@@ -53,7 +53,7 @@ public class ProductDetailUserController {
         model.addAttribute("productAll", product.getProduct());
         BigDecimal reduceMoney = BigDecimal.valueOf(0);
         if (product.getCoupon() != null && product.getCoupon().isActive()) {
-            reduceMoney = product.getPriceExport().subtract(product.getPriceExport().multiply(BigDecimal.valueOf(Float.valueOf(product.getCoupon().getValue()) / 100)));
+            reduceMoney = product.getPriceExport().subtract(product.getPriceExport().multiply(BigDecimal.valueOf(Double.parseDouble(product.getCoupon().getValue())).divide(new BigDecimal(100))));
         }
         model.addAttribute("reduceMoney", reduceMoney);
         session.setAttribute("pageView", "/user/page/product/detail.html");
