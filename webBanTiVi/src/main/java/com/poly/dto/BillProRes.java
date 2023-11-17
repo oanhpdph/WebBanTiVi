@@ -25,6 +25,7 @@ public class BillProRes {
     BigDecimal totalPrice;
     Integer paymentMethod;
     Integer voucher;
+    List<BigDecimal> reducedMoney;
     Users customer;
     //delivery
     String deliver;
