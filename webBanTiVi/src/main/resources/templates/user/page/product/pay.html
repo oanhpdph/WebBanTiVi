@@ -67,12 +67,14 @@
                                         <div class="row justify-content-between">
                                             <div class="col">
                                                 <label class="form-label">Tên người nhận</label>
-                                                <input class="form-control" type="text" placeholder="họ và tên" th:field="*{name}"
+                                                <input class="form-control" type="text" placeholder="họ và tên"
+                                                       th:field="*{name}"
                                                        id="name" th:name="name">
                                             </div>
                                             <div class="col">
                                                 <label class="form-label">Số điện thoại người nhận</label>
-                                                <input class="form-control" type="text" placeholder="VN (+84)" th:field="*{phoneNumber}"
+                                                <input class="form-control" type="text" placeholder="VN (+84)"
+                                                       th:field="*{phoneNumber}"
                                                        id="phoneNumber" th:name="phoneNumber">
                                             </div>
                                         </div>
@@ -80,15 +82,27 @@
                                         <!--                                                email-->
                                         <div class="mb-3">
                                             <label class="form-label">Email</label>
-                                            <input type="email" class="form-control" placeholder="oanhpham085@gmail.com" th:field="*{email}"
+                                            <input type="email" class="form-control" placeholder="oanhpham085@gmail.com"
+                                                   th:field="*{email}"
                                                    id="email" th:name="email">
                                         </div>
                                         <br>
                                         <!--                                                address-->
                                         <div class="mb-3">
                                             <label class="form-label">Địa chỉ nhận hàng</label>
-                                            <input type="text" class="form-control" placeholder="Thôn liên trì 1, xã Yên hòa" th:field="*{address}"
+                                            <input type="text" class="form-control"
+                                                   placeholder="Thôn liên trì 1, xã Yên hòa" th:field="*{address}"
                                                    id="address" th:name="address">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Voucher</label>
+                                            <select class="form-select" id="exampleFormControlSelect1"
+                                                    aria-label="Default select example">
+                                                <option selected="">Voucher</option>
+                                                <option value="1">One</option>
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                            </select>
                                         </div>
 
                                         <div class="mb-3 table-responsive">
@@ -103,7 +117,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr th:each="item:${session.list}">
+                                                <tr th:each="item,itemStat:${session.list}">
                                                     <input th:value="${item.product.id}" name="id" hidden>
                                                     <td>
                                                         <div class="mb-3">
@@ -116,10 +130,17 @@
                                                     </td>
                                                     <td>
                                                         <div>
-                                                            <span class="fs-5"><span class="price-export"
-                                                                                     th:value="${item.product.priceExport}"
-                                                                                     th:text="${item.product.priceExport}"></span>
-                                                            </span>
+                                                            <div th:if="${reduceMoney[itemStat.index]!=0}">
+                                                                <span class=" fs-4" name="reducedMoney">[(${#numbers.formatDecimal(reduceMoney[itemStat.index],0,'COMMA',0,'POINT')})]</span>
+                                                            </div>
+                                                            <div th:if="${reduceMoney[itemStat.index]==0}">
+                                                                <pan class="fs-4" name="reducedMoney"
+                                                                     th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')} (VNĐ)|"></pan>
+                                                            </div>
+                                                        </div>
+                                                        <div th:if="${reduceMoney[itemStat.index]!=0}">
+                                                            <pan class="fs-5 text-strike-through"
+                                                                 th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')} (VNĐ)|"></pan>
                                                         </div>
                                                     </td>
                                                     <td>
@@ -136,10 +157,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <span class="fs-5">
-                                                             <span th:text="${item.product.priceExport * item.quantity}"
-                                                                   class="total-price"></span>
-                                                        </span>
+                                                        <span class="total-price">[(${#numbers.formatDecimal(reduceMoney[itemStat.index]* item.quantity,0,'COMMA',0,'POINT')})]</span>
                                                     </td>
                                                 </tr>
                                                 <hr>
@@ -159,14 +177,16 @@
                                             <div class="row gy-3">
                                                 <div class="col-md">
                                                     <div class="form-check form-check-inline mt-3">
-                                                        <input class="form-check-input" type="radio" th:field="*{paymentMethod}"
+                                                        <input class="form-check-input" type="radio"
+                                                               th:field="*{paymentMethod}"
                                                                name="paymentMethod" id="inlineRadio1"
                                                                th:value="1" checked>
                                                         <label class="form-check-label" for="inlineRadio1">Thanh toán
                                                             tiền mặt</label>
                                                     </div>
                                                     <div class="form-check form-check-inline">
-                                                        <input class="form-check-input" type="radio"th:field="*{paymentMethod}"
+                                                        <input class="form-check-input" type="radio"
+                                                               th:field="*{paymentMethod}"
                                                                name="paymentMethod" id="inlineRadio2"
                                                                th:value="2">
                                                         <label class="form-check-label" for="inlineRadio2">Thanh toán
