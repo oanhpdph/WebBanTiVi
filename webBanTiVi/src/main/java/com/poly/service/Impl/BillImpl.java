@@ -85,7 +85,7 @@ public class BillImpl implements BillService {
                 billProduct.setQuantity(billProRes.getQty());
                 billProduct.setQuantityReturn(list.get(i).get().getQuantity());
                 billProduct.setReason("");
-//                billProduct.setReducedMoney();
+                billProduct.setReducedMoney(billProRes.getReducedMoney().get(i));
                 this.billProductRepos.save(billProduct);
             }
         }
@@ -199,11 +199,11 @@ public class BillImpl implements BillService {
         return dto;
     }
 
-
     @Override
     public Bill findByCode(String code) {
         return this.billRepos.findByCode(code).get();
     }
+
 
     @Override
     public List<Bill> findBillReturnByStatus(String code) {

@@ -84,7 +84,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="item:${session.list}">
+                                            <tr th:each="item,itemStat:${session.list}">
                                                 <td>
                                                     <input th:value="${item.product.id}" name="id" hidden>
                                                     <a th:href="@{'/product/detail/'+${item.product.id}}"
@@ -106,14 +106,17 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <span class="fs-5"><span class="price-export"
-                                                                             th:value="${item.product.priceExport}"
-                                                                             th:text="${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}"></span>
-                                                    </span>
-<!--                                                    <span class="fs-5"><span class=""-->
-<!--                                                                             th:value="${item.product.coupon.value}"-->
-<!--                                                                             th:text="${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}"></span>-->
-<!--                                                    </span>-->
+                                                    <div th:if="${reduceMoney[itemStat.index]!=0}">
+                                                        <span class="fs-4" >[(${#numbers.formatDecimal(reduceMoney[itemStat.index],0,'COMMA',0,'POINT')})]</span>
+                                                    </div>
+                                                    <div th:if="${reduceMoney[itemStat.index]==0}">
+                                                        <pan class="fs-4"
+                                                             th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')} (VNĐ)|"></pan>
+                                                    </div>
+                                                    <div th:if="${reduceMoney[itemStat.index]!=0}">
+                                                        <pan class="fs-5 text-strike-through"
+                                                             th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')} (VNĐ)|"></pan>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <div class="buttons_added" th:id="${item.product.id}">
@@ -128,7 +131,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <span class="total-price">[(${#numbers.formatDecimal(item.product.priceExport * item.quantity,0,'COMMA',0,'POINT')})]</span>
+                                                    <span class="total-price">[(${#numbers.formatDecimal(reduceMoney[itemStat.index]* item.quantity,0,'COMMA',0,'POINT')})]</span>
                                                 </td>
                                                 <td>
                                                     <a type="button" class="btn btn-icon btn-danger"
@@ -213,7 +216,7 @@
             title: "Xóa thành công"
         });
     }
-    if(document.getElementById("message").textContent=='update-success'){
+    if (document.getElementById("message").textContent == 'update-success') {
 
         const Toast = Swal.mixin({
             toast: true,

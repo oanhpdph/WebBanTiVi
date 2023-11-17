@@ -110,12 +110,24 @@ public class CartSeviceImpl implements CartService {
 
     @Override
     public BigDecimal getAmount() {
-        BigDecimal amount = null;
+        //(sp - sp/100)*qty
+        BigDecimal amount = new BigDecimal(0);
         for (CartProduct item : items) {
-            BigDecimal qty = new BigDecimal(item.getQuantity());
-            BigDecimal price = new BigDecimal(String.valueOf(item.getProduct().getPriceExport()));
-            BigDecimal result = qty.multiply(price);
-            amount = result.setScale(2, RoundingMode.HALF_EVEN);
+            if (item.getProduct().getCoupon() != null && item.getProduct().getCoupon().isActive()) {
+                BigDecimal values = new BigDecimal(String.valueOf(item.getProduct().getCoupon().getValue()));
+                BigDecimal result = values.divide(BigDecimal.valueOf(100));
+                BigDecimal price = new BigDecimal(String.valueOf(item.getProduct().getPriceExport()));
+                BigDecimal result1 = price.multiply(result);
+                BigDecimal result2 = price.subtract(result1);
+                BigDecimal qty = new BigDecimal(item.getQuantity());
+                BigDecimal redu = result2.multiply(qty);
+                amount = amount.add(redu.setScale(2, RoundingMode.HALF_EVEN));
+            } else {
+                BigDecimal qty = new BigDecimal(item.getQuantity());
+                BigDecimal price = new BigDecimal(String.valueOf(item.getProduct().getPriceExport()));
+                BigDecimal result = qty.multiply(price);
+                amount = amount.add(result.setScale(2, RoundingMode.HALF_EVEN));
+            }
         }
         return amount;
     }
@@ -131,5 +143,21 @@ public class CartSeviceImpl implements CartService {
         }
         return null;
     }
+
+
+//    public BigDecimal getDiscountedPrice() {
+//        BigDecimal discountPrice = null;
+//        for (CartProduct item : items) {
+//            BigDecimal values = new BigDecimal(String.valueOf(item.getProduct().getCoupon().getValue()));
+//            BigDecimal result = values.divide(BigDecimal.valueOf(100));
+//            BigDecimal price = new BigDecimal(String.valueOf(item.getProduct().getPriceExport()));
+//            BigDecimal result1 = price.multiply(result);
+//            BigDecimal result2 = price.subtract(result1);
+//            BigDecimal qty = new BigDecimal(item.getQuantity());
+//            BigDecimal redu = result2.multiply(qty);
+//            discountPrice = discountPrice.add(redu.setScale(2, RoundingMode.HALF_EVEN));
+//        }
+//        return discountPrice;
+//    }
 
 }
