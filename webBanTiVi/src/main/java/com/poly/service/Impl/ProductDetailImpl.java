@@ -182,9 +182,5 @@ public class ProductDetailImpl implements ProductDetailService {
         return productDetail;
     }
 
-//    @Override
-//    public List<ProductDetail> update(List<ProductDetailDto> productDetailDto) {
-//        return null;
-//    }
 
 }

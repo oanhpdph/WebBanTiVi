@@ -1,4 +1,4 @@
-<h4 class="fw-semibold py-3 mb-4"> Danh sách đánh giá</h4>
+<h4 class="fw-semibold py-3 mb-4"> Đánh giá sản phẩm: <span th:text="${product.nameProduct}"></span></h4>
 <div class="card mb-3 ">
     <div class="card-header">
         <form class="col-12 mt-2">
@@ -25,18 +25,9 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-2 d-flex align-items-center">
-                <p>Evaluate :
-                    <span th:text="${#lists.size(list)}"></span>
+                <p>Sô lượng:
+                    <span th:text="${#lists.size(list.content)}"></span>
                 </p>
-            </div>
-            <div class="col-md-10 text-end">
-                <div class="btn-group" role="group" aria-label="First group">
-                    <button type="button" class="btn btn-outline-secondary">Excel
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary">PDF
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary">In</button>
-                </div>
             </div>
         </div>
         <hr>
@@ -44,19 +35,16 @@
             <table class="table table-hover overflow-hidden">
                 <thead>
                 <tr>
-                    <th>Product</th>
-                    <th>Customer</th>
-                    <th>Date Create</th>
-                    <th>Point</th>
-                    <th>Comment</th>
+                    <th>Tên khách hàng</th>
+                    <th>Ngày tạo</th>
+                    <th>Điểm đánh giá</th>
+                    <th>Bình luận</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="evaluate : ${list}">
-
-                    <!--                        <td th:text="${evaluate.product.name}"></td>-->
-                    <td th:text="${evaluate.customer.name}"></td>
+                    <td th:text="${evaluate.customer.name!= null ?evaluate.customer.name:'Trống' }"></td>
                     <td th:text="${evaluate.dateCreate}"></td>
                     <td th:text="${evaluate.point}"></td>
                     <td th:text="${evaluate.comment}"></td>
@@ -65,95 +53,94 @@
                                 th:data-bs-target="|#modal${evaluate.id}|">
                             <i class="bx bxs-edit-alt"></i>
                         </button>
-
-                        <div class="modal fade" th:id="|modal${evaluate.id}|" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-xl" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Thông tin Evaluate</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form th:action="@{/admin/evaluate/update/{id}(id=${evaluate.id})}"
-                                              method="post" th:object="${evaluate}">
-                                            <div class="row">
-                                                <div class="row col-lg-12 col-xl-9">
-                                                    <div class="col-xl-4 col-lg-6 col-md-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Customer:</label>
-                                                            <br>
-                                                            <select th:name="customer" class="form-select"
-                                                                    aria-label="Default select example">
-                                                                <option th:each="i:${listCustomer}"
-                                                                        th:value="${i.id}"
-                                                                        th:text="${evaluate.customer.name}"></option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Product:</label>
-                                                            <br>
-                                                            <select th:name="product" class="form-select"
-                                                                    aria-label="Default select example">
-                                                                <!--                                                                    <option th:each="i:${listProduct}"-->
-                                                                <!--                                                                            th:value="${i.id}"-->
-                                                                <!--                                                                            th:text="${i.name}"></option>-->
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xl-4 col-lg-6 col-md-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Date Create</label>
-                                                            <input type="text" class="form-control"
-                                                                   th:name="dateCreate"
-                                                                   th:value="${evaluate.dateCreate}">
-                                                        </div>
-                                                        <div class="mb-3">
-                                                            <label class="form-label">Point</label>
-                                                            <input class="form-control" type="text"
-                                                                   th:name="point"
-                                                                   th:value="${evaluate.point}">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xl-4 col-lg-6 col-md-6">
-                                                        <div class="mb-3">
-                                                            <label class="form-label"> Reduced Form</label>
-                                                            <input class="form-control" type="text"
-                                                                   th:name="comment"
-                                                                   th:value="${evaluate.comment}">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row justify-content-xl-end">
-                                                <div class="w-auto">
-                                                    <button type="reset"
-                                                            class="btn btn-primary btn-control">
-                                                        Reset
-                                                    </button>
-                                                </div>
-                                                <div class="w-auto">
-                                                    <button type="submit"
-                                                            class="btn btn-primary btn-control"
-                                                            onclick="return confirm('Xác nhận cập nhật')">
-                                                        Update
-                                                    </button>
-                                                </div>
-                                                <div class="w-auto">
-                                                    <a th:href="@{/admin/evaluate/delete/{id}(id=${evaluate.id})}"
-                                                       onclick="return confirm('Xác nhận xóa')">
-                                                        <button type="button"
-                                                                class="btn btn-primary btn-control">
-                                                            Delete
-                                                        </button>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!--                        <div class="modal fade" th:id="|modal${evaluate.id}|" tabindex="-1" aria-hidden="true">-->
+                        <!--                            <div class="modal-dialog modal-xl" role="document">-->
+                        <!--                                <div class="modal-content">-->
+                        <!--                                    <div class="modal-header">-->
+                        <!--                                        <h5 class="modal-title">Thông tin Evaluate</h5>-->
+                        <!--                                        <button type="button" class="btn-close" data-bs-dismiss="modal"-->
+                        <!--                                                aria-label="Close"></button>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="modal-body">-->
+                        <!--                                        <form th:action="@{/admin/evaluate/update/{id}(id=${evaluate.id})}"-->
+                        <!--                                              method="post" th:object="${evaluate}">-->
+                        <!--                                            <div class="row">-->
+                        <!--                                                <div class="row col-lg-12 col-xl-9">-->
+                        <!--                                                    <div class="col-xl-4 col-lg-6 col-md-6">-->
+                        <!--                                                        <div class="mb-3">-->
+                        <!--                                                            <label class="form-label">Customer:</label>-->
+                        <!--                                                            <br>-->
+                        <!--                                                            <select th:name="customer" class="form-select"-->
+                        <!--                                                                    aria-label="Default select example">-->
+                        <!--                                                                <option th:each="i:${listCustomer}"-->
+                        <!--                                                                        th:value="${i.id}"-->
+                        <!--                                                                        th:text="${evaluate.customer.name}"></option>-->
+                        <!--                                                            </select>-->
+                        <!--                                                        </div>-->
+                        <!--                                                        <div class="mb-3">-->
+                        <!--                                                            <label class="form-label">Product:</label>-->
+                        <!--                                                            <br>-->
+                        <!--                                                            <select th:name="product" class="form-select"-->
+                        <!--                                                                    aria-label="Default select example">-->
+                        <!--                                                                &lt;!&ndash;                                                                    <option th:each="i:${listProduct}"&ndash;&gt;-->
+                        <!--                                                                &lt;!&ndash;                                                                            th:value="${i.id}"&ndash;&gt;-->
+                        <!--                                                                &lt;!&ndash;                                                                            th:text="${i.name}"></option>&ndash;&gt;-->
+                        <!--                                                            </select>-->
+                        <!--                                                        </div>-->
+                        <!--                                                    </div>-->
+                        <!--                                                    <div class="col-xl-4 col-lg-6 col-md-6">-->
+                        <!--                                                        <div class="mb-3">-->
+                        <!--                                                            <label class="form-label">Date Create</label>-->
+                        <!--                                                            <input type="text" class="form-control"-->
+                        <!--                                                                   th:name="dateCreate"-->
+                        <!--                                                                   th:value="${evaluate.dateCreate}">-->
+                        <!--                                                        </div>-->
+                        <!--                                                        <div class="mb-3">-->
+                        <!--                                                            <label class="form-label">Point</label>-->
+                        <!--                                                            <input class="form-control" type="text"-->
+                        <!--                                                                   th:name="point"-->
+                        <!--                                                                   th:value="${evaluate.point}">-->
+                        <!--                                                        </div>-->
+                        <!--                                                    </div>-->
+                        <!--                                                    <div class="col-xl-4 col-lg-6 col-md-6">-->
+                        <!--                                                        <div class="mb-3">-->
+                        <!--                                                            <label class="form-label"> Reduced Form</label>-->
+                        <!--                                                            <input class="form-control" type="text"-->
+                        <!--                                                                   th:name="comment"-->
+                        <!--                                                                   th:value="${evaluate.comment}">-->
+                        <!--                                                        </div>-->
+                        <!--                                                    </div>-->
+                        <!--                                                </div>-->
+                        <!--                                            </div>-->
+                        <!--                                            <div class="row justify-content-xl-end">-->
+                        <!--                                                <div class="w-auto">-->
+                        <!--                                                    <button type="reset"-->
+                        <!--                                                            class="btn btn-primary btn-control">-->
+                        <!--                                                        Reset-->
+                        <!--                                                    </button>-->
+                        <!--                                                </div>-->
+                        <!--                                                <div class="w-auto">-->
+                        <!--                                                    <button type="submit"-->
+                        <!--                                                            class="btn btn-primary btn-control"-->
+                        <!--                                                            onclick="return confirm('Xác nhận cập nhật')">-->
+                        <!--                                                        Update-->
+                        <!--                                                    </button>-->
+                        <!--                                                </div>-->
+                        <!--                                                <div class="w-auto">-->
+                        <!--                                                    <a th:href="@{/admin/evaluate/delete/{id}(id=${evaluate.id})}"-->
+                        <!--                                                       onclick="return confirm('Xác nhận xóa')">-->
+                        <!--                                                        <button type="button"-->
+                        <!--                                                                class="btn btn-primary btn-control">-->
+                        <!--                                                            Delete-->
+                        <!--                                                        </button>-->
+                        <!--                                                    </a>-->
+                        <!--                                                </div>-->
+                        <!--                                            </div>-->
+                        <!--                                        </form>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                         <a th:href="@{/admin/evaluate/delete/{id}(id=*{evaluate.id})}"
                            onclick="return confirm('Xác nhận xóa')">
                             <button type="button" class="btn btn-icon btn-danger">

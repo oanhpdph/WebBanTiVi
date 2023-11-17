@@ -31,6 +31,7 @@ public class HomeUserController {
 
     @Autowired
     private CustomerService customerService;
+
     @Autowired
     private ProductService productService;
 
@@ -44,7 +45,6 @@ public class HomeUserController {
         productDetailDto.setActive(true);
 
         productDetailDto.setGroup(1);
-
 
         Page<Product> page = productService.findAll(productDetailDto);
         List<ProductDetailDto> listProduct = new ArrayList<>();
@@ -137,6 +137,7 @@ public class HomeUserController {
         if (userDetailDto != null) {
             Cart cart = cartService.getOneByUser(userDetailDto.getId());
             if (cart == null) {
+                cart= new Cart();
                 Optional<Users> optional = customerService.findById(userDetailDto.getId());
                 if (optional.isPresent()) {
                     cart.setCustomer(optional.get());
@@ -145,7 +146,6 @@ public class HomeUserController {
             }
             session.setAttribute("list", cart.getListCartPro());
         }
-        model.addAttribute("listPhuKien", phuKien);
         return "/user/index";
     }
 }

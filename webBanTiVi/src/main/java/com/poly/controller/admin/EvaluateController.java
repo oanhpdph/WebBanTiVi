@@ -3,12 +3,13 @@ package com.poly.controller.admin;
 import com.poly.dto.EvaluateRes;
 import com.poly.entity.Evaluate;
 import com.poly.service.CustomerService;
-import com.poly.service.Impl.EvaluateServiceImpl;
+import com.poly.service.EvaluateService;
 import com.poly.service.ProductDetailService;
 import com.poly.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
 public class EvaluateController {
     @Autowired
-    EvaluateServiceImpl evaluateService;
+    EvaluateService evaluateService;
 
     @Autowired
     ProductDetailService productDetailService;
@@ -31,14 +32,16 @@ public class EvaluateController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("/evaluate/list")
-    public String index(Model model, HttpSession httpSession) {
-        model.addAttribute("list", evaluateService.getAll());
+    @GetMapping("/evaluate/{id}")
+    public String index(@ModelAttribute(name = "evaluate") EvaluateRes evaluateDto, @PathVariable Integer id, Model model, HttpSession httpSession) {
+        evaluateDto.setProduct(id);
+        Page<Evaluate> evaluates = evaluateService.getAll(evaluateDto);
+        model.addAttribute("list", evaluates);
         httpSession.setAttribute("pageView", "/admin/page/evaluate/evaluate.html");
         httpSession.setAttribute("active", "/evaluate/list");
-        model.addAttribute("evaluate", new EvaluateRes());
-        model.addAttribute("listCustomer", this.customerService.findAll());
-        model.addAttribute("listProduct", this.productDetailService.findAll());
+//        model.addAttribute("evaluate", new EvaluateRes());
+//        model.addAttribute("listCustomer", this.customerService.findAll());
+        model.addAttribute("product", productService.findById(id));
         return "admin/layout";
 
     }

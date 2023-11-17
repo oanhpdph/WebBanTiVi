@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "evaluate")
@@ -32,8 +33,12 @@ public class Evaluate {
     private Date dateCreate;
 
     @Column(name="point")
-    private Integer point;
+    private float point;
 
     @Column(name="comment")
     private String comment;
+
+    @OneToMany(mappedBy = "evaluate")
+    private List<ImageEvaluate> evaluateList;
+
 }
