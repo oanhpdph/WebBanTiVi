@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -121,12 +120,12 @@ public class CartSeviceImpl implements CartService {
                 BigDecimal result2 = price.subtract(result1);
                 BigDecimal qty = new BigDecimal(item.getQuantity());
                 BigDecimal redu = result2.multiply(qty);
-                amount = amount.add(redu.setScale(2, RoundingMode.HALF_EVEN));
+                amount = amount.add(redu);
             } else {
                 BigDecimal qty = new BigDecimal(item.getQuantity());
                 BigDecimal price = new BigDecimal(String.valueOf(item.getProduct().getPriceExport()));
                 BigDecimal result = qty.multiply(price);
-                amount = amount.add(result.setScale(2, RoundingMode.HALF_EVEN));
+                amount = amount.add(result);
             }
         }
         return amount;
@@ -143,21 +142,5 @@ public class CartSeviceImpl implements CartService {
         }
         return null;
     }
-
-
-//    public BigDecimal getDiscountedPrice() {
-//        BigDecimal discountPrice = null;
-//        for (CartProduct item : items) {
-//            BigDecimal values = new BigDecimal(String.valueOf(item.getProduct().getCoupon().getValue()));
-//            BigDecimal result = values.divide(BigDecimal.valueOf(100));
-//            BigDecimal price = new BigDecimal(String.valueOf(item.getProduct().getPriceExport()));
-//            BigDecimal result1 = price.multiply(result);
-//            BigDecimal result2 = price.subtract(result1);
-//            BigDecimal qty = new BigDecimal(item.getQuantity());
-//            BigDecimal redu = result2.multiply(qty);
-//            discountPrice = discountPrice.add(redu.setScale(2, RoundingMode.HALF_EVEN));
-//        }
-//        return discountPrice;
-//    }
 
 }

@@ -56,7 +56,7 @@ public class BillDetailController {
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("paymentMethod", paymentMethodService.getAll());
 //        model.addAttribute("totalReduceMoney", reduceMoney);
-        BigDecimal totalAfter = BigDecimal.valueOf(0);
+        BigDecimal totalAfter = new BigDecimal(0);
 //        if (bill.getVoucher() != null && bill.getVoucher().isReducedForm() == true) {// giảm %
 //            totalAfter = totalPrice.subtract(reduceMoney);
 //            BigDecimal reduce = totalPrice.multiply(BigDecimal.valueOf(bill.getVoucher().getValue() / 100));

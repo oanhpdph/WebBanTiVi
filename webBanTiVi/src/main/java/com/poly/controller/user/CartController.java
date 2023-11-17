@@ -1,7 +1,5 @@
-
 package com.poly.controller.user;
 
-package com.poly.controller.user;
 import com.poly.common.CheckLogin;
 import com.poly.dto.BillProRes;
 import com.poly.dto.UserDetailDto;
@@ -22,7 +20,6 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,28 +66,42 @@ public class CartController {
     public String pay(Model model) {
         session.setAttribute("pageView", "/user/page/product/pay.html");
         model.addAttribute("billProduct", new BillProRes());
+        List<BigDecimal> listRedu = new ArrayList<>();
+        BigDecimal reduceMoney = BigDecimal.valueOf(0);
 
         UserDetailDto userDetailDto = checkLogin.checkLogin();
         if (userDetailDto != null) {
             Cart cart = cartService.getOneByUser(userDetailDto.getId());
             BigDecimal total = new BigDecimal(0);
-            for (CartProduct product : cart.getListCartPro()) {
-                total = total.add(product.getProduct().getPriceExport().multiply(BigDecimal.valueOf(product.getQuantity())));
+            if (cart.getListCartPro().isEmpty()) {
+                session.setAttribute("pageView", "/user/page/product/cart_null.html");
+                session.setAttribute("list", null);
+                return "user/index";
             }
+            for (CartProduct product : cart.getListCartPro()) {
+                if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive()) {
+                    reduceMoney = product.getProduct().getPriceExport().subtract(product.getProduct().getPriceExport().multiply(new BigDecimal(product.getProduct().getCoupon().getValue()).divide(new BigDecimal(100))));
+                    total = total.add(reduceMoney.multiply(BigDecimal.valueOf(product.getQuantity())));
+                    listRedu.add(reduceMoney);
+                } else {
+                    reduceMoney = product.getProduct().getPriceExport();
+                    total = total.add(product.getProduct().getPriceExport().multiply(BigDecimal.valueOf(product.getQuantity())));
+                    listRedu.add(reduceMoney);
+                }
+            }
+            model.addAttribute("reduceMoney", listRedu);
             model.addAttribute("total", total);
             session.setAttribute("list", cart.getListCartPro());
             return "user/index";
         }
         List<CartProduct> listCart = (List<CartProduct>) session.getAttribute("list");
-        BigDecimal reduceMoney = BigDecimal.valueOf(0);
         if (cartService.getTotal() == 0) {
             session.setAttribute("pageView", "/user/page/product/cart_null.html");
             return "user/index";
         }
-        List<BigDecimal> listRedu = new ArrayList<>();
         for (CartProduct product : listCart) {
             if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive()) {
-                reduceMoney = product.getProduct().getPriceExport().subtract(product.getProduct().getPriceExport().multiply(BigDecimal.valueOf(Float.valueOf(product.getProduct().getCoupon().getValue()) / 100)));
+                reduceMoney = product.getProduct().getPriceExport().subtract(product.getProduct().getPriceExport().multiply(new BigDecimal(product.getProduct().getCoupon().getValue()).divide(new BigDecimal(100))));
                 listRedu.add(reduceMoney);
             } else {
                 reduceMoney = product.getProduct().getPriceExport();
@@ -117,54 +128,93 @@ public class CartController {
 
         Users checkEmail = customerService.findByEmail(billProRes.getEmail());
         UserDetailDto userDetailDto = checkLogin.checkLogin();
+        List<CartProduct> listCart = new ArrayList<>();
+        BigDecimal reduceMoney = BigDecimal.valueOf(0);
+        listCart = (List<CartProduct>) session.getAttribute("list");
 
-        if (checkEmail == null) {
-            checkEmail = customerService.add(billProRes);
-            billProRes.setCustomer(checkEmail);
-        } else if (checkEmail != null && checkEmail.getRoles() == null) {
-            billProRes.setCustomer(checkEmail);
-        } else if (checkEmail != null && checkEmail.getRoles() != null && checkEmail.getRoles().equals("USER")) {
-            if (userDetailDto == null) {
-                return "user/index";
+        List<BigDecimal> listRedu = new ArrayList<>();
+        List<Integer> listPro = new ArrayList<>();
+        List<Integer> quantity = new ArrayList<>();
+        BigDecimal total = new BigDecimal(0);
+        for (CartProduct product : listCart) {
+            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive()) {
+                reduceMoney = product.getProduct().getPriceExport().multiply(new BigDecimal(product.getProduct().getCoupon().getValue()).divide(new BigDecimal(100)));
+                listRedu.add(reduceMoney);
+                total = total.add(product.getProduct().getPriceExport().subtract(reduceMoney).multiply(BigDecimal.valueOf(product.getQuantity())));
+            } else {
+                total = total.add(product.getProduct().getPriceExport().multiply(BigDecimal.valueOf(product.getQuantity())));
+                listRedu.add(BigDecimal.valueOf(0));
             }
-            if (userDetailDto.getEmail() != billProRes.getEmail()) {
+            quantity.add(product.getQuantity());
+            listPro.add(product.getProduct().getId());
+        }
+        billProRes.setTotalPrice(total);// lấy tổng tiền
+
+        if (userDetailDto == null) {
+            if (checkEmail == null) {
+                checkEmail = customerService.add(billProRes);
+                billProRes.setCustomer(checkEmail);
+            } else if (checkEmail != null && checkEmail.getRoles() == null) {
+                billProRes.setCustomer(checkEmail);
+            } else if (checkEmail != null && checkEmail.getRoles().equals("USER")) {
+
+                return "";// thông báo email đã dùng đăng ký tài khoản
+            }
+            total = cartService.getAmount();
+            billProRes.setTotalPrice(total);// lấy tổng tiền
+
+        } else {
+            if (userDetailDto.getEmail().trim() != billProRes.getEmail().trim()) {
+                if (checkEmail != null && checkEmail.getRoles() != null) {
+                    return "user/index";
+                }
                 // thông báo lỗi email của người khác k thể dùng để mua hàng
-                return "user/index";
+                billProRes.setCustomer(checkEmail);
             } else {
                 billProRes.setCustomer(checkEmail);
             }
+        }
 
-        }
-        BigDecimal total = cartService.getAmount();
-        billProRes.setTotalPrice(total);
-        Bill bill1 = billService.add(billProRes);
+        Bill bill1 = billService.add(billProRes);// tạo hóa đơn mới
         billProRes.setBill(bill1);
-        DeliveryNotes notes = deliveryNotes.save(billProRes);
-        BigDecimal reduceMoney = BigDecimal.valueOf(0);
-        List<CartProduct> listCart = (List<CartProduct>) session.getAttribute("list");
-        List<BigDecimal> listRedu = new ArrayList<>();
-        for (CartProduct product : listCart) {
-            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive()) {
-                reduceMoney = product.getProduct().getPriceExport().subtract(product.getProduct().getPriceExport().multiply(BigDecimal.valueOf(Float.valueOf(product.getProduct().getCoupon().getValue()) / 100)));
-                listRedu.add(reduceMoney);
-            } else {
-                reduceMoney = product.getProduct().getPriceExport();
-                listRedu.add(reduceMoney);
-            }
-        }
+
+        DeliveryNotes notes = deliveryNotes.save(billProRes);// tạo phiếu giao hàng
+        billProRes.setQuantity(quantity);
+        billProRes.setReducedMoney(listRedu);// lấy danh sách giảm giá
+        billProRes.setProduct(listPro);// lấy danh sách sản phẩm
+
         if (billProRes.getPaymentMethod() == 2) {
             //VNPAY
             String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-            String vnpayUrl = vnPayService.createOrder(total, bill1.getCode(), baseUrl);
-            billProRes.setProduct(Collections.singletonList(id));
-            billProRes.setReducedMoney(listRedu);
+            String vnpayUrl = vnPayService.createOrder(bill1.getTotalPrice(), bill1.getCode(), baseUrl);
+//            billProRes.setProduct(Collections.singletonList(id));
             billService.addBillPro(bill1, billProRes);
+            if (userDetailDto != null) {
+                Cart cart = cartService.getOneByUser(userDetailDto.getId());
+                for (CartProduct cartProduct : cart.getListCartPro()) {
+                    CartProductId cartProductId = new CartProductId();
+                    cartProductId.setProduct(cartProduct.getProduct());
+                    cartProductId.setCart(cart);
+                    boolean check = cartProductService.delete(cartProductId);
+                }
+                session.setAttribute("list", null);
+            }
+
             cartService.clear();
+
             return "redirect:" + vnpayUrl;
         } else {
-            billProRes.setProduct(Collections.singletonList(id));
-            billProRes.setReducedMoney(listRedu);
             billService.addBillPro(bill1, billProRes);
+            if (userDetailDto != null) {
+                Cart cart = cartService.getOneByUser(userDetailDto.getId());
+                for (CartProduct cartProduct : cart.getListCartPro()) {
+                    CartProductId cartProductId = new CartProductId();
+                    cartProductId.setProduct(cartProduct.getProduct());
+                    cartProductId.setCart(cart);
+                    boolean check = cartProductService.delete(cartProductId);
+                }
+                session.setAttribute("list", null);
+            }
             cartService.clear();
             return "redirect:/confirm";
         }
@@ -173,7 +223,8 @@ public class CartController {
     @GetMapping("/cart")
     public String index(Model model) {
         session.setAttribute("pageView", "/user/page/product/pro_cart.html");
-
+        List<BigDecimal> listRedu = new ArrayList<>();
+        BigDecimal reduceMoney = new BigDecimal(0);
         UserDetailDto userDetailDto = checkLogin.checkLogin();
         if (userDetailDto != null) {
             Cart cart = cartService.getOneByUser(userDetailDto.getId());
@@ -184,22 +235,30 @@ public class CartController {
             }
             BigDecimal total = new BigDecimal(0);
             for (CartProduct product : cart.getListCartPro()) {
-                total = total.add(product.getProduct().getPriceExport().multiply(BigDecimal.valueOf(product.getQuantity())));
+                if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive()) {
+                    reduceMoney = product.getProduct().getPriceExport().subtract(product.getProduct().getPriceExport().multiply(new BigDecimal(product.getProduct().getCoupon().getValue()).divide(new BigDecimal(100))));
+                    total = total.add(reduceMoney.multiply(BigDecimal.valueOf(product.getQuantity())));
+                    listRedu.add(reduceMoney);
+                } else {
+                    reduceMoney = product.getProduct().getPriceExport();
+                    total = total.add(product.getProduct().getPriceExport().multiply(new BigDecimal(product.getQuantity())));
+                    listRedu.add(reduceMoney);
+                }
             }
+            model.addAttribute("reduceMoney", listRedu);
             model.addAttribute("total", total);
             session.setAttribute("list", cart.getListCartPro());
             return "user/index";
         }
         List<CartProduct> listCart = (List<CartProduct>) session.getAttribute("list");
-        BigDecimal reduceMoney = BigDecimal.valueOf(0);
+
         if (cartService.getTotal() == 0) {
             session.setAttribute("pageView", "/user/page/product/cart_null.html");
             return "user/index";
         }
-        List<BigDecimal> listRedu = new ArrayList<>();
         for (CartProduct product : listCart) {
             if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive()) {
-                reduceMoney = product.getProduct().getPriceExport().subtract(product.getProduct().getPriceExport().multiply(BigDecimal.valueOf(Float.valueOf(product.getProduct().getCoupon().getValue()) / 100)));
+                reduceMoney = product.getProduct().getPriceExport().subtract(product.getProduct().getPriceExport().multiply(new BigDecimal(product.getProduct().getCoupon().getValue()).divide(new BigDecimal(100))));
                 listRedu.add(reduceMoney);
             } else {
                 reduceMoney = product.getProduct().getPriceExport();

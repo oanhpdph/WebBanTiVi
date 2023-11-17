@@ -110,9 +110,9 @@
                                                 <thead>
                                                 <tr>
                                                     <th>Sản phẩm</th>
-                                                    <th>Giá</th>
+                                                    <th>Giá (VNĐ)</th>
                                                     <th>Số lượng</th>
-                                                    <th>Thành tiền</th>
+                                                    <th>Thành tiền (VNĐ)</th>
                                                     <th></th>
                                                 </tr>
                                                 </thead>
@@ -123,38 +123,31 @@
                                                         <div class="mb-3">
                                                             <img th:each="image:${item.product.listImage}"
                                                                  th:if="${image.location == true}"
-                                                                 th:src="@{'/image/'+${image.link}}"
+                                                                 th:src="@{'/image/product/'+${image.link}}"
                                                                  alt="" width="100px">
                                                         </div>
                                                         <span th:text="${item.product.product.nameProduct}"></span>
                                                     </td>
                                                     <td>
+                                                        <div th:if="${reduceMoney[itemStat.index]!=item.product.priceExport}">
+                                                            <span class="fs-5 text-strike-through"
+                                                                 th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}|"></span>
+                                                        </div>
                                                         <div>
-                                                            <div th:if="${reduceMoney[itemStat.index]!=0}">
+                                                            <div th:if="${reduceMoney[itemStat.index]!=item.product.priceExport}">
                                                                 <span class=" fs-4" name="reducedMoney">[(${#numbers.formatDecimal(reduceMoney[itemStat.index],0,'COMMA',0,'POINT')})]</span>
                                                             </div>
-                                                            <div th:if="${reduceMoney[itemStat.index]==0}">
-                                                                <pan class="fs-4" name="reducedMoney"
-                                                                     th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')} (VNĐ)|"></pan>
+                                                            <div th:if="${reduceMoney[itemStat.index]==item.product.priceExport}">
+                                                                <span class="fs-4" name="reducedMoney"
+                                                                     th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}|"></span>
                                                             </div>
                                                         </div>
-                                                        <div th:if="${reduceMoney[itemStat.index]!=0}">
-                                                            <pan class="fs-5 text-strike-through"
-                                                                 th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')} (VNĐ)|"></pan>
-                                                        </div>
+
                                                     </td>
                                                     <td>
-                                                        <div class="buttons_added" th:id="${item.product.id}">
-                                                            <input class="minus is-form" type="button"
-                                                                   value="-">
-                                                            <input aria-label="quantity" class="input-qty" max="10"
-                                                                   min="1"
-                                                                   name="qty"
-                                                                   type="number"
-                                                                   th:value="${item.quantity}">
-                                                            <input class="plus is-form plus"
-                                                                   type="button" value="+">
-                                                        </div>
+                                                            <input aria-label="quantity" name="qty" class="form-control"
+                                                                  th:value="${item.quantity}" hidden="hidden"></input>
+                                                        <span th:text="${item.quantity}"></span>
                                                     </td>
                                                     <td>
                                                         <span class="total-price">[(${#numbers.formatDecimal(reduceMoney[itemStat.index]* item.quantity,0,'COMMA',0,'POINT')})]</span>
@@ -167,7 +160,7 @@
                                         <div class="row justify-content-center">
                                             <span class="col fs-5">Tổng tiền: </span>
                                             <span class="col text-danger text-center">
-                                                <span th:text="${total}" class="total-pro" name="totalPrice"></span>
+                                                <span th:text="${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')}" class="total-pro" name="totalPrice"></span>
 
                                             </span>
                                         </div>
