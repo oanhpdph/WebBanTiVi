@@ -2,12 +2,15 @@ package com.poly.service.Impl;
 
 import com.poly.common.RandomNumber;
 import com.poly.dto.BillProRes;
+import com.poly.dto.ImageReturnDto;
+import com.poly.dto.ReturnDto;
 import com.poly.dto.SearchBillDto;
-import com.poly.entity.Bill;
-import com.poly.entity.BillProduct;
-import com.poly.entity.ProductDetail;
+import com.poly.entity.*;
 import com.poly.repository.*;
+import com.poly.service.BillProductService;
 import com.poly.service.BillService;
+import com.poly.service.BillStatusService;
+import com.poly.service.ImageReturnService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -51,6 +54,16 @@ public class BillImpl implements BillService {
     @Autowired
     PaymentMethodRepos paymentMethodRepos;
 
+    @Autowired
+    ImageReturnService imageReturnService;
+
+    @Autowired
+    BillProductService billProductService;
+
+    @Autowired
+    BillStatusService billStatusService;
+
+
     @Override
     public Bill add(BillProRes bill) {
         String code = "";
@@ -83,7 +96,9 @@ public class BillImpl implements BillService {
                 billProduct.setProduct(list.get(i).get());
                 billProduct.setPrice(list.get(i).get().getPriceExport());
                 billProduct.setQuantity(billProRes.getQuantity().get(i));
-                billProduct.setQuantityReturn(0);
+                billProduct.setQuantityRequestReturn(0);
+                billProduct.setQuantityAcceptReturn(0);
+                billProduct.setStatus(0);
                 billProduct.setReason("");
                 billProduct.setReducedMoney(billProRes.getReducedMoney().get(i));
                 this.billProductRepos.save(billProduct);
@@ -202,6 +217,78 @@ public class BillImpl implements BillService {
     @Override
     public Bill findByCode(String code) {
         return this.billRepos.findByCode(code).get();
+    }
+
+    @Override
+    public List<Bill> listBillFilter(List<Bill> billList) {
+        List<Bill> listBillFilter= new ArrayList<>();
+        int i=0;
+        for(Bill bill : billList){
+            for(BillProduct billPro : bill.getBillProducts()){
+                if(billPro.getStatus()!=0){
+                    i++;
+                }
+            }
+            if(i==bill.getBillProducts().size()){
+                listBillFilter.add(bill);
+            }
+        }
+        return listBillFilter;
+    }
+
+    @Override
+    public List<Bill> listBillFilterStill(List<Bill> billList) {
+        List<Bill> listBillFilterStill= new ArrayList<>();
+        int j=0;
+        for(Bill bill : billList){
+            for(BillProduct billPro : bill.getBillProducts()){
+                if(billPro.getStatus()==0){
+                    j=1;
+                }
+            }
+            if(j==1){
+                listBillFilterStill.add(bill);
+            }
+        }
+
+        return listBillFilterStill;
+    }
+
+    @Override
+    public void logicBillReturn(Integer id, List<ReturnDto> returnDto) {
+        for (ReturnDto dto : returnDto) {
+            for (ImageReturnDto image : dto.getImage()) {
+                ImageReturned img = new ImageReturned();
+                BillProduct billProduct = this.billProductService.edit(image.getIdBillProduct());
+                billProduct.setStatus(1); // yêu cầu trả hàng
+                billProduct.setReason(dto.getReason());
+                billProduct.setQuantityRequestReturn(Integer.parseInt(dto.getQuantityReturn()));
+                this.billProductService.save(billProduct);
+                img.setBillProduct(billProduct);
+                img.setNameImage(image.getNameImage());
+                this.imageReturnService.save(img);
+            }
+        }
+        BillStatus billStatus = this.billStatusService.getOneBycode("RR");
+        Bill bill = this.getOneById(id);
+        bill.setBillStatus(billStatus);
+        this.add(bill);
+    }
+
+    @Override
+    public Boolean checkBillNoLogin(String code) {
+        Boolean bool= false;
+        Bill bill = this.findByCode(code);
+        int check=0;
+        for(BillProduct billPro : bill.getBillProducts()){
+            if(billPro.getStatus()==0){
+                check=1;
+            }
+        }
+        if(check==1 ){
+            bool=true;
+        }
+        return bool;
     }
 
 

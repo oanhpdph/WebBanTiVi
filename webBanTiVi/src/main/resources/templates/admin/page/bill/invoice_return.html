@@ -43,6 +43,7 @@
                     <tr th:each="billReturn : ${listBill}">
                         <td>1</td>
                         <td>[(${billReturn.code})]</td>
+                        <td>[(${billReturn.customer.name})]</td>
                         <td>
                             <a th:href="@{/admin/invoice_return/{id}(id=*{billReturn.id})}">
                                 <button type="button" class="btn btn-icon btn-primary return">
