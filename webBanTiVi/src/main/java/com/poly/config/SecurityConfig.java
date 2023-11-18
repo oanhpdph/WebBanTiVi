@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,7 +23,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +54,7 @@ public class SecurityConfig {
                                 .requestMatchers("/image/**").permitAll()
                                 .requestMatchers("/**").permitAll()
                                 .requestMatchers("/admin/dashboard/**").permitAll()
-                                .anyRequest().authenticated())
+                                .anyRequest().permitAll())
                 .authenticationProvider(CustomerAuthenticationProvider())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
@@ -68,17 +66,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
-        return new AuthenticationSuccessHandler() {
-            @Override
-            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
-                // Chuyển hướng người dùng đến trang chủ
-                response.sendRedirect("/");
-            }
-        };
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {

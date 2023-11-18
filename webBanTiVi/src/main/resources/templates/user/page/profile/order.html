@@ -48,7 +48,7 @@
         </ul>
         <div class="tab-content col-lg-9">
             <div class="tab-pane fade show active " id="navs-top-profile" role="tabpanel">
-                <h4>Đơn hàng đang mua</h4>
+                <h4>Đơn hàng của bạn</h4>
                 <div class="mb-4 mx-4">
                     <div class="mb-3 row order" th:each="bill : ${bill}">
                         <div class="row mt-3">
@@ -58,17 +58,25 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
-                                <img class="w-25 d-inline"
-                                     src="/image/smart-tivi-toshiba-43-inch-43v31mp-04.jpg">
-                                <br>
+                                <div th:each="image:${bill.billProducts[0].product.listImage}">
+                                    <img th:if="${image.location == true}"
+                                         th:src="@{'/image/product/'+${image.link}}"
+                                         alt="" width="100px">
+                                </div>
                                 <span class="d-inline-flex"
-                                      th:text="${bill.billProducts[0].product.product.nameProduct}"></span>
+                                      th:text="${bill.billProducts[0].product.product.nameProduct}">
+                                </span>
+                                <div th:each="field:${bill.billProducts[0].product.fieldList}">
+                                    <p><span
+                                            th:text="|${field.field.name}  :  ${field.value}|"></span>
+                                    </p>
+                                </div>
                             </div>
                             <span class="col-sm-6 text-end ">
                                       Tổng tiền:
-                                          <span class="fs-4 position-relative"
-                                                th:text="${bill.totalPrice}"> </span><span
-                                    class="text-decoration-underline fs-6">đ</span>
+                                <span class="fs-4 position-relative">[(${#numbers.formatDecimal(bill.totalPrice,0,'COMMA',0,'POINT')})]</span>
+                                <span
+                                        class="text-decoration-underline fs-6">đ</span>
                                       </span>
                             <div class="text-end mb-3 ">
                                 <a class="btn btn-outline-dark"
@@ -78,7 +86,6 @@
                                 <button th:if="${bill.billStatus.code== 'CO'}" type="button"
                                         class="btn btn-outline-dark return" data-bs-toggle="modal"
                                         th:data-bs-target="|#modal${bill.id}|" th:value="${bill.id}">Trả hàng
-
                                 </button>
                             </div>
                             <div class="modal fade" th:id="|modal${bill.id}|" tabindex="-1"
@@ -91,107 +98,114 @@
                                                     aria-label="Close"></button>
                                         </div>
                                         <input type="text" th:value="${bill.id}" class="id" hidden="hidden">
-                                        <h4 style="color: black" class="px-3"> Thông tin trả hàng</h4>
-                                        <div class="table-responsive text-nowrap">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                <tr>
-                                                    <th>
-                                                        <input type="checkbox">
-                                                    </th>
-                                                    <th>Id hoa don</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Số lượng</th>
-                                                    <th>Lí do</th>
-                                                    <th>Ảnh trả hàng</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr th:each="billProduct : ${bill.billProducts}">
-                                                    <td>
-                                                        <input type="checkbox" readonly="readonly"
-                                                               th:class="|checkbox${bill.id}|">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" th:value="${billProduct.id}"
-                                                               th:class="|idBillProduct${bill.id} form-control|"
-                                                               disabled>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text"
-                                                               th:value="${billProduct.product.product.nameProduct}"
-                                                               th:class="|nameProduct${bill.id} form-control|" disabled>
-                                                    </td>
-                                                    <td>
-                                                        <input th:class="|form-control quantityReturn${bill.id}|"
-                                                               value="1" disabled>
-                                                    </td>
-                                                    <td>
+                                        <div th:each="billCheck:${listBillCheck}" th:if="${billCheck.id - bill.id ==0}">
+                                            <h4 class="text-center">Đơn hàng của bạn đã không còn sản phẩm nào được trả</h4>
+                                        </div>
+                                        <div th:each="billCheckStill:${listBillFilterStill}"
+                                             th:if="${billCheckStill.id - bill.id ==0}">
+                                            <h4 style="color: black" class="px-3"> Thông tin trả hàng</h4>
+                                            <div class="table-responsive text-nowrap">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>
+                                                            <input type="checkbox" th:id="|checkboxAll${bill.id}|">
+                                                        </th>
+                                                        <th>Tên sản phẩm</th>
+                                                        <th>Số lượng</th>
+                                                        <th>Lí do</th>
+                                                        <th>Ảnh trả hàng</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="billProduct : ${bill.billProducts}"
+                                                        th:if="${billProduct.status ==0}">
+                                                        <td>
+                                                            <input type="checkbox" readonly="readonly"
+                                                                   th:class="|checkbox${bill.id}|"
+                                                                   th:value="${billProduct.id}">
+                                                        </td>
+                                                        <td>
+                                                         <span th:class="|nameProduct${bill.id}|">[(${billProduct?.product.product.nameProduct})] [
+                                                               <span th:each="field:${billProduct.product.fieldList}">[(${field.value})]</span> ]
+                                                          </span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="number"
+                                                                       th:class="|form-control w-px-50 quantityReturn${bill.id}|"
+                                                                       th:value="${quantity}"
+                                                                       th:max="${billProduct.quantity}" disabled>
+                                                                <span class="input-group-text w-px-60"  disabled>/[(${billProduct.quantity})]</span>
+                                                            </div>
+                                                            <span th:class="|errorQuantity${billProduct.id} text-danger|"></span>
+                                                        </td>
+                                                        <td>
                                                                 <textarea name="" id="" cols=""
-                                                                          rows="2" th:name="reason"
+                                                                          rows="2"
                                                                           th:class="|reason${bill.id} form-control|"
                                                                           disabled></textarea>
-                                                    </td>
-                                                    <td>
-                                                        <ul class="list-unstyled users-list avatar-group m-0 d-flex align-items-center">
-                                                            <li data-bs-toggle="tooltip"
-                                                                data-popup="tooltip-custom"
-                                                                data-bs-placement="bottom"
-                                                                class="avatar avatar-xl pull-up border-dark border"
-                                                                data-bs-offset="0,4" data-bs-html="true"
-                                                                title=""
-                                                                data-bs-original-title="<span>Ảnh chính</span>">
-                                                                <img src="/image/smart-tivi-toshiba-43-inch-43v31mp-01.jpg"
-                                                                     alt="Avatar"
-                                                                     class="image-preview">
-                                                                <input type="file" multiple name="return-images"
-                                                                       hidden
-                                                                       th:class="|file-input  returnImg${billProduct.id}|"
-                                                                       disabled>
-                                                            </li>
-                                                            <li data-bs-toggle="tooltip"
-                                                                data-popup="tooltip-custom"
-                                                                data-bs-placement="bottom"
-                                                                class="avatar avatar-xl pull-up border-dark border"
-                                                                data-bs-offset="0,4" data-bs-html="true"
-                                                                title=""
-                                                                data-bs-original-title="<span>Ảnh phụ</span>">
-                                                                <img src="/image/smart-tivi-toshiba-43-inch-43v31mp-01.jpg"
-                                                                     alt="Avatar"
-                                                                     class="image-preview">
-                                                                <input type="file" multiple name="return-images"
-                                                                       hidden
-                                                                       th:class="|file-input  returnImg${billProduct.id}|"
-                                                                       disabled>
-                                                            </li>
-                                                            <li data-bs-toggle="tooltip"
-                                                                data-popup="tooltip-custom"
-                                                                data-bs-placement="bottom"
-                                                                class="avatar avatar-xl pull-up border-dark border"
-                                                                title=""
-                                                                data-bs-offset="0,4" data-bs-html="true"
-                                                                data-bs-original-title="<span>Ảnh phụ</span>">
-                                                                <img src="/image/smart-tivi-toshiba-43-inch-43v31mp-01.jpg"
-                                                                     alt="Avatar"
-                                                                     class="image-preview">
-                                                                <input type="file" multiple name="return-images"
-                                                                       hidden
-                                                                       th:class="|file-input  returnImg${billProduct.id}|"
-                                                                       disabled>
-                                                            </li>
-                                                        </ul>
-                                                    </td>
-
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                                            <span th:class="|errorReason${billProduct.id} text-danger|"></span>
+                                                        </td>
+                                                        <td>
+                                                            <ul class="list-unstyled users-list avatar-group m-0 d-flex align-items-center">
+                                                                <li data-bs-toggle="tooltip"
+                                                                    data-popup="tooltip-custom"
+                                                                    data-bs-placement="bottom"
+                                                                    class="avatar avatar-xl pull-up border-dark border"
+                                                                    data-bs-offset="0,4" data-bs-html="true"
+                                                                    title="">
+                                                                    <img src="/image/anhdefault.jpg"
+                                                                         alt="Avatar"
+                                                                         class="image-preview">
+                                                                    <input type="file" multiple name="return-images"
+                                                                           hidden
+                                                                           th:class="|file-input  returnImg${billProduct.id}|"
+                                                                           disabled>
+                                                                </li>
+                                                                <li data-bs-toggle="tooltip"
+                                                                    data-popup="tooltip-custom"
+                                                                    data-bs-placement="bottom"
+                                                                    class="avatar avatar-xl pull-up border-dark border"
+                                                                    data-bs-offset="0,4" data-bs-html="true"
+                                                                    title=""
+                                                                >
+                                                                    <img src="/image/anhdefault.jpg"
+                                                                         alt="Avatar"
+                                                                         class="image-preview">
+                                                                    <input type="file" multiple name="return-images"
+                                                                           hidden
+                                                                           th:class="|file-input  returnImg${billProduct.id}|"
+                                                                           disabled>
+                                                                </li>
+                                                                <li data-bs-toggle="tooltip"
+                                                                    data-popup="tooltip-custom"
+                                                                    data-bs-placement="bottom"
+                                                                    class="avatar avatar-xl pull-up border-dark border"
+                                                                    title=""
+                                                                    data-bs-offset="0,4" data-bs-html="true"
+                                                                >
+                                                                    <img src="/image/anhdefault.jpg"
+                                                                         alt="Avatar"
+                                                                         class="image-preview">
+                                                                    <input type="file" multiple name="return-images"
+                                                                           hidden
+                                                                           th:class="|file-input  returnImg${billProduct.id}|"
+                                                                           disabled>
+                                                                </li>
+                                                            </ul>
+                                                            <span th:class="|errorImage${billProduct.id} text-danger|"></span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                         <div class="mb-3 text-center">
-                                            <button type="submit" class="btn btn-primary">
-                                                <a class="px-3 text-end" onclick="clickSave()">Hoàn tất</a>
-                                            </button>
+                                            <Button type="submit" th:class="|btn btn-primary completed${bill.id} |"
+                                                    hidden="hidden" onclick="clickSave()">Hoàn tất
+                                            </Button>
                                         </div>
-                                        <!--                                        </form>-->
                                     </div>
                                 </div>
                             </div>
@@ -203,125 +217,4 @@
     </div>
 </section>
 <script src="/admin/plugin/js/loadImage.js"></script>
-<script>
-    var idBill;
-    $.each(document.getElementsByClassName("return"), function (index, item) {
-        item.addEventListener('click', function () {
-            idBill = item.value;
-            $.each(document.getElementsByClassName("checkbox" + idBill), function (index, item) {
-                item.addEventListener('change', function () {
-                    var idBillProduct = document.getElementsByClassName("idBillProduct" + idBill)
-                    var nameProduct = document.getElementsByClassName("nameProduct" + idBill)
-                    var quantityReturn = document.getElementsByClassName("quantityReturn" + idBill)
-                    var image = document.getElementsByClassName("returnImg" + idBillProduct[index].value)
-                    var reason = document.getElementsByClassName("reason" + idBill)
-                    if (item.checked == false) {
-                        console.log("false")
-                        idBillProduct[index].disabled = true;
-                        nameProduct[index].disabled = true;
-                        quantityReturn[index].disabled = true;
-                        reason[index].disabled = true;
-                        $.each(image, function (index, item) {
-                            item.disabled = true;
-                        })
-                    } else {
-                        console.log("true")
-                        idBillProduct[index].disabled = false;
-                        nameProduct[index].disabled = false;
-                        quantityReturn[index].disabled = false;
-                        reason[index].disabled = false;
-                        $.each(image, function (index, item) {
-                            item.disabled = false;
-                        })
-                    }
-                })
-            })
-        })
-    })
-
-    function clickSave() {
-        var idBillProduct = document.getElementsByClassName("idBillProduct" + idBill)
-        var nameProduct = document.getElementsByClassName("nameProduct" + idBill)
-        var quantityReturn = document.getElementsByClassName("quantityReturn" + idBill)
-        var reason = document.getElementsByClassName("reason" + idBill)
-        var data = []
-
-        // set ảnh
-        $.each(idBillProduct, function (index, item) {
-            if (item.disabled == false) {
-                var image = "returnImg" + item.value
-                var arrImage = []
-                var listImage = document.getElementsByClassName(image)
-                $.each(listImage, function (index, itm) {
-                    var imageItem;
-                    var fileName = itm.value; // Lấy đường dẫn đầy đủ của tệp
-                    var imageName;
-                    // Trích xuất tên tệp từ đường dẫn
-                    var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
-                    if (lastIndex >= 0) {
-                        imageName = fileName.substr(lastIndex + 1);
-                    }
-
-                    if (fileName.length != 0) {
-                        imageItem = {
-                            nameImage: imageName,
-                            idBillProduct: item.value
-                        }
-                        arrImage.push(imageItem)
-                    }
-
-
-                })
-
-                var temp = {
-                    idBillProduct: idBillProduct[index].value,
-                    nameProduct: nameProduct[index].value,
-                    quantityReturn: quantityReturn[index].value,
-                    reason: reason[index].value,
-                    image: arrImage,
-
-                }
-                data.push(temp)
-            }
-        })
-        console.log(data)
-        uploadImage();
-        $.ajax({
-            url: "/return/" + idBill,
-            method: "post",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            success: function () {
-                var close = document.getElementsByClassName("close" + idBill)
-                $.each(close, function (index, item) {
-                    item.click();
-                })
-                console.log("Thành công!")
-            }
-        })
-    }
-
-    function uploadImage() {
-        var fileInput = document.getElementsByClassName('file-input');
-        var formData = new FormData();
-        $.each(fileInput, function (index, item) {
-            if(item.value!=null) {
-                formData.append('images', item.files[0], item.files[0].name);
-            }
-        })
-
-        $.ajax({
-            url: '/returnImage',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                console.log("thành công")
-            },
-            error: function (error) {
-                console.error('Lỗi:', error);
-            }
-        });
-    }
-</script>
+<script src="/admin/plugin/js/order.js"></script>
