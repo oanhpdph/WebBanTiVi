@@ -111,13 +111,12 @@
                                                              th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}|"></pan>
                                                     </div>
                                                     <div th:if="${reduceMoney[itemStat.index]!=item.product.priceExport}">
-                                                        <span class="fs-4" >[(${#numbers.formatDecimal(reduceMoney[itemStat.index],0,'COMMA',0,'POINT')})]</span>
+                                                        <span class="fs-4 price-export">[(${#numbers.formatDecimal(reduceMoney[itemStat.index],0,'COMMA',0,'POINT')})]</span>
                                                     </div>
                                                     <div th:if="${reduceMoney[itemStat.index]==item.product.priceExport}">
-                                                        <pan class="fs-4"
-                                                             th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}|"></pan>
+                                                        <span class="fs-4 price-export"
+                                                              th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}|"></span>
                                                     </div>
-
                                                 </td>
                                                 <td>
                                                     <div class="buttons_added" th:id="${item.product.id}">
@@ -266,18 +265,19 @@
                 }
 
                 // var quantity = quantityForm[index].value
-                var priceExport = priceExportForm[index].getAttribute("value")
-                var totalPrice = Number(valueInput) * Number(priceExport)
+                var priceExport = priceExportForm[index]
+                var temp = parseInt(priceExport.textContent.replace(/,/g, ''), 10)
 
-                totalPriceForm[index].innerText = totalPrice
+                var totalPrice = Number(valueInput) * Number(temp)
+
+                totalPriceForm[index].innerText = new Intl.NumberFormat().format(totalPrice)
                 const totalProForm = document.querySelector(".total-pro")
                 var totalPro = 0;
                 for (let i = 0; i < totalPriceForm.length; i++) {
-                    totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
-                    console.log(totalPro);
+                    totalPro = Number(parseInt(totalPriceForm[i].textContent.replace(/,/g, ''), 10)) + Number(totalPro);
                 }
 
-                totalProForm.innerText = totalPro
+                totalProForm.innerText = new Intl.NumberFormat().format(totalPro) + ' (VNĐ)'
             })
         }),
         $.each(minus, function (index, item) {
@@ -295,11 +295,19 @@
                     valueInput = Number(valueInput) - 1
                 }
 
-                var priceExport = priceExportForm[index].getAttribute("value")
-                var totalPrice = Number(valueInput) * Number(priceExport)
+                var priceExport = priceExportForm[index]
+                var temp = parseInt(priceExport.textContent.replace(/,/g, ''), 10)
 
-                totalPriceForm[index].innerText = totalPrice
-                tinhtong();
+                var totalPrice = Number(valueInput) * Number(temp)
+
+                totalPriceForm[index].innerText = new Intl.NumberFormat().format(totalPrice)
+                const totalProForm = document.querySelector(".total-pro")
+                var totalPro = 0;
+                for (let i = 0; i < totalPriceForm.length; i++) {
+                    totalPro = Number(parseInt(totalPriceForm[i].textContent.replace(/,/g, ''), 10)) + Number(totalPro);
+                }
+
+                totalProForm.innerText = new Intl.NumberFormat().format(totalPro) + ' (VNĐ)'
             })
         })
     )

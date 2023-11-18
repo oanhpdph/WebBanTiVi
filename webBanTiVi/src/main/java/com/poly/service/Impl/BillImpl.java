@@ -5,10 +5,15 @@ import com.poly.dto.BillProRes;
 import com.poly.dto.ImageReturnDto;
 import com.poly.dto.ReturnDto;
 import com.poly.dto.SearchBillDto;
+import com.poly.entity.Bill;
+import com.poly.entity.BillProduct;
+import com.poly.entity.ProductDetail;
+import com.poly.entity.Voucher;
 import com.poly.entity.*;
 import com.poly.repository.*;
 import com.poly.service.BillProductService;
 import com.poly.service.BillService;
+import com.poly.service.VoucherService;
 import com.poly.service.BillStatusService;
 import com.poly.service.ImageReturnService;
 import jakarta.persistence.EntityManager;
@@ -23,6 +28,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +61,9 @@ public class BillImpl implements BillService {
     PaymentMethodRepos paymentMethodRepos;
 
     @Autowired
-    ImageReturnService imageReturnService;
+    private VoucherService voucherService;
+
+   
 
     @Autowired
     BillProductService billProductService;
@@ -71,6 +79,13 @@ public class BillImpl implements BillService {
             code = RandomNumber.generateRandomString(10);
         } while (billRepos.findByCode(code) == null);
         Bill bi = new Bill();
+        Optional<Voucher> voucher = voucherService.findById(bill.getVoucher());
+        if (voucher.isPresent()) {
+            bi.setVoucher(voucher.get());
+            bi.setVoucher_value(BigDecimal.valueOf(voucher.get().getValue()));
+            bill.setTotalPrice(bill.getTotalPrice().subtract(BigDecimal.valueOf(voucher.get().getValue())));
+        }
+
         bi.setCustomer(bill.getCustomer());
         bi.setCode("HD" + code);
         bi.setCreateDate(new java.util.Date());
@@ -100,6 +115,7 @@ public class BillImpl implements BillService {
                 billProduct.setQuantityAcceptReturn(0);
                 billProduct.setStatus(0);
                 billProduct.setReason("");
+                billProduct.setStatus(0);
                 billProduct.setReducedMoney(billProRes.getReducedMoney().get(i));
                 this.billProductRepos.save(billProduct);
             }
