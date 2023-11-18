@@ -176,15 +176,17 @@ CREATE TABLE bill_product
      id_bill		INT REFERENCES bill(id),
      id_product		INT REFERENCES product_detail(id),
      quantity		INT not null,
-     quantityReturn	INT ,
+     quantity_request_return	INT ,
      reason 		nvarchar(max),
      price			money not null,
 	 reduced_money	money,
 	 status			int,
-	 note			NVARCHAR(200)
+	 note			NVARCHAR(200),
+	 quantity_accept_return INT 
    --  PRIMARY KEY(id_bill, id_product)
   )
 
+  
 
 CREATE TABLE image_returned
   (

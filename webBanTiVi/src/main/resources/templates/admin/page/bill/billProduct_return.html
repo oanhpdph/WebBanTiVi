@@ -35,7 +35,14 @@
                            th:class="|nameProduct form-control|" disabled>
                 </td>
                 <td>
-                    <input th:class="|form-control quantityReturn|" th:name="quantity" value="1" disabled>
+                    <div class="input-group input-group-merge" style="flex-wrap:nowrap !important;">
+                        <input type="number"
+                               th:class="|form-control w-px-50 quantityReturn|"
+                               th:name="quantity"
+                               th:max="${billProduct.quantityRequestReturn}" disabled>
+                        <span class="input-group-text w-px-60"  disabled>/[(${billProduct.quantityRequestReturn})]</span>
+                    </div>
+                    <span th:class="|errorQuantity${billProduct.id} text-danger|"></span>
                 </td>
                 <td>
                             <textarea name="" id="" cols=""
@@ -55,8 +62,8 @@
                             class="avatar avatar-xl pull-up border-dark border"
                             data-bs-offset="0,4" data-bs-html="true"
                             title=""
-                            data-bs-original-title="<span>Ảnh chính</span>" th:each="image:${billProduct.listImage}">
-                            <img th:src="@{'/image/'+${image.nameImage}}"
+                             th:each="image:${billProduct.listImage}">
+                            <img th:src="@{'/image/product/'+${image.nameImage}}"
                                  alt="Avatar"
                                  class="image-preview">
                         </li>

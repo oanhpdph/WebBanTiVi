@@ -42,8 +42,11 @@ public class BillProduct {
     @Column(name="reason")
     private String reason;
 
-    @Column(name="quantityReturn")
-    private Integer quantityReturn;
+    @Column(name="quantity_request_return")
+    private Integer quantityRequestReturn;
+
+    @Column(name="quantity_accept_return")
+    private Integer quantityAcceptReturn;
 
     @Column(name="status")
     private Integer status;
