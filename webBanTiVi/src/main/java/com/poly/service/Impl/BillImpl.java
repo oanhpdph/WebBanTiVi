@@ -63,7 +63,8 @@ public class BillImpl implements BillService {
     @Autowired
     private VoucherService voucherService;
 
-   
+   @Autowired
+   ImageReturnService imageReturnService;
 
     @Autowired
     BillProductService billProductService;
@@ -82,7 +83,7 @@ public class BillImpl implements BillService {
         Optional<Voucher> voucher = voucherService.findById(bill.getVoucher());
         if (voucher.isPresent()) {
             bi.setVoucher(voucher.get());
-            bi.setVoucher_value(BigDecimal.valueOf(voucher.get().getValue()));
+            bi.setVoucherValue(BigDecimal.valueOf(voucher.get().getValue()));
             bill.setTotalPrice(bill.getTotalPrice().subtract(BigDecimal.valueOf(voucher.get().getValue())));
         }
 
