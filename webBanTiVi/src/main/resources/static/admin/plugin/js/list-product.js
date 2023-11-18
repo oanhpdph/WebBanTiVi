@@ -61,7 +61,6 @@ if (document.getElementById("edit-attri")) {
                 value: item.textContent,
                 id: '__' + item.getAttribute('value')
             });
-            console.log(input)
             $(item).closest('td').html(input);
         })
     })
@@ -276,6 +275,21 @@ $.each(document.getElementsByClassName("active-product-detail"), function (index
                         data: JSON.stringify(data),
                         contentType: "application/json",
                         success: function (data) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: "Cập nhật thành công"
+                            });
                         }
                     })
                 } else {
@@ -288,6 +302,7 @@ $.each(document.getElementsByClassName("active-product-detail"), function (index
         }
     )
 })
+
 $.each(document.getElementsByClassName("edit-product"), function (index, item) {
     item.addEventListener("click", function () {
         var data = {
@@ -335,14 +350,28 @@ $.each(document.getElementsByClassName("edit-product"), function (index, item) {
                         }
                         data.product.push(attri)
                     })
-                    console.log(data)
-                    console.log(data)
                     $.ajax({
                         url: "/product/update-product",
                         method: "post",
                         data: JSON.stringify(data),
                         contentType: "application/json",
                         success: function (data) {
+                            $("#close").click()
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: "Cập nhật thành công"
+                            });
                         }
                     })
                 })
@@ -350,3 +379,193 @@ $.each(document.getElementsByClassName("edit-product"), function (index, item) {
         })
     })
 })
+
+$.each($(".view-product"), function (index, item) {
+        item.addEventListener("click", function () {
+            var data = {
+                id: this.getAttribute('value'),
+            }
+            $.ajax({
+                url: "/product/get-one-product",
+                method: "get",
+                data: data,
+                success: function (data) {
+                    $("#save-product-detail").val(data.id)
+                    $("#sku").val(data.sku)
+                    $("#quantity").val(data.quantity)
+                    $("#price-export").val(data.priceExport)
+                    $("#price-import").val(data.priceImport)
+
+                    var list = []
+                    list.push(data.product.nameProduct)
+                    list.push('[')
+                    $.each(data.fieldList, function (index, item) {
+                        list.push(item.value)
+                    })
+                    list.push(']')
+                    $("#image").empty()
+                    $.each(data.listImage, function (index, item) {
+                        var img = $('<img>', {
+                            class: 'w-25 image-preview cursor-pointer',
+                            src: '/image/product/' + item.link,
+                            alt: 'Lỗi hình ảnh',
+                        });
+                        img.attr("data-bs-toggle", "tooltip");
+                        img.attr("data-popup", "tooltip-custom");
+                        img.attr("data-bs-placement", "bottom");
+                        img.attr("data-bs-offset", "0,4");
+                        img.attr("data-bs-html", "true");
+                        if (item.location) {
+                            img.attr("title", "Ảnh chính");
+                            img.addClass('border border-1 p-2')
+                        } else {
+                            img.attr("title", "Ảnh phụ");
+                        }
+                        var input = $('<input>', {
+                            class: 'file-input',
+                            type: 'file',
+                            hidden: true,
+                            id: 'image' + item.id
+                        });
+
+                        $("#image").append(img)
+                        $("#image").append(input)
+
+                        var fileInput = input;
+                        var imagePreview = img;
+
+                        imagePreview.on("click", function () {
+                            fileInput.click()
+                        })
+                        // Lắng nghe sự kiện khi người dùng chọn tệp
+                        fileInput.on('change', function () {
+                            var file = fileInput.prop("files")[0]; // Lấy tệp đã chọn
+                            if (file) {
+                                // Kiểm tra xem tệp đã chọn có phải là hình ảnh
+                                if (file.type.startsWith('image/')) {
+                                    // Tạo đường dẫn URL cho hình ảnh và hiển thị nó
+                                    var imageURL = URL.createObjectURL(file);
+                                    console.log(imageURL)
+                                    imagePreview.attr('src', imageURL);
+                                    console.log(imagePreview)
+                                } else {
+                                    alert('Vui lòng chọn một tệp hình ảnh.');
+                                    fileInput.value = ''; // Đặt lại trường nhập
+                                }
+                            } else {
+                                imagePreview.src = '/image/product/' + item.link
+                            }
+                        });
+                    })
+
+                    $("#name-product").text(list.join(' '))
+                    var date = new Date(data.createDate);
+
+                    var formattedDate = date.toISOString().slice(0, 16);
+                    $("#date-create").text('Ngày tạo: ' + formattedDate)
+                    if (data.active) {
+                        $("#active").attr('checked', 'checked')
+                    } else {
+                        $("#inactive").attr('checked', 'checked')
+                    }
+                }
+            })
+        })
+    }
+)
+$("#save-product-detail").on('click', function () {
+    Swal.fire({
+        title: "Bạn xác nhận cập nhật?",
+        text: "",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Xác nhận!",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var data = {}
+            data.id = this.value
+            data.sku = $("#sku").val()
+            data.priceImport = $("#price-import").val()
+            data.priceExport = $("#price-export").val()
+            console.log(document.getElementById("active").checked)
+            if (document.getElementById("active").checked) {
+                data.active = true
+            } else {
+                data.active = false
+            }
+            data.quantity = $("#quantity").val()
+            data.image = []
+
+            $.each($(".file-input"), function (index, item) {
+                var imageItem;
+                var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
+// Trích xuất tên tệp từ đường dẫn
+                var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
+                if (lastIndex >= 0) {
+                    fileName = fileName.substr(lastIndex + 1);
+                }
+                imageItem = {
+                    id: item.id.substring(5, item.id.length),
+                    multipartFile: fileName,
+                }
+                data.image.push(imageItem)
+            })
+            uploadImage()
+
+            console.log(data)
+            $.ajax({
+                url: '/product/update-productdetail',
+                method: 'post',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function (data) {
+                    $("#close").click()
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: "Cập nhật thành công"
+                    });
+                }
+            })
+        }
+    })
+})
+
+function uploadImage() {
+    var fileInput = document.getElementsByClassName('file-input');
+
+    var formData = new FormData();
+    $.each(fileInput, function (index, item) {
+        if (item.value.trim().length != 0) {
+            formData.append('images', item.files[0], item.files[0].name);
+        }
+    })
+    console.log(formData)
+    $.ajax({
+        url: '/product/upload',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            // Xử lý kết quả từ máy chủ (nếu cần)
+            console.log("thành công")
+        },
+        error: function (error) {
+            console.error('Lỗi:', error);
+        }
+    });
+
+}

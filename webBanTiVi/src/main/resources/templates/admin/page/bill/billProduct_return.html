@@ -56,7 +56,7 @@
                             data-bs-offset="0,4" data-bs-html="true"
                             title=""
                             data-bs-original-title="<span>Ảnh chính</span>" th:each="image:${billProduct.listImage}">
-                            <img th:src="@{'/image/'+${image.nameImage}}"
+                            <img th:src="@{'/image/product'+${image.nameImage}}"
                                  alt="Avatar"
                                  class="image-preview">
                         </li>

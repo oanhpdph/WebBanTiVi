@@ -63,57 +63,61 @@
                                 <div class="card mb-4">
                                     <span class="card-header text-uppercase fs-5">THÔNG TIN KHÁCH HÀNG:</span>
                                     <div class="card-body" th:id="add">
-                                        <!--                                            ten, sdt-->
-                                        <div class="row justify-content-between">
-                                            <div class="col">
-                                                <label class="form-label">Tên người nhận</label>
-                                                <input class="form-control" type="text" placeholder="họ và tên"
-                                                       th:field="*{name}"
-                                                       id="name" th:name="name">
+                                        <div>
+                                            <!--                                            ten, sdt-->
+                                            <div class="row justify-content-between">
+                                                <div class="col">
+                                                    <label class="form-label">Tên người nhận</label>
+                                                    <input class="form-control" type="text" placeholder="họ và tên"
+                                                           th:field="*{name}"
+                                                           id="name" th:name="name">
+                                                </div>
+                                                <div class="col">
+                                                    <label class="form-label">Số điện thoại người nhận</label>
+                                                    <input class="form-control" type="text" placeholder="VN (+84)"
+                                                           th:field="*{phoneNumber}"
+                                                           id="phoneNumber" th:name="phoneNumber">
+                                                </div>
                                             </div>
-                                            <div class="col">
-                                                <label class="form-label">Số điện thoại người nhận</label>
-                                                <input class="form-control" type="text" placeholder="VN (+84)"
-                                                       th:field="*{phoneNumber}"
-                                                       id="phoneNumber" th:name="phoneNumber">
+                                            <br>
+                                            <!--                                                email-->
+                                            <div class="mb-3">
+                                                <label class="form-label">Email</label>
+                                                <input type="email" class="form-control"
+                                                       placeholder="oanhpham085@gmail.com"
+                                                       th:field="*{email}"
+                                                       id="email" th:name="email">
+                                            </div>
+                                            <br>
+                                            <!--                                                address-->
+                                            <div class="mb-3">
+                                                <label class="form-label">Địa chỉ nhận hàng</label>
+                                                <input type="text" class="form-control"
+                                                       placeholder="Thôn liên trì 1, xã Yên hòa" th:field="*{address}"
+                                                       id="address" th:name="address">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Voucher</label>
+                                                <select class="form-select" id="voucher" name="voucher">
+                                                    <option value="-1">Chưa chọn voucher</option>
+                                                    <option th:value="${voucher.voucher.id}"
+                                                            th:each="voucher:${listVoucher}"
+                                                            th:if="${voucher.active==true}">[(${voucher.voucher.code})]
+                                                    </option>
+                                                </select>
+                                                <div class="mt-2">
+                                                    <span id="info-voucher" class="text-danger"></span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <br>
-                                        <!--                                                email-->
-                                        <div class="mb-3">
-                                            <label class="form-label">Email</label>
-                                            <input type="email" class="form-control" placeholder="oanhpham085@gmail.com"
-                                                   th:field="*{email}"
-                                                   id="email" th:name="email">
-                                        </div>
-                                        <br>
-                                        <!--                                                address-->
-                                        <div class="mb-3">
-                                            <label class="form-label">Địa chỉ nhận hàng</label>
-                                            <input type="text" class="form-control"
-                                                   placeholder="Thôn liên trì 1, xã Yên hòa" th:field="*{address}"
-                                                   id="address" th:name="address">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label">Voucher</label>
-                                            <select class="form-select" id="exampleFormControlSelect1"
-                                                    aria-label="Default select example">
-                                                <option selected="">Voucher</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div>
-
                                         <div class="mb-3 table-responsive">
-                                            <table class="table table-borderless">
+                                            <table class="table table-bordered">
                                                 <thead>
                                                 <tr>
                                                     <th>Sản phẩm</th>
                                                     <th>Giá (VNĐ)</th>
                                                     <th>Số lượng</th>
                                                     <th>Thành tiền (VNĐ)</th>
-                                                    <th></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -127,11 +131,15 @@
                                                                  alt="" width="100px">
                                                         </div>
                                                         <span th:text="${item.product.product.nameProduct}"></span>
+                                                        <div>
+                                                            [ <span th:each="field:${item.product.fieldList}"
+                                                                    th:text="|${field.value} |"></span>]
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         <div th:if="${reduceMoney[itemStat.index]!=item.product.priceExport}">
                                                             <span class="fs-5 text-strike-through"
-                                                                 th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}|"></span>
+                                                                  th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}|"></span>
                                                         </div>
                                                         <div>
                                                             <div th:if="${reduceMoney[itemStat.index]!=item.product.priceExport}">
@@ -139,29 +147,42 @@
                                                             </div>
                                                             <div th:if="${reduceMoney[itemStat.index]==item.product.priceExport}">
                                                                 <span class="fs-4" name="reducedMoney"
-                                                                     th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}|"></span>
+                                                                      th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}|"></span>
                                                             </div>
                                                         </div>
-
                                                     </td>
                                                     <td>
-                                                            <input aria-label="quantity" name="qty" class="form-control"
-                                                                  th:value="${item.quantity}" hidden="hidden"></input>
-                                                        <span th:text="${item.quantity}"></span>
+                                                        <input aria-label="quantity" name="qty" class="form-control"
+                                                               th:value="${item.quantity}" hidden="hidden">
+                                                        <span class="fs-4" th:text="${item.quantity}"></span>
                                                     </td>
                                                     <td>
-                                                        <span class="total-price">[(${#numbers.formatDecimal(reduceMoney[itemStat.index]* item.quantity,0,'COMMA',0,'POINT')})]</span>
+                                                        <span class="fs-4 total-price">[(${#numbers.formatDecimal(reduceMoney[itemStat.index]* item.quantity,0,'COMMA',0,'POINT')})]</span>
                                                     </td>
                                                 </tr>
                                                 <hr>
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <hr>
+                                        <div class="row justify-content-center">
+                                            <span class="col fs-5">Tạm tính: </span>
+                                            <span class="col text-danger text-end">
+                                                <span th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} đ|"
+                                                      class="total-pro fs-4" name="totalPrice"></span>
+                                            </span>
+                                        </div>
+                                        <div class="row justify-content-center" id="voucher-info" hidden="hidden">
+                                            <span class="col fs-5">Voucher: </span>
+                                            <span class="col text-danger text-end">
+                                                <span class="fs-4" id="voucher-reduce"></span>
+                                            </span>
+                                        </div>
                                         <div class="row justify-content-center">
                                             <span class="col fs-5">Tổng tiền: </span>
-                                            <span class="col text-danger text-center">
-                                                <span th:text="${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')}" class="total-pro" name="totalPrice"></span>
-
+                                            <span class="col text-danger text-end">
+                                                <span class="fs-4" id="total"
+                                                      th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} đ|"></span>
                                             </span>
                                         </div>
                                         <hr>
@@ -171,7 +192,6 @@
                                                 <div class="col-md">
                                                     <div class="form-check form-check-inline mt-3">
                                                         <input class="form-check-input" type="radio"
-                                                               th:field="*{paymentMethod}"
                                                                name="paymentMethod" id="inlineRadio1"
                                                                th:value="1" checked>
                                                         <label class="form-check-label" for="inlineRadio1">Thanh toán
@@ -179,7 +199,6 @@
                                                     </div>
                                                     <div class="form-check form-check-inline">
                                                         <input class="form-check-input" type="radio"
-                                                               th:field="*{paymentMethod}"
                                                                name="paymentMethod" id="inlineRadio2"
                                                                th:value="2">
                                                         <label class="form-check-label" for="inlineRadio2">Thanh toán
@@ -195,10 +214,9 @@
                                                     onclick="return confirm('Xác nhận tạo hóa đơn')">
                                                 Đặt Hàng
                                             </button>
-                                            <button class="btn btn-outline-secondary btn-lg" type="button"
-                                                    formaction="/cart">
+                                            <a href="/cart" class="btn btn-outline-secondary btn-lg" type="button">
                                                 Hủy
-                                            </button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -212,6 +230,39 @@
     </div>
 </div>
 <script>
+    console.log(parseInt(document.querySelector('.total-pro').textContent.replace(/,/g, ''), 10))
+
+    $("#voucher").on("change", function () {
+        console.log(this.value)
+        var data = {
+            id: this.value,
+        }
+        $.ajax({
+            url: "/admin/voucher/getone",
+            method: "get",
+            data: data,
+            success: function (data) {
+                console.log(data)
+                var temp = parseInt(document.querySelector('.total-pro').textContent.replace(/,/g, ''), 10)
+                if (data) {
+                    // var formattedNumber = new Intl.NumberFormat().format(data.minimumValue);
+                    if (temp >= data.minimumValue) {
+                        document.getElementById("voucher-reduce").innerText = new Intl.NumberFormat().format(data.value) + ' đ'
+                        document.getElementById("voucher-info").hidden = false
+                        document.getElementById("total").innerText = ''
+                        document.getElementById("total").innerText = new Intl.NumberFormat().format(temp - data.value)
+                    }
+                    document.getElementById('info-voucher').innerText = 'Giảm ' + new Intl.NumberFormat().format(data.value) + ' đ cho đơn hàng có giá trị từ ' + new Intl.NumberFormat().format(data.minimumValue) + ' đ'
+                } else {
+                    document.getElementById("total").innerText = new Intl.NumberFormat().format(temp) + ' đ'
+                    document.getElementById("voucher-info").hidden = true
+                    document.getElementById('info-voucher').innerText = ''
+                    document.getElementById("voucher-reduce").innerText = ''
+                }
+            }
+        })
+    })
+
     const plus = document.querySelectorAll(".plus")
     const minus = document.querySelectorAll(".minus")
 
@@ -279,7 +330,6 @@
             })
         })
     )
-
 
     function xoa(x) {
         var tr = x.parentElement.parentElement;

@@ -14,7 +14,7 @@ public interface BillService {
 
     Bill add(Bill bill);
 
-    public Bill add(BillProRes bill);
+     Bill add(BillProRes bill);
 
     public void addBillPro(Bill bill, BillProRes billProRes);
 

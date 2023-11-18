@@ -51,12 +51,17 @@ public class ProductDetailImpl implements ProductDetailService {
 
     @PersistenceContext
     private EntityManager entityManager;
-    public void addProductDiscount(Coupon coupon, Integer id){
-        productDetailRepo.addProductDiscount(coupon,id);
-    };
-    public List<ProductDetail> findBySku(String keyword){
+
+    public void addProductDiscount(Coupon coupon, Integer id) {
+        productDetailRepo.addProductDiscount(coupon, id);
+    }
+
+    ;
+
+    public List<ProductDetail> findBySku(String keyword) {
         return productDetailRepo.findbySku(keyword);
     }
+
     @Override
     public Product saveList(ProductDetailDto dto) {
         String sameProduct = "";
@@ -181,13 +186,33 @@ public class ProductDetailImpl implements ProductDetailService {
         ProductDetail productDetail = findById(productDetailListDto.getId());
         if (productDetail != null) {
             productDetail.setActive(productDetailListDto.isActive());
+            if (productDetailListDto.getPriceExport() != null) {
+                productDetail.setPriceExport(productDetailListDto.getPriceExport());
+            }
+            if (productDetailListDto.getPriceImport() != null) {
+                productDetail.setPriceExport(productDetailListDto.getPriceImport());
+            }
+            if (productDetailListDto.getQuantity() != null) {
+                productDetail.setQuantity(productDetailListDto.getQuantity());
+            }
+            if (productDetailListDto.getSku().trim().length() != 0) {
+                productDetail.setSku(productDetailListDto.getSku());
+            }
+            if (productDetailListDto.getImage() != null) {
+                for (ImageDto imageDto : productDetailListDto.getImage()) {
+                    if (imageDto.getMultipartFile().trim().length() != 0) {
+                        Image image = imageService.findById(imageDto.getId());
+                        image.setLink(imageDto.getMultipartFile());
+                        imageService.add(image);
+                    }
+                }
+            }
             productDetailRepo.save(productDetail);
         }
         return productDetail;
     }
-    public void deleteProductDiscount(Integer id){
+
+    public void deleteProductDiscount(Integer id) {
         productDetailRepo.deleteProductDiscount(id);
-    };
-
-
+    }
 }

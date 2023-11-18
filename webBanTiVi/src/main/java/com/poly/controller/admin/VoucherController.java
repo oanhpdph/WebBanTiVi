@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -85,7 +87,7 @@ public class VoucherController {
     public String showVoucher(HttpSession session, @PathVariable("id") Integer id, Model model) {
         Voucher voucher = this.voucherService.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        model.addAttribute("voucher",voucher);
+        model.addAttribute("voucher", voucher);
 //        model.addAttribute("listVoucher", this.voucherService.findAll(pageable));
         return "admin/layout";
     }
@@ -128,4 +130,14 @@ public class VoucherController {
         this.voucherService.delete(id);
         return "redirect:/admin/voucher/list";
     }
+
+    @GetMapping("/voucher/getone")
+    public ResponseEntity<?> getOne(@RequestParam("id") Integer id) {
+        Optional<Voucher> voucher = this.voucherService.findById(id);
+        if (voucher.isPresent()) {
+            return ResponseEntity.ok(voucher);
+        }
+        return ResponseEntity.ok(null);
+    }
+
 }

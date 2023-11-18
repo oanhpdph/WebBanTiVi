@@ -40,30 +40,11 @@ public class VoucherCustomerController {
             model.addAttribute("listVoucherCustomer", voucherCustomerService.findAllByVoucher(id));
         }
         else {
-            // TODO: Search
             model.addAttribute("listVoucherCustomer", voucherCustomerService.findAllByKeyword("%"+keyword+"%", id));
         }
         session.setAttribute("pageView", "/admin/page/voucher/voucherCustomer.html");
         return "admin/layout";
     }
-
-//    @PostMapping("/voucherCustomer/add")
-//    public String addVoucherCustomer(Model model, @Valid @ModelAttribute("voucherCustomer") VoucherCustomerRes voucherCustomerRes, BindingResult result) {
-//        if (result.hasErrors()) {
-//            model.addAttribute("message", "Vui long dien day du thong tin");
-//            return "admin/layout";
-//        }
-//        this.voucherCustomerService.save(voucherCustomerRes);
-//        model.addAttribute("listVoucherCustomer", this.voucherCustomerService.findAll());
-//        rmodel.addAttribute("voucher",voucherService.findById(id).get());
-//        session.setAttribute("active", "/voucherCustomer");
-//        session.setAttribute("listCustomer", this.customerService.findAll());
-//        session.setAttribute("listVoucher", this.voucherService.findAllList());
-//        model.addAttribute("listVoucherCustomer", voucherCustomerService.findAllByVoucher(id));
-//        model.addAttribute("voucherCustomer", new VoucherCustomerRes());
-//        session.setAttribute("pageView", "/admin/page/voucher/discountProduct.html");
-//        return "admin/layout";
-//    }
 
 
     @RequestMapping("/vouchercustomer/update/{id}")
