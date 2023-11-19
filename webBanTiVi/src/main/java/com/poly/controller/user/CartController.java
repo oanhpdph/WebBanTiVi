@@ -203,7 +203,6 @@ public class CartController {
                 }
                 session.setAttribute("list", null);
             }
-
             cartService.clear();
 
             return "redirect:" + vnpayUrl;

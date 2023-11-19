@@ -2,12 +2,15 @@ package com.poly.controller.admin;
 
 import com.poly.entity.Field;
 import com.poly.service.FieldService;
-import com.poly.service.Impl.FieldImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+@Controller
 @RequestMapping("/field")
 public class FieldController {
     @Autowired
@@ -24,4 +27,5 @@ public class FieldController {
 
         return ResponseEntity.ok(field.save(f));
     }
+
 }

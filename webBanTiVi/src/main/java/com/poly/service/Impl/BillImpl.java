@@ -63,7 +63,8 @@ public class BillImpl implements BillService {
     @Autowired
     private VoucherService voucherService;
 
-   
+    @Autowired
+    private ImageReturnService imageReturnService;
 
     @Autowired
     BillProductService billProductService;
@@ -82,7 +83,7 @@ public class BillImpl implements BillService {
         Optional<Voucher> voucher = voucherService.findById(bill.getVoucher());
         if (voucher.isPresent()) {
             bi.setVoucher(voucher.get());
-            bi.setVoucher_value(BigDecimal.valueOf(voucher.get().getValue()));
+            bi.setVoucherValue(BigDecimal.valueOf(voucher.get().getValue()));
             bill.setTotalPrice(bill.getTotalPrice().subtract(BigDecimal.valueOf(voucher.get().getValue())));
         }
 
@@ -147,11 +148,10 @@ public class BillImpl implements BillService {
                     criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "RE")
             ));
         } else if (searchBillDto.getBillStatus().equals("donhoan")) {
-            billStatus.add("oanh");
+            billStatus.add("RN");
         } else {
             billStatus.add("WP");
         }
-
 
         if (!searchBillDto.getKey().isEmpty()) {
             list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("code"), searchBillDto.getKey()),
@@ -237,15 +237,15 @@ public class BillImpl implements BillService {
 
     @Override
     public List<Bill> listBillFilter(List<Bill> billList) {
-        List<Bill> listBillFilter= new ArrayList<>();
-        int i=0;
-        for(Bill bill : billList){
-            for(BillProduct billPro : bill.getBillProducts()){
-                if(billPro.getStatus()!=0){
+        List<Bill> listBillFilter = new ArrayList<>();
+        int i = 0;
+        for (Bill bill : billList) {
+            for (BillProduct billPro : bill.getBillProducts()) {
+                if (billPro.getStatus() != 0) {
                     i++;
                 }
             }
-            if(i==bill.getBillProducts().size()){
+            if (i == bill.getBillProducts().size()) {
                 listBillFilter.add(bill);
             }
         }
@@ -254,15 +254,15 @@ public class BillImpl implements BillService {
 
     @Override
     public List<Bill> listBillFilterStill(List<Bill> billList) {
-        List<Bill> listBillFilterStill= new ArrayList<>();
-        int j=0;
-        for(Bill bill : billList){
-            for(BillProduct billPro : bill.getBillProducts()){
-                if(billPro.getStatus()==0){
-                    j=1;
+        List<Bill> listBillFilterStill = new ArrayList<>();
+        int j = 0;
+        for (Bill bill : billList) {
+            for (BillProduct billPro : bill.getBillProducts()) {
+                if (billPro.getStatus() == 0) {
+                    j = 1;
                 }
             }
-            if(j==1){
+            if (j == 1) {
                 listBillFilterStill.add(bill);
             }
         }
@@ -293,16 +293,16 @@ public class BillImpl implements BillService {
 
     @Override
     public Boolean checkBillNoLogin(String code) {
-        Boolean bool= false;
+        Boolean bool = false;
         Bill bill = this.findByCode(code);
-        int check=0;
-        for(BillProduct billPro : bill.getBillProducts()){
-            if(billPro.getStatus()==0){
-                check=1;
+        int check = 0;
+        for (BillProduct billPro : bill.getBillProducts()) {
+            if (billPro.getStatus() == 0) {
+                check = 1;
             }
         }
-        if(check==1 ){
-            bool=true;
+        if (check == 1) {
+            bool = true;
         }
         return bool;
     }

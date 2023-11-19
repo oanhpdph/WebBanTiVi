@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="" />
+    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -304,7 +306,8 @@
       <workItem from="1700065229738" duration="16774000" />
       <workItem from="1700113799391" duration="20147000" />
       <workItem from="1700202151569" duration="35653000" />
-      <workItem from="1700284285652" duration="35477000" />
+      <workItem from="1700284285652" duration="39446000" />
+      <workItem from="1700360022165" duration="2054000" />
     </task>
     <servers />
   </component>
