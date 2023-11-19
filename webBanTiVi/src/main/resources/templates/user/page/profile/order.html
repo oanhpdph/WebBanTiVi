@@ -83,7 +83,7 @@
                                    th:href="@{/invoice/invoice_detail/{id}(id=${bill.id})}"
                                 >Xem chi tiết
                                 </a>
-                                <button th:if="${bill.billStatus.code== 'CO'}" type="button"
+                                <button th:if="${bill.billStatus.code== 'CO' &&  (today.getTime()-bill.paymentDate.getTime()) <  86400000 * 3 }" type="button"
                                         class="btn btn-outline-dark return" data-bs-toggle="modal"
                                         th:data-bs-target="|#modal${bill.id}|" th:value="${bill.id}">Trả hàng
                                 </button>
@@ -218,3 +218,4 @@
 </section>
 <script src="/admin/plugin/js/loadImage.js"></script>
 <script src="/admin/plugin/js/order.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
