@@ -168,12 +168,10 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Tên đăng nhập</th>
                     <th>Họ tên</th>
                     <th>Địa Chỉ</th>
                     <th>SĐT</th>
                     <th>Email</th>
-                    <th>Giới tính</th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>
@@ -181,7 +179,6 @@
                 <tbody class="table-border-bottom-0">
                 <tr th:each="customer,Stat : ${session.list.content}">
                     <td th:text="${Stat.index+1}"></td>
-                    <td th:text="${customer.username}"></td>
                     <td>
                         <span th:class="${customer.name== null?'badge bg-label-primary': ''}"
                               th:text="${customer.name== null?'Trống': customer.name}"></span>
@@ -196,9 +193,7 @@
                               th:text="${customer.phoneNumber == null?'Trống': customer.phoneNumber}"></span>
                     </td>
                     <td th:text="${customer.email}"></td>
-                    <td>
-                        <span th:text="${customer.gender} == true?'Nam':'Nữ'"/>
-                    </td>
+
                     <td>
                         <span th:text="${customer.status} == true?'Hoạt động':'Khóa'"/>
                     </td>

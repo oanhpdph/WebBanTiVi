@@ -57,4 +57,10 @@ public class HomeController {
 //        session.setAttribute("active", "/product/add-product");
         return "admin/page/direct_sales/directSales";
     }
+    @GetMapping("/attributes/list")
+    public String loadField(HttpSession session) {
+        session.setAttribute("pageView", "/admin/page/product/attributes.html");
+        session.setAttribute("active", "/product/attributes");
+        return "admin/layout";
+    }
 }

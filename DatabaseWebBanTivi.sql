@@ -186,7 +186,6 @@ CREATE TABLE bill_product
    --  PRIMARY KEY(id_bill, id_product)
   )
 
-  
 
 CREATE TABLE image_returned
   (
@@ -325,6 +324,16 @@ INSERT INTO [dbo].[bill_status]
            ,N'Đã nhận lại được sản phẩm bị yêu cầu trả hàng')
 GO
 
+
+INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('RN'
+           ,N'Hoàn trả hàng'
+           ,N'Hoàn trả hàng khi khách không nhận hàng')
+GO
 INSERT INTO [dbo].[payment_method]
            ([code]
            ,[payment_method]
