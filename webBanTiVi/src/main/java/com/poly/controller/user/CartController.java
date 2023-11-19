@@ -32,11 +32,7 @@ public class CartController {
     HttpSession session;
 
     @Autowired
-    CartRepos cartRepos;
-
-    @Autowired
     CartService cartService;
-
 
     @Autowired
     CustomerService customerService;
@@ -52,6 +48,9 @@ public class CartController {
 
     @Autowired
     private CartProductService cartProductService;
+
+    @Autowired
+    private VoucherCustomerService voucherCustomerService;
 
     @Autowired
     private CheckLogin checkLogin;
@@ -93,8 +92,11 @@ public class CartController {
                     listRedu.add(reduceMoney);
                 }
             }
+            List<VoucherCustomer> voucherCustomer = voucherCustomerService.findByUser(userDetailDto.getId());
+            model.addAttribute("listVoucher", voucherCustomer);
             model.addAttribute("reduceMoney", listRedu);
             model.addAttribute("total", total);
+
             session.setAttribute("list", cart.getListCartPro());
             return "user/index";
         }
@@ -169,13 +171,16 @@ public class CartController {
             billProRes.setTotalPrice(total);// lấy tổng tiền
 
         } else {
-            if (userDetailDto.getEmail().trim() != billProRes.getEmail().trim()) {
-                if (checkEmail != null && checkEmail.getRoles() != null) {
-                    return "user/index";
-                }
+            if (userDetailDto.getEmail().trim().equals(billProRes.getEmail().trim())) {
+//                if (checkEmail != null && checkEmail.getRoles() != null) {
+//                    return "user/index";
+//                }
                 // thông báo lỗi email của người khác k thể dùng để mua hàng
                 billProRes.setCustomer(checkEmail);
             } else {
+                if (checkEmail != null && checkEmail.getRoles() != null) {
+                    return "user/index";
+                }
                 billProRes.setCustomer(checkEmail);
             }
         }

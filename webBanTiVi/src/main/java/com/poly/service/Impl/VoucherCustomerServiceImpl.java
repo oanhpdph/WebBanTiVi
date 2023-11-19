@@ -40,20 +40,23 @@ public class VoucherCustomerServiceImpl implements VoucherCustomerService {
         return voucherCustomerRepository.findAllByVoucher(id);
     }
 
-    public List<VoucherCustomer> findAllByKeyword(String keyword,Integer id){
-        return voucherCustomerRepository.findAllByKeyword(keyword,id);
+    public List<VoucherCustomer> findAllByKeyword(String keyword, Integer id) {
+        return voucherCustomerRepository.findAllByKeyword(keyword, id);
     }
+
     @PersistenceContext
     private EntityManager entityManager;
-    public void updateById(VoucherCustomerRes voucher, int id){
+
+    public void updateById(VoucherCustomerRes voucher, int id) {
         Optional<Users> optionalCustomer = customerRepository.findById(voucher.getCustomer());
         Optional<Voucher> optionalVoucher = voucherRepository.findById(voucher.getVoucher());
         VoucherCustomer voucherCustomer = new VoucherCustomer();
         voucherCustomer.setCustomer(optionalCustomer.get());
         voucherCustomer.setVoucher(optionalVoucher.get());
         voucherCustomer.setActive(voucher.getActive());
-        voucherCustomerRepository.updateById(optionalVoucher.get(),optionalCustomer.get(),voucher.getActive(),id);
+        voucherCustomerRepository.updateById(optionalVoucher.get(), optionalCustomer.get(), voucher.getActive(), id);
     }
+
     @Override
     public VoucherCustomer save(VoucherCustomerRes voucher) {
         Optional<Users> optionalCustomer = customerRepository.findById(voucher.getCustomer());
@@ -71,10 +74,14 @@ public class VoucherCustomerServiceImpl implements VoucherCustomerService {
         this.voucherCustomerRepository.deleteById(id);
     }
 
-
     @Override
-    public List<VoucherCustomer> findAll() {
-        return this.voucherCustomerRepository.findAll();
+    public List<VoucherCustomer> findByUser(Integer user) {
+        Optional<Users> optional = customerRepository.findById(user);
+        if (optional.isPresent()) {
+            List<VoucherCustomer> voucherCustomers = voucherCustomerRepository.findByUser(optional.get());
+            return voucherCustomers;
+        }
+        return null;
     }
 
     @Override

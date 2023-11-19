@@ -36,19 +36,20 @@
                         <th>#</th>
                         <th>Mã Hóa Đơn</th>
                         <th>Tên Sản Phẩm</th>
-                         <th>Số lượng</th>
+                         <th>Số lượng yêu cầu trả</th>
                          <th>Ghi chú</th>
-                        <th>Số lượng</th>
+                        <th>Số lượng đồng ý trả</th>
                         <th>Lí do trả hàng</th>
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0 text-left">
                     <tr th:each="billReturn : ${listAgree}">
                         <td>1</td>
-                        <td>[(${billReturn.bill.id})]</td>
+                        <td>[(${billReturn.bill.code})]</td>
                         <td>[(${billReturn.product.product.nameProduct})]</td>
-                        <td>[(${billReturn.quantityReturn})]</td>
+                        <td>[(${billReturn.quantityRequestReturn})]</td>
                         <td>[(${billReturn.note})]</td>
+                        <td>[(${billReturn.quantityAcceptReturn})]</td>
                         <td>[(${billReturn.reason})]</td>
                     </tr>
                     </tbody>

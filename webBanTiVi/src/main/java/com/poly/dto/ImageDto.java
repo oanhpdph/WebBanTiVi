@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImageDto {
-
+    private Integer id;
     private String multipartFile;
     private Boolean location;
 

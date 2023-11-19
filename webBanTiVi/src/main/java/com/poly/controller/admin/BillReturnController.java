@@ -77,7 +77,7 @@ public class BillReturnController {
     ){
         BillProduct billProduct =this.billProductService.edit(id);
         billProduct.setNote(dto.getNote());
-        billProduct.setQuantityReturn(Integer.parseInt(dto.getQuantity()));
+        billProduct.setQuantityAcceptReturn(Integer.parseInt(dto.getQuantity()));
         billProduct.setStatus(3); //dong y
         this.billProductService.save(billProduct);
         return "redirect:/admin/invoice_return/"+billProduct.getBill().getId();

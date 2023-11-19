@@ -33,12 +33,12 @@
                             <div class="col-4 col-md-5 col-xl-4">
                                 <img th:each="image:${billProduct.product.listImage}"
                                      th:if="${image.location == true }"
-                                     th:src="@{'/image/'+ ${ image.link}}" src=""
+                                     th:src="@{'/image/product/'+ ${ image.link}}" src=""
                                      class="w-px-200" alt="Lỗi hiển thị">
                             </div>
                             <div class="col-8 col-md-7 col-xl-8">
                                 <div class="col-12 mb-4 fs-4"><p><b>Tên sản phẩm:</b>
-                                    <a th:href="@{/admin/product/abcxyz}" class="text-decoration-none">[(${billProduct.product.product.nameProduct})]</a>
+                                    <span class="text-decoration-none">[(${billProduct.product.product.nameProduct})]</span>
                                 </p></div>
                                 <div class="row mb-4">
                                     <span class="col-8 text-left"><b>Số lượng:</b></span>

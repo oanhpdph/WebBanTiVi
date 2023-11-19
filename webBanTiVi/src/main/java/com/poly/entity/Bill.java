@@ -55,7 +55,7 @@ public class Bill {
     private Voucher voucher;
 
     @Column(name="voucher_value")
-    private BigDecimal voucher_value;
+    private BigDecimal voucherValue;
 
     @Column(name="note")
     private String note;

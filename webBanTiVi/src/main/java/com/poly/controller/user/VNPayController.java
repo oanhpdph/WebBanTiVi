@@ -9,6 +9,7 @@ import com.poly.service.VNPayService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,7 +20,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Map;
 
-@org.springframework.stereotype.Controller
+@Controller
 public class VNPayController {
     @Autowired
     private VNPayService vnPayService;

@@ -96,8 +96,9 @@
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="javascript:void(0);" data-bs-toggle="modal"
-                                       data-bs-target="#modalDetailProduct"><i class='bx bxs-show me-1'></i>Xem</a>
+                                    <a class="dropdown-item view-product" href="javascript:void(0);"
+                                       data-bs-toggle="modal" th:value="${product.id}"
+                                       data-bs-target="#modalDetailProduct"><i class='bx bxs-show me-1'></i>Xem sản phẩm</a>
                                     <a class="dropdown-item" href="javascript:void(0);"><i
                                             class="bx bx-trash me-1"></i> Xóa</a>
                                 </div>
@@ -110,37 +111,38 @@
             <div class="modal fade" id="modalDetailProduct" tabindex="-1" style="display: none">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel4">Chi tiết sản phẩm</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        <div class="modal-header ">
+                            <div>
+                                <h5 class="modal-title" id="name-product"></h5>
+                            </div>
+                            <div class="mx-2">
+                                <span id="date-create"></span>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" id="close"
                                     aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col mb-3">
                                     <label class="form-label">sku</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" id="sku">
                                 </div>
                                 <div class="col mb-3">
                                     <label class="form-label">Số lượng</label>
-                                    <input type="number" class="form-control">
+                                    <input type="number" class="form-control" id="quantity">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col mb-3">
                                     <label class="form-label">Giá nhập</label>
-                                    <input type="number" class="form-control">
+                                    <input type="number" class="form-control" id="price-import">
                                 </div>
                                 <div class="col mb-3">
                                     <label class="form-label">Giá bán</label>
-                                    <input type="number" class="form-control">
+                                    <input type="number" class="form-control" id="price-export">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col mb-3">
-                                    <label class="form-label">Ngày tạo</label>
-                                    <input type="datetime-local" class="form-control">
-                                </div>
                                 <div class="col mb-3">
                                     <div class="col-md">
                                         <label class="d-block form-label">Bày bán</label>
@@ -156,11 +158,11 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="row">
                                 <div class="col mb-3">
-                                    <div class="col-md">
+                                    <label class="form-label">Hình ảnh</label>
+                                    <div class="text-center" id="image">
 
                                     </div>
                                 </div>

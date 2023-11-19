@@ -17,7 +17,7 @@ public interface VoucherCustomerService {
 
     void delete(Integer id);
 
-    List<VoucherCustomer> findAll();
+    List<VoucherCustomer> findByUser(Integer user);
 
     Optional<VoucherCustomer> findById(Integer id);
 

@@ -833,7 +833,7 @@ function changeTableProductDetail() {
                 listItem.setAttribute("data-bs-html", "true");
 
                 const image = document.createElement("img");
-                image.src = "/image/smart-tivi-toshiba-43-inch-43v31mp-01.jpg";
+                image.src = "/image/product/tải ảnh lên.jpg";
                 image.alt = "Chưa có ảnh";
                 image.className = "image-preview";
                 image.onclick = clickImage
