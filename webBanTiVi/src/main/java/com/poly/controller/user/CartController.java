@@ -5,6 +5,7 @@ import com.poly.dto.BillProRes;
 import com.poly.dto.UserDetailDto;
 import com.poly.entity.*;
 import com.poly.entity.idClass.CartProductId;
+import com.poly.repository.BillStatusRepos;
 import com.poly.repository.CartRepos;
 import com.poly.service.*;
 import com.poly.service.Impl.DeliveryNotesImpl;
@@ -60,6 +61,9 @@ public class CartController {
 
     @Autowired
     private DeliveryNotesImpl deliveryNotes;
+
+    @Autowired
+    private BillStatusRepos billStatusRepos;
 
 
     @GetMapping("/pay")
@@ -119,6 +123,7 @@ public class CartController {
         session.setAttribute("pageView", "/user/page/product/confirm.html");
         return "user/index";
     }
+
 
     @PostMapping("/purchase")
     public String addBill(HttpServletRequest request,
@@ -189,6 +194,7 @@ public class CartController {
             String vnpayUrl = vnPayService.createOrder(bill1.getTotalPrice(), bill1.getCode(), baseUrl);
 //            billProRes.setProduct(Collections.singletonList(id));
             billService.addBillPro(bill1, billProRes);
+
             if (userDetailDto != null) {
                 Cart cart = cartService.getOneByUser(userDetailDto.getId());
                 for (CartProduct cartProduct : cart.getListCartPro()) {
@@ -199,9 +205,7 @@ public class CartController {
                 }
                 session.setAttribute("list", null);
             }
-
             cartService.clear();
-
             return "redirect:" + vnpayUrl;
         } else {
             billService.addBillPro(bill1, billProRes);
@@ -215,6 +219,7 @@ public class CartController {
                 }
                 session.setAttribute("list", null);
             }
+
             cartService.clear();
             return "redirect:/confirm";
         }

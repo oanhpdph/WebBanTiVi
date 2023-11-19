@@ -63,9 +63,9 @@ public class BillImpl implements BillService {
         bi.setCreateDate(new java.util.Date());
         bi.setPaymentDate(new java.util.Date());
         bi.setTotalPrice(bill.getTotalPrice());
-        bi.setPaymentStatus(1);
+        bi.setPaymentStatus(2);
         bi.setBillStatus(billStatusRepos.findByCode("WP").get());
-        bi.setPaymentMethod(paymentMethodRepos.findById(bill.getPaymentMethod()).get());
+        bi.setPaymentMethod(paymentMethodRepos.findById(1).get());
         return this.billRepos.save(bi);
     }
 
