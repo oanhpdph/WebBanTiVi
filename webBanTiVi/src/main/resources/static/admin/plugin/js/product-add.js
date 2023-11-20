@@ -262,7 +262,6 @@ function clickSave() {
         }
         data.listProduct.push(temp)
         data.nameProduct = document.getElementById("name-display").value
-        data.sameProduct = document.getElementById("sameProduct").value
         data.sku = document.getElementById("sku-code").value
         data.group = document.getElementById("select-group").value
     })
@@ -992,6 +991,5 @@ function clear() {
 
     document.getElementById("sku-code").value = ""
     document.getElementById("name-display").value = ""
-    document.getElementById("sameProduct").value = ""
 }
 
