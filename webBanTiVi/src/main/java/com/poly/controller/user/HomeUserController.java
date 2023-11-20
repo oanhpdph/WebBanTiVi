@@ -47,90 +47,20 @@ public class HomeUserController {
         productDetailDto.setGroup(1);
 
         Page<Product> page = productService.findAll(productDetailDto);
-        List<ProductDetailDto> listProduct = new ArrayList<>();
-        for (Product product : page.getContent()) {
-            ProductDetailDto productDetailDto1 = new ProductDetailDto();
-            productDetailDto1.setNameProduct(product.getNameProduct() + " " + product.getSku());
-            //name
-            int temp = 0;
-            for (ProductDetail productDetail : product.getProductDetails()) {
-                if (productDetail.isActive()) {
-                    for (Image image : productDetail.getListImage()) {
-                        if (image.isLocation()) {
-                            productDetailDto1.setImage(image.getLink());
-                            // ảnh
-                            break;
-                        }
-                    }
-
-                    if (productDetail.getCoupon() != null && productDetail.getCoupon().isActive()) {
-                        BigDecimal reduceMoney = productDetail.getPriceExport().multiply(BigDecimal.valueOf(Integer.parseInt(productDetail.getCoupon().getValue()))).divide(BigDecimal.valueOf(100));
-                        productDetailDto1.setReduceMoney(productDetail.getPriceExport().subtract(reduceMoney));
-                        //giá sau giảm
-                        productDetailDto1.setPrice(productDetail.getPriceExport());
-                        // giá trước giảm
-                    } else {
-                        productDetailDto1.setPrice(BigDecimal.valueOf(0));
-                        productDetailDto1.setReduceMoney(productDetail.getPriceExport());
-                    }
-
-                    productDetailDto1.setId(productDetail.getId());
-                    productDetailDto1.setPoint(product.getAvgPoint());
-                    productDetailDto1.setQuantityEvalute(product.getListEvaluate().size());
-                    temp = 1;
-                    break;
-                }
-            }
-            if (temp == 1) {
-                listProduct.add(productDetailDto1);
-            }
-        }
-
-        model.addAttribute("listTivi", listProduct);
-
+        model.addAttribute("listTivi", getProduct(new ArrayList<>(), page.getContent()));
 
         productDetailDto.setGroup(2);
-
         Page<Product> phuKien = productService.findAll(productDetailDto);
-        List<ProductDetailDto> listPhuKien = new ArrayList<>();
-        for (Product product : phuKien.getContent()) {
-            ProductDetailDto productDetailDto1 = new ProductDetailDto();
-            productDetailDto1.setNameProduct(product.getNameProduct() + " " + product.getSku());
-            //name
-            int temp = 0;
-            for (ProductDetail productDetail : product.getProductDetails()) {
-                if (productDetail.isActive()) {
-                    for (Image image : productDetail.getListImage()) {
-                        if (image.isLocation()) {
-                            productDetailDto1.setImage(image.getLink());
-                            // ảnh
-                            break;
-                        }
-                    }
+        model.addAttribute("listPhuKien", getProduct(new ArrayList<>(), phuKien.getContent()));
 
-                    if (productDetail.getCoupon() != null && productDetail.getCoupon().isActive()) {
-                        BigDecimal reduceMoney = productDetail.getPriceExport().multiply(BigDecimal.valueOf(Integer.parseInt(productDetail.getCoupon().getValue()))).divide(BigDecimal.valueOf(100));
-                        productDetailDto1.setReduceMoney(productDetail.getPriceExport().subtract(reduceMoney));
-                        //giá sau giảm
-                        productDetailDto1.setPrice(productDetail.getPriceExport());
-                        // giá trước giảm
-                    } else {
-                        productDetailDto1.setPrice(BigDecimal.valueOf(0));
-                        productDetailDto1.setReduceMoney(productDetail.getPriceExport());
-                    }
+        productDetailDto.setGroup(0);
+        Page<Product> productNew = productService.findAll(productDetailDto);
+        model.addAttribute("listNewProduct", getProduct(new ArrayList<>(), productNew.getContent()));
 
-                    productDetailDto1.setId(productDetail.getId());
-                    productDetailDto1.setPoint(product.getAvgPoint());
-                    productDetailDto1.setQuantityEvalute(product.getListEvaluate().size());
-                    temp = 1;
-                    break;
-                }
-            }
-            if (temp == 1) {
-                listPhuKien.add(productDetailDto1);
-            }
-        }
-        model.addAttribute("listPhuKien", listPhuKien);
+        productDetailDto.setSort(3);
+        Page<Product> topRate = productService.findAll(productDetailDto);
+        model.addAttribute("listTopRate", getProduct(new ArrayList<>(), topRate.getContent()));
+
 
         UserDetailDto userDetailDto = checkLogin.checkLogin();
         if (userDetailDto != null) {
@@ -149,5 +79,75 @@ public class HomeUserController {
             session.setAttribute("user", false);
         }
         return "/user/index";
+    }
+
+    @GetMapping("/tivi")
+    public String loadProduct(HttpSession session, Model model, ProductDetailDto productDetailDto) {
+        productDetailDto.setSize(20);
+        productDetailDto.setActive(true);
+        productDetailDto.setGroup(1);
+
+        Page<Product> page = productService.findAll(productDetailDto);
+        model.addAttribute("listTivi", getProduct(new ArrayList<>(), page.getContent()));
+
+        session.setAttribute("pageView", "/user/page/product/tivi.html");
+        model.addAttribute("active", "tivi");
+        return "/user/index";
+    }
+
+    @GetMapping("/accessory")
+    public String loadAccessory(HttpSession session, Model model, ProductDetailDto productDetailDto) {
+        productDetailDto.setSize(20);
+        productDetailDto.setActive(true);
+        productDetailDto.setGroup(2);
+        Page<Product> phuKien = productService.findAll(productDetailDto);
+
+        model.addAttribute("listPhuKien", getProduct(new ArrayList<>(), phuKien.getContent()));
+
+
+        session.setAttribute("pageView", "/user/page/product/accessory.html");
+        model.addAttribute("active", "accesory");
+        return "/user/index";
+    }
+
+    private List<ProductDetailDto> getProduct(List<ProductDetailDto> listReturn, List<Product> listInput) {
+        for (Product product : listInput) {
+            ProductDetailDto productDetailDto1 = new ProductDetailDto();
+            productDetailDto1.setNameProduct(product.getNameProduct() + " " + product.getSku());
+            //name
+            int temp = 0;
+            for (ProductDetail productDetail : product.getProductDetails()) {
+                if (productDetail.isActive()) {
+                    for (Image image : productDetail.getListImage()) {
+                        if (image.isLocation()) {
+                            productDetailDto1.setImage(image.getLink());
+                            // ảnh
+                            break;
+                        }
+                    }
+
+                    if (productDetail.getCoupon() != null && productDetail.getCoupon().isActive()) {
+                        BigDecimal reduceMoney = productDetail.getPriceExport().multiply(BigDecimal.valueOf(Integer.parseInt(productDetail.getCoupon().getValue()))).divide(BigDecimal.valueOf(100));
+                        productDetailDto1.setReduceMoney(productDetail.getPriceExport().subtract(reduceMoney));
+                        //giá sau giảm
+                        productDetailDto1.setPrice(productDetail.getPriceExport());
+                        // giá trước giảm
+                    } else {
+                        productDetailDto1.setPrice(BigDecimal.valueOf(0));
+                        productDetailDto1.setReduceMoney(productDetail.getPriceExport());
+                    }
+
+                    productDetailDto1.setId(productDetail.getId());
+                    productDetailDto1.setPoint(product.getAvgPoint());
+                    productDetailDto1.setQuantityEvalute(product.getListEvaluate().size());
+                    temp = 1;
+                    break;
+                }
+            }
+            if (temp == 1) {
+                listReturn.add(productDetailDto1);
+            }
+        }
+        return listReturn;
     }
 }

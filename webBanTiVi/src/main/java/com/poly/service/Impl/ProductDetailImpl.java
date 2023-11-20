@@ -1,6 +1,5 @@
 package com.poly.service.Impl;
 
-import com.poly.common.RandomNumber;
 import com.poly.dto.Attribute;
 import com.poly.dto.ImageDto;
 import com.poly.dto.ProductDetailDto;
@@ -64,25 +63,25 @@ public class ProductDetailImpl implements ProductDetailService {
 
     @Override
     public Product saveList(ProductDetailDto dto) {
-        String sameProduct = "";
-        if (dto.getSameProduct() == null) {
-            do {
-                sameProduct = "PR" + RandomNumber.generateRandomString(5);
-            }
-            while (!productService.findSameProduct(sameProduct).isEmpty());
-        } else if (dto.getSameProduct() != null && productService.findSameProduct(dto.getSameProduct()).isEmpty()) {
-            do {
-                sameProduct = "PR" + RandomNumber.generateRandomString(5);
-            }
-            while (!productService.findSameProduct(sameProduct).isEmpty());
-        } else if (dto.getSameProduct() != null && !productService.findSameProduct(dto.getSameProduct()).isEmpty()) {
-            sameProduct = dto.getSameProduct();
-        }
+//        String sameProduct = "";
+//        if (dto.getSameProduct() == null) {
+//            do {
+//                sameProduct = "PR" + RandomNumber.generateRandomString(5);
+//            }
+//            while (!productService.findSameProduct(sameProduct).isEmpty());
+//        } else if (dto.getSameProduct() != null && productService.findSameProduct(dto.getSameProduct()).isEmpty()) {
+//            do {
+//                sameProduct = "PR" + RandomNumber.generateRandomString(5);
+//            }
+//            while (!productService.findSameProduct(sameProduct).isEmpty());
+//        } else if (dto.getSameProduct() != null && !productService.findSameProduct(dto.getSameProduct()).isEmpty()) {
+//            sameProduct = dto.getSameProduct();
+//        }
         Product product = new Product();
         product.setGroupProduct(groupProductService.findById(dto.getGroup()));
         product.setNameProduct(dto.getNameProduct());
         product.setSku(dto.getSku());
-        product.setSame(sameProduct);
+//        product.setSame(sameProduct);
         if (!dto.getListProduct().isEmpty()) {
             product.setActive(true);
         } else {

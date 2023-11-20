@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -28,10 +27,6 @@ public class Cart {
 
     @Column(name = "code")
     private String code;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_update")
-    private Date dateUpdate;
 
     @OneToMany(mappedBy = "cart")
     private List<CartProduct> listCartPro;

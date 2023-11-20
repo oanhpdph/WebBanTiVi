@@ -71,10 +71,16 @@ public class ProductServiceImpl implements ProductService {
         }
         if (productDetailDto.getSort() == 1) {
             productCriteriaQuery.orderBy(criteriaBuilder.desc(productRoot.get("createDate")));
-        } else {
+        }
+        if (productDetailDto.getSort() == 2) {
             productCriteriaQuery.orderBy(criteriaBuilder.asc(productRoot.get("createDate")));
         }
+        if (productDetailDto.getSort() == 3) {
+            productCriteriaQuery.orderBy(criteriaBuilder.desc(productRoot.get("avgPoint")));
+        }
+
         productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
+
         Pageable pageable = PageRequest.of(productDetailDto.getPage() - 1, productDetailDto.getSize());
         List<Product> result = entityManager.createQuery(productCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
 
@@ -106,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
             } else {
                 product1.setActive(product.isActive());
             }
-            if (product.getProduct()!= null) {
+            if (product.getProduct() != null) {
                 List<ProductFieldValue> productFieldValue = productFieldValueService.findByProduct(product1);
                 if (!productFieldValue.isEmpty()) {
                     for (int i = 0; i < productFieldValue.size(); i++) {
@@ -123,11 +129,5 @@ public class ProductServiceImpl implements ProductService {
         }
         return null;
     }
-
-    @Override
-    public List<Product> findSameProduct(String same) {
-        return productRepository.findBySameProduct(same);
-    }
-
 
 }
