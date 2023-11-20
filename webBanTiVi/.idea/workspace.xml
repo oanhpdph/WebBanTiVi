@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" afterDir="false" />
-    </list>
+    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,9 +29,9 @@
         <option value="Interface" />
         <option value="HTML File" />
         <option value="Interface" />
-        <option value="Class" />
         <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -66,7 +64,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$USER_HOME$/OneDrive/Desktop/Documents/duanthuctap" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -116,6 +114,19 @@
         </value>
       </option>
       <option name="TEST_OBJECT" value="CLASS" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -295,6 +306,10 @@
       <workItem from="1700202151569" duration="35653000" />
       <workItem from="1700284285652" duration="39446000" />
       <workItem from="1700360022165" duration="2054000" />
+      <workItem from="1700383895832" duration="1587000" />
+      <workItem from="1700386938913" duration="1075000" />
+      <workItem from="1700408283036" duration="4139000" />
+      <workItem from="1700470590935" duration="4633000" />
     </task>
     <servers />
   </component>
@@ -358,6 +373,7 @@
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile" memberName="filename" />
+        <PinnedItemInfo parentTag="com.poly.dto.ProductDetailListDto" memberName="image" />
         <PinnedItemInfo parentTag="org.springframework.security.web.servletapi.HttpServlet3RequestFactory$Servlet3SecurityContextHolderAwareRequestWrapper" memberName="response" />
         <PinnedItemInfo parentTag="com.poly.entity.Evaluate" memberName="customer" />
       </pinned-members>
@@ -373,7 +389,7 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1699688221253" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1700251615041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.poly.*</FILTER>
     </SUITE>
   </component>

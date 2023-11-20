@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,7 +64,7 @@ public class CartSeviceImpl implements CartService {
         ProductDetail product = productDetailService.findById(id);
         if (product != null) {
             items.add(
-                    new CartProduct(product, cart, qty, null, new Date(), cart.getDateUpdate())
+                    new CartProduct(product, cart, qty, null)
             );
         }
         return items;

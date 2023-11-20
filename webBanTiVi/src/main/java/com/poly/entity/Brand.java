@@ -5,25 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
-@Table(name = "field")
+@Table(name = "brand")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Field {
+public class Brand {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "code")
-    private String code;
-
     @Column(name = "name")
     private String name;
 
-    @Column(name="variant")
-    private boolean variant;
-
-    @Column(name="active")
+    @Column(name = "active")
     private boolean active;
+
+    @OneToMany(mappedBy = "brand")
+    private List<Product> listProducts;
 }

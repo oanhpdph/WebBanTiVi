@@ -40,11 +40,12 @@ public class Product {
     @Column(name = "avg_point")
     private float avgPoint;
 
-    @Column(name = "same_product")
-    private String same;
+    @ManyToOne
+    @JoinColumn(name = "id_brand")
+    private Brand brand;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name="date_create")
+    @Column(name = "date_create")
     private Date createDate;
 
     @JsonIgnore

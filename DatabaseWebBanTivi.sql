@@ -19,6 +19,7 @@ CREATE TABLE discount
 create table group_product(
   id int identity(1,1) primary key,
   name_group nvarchar(100)
+  
 )
 
 
@@ -26,7 +27,8 @@ Create table field(
 	id		int identity(1,1) primary key,
 	code	varchar(10),
 	name	nvarchar(100) not null,
-	variant bit
+	variant bit,
+	active  bit
 )
 
 CREATE TABLE product
@@ -37,9 +39,17 @@ CREATE TABLE product
 	 name_product   nvarchar(200),
 	 avg_point		float,
 	 date_create    datetime,
-	 same_product	varchar(10),
+	 id_brand		int references brand(id),
      active         BIT
 )
+
+Create table Brand
+(
+id	   int identity(1,1) primary key,
+name   nvarchar(100),
+active bit
+)
+
 CREATE TABLE product_detail
   (
      id             INT IDENTITY(1, 1) PRIMARY KEY,
@@ -124,6 +134,7 @@ CREATE TABLE evaluate
      date_create DATETIME not null,
      point       float not null,
      comment     NVARCHAR(max),
+	 active		bit
   )
 
 CREATE TABLE image_evaluate
