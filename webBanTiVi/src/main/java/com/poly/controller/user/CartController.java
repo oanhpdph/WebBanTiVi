@@ -221,6 +221,7 @@ public class CartController {
                 ProductDetail product = item.getProduct();
                 int newQuantity = product.getQuantity() - item.getQuantity();
                 if (newQuantity < 0) {
+                    product.setActive(false);
                     model.addAttribute("error", "Không đủ hàng cho sản phẩm: " + product.getProduct().getNameProduct());
                     return "checkout";
                 }
@@ -238,7 +239,7 @@ public class CartController {
                 }
                 session.setAttribute("list", null);
             }
-            model.addAttribute("listBill", bill1);
+            session.setAttribute("listBill", bill1);
             cartService.clear();
             return "redirect:/confirm";
         }
