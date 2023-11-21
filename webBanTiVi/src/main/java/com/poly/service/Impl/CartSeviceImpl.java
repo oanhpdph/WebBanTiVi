@@ -6,6 +6,7 @@ import com.poly.entity.ProductDetail;
 import com.poly.entity.Users;
 import com.poly.repository.CartProductRepos;
 import com.poly.repository.CartRepos;
+import com.poly.repository.ProductDetailRepo;
 import com.poly.service.CartService;
 import com.poly.service.CustomerService;
 import com.poly.service.ProductDetailService;
@@ -24,6 +25,8 @@ public class CartSeviceImpl implements CartService {
     CartRepos cartRepos;
     @Autowired
     CartProductRepos cartProductRepos;
+    @Autowired
+    ProductDetailRepo productDetailRepo;
     @Autowired
     ProductServiceImpl productService;
     @Autowired
