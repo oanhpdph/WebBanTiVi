@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="card-body table-responsive">
-                <table class="table table-hover" id="table-all-product">
+                <table class="table table-hover text-center" id="table-all-product">
                     <caption class="ms-4">
                         Từ [(${listProduct.number * listProduct.size +1})] đến [(${(listProduct.number*
                         listProduct.size)+listProduct.numberOfElements})]
@@ -75,6 +75,7 @@
                         <!--                        <th>#</th>-->
                         <th>Sản phẩm</th>
                         <th>Sku</th>
+                        <th>Hãng</th>
                         <th>Điểm trung bình</th>
                         <th>Trạng thái</th>
                         <th>Thao tác</th>
@@ -85,6 +86,7 @@
                         <!--                        <td th:text="${productStat.index+1}"></td>-->
                         <td th:text="${product.nameProduct}"></td>
                         <td th:text="${product.sku}"></td>
+                        <td th:text="${product.brand.name}"></td>
                         <td th:text="${product.avgPoint}"></td>
                         <td class="form-switch text-center"><input class="form-check-input update-active-product"
                                                                    type="checkbox"
@@ -167,7 +169,8 @@
                                         aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <span class="fs-5">Thông tin <i class='bx bx-edit-alt cursor-pointer' id="edit-attri"></i></span>
+                                <span class="fs-5">Thông tin <i class='bx bx-edit-alt cursor-pointer'
+                                                                id="edit-attri"></i></span>
                                 <div class="table-responsive">
                                     <table class="table" id="table-detail-modal">
                                         <tbody class="table-border-bottom-0">

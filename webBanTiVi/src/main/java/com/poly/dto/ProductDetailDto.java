@@ -14,7 +14,7 @@ public class ProductDetailDto {
     String nameProduct;
     Integer group = 0;
     boolean active;
-    String sameProduct;
+    Integer brand;
     List<ProductDetailListDto> listProduct;
     List<Attribute> product;
     Integer page = 1;
@@ -25,5 +25,6 @@ public class ProductDetailDto {
     BigDecimal price;
     float point;
     Integer quantityEvalute;
-
+    List<Integer> listBrand;
+    String key;
 }

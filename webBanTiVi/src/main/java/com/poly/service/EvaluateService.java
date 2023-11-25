@@ -10,9 +10,8 @@ public interface EvaluateService {
 
     public Evaluate add(EvaluateRes evaluate);
 
-    public void delete(Integer id);
-
-    public Evaluate edit(Integer id);
-
     Evaluate findById(Integer id);
+
+    Evaluate update(EvaluateRes evaluateRes);
+
 }

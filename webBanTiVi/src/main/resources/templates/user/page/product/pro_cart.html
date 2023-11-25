@@ -107,7 +107,7 @@
                                                 </td>
                                                 <td>
                                                     <div th:if="${reduceMoney[itemStat.index]!=item.product.priceExport}">
-                                                        <pan class="fs-5 text-strike-through"
+                                                        <pan class="fs-4 text-strike-through"
                                                              th:text="|${#numbers.formatDecimal(item.product.priceExport,0,'COMMA',0,'POINT')}|"></pan>
                                                     </div>
                                                     <div th:if="${reduceMoney[itemStat.index]!=item.product.priceExport}">
@@ -131,7 +131,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <span class="total-price">[(${#numbers.formatDecimal(reduceMoney[itemStat.index]* item.quantity,0,'COMMA',0,'POINT')})]</span>
+                                                    <span class="total-price fs-4">[(${#numbers.formatDecimal(reduceMoney[itemStat.index]* item.quantity,0,'COMMA',0,'POINT')})]</span>
                                                 </td>
                                                 <td>
                                                     <a type="button" class="btn btn-icon btn-danger"
@@ -179,14 +179,14 @@
                     <br>
                     <div class="card shadow-none bg-transparent border border-secondary mb-3">
                         <div class="card-body">
-                               <span> Tổng tiền: <span class="text-end text-danger">
-                                    <span class="total-pro"
-                                          th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} (VNĐ)|"></span>
+                               <span class="fs-4"> Tổng tiền:
+                                   <span class="text-end text-danger">
+                                    <span class="total-pro" th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} (VNĐ)|"></span>
                                 </span></span>
                         </div>
                         <div class="card-footer">
                             <div style="text-align: center">
-                                <a type="submit" class="btn btn-primary" th:href="@{/pay}">Thanh
+                                <a type="submit" class="btn btn-primary btn-lg" th:href="@{/pay}">Thanh
                                     Toán
                                 </a>
                             </div>

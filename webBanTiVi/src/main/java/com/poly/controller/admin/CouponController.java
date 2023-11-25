@@ -71,7 +71,9 @@ public class CouponController {
         findCoupon.setCode(coupon.getCode());
         findCoupon.setValue(coupon.getValue());
         findCoupon.setActive(coupon.isActive());
-        System.out.println(coupon.getImage());
+       findCoupon.setDateStart(coupon.getDateStart());
+        findCoupon.setDateEnd(coupon.getDateEnd());
+
         if (!"".equals(fileName)) {
             findCoupon.setImage(fileName);
             String uploadDir = "src/main/resources/static/image";

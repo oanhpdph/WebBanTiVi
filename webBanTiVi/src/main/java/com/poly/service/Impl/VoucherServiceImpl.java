@@ -38,17 +38,16 @@ public class VoucherServiceImpl implements VoucherService {
         List<Predicate> list = new ArrayList<Predicate>();
         if (!searchVoucherDto.getKey().isEmpty()) {
             list.add(criteriaBuilder.or(
-                    criteriaBuilder.equal(voucherRoot.get("code"), searchVoucherDto.getKey()),
-                    criteriaBuilder.equal(voucherRoot.get("nameVoucher"), searchVoucherDto.getKey())));
+                    criteriaBuilder.like(voucherRoot.get("code"), searchVoucherDto.getKey()),
+                    criteriaBuilder.like(voucherRoot.get("nameVoucher"), searchVoucherDto.getKey())));
         }
-        if (!searchVoucherDto.getDate().isEmpty() ) {
+        if (!searchVoucherDto.getDate().isEmpty()) {
             String date1 = searchVoucherDto.getDate().substring(0, searchVoucherDto.getDate().indexOf("-") - 1).replace("/", "-");
             String date2 = searchVoucherDto.getDate().substring(searchVoucherDto.getDate().indexOf("-") + 1, searchVoucherDto.getDate().length()).replace("/", "-");
-            System.out.println(date1 + date2);
             java.sql.Date dateStart = java.sql.Date.valueOf(date1.trim());
             java.sql.Date dateEnd = java.sql.Date.valueOf(date2.trim());
-            list.add(criteriaBuilder.and(criteriaBuilder.greaterThan(voucherRoot.get("startDay"),dateStart),
-                    criteriaBuilder.lessThan(voucherRoot.get("expirationDate"),dateEnd)));
+            list.add(criteriaBuilder.and(criteriaBuilder.greaterThan(voucherRoot.get("startDay"), dateStart),
+                    criteriaBuilder.lessThan(voucherRoot.get("expirationDate"), dateEnd)));
         }
         voucherCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
         List<Voucher> result = entityManager.createQuery(voucherCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
@@ -82,7 +81,8 @@ public class VoucherServiceImpl implements VoucherService {
     public List<Voucher> findAllList() {
         return this.voucherRepository.findAll();
     }
-    public List<Voucher> findAllByDate(Date date){
+
+    public List<Voucher> findAllByDate(Date date) {
         return voucherRepository.findAllByExpirationDate(date);
     }
 }

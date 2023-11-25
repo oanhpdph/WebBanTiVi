@@ -1,6 +1,6 @@
-function oncl(id) {
-    window.location.href = "http://localhost:8080/admin/bill/bill_detail/" + id
-}
+// function oncl(id) {
+//     window.location.href = "http://localhost:8080/admin/bill/bill_detail/" + id
+// }
 
 $.each(document.getElementsByClassName("status"), function (index, item) {
     console.log(item)
