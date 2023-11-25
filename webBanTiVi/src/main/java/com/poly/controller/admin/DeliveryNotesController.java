@@ -22,14 +22,10 @@ public class DeliveryNotesController {
 
     @PostMapping("/bill/bill_detail/update_delivery_notes/{id}")
     public String updateDelivery(@PathVariable("id") Integer idDelivery,
-                                 @RequestParam(name = "deliver") String deliver,
-                                 @RequestParam(name = "deliveryPhone") String deliveryPhone,
                                  @RequestParam(name = "receivingAddress") String receivingAddress,
                                  @RequestParam(name = "deliveryFee") BigDecimal deliveryFee,
                                  @RequestParam(name = "note") String note) {
         DeliveryNotes deliveryNotes = new DeliveryNotes();
-        deliveryNotes.setDeliver(deliver);
-        deliveryNotes.setDeliveryPhone(deliveryPhone);
         deliveryNotes.setReceivingAddress(receivingAddress);
         deliveryNotes.setDeliveryFee(deliveryFee);
         deliveryNotes.setNote(note);

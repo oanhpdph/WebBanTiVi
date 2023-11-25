@@ -227,7 +227,6 @@ CREATE TABLE cart
      id          INT IDENTITY(1, 1) PRIMARY KEY,
      id_users	INT REFERENCES users(id) not null,
      code        NVARCHAR(30),
-     date_update DATETIME,
   )
 
 -- giỏ hàng chi tiết
@@ -237,11 +236,10 @@ CREATE TABLE cart_product
      product_id  INT REFERENCES product_detail(id),
      quantity    INT not null,
      note        NVARCHAR(max),
-     create_date DATETIME,
-	 date_update DATETIME
      PRIMARY KEY(cart_id, product_id)
   )
 GO
+
 
 insert into users(username, password,gender,roles,status,phone_number,email)
 values('PDO','$2a$10$qHWKLl/DjkAuZaVcqOML4OsFYzLMPcD70E1xh9DA30K7takJbMRXO',0,'ADMIN',1,'0978973','oanh')
@@ -371,4 +369,6 @@ GO
 insert into group_product values('Tivi')
 insert into group_product values(N'Phụ kiện')
 
-		
+insert into Brand values(N'Samsung',1)
+insert into Brand values(N'Sony',1)
+insert into Brand values(N'LG',1)

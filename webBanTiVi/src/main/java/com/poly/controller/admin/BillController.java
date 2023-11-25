@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -49,9 +50,11 @@ public class BillController {
         private String code;
         private String name;
         private String phoneNumber;
+        private String product;
         private String dateCreate;
         private Long totalPrice;
-        private String product;
+        private Long reduce;
+        private Long voucher;
         private String billStatus;
         private String paymentStatus;
         private String note;
@@ -182,23 +185,14 @@ public class BillController {
                     .map(billProduct -> billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
             BigDecimal totalAfter = new BigDecimal('0');
-//            if (b.getVoucher() != null && b.getVoucher().isReducedForm() == true) {// giảm %
-//                totalAfter = totalPrice.subtract(reduceMoney);
-//                BigDecimal reduce = totalPrice.multiply(BigDecimal.valueOf(b.getVoucher().getValue() / 100));
-//                if (reduce.compareTo(b.getVoucher().getMaximumDiscount()) >= 0) {
-//                    reduce = b.getVoucher().getMaximumDiscount();
-//                }
-//                totalAfter = totalAfter.subtract(reduce);
-//            }
-////            if (b.getVoucher() != null && b.getVoucher().isReducedForm() == false) {
-////                totalAfter = totalPrice.subtract(reduceMoney).subtract(BigDecimal.valueOf(b.getVoucher().getValue()));
-////            }
             if (b.getVoucher() == null) {
                 totalAfter = totalPrice.subtract(reduceMoney);
             }
             dataExportExcel.setTotalPrice(totalAfter.longValue());
 
-//            dataExportExcel.setProduct(b.getBillProducts().stream().map(billProduct -> billProduct.getProduct().getCode()).reduce("", (o1, o2) -> o1 + o2 + ", "));
+            dataExportExcel.setVoucher(b.getVoucherValue() != null ? b.getVoucherValue().longValue() : 0);
+            dataExportExcel.setReduce(reduceMoney.longValue());
+            dataExportExcel.setProduct(String.join(",", b.getBillProducts().stream().map(billProduct -> billProduct.getProduct().getSku()).collect(Collectors.toList())));
             dataExportExcel.setBillStatus(b.getBillStatus().getStatus());
             dataExportExcel.setPaymentStatus(b.getPaymentStatus() == 1 ? "Đã thanh toán" : b.getPaymentStatus() == 2 ? "Chưa thanh toán" : "Đã hoàn tiền");
             dataExportExcel.setNote(b.getNote());
@@ -213,9 +207,11 @@ public class BillController {
         header.add("Mã hóa đơn");
         header.add("Tên khách hàng");
         header.add("Số điện thoại");
+        header.add("Sản phẩm");
         header.add("Thời gian tạo");
         header.add("Tổng tiền");
-        header.add("Mã sản phẩm mua");
+        header.add("Giảm giá");
+        header.add("Voucher");
         header.add("Trạng thái hóa đơn");
         header.add("Trạng thái thanh toán");
         header.add("Ghi chú");

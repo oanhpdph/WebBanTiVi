@@ -12,10 +12,7 @@ import com.poly.service.ProductFieldValueService;
 import com.poly.service.ProductService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -66,9 +63,22 @@ public class ProductServiceImpl implements ProductService {
         if (productDetailDto.getGroup() != 0) {
             list.add(criteriaBuilder.equal(productRoot.get("groupProduct").get("id"), productDetailDto.getGroup()));
         }
-        if (productDetailDto.isActive() == true) {
-            list.add(criteriaBuilder.equal(productRoot.get("active"), true));
+
+        list.add(criteriaBuilder.greaterThanOrEqualTo(productRoot.get("avgPoint"), productDetailDto.getPoint()));
+
+
+        if (productDetailDto.getKey() != null && productDetailDto.getKey().trim().length() != 0) {
+            Join<Product, ProductFieldValue> fieldValueJoin = productRoot.joinList("productFieldValues");
+            list.add(criteriaBuilder.like(fieldValueJoin.get("value"), productDetailDto.getKey()));
         }
+
+        if (productDetailDto.getListBrand() != null && !productDetailDto.getListBrand().isEmpty()) {
+            Predicate[] predicates = productDetailDto.getListBrand().stream()
+                    .map(id -> criteriaBuilder.equal(productRoot.get("brand").get("id"), id))
+                    .toArray(Predicate[]::new);
+            list.add(criteriaBuilder.or(predicates));
+        }
+
         if (productDetailDto.getSort() == 1) {
             productCriteriaQuery.orderBy(criteriaBuilder.desc(productRoot.get("createDate")));
         }

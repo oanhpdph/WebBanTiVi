@@ -23,7 +23,6 @@ import java.util.List;
 public class BillDetailController {
 
 
-
     @Autowired
     private BillService billService;
 
@@ -49,28 +48,18 @@ public class BillDetailController {
                 .map(billProduct -> billProduct.getPrice().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-//        BigDecimal reduceMoney = billProducts.stream()
-//                .map(billProduct -> billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
-//                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal reduceMoney = billProducts.stream()
+                .map(billProduct -> billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("paymentMethod", paymentMethodService.getAll());
-//        model.addAttribute("totalReduceMoney", reduceMoney);
-        BigDecimal totalAfter = new BigDecimal(0);
-//        if (bill.getVoucher() != null && bill.getVoucher().isReducedForm() == true) {// giảm %
-//            totalAfter = totalPrice.subtract(reduceMoney);
-//            BigDecimal reduce = totalPrice.multiply(BigDecimal.valueOf(bill.getVoucher().getValue() / 100));
-//            if (reduce.compareTo(bill.getVoucher().getMaximumDiscount()) >= 0) {
-//                reduce = bill.getVoucher().getMaximumDiscount();
-//            }
-//            totalAfter = totalAfter.subtract(reduce);
-//        }
-//        if (bill.getVoucher() != null && bill.getVoucher().isReducedForm() == false) {
-//            totalAfter = totalPrice.subtract(reduceMoney).subtract(BigDecimal.valueOf(bill.getVoucher().getValue()));
-//        }
-//        if (bill.getVoucher() == null) {
-//            totalAfter = totalPrice.subtract(reduceMoney);
-//        }
+        model.addAttribute("totalReduceMoney", reduceMoney);
+        BigDecimal totalAfter = totalPrice;
+        if (bill.getVoucherValue() != null) {// giảm %
+            totalAfter = totalAfter.subtract(bill.getVoucherValue());
+        }
+        totalAfter = totalAfter.subtract(reduceMoney);
         model.addAttribute("totalAfter", totalAfter);
         List<BillStatus> billStatusList = billStatus(billStatusService.getAll(), bill.getBillStatus().getCode());
         model.addAttribute("billStatus", billStatusList);
@@ -83,8 +72,8 @@ public class BillDetailController {
     @PostMapping("/bill/bill_detail/update_status/{id}")
     public String updateBillStatus(@PathVariable("id") Integer id, Model model,
                                    @RequestParam(name = "status", required = false) String status,
-                                   @RequestParam(name = "paymentStatus", required = false,defaultValue = "-1") Integer paymentStatus,
-                                   @RequestParam(name = "paymentMethod", required = false,defaultValue = "-1") Integer paymentMethod) {
+                                   @RequestParam(name = "paymentStatus", required = false, defaultValue = "-1") Integer paymentStatus,
+                                   @RequestParam(name = "paymentMethod", required = false, defaultValue = "-1") Integer paymentMethod) {
         Bill bill = new Bill();
         bill.setBillStatus(billStatusService.getOneBycode(status));
         bill.setPaymentMethod(paymentMethodService.getOne(paymentMethod));
