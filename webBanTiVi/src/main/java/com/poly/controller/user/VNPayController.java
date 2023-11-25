@@ -61,7 +61,7 @@ public class VNPayController {
         model.addAttribute("paymentTime", paymentTime);
         model.addAttribute("transactionId", transactionId);
         model.addAttribute("vnp_ResponseCode", responseCode);
-        Bill bill = billService.findByCode(orderInfo);
+        Bill bill = billService.findByCode(orderInfo).get();
         if ("00".equals(responseCode)) {
             // Giao dịch thành công
             // Thực hiện các xử lý cần thiết, ví dụ: cập nhật CSDL
