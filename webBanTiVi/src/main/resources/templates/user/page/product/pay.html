@@ -51,13 +51,18 @@
         -webkit-appearance: none;
         margin: 0;
     }
+
+    .error {
+        color: red;
+    }
 </style>
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
         <div class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y">
                 <div class="content-wrapper">
-                    <form th:action="@{/purchase}" method="post" th:object="${billProduct}">
+                    <form th:action="@{/purchase}" method="post" th:object="${billProduct}" th:name="myform"
+                          th:onsubmit="return validateForm()">
                         <div class="row justify-content-center">
                             <div class="col-md-7 mb-5">
                                 <div class="card mb-4">
@@ -71,12 +76,20 @@
                                                     <input class="form-control" type="text" placeholder="họ và tên"
                                                            th:field="*{name}"
                                                            id="name" th:name="name">
+                                                    <span id="nameloc" class="error"></span>
+                                                    <div class="alert alert-warning"
+                                                         th:if="${#fields.hasErrors('name')}"
+                                                         th:errors="*{name}"></div>
                                                 </div>
                                                 <div class="col">
                                                     <label class="form-label">Số điện thoại người nhận</label>
                                                     <input class="form-control" type="text" placeholder="VN (+84)"
                                                            th:field="*{phoneNumber}"
                                                            id="phoneNumber" th:name="phoneNumber">
+                                                    <span id="numloc" class="error"></span>
+                                                    <div class="alert alert-warning"
+                                                         th:if="${#fields.hasErrors('phoneNumber')}"
+                                                         th:errors="*{phoneNumber}"></div>
                                                 </div>
                                             </div>
                                             <br>
@@ -87,6 +100,10 @@
                                                        placeholder="oanhpham085@gmail.com"
                                                        th:field="*{email}"
                                                        id="email" th:name="email">
+                                                <span id="emailloc" class="error"></span>
+                                                <div class="alert alert-warning"
+                                                     th:if="${#fields.hasErrors('email')}"
+                                                     th:errors="*{email}"></div>
                                             </div>
                                             <br>
                                             <!--                                                address-->
@@ -95,6 +112,10 @@
                                                 <input type="text" class="form-control"
                                                        placeholder="Thôn liên trì 1, xã Yên hòa" th:field="*{address}"
                                                        id="address" th:name="address">
+                                                <span id="addressloc" class="error"></span>
+                                                <div class="alert alert-warning"
+                                                     th:if="${#fields.hasErrors('address')}"
+                                                     th:errors="*{address}"></div>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Voucher</label>
@@ -265,6 +286,66 @@
 
     const plus = document.querySelectorAll(".plus")
     const minus = document.querySelectorAll(".minus")
+
+    function validateForm() {
+
+        var name = document.myform.name.value;
+        var email = document.myform.email.value;
+        var address = document.myform.address.value;
+        var phoneNumber = document.myform.phoneNumber.value;
+        var status = false;
+
+        //name
+        if (name.length < 1) {
+            document.getElementById("nameloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống tên!";
+            status = false;
+        } else {
+            document.getElementById("nameloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i>";
+            status = true;
+        }
+        //address
+        if (address.length < 1) {
+            document.getElementById("addressloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống địa chỉ!";
+            status = false;
+        } else {
+            document.getElementById("addressloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i>";
+            status = true;
+        }
+        //email
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if (email.length < 1) {
+            document.getElementById("emailloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống email!";
+            status = false;
+        } else if (!filter.test(email.value)) {
+            document.getElementById("emailloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i>Hay nhap dia chi email hop le.\nExample@gmail.com!";
+            email.focus;
+            status = false;
+        } else {
+            document.getElementById("emailloc").innerHTML =
+                " <img src='checked.gif'/>";
+            status = true;
+        }
+        //phone
+        var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+        if (phoneNumber.length < 1) {
+            document.getElementById("numloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống số điện thoại!";
+            status = false;
+        } else if (phoneNumber.match(phoneno)) {
+            status = true;
+        } else {
+            document.getElementById("numloc").innerHTML = "Không đúng định dạng số điện thoại!";
+            status = false;
+        }
+
+        return status;
+    }
 
     function tinhtong() {
         const totalPriceForm = document.querySelectorAll(".total-price")
