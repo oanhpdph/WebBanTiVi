@@ -179,7 +179,7 @@
             <div class="col-sm-6 row justify-content-between">
                 <div class="mb-3 col">
                     <label class="form-label" for="select-group">Nhóm sản phẩm</label>
-                    <select class="form-select select2" id="select-group">
+                    <select class="form-select" id="select-group">
                         <option></option>
                     </select>
                     <span class="fst-italic text-danger group-error"></span>
@@ -191,9 +191,11 @@
                         <span class="fst-italic text-danger sku-code-error"></span>
                     </div>
                     <div class="mb-3 col">
-                        <label class="form-label">Sản phẩm tương tự</label>
-                        <input class="form-control" id="sameProduct" placeholder="Để trống nếu không có">
-                        <span class="fst-italic text-danger same-product-error"></span>
+                        <label class="form-label">Hãng</label>
+                        <select class="form-select" id="select-brand">
+                            <option></option>
+                        </select>
+                        <span class="fst-italic text-danger group-error"></span>
                     </div>
                 </div>
             </div>
@@ -219,7 +221,7 @@
                          data-bs-parent="#accordionExample" style="max-height: 600px">
                         <div class="accordion-body">
                             <div class="fst-italic">Nhấn enter để xác định 1 giá trị, click vào
-                                giá trị để xóa
+                                giá trị để xóa, những thuộc tính không có giá trị sẽ bỏ qua.
                             </div>
                             <div class="mb-3 row">
                                 <div class="item-content">

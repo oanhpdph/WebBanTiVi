@@ -57,6 +57,7 @@ public class EvaluateServiceImpl implements EvaluateService {
         if (evaluateRes.getProduct() != null) {
             list.add(criteriaBuilder.equal(evaluateRoot.get("product").get("id"), evaluateRes.getProduct()));
         }
+
         evaluateCriteriaQuery.orderBy(criteriaBuilder.desc(evaluateRoot.get("dateCreate")));
 
         evaluateCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
@@ -89,10 +90,12 @@ public class EvaluateServiceImpl implements EvaluateService {
         eval = this.evaluateRepos.save(eval);
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
-            float avgPoint = evaluateRepos.avgPoint(product);
-            float roundedNumber = (float) (Math.round(avgPoint * 10.0) / 10.0);
-            product.setAvgPoint(roundedNumber);
-            productRepository.save(product);
+            Optional<Float> avgPoint = evaluateRepos.avgPoint(optionalProduct.get());
+            if (avgPoint.isPresent()) {
+                float roundedNumber = (float) (Math.round(avgPoint.get() * 10.0) / 10.0);
+                product.setAvgPoint(roundedNumber);
+                productRepository.save(product);
+            }
         }
         for (String s : evaluate.getImage()) {
             ImageEvaluate imageEvaluate = new ImageEvaluate();
@@ -105,20 +108,31 @@ public class EvaluateServiceImpl implements EvaluateService {
     }
 
     @Override
-    public void delete(Integer id) {
-        evaluateRepos.deleteById(id);
-    }
-
-    @Override
-    public Evaluate edit(Integer id) {
-        return evaluateRepos.findById(id).get();
-    }
-
-    @Override
     public Evaluate findById(Integer id) {
         Optional<Evaluate> evaluate = evaluateRepos.findById(id);
         if (evaluate.isPresent()) {
             return evaluate.get();
+        }
+        return null;
+    }
+
+    @Override
+    public Evaluate update(EvaluateRes evaluateRes) {
+        Evaluate evaluate = findById(evaluateRes.getId());
+        if (evaluate != null) {
+            evaluate.setActive(evaluateRes.isActive());
+            evaluateRepos.save(evaluate);
+
+            Optional<Float> avgPoint = evaluateRepos.avgPoint(evaluate.getProduct());
+            float roundedNumber;
+            if (avgPoint.isPresent()) {
+                roundedNumber = (float) (Math.round(avgPoint.get() * 10.0) / 10.0);
+                evaluate.getProduct().setAvgPoint(roundedNumber);
+
+            } else {
+                evaluate.getProduct().setAvgPoint(0);
+            }
+            productRepository.save(evaluate.getProduct());
         }
         return null;
     }

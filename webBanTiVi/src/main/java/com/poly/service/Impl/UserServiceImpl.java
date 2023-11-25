@@ -92,14 +92,25 @@ public class UserServiceImpl implements CustomerService {
         Root<Users> customerRoot = customerCriteriaQuery.from(Users.class);
 
         List<Predicate> list = new ArrayList<Predicate>();
-        if (!searchStaffDto.getKey().isEmpty()) {
+        if (searchStaffDto.getKey() != "") {
             list.add(criteriaBuilder.or(
-                    criteriaBuilder.equal(customerRoot.get("username"), searchStaffDto.getKey()),
-                    criteriaBuilder.equal(customerRoot.get("phoneNumber"), searchStaffDto.getKey())));
+                    criteriaBuilder.like(customerRoot.get("name"), searchStaffDto.getKey()),
+                    criteriaBuilder.like(customerRoot.get("phoneNumber"), searchStaffDto.getKey())));
         }
+
+        if (searchStaffDto.getRole().equals("USER") && !searchStaffDto.getRole().isBlank()) {
+            list.add(criteriaBuilder.equal(customerRoot.get("roles"), "USER"));
+        } else {
+            list.add(criteriaBuilder.or(criteriaBuilder.equal(customerRoot.get("roles"), "STAFF"),
+                    criteriaBuilder.equal(customerRoot.get("roles"), "ADMIN")));
+        }
+
+
         customerCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
+
         List<Users> result = entityManager.createQuery(customerCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
         List<Users> result2 = entityManager.createQuery(customerCriteriaQuery).getResultList();
+
         Page<Users> page = new PageImpl<>(result, pageable, result2.size());
         return page;
     }

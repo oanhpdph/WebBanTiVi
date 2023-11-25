@@ -23,7 +23,7 @@
 
 </style>
 
-<div id="bannerUnderMenu" class="carousel slide mb-5" data-bs-ride="carousel">
+<div id="bannerUnderMenu" class="carousel slide mb-5">
     <div id="carouselExample" class="carousel slide">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -52,18 +52,91 @@
 <!--<section>-->
 <!--    <img class="d-block w-100" src="/image/230214-G3-category-1600x600.jpg" alt="Second slide">-->
 <!--</section>-->
+<section class="container-xxl" th:if="${#lists.size(listTopRate)>0}">
+    <div class="mb-4">
+        <div class="row mb-4 pt-3"><h2
+                class="header col text-center pt-2 pb-2 px-3 text-uppercase fw-bold">Sản phẩm nổi bật</h2>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-sm-2 g-4">
+            <div class="col" th:each="topRate,Stat:${listTopRate}">
+                <div class="card h-100 item-product">
+                    <div class="card-body mb-4 mt-3">
+                        <img class="img-fluid d-flex mx-auto my-4"
+                             th:src="|/image/product/${topRate.image}|"
+                             alt="Hình ảnh bị lỗi"/>
+                        <a th:href="@{'/product/detail/'+${topRate.id}}"
+                           class="stretched-link mb-2 text-black">
+                                            <span class="fs-5 card-title"
+                                                  th:text="${topRate.nameProduct}">
+                                                        </span></a>
+                        <div th:if="${topRate.price!=0}"><span
+                                class="text-strike-through fs-6 "> [(${#numbers.formatDecimal(topRate.price,0,'COMMA',0,'POINT')})]<small
+                                class="align-text-top">đ</small></span>
+                        </div>
+                        <div><span class="text-danger fs-6 fw-bold"
+                        >[(${#numbers.formatDecimal(topRate.reduceMoney,0,'COMMA',0,'POINT')})] <small
+                                class="align-text-top">đ</small></span>
+                        </div>
+                        <div>
+                            <span>[(${topRate.point})]<i class='bx bxs-star' style='color:#fee500'></i>([(${topRate.quantityEvalute})])</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="mb-5">
+    <img class="d-block w-100" src="/image/tv-xiaomi-thang-9-1200x200.jpg" alt="Second slide">
+</section>
+<section class="container-xxl" th:if="${#lists.size(listNewProduct)>0}">
+    <div class="mb-4">
+        <div class="row pt-3 mb-4"><h2
+                class="header col text-center pt-2 pb-2 px-3 text-uppercase fw-bold">Sản phẩm mới</h2>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-sm-2 g-4">
+            <div class="col" th:each="newProduct,Stat:${listNewProduct}">
+                <div class="card h-100 item-product">
+                    <div class="card-body mb-4 mt-3">
+                        <img class="img-fluid d-flex mx-auto my-4"
+                             th:src="|/image/product/${newProduct.image}|"
+                             alt="Hình ảnh bị lỗi"/>
+                        <a th:href="@{'/product/detail/'+${newProduct.id}}"
+                           class="stretched-link mb-2 text-black">
+                                            <span class="fs-5 card-title"
+                                                  th:text="${newProduct.nameProduct}">
+                                                        </span></a>
+                        <div th:if="${newProduct.price!=0}"><span class="text-strike-through fs-6 "> [(${#numbers.formatDecimal(newProduct.price,0,'COMMA',0,'POINT')})]<small
+                                class="align-text-top">đ</small></span>
+                        </div>
+                        <div><span class="text-danger fs-6 fw-bold"
+                        >[(${#numbers.formatDecimal(newProduct.reduceMoney,0,'COMMA',0,'POINT')})] <small
+                                class="align-text-top">đ</small></span>
+                        </div>
+                        <div>
+                            <span>[(${newProduct.point})]<i class='bx bxs-star' style='color:#fee500'></i>([(${newProduct.quantityEvalute})])</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="mb-5">
+    <img class="d-block w-100" src="/image/tv-xiaomi-thang-9-1200x200.jpg" alt="Second slide">
+</section>
 <section class="container-xxl" th:if="${#lists.size(listTivi)>0}">
     <div class="mb-4">
-        <div class="row mb-4 pt-3 row-cols-lg-3 row-cols-md-3 row-cols-xl-3"><h3
-                class="header col text-center bg-white pt-2 pb-2 title px-3 text-uppercase fw-bold">Tivi</h3>
+        <div class="row pt-3 mb-4"><h2
+                class="header col text-center pt-2 pb-2 px-3 text-uppercase fw-bold">Tivi</h2>
         </div>
         <div class="row mt-n3 mb-3 justify-content-end"><a
-                class="fs-6 text-end text-decoration-underline link-dark w-auto" href="/tivi">Xem tất
+                class="fs-5 text-end text-decoration-underline link-dark w-auto" href="/tivi">Xem tất
             cả</a></div>
         <div id="carouselTivi" class="carousel slide" data-bs-ride="false" data-bs-interval="false">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <div class="row row-cols-1 row-cols-md-5 row-cols-sm-2 g-4">
+                    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-sm-2 g-4">
                         <div class="col" th:each="tivi,Stat:${listTivi}" th:if="${Stat.index<10}">
                             <div class="card h-100 item-product">
                                 <div class="card-body mb-4 mt-3">
@@ -75,7 +148,7 @@
                                             <span class="fs-5 card-title"
                                                   th:text="${tivi.nameProduct}">
                                                         </span></a>
-                                    <div th:if="${tivi.price!=0}"><span class="text-strike-through fs-6 "> [(${tivi.price})]<small
+                                    <div th:if="${tivi.price!=0}"><span class="text-strike-through fs-6 "> [(${#numbers.formatDecimal(tivi.price,0,'COMMA',0,'POINT')})]<small
                                             class="align-text-top">đ</small></span>
                                     </div>
                                     <div><span class="text-danger fs-6 fw-bold"
@@ -91,7 +164,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div class="row row-cols-1 row-cols-md-5 row-cols-sm-2 g-4">
+                    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-sm-2 g-4">
                         <div class="col" th:each="tivi,Stat:${listTivi}"
                              th:if="${Stat.index>=10 && Stat.index<20}">
                             <div class="card h-100 item-product">
@@ -104,7 +177,7 @@
                                             <span class="fs-5  card-title"
                                                   th:text="${tivi.nameProduct}">
                                                         </span></a>
-                                    <div th:if="${tivi.price!=0}"><span class="text-strike-through fs-6 "> [(${tivi.price)]<small
+                                    <div th:if="${tivi.price!=0}"><span class="text-strike-through fs-6 "> [(${#numbers.formatDecimal(tivi.price,0,'COMMA',0,'POINT')})]<small
                                             class="align-text-top">đ</small></span>
                                     </div>
                                     <div><span class="text-danger fs-6 fw-bold"
@@ -121,12 +194,12 @@
                 </div>
             </div>
             <!--                </div>-->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselTivi"
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselTivi" th:if="${#lists.size(listTivi)>10}"
                     data-bs-slide="prev">
                 <i class='bx bx-chevron-left bx-lg'></i>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselTivi"
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselTivi" th:if="${#lists.size(listTivi)>10}"
                     data-bs-slide="next">
                 <i class='bx bx-chevron-right bx-lg'></i>
                 <span class="visually-hidden">Next</span>
@@ -134,22 +207,21 @@
         </div>
     </div>
 </section>
-<section>
+<section class="mb-5">
     <img class="d-block w-100" src="/image/tv-xiaomi-thang-9-1200x200.jpg" alt="Second slide">
 </section>
 <section class="container-xxl" th:if="${#lists.size(listPhuKien)>0}">
     <div class="mb-4">
-        <!--            <div class="">-->
-        <div class="row mb-4 pt-3 row-cols-lg-3 row-cols-md-3 row-cols-xl-3"><h3
-                class="header col text-center bg-white pt-2 pb-2 title px-3 text-uppercase fw-bold">Phụ kiện</h3>
+        <div class="row mb-4 pt-3"><h2
+                class="header col text-center pt-2 pb-2 px-3 text-uppercase fw-bold">Phụ kiện</h2>
         </div>
         <div class="row mt-n3 mb-3 justify-content-end"><a
-                class="fs-6 text-end text-decoration-underline link-dark w-auto" href="/accessory">Xem tất
+                class="fs-5 text-end text-decoration-underline link-dark w-auto" href="/accessory">Xem tất
             cả</a></div>
         <div id="carouselPhukien" class="carousel slide" data-bs-ride="false" data-bs-interval="false">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <div class="row row-cols-1 row-cols-md-5 row-cols-sm-2 g-4">
+                    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-sm-2 g-4">
                         <div class="col" th:each="phuKien,Stat:${listPhuKien}"
                              th:if="${Stat.index<10}">
                             <div class="card h-100 item-product">
@@ -162,7 +234,7 @@
                                             <span class="fs-5  card-title"
                                                   th:text="${phuKien.nameProduct}">
                                                         </span></a>
-                                    <div th:if="${phuKien.price!=0}"><span class="text-strike-through fs-6"> [(${phuKien.price})]<small
+                                    <div th:if="${phuKien.price!=0}"><span class="text-strike-through fs-6"> [(${#numbers.formatDecimal(phuKien.price,0,'COMMA',0,'POINT')})]<small
                                             class="align-text-top">đ</small></span>
                                     </div>
                                     <div><span class="text-danger fs-6 fw-bold"
@@ -178,7 +250,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div class="row row-cols-1 row-cols-md-5 row-cols-sm-2 g-4">
+                    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-sm-2 g-4">
                         <div class="col" th:each="phuKien,Stat:${listPhuKien}"
                              th:if="${Stat.index>=10 && Stat.index<20}">
                             <div class="card h-100 item-product">
@@ -191,7 +263,7 @@
                                             <span class="fs-5 card-title"
                                                   th:text="${phuKien.nameProduct}">
                                                         </span></a>
-                                    <div th:if="${phuKien.price!=0}"><span class="text-strike-through fs-6"> [(${phuKien.price})]<small
+                                    <div th:if="${phuKien.price!=0}"><span class="text-strike-through fs-6">[(${#numbers.formatDecimal(phuKien.price,0,'COMMA',0,'POINT')})]<small
                                             class="align-text-top">đ</small></span>
                                     </div>
                                     <div><span class="text-danger fs-6 fw-bold"
@@ -208,12 +280,13 @@
                 </div>
             </div>
             <!--                </div>-->
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselPhukien"
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselPhukien" th:if="${#lists.size(listPhuKien)>10}"
                     data-bs-slide="prev">
+                <i class='bx bx-chevron-left bx-lg'></i>
                 <i class='bx bx-chevron-left bx-lg'></i>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselPhukien"
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselPhukien" th:if="${#lists.size(listPhuKien)>10}"
                     data-bs-slide="next">
                 <i class='bx bx-chevron-right bx-lg'></i>
                 <span class="visually-hidden">Next</span>
@@ -221,11 +294,11 @@
         </div>
     </div>
 </section>
-<section>
+<section class="mb-5">
     <img class="d-block w-100" src="/image/camera-360-do-01.jpg">
 </section>
 <section class="mt-4 container-xxl">
-    <div class="row row-cols-1 row-cols-xl-3 row-cols-lg-3 row-cols-md-2 row-cols-sm-2 g-4">
+    <div class="row row-cols-lg-3 row-cols-sm-2 g-4">
         <div class="col text-center">
             <i class='bx bx-check-shield' style='color:#ff0202; font-size: 80px'></i>
             <h5 class="text-secondary">Sản phẩm chính hãng</h5>

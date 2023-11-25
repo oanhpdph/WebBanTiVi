@@ -38,6 +38,9 @@ public class Evaluate {
     @Column(name="comment")
     private String comment;
 
+    @Column(name="active")
+    private boolean active;
+
     @OneToMany(mappedBy = "evaluate")
     private List<ImageEvaluate> evaluateList;
 

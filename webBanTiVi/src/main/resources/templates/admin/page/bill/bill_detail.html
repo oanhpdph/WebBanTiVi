@@ -1,20 +1,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="/admin/plugin/css/invoice_detail.css">
-<div class="page-header">
-    <div class="row">
-        <h4 class="fw-bold py-3 mb-4 col-5">Bill details</h4>
-        <div class="col-7 text-end">
-            <button type="button" class="btn btn-primary col-3" onclick="window.history.back()">
-                <span class="tf-icons bx bx-arrow-back mx-1"></span>Go back
-            </button>
-            <button type="button" class="btn btn-danger col-3">
-                <span class="tf-icons bx bx-printer mx-1"></span>Print bill
-            </button>
-        </div>
-    </div>
-</div>
-
-
+<h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a class="text-muted fw-light"
+                                                                   href="/admin/bill/list_bill">Danh sách Hóa đơn/</a></span>Hóa
+    đơn chi tiết</h4>
 <div class="row">
     <!--    sản phẩm, phiếu giao-->
     <input th:value="${billDetail.id}" style="display: none" id="idBill">
@@ -38,18 +26,20 @@
                             </div>
                             <div class="col-8 col-md-7 col-xl-8">
                                 <div class="col-12 mb-4 fs-4"><p><b>Tên sản phẩm:</b>
-                                    <span class="text-decoration-none">[(${billProduct.product.product.nameProduct})]</span>
+                                    <span class="text-decoration-none">[(${billProduct.product.product.nameProduct+'-'+billProduct.product.product.sku})]</span>
                                 </p></div>
                                 <div class="row mb-4">
                                     <span class="col-8 text-left"><b>Số lượng:</b></span>
                                     <span class="col-4 text-end"> [(${billProduct.quantity})]</span>
                                 </div>
                                 <div class="row mb-4">
-                                    <span class="col-7 text-start"><b>Giá sản phẩm x[(${billProduct.quantity})]:</b></span>
-                                    <span class="col-5 text-end"> [(${#numbers.formatDecimal(billProduct.quantity * billProduct.price, 0,'COMMA',0,'POINT')})]<u>đ</u></span>
+                                    <span class="col-7 text-start"><b>Giá sản phẩm:</b></span>
+                                    <span class="col-5 text-end"> [(${#numbers.formatDecimal(billProduct.price, 0,'COMMA',0,'POINT')})]<u>đ</u></span>
                                 </div>
-                                <div class="row mb-4">
+                                <div class="row mb-4" th:if="${billProduct.reducedMoney!=0}">
                                     <span class="col-7 text-start"><b>Giá khuyến mãi:</b></span>
+                                    <span class="col-5 text-end"> [(${#numbers.formatDecimal(billProduct.price-billProduct.reducedMoney, 0,'COMMA',0,'POINT')})]<u>đ</u></span>
+
                                 </div>
                             </div>
                         </div>
@@ -110,24 +100,6 @@
                                         </td>
                                         <td>
                                             <p id="emailCustomerText" th:text="${deliveryNote?.receivedEmail}"></p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Tên người nhận:</strong>
-                                        </td>
-                                        <td class="input-group">
-                                            <input class="form-check form-control " type="text"
-                                                   th:value="${deliveryNote?.deliver}" name="deliver"
-                                                   id="deliver" disabled="true">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>SĐT người nhận:</strong>
-                                        </td>
-                                        <td class="input-group">
-                                            <input class="form-check form-control " type="text"
-                                                   th:value="${deliveryNote?.deliveryPhone}" name="deliveryPhone"
-                                                   id="deliveryPhone" disabled="true">
-                                        </td>
                                     </tr>
                                     <tr>
                                         <td><strong>Địa chỉ người nhận:</strong>
@@ -210,7 +182,7 @@
                             <hr>
                             <div class="mb-2">
                                 <div class="row">
-                                    <label class="col-5 col-md-5"><b class="text-start">Tổng gốc:</b></label>
+                                    <label class="col-5 col-md-5"><b class="text-start">Tạm tính:</b></label>
                                     <span class="text-end col-7 col-md-7">[(${#numbers.formatDecimal(totalPrice,0,'COMMA',0,'POINT')})]<u>đ</u></span>
                                 </div>
                                 <small class="col-12 col-md-12"

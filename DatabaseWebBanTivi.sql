@@ -19,6 +19,7 @@ CREATE TABLE discount
 create table group_product(
   id int identity(1,1) primary key,
   name_group nvarchar(100)
+  
 )
 
 
@@ -26,7 +27,8 @@ Create table field(
 	id		int identity(1,1) primary key,
 	code	varchar(10),
 	name	nvarchar(100) not null,
-	variant bit
+	variant bit,
+	active  bit
 )
 
 CREATE TABLE product
@@ -37,9 +39,17 @@ CREATE TABLE product
 	 name_product   nvarchar(200),
 	 avg_point		float,
 	 date_create    datetime,
-	 same_product	varchar(10),
+	 id_brand		int references brand(id),
      active         BIT
 )
+
+Create table Brand
+(
+id	   int identity(1,1) primary key,
+name   nvarchar(100),
+active bit
+)
+
 CREATE TABLE product_detail
   (
      id             INT IDENTITY(1, 1) PRIMARY KEY,
@@ -100,7 +110,6 @@ CREATE TABLE voucher
      name_voucher     VARCHAR(100) not null,
      [value]          INT not null,
      minimum_value    MONEY not null,-- giá trị đơn hàng tối thiểu cần
-     maximum_discount MONEY not null,--giá trị tối đa đơn hàng giảm
      quantity         INT not null, -- số lượng voucher
 	 start_day		  DATE not null,-- thời gian bắt đầu có hiệu lực
      expiration_date  DATE not null,-- thời gian mã giảm giá hết hiệu lực
@@ -124,6 +133,7 @@ CREATE TABLE evaluate
      date_create DATETIME not null,
      point       float not null,
      comment     NVARCHAR(max),
+	 active		bit
   )
 
 CREATE TABLE image_evaluate
@@ -186,7 +196,6 @@ CREATE TABLE bill_product
    --  PRIMARY KEY(id_bill, id_product)
   )
 
-  
 
 CREATE TABLE image_returned
   (
@@ -218,7 +227,6 @@ CREATE TABLE cart
      id          INT IDENTITY(1, 1) PRIMARY KEY,
      id_users	INT REFERENCES users(id) not null,
      code        NVARCHAR(30),
-     date_update DATETIME,
   )
 
 -- giỏ hàng chi tiết
@@ -228,11 +236,10 @@ CREATE TABLE cart_product
      product_id  INT REFERENCES product_detail(id),
      quantity    INT not null,
      note        NVARCHAR(max),
-     create_date DATETIME,
-	 date_update DATETIME
      PRIMARY KEY(cart_id, product_id)
   )
 GO
+
 
 insert into users(username, password,gender,roles,status,phone_number,email)
 values('PDO','$2a$10$qHWKLl/DjkAuZaVcqOML4OsFYzLMPcD70E1xh9DA30K7takJbMRXO',0,'ADMIN',1,'0978973','oanh')
@@ -325,6 +332,16 @@ INSERT INTO [dbo].[bill_status]
            ,N'Đã nhận lại được sản phẩm bị yêu cầu trả hàng')
 GO
 
+
+INSERT INTO [dbo].[bill_status]
+           ([code]
+           ,[status]
+           ,[description])
+     VALUES
+           ('RN'
+           ,N'Hoàn trả hàng'
+           ,N'Hoàn trả hàng khi khách không nhận hàng')
+GO
 INSERT INTO [dbo].[payment_method]
            ([code]
            ,[payment_method]
@@ -352,4 +369,6 @@ GO
 insert into group_product values('Tivi')
 insert into group_product values(N'Phụ kiện')
 
-		
+insert into Brand values(N'Samsung',1)
+insert into Brand values(N'Sony',1)
+insert into Brand values(N'LG',1)

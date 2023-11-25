@@ -6,6 +6,7 @@ import com.poly.entity.ProductDetail;
 import com.poly.entity.Users;
 import com.poly.repository.CartProductRepos;
 import com.poly.repository.CartRepos;
+import com.poly.repository.ProductDetailRepo;
 import com.poly.service.CartService;
 import com.poly.service.CustomerService;
 import com.poly.service.ProductDetailService;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +25,8 @@ public class CartSeviceImpl implements CartService {
     CartRepos cartRepos;
     @Autowired
     CartProductRepos cartProductRepos;
+    @Autowired
+    ProductDetailRepo productDetailRepo;
     @Autowired
     ProductServiceImpl productService;
     @Autowired
@@ -65,7 +67,7 @@ public class CartSeviceImpl implements CartService {
         ProductDetail product = productDetailService.findById(id);
         if (product != null) {
             items.add(
-                    new CartProduct(product, cart, qty, null, new Date(), cart.getDateUpdate())
+                    new CartProduct(product, cart, qty, null)
             );
         }
         return items;

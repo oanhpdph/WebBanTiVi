@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SearchStaffDto {
 
-    public String key = "";
-
+    private String key = "";
+    private String role = "";
 }

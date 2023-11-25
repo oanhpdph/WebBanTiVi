@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -47,17 +48,29 @@ public class ProductDetailUserController {
     private CheckLogin checkLogin;
 
     @GetMapping("/product/detail/{id}")
-    public String edit(@PathVariable Integer id, Model model) {
+    public String edit(@PathVariable Integer id, Model model, HttpSession session) {
         ProductDetail product = productDetailService.findById(id);
         model.addAttribute("product", product);
         model.addAttribute("productAll", product.getProduct());
         BigDecimal reduceMoney = BigDecimal.valueOf(0);
-        if (product.getCoupon() != null && product.getCoupon().isActive()) {
+        if (product.getCoupon() != null && product.getCoupon().isActive() && (LocalDate.now().isAfter(product.getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(product.getCoupon().getDateEnd().toLocalDate()))) {
             reduceMoney = product.getPriceExport().subtract(product.getPriceExport().multiply(BigDecimal.valueOf(Double.parseDouble(product.getCoupon().getValue())).divide(new BigDecimal(100))));
         }
         model.addAttribute("reduceMoney", reduceMoney);
         session.setAttribute("pageView", "/user/page/product/detail.html");
         model.addAttribute("listPro", this.productDetailService.findAll());
+        UserDetailDto userDetailDto = checkLogin.checkLogin();
+        List<Evaluate> evaluates = product.getProduct().getListEvaluate();
+        if (userDetailDto != null) {
+            for (Evaluate evaluate : evaluates) {
+                if (evaluate.getCustomer().getId() == userDetailDto.getId()) {
+                    model.addAttribute("hasEvaluate", true);
+                } else {
+                    model.addAttribute("hasEvaluate", false);
+                }
+            }
+        }
+        model.addAttribute("evaluate", evaluates.stream().filter(evaluate -> evaluate.isActive() == true).toList());
         return "user/index";
     }
 

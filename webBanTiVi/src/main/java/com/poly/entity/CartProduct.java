@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Entity
 @Table(name = "cart_product")
 @Getter
@@ -33,12 +31,5 @@ public class CartProduct {
     @Column(name = "note")
     private String note;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date")
-    private Date createDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_update")
-    private Date dateUpdate;
 
 }

@@ -159,6 +159,7 @@ $.each(document.getElementsByClassName("update-active-product"), function (index
                         confirmButtonColor: "#3085d6",
                         cancelButtonColor: "#d33",
                         confirmButtonText: "Xác nhận!",
+                        cancelButtonText:"Hủy"
                     }).then((result) => {
                         if (result.isConfirmed) {
                             var productDetailList = []
@@ -224,6 +225,7 @@ $.each(document.getElementsByClassName("update-active-product"), function (index
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Xác nhận!",
+            cancelButtonText:"Hủy"
         }).then((result) => {
             if (result.isConfirmed) {
                 var data = {
@@ -261,6 +263,7 @@ $.each(document.getElementsByClassName("active-product-detail"), function (index
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Xác nhận!",
+                cancelButtonText:"Hủy"
             }).then((result) => {
                 if (result.isConfirmed) {
                     var data = []
@@ -296,9 +299,6 @@ $.each(document.getElementsByClassName("active-product-detail"), function (index
                     item.checked = !item.checked
                 }
             })
-            // } else {
-            //
-            // }
         }
     )
 })
@@ -319,25 +319,27 @@ $.each(document.getElementsByClassName("edit-product"), function (index, item) {
                 var table = document.querySelector("#table-detail-modal tbody")
                 $("#table-detail-modal tbody").empty()
                 $.each(data.productFieldValues, function (index, item) {
-                    var row = document.createElement("tr")
-                    var cell1 = document.createElement("td")
-                    var nameAttri = document.createElement("span")
-                    nameAttri.innerText = item.field.name
-                    cell1.appendChild(nameAttri)
+                        if (item.field.active == true) {
+                            var row = document.createElement("tr")
+                            var cell1 = document.createElement("td")
+                            var nameAttri = document.createElement("span")
+                            nameAttri.innerText = item.field.name
+                            cell1.appendChild(nameAttri)
 
-                    var cell2 = document.createElement("td")
-                    var value = document.createElement("span")
-                    value.className = "span-value-attri"
-                    // value.disabled = true
-                    value.innerText = item.value
-                    value.setAttribute('value', item.field.id)
-                    cell2.appendChild(value)
+                            var cell2 = document.createElement("td")
+                            var value = document.createElement("span")
+                            value.className = "span-value-attri"
+                            // value.disabled = true
+                            value.innerText = item.value
+                            value.setAttribute('value', item.field.id)
+                            cell2.appendChild(value)
 
-                    row.appendChild(cell1)
-                    row.appendChild(cell2)
-                    table.appendChild(row)
-
-                })
+                            row.appendChild(cell1)
+                            row.appendChild(cell2)
+                            table.appendChild(row)
+                        }
+                    }
+                )
                 $("#save").on("click", function () {
                     var data = {}
                     data.product = []
@@ -375,6 +377,7 @@ $.each(document.getElementsByClassName("edit-product"), function (index, item) {
                         }
                     })
                 })
+
             }
         })
     })
@@ -406,7 +409,7 @@ $.each($(".view-product"), function (index, item) {
                     $("#image").empty()
                     $.each(data.listImage, function (index, item) {
                         var img = $('<img>', {
-                            class: 'w-25 image-preview cursor-pointer',
+                            class: 'w-25 image-preview cursor-pointer m-2',
                             src: '/image/product/' + item.link,
                             alt: 'Lỗi hình ảnh',
                         });
@@ -463,10 +466,12 @@ $.each($(".view-product"), function (index, item) {
 
                     var formattedDate = date.toISOString().slice(0, 16);
                     $("#date-create").text('Ngày tạo: ' + formattedDate)
+                    $("#active").attr('checked', false)
+                    $("#inactive").attr('checked', false)
                     if (data.active) {
-                        $("#active").attr('checked', 'checked')
+                        $("#active").attr('checked', true)
                     } else {
-                        $("#inactive").attr('checked', 'checked')
+                        $("#inactive").attr('checked', true)
                     }
                 }
             })
@@ -482,6 +487,7 @@ $("#save-product-detail").on('click', function () {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Xác nhận!",
+        cancelButtonText: "Hủy"
     }).then((result) => {
         if (result.isConfirmed) {
             var data = {}

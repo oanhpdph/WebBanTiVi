@@ -21,6 +21,6 @@ public interface ProductService {
 
     Product update(Integer id,ProductDetailDto product);
 
-    List<Product> findSameProduct(String same);
+//    List<Product> findSameProduct(String same);
 
 }

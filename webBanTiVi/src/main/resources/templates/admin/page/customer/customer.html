@@ -1,4 +1,4 @@
-<h4 class="fw-semibold py-3 mb-4"> Danh sách khách hàng </h4>
+<h4 class="fw-semibold py-3 mb-4"> Danh sách tài khoản </h4>
 <html xmlns:th="http://www.thymeleaf.org">
 <div class="mb-4">
     <div class="row justify-content-end me-4">
@@ -116,19 +116,40 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                Reset
+                                Đặt lại
                             </button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </form>
 </div>
 
 <div class="card mb-3 ">
     <div class="card-header">
-        <form class="col-12 mt-2" th:action="@{/admin/customer/list}" method="get" th:object="${searchCustomer}">
+        <form class="col-12 mt-2" th:action="@{/admin/customer/list}" id="form-user" method="get"
+              th:object="${searchCustomer}">
+            <input hidden th:field="*{role}" id="role">
+            <ul class="nav nav-tabs nav-fill mb-4 fs-5" role="tablist">
+                <li class="nav-item">
+                    <button type="button" th:class="|nav-link *{role!='USER'? 'active':''}|" role="tab"
+                            data-bs-toggle="tab" id="staff">
+                        Nhân viên
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger"
+                              th:text="${countStaff}"></span>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button type="button" th:class="|nav-link *{role=='USER'?'active':''}|" role="tab"
+                            data-bs-toggle="tab" id="customer">
+                        Khách hàng
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger"
+                              th:text="${countUser}"></span>
+                    </button>
+                </li>
+            </ul>
             <div class="col-12 row">
                 <div class="col-7">
                     <div class="form-check input-group input-group-merge">
@@ -136,13 +157,13 @@
                         <i class="bx bx-search"></i>
                     </span>
                         <input type="text" class="form-control" placeholder="Tìm tên, sđt" name="keywords"
-                               th:name="key" id="key" th:field="*{key}" autocomplete="off">
+                               id="key" th:name="key" autocomplete="off">
                         <button class="btn btn-primary" type="submit">Tìm kiếm</button>
                     </div>
                 </div>
                 <div class="col-1">
                     <button class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-offset="0,4"
-                            data-bs-placement="bottom" data-bs-html="true" title=""
+                            data-bs-placement="bottom" data-bs-html="true" title="" type="reset"
                             data-bs-original-title="<span>Reset filter</span>" aria-describedby="tooltip91262">
                         <i class='bx bx-reset'></i>
                     </button>
@@ -151,29 +172,16 @@
         </form>
     </div>
     <div class="card-body">
-
-        <div class=" text-end">
-            <div class="btn-group" role="group" aria-label="First group">
-                <button type="button" class="btn btn-outline-secondary">Excel
-                </button>
-                <button type="button" class="btn btn-outline-secondary">PDF
-                </button>
-                <button type="button" class="btn btn-outline-secondary">In</button>
-            </div>
-        </div>
-
         <hr>
         <div class="table-responsive text-nowrap">
             <table class="table table-hover">
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Tên đăng nhập</th>
                     <th>Họ tên</th>
                     <th>Địa Chỉ</th>
                     <th>SĐT</th>
                     <th>Email</th>
-                    <th>Giới tính</th>
                     <th>Trạng thái</th>
                     <th></th>
                 </tr>
@@ -181,11 +189,9 @@
                 <tbody class="table-border-bottom-0">
                 <tr th:each="customer,Stat : ${session.list.content}">
                     <td th:text="${Stat.index+1}"></td>
-                    <td th:text="${customer.username}"></td>
                     <td>
                         <span th:class="${customer.name== null?'badge bg-label-primary': ''}"
                               th:text="${customer.name== null?'Trống': customer.name}"></span>
-
                     </td>
                     <td>
                         <span th:class="${customer.address== null?'badge bg-label-primary': ''}"
@@ -196,9 +202,7 @@
                               th:text="${customer.phoneNumber == null?'Trống': customer.phoneNumber}"></span>
                     </td>
                     <td th:text="${customer.email}"></td>
-                    <td>
-                        <span th:text="${customer.gender} == true?'Nam':'Nữ'"/>
-                    </td>
+
                     <td>
                         <span th:text="${customer.status} == true?'Hoạt động':'Khóa'"/>
                     </td>
@@ -238,7 +242,7 @@
                                                 </div>
                                                 <div class="row mb-3 col-lg-8 col-xl-9">
                                                     <div class="col-sm-4 p-3">
-                                                        <label class="form-label">Họ tên:</label>
+                                                        <label class="form-label">Tên đăng nhập:</label>
                                                         <input type="text" class="form-control" th:name="username"
                                                                th:value="${customer.username}">
                                                     </div>
@@ -354,21 +358,21 @@
                                                 <div class="w-auto">
                                                     <button type="reset"
                                                             class="btn btn-primary btn-control">
-                                                        Reset
+                                                        Đặt lại
                                                     </button>
                                                 </div>
                                                 <div class="w-auto">
                                                     <button type="submit"
                                                             class="btn btn-primary btn-control"
                                                             onclick="return confirm('Xác nhận cập nhật')">
-                                                        Update
+                                                        Cập nhật
                                                     </button>
                                                 </div>
                                                 <div class="w-auto">
                                                     <a th:href="@{/admin/customer/delete/{id}(id=${customer.id})}">
                                                         <button type="button"
                                                                 class="btn btn-primary btn-control delete">
-                                                            Delete
+                                                            Xóa
                                                         </button>
                                                     </a>
                                                 </div>
@@ -391,51 +395,40 @@
         </div>
         <hr class="card-separator">
     </div>
-</div>
-<div class="card-footer">
-
-    <div class="d-inline-flex float-end">
-        <div class="mx-3 row" style="width: 180px; color: black">
-            <label for="select-view" class="col-form-label col-5 text-end">View:</label>
-            <div class="col-7">
-                <select class="form-select text-start" id="select-view">
-                    <option>10</option>
-                    <option>20</option>
-                    <option>40</option>
-                    <option>80</option>
-                </select>
+    <div class="card-footer">
+        <div class="d-inline-flex float-end">
+            <div aria-label="Page pagination">
+                <ul class="pagination">
+                    <li class="page-item first">
+                        <a class="page-link" th:href="@{'/admin/customer/list?page=1&size='+${session.size}}"><i
+                                class="tf-icon bx bx-chevrons-left"></i></a>
+                    </li>
+                    <li class="page-item prev">
+                        <a class="page-link"
+                           th:href="@{'/admin/customer/list?page='+${session.page==1? '1': session.page - 1}+'&size='+${session.size}}"><i
+                                class="tf-icon bx bx-chevron-left"></i></a>
+                    </li>
+                    <li class="page-item" th:each="pagination:${#numbers.sequence(1,session.list.totalPages)}">
+                        <a class="page-link"
+                           th:href="@{'/admin/customer/list?page='+${pagination}+'&size='+${session.size}}"
+                           th:text="${pagination}"></a>
+                    </li>
+                    <li class="page-item next">
+                        <a class="page-link"
+                           th:href="@{'/admin/customer/list?page='+${session.page < session.list.totalPages ? session.page + 1 : session.list.totalPages }+'&size='+${session.size}}"><i
+                                class="tf-icon bx bx-chevron-right"></i></a>
+                    </li>
+                    <li class="page-item last">
+                        <a class="page-link"
+                           th:href="@{'/admin/customer/list?page='+${session.list.totalPages}+'&size='+${session.size}}"><i
+                                class="tf-icon bx bx-chevrons-right"></i></a>
+                    </li>
+                </ul>
             </div>
-        </div>
-        <div aria-label="Page pagination">
-            <ul class="pagination">
-                <li class="page-item first">
-                    <a class="page-link" th:href="@{'/admin/customer/list?page=1&size='+${session.size}}"><i
-                            class="tf-icon bx bx-chevrons-left"></i></a>
-                </li>
-                <li class="page-item prev">
-                    <a class="page-link"
-                       th:href="@{'/admin/customer/list?page='+${session.page==1? '1': session.page - 1}+'&size='+${session.size}}"><i
-                            class="tf-icon bx bx-chevron-left"></i></a>
-                </li>
-                <li class="page-item" th:each="pagination:${#numbers.sequence(1,session.list.totalPages)}">
-                    <a class="page-link"
-                       th:href="@{'/admin/customer/list?page='+${pagination}+'&size='+${session.size}}"
-                       th:text="${pagination}"></a>
-                </li>
-                <li class="page-item next">
-                    <a class="page-link"
-                       th:href="@{'/admin/customer/list?page='+${session.page < session.list.totalPages ? session.page + 1 : session.list.totalPages }+'&size='+${session.size}}"><i
-                            class="tf-icon bx bx-chevron-right"></i></a>
-                </li>
-                <li class="page-item last">
-                    <a class="page-link"
-                       th:href="@{'/admin/customer/list?page='+${session.list.totalPages}+'&size='+${session.size}}"><i
-                            class="tf-icon bx bx-chevrons-right"></i></a>
-                </li>
-            </ul>
         </div>
     </div>
 </div>
+
 <script>
     const fileInputs = document.getElementsByClassName('file-input');
     const imagePreviews = document.getElementsByClassName('image-preview');
@@ -454,34 +447,44 @@
                     // Tạo đường dẫn URL cho hình ảnh và hiển thị nó
                     const imageURL = URL.createObjectURL(file);
                     imagePreview.src = imageURL;
-
                 } else {
                     alert('Vui lòng chọn một tệp hình ảnh.');
                     fileInput.value = ''; // Đặt lại trường nhập
                 }
+            } else {
+                imagePreview.src = '/image/product/anhdefault.jpg';
             }
         });
     }
     $.each(document.getElementsByClassName("delete"), function (index, item) {
         item.addEventListener("click", function () {
             Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                title: "Xác nhận xóa?",
+                text: "Sau khi xóa không thể khôi phục!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!"
+                confirmButtonText: "Xác nhận!",
+                cancelButtonText: "Hủy"
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire({
-                        title: "Deleted!",
-                        text: "Your file has been deleted.",
+                        title: "Xóa!",
+                        text: "Đã xóa",
                         icon: "success"
                     });
                 }
             });
         })
+    })
+    $("#staff").on('click', function () {
+        $("#role").val('STAFF')
+        $("#form-user").submit()
+    })
+    $("#customer").on('click', function () {
+        $("#role").val('USER')
+        $("#form-user").submit()
     })
 </script>
 

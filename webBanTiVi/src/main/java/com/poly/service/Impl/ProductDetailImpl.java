@@ -1,11 +1,11 @@
 package com.poly.service.Impl;
 
-import com.poly.common.RandomNumber;
 import com.poly.dto.Attribute;
 import com.poly.dto.ImageDto;
 import com.poly.dto.ProductDetailDto;
 import com.poly.dto.ProductDetailListDto;
 import com.poly.entity.*;
+import com.poly.repository.FieldRepo;
 import com.poly.repository.ProductDetailRepo;
 import com.poly.service.*;
 import jakarta.persistence.EntityManager;
@@ -38,13 +38,16 @@ public class ProductDetailImpl implements ProductDetailService {
     private ImageService imageService;
 
     @Autowired
+    private BrandService brandService;
+
+    @Autowired
     private ProductFieldValueService productFieldValueService;
 
     @Autowired
     private ProductDetailFieldService productDetailFieldService;
 
     @Autowired
-    private FieldService fieldService;
+    private FieldRepo fieldService;
 
     @Autowired
     private GroupProductService groupProductService;
@@ -56,7 +59,6 @@ public class ProductDetailImpl implements ProductDetailService {
         productDetailRepo.addProductDiscount(coupon, id);
     }
 
-    ;
 
     public List<ProductDetail> findBySku(String keyword) {
         return productDetailRepo.findbySku(keyword);
@@ -64,25 +66,11 @@ public class ProductDetailImpl implements ProductDetailService {
 
     @Override
     public Product saveList(ProductDetailDto dto) {
-        String sameProduct = "";
-        if (dto.getSameProduct() == null) {
-            do {
-                sameProduct = "PR" + RandomNumber.generateRandomString(5);
-            }
-            while (!productService.findSameProduct(sameProduct).isEmpty());
-        } else if (dto.getSameProduct() != null && productService.findSameProduct(dto.getSameProduct()).isEmpty()) {
-            do {
-                sameProduct = "PR" + RandomNumber.generateRandomString(5);
-            }
-            while (!productService.findSameProduct(sameProduct).isEmpty());
-        } else if (dto.getSameProduct() != null && !productService.findSameProduct(dto.getSameProduct()).isEmpty()) {
-            sameProduct = dto.getSameProduct();
-        }
         Product product = new Product();
         product.setGroupProduct(groupProductService.findById(dto.getGroup()));
         product.setNameProduct(dto.getNameProduct());
         product.setSku(dto.getSku());
-        product.setSame(sameProduct);
+        product.setBrand(brandService.findById(dto.getBrand()));
         if (!dto.getListProduct().isEmpty()) {
             product.setActive(true);
         } else {
@@ -93,7 +81,7 @@ public class ProductDetailImpl implements ProductDetailService {
         productService.save(product);
         for (int i = 0; i < dto.getProduct().size(); i++) {
             ProductFieldValue productFieldValue = new ProductFieldValue();
-            productFieldValue.setField(fieldService.findById(dto.getProduct().get(i).getId()));
+            productFieldValue.setField(fieldService.findById(dto.getProduct().get(i).getId()).get());
             productFieldValue.setValue(dto.getProduct().get(i).getValue());
             productFieldValue.setProduct(product);
             productFieldValueService.save(productFieldValue);
@@ -112,7 +100,7 @@ public class ProductDetailImpl implements ProductDetailService {
 
             for (Attribute attribute : productFieldValue.getListAttributes()) {
                 ProductDetailField productDetailField = new ProductDetailField();
-                productDetailField.setField(fieldService.findById(attribute.getId()));
+                productDetailField.setField(fieldService.findById(attribute.getId()).get());
                 productDetailField.setProductDetail(productDetail);
                 productDetailField.setValue(attribute.getValue());
                 productDetailFieldService.save(productDetailField);
@@ -157,10 +145,6 @@ public class ProductDetailImpl implements ProductDetailService {
 
         List<ProductDetail> result = entityManager.createQuery(productCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
         List<ProductDetail> result2 = entityManager.createQuery(productCriteriaQuery).getResultList();
-//        if (pageable.getPageSize() == 1) {
-//            pageable = PageRequest.of(0, result2.size());
-//            result = entityManager.createQuery(productCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
-//        }
 
         Page<ProductDetail> page = new PageImpl<>(result, pageable, result2.size());
         return page;

@@ -1,54 +1,81 @@
+<html xmlns:th="http://www.thymeleaf.org">
 <div class="content-wrapper">
     <!-- Content -->
-
-    <div class="container-xxl flex-grow-1 container-p-y">
-        <div class="row">
-            <div class="col-lg-2 mb-4 order-0"></div>
-            <div class="col-lg-8 mb-4 order-0">
-                <div class="card">
-                    <div class="d-flex align-items-end row">
-                        <div class="card-header">
-                            <div class="col-md-12 col-xl-12">
-                                <div class="card bg-primary  text-white mb-3">
-                                    <div class="card-body">
-                                        <i class='bx bxs-party' style='color:#15f30c'></i>
-                                        <h5 class="card-title text-white" style="color: black; text-align: center">ĐẶT
-                                            HÀNG
-                                            THÀNH
-                                            CÔNG</h5>
+    <form th:action="@{/confirm}" method="get" th:object="${session.listBill}">
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="row">
+                <div class="col-lg-2 mb-4 order-0"></div>
+                <div class="col-lg-8 mb-4 order-0">
+                    <div class="card">
+                        <div class="d-flex align-items-end row">
+                            <div class="card-header">
+                                <div class="col-md-12 col-xl-12">
+                                    <div class="card bg-primary text-white mb-3">
+                                        <div class="card-body">
+                                            <i class="bx bxs-party" style="color: #15f30c"></i>
+                                            <h5
+                                                    class="card-title text-white"
+                                                    style="color: black; text-align: center"
+                                            >
+                                                ĐẶT HÀNG THÀNH CÔNG
+                                            </h5>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <span>Cảm Ơn Quý Khách Đã Đặt Hàng Của Big6 Store</span>
-                            <div class="col-md-12 col-xl-12" th:each="cus: ${listCus}">
-                                <div class="card bg-secondary text-white mb-3">
-                                    <div class="card-header" th:each="id: ${cus.listBill}">ĐƠN HÀNG: <span
-                                            th:text="${id.code}"></span></div>
-                                    <div class="card-body">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <span class="text-center">Cảm Ơn Quý Khách Đã Đặt Hàng Của Big6 Store</span>
+                                </div>
+                                <div class="col-md-12 col-xl-12">
+                                    <div class="card shadow-none bg-transparent border border-primary mb-3">
+                                        <div class="card-header">
+                                            <span class="text-center">Thông tin hóa đơn</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <b>ĐƠN HÀNG: </b><span th:text="*{code}"></span>
+                                        </div>
+                                        <div class="card-body">
+                    <span>
+                      <b>Tổng Tiền: </b>
+                      <p th:text="*{totalPrice}"></p
+                      ></span>
+
+                                            <br/>
                                             <span>
-                                                <b>Người nhận hàng: </b><p th:text="${cus.username}"></p>,
-                                                <p th:text="${cus.phoneNumber}"></p>, <p th:text="${cus.email}"></p>
-                                            </span>
-                                        <br>
-                                        <span>
-                                                <b>Giao: </b> <p th:text="${cus.address}"></p>
-                                        </span>
-                                        <br>
-                                        <span>
-                                                <b>Tổng tiền: 1000000 </b>
-                                        </span>
+                      <b>Phương Thức Thanh Toán: </b>
+                      <p th:text="*{paymentMethod.paymentMethod}"></p
+                      ></span>
+
+                                            <br/>
+                                            <span>
+                      <b>Trạng Thái Thanh Toán: </b>
+                      <p th:text="*{paymentStatus}"></p
+                      ></span>
+
+                                            <br/>
+                                            <span>
+                      <b>Voucher: </b>
+                      <p th:text="*{voucherValue}"></p
+                      ></span>
+
+                                            <br/>
+                                            <!--                                            <span>-->
+                                            <!--                                                                  <b>Sản Phẩm: </b>-->
+                                            <!--                                                                  <p th:text="*{billProducts.product}"></p>-->
+                                            <!--                                                                </span>-->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-2 mb-4 order-0"></div>
             </div>
-            <div class="col-lg-2 mb-4 order-0"></div>
         </div>
-    </div>
-    <!-- / Content -->
-    <div class="content-backdrop fade"></div>
+        <!-- / Content -->
+        <div class="content-backdrop fade"></div>
+    </form>
 </div>
+</html>

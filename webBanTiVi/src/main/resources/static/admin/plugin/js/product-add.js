@@ -3,36 +3,13 @@ $(document).ready(function () {
     loadDataField()
     loadDataGroup()
     loadVariant()
+    loadDataBrand()
     // getProduct()
 })
-// $("#select-group").change(function () {
-//     loadDataType()
-// })
 $("#select-type").change(function () {
     changeTableProductDetail()
 })
 
-// document.getElementById("sameProduct").addEventListener("keyup", function (e) {
-//     var sameCode = this.value
-//     $.ajax({
-//         url: "/product/same-product?same-code=" + sameCode,
-//         method: "get",
-//         success: function (data) {
-//             console.log(data)
-//         }
-//     })
-// })
-// document.getElementById("sameProduct").addEventListener("paste", function (e) {
-//     const clipboardData = e.clipboardData || window.clipboardData;
-//     const sameCode = clipboardData.getData('text');
-//     $.ajax({
-//         url: "/product/same-product?same-code=" + sameCode,
-//         method: "get",
-//         success: function (data) {
-//             console.log(data)
-//         }
-//     })
-// })
 
 function loadDataField() {
     $.ajax({
@@ -41,6 +18,7 @@ function loadDataField() {
         success: function (data) {
             // var dataTable = $('#tableAttributes tbody');
             $("#tableAttributes tbody").empty()
+            console.log(data)
             $.each(data, function (index, item) {
                 if (item.variant == false) {
                     var button = document.createElement('button');
@@ -117,32 +95,6 @@ function loadVariant() {
     })
 }
 
-// function loadDataType() {
-//     let value = $("#select-group").val()
-//     $.ajax({
-//         url: "/type/all?group=" + value,
-//         method: "get",
-//         success: function (data) {
-//             var select = $('#select-type');
-//             select.empty();
-//             select.append($('<option>', {
-//                 disabled: true,
-//                 selected: true,
-//                 hidden: true,
-//                 value: -1,
-//                 text: "--Chưa chọn--"
-//             }))
-//             $.each(data, function (index, item) {
-//                 select.append($('<option>', {
-//                     value: item.id,
-//                     text: item.nameType
-//                 }));
-//             });
-//         },
-//     })
-//
-// }
-
 function loadDataGroup() {
     $.ajax({
         url: "/group/all",
@@ -160,6 +112,29 @@ function loadDataGroup() {
     })
 }
 
+function loadDataBrand() {
+    $.ajax({
+        url: "/api/brand/all",
+        method: "get",
+        success: function (data) {
+            var select = $('#select-brand');
+            select.empty();
+            select.append($('<option>', {
+                value: -1,
+                text: 'Chưa chọn'
+            }));
+            $.each(data, function (index, item) {
+
+                if (item.active == true) {
+                    select.append($('<option>', {
+                        value: item.id,
+                        text: item.name
+                    }));
+                }
+            });
+        },
+    })
+}
 
 function clickImage() {
     if (this) {
@@ -200,116 +175,221 @@ function onchangeImage() {
 }
 
 function saveProduct() {
-    document.getElementById("save-product").removeEventListener("click", clickSave)
-    document.getElementById("save-product").addEventListener("click", clickSave)
-}
+    $("#save-product").unbind()
 
-function clickSave() {
-    var valueReturn = validate()
-    if (valueReturn === false) {
-        return
-    }
-    var sku = document.getElementsByClassName("sku")
-    var priceImport = document.getElementsByClassName("priceImport")
-    var priceExport = document.getElementsByClassName("priceExport")
-    var quantity = document.getElementsByClassName("quantity")
-    var checkActive = document.getElementsByClassName("check-active")
+    $("#save-product").on("click", function clickSave() {
+        var valueReturn = validate()
+        if (valueReturn === false) {
+            return
+        }
+        var sku = document.getElementsByClassName("sku")
+        var priceImport = document.getElementsByClassName("priceImport")
+        var priceExport = document.getElementsByClassName("priceExport")
+        var quantity = document.getElementsByClassName("quantity")
+        var checkActive = document.getElementsByClassName("check-active")
 
-    var data = {}
-    data.listProduct = []
-    data.product = []
-    console.log(document.getElementById("table-product-detail").rows)
+        var data = {}
+        data.listProduct = []
+        data.product = []
+        console.log(document.getElementById("table-product-detail").rows)
 
-    // set ảnh
+        // set ảnh
 
-    $.each(checkActive, function (index, item) {
-        var value = item.getAttribute("value")
-        var image = "imageUpload" + value
-        var arrImage = []
-        var listImage = document.getElementsByClassName(image)
-        $.each(listImage, function (index, item) {
-            // Lấy tệp từ trường chọn tệp
-            var imageItem;
-            var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
+        $.each(checkActive, function (index, item) {
+            var value = item.getAttribute("value")
+            var image = "imageUpload" + value
+            var arrImage = []
+            var listImage = document.getElementsByClassName(image)
+            $.each(listImage, function (index, item) {
+                // Lấy tệp từ trường chọn tệp
+                var imageItem;
+                var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
 // Trích xuất tên tệp từ đường dẫn
-            var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
-            if (lastIndex >= 0) {
-                fileName = fileName.substr(lastIndex + 1);
-            }
+                var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
+                if (lastIndex >= 0) {
+                    fileName = fileName.substr(lastIndex + 1);
+                }
 
-            if (item.classList.contains("true")) {
-                imageItem = {
-                    location: "true",
-                    multipartFile: fileName
+                if (item.classList.contains("true")) {
+                    imageItem = {
+                        location: "true",
+                        multipartFile: fileName
+                    }
+                } else {
+                    imageItem = {
+                        location: "false",
+                        multipartFile: fileName
+                    }
                 }
-            } else {
-                imageItem = {
-                    location: "false",
-                    multipartFile: fileName
-                }
+                arrImage.push(imageItem)
+            })
+            console.log(sku[index])
+            var temp = {
+                sku: sku[index].value,
+                priceImport: priceImport[index].value,
+                priceExport: priceExport[index].value,
+                quantity: quantity[index].value,
+                image: arrImage,
+                listAttributes: dataProductDetail.listAttributes[index],
+                active: checkActive[index].checked
             }
-            arrImage.push(imageItem)
+            data.listProduct.push(temp)
+            data.nameProduct = document.getElementById("name-display").value
+            data.sku = document.getElementById("sku-code").value
+            data.brand = $("#select-brand").val()
+            data.group = document.getElementById("select-group").value
         })
-        console.log(sku[index])
-        var temp = {
-            sku: sku[index].value,
-            priceImport: priceImport[index].value,
-            priceExport: priceExport[index].value,
-            quantity: quantity[index].value,
-            image: arrImage,
-            listAttributes: dataProductDetail.listAttributes[index],
-            active: checkActive[index].checked
-        }
-        data.listProduct.push(temp)
-        data.nameProduct = document.getElementById("name-display").value
-        data.sameProduct = document.getElementById("sameProduct").value
-        data.sku = document.getElementById("sku-code").value
-        data.group = document.getElementById("select-group").value
-    })
-    var inputAttributes = document.querySelectorAll(".input-data.data-attributes")
-    $.each(inputAttributes, function (index, item) {
-        // var arr = []
-        var allTag = document.querySelector("." + item.id)
-        data.product.push({
-            id: item.id.substring(2),
-            value: allTag.textContent,
+        var inputAttributes = document.querySelectorAll(".input-data.data-attributes")
+        $.each(inputAttributes, function (index, item) {
+            // var arr = []
+            var allTag = document.querySelector("." + item.id)
+            if (allTag) {
+                data.product.push({
+                    id: item.id.substring(2),
+                    value: allTag.textContent,
+                })
+            }
         })
-    })
-    console.log(data)
-    uploadImage()
-    $.ajax({
-        url: "/product/save-product",
-        method: "post",
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        success: function () {
-            $("#table-product-detail tbody").empty()
-            clear()
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
-                }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "Thêm sản phẩm thành công"
-            });
-        }
+        console.log(data)
+        uploadImage()
+        // $.ajax({
+        //     url: "/product/save-product",
+        //     method: "post",
+        //     data: JSON.stringify(data),
+        //     contentType: "application/json",
+        //     success: function () {
+        //         $("#table-product-detail tbody").empty()
+        //         clear()
+        //         const Toast = Swal.mixin({
+        //             toast: true,
+        //             position: "top-end",
+        //             showConfirmButton: false,
+        //             timer: 3000,
+        //             timerProgressBar: true,
+        //             didOpen: (toast) => {
+        //                 toast.onmouseenter = Swal.stopTimer;
+        //                 toast.onmouseleave = Swal.resumeTimer;
+        //             }
+        //         });
+        //         Toast.fire({
+        //             icon: "success",
+        //             title: "Thêm sản phẩm thành công"
+        //         });
+        //     }
+        // })
     })
 }
+
+// function clickSave() {
+//     var valueReturn = validate()
+//     if (valueReturn === false) {
+//         return
+//     }
+//     var sku = document.getElementsByClassName("sku")
+//     var priceImport = document.getElementsByClassName("priceImport")
+//     var priceExport = document.getElementsByClassName("priceExport")
+//     var quantity = document.getElementsByClassName("quantity")
+//     var checkActive = document.getElementsByClassName("check-active")
+//
+//     var data = {}
+//     data.listProduct = []
+//     data.product = []
+//     console.log(document.getElementById("table-product-detail").rows)
+//
+//     // set ảnh
+//
+//     $.each(checkActive, function (index, item) {
+//         var value = item.getAttribute("value")
+//         var image = "imageUpload" + value
+//         var arrImage = []
+//         var listImage = document.getElementsByClassName(image)
+//         $.each(listImage, function (index, item) {
+//             // Lấy tệp từ trường chọn tệp
+//             var imageItem;
+//             var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
+// // Trích xuất tên tệp từ đường dẫn
+//             var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
+//             if (lastIndex >= 0) {
+//                 fileName = fileName.substr(lastIndex + 1);
+//             }
+//
+//             if (item.classList.contains("true")) {
+//                 imageItem = {
+//                     location: "true",
+//                     multipartFile: fileName
+//                 }
+//             } else {
+//                 imageItem = {
+//                     location: "false",
+//                     multipartFile: fileName
+//                 }
+//             }
+//             arrImage.push(imageItem)
+//         })
+//         console.log(sku[index])
+//         var temp = {
+//             sku: sku[index].value,
+//             priceImport: priceImport[index].value,
+//             priceExport: priceExport[index].value,
+//             quantity: quantity[index].value,
+//             image: arrImage,
+//             listAttributes: dataProductDetail.listAttributes[index],
+//             active: checkActive[index].checked
+//         }
+//         data.listProduct.push(temp)
+//         data.nameProduct = document.getElementById("name-display").value
+//         data.sku = document.getElementById("sku-code").value
+//         data.brand = $("#select-brand").val()
+//         data.group = document.getElementById("select-group").value
+//     })
+//     var inputAttributes = document.querySelectorAll(".input-data.data-attributes")
+//     $.each(inputAttributes, function (index, item) {
+//         // var arr = []
+//         var allTag = document.querySelector("." + item.id)
+//         if (allTag) {
+//             data.product.push({
+//                 id: item.id.substring(2),
+//                 value: allTag.textContent,
+//             })
+//         }
+//     })
+//     console.log(data)
+//     uploadImage()
+//     $.ajax({
+//         url: "/product/save-product",
+//         method: "post",
+//         data: JSON.stringify(data),
+//         contentType: "application/json",
+//         success: function () {
+//             $("#table-product-detail tbody").empty()
+//             clear()
+//             const Toast = Swal.mixin({
+//                 toast: true,
+//                 position: "top-end",
+//                 showConfirmButton: false,
+//                 timer: 3000,
+//                 timerProgressBar: true,
+//                 didOpen: (toast) => {
+//                     toast.onmouseenter = Swal.stopTimer;
+//                     toast.onmouseleave = Swal.resumeTimer;
+//                 }
+//             });
+//             Toast.fire({
+//                 icon: "success",
+//                 title: "Thêm sản phẩm thành công"
+//             });
+//         }
+//     })
+// }
 
 function uploadImage() {
     var fileInput = document.getElementsByClassName('file-input');
 
     var formData = new FormData();
     $.each(fileInput, function (index, item) {
-        formData.append('images', item.files[0], item.files[0].name);
+        if (item.value != "") {
+            formData.append('images', item.files[0], item.files[0].name);
+        }
     })
 
     $.ajax({
@@ -332,7 +412,10 @@ function uploadImage() {
 // Thêm thuộc tính
 $("#submit-add-attribute").click(function () {
     var value = $("#name-attribute").val()
-    var dataPost = {name: value}
+    var dataPost = {
+        name: value,
+        active: true
+    }
     $.ajax(
         {
             url: "/field/add",
@@ -399,7 +482,8 @@ $("#submit-add-variant").click(function () {
     var value = $("#name-variant").val()
     var dataPost = {
         name: value,
-        variant: 1
+        variant: 1,
+        active: true
     }
     $.ajax(
         {
@@ -804,6 +888,7 @@ function changeTableProductDetail() {
                 input.className = "form-control " + name[i];
                 if (i === 0) {
                     input.type = "text";
+                    input.value = $("#sku-code").val() + "-" + index
                 } else {
                     input.type = "number";
                     input.value = 0
@@ -833,7 +918,7 @@ function changeTableProductDetail() {
                 listItem.setAttribute("data-bs-html", "true");
 
                 const image = document.createElement("img");
-                image.src = "/image/product/tải ảnh lên.jpg";
+                image.src = "/image/product/anhdefault.jpg";
                 image.alt = "Chưa có ảnh";
                 image.className = "image-preview";
                 image.onclick = clickImage
@@ -866,7 +951,7 @@ function changeTableProductDetail() {
             var check = document.createElement("input")
             check.className = "form-check-input larger-checkbox check-active"
             check.type = "checkbox"
-            check.checked=true
+            check.checked = true
             check.value = index
 
             activeCell.appendChild(check);
@@ -895,78 +980,97 @@ function validate() {
     var listQuantity = document.getElementsByClassName("quantity")
     var listPriceImport = document.getElementsByClassName("priceImport")
     var listPriceExport = document.getElementsByClassName("priceExport")
-
-
-    $.each(listSku, function (index, item) {
-        var parentElement = item.closest('td');
-        var span = parentElement.querySelector("span.error-sku")
-        if (item.value === "") {
-            span.textContent = "Nhập mã sku cho biến thể"
-            check.sku = false
-        } else {
-            check.sku = true
-            span.textContent = ""
-        }
-    })
-    $.each(listQuantity, function (index, item) {
-        var parentElement = item.closest('td');
-        var span = parentElement.querySelector("span.error-quantity")
-        if (item.value === "" || Number(item.value) < 0) {
-            span.textContent = "Số lượng >=0"
-            check.quantity = false
-        } else {
-            check.quantity = true
-            span.textContent = ""
-        }
-    })
-    $.each(listPriceImport, function (index, item) {
-        var parentElement = item.closest('td');
-        var span = parentElement.querySelector("span.error-priceImport")
-        if (item.value === "" || Number(item.value) < 0) {
-            span.textContent = "Giá nhập >=0 "
-            check.priceImport = false
-        } else {
-            check.priceImport = true
-            span.textContent = ""
-        }
-    })
-    $.each(listPriceExport, function (index, item) {
-        var parentElement = item.closest('td');
-        var span = parentElement.querySelector("span.error-priceExport")
-        if (item.value === "" || Number(item.value) < 0) {
-            span.textContent = "Giá bán >=0"
-            check.priceExport = false
-        } else {
-            check.priceExport = true
-            span.textContent = ""
-        }
-    })
-
     var checkActive = document.getElementsByClassName("check-active")
-
     $.each(checkActive, function (index, item) {
-        var value = item.getAttribute("value")
-        var image = "imageUpload" + value
-        var listImage = document.getElementsByClassName(image)
-        $.each(listImage, function (index, item) {
-            var parentElement = item.closest('td');
-            var span = parentElement.querySelector("span.error-image")
-            // Lấy tệp từ trường chọn tệp
-            var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
-            var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
-            if (lastIndex >= 0) {
-                fileName = fileName.substr(lastIndex + 1);
+        var parentElement;
+        var span;
+        if (item.checked) {
+            parentElement = listSku[index].closest('td');
+            span = parentElement.querySelector("span.error-sku")
+            if (listSku[index].value === "") {
+                span.textContent = "Nhập mã sku cho sản phẩm"
+                check.sku = false
+            } else {
+                check.sku = true
+                span.textContent = ""
             }
-            if (fileName === "") {
-                span.textContent = "Chọn ảnh sản phẩm"
-            }
-        })
 
-        if (check.sku === false || check.quantity === false || check.priceExport === false || check.priceImport === false) {
-            return false
+            parentElement = listQuantity[index].closest('td');
+            span = parentElement.querySelector("span.error-quantity")
+            if (listQuantity[index].value === "" || Number(item.value) < 0) {
+                span.textContent = "Số lượng >=0"
+                check.quantity = false
+            } else {
+                check.quantity = true
+                span.textContent = ""
+            }
+
+            parentElement = listPriceImport[index].closest('td');
+            span = parentElement.querySelector("span.error-priceImport")
+            if (listPriceImport[index].value === "" || Number(item.value) < 0) {
+                span.textContent = "Giá nhập >=0 "
+                check.priceImport = false
+            } else {
+                check.priceImport = true
+                span.textContent = ""
+            }
+
+            parentElement = listPriceExport[index].closest('td');
+            span = parentElement.querySelector("span.error-priceExport")
+            if (listPriceExport[index].value === "" || Number(item.value) < 0) {
+                span.textContent = "Giá bán >=0"
+                check.priceExport = false
+            } else {
+                check.priceExport = true
+                span.textContent = ""
+            }
+            var value = item.getAttribute("value")
+            var image = "imageUpload" + value
+            var listImage = document.getElementsByClassName(image)
+            $.each(listImage, function (index, item) {
+                parentElement = item.closest('td');
+                span = parentElement.querySelector("span.error-image")
+                // Lấy tệp từ trường chọn tệp
+                var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
+                var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
+                if (lastIndex >= 0) {
+                    fileName = fileName.substr(lastIndex + 1);
+                }
+                if (fileName === "") {
+                    span.textContent = "Chọn ảnh sản phẩm"
+                } else {
+                    span.textContent = ""
+                }
+            })
+        } else {
+            parentElement = listSku[index].closest('td');
+            span = parentElement.querySelector("span.error-sku")
+            span.textContent = ""
+
+            parentElement = listPriceExport[index].closest('td');
+            span = parentElement.querySelector("span.error-priceExport")
+            span.textContent = ""
+
+            parentElement = listQuantity[index].closest('td');
+            span = parentElement.querySelector("span.error-quantity")
+            span.textContent = ""
+
+            parentElement = listPriceExport[index].closest('td');
+            span = parentElement.querySelector("span.error-priceExport")
+            span.textContent = ""
+
+            var value = item.getAttribute("value")
+            var image = "imageUpload" + value
+            var listImage = document.getElementsByClassName(image)
+            parentElement = listImage[0].closest('td');
+            span = parentElement.querySelector("span.error-image")
+            span.textContent = ""
         }
-        return true;
     })
+    if (check.sku === false || check.quantity === false || check.priceExport === false || check.priceImport === false) {
+        return false
+    }
+    return true;
 }
 
 // clear form modal add product
@@ -992,6 +1096,5 @@ function clear() {
 
     document.getElementById("sku-code").value = ""
     document.getElementById("name-display").value = ""
-    document.getElementById("sameProduct").value = ""
 }
 

@@ -12,7 +12,7 @@ if (codeStatus.value != 'WP' && codeStatus.value != 'PG') {
 
 }
 
-const listInput = [deliverInput, phoneDeliverInput, addressDeliverInput, deliveryFeeInput, noteInput]
+const listInput = [addressDeliverInput, deliveryFeeInput, noteInput]
 
 function changeBtn() {
     //nút chỉnh sửa đang ẩn

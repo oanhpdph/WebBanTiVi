@@ -23,4 +23,7 @@ public class Field {
 
     @Column(name="variant")
     private boolean variant;
+
+    @Column(name="active")
+    private boolean active;
 }

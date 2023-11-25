@@ -89,13 +89,6 @@ $(".point").on("click", function () {
         }
         point = 5
     }
-    // else {
-    //     // If the class is not "original", change it back to "original"
-    //     myParagraph.classList.remove("highlight");
-    //     myParagraph.classList.add("original");
-    // }
-    // this.className = 'bx bxs-star bx-lg star1 point '
-
 })
 $("#sendEvaluate").on("click", function () {
     uploadImage()
@@ -117,7 +110,8 @@ $("#sendEvaluate").on("click", function () {
         point: point,
         comment: $("#comment").val(),
         product: $("#sendEvaluate").val(),
-        image: image
+        image: image,
+        active: true
     }
     $.ajax({
         url: "/product/evaluate/add",
@@ -140,7 +134,7 @@ $("#sendEvaluate").on("click", function () {
                 icon: "success",
                 title: "Thêm thành công"
             });
-           window.location.reload()
+            window.location.reload()
         }
     })
 })

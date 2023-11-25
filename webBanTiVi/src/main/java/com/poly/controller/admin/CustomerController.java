@@ -36,8 +36,8 @@ public class CustomerController {
     @GetMapping("/customer/list")
     public String loadStaff(HttpSession session, Model model,
                             @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageRequest,
-                            @RequestParam(name = "size", required = false, defaultValue = "2") Integer sizeRequest,
-                            @ModelAttribute(name = "searchCustomer", binding = false) SearchStaffDto search
+                            @RequestParam(name = "size", required = false, defaultValue = "10") Integer sizeRequest,
+                            @ModelAttribute(name = "searchCustomer") SearchStaffDto search
     ) {
 
         if (pageRequest < 0) {
@@ -53,6 +53,8 @@ public class CustomerController {
         Pageable pageable = PageRequest.of(pageRequest - 1, sizeRequest);
         Page<Users> staffs = customerService.loadData(search, pageable);
 
+        model.addAttribute("countStaff", customerService.loadData(new SearchStaffDto("", "STAFF"), pageable).getContent().stream().filter(users -> !users.getRoles().equals("USER")).toList().size());
+        model.addAttribute("countUser", customerService.loadData(new SearchStaffDto("", "USER"), pageable).getContent().stream().filter(users -> users.getRoles().equals("USER")).toList().size());
         model.addAttribute("totalElements", staffs.getTotalElements());
         session.setAttribute("list", staffs);
 

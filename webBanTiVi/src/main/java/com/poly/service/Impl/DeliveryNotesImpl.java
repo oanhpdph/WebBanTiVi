@@ -39,8 +39,6 @@ public class DeliveryNotesImpl implements DeliveryNotesSevice {
         if (optional.isPresent()) {
             DeliveryNotes deliveryNotesUpdate = optional.get();
             deliveryNotesUpdate.setNote(deliveryNotes.getNote());
-            deliveryNotesUpdate.setDeliver(deliveryNotes.getDeliver());
-            deliveryNotesUpdate.setDeliveryPhone(deliveryNotes.getDeliveryPhone());
             deliveryNotesUpdate.setStatus(deliveryNotesUpdate.getStatus());
             deliveryNotesUpdate.setDeliveryFee(deliveryNotes.getDeliveryFee());
             deliveryNotesUpdate.setReceivingAddress(deliveryNotes.getReceivingAddress());
@@ -71,8 +69,8 @@ public class DeliveryNotesImpl implements DeliveryNotesSevice {
         notes.setDeliveryPhone(deliveryNotes.getPhoneNumber());
         notes.setDeliveryDate(new java.util.Date());
         notes.setDeliveryFee(deliveryNotes.getDeliveryFee());
-        notes.setReceivedDate(new java.util.Date());
-        notes.setNote("kaka");
+        notes.setReceivedDate(deliveryNotes.getReceivedDate());
+        notes.setNote("");
         notes.setStatus(0);
         return this.deliveryNotesRepos.save(notes);
     }
