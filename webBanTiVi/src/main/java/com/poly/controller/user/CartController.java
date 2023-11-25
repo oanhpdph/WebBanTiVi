@@ -5,13 +5,17 @@ import com.poly.dto.BillProRes;
 import com.poly.dto.UserDetailDto;
 import com.poly.entity.*;
 import com.poly.entity.idClass.CartProductId;
+import com.poly.repository.BillRepos;
+import com.poly.repository.ProductDetailRepo;
 import com.poly.service.*;
 import com.poly.service.Impl.DeliveryNotesImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -44,6 +48,8 @@ public class CartController {
 
     @Autowired
     ProductDetailService productDetailService;
+    @Autowired
+    ProductDetailRepo productDetailRepo;
 
     @Autowired
     private CartProductService cartProductService;
@@ -105,15 +111,22 @@ public class CartController {
 
     @GetMapping("/confirm")
     public String con(Model model) {
+//        model.addAttribute("listBill", new Bill());
         session.setAttribute("pageView", "/user/page/product/confirm.html");
         return "user/index";
     }
 
 
     @PostMapping("/purchase")
-    public String addBill(HttpServletRequest request,
-                          @ModelAttribute(value = "billProduct") BillProRes billProRes) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-
+    public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes,
+                          HttpServletRequest request,
+                          Model model,
+                          Integer id,
+                          BindingResult result) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        if (result.hasErrors()) {
+            return "redirect:/pay";
+        }
+        //
         Users checkEmail = customerService.findByEmail(billProRes.getEmail());
         UserDetailDto userDetailDto = checkLogin.checkLogin();
         List<CartProduct> listCart = new ArrayList<>();
@@ -190,6 +203,19 @@ public class CartController {
             return "redirect:" + vnpayUrl;
         } else {
             billService.addBillPro(bill1, billProRes);
+            //
+            for (CartProduct item : listCart) {
+                ProductDetail product = item.getProduct();
+                int newQuantity = product.getQuantity() - item.getQuantity();
+                if (newQuantity < 0) {
+                    product.setActive(false);
+                    model.addAttribute("error", "Không đủ hàng cho sản phẩm: " + product.getProduct().getNameProduct());
+                    return "checkout";
+                }
+                product.setQuantity(newQuantity);
+                productDetailRepo.save(product);
+            }
+            // update sl
             if (userDetailDto != null) {
                 Cart cart = cartService.getOneByUser(userDetailDto.getId());
                 for (CartProduct cartProduct : cart.getListCartPro()) {
@@ -200,7 +226,7 @@ public class CartController {
                 }
                 session.setAttribute("list", null);
             }
-
+            session.setAttribute("listBill", bill1);
             cartService.clear();
             return "redirect:/confirm";
         }

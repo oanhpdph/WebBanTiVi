@@ -66,7 +66,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/OneDrive/Desktop/Documents/duanthuctap" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Desktop/Documents/duanthuctap" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -312,11 +312,9 @@
       <workItem from="1700383895832" duration="1587000" />
       <workItem from="1700386938913" duration="1075000" />
       <workItem from="1700408283036" duration="4139000" />
-      <workItem from="1700470590935" duration="43002000" />
-      <workItem from="1700716433963" duration="18449000" />
-      <workItem from="1700801047578" duration="6807000" />
-      <workItem from="1700890940962" duration="18596000" />
-      <workItem from="1700918357956" duration="4318000" />
+      <workItem from="1700470590935" duration="5304000" />
+      <workItem from="1700481147052" duration="16135000" />
+      <workItem from="1700579403982" duration="19361000" />
     </task>
     <servers />
   </component>
@@ -396,7 +394,7 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1700251615041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1699688221253" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.poly.*</FILTER>
     </SUITE>
   </component>
