@@ -110,7 +110,6 @@ CREATE TABLE voucher
      name_voucher     VARCHAR(100) not null,
      [value]          INT not null,
      minimum_value    MONEY not null,-- giá trị đơn hàng tối thiểu cần
-     maximum_discount MONEY not null,--giá trị tối đa đơn hàng giảm
      quantity         INT not null, -- số lượng voucher
 	 start_day		  DATE not null,-- thời gian bắt đầu có hiệu lực
      expiration_date  DATE not null,-- thời gian mã giảm giá hết hiệu lực

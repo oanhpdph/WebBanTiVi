@@ -64,7 +64,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../Desktop/Documents/duanthuctap" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Documents/duanthuctap" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -311,6 +311,8 @@
       <workItem from="1700408283036" duration="4139000" />
       <workItem from="1700470590935" duration="5304000" />
       <workItem from="1700481147052" duration="14414000" />
+      <workItem from="1700919075545" duration="2301000" />
+      <workItem from="1700921643021" duration="3209000" />
     </task>
     <servers />
   </component>

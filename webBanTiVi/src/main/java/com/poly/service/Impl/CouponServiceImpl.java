@@ -1,7 +1,6 @@
 package com.poly.service.Impl;
 
 
-import com.poly.dto.CouponRes;
 import com.poly.entity.Coupon;
 import com.poly.entity.ProductDetail;
 import com.poly.repository.CouponRepository;
@@ -20,11 +19,11 @@ public class CouponServiceImpl implements CouponService {
     public List<ProductDetail> getAllByIdAndKeyword(Integer id, String keyword){
     return couponRepository.getAllByIdAndKeyword(id,keyword);
     }
-    public List<CouponRes> getAllCouponRes(Date date){
-        return couponRepository.getCouponRes(date);
-    }
-    public List<Coupon> getAllByActive(){
-        return couponRepository.getAllByActive();
+//    public List<CouponRes> getAllCouponRes(Date date){
+//        return couponRepository.getCouponRes(date);
+//    }
+    public List<Coupon> getAllByActive(Date date){
+        return couponRepository.getAllByActive(date);
     }
 
     @Override
