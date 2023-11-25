@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -104,9 +105,15 @@ public class UserController {
     }
 
     @PostMapping("/search_order_user")
-    public String getSearchOder(@ModelAttribute("search") String search,HttpSession session){
-         Bill bill =  this.billService.findByCode(search);
-         session.setAttribute("bill",bill);
+    public String getSearchOder(@ModelAttribute("search") String search,HttpSession session,Model model){
+         Optional<Bill> bill =  this.billService.findByCode(search);
+         if(bill.isEmpty()){
+             model.addAttribute("errorSearch","Xin lỗi! Đơn hàng bạn tìm không tồn tại trên hệ thống!");
+             return "/user/index";
+         }
+         Date today = new Date();
+         session.setAttribute("today",today);
+         session.setAttribute("bill",bill.get());
          session.setAttribute("bool",this.billService.checkBillNoLogin(search));
         return "redirect:/search_order";
     }

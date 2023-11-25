@@ -72,6 +72,8 @@
                     <p class="mb-4">Chào mừng sự trở lại của quý khách hàng!</p>
                     <input type="text" th:value="${error}" id="error" hidden="hidden" >
                     <input type="text" th:value="${success}" id="success" hidden="hidden" >
+                    <input type="text" th:value="${updateSuccess}" id="updateSuccess" hidden="hidden" >
+                    <input type="text" th:value="${resetPass}" id="resetPass" hidden="hidden" >
                     <form  class="mb-3" method="post"  th:object="${login}" th:action="@{/login}">
                         <div class="mb-3">
                             <label  class="form-label">Tên tài khoản</label>
@@ -184,6 +186,40 @@
         Toast.fire({
             icon: "success",
             title: "Đăng ký tài khoản thành công!"
+        });
+    }
+        if(document.getElementById("updateSuccess").value=="updateSuccess") {
+        const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+    }
+    });
+        Toast.fire({
+        icon: "success",
+        title: "Cập nhật thành  công!" + "\n" + "Vui lòng đăng nhập lại!"
+    });
+    }
+    if(document.getElementById("resetPass").value=="resetPass") {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "success",
+            title: "Hãy xem lại mật khẩu mới"+"\n"+" trong email của bạn!"
         });
     }
 </script>

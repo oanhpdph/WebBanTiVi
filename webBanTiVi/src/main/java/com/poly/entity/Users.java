@@ -1,6 +1,8 @@
 package com.poly.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +24,7 @@ public class Users {
     @Column(name = "id")
     private Integer id;
 
-
+    @NotBlank(message = "(*)Tên không được để trống!")
     @Column(name = "username")
     private String username;
 
@@ -36,12 +38,16 @@ public class Users {
     @Column(name = "address")
     private String address;
 
+    @NotBlank(message="(*)Số điện thoại không được bỏ trống!")
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @NotBlank(message="(*)Email không được bỏ trống!")
+    @Email(message = "(*)Email không hợp lệ!")
     @Column(name = "email")
     private String email;
 
+    @NotBlank(message="(*)Mật khẩu được bỏ trống!")
     @Column(name = "password")
     private String password;
 
