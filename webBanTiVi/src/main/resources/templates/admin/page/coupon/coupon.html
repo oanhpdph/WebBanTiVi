@@ -133,13 +133,12 @@
                              class="w-px-100"/>
                     </p>
                     </td>
-                    <td> <span th:text="${coupon.active} == true?'Hoạt động':'Không hoạt động'"/></td>
+                    <td><span th:text="${coupon.active} == true?'Hoạt động':'Không hoạt động'"/></td>
                     <td>
                         <button type="button" class="btn btn-icon btn-primary" data-bs-toggle="modal"
                                 th:data-bs-target="|#modal${coupon.id}|">
                             <i class="bx bxs-edit-alt"></i>
                         </button>
-
                         <div class="modal fade" th:id="|modal${coupon.id}|" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
@@ -155,14 +154,14 @@
                                                 <div class="col-lg-5 col-sm-12 text-center">
                                                     <div class="text-center">
                                                         <img th:src="@{'/image/'+*{image}}" alt="user-avatar"
-                                                             class="rounded mb-3"
-                                                             width="250" id="uploadedImage">
+                                                             class="rounded mb-3 image-preview"
+                                                             width="250">
                                                     </div>
-                                                    <label th:for="upload2" class="btn btn-primary me-2 mb-4"
+                                                    <label class="btn btn-primary me-2 mb-4"
                                                            tabindex="0">
-                                                        <span class="d-none d-sm-block">Upload new photo</span>
+                                                        <span class="d-none d-sm-block">Tải ảnh lên</span>
                                                         <i class="bx bx-upload d-block d-sm-none"></i>
-                                                        <input type="file" th:id="upload2" class="account-file-input"
+                                                        <input type="file" class="file-input"
                                                                hidden=""
                                                                accept="image/png, image/jpeg"
                                                                name="avatar">

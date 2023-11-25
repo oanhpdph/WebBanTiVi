@@ -1,21 +1,15 @@
 package com.poly.service.Impl;
 
+import com.poly.common.CheckLogin;
 import com.poly.common.RandomNumber;
-import com.poly.dto.BillProRes;
-import com.poly.dto.ImageReturnDto;
-import com.poly.dto.ReturnDto;
-import com.poly.dto.SearchBillDto;
+import com.poly.dto.*;
 import com.poly.entity.Bill;
 import com.poly.entity.BillProduct;
 import com.poly.entity.ProductDetail;
 import com.poly.entity.Voucher;
 import com.poly.entity.*;
 import com.poly.repository.*;
-import com.poly.service.BillProductService;
-import com.poly.service.BillService;
-import com.poly.service.VoucherService;
-import com.poly.service.BillStatusService;
-import com.poly.service.ImageReturnService;
+import com.poly.service.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -52,6 +46,9 @@ public class BillImpl implements BillService {
     ProductRepository productRepository;
 
     @Autowired
+    private VoucherCustomerService voucherCustomerService;
+
+    @Autowired
     ProductDetailRepo productDetailRepo;
 
     @Autowired
@@ -62,7 +59,7 @@ public class BillImpl implements BillService {
 
     @Autowired
     private VoucherService voucherService;
-  
+
     @Autowired
     private ImageReturnService imageReturnService;
 
@@ -71,6 +68,9 @@ public class BillImpl implements BillService {
 
     @Autowired
     BillStatusService billStatusService;
+
+    @Autowired
+    private CheckLogin checkLogin;
 
 
     @Override
@@ -82,9 +82,19 @@ public class BillImpl implements BillService {
         Bill bi = new Bill();
         Optional<Voucher> voucher = voucherService.findById(bill.getVoucher());
         if (voucher.isPresent()) {
-            bi.setVoucher(voucher.get());
-            bi.setVoucherValue(BigDecimal.valueOf(voucher.get().getValue()));
-            bill.setTotalPrice(bill.getTotalPrice().subtract(BigDecimal.valueOf(voucher.get().getValue())));
+            UserDetailDto userDetailDto = checkLogin.checkLogin();
+            if (userDetailDto != null) {
+                List<VoucherCustomer> voucherCustomer = voucherCustomerService.findByUser(userDetailDto.getId()).stream().filter(voucherCustomer1 -> voucherCustomer1.getVoucher().getId() == voucher.get().getId()).toList();
+                VoucherCustomerRes voucherCustomerRes = new VoucherCustomerRes();
+                voucherCustomerRes.setCustomer(userDetailDto.getId());
+                voucherCustomerRes.setVoucher(voucher.get().getId());
+                voucherCustomerRes.setActive(false);
+                voucherCustomerService.updateById(voucherCustomerRes, voucherCustomer.get(0).getId());
+
+                bi.setVoucher(voucher.get());
+                bi.setVoucherValue(BigDecimal.valueOf(voucher.get().getValue()));
+                bill.setTotalPrice(bill.getTotalPrice().subtract(BigDecimal.valueOf(voucher.get().getValue())));
+            }
         }
 
         bi.setCustomer(bill.getCustomer());
@@ -95,6 +105,7 @@ public class BillImpl implements BillService {
         bi.setPaymentStatus(2);
         bi.setBillStatus(billStatusRepos.findByCode("WP").get());
         bi.setPaymentMethod(paymentMethodRepos.findById(1).get());
+
         return this.billRepos.save(bi);
     }
 
@@ -155,8 +166,8 @@ public class BillImpl implements BillService {
 
         if (!searchBillDto.getKey().isEmpty()) {
             list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("code"), searchBillDto.getKey()),
-                    criteriaBuilder.equal(billRoot.get("customer").get("name"), searchBillDto.getKey()),
-                    criteriaBuilder.equal(billRoot.get("customer").get("phoneNumber"), searchBillDto.getKey())));
+                    criteriaBuilder.like(billRoot.get("customer").get("name"), searchBillDto.getKey()),
+                    criteriaBuilder.like(billRoot.get("customer").get("phoneNumber"), searchBillDto.getKey())));
         }
         if (searchBillDto.getPaymentStatus() != -1) {
             list.add(criteriaBuilder.equal(billRoot.get("paymentStatus"), searchBillDto.getPaymentStatus()));

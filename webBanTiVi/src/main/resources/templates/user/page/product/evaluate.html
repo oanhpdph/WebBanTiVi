@@ -20,7 +20,7 @@
                 <div>
                     <span class="fs-3" th:text="${product.avgPoint}"></span>
                     <span class="fs-5 mx-2"
-                          th:text="|${#lists.size(product.listEvaluate)} đánh giá|"></span>
+                          th:text="|${#lists.size(evaluate)} đánh giá|"></span>
                 </div>
                 <div class="mt-3">
                     <div>
@@ -70,7 +70,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel1">Đánh giá</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"  id="close"
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" id="close"
                                     aria-label="Close"></button>
                         </div>
                         <div class="modal-body">

@@ -172,15 +172,11 @@
                 <!--                <span th:text="${product.product.nameProduct}"></span>-->
             </h3>
             <div class="table-responsive text-nowrap">
-                <table class="table table-striped" border="0px">
-                    <!--                    <thead>-->
-                    <!--                    <tr>-->
-                    <!--                        <td>Thông số</td>-->
-                    <!--                        <td>Giá trị</td>-->
-                    <!--                    </tr>-->
-                    <!--                    </thead>-->
+                <table class="table" border="0px">
+                    <caption class="ms-4">
+                    </caption>
                     <tbody class="table-border-bottom-0">
-                    <tr th:each="item : ${product.product.productFieldValues}">
+                    <tr th:each="item : ${product.product.productFieldValues}" th:if="${item.field.active==true}">
                         <td>[(${item.field.name})]:</td>
                         <td>[(${item.value})]</td>
                     </tr>
@@ -211,12 +207,12 @@
                         <div>
                             <span class="fs-3" th:text="${product.product.avgPoint}"></span>
                             <span class="fs-5 mx-2"
-                                  th:text="|${#lists.size(product.product.listEvaluate)} đánh giá|"></span>
+                                  th:text="|${#lists.size(evaluate)} đánh giá|"></span>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div th:each="item,itemStat: ${product.product.listEvaluate}" th:if="${itemStat.index<3}">
+                    <div th:each="item,itemStat: ${evaluate}" th:if="${itemStat.index<3}">
                     <span class="fs-5"><strong th:text="${item.customer.name}"></strong>
                                         </span>
                         <div>
@@ -255,12 +251,13 @@
                                 Xem tất cả đánh giá([(${#lists.size(product.product.listEvaluate)})])
                             </a>
                             <button class="btn btn-primary" style="width: 40%" data-bs-target="#writeEvaluate"
-                                    data-bs-toggle="modal" th:if="${session.user == true}">
+                                    data-bs-toggle="modal"
+                                    th:if="${(session.user != null && hasEvaluate !=true)}">
                                 Viết đánh giá
                             </button>
                         </div>
-                        <small  th:if="${session.user != true}">Bạn cần đăng nhập để đánh giá</small>
-
+                        <small th:if="${session.user == null}">Bạn cần đăng nhập để đánh giá</small>
+                        <small  th:unless="${(session.user != null && hasEvaluate !=true)}">Bạn đã đánh giá sản phẩm này</small>
 
                     </div>
                     <div class="modal fade" id="writeEvaluate" tabindex="-1" aria-modal="true" role="dialog">

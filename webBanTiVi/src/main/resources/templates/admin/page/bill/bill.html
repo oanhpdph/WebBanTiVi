@@ -127,49 +127,21 @@
                         <th>Tên khách hàng</th>
                         <th>Số điện thoại</th>
                         <th>Ngày tạo</th>
-                        <th><select class="select2" th:name="paymentStatus" id="paymentStatus"
+                        <th><select class="form-select" th:name="paymentStatus" id="paymentStatus"
                                     th:field="*{paymentStatus}">
-                            <optgroup th:label="#{invoice.pay}">
+                            <optgroup label="Thanh toán">
                                 <option selected value="-1">Tất cả</option>
                                 <option value="1">Đã thanh toán</option>
                                 <option value="2">Chưa thanh toán</option>
                                 <option value="3">Đã hoàn tiền</option>
                             </optgroup>
                         </select></th>
-                        <!--                        <th><select class="select2" id="filterBillStatus">-->
-                        <!--                            <optgroup label="Trạng thái đơn hàng">-->
-                        <!--                                <option th:selected="${session.defaultBillStatus == ''}" value="">Tất cả</option>-->
-                        <!--                                <option value="WP" th:selected="${session.defaultBillStatus=='WP'}">Chờ xử lý</option>-->
+                        <th></th>
 
-                        <!--                                <option value="PG" th:selected="${session.defaultBillStatus== 'PG'}">Đang chuẩn bị-->
-                        <!--                                    hàng-->
-                        <!--                                </option>-->
-
-                        <!--                                <option value="DE" th:selected="${ session.defaultBillStatus =='DE'}">Đang giao hàng-->
-                        <!--                                </option>-->
-
-                        <!--                                <option value="CO" th:selected="${ session.defaultBillStatus  == 'CO'}">Đã hoàn thành-->
-                        <!--                                </option>-->
-
-                        <!--                                <option value="SC" th:selected="${ session.defaultBillStatus ==  'SC'}">Shop hủy-->
-                        <!--                                </option>-->
-                        <!--                                <option value="CC" th:selected="${ session.defaultBillStatus  == 'CC'}">Khách hủy-->
-                        <!--                                </option>-->
-
-                        <!--                                <option value="RR" th:selected="${ session.defaultBillStatus == 'RR'}">Yêu cầu trả hàng-->
-                        <!--                                </option>-->
-                        <!--                                <option value="WR" th:selected="${ session.defaultBillStatus  == 'WR'}">Chờ trả hàng-->
-                        <!--                                </option>-->
-                        <!--                                <option value="RE" th:selected="${session.defaultBillStatus  == 'RE'}">Đã trả hàng-->
-                        <!--                                </option>-->
-
-                        <!--                            </optgroup>-->
-                        <!--                        </select>-->
-                        <!--                        </th>-->
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    <tr th:each="listBill,billStat: ${listBill.content}" th:onclick="|oncl(${ listBill.id })|">
+                    <tr th:each="listBill,billStat: ${listBill.content}" >
                         <td>
                             <strong>[(${billStat.index+1})]</strong>
                         </td>
@@ -180,7 +152,11 @@
                         <td>[(${listBill.customer.phoneNumber})]</td>
                         <td>[(${listBill.createDate})]</td>
                         <td th:text="${listBill.paymentStatus == 1 ? 'Đã thanh toán' : listBill.paymentStatus == 2 ? 'Chưa thanh toán' : 'Đã hoàn tiền'}"></td>
-                        <!--                        <td>[(${listBill.billStatus.status})]</td>-->
+                        <td>
+                            <a th:href="|/admin/bill/bill_detail/${listBill.id}|" type="button" class="btn btn-icon btn-outline-primary">
+                                <i class="bx bxs-edit-alt"></i>
+                            </a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

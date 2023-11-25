@@ -22,4 +22,6 @@ public interface VoucherCustomerService {
     Optional<VoucherCustomer> findById(Integer id);
 
     Page<VoucherCustomer> loadData(SearchVoucherDto searchVoucherDto, Pageable pageable);
+
+    void updateById(VoucherCustomerRes voucher, int id);
 }

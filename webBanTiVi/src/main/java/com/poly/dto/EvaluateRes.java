@@ -18,6 +18,7 @@ public class EvaluateRes {
     Date dateCreate;
     Integer point;
     String comment;
+    boolean active;
     List<String> image;
     Integer page = 1;
     Integer size = 10;

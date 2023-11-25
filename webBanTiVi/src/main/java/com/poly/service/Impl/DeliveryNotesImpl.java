@@ -39,8 +39,6 @@ public class DeliveryNotesImpl implements DeliveryNotesSevice {
         if (optional.isPresent()) {
             DeliveryNotes deliveryNotesUpdate = optional.get();
             deliveryNotesUpdate.setNote(deliveryNotes.getNote());
-            deliveryNotesUpdate.setDeliver(deliveryNotes.getDeliver());
-            deliveryNotesUpdate.setDeliveryPhone(deliveryNotes.getDeliveryPhone());
             deliveryNotesUpdate.setStatus(deliveryNotesUpdate.getStatus());
             deliveryNotesUpdate.setDeliveryFee(deliveryNotes.getDeliveryFee());
             deliveryNotesUpdate.setReceivingAddress(deliveryNotes.getReceivingAddress());

@@ -1,0 +1,197 @@
+$(document).ready(getField())
+
+function getField() {
+    var data = {
+        page: 1,
+        size: 10
+    }
+    $.ajax({
+        url: "/field/get",
+        method: "get",
+        data: data,
+        success: function (data) {
+            var table = $("#list-attributes tbody")
+            table.empty()
+            $.each(data, function (index, item) {
+                var tr = $('<tr>')
+                var td1 = $('<td>').text(index + 1)
+                var td2 = $('<td>').text(item.name)
+                var td3 = $('<td>').text(item.variant == true ? 'Thuộc tính tùy chỉnh' : 'Thuộc tính thường')
+                if (item.variant) {
+                    var td4 = $('<td>').append($('<div>').addClass('form-check form-switch mb-2').html("<input class='form-check-input active-attributes variant' type='checkbox' value=" + item.id + " " + (item.active == true ? 'checked' : '') + ">"))
+                } else {
+                    var td4 = $('<td>').append($('<div>').addClass('form-check form-switch mb-2').html("<input class='form-check-input active-attributes' type='checkbox' value=" + item.id + " " + (item.active == true ? 'checked' : '') + ">"))
+                }
+
+                var td5 = $('<td>').append(
+                    $('<button>').addClass('btn btn-icon btn-outline-primary view-attributes').val(item.id).attr('data-bs-toggle', 'modal').attr('data-bs-target', '#modalDetailAttributes').attr('type', 'button').html("<i class='bx bxs-edit-alt'> </i>"))
+
+
+                tr.append(td1, td2, td3, td4, td5)
+                table.append(tr)
+            })
+            updateActive()
+            findById()
+        }
+    })
+}
+
+function updateActive() {
+    $.each($(".active-attributes"), function (index, item) {
+        item.addEventListener('change', function () {
+            var text = ''
+            if (item.checked == false) {
+                text = 'Nếu tắt hoạt động thuộc tính sẽ không được hiển thị'
+            }
+            if (item.closest('.variant') && item.checked == false) {
+                text = 'Tắt hoạt động của thuộc tính tùy chỉnh sẽ ngừng bán các sản phẩm đang có thuộc tính này'
+            }
+            Swal.fire({
+                title: "Bạn xác nhận cập nhật trạng thái?",
+                text: text,
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Xác nhận!",
+                cancelButtonText: "Hủy"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var data = {
+                        id: item.value,
+                        active: item.checked
+                    }
+                    $.ajax({
+                        url: "/field/update",
+                        method: "post",
+                        data: JSON.stringify(data),
+                        contentType: "application/json",
+                        success: function (data) {
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: "Cập nhật thành công"
+                            });
+                        }
+                    })
+                } else {
+                    this.checked = !this.checked
+                }
+            })
+
+        })
+    })
+}
+
+function findById() {
+    $.each($(".view-attributes"), function (index, item) {
+        var $this = this
+        item.addEventListener("click", function () {
+            $.ajax({
+                url: "/field/get-one",
+                method: "get",
+                data: {id: Number(item.value)},
+                success: function (data) {
+                    $("#name-attribute").val(data.name)
+                    $("#update-attribute").val(data.id)
+                    $("#type-attribute").addClass(data.variant).text(data.variant == true ? 'Thuộc tính tùy chỉnh' : 'Thuộc tính thường')
+                    $("#active").attr('checked', false)
+                    $("#inactive").attr('checked', false)
+                    if (data.active) {
+                        $("#active").attr('checked', true)
+                    } else {
+                        $("#inactive").attr('checked', true)
+                    }
+                    $("#update-attribute").on('click', function () {
+                        var text = ''
+                        if ($("#inactive").is(':checked') == true) {
+                            text = 'Nếu tắt hoạt động thuộc tính sẽ không được hiển thị'
+                        }
+                        if ($("#type-attribute").hasClass('true') && $("#inactive").is(':checked') == true) {
+                            text = 'Tắt hoạt động của thuộc tính tùy chỉnh sẽ ngừng bán các sản phẩm đang có thuộc tính này'
+                        }
+                        $("#close").click()
+                        Swal.fire({
+                            title: "Bạn xác nhận cập nhật thuộc tính?",
+                            text: text,
+                            icon: "question",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Xác nhận!",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                console.log($("#active").val())
+                                var data = {
+                                    id: $("#update-attribute").val(),
+                                    name: $("#name-attribute").val(),
+                                    active: $("#active").is(':checked') == true ? 'true' : 'false'
+                                }
+                                $.ajax({
+                                    url: "/field/update",
+                                    method: "post",
+                                    data: JSON.stringify(data),
+                                    contentType: "application/json",
+                                    success: function (data) {
+                                        const Toast = Swal.mixin({
+                                            toast: true,
+                                            position: "top-end",
+                                            showConfirmButton: false,
+                                            timer: 3000,
+                                            timerProgressBar: true,
+                                            didOpen: (toast) => {
+                                                toast.onmouseenter = Swal.stopTimer;
+                                                toast.onmouseleave = Swal.resumeTimer;
+                                            }
+                                        });
+                                        Toast.fire({
+                                            icon: "success",
+                                            title: "Cập nhật thành công"
+                                        });
+                                    }
+                                })
+                            } else {
+                                $this.click()
+                            }
+                        })
+                    })
+
+                }
+            })
+        })
+    })
+}
+
+// function myFunction() {
+// Declare variables
+$("#search").keyup(function () {
+    var input, filter, table, tr, td, i, txtValue;
+    input = $("#search");
+    filter = input.val().toUpperCase();
+    table = $("#list-attributes");
+    tr = table.find("tr");
+
+    // Loop through all table rows, and hide those who don't match the search query
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+})
+// }
