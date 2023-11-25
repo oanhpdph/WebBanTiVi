@@ -2,6 +2,7 @@ package com.poly.controller.user;
 
 import com.poly.dto.UserDetailDto;
 import com.poly.dto.VoucherCustomerRes;
+import com.poly.entity.ProductDetail;
 import com.poly.entity.Voucher;
 import com.poly.entity.VoucherCustomer;
 import com.poly.service.Impl.*;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/promotion")
@@ -38,7 +40,7 @@ public class PromotionController {
     @GetMapping()
     public String index(HttpSession session, Model model, @RequestParam(defaultValue = "0") int p) {
 
-        model.addAttribute("listcoupon", couponService.getAllByActive());
+        model.addAttribute("listcoupon", couponService.getAllByActive(date));
         model.addAttribute("listvoucher", voucherService.findAllByDate(date));
         session.setAttribute("pageView", "/user/page/promotion/promotions.html");
         return "/user/index";
@@ -49,8 +51,17 @@ public class PromotionController {
         Integer giam = Integer.parseInt(couponService.findById(id).get().getValue());
         model.addAttribute("giam",giam);
         model.addAttribute("discount",couponService.findById(id).get());
-        model.addAttribute("listproduct", couponService.findById(id).get().getProductDetailList());
-        couponService.findById(id).get().getProductDetailList().get(0).getPriceExport().intValue();
+        List<ProductDetail> list =couponService.findById(id).get().getProductDetailList();
+        boolean check = true;
+        if (list.size()==0){
+            check = false;
+            model.addAttribute("check",check);
+            model.addAttribute("message", "Chương trình hiện tại chưa có sản phẩm áp dụng!");
+            session.setAttribute("pageView", "/user/page/promotion/coupondetail.html");
+            return "/user/index";
+        }
+        model.addAttribute("check",check);
+        model.addAttribute("listproduct", list);
         session.setAttribute("pageView", "/user/page/promotion/coupondetail.html");
         return "/user/index";
     }
