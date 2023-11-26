@@ -5,7 +5,6 @@ import com.poly.dto.BillProRes;
 import com.poly.dto.UserDetailDto;
 import com.poly.entity.*;
 import com.poly.entity.idClass.CartProductId;
-import com.poly.repository.BillRepos;
 import com.poly.repository.ProductDetailRepo;
 import com.poly.service.*;
 import com.poly.service.Impl.DeliveryNotesImpl;
@@ -158,21 +157,13 @@ public class CartController {
             } else if (checkEmail != null && checkEmail.getRoles() == null) {
                 billProRes.setCustomer(checkEmail);
             } else if (checkEmail != null && checkEmail.getRoles().equals("USER")) {
-
                 return "";// thông báo email đã dùng đăng ký tài khoản
             }
             total = cartService.getAmount();
             billProRes.setTotalPrice(total);// lấy tổng tiền
         } else {
-            if (userDetailDto.getEmail().trim().equals(billProRes.getEmail().trim())) {
-                // thông báo lỗi email của người khác k thể dùng để mua hàng
-                billProRes.setCustomer(checkEmail);
-            } else {
-                if (checkEmail != null && checkEmail.getRoles() != null) {
-                    return "user/index";
-                }
-                billProRes.setCustomer(checkEmail);
-            }
+            billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
+            billProRes.setEmail(userDetailDto.getEmail());
         }
 
         Bill bill1 = billService.add(billProRes);// tạo hóa đơn mới
