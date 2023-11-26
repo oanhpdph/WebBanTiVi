@@ -95,6 +95,8 @@ public class BillImpl implements BillService {
                 bi.setVoucherValue(BigDecimal.valueOf(voucher.get().getValue()));
                 bill.setTotalPrice(bill.getTotalPrice().subtract(BigDecimal.valueOf(voucher.get().getValue())));
             }
+        } else {
+            bi.setVoucherValue(BigDecimal.valueOf(0));
         }
 
         bi.setCustomer(bill.getCustomer());

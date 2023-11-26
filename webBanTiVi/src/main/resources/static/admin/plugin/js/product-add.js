@@ -252,135 +252,33 @@ function saveProduct() {
         })
         console.log(data)
         uploadImage()
-        // $.ajax({
-        //     url: "/product/save-product",
-        //     method: "post",
-        //     data: JSON.stringify(data),
-        //     contentType: "application/json",
-        //     success: function () {
-        //         $("#table-product-detail tbody").empty()
-        //         clear()
-        //         const Toast = Swal.mixin({
-        //             toast: true,
-        //             position: "top-end",
-        //             showConfirmButton: false,
-        //             timer: 3000,
-        //             timerProgressBar: true,
-        //             didOpen: (toast) => {
-        //                 toast.onmouseenter = Swal.stopTimer;
-        //                 toast.onmouseleave = Swal.resumeTimer;
-        //             }
-        //         });
-        //         Toast.fire({
-        //             icon: "success",
-        //             title: "Thêm sản phẩm thành công"
-        //         });
-        //     }
-        // })
+        $.ajax({
+            url: "/product/save-product",
+            method: "post",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function () {
+                $("#table-product-detail tbody").empty()
+                clear()
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Thêm sản phẩm thành công"
+                });
+            }
+        })
     })
 }
-
-// function clickSave() {
-//     var valueReturn = validate()
-//     if (valueReturn === false) {
-//         return
-//     }
-//     var sku = document.getElementsByClassName("sku")
-//     var priceImport = document.getElementsByClassName("priceImport")
-//     var priceExport = document.getElementsByClassName("priceExport")
-//     var quantity = document.getElementsByClassName("quantity")
-//     var checkActive = document.getElementsByClassName("check-active")
-//
-//     var data = {}
-//     data.listProduct = []
-//     data.product = []
-//     console.log(document.getElementById("table-product-detail").rows)
-//
-//     // set ảnh
-//
-//     $.each(checkActive, function (index, item) {
-//         var value = item.getAttribute("value")
-//         var image = "imageUpload" + value
-//         var arrImage = []
-//         var listImage = document.getElementsByClassName(image)
-//         $.each(listImage, function (index, item) {
-//             // Lấy tệp từ trường chọn tệp
-//             var imageItem;
-//             var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
-// // Trích xuất tên tệp từ đường dẫn
-//             var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
-//             if (lastIndex >= 0) {
-//                 fileName = fileName.substr(lastIndex + 1);
-//             }
-//
-//             if (item.classList.contains("true")) {
-//                 imageItem = {
-//                     location: "true",
-//                     multipartFile: fileName
-//                 }
-//             } else {
-//                 imageItem = {
-//                     location: "false",
-//                     multipartFile: fileName
-//                 }
-//             }
-//             arrImage.push(imageItem)
-//         })
-//         console.log(sku[index])
-//         var temp = {
-//             sku: sku[index].value,
-//             priceImport: priceImport[index].value,
-//             priceExport: priceExport[index].value,
-//             quantity: quantity[index].value,
-//             image: arrImage,
-//             listAttributes: dataProductDetail.listAttributes[index],
-//             active: checkActive[index].checked
-//         }
-//         data.listProduct.push(temp)
-//         data.nameProduct = document.getElementById("name-display").value
-//         data.sku = document.getElementById("sku-code").value
-//         data.brand = $("#select-brand").val()
-//         data.group = document.getElementById("select-group").value
-//     })
-//     var inputAttributes = document.querySelectorAll(".input-data.data-attributes")
-//     $.each(inputAttributes, function (index, item) {
-//         // var arr = []
-//         var allTag = document.querySelector("." + item.id)
-//         if (allTag) {
-//             data.product.push({
-//                 id: item.id.substring(2),
-//                 value: allTag.textContent,
-//             })
-//         }
-//     })
-//     console.log(data)
-//     uploadImage()
-//     $.ajax({
-//         url: "/product/save-product",
-//         method: "post",
-//         data: JSON.stringify(data),
-//         contentType: "application/json",
-//         success: function () {
-//             $("#table-product-detail tbody").empty()
-//             clear()
-//             const Toast = Swal.mixin({
-//                 toast: true,
-//                 position: "top-end",
-//                 showConfirmButton: false,
-//                 timer: 3000,
-//                 timerProgressBar: true,
-//                 didOpen: (toast) => {
-//                     toast.onmouseenter = Swal.stopTimer;
-//                     toast.onmouseleave = Swal.resumeTimer;
-//                 }
-//             });
-//             Toast.fire({
-//                 icon: "success",
-//                 title: "Thêm sản phẩm thành công"
-//             });
-//         }
-//     })
-// }
 
 function uploadImage() {
     var fileInput = document.getElementsByClassName('file-input');
