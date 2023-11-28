@@ -69,7 +69,12 @@ public class ProductServiceImpl implements ProductService {
 
         if (productDetailDto.getKey() != null && productDetailDto.getKey().trim().length() != 0) {
             Join<Product, ProductFieldValue> fieldValueJoin = productRoot.joinList("productFieldValues");
-            list.add(criteriaBuilder.like(fieldValueJoin.get("value"), productDetailDto.getKey()));
+            list.add(
+                    criteriaBuilder.or(
+                            criteriaBuilder.like(fieldValueJoin.get("value"),"%"+ productDetailDto.getKey()+"%"),
+                            criteriaBuilder.like(productRoot.get("nameProduct"),"%"+ productDetailDto.getKey()+"%"),
+                            criteriaBuilder.like(productRoot.get("sku"), "%"+ productDetailDto.getKey()+"%")
+                    ));
         }
 
         if (productDetailDto.getListBrand() != null && !productDetailDto.getListBrand().isEmpty()) {

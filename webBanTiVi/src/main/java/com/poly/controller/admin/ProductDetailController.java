@@ -46,4 +46,10 @@ public class ProductDetailController {
 
         return ResponseEntity.ok(productDetailService.update(productDetailListDto));
     }
+
+    @GetMapping("/product-detail/all")
+    public ResponseEntity<?> getALl() {
+
+        return ResponseEntity.ok(productDetailService.findAll());
+    }
 }

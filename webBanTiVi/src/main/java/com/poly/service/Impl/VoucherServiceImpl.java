@@ -38,8 +38,8 @@ public class VoucherServiceImpl implements VoucherService {
         List<Predicate> list = new ArrayList<Predicate>();
         if (!searchVoucherDto.getKey().isEmpty()) {
             list.add(criteriaBuilder.or(
-                    criteriaBuilder.like(voucherRoot.get("code"), searchVoucherDto.getKey()),
-                    criteriaBuilder.like(voucherRoot.get("nameVoucher"), searchVoucherDto.getKey())));
+                    criteriaBuilder.like(voucherRoot.get("code"),"%"+ searchVoucherDto.getKey()+"%"),
+                    criteriaBuilder.like(voucherRoot.get("nameVoucher"),"%"+ searchVoucherDto.getKey()+"%")));
         }
         if (!searchVoucherDto.getDate().isEmpty()) {
             String date1 = searchVoucherDto.getDate().substring(0, searchVoucherDto.getDate().indexOf("-") - 1).replace("/", "-");

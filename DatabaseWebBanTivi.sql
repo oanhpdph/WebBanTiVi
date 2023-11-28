@@ -30,6 +30,12 @@ Create table field(
 	variant bit,
 	active  bit
 )
+Create table Brand
+(
+id	   int identity(1,1) primary key,
+name   nvarchar(100),
+active bit
+)
 
 CREATE TABLE product
   (
@@ -43,12 +49,7 @@ CREATE TABLE product
      active         BIT
 )
 
-Create table Brand
-(
-id	   int identity(1,1) primary key,
-name   nvarchar(100),
-active bit
-)
+
 
 CREATE TABLE product_detail
   (

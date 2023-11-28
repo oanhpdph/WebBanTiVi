@@ -2,6 +2,7 @@ package com.poly.controller.admin;
 
 import com.poly.dto.ProductDetailDto;
 import com.poly.dto.ProductDetailListDto;
+import com.poly.entity.Product;
 import com.poly.service.ProductDetailService;
 import com.poly.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,11 @@ public class ProductRestController {
             productDetailService.update(productDetailListDto);
         }
         return ResponseEntity.ok(200);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getALl() {
+        List<Product> productList = productService.findAll();
+        return ResponseEntity.ok(productList);
     }
 }

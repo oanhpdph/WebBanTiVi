@@ -32,12 +32,17 @@
             <ul class="menu-sub">
                 <li th:class="${#strings.equals(session.active,'/product/list-product')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/product/list}" class="menu-link">
-                        <div>Danh sách sản phẩm</div>
+                        <div>Sản phẩm</div>
                     </a>
                 </li>
                 <li th:class="${#strings.equals(session.active,'/product/attributes')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/attributes/list}" class="menu-link">
-                        <div>Danh sách thuộc tính</div>
+                        <div>Thuộc tính</div>
+                    </a>
+                </li>
+                <li th:class="${#strings.equals(session.active,'/product/brand')?'menu-item active':'menu-item'}">
+                    <a th:href="@{/admin/brand/list}" class="menu-link">
+                        <div>Hãng</div>
                     </a>
                 </li>
             </ul>
