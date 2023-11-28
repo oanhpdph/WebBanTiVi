@@ -35,7 +35,6 @@ import java.util.List;
 public class SecurityConfig {
 
 
-//    private final StaffRepository staffRepository;
 
     private final CustomerRepository customerRepository;
 

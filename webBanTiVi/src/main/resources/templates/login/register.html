@@ -72,6 +72,8 @@
                                     placeholder="Nhập username"
                                     th:field="*{username}"
                             />
+                            <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}" />
+                            <p class="text-danger" th:if="${errorUsername!=''}">[(${errorUsername})]</p>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
@@ -83,6 +85,8 @@
                                     placeholder="Nhập email"
                                     th:field="*{email}"
                             />
+                            <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}" />
+                            <p class="text-danger" th:if="${errorEmail!=''}">[(${errorEmail})]</p>
                         </div>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Số điện thoại</label>
@@ -94,6 +98,8 @@
                                     placeholder="Nhập số điện thoại"
                                     th:field="*{phoneNumber}"
                             />
+                            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="error" th:errors="*{phoneNumber}" />
+                            <p class="text-danger" th:if="${errorPhone!=''}">[(${errorPhone})]</p>
                         </div>
                         <div class="mb-3 form-password-toggle">
                             <label class="form-label" for="password">Mật khẩu</label>
@@ -111,6 +117,7 @@
                                 ><i class="bx bx-hide"></i
                                 ></span>
                             </div>
+                            <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}" />
                         </div>
                         <div class="mb-3 form-password-toggle">
                             <label class="form-label" for="password">Nhập lại mật khẩu</label>
@@ -122,8 +129,11 @@
                                         class="form-control"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                 />
-                                <span id='message'></span>
+                                <span class="input-group-text cursor-pointer"
+                                ><i class="bx bx-hide"></i
+                                ></span>
                             </div>
+                            <div id='message'></div>
                         </div>
 
                         <div class="mb-3">
@@ -173,10 +183,10 @@
 <script>
     $('#password, #confirm_password').on('keyup', function () {
         if ($('#password').val() != $('#confirm_password').val()) {
-            $('#message').html('Not Matching').css('color', 'red');
+            $('#message').html('(*)Mật khẩu không trùng khớp!').css('color', 'red');
             $('#dangky').prop('disabled', true);
         } else {
-            $('#message').html('Matching').css('color', 'green');
+            $('#message').html('').css('color', 'green');
             $('#dangky').prop('disabled', false);
         }
     });

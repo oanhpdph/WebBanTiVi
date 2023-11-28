@@ -42,6 +42,7 @@
                     </a>
                 </li>
             </ul>
+
             <div class="tab-content col-lg-9">
                 <div class="tab-pane fade show active" id="navs-top-home" role="tabpanel">
                     <form>
@@ -82,6 +83,8 @@
                                        placeholder="john.doe"
                                        aria-label="john.doe" aria-describedby="basic-default-email2">
                             </div>
+                            <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}" />
+                            <p class="text-danger" th:if="${errorEmail!=''}">[(${errorEmail})]</p>
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Phone No</label>
@@ -92,6 +95,8 @@
                                        class="form-control phone-mask"
                                        placeholder="658 799 8941">
                             </div>
+                            <p th:if="${#fields.hasErrors('phone')}" th:errorclass="error" th:errors="*{phone}" />
+                            <p class="text-danger" th:if="${errorPhone!=''}">[(${errorPhone})]</p>
                         </div>
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label">Địa chỉ</label>
@@ -109,6 +114,7 @@
                                        th:name="birthday"
                                        th:value="${#authentication.principal.birthday}">
                             </div>
+                            <p class="text-danger" th:if="${errorsBirthDay!=''}">[(${errorsBirthDay})]</p>
                         </div>
                         <div class="row mb-3 mt-4">
                             <span class="text-center fs-6 text-decoration-underline">Để trống nếu không muốn thay đổi mật khẩu</span>
