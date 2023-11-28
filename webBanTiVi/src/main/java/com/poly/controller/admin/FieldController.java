@@ -41,7 +41,9 @@ public class FieldController {
         Field field1 = field.findById(attribute.getId());
         if (field1 != null) {
             field1.setActive(attribute.isActive());
-            field1.setName(attribute.getName());
+            if (attribute.getName() != null) {
+                field1.setName(attribute.getName());
+            }
         }
         return ResponseEntity.ok(field.update(field1));
     }

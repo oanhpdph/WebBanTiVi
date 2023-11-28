@@ -168,8 +168,8 @@ public class BillImpl implements BillService {
 
         if (!searchBillDto.getKey().isEmpty()) {
             list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("code"), searchBillDto.getKey()),
-                    criteriaBuilder.like(billRoot.get("customer").get("name"), searchBillDto.getKey()),
-                    criteriaBuilder.like(billRoot.get("customer").get("phoneNumber"), searchBillDto.getKey())));
+                    criteriaBuilder.like(billRoot.get("customer").get("name"),"%"+ searchBillDto.getKey()+"%"),
+                    criteriaBuilder.like(billRoot.get("customer").get("phoneNumber"), "%"+searchBillDto.getKey()+"%")));
         }
         if (searchBillDto.getPaymentStatus() != -1) {
             list.add(criteriaBuilder.equal(billRoot.get("paymentStatus"), searchBillDto.getPaymentStatus()));

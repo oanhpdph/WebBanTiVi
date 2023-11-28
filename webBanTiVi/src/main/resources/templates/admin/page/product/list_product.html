@@ -102,10 +102,9 @@
                                     <a class="dropdown-item edit-product" data-bs-toggle="modal"
                                        data-bs-target="#modalProduct" href="javascript:void(0);"
                                        th:value="${product.id}"><i
-                                            class="bx bx-edit-alt me-1"></i> Chỉnh sửa</a>
-                                    <a class="dropdown-item delete-product" href="javascript:void(0);"
-                                       th:value="${product.id}"><i
-                                            class="bx bx-trash me-1"></i> Xóa</a>
+                                            class="bx bx-show-alt me-1"></i> Thông tin</a>
+                                    <a class="dropdown-item delete-product" th:href="|/admin/evaluate/${product.id}|"><i
+                                            class="bx bx-star me-1"></i> Xem đánh giá</a>
                                 </div>
                             </div>
                         </td>
@@ -183,7 +182,6 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <a type="button" class="btn btn-primary" id="evaluate">Xem đánh giá</a>
                                 <button type="button" class="btn btn-primary" id="save">Lưu</button>
                             </div>
                         </div>

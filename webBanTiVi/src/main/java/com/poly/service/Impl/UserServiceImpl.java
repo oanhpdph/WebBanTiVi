@@ -94,8 +94,8 @@ public class UserServiceImpl implements CustomerService {
         List<Predicate> list = new ArrayList<Predicate>();
         if (searchStaffDto.getKey() != "") {
             list.add(criteriaBuilder.or(
-                    criteriaBuilder.like(customerRoot.get("name"), searchStaffDto.getKey()),
-                    criteriaBuilder.like(customerRoot.get("phoneNumber"), searchStaffDto.getKey())));
+                    criteriaBuilder.like(customerRoot.get("name"), "%" + searchStaffDto.getKey() + "%"),
+                    criteriaBuilder.like(customerRoot.get("phoneNumber"), "%" + searchStaffDto.getKey() + "%")));
         }
 
         if (searchStaffDto.getRole().equals("USER") && !searchStaffDto.getRole().isBlank()) {

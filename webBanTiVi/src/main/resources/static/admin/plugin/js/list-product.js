@@ -73,9 +73,9 @@ $.each(document.getElementsByClassName("update-active-product"), function (index
 
         var text;
         if (item.checked) {
-            document.getElementById("cancelActive").removeEventListener("click", change)
+            $("#cancelActive").unbind("click")
             document.getElementById("cancelActive").addEventListener("click", change)
-            document.getElementById("closeActive").removeEventListener("click", change)
+            $("#closeActive").unbind("click")
             document.getElementById("closeActive").addEventListener("click", change)
 
             var data = {
@@ -88,10 +88,10 @@ $.each(document.getElementsByClassName("update-active-product"), function (index
                 // contentType: "application/json",
                 success: function (data) {
                     console.log(data)
-
                     var table = document.querySelector("#table-active tbody")
                     $("#table-active tbody").empty()
                     $.each(data.productDetails, function (index, item2) {
+                        console.log(item2)
                         var nameProduct = []
                         nameProduct.push(data.nameProduct)
                         nameProduct.push("[")
@@ -159,7 +159,7 @@ $.each(document.getElementsByClassName("update-active-product"), function (index
                         confirmButtonColor: "#3085d6",
                         cancelButtonColor: "#d33",
                         confirmButtonText: "Xác nhận!",
-                        cancelButtonText:"Hủy"
+                        cancelButtonText: "Hủy"
                     }).then((result) => {
                         if (result.isConfirmed) {
                             var productDetailList = []
@@ -225,7 +225,7 @@ $.each(document.getElementsByClassName("update-active-product"), function (index
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Xác nhận!",
-            cancelButtonText:"Hủy"
+            cancelButtonText: "Hủy"
         }).then((result) => {
             if (result.isConfirmed) {
                 var data = {
@@ -263,7 +263,7 @@ $.each(document.getElementsByClassName("active-product-detail"), function (index
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Xác nhận!",
-                cancelButtonText:"Hủy"
+                cancelButtonText: "Hủy"
             }).then((result) => {
                 if (result.isConfirmed) {
                     var data = []
@@ -314,7 +314,6 @@ $.each(document.getElementsByClassName("edit-product"), function (index, item) {
             data: data,
             success: function (data) {
                 var localData = data
-                document.getElementById("evaluate").href = "/admin/evaluate/" + data.id
                 document.getElementById("save").value = data.id
                 var table = document.querySelector("#table-detail-modal tbody")
                 $("#table-detail-modal tbody").empty()

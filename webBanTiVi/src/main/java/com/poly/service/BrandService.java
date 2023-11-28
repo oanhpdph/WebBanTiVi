@@ -8,4 +8,10 @@ public interface BrandService {
     List<Brand> findAll();
 
     Brand findById(Integer id);
+
+    Brand update(Brand brand);
+
+    Brand save(Brand brand);
+
+    Brand findName(String brand);
 }

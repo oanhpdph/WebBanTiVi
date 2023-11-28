@@ -1,4 +1,5 @@
-$(document).ready(getField())
+$(document).ready(getField(),
+)
 
 function getField() {
     var data = {
@@ -129,9 +130,9 @@ function findById() {
                             confirmButtonColor: "#3085d6",
                             cancelButtonColor: "#d33",
                             confirmButtonText: "Xác nhận!",
+                            focusConfirm: true
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                console.log($("#active").val())
                                 var data = {
                                     id: $("#update-attribute").val(),
                                     name: $("#name-attribute").val(),
@@ -158,6 +159,15 @@ function findById() {
                                             icon: "success",
                                             title: "Cập nhật thành công"
                                         });
+                                        var tr = $($this).closest('tr')
+                                        var td = $(tr).find('td')
+                                        td[1].innerText = $("#name-attribute").val()
+                                        var active = $(td[3]).find('input')
+                                        if ($("#active").is(':checked')) {
+                                            $(active).attr('checked', true)
+                                        } else {
+                                            $(active).removeAttr('checked')
+                                        }
                                     }
                                 })
                             } else {
@@ -165,15 +175,12 @@ function findById() {
                             }
                         })
                     })
-
                 }
             })
         })
     })
 }
 
-// function myFunction() {
-// Declare variables
 $("#search").keyup(function () {
     var input, filter, table, tr, td, i, txtValue;
     input = $("#search");
@@ -194,4 +201,6 @@ $("#search").keyup(function () {
         }
     }
 })
+
 // }
+
