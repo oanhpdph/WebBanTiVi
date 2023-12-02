@@ -317,6 +317,24 @@ public class CartController {
             }
             session.setAttribute("list", list);
         }
+        model.addAttribute("qty", qty);
+//        for (CartProduct item : list) {
+//            ProductDetail product = item.getProduct();
+//
+//            if (product != null) {
+//                if (quantity > product.getQuantity()) {
+//                    model.addAttribute("error", "Số lượng sản phẩm trong giỏ hàng không được lớn hơn số lượng tồn");
+//                    return "redirect:/cart";
+//                } else {
+//                    for (int i = 0; i < id.size(); i++) {
+//                        list = cartService.update(id.get(i), qty.get(i));
+//                    }
+//                    session.setAttribute("list", list);
+//                }
+//            } else {
+//                model.addAttribute("error", "Sản phẩm không tồn tại");
+//            }
+//        }
         redirectAttributes.addFlashAttribute("message", "update-success");
         return "redirect:/cart";
     }

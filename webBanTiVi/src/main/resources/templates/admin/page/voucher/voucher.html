@@ -1,3 +1,9 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<style>
+    .error {
+        color: red;
+    }
+</style>
 <h4 class="fw-semibold py-3 mb-4"> Danh sách Voucher</h4>
 
 <div class="row justify-content-end me-4">
@@ -15,7 +21,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form th:action="@{/admin/voucher/add}" method="post" th:object="${voucher}"
-                      enctype="multipart/form-data">
+                      enctype="multipart/form-data" th:name="myform"
+                      th:onsubmit="return validateForm()">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-4 col-sm-12 col-xl-3 text-center">
@@ -36,12 +43,20 @@
                                     <div class="mb-3">
                                         <label class="form-label">Mã voucher:</label>
                                         <input type="text" class="form-control" th:name="code">
+                                        <span id="codeloc" class="error"></span>
+                                        <div class="alert alert-warning"
+                                             th:if="${#fields.hasErrors('code')}"
+                                             th:errors="*{code}"></div>
                                     </div>
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Tên voucher:</label>
                                         <input type="text" class="form-control" th:name="nameVoucher">
+                                        <span id="nameVoucherloc" class="error"></span>
+                                        <div class="alert alert-warning"
+                                             th:if="${#fields.hasErrors('nameVoucher')}"
+                                             th:errors="*{nameVoucher}"></div>
                                     </div>
                                 </div>
 
@@ -49,23 +64,29 @@
                                     <div class="mb-3">
                                         <label class="form-label">Giá trị giảm</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" th:name="value">
+                                            <input type="text" class="form-control" th:name="value" step="any"
+                                                   pattern="[-+]?[0-9]">
                                             <span class="input-group-text">VNĐ</span>
+                                            <span id="valueloc" class="error"></span>
+                                            <div class="alert alert-warning"
+                                                 th:if="${#fields.hasErrors('value')}"
+                                                 th:errors="*{value}"></div>
                                         </div>
-
                                     </div>
-
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Giá trị tối thiểu</label>
                                         <div class="input-group">
                                             <input class="form-control" type="text"
-                                                   th:name="minimumValue"
+                                                   th:name="minimumValue" step="any" pattern="[-+]?[0-9]"
                                             >
                                             <span class="input-group-text">VNĐ</span>
+                                            <span id="minimumValueloc" class="error"></span>
+                                            <div class="alert alert-warning"
+                                                 th:if="${#fields.hasErrors('minimumValue')}"
+                                                 th:errors="*{minimumValue}"></div>
                                         </div>
-
                                     </div>
                                 </div>
 
@@ -74,17 +95,30 @@
                                         <label class="form-label">Ngày bắt đầu:</label>
                                         <input type="date" class="form-control" th:name="startDay">
                                     </div>
+                                    <span id="startDayloc" class="error"></span>
+                                    <div class="alert alert-warning"
+                                         th:if="${#fields.hasErrors('startDay')}"
+                                         th:errors="*{startDay}"></div>
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Ngày kết thúc:</label>
                                         <input type="date" class="form-control" th:name="expirationDate"/>
                                     </div>
+                                    <span id="expirationDateloc" class="error"></span>
+                                    <div class="alert alert-warning"
+                                         th:if="${#fields.hasErrors('expirationDate')}"
+                                         th:errors="*{expirationDate}"></div>
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Số lượng:</label>
-                                        <input type="number" class="form-control" th:name="quantity"/>
+                                        <input type="number" class="form-control" th:name="quantity"
+                                               pattern="[-+]?[0-9]"/>
+                                        <span id="quantityloc" class="error"></span>
+                                        <div class="alert alert-warning"
+                                             th:if="${#fields.hasErrors('quantity')}"
+                                             th:errors="*{quantity}"></div>
                                     </div>
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
@@ -103,6 +137,10 @@
                                                        th:value="false">
                                                 <label class="form-check-label" for="inlineRadio2">Không hoạt
                                                     động</label>
+                                                <span id="activeloc" class="error"></span>
+                                                <div class="alert alert-warning"
+                                                     th:if="${#fields.hasErrors('active')}"
+                                                     th:errors="*{active}"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -310,7 +348,7 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Số lượng:</label>
                                                             <input type="number" class="form-control"
-                                                                   th:name="quantity"
+                                                                   th:name="quantity" pattern="[-+]?[0-9]"
                                                                    th:value="${voucher.quantity}"/>
                                                         </div>
                                                     </div>
@@ -354,12 +392,12 @@
                                 </div>
                             </div>
                         </div>
-<!--                        <a th:href="@{/admin/voucher/delete/{id}(id=*{voucher.id})}"-->
-<!--                           onclick="return confirm('Xác nhận xóa')">-->
-<!--                            <button type="button" class="btn btn-icon btn-danger">-->
-<!--                                <span class="bx bxs-trash"></span>-->
-<!--                            </button>-->
-<!--                        </a>-->
+                        <!--                        <a th:href="@{/admin/voucher/delete/{id}(id=*{voucher.id})}"-->
+                        <!--                           onclick="return confirm('Xác nhận xóa')">-->
+                        <!--                            <button type="button" class="btn btn-icon btn-danger">-->
+                        <!--                                <span class="bx bxs-trash"></span>-->
+                        <!--                            </button>-->
+                        <!--                        </a>-->
                     </td>
                 </tr>
                 </tbody>
@@ -369,41 +407,144 @@
     </div>
     <div class="card-footer">
 
-<!--        <div class="d-inline-flex float-end">-->
-<!--            <div aria-label="Page pagination">-->
-<!--                <ul class="pagination">-->
-<!--                    <li class="page-item first">-->
-<!--                        <a class="page-link" th:href="@{'/admin/voucher/list?page=1&size='+${session.size}}"><i-->
-<!--                                class="tf-icon bx bx-chevrons-left"></i></a>-->
-<!--                    </li>-->
-<!--                    <li class="page-item prev">-->
-<!--                        <a class="page-link"-->
-<!--                           th:href="@{'/admin/voucher/list?page='+${session.page==1? '1': session.page - 1}+'&size='+${session.size}}"><i-->
-<!--                                class="tf-icon bx bx-chevron-left"></i></a>-->
-<!--                    </li>-->
-<!--                    <li class="page-item" th:each="pagination:${#numbers.sequence(1,session.list.totalPages)}">-->
-<!--                        <a class="page-link"-->
-<!--                           th:href="@{'/admin/voucher/list?page='+${pagination}+'&size='+${session.size}}"-->
-<!--                           th:text="${pagination}"></a>-->
-<!--                    </li>-->
-<!--                    <li class="page-item next">-->
-<!--                        <a class="page-link"-->
-<!--                           th:href="@{'/admin/voucher/list?page='+${session.page < session.list.totalPages ? session.page + 1 : session.list.totalPages }+'&size='+${session.size}}"><i-->
-<!--                                class="tf-icon bx bx-chevron-right"></i></a>-->
-<!--                    </li>-->
-<!--                    <li class="page-item last">-->
-<!--                        <a class="page-link"-->
-<!--                           th:href="@{'/admin/voucher/list?page='+${session.list.totalPages}+'&size='+${session.size}}"><i-->
-<!--                                class="tf-icon bx bx-chevrons-right"></i></a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
+        <!--        <div class="d-inline-flex float-end">-->
+        <!--            <div aria-label="Page pagination">-->
+        <!--                <ul class="pagination">-->
+        <!--                    <li class="page-item first">-->
+        <!--                        <a class="page-link" th:href="@{'/admin/voucher/list?page=1&size='+${session.size}}"><i-->
+        <!--                                class="tf-icon bx bx-chevrons-left"></i></a>-->
+        <!--                    </li>-->
+        <!--                    <li class="page-item prev">-->
+        <!--                        <a class="page-link"-->
+        <!--                           th:href="@{'/admin/voucher/list?page='+${session.page==1? '1': session.page - 1}+'&size='+${session.size}}"><i-->
+        <!--                                class="tf-icon bx bx-chevron-left"></i></a>-->
+        <!--                    </li>-->
+        <!--                    <li class="page-item" th:each="pagination:${#numbers.sequence(1,session.list.totalPages)}">-->
+        <!--                        <a class="page-link"-->
+        <!--                           th:href="@{'/admin/voucher/list?page='+${pagination}+'&size='+${session.size}}"-->
+        <!--                           th:text="${pagination}"></a>-->
+        <!--                    </li>-->
+        <!--                    <li class="page-item next">-->
+        <!--                        <a class="page-link"-->
+        <!--                           th:href="@{'/admin/voucher/list?page='+${session.page < session.list.totalPages ? session.page + 1 : session.list.totalPages }+'&size='+${session.size}}"><i-->
+        <!--                                class="tf-icon bx bx-chevron-right"></i></a>-->
+        <!--                    </li>-->
+        <!--                    <li class="page-item last">-->
+        <!--                        <a class="page-link"-->
+        <!--                           th:href="@{'/admin/voucher/list?page='+${session.list.totalPages}+'&size='+${session.size}}"><i-->
+        <!--                                class="tf-icon bx bx-chevrons-right"></i></a>-->
+        <!--                    </li>-->
+        <!--                </ul>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 </div>
 <script>
     const fileInputs = document.getElementsByClassName('file-input');
     const imagePreviews = document.getElementsByClassName('image-preview');
+
+    function validateForm() {
+
+        var nameVoucher = document.myform.nameVoucher.value;
+        var code = document.myform.code.value;
+        var value = document.myform.value.value;
+        var minimumValue = document.myform.minimumValue.value;
+        var quantity = document.myform.quantity.value;
+        var startDay = document.myform.startDay.value;
+        var expirationDate = document.myform.expirationDate.value;
+        // var phoneNumber = document.myform.phoneNumber.value;
+        var status = false;
+
+        //code
+        if (code.length < 1) {
+            document.getElementById("codeloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!";
+            status = false;
+        } else {
+            document.getElementById("codeloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i>";
+            status = true;
+        }
+        //name
+        if (nameVoucher.length < 1) {
+            document.getElementById("nameVoucherloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống tên!";
+            status = false;
+        } else {
+            document.getElementById("nameVoucherloc").innerHTML = "";
+            status = true;
+        }
+        //value
+        if (value.length < 1) {
+            document.getElementById("valueloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống giá trị!";
+            status = false;
+        } else {
+            document.getElementById("valueloc").innerHTML = "";
+            status = true;
+        }
+        //minimumValue
+        if (minimumValue.length < 1) {
+            document.getElementById("minimumValueloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống giá trị!";
+            status = false;
+        } else {
+            document.getElementById("minimumValueloc").innerHTML = "";
+            status = true;
+        }
+        //startDay
+        if (startDay.length < 1) {
+            document.getElementById("startDayloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!";
+            status = false;
+        } else {
+            document.getElementById("startDayloc").innerHTML = "";
+            status = true;
+        }
+        //expirationDate
+        if (expirationDate.length < 1) {
+            document.getElementById("expirationDateloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!";
+            status = false;
+        } else if (expirationDate.length < startDay.length) {
+            document.getElementById("expirationDateloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!";
+            status = false;
+        } else {
+            document.getElementById("expirationDateloc").innerHTML = "";
+            status = true;
+        }
+        //quantity
+        var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+        if (quantity.length < 1) {
+            document.getElementById("quantityloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống số lượng!";
+            status = false;
+        } else if (quantity.length == Number(quantity)) {
+            document.getElementById("quantityloc").innerHTML = "";
+            status = true;
+        } else {
+            document.getElementById("quantityloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i>";
+            status = false;
+        }
+        //active
+        // var active = document.form.lang;
+        var active = document.myform.active.value;
+        for (var i = 0; i < active.length; i++) {
+            if (active[i].checked) {
+                break;
+            }
+        }
+        if (i == active.length) {
+            document.getElementById("activeloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống trạng thái!";
+            status = false;
+        }
+        return document.getElementById("activeloc").innerHTML = "You select option " + (i + 1);
+
+        return status;
+    }
 
     for (let i = 0; i < fileInputs.length; i++) {
         const fileInput = fileInputs[i];
@@ -428,3 +569,4 @@
         });
     }
 </script>
+</html>
