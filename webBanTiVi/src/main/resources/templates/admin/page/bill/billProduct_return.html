@@ -36,13 +36,15 @@
                 </td>
                 <td>
                     <div class="input-group input-group-merge" style="flex-wrap:nowrap !important;">
-                        <input type="number"
+                        <input type="text"
                                th:class="|form-control w-px-50 quantityReturn|"
                                th:name="quantity"
-                               th:max="${billProduct.quantityRequestReturn}" disabled>
+                               th:max="${billProduct.quantityRequestReturn}"
+                               disabled>
                         <span class="input-group-text w-px-60"  disabled>/[(${billProduct.quantityRequestReturn})]</span>
                     </div>
-                    <span th:class="|errorQuantity${billProduct.id} text-danger|"></span>
+                    <p class="text-danger" th:if="${errorAdminQuantity!=''}">[(${errorAdminQuantity})]</p>
+                    <p class="text-danger" th:if="${errorQuantityNull!=''}">[(${errorQuantityNull})]</p>
                 </td>
                 <td>
                             <textarea name="" id="" cols=""
@@ -52,7 +54,9 @@
                 <td>
                             <textarea name=""  cols=""
                                       rows="2" th:value="${billProduct.note}"
-                                      th:class="|note form-control|" th:name="note" disabled></textarea>
+                                      th:class="|note form-control|" th:name="note"
+                                      disabled></textarea>
+                    <p class="text-danger" th:if="${errorNoteNull!=''}">[(${errorNoteNull})]</p>
                 </td>
                 <td>
                     <ul class="list-unstyled users-list avatar-group m-0 d-flex align-items-center">
@@ -70,13 +74,13 @@
                     </ul>
                 </td>
                 <td>
-                    <button th:formaction="@{/admin/refuse/{id}(id=${billProduct.id})}" type="submit"
+                    <button th:formaction="@{/admin/refuse/{id}(id=${billProduct.id})}" formmethod="post" type="submit"
                             class="btn btn-icon btn-secondary refuse "
                             onclick="return confirm('Xác nhận từ chối trả hàng')" disabled>
                         <i class='bx bx-x'></i>
                     </button>
 
-                    <button th:formaction="@{/admin/agree/{id}(id=${billProduct.id})}" type="submit"
+                    <button th:formaction="@{/admin/agree/{id}(id=${billProduct.id})}" formmethod="post" type="submit"
                             class="btn btn-icon btn-success agree" onclick="return confirm('Xác nhận đồng ý trả hàng')"
                             disabled>
                         <i class='bx bx-check'></i>

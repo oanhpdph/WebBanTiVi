@@ -265,6 +265,7 @@ public class BillImpl implements BillService {
             }
             if (i == bill.getBillProducts().size()) {
                 listBillFilter.add(bill);
+                i=0;
             }
         }
         return listBillFilter;
