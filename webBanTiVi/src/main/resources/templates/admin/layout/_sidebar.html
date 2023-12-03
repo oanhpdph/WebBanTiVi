@@ -58,11 +58,6 @@
                         <div>Danh sách hóa đơn</div>
                     </a>
                 </li>
-                <!--                <li th:class="${#strings.equals(session.active,'/bill/payment_method')?'menu-item active':'menu-item'}">-->
-                <!--                    <a th:href="@{/admin/bill/payment_method}" class="menu-link">-->
-                <!--                        <div th:text="#{sidebar.paymentMethod}"></div>-->
-                <!--                    </a>-->
-                <!--                </li>-->
                 <li th:class="${#strings.equals(session.active,'/bill/invoice_return')?'menu-item active':'menu-item'}">
                     <a th:href="@{/admin/bill/list_invoice_return}" class="menu-link">
                         <div>Trả hàng</div>
@@ -111,7 +106,7 @@
             </a>
         </li>
         <li class="menu-item">
-            <a class="menu-link" th:href="@{/login}">
+            <a class="menu-link" th:href="@{/login/logout}">
                 <i class="menu-icon tf-icons bx bx-power-off me-2"></i>
                 <span class="align-middle">Đăng xuất</span>
             </a>

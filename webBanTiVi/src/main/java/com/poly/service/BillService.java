@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BillService {
 
@@ -31,7 +32,7 @@ public interface BillService {
 
     List<Bill> findBillReturnByStatus(String code);
 
-    Bill findByCode(String code);
+    Optional<Bill> findByCode(String code);
 
     List<Bill> listBillFilter(List<Bill> billList);
 

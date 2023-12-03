@@ -18,6 +18,10 @@
             Các sản phẩm áp dụng:
         </h3>
     </div>
+    <div th:if="${check == false}">
+    <p class="fs-large fw-bold text-center text-danger">[(${message})]</p>
+    </div>
+    <div th:if="${check == true}">
     <div class="row row-cols-1 row-cols-lg-4 row-cols-md-4 row-cols-sm-2 g-4">
         <div th:each="tivi : ${listproduct}">
             <div class="col">
@@ -42,6 +46,7 @@
                 </div>
             </div>
         </div>
+                </div>
     </div>
     </div>
     </div>

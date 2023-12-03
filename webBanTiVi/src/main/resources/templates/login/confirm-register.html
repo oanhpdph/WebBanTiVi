@@ -46,6 +46,7 @@
                         <input class="form-group" type="text" id="verification-code" name="verification-code"
                                placeholder="Nhập mã xác thực" required>
                     </div>
+                    <p class="text-danger" th:if="${errorRegister !=''}">[(${errorRegister})]</p>
                     <button type="submit">Xác thực</button>
                 </form>
             </div>
