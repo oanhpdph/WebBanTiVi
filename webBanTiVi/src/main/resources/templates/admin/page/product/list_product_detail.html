@@ -21,7 +21,7 @@
                             data-bs-target="#navs-pills-justified-home" aria-controls="navs-pills-justified-home"
                             aria-selected="true">
                         Sản phẩm
-                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">[(${#lists.size(listProduct)})]</span>
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">[(${#lists.size(countProduct)})]</span>
                     </button>
                 </a>
             </li>
@@ -31,13 +31,18 @@
                             data-bs-target="#navs-pills-justified-profile" aria-controls="navs-pills-justified-profile"
                             aria-selected="false">
                         Sản phẩm chi tiết
-                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">[(${listProductDetail.totalElements})]</span>
+                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger">[(${#lists.size(countDetail)})]</span>
                     </button>
                 </a>
             </li>
         </ul>
         <div class="card p-0 rounded-bottom rounded-0">
             <div class="card-header">
+                <div class="input-group mb-3">
+                    <input class="form-control" type="search" placeholder="Nhập tên sản phẩm hoặc thông số muốn tìm"
+                           id="key" th:field="*{key}">
+                    <button class="btn btn-secondary" id="search">Tìm kiếm</button>
+                </div>
                 <div class="row justify-content-between">
                     <div class="col-xl-2 col-4">
                         <div class="input-group ">
@@ -62,29 +67,32 @@
                 </div>
             </div>
             <div class="card-body table-responsive">
-                <table class="table table-hover" id="table-all-product">
+                <table class="table table-hover text-center" id="table-all-product">
                     <caption class="ms-4">
                         Từ [(${listProductDetail.number * listProductDetail.size +1})] đến [(${(listProductDetail.number
                         *
                         listProductDetail.size)+listProductDetail.numberOfElements})]
                     </caption>
                     <thead>
-                    <tr class="fw-semibold row-table text-center">
+                    <tr class="fw-semibold row-table">
                         <th>Sản phẩm</th>
                         <th>Sku</th>
                         <!--                    <th>Giá nhập</th>-->
                         <th>Giá bán</th>
+                        <th>Giảm giá</th>
                         <th>Số lượng</th>
                         <th>Trạng thái</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
+                    <!--                    (today.getTime()-bill.paymentDate.getTime())-->
                     <tr th:each="product,productStat:${listProductDetail}">
                         <td th:text="${listNameProduct[productStat.index]}"></td>
                         <td th:text="${product.sku}"></td>
-                        <!--                    <td th:text="${product.priceImport}"></td>-->
-                        <td th:text="${#numbers.formatDecimal(product.priceExport,0,'COMMA',2,'POINT')}"></td>
+                        <td th:text="${#numbers.formatDecimal(product.priceExport,0,'COMMA',0,'POINT')}"></td>
+                        <td th:text="${ product.coupon!=null &&product.coupon.active == true && #dates.createNow().before(product.coupon.dateEnd) && #dates.createNow().after(product.coupon.dateStart)  ? product.coupon.value+'%':'0%'}">
+                        </td>
                         <td th:text="${product.quantity}"></td>
                         <td class="form-switch text-center"><input class="form-check-input active-product-detail"
                                                                    type="checkbox" th:value="${product.id}"
@@ -98,15 +106,56 @@
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item view-product" href="javascript:void(0);"
                                        data-bs-toggle="modal" th:value="${product.id}"
-                                       data-bs-target="#modalDetailProduct"><i class='bx bxs-show me-1'></i>Xem sản phẩm</a>
-                                    <a class="dropdown-item" href="javascript:void(0);"><i
-                                            class="bx bx-trash me-1"></i> Xóa</a>
+                                       data-bs-target="#modalDetailProduct"><i class='bx bx-show me-1'></i>Xem sản phẩm</a>
+                                    <a class="dropdown-item view-discount" href="javascript:void(0);"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#modalDiscount" th:value="${product.id}"><i
+                                            class='bx bxs-discount'></i>Xem
+                                        giảm giá</a>
                                 </div>
                             </div>
                         </td>
                     </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="modal fade" id="modalDiscount" aria-modal="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="title-discount">Thông tin giảm giá</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="have-discount">
+                            <div class="mb-3">
+                                <label class="form-label">Mã giảm giá:</label>
+                                <span class="form-control" name="code" id="code"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Giá trị:</label>
+                                <div class="input-group">
+                                    <span type="number" class="form-control" name="value" id="value"></span>
+                                    <span class="input-group-text">%</span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ngày bắt đầu:</label>
+                                <span type="date" class="form-control" name="dateStart" id="date-start"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Ngày kết thúc:</label>
+                                <span type="date" class="form-control" name="dateEnd" id="date-end"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Trạng thái :</label>
+                                <span type="date" class="form-control" name="active" id="active-discount"></span>
+                            </div>
+                        </div>
+                        <div class="modal-body" id="no-discount" hidden>
+                            <h3>Sản phẩm chưa từng được áp dụng giảm giá</h3>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal fade" id="modalDetailProduct" tabindex="-1" style="display: none">
                 <div class="modal-dialog modal-lg" role="document">
@@ -126,20 +175,33 @@
                                 <div class="col mb-3">
                                     <label class="form-label">sku</label>
                                     <input type="text" class="form-control" id="sku">
+                                    <span class="fst-italic text-danger" id="error-sku"></span>
+
                                 </div>
                                 <div class="col mb-3">
                                     <label class="form-label">Số lượng</label>
                                     <input type="number" class="form-control" id="quantity">
+                                    <span class="fst-italic text-danger" id="error-quantity"></span>
+
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col mb-3">
                                     <label class="form-label">Giá nhập</label>
-                                    <input type="number" class="form-control" id="price-import">
+                                    <div class=" input-group">
+                                        <input type="number" class="form-control" id="price-import">
+                                        <span class="input-group-text">VNĐ</span>
+                                    </div>
+                                    <span class="fst-italic text-danger" id="error-priceImport"></span>
                                 </div>
+
                                 <div class="col mb-3">
                                     <label class="form-label">Giá bán</label>
-                                    <input type="number" class="form-control" id="price-export">
+                                    <div class=" input-group">
+                                        <input type="number" class="form-control" id="price-export">
+                                        <span class="input-group-text">VNĐ</span>
+                                    </div>
+                                    <span class="fst-italic text-danger" id="error-priceExport"></span>
                                 </div>
                             </div>
                             <div class="row">

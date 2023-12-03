@@ -21,7 +21,7 @@ for (let i = 0; i < fileInputs.length; i++) {
                 fileInput.value = ''; // Đặt lại trường nhập
             }
         } else {
-            imagePreview.src = ""
+            imagePreview.src = "/image/product/anhdefault.jpg"
         }
     });
 }

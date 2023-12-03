@@ -57,7 +57,7 @@
                                         <div class="form-check form-check-inline mt-3">
                                             <input class="form-check-input" type="radio"
                                                    th:name="active"
-                                                   th:value="true">
+                                                   th:value="true" checked>
                                             <label class="form-check-label">Hoạt Động</label>
                                         </div>
                                         <div class="form-check form-check-inline">
@@ -72,7 +72,6 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="reset" class="btn btn-secondary">Đặt lại</button>
                         <button type="submit" class="btn btn-primary">Lưu</button>
                     </div>
                 </div>
@@ -219,16 +218,10 @@
                                                        class="btn btn-primary btn-control">Các sản phẩm được giảm</a>
                                                 </div>
                                                 <div class="w-auto">
-                                                    <button type="reset"
-                                                            class="btn btn-primary btn-control">
-                                                        Đặt lại
-                                                    </button>
-                                                </div>
-                                                <div class="w-auto">
                                                     <button type="submit"
                                                             class="btn btn-primary btn-control"
                                                             onclick="return confirm('Xác nhận cập nhật')">
-                                                        Update
+                                                        Cập nhật
                                                     </button>
                                                 </div>
                                                 <div class="w-auto">
@@ -236,7 +229,7 @@
                                                        onclick="return confirm('Xác nhận xóa')">
                                                         <button type="button"
                                                                 class="btn btn-primary btn-control">
-                                                            Delete
+                                                            Xóa
                                                         </button>
                                                     </a>
                                                 </div>

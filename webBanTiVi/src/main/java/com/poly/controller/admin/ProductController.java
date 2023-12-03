@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,9 @@ public class ProductController {
         session.setAttribute("pageView", "/admin/page/product/list_product.html");
         session.setAttribute("active", "/product/list-product");
         model.addAttribute("listProduct", productService.findAll(detailDto));
-        model.addAttribute("listProductDetail", productDetailService.findAll());
+        model.addAttribute("countProduct", productService.findAll());
+
+        model.addAttribute("countDetail", productDetailService.findAll());
         return "/admin/layout";
     }
 
@@ -42,7 +45,8 @@ public class ProductController {
     public String getAllListDetail(@ModelAttribute(name = "detailDTO") ProductDetailListDto detailDto, HttpSession session, Model model) {
         session.setAttribute("pageView", "/admin/page/product/list_product_detail.html");
         session.setAttribute("active", "/product/list-product");
-        model.addAttribute("listProduct", productService.findAll());
+        model.addAttribute("countProduct", productService.findAll());
+
         Page<ProductDetail> page = productDetailService.findAll(detailDto);
         List<String> list = new ArrayList<>();
         for (ProductDetail productDetail : page.getContent()) {
@@ -54,12 +58,14 @@ public class ProductController {
                 temp.add(string.getValue());
                 temp.add("-");
             }
-            temp.remove(temp.size()-1);
+            temp.remove(temp.size() - 1);
             temp.add("]");
             list.add(String.join(" ", temp));
         }
         model.addAttribute("listNameProduct", list);
         model.addAttribute("listProductDetail", page);
+        model.addAttribute("countDetail", productDetailService.findAll());
+
         return "/admin/layout";
     }
 

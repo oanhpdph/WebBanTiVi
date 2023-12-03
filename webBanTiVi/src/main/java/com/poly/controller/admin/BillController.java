@@ -125,6 +125,15 @@ public class BillController {
         }
         Pageable pageable = PageRequest.of(pageRequest - 1, sizeRequest);
         bills = billService.loadData(search, pageable);
+        List<Bill> bill1 = billService.all();
+        model.addAttribute("cho", bill1.stream().filter(bill -> bill.getBillStatus().getCode().equals("WP")).toList());
+        model.addAttribute("chuanbi", bill1.stream().filter(bill -> bill.getBillStatus().getCode().equals("PG")).toList());
+        model.addAttribute("danggiao", bill1.stream().filter(bill -> bill.getBillStatus().getCode().equals("DE")).toList());
+        model.addAttribute("hoanthanh", bill1.stream().filter(bill -> bill.getBillStatus().getCode().equals("CO")).toList());
+        model.addAttribute("hoantra", bill1.stream().filter(bill -> bill.getBillStatus().getCode().equals("RN")).toList());
+        model.addAttribute("huy", bill1.stream().filter(bill -> bill.getBillStatus().getCode().equals("CA")).toList());
+        model.addAttribute("trahang", bill1.stream().filter(bill -> bill.getBillStatus().getCode().equals("RR") || bill.getBillStatus().getCode().equals("WR") || bill.getBillStatus().getCode().equals("RE")).toList());
+
         model.addAttribute("listBill", bills);
         model.addAttribute("totalElements", bills.getTotalElements());
         return "/admin/layout";

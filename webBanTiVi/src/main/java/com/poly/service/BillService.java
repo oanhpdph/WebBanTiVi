@@ -15,9 +15,11 @@ public interface BillService {
 
     Bill add(Bill bill);
 
-     Bill add(BillProRes bill);
+    List<Bill> all();
 
-     void addBillPro(Bill bill, BillProRes billProRes);
+    Bill add(BillProRes bill);
+
+    void addBillPro(Bill bill, BillProRes billProRes);
 
     Bill update(Bill bill, Integer id);
 

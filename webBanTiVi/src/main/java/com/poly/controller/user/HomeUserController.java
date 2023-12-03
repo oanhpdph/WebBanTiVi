@@ -154,7 +154,7 @@ public class HomeUserController {
 
                     productDetailDto1.setId(productDetail.getId());
                     productDetailDto1.setPoint(product.getAvgPoint());
-                    productDetailDto1.setQuantityEvalute(product.getListEvaluate().size());
+                    productDetailDto1.setQuantityEvalute(product.getListEvaluate().stream().filter(evaluate -> evaluate.isActive()==true).toList().size());
                     temp = 1;
                     break;
                 }
