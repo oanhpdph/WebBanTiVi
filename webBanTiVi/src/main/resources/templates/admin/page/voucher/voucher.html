@@ -291,7 +291,7 @@
                                                             <div class="input-group">
                                                                 <input class="form-control" type="text"
                                                                        th:name="minimumValue"
-                                                                       th:value="${voucher.minimumValue}">
+                                                                       th:value="${#numbers.formatDecimal(voucher.minimumValue,0,'COMMA',0,'POINT')}">
                                                                 <span class="input-group-text">VNĐ</span>
                                                             </div>
 

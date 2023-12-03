@@ -10,6 +10,7 @@
                         data-bs-toggle="tab" value="doncho"
                         aria-selected="false">
                     Chờ xử lý
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger" th:if="${#lists.size(cho)>0}">[(${#lists.size(cho)})]</span>
                 </button>
             </li>
             <li class="nav-item">
@@ -17,6 +18,7 @@
                         data-bs-toggle="tab" value="chuanbi"
                         aria-selected="true">
                     Chuẩn bị hàng
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger"  th:if="${#lists.size(chuanbi)>0}">[(${#lists.size(chuanbi)})]</span>
                 </button>
             </li>
             <li class="nav-item">
@@ -24,6 +26,7 @@
                         data-bs-toggle="tab" value="danggiao"
                         aria-selected="false">
                     Đang giao
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger"  th:if="${#lists.size(danggiao)>0}">[(${#lists.size(danggiao)})]</span>
                 </button>
             </li>
             <li class="nav-item">
@@ -31,6 +34,7 @@
                         data-bs-toggle="tab" value="hoanthanh"
                         aria-selected="false">
                     Hoàn thành
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger"  th:if="${#lists.size(hoanthanh)>0}">[(${#lists.size(hoanthanh)})]</span>
                 </button>
             </li>
             <li class="nav-item">
@@ -38,6 +42,7 @@
                         data-bs-toggle="tab" value="donhuy"
                         aria-selected="false">
                     Đơn hủy
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger"  th:if="${#lists.size(huy)>0}">[(${#lists.size(huy)})]</span>
                 </button>
             </li>
             <li class="nav-item">
@@ -45,6 +50,7 @@
                         data-bs-toggle="tab" value="dontra"
                         aria-selected="false">
                     Đơn trả
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger"  th:if="${#lists.size(trahang)>0}">[(${#lists.size(trahang)})]</span>
                 </button>
             </li>
             <li class="nav-item">
@@ -52,6 +58,7 @@
                         data-bs-toggle="tab" value="donhoan"
                         aria-selected="false">
                     Đơn hoàn
+                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger"  th:if="${#lists.size(hoantra)>0}">[(${#lists.size(hoantra)})]</span>
                 </button>
             </li>
         </ul>
@@ -125,8 +132,8 @@
                         <th>#</th>
                         <th>Mã hóa đơn</th>
                         <th>Tên khách hàng</th>
-                        <th>Số điện thoại</th>
                         <th>Ngày tạo</th>
+                        <th>Tổng tiền(VNĐ)</th>
                         <th><select class="form-select" th:name="paymentStatus" id="paymentStatus"
                                     th:field="*{paymentStatus}">
                             <optgroup label="Thanh toán">
@@ -141,7 +148,7 @@
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    <tr th:each="listBill,billStat: ${listBill.content}" >
+                    <tr th:each="listBill,billStat: ${listBill.content}">
                         <td>
                             <strong>[(${billStat.index+1})]</strong>
                         </td>
@@ -149,11 +156,14 @@
                         <td>
                             [(${listBill.customer.name})]
                         </td>
-                        <td>[(${listBill.customer.phoneNumber})]</td>
                         <td>[(${listBill.createDate})]</td>
+                        <td>
+                            [(${#numbers.formatDecimal(listBill.totalPrice-listBill.voucherValue,0,'COMMA',0,'POINT')})]
+                        </td>
                         <td th:text="${listBill.paymentStatus == 1 ? 'Đã thanh toán' : listBill.paymentStatus == 2 ? 'Chưa thanh toán' : 'Đã hoàn tiền'}"></td>
                         <td>
-                            <a th:href="|/admin/bill/bill_detail/${listBill.id}|" type="button" class="btn btn-icon btn-outline-primary">
+                            <a th:href="|/admin/bill/bill_detail/${listBill.id}|" type="button"
+                               class="btn btn-icon btn-outline-primary">
                                 <i class="bx bxs-edit-alt"></i>
                             </a>
                         </td>

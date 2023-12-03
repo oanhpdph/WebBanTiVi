@@ -88,32 +88,25 @@ public class BillDetailController {
                     s.getCode().equals("PG") &&
                     s.getCode().equals("DE") &&
                     s.getCode().equals("CO") &&
-                    s.getCode().equals("SC") &&
-                    s.getCode().equals("CC")
+                    s.getCode().equals("CA")
             );
         }
         if (code.equals("PG")) {
             billStatusList.removeIf(s -> !s.getCode().equals("PG") &&
                     !s.getCode().equals("DE") &&
                     !s.getCode().equals("CO") &&
-                    !s.getCode().equals("SC") &&
-                    !s.getCode().equals("CC")
+                    !s.getCode().equals("CA")
             );
         }
         if (code.equals("DE")) {
             billStatusList.removeIf(s -> !s.getCode().equals("DE") &&
                     !s.getCode().equals("DEE") &&
                     !s.getCode().equals("CO") &&
-                    !s.getCode().equals("SC") &&
-                    !s.getCode().equals("CC")
+                    !s.getCode().equals("CA")
             );
         }
         if (code.equals("CO")) {
-            billStatusList.removeIf(s -> !s.getCode().equals("CO") &&
-                    !s.getCode().equals("RR") &&
-                    !s.getCode().equals("WR") &&
-                    !s.getCode().equals("RE")
-            );
+            billStatusList.removeIf(s -> !s.getCode().equals("CO"));
         }
         if (code.equals("RR")) {
             billStatusList.removeIf(s -> !s.getCode().equals("RR") &&
@@ -131,16 +124,11 @@ public class BillDetailController {
         if (code.equals("DEE")) {
             billStatusList.removeIf(s -> !s.getCode().equals("DEE") &&
                     !s.getCode().equals("DE") &&
-                    !s.getCode().equals("SC") &&
                     !s.getCode().equals("CC")
             );
         }
-        if (code.equals("SC")) {
-            billStatusList.removeIf(s -> !s.getCode().equals("SC")
-            );
-        }
-        if (code.equals("CC")) {
-            billStatusList.removeIf(s -> !s.getCode().equals("CC")
+        if (code.equals("CA")) {
+            billStatusList.removeIf(s -> !s.getCode().equals("CA")
             );
         }
         if (code.equals("RE")) {

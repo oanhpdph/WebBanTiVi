@@ -27,7 +27,7 @@
                 </tr>
                 <tr>
                     <td>Tổng tiền:</td>
-                    <td><span th:text="${totalPrice}">[total price]</span></td>
+                    <td><span th:text="${#numbers.formatDecimal(totalPrice,0,'COMMA',0,'POINT')}">[total price]</span></td>
                 </tr>
                 <tr>
                     <td>Thời gian thanh toán:</td>
