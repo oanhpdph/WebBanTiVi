@@ -25,21 +25,37 @@
                                      class="w-px-200" alt="Lỗi hiển thị">
                             </div>
                             <div class="col-8 col-md-7 col-xl-8">
-                                <div class="col-12 mb-4 fs-4"><p><b>Tên sản phẩm:</b>
+                                <div class="col-12 mb-4 "><p class="fs-4"><b>Tên sản phẩm:</b>
                                     <span class="text-decoration-none">[(${billProduct.product.product.nameProduct+'-'+billProduct.product.product.sku})]</span>
-                                </p></div>
-                                <div class="row mb-4">
-                                    <span class="col-8 text-left"><b>Số lượng:</b></span>
-                                    <span class="col-4 text-end"> [(${billProduct.quantity})]</span>
+                                </p>
+                                    <div class="fs-5" th:each="field:${billProduct.product.fieldList}">
+                                        <span>[(${field.field.name})]: [(${field.value})]</span>
+                                    </div>
                                 </div>
-                                <div class="row mb-4">
-                                    <span class="col-7 text-start"><b>Giá sản phẩm:</b></span>
-                                    <span class="col-5 text-end"> [(${#numbers.formatDecimal(billProduct.price, 0,'COMMA',0,'POINT')})]<u>đ</u></span>
-                                </div>
-                                <div class="row mb-4" th:if="${billProduct.reducedMoney!=0}">
-                                    <span class="col-7 text-start"><b>Giá khuyến mãi:</b></span>
-                                    <span class="col-5 text-end"> [(${#numbers.formatDecimal(billProduct.price-billProduct.reducedMoney, 0,'COMMA',0,'POINT')})]<u>đ</u></span>
 
+                                <div class="row mb-4 justify-content-between">
+                                    <span class="col text-left"><b>Số lượng:</b></span>
+                                    <span class="col text-end"> [(${billProduct.quantity})]</span>
+                                </div>
+                                <div class="row mb-4 justify-content-between">
+                                    <span class="col text-start"><b>Giá sản phẩm:</b></span>
+                                    <span class="col text-end"> [(${#numbers.formatDecimal(billProduct.price, 0,'COMMA',0,'POINT')})]<u>đ</u></span>
+                                </div>
+                                <div class="row mb-4 justify-content-between" th:if="${billProduct.reducedMoney!=0}">
+                                    <span class="col text-start"><b>Giá khuyến mãi:</b></span>
+                                    <span class="col text-end"> [(${#numbers.formatDecimal(billProduct.price-billProduct.reducedMoney, 0,'COMMA',0,'POINT')})]<u>đ</u></span>
+                                </div>
+                                <div class="row mb-4 justify-content-between text-success" th:if="${billProduct.status==3}">
+                                    <span class="col text-start"><b>Trả hàng thành công:</b></span>
+                                    <span class="col text-end"> [(${billProduct.quantityAcceptReturn})]</span>
+                                </div>
+                                <div class="row mb-4 justify-content-between text-danger" th:if="${billProduct.status==1}">
+                                    <span class="col text-start"><b>Số lượng yêu cầu trả:</b></span>
+                                    <span class="col text-end"> [(${billProduct.quantityRequestReturn})]</span>
+                                </div>
+                                <div class="row mb-4 justify-content-between text-danger" th:if="${billProduct.status==2}">
+                                    <span class="col text-start"><b>Không chấp nhận trả hàng:</b></span>
+                                    <span class="col text-end"> [(${billProduct.quantityRequestReturn})]</span>
                                 </div>
                             </div>
                         </div>
@@ -53,30 +69,28 @@
                         <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
                                 data-bs-target="#navs-top-info-customer" aria-controls="navs-top-home"
                                 aria-selected="true">
-                            Thông tin khách hàng
+                            Thông tin phiếu giao
                         </button>
                     </li>
                 </ul>
                 <div class="tab-content" style="z-index: initial">
                     <div class="tab-pane fade active show" id="navs-top-info-customer" role="tabpanel">
-                        <!--                     thông tin khách hàng-->
                         <form th:action="@{/admin/bill/bill_detail/delivery_note}" id="formUpdateDeliveryNotes">
-                            <div class="row">
-                                <h4 class="fw-bold text-start col-6 col-md-6">Đơn từ web</h4>
-                                <div class="col-6 col-md-6 text-end">
-                                    <button class="btn btn-outline-dark" type="button" id="btnEdit"
-                                            name="editInfo">Chỉnh sửa
-                                    </button>
-                                    <button class="btn btn-outline-dark" type="button" id="btnSave"
-                                            th:value="${deliveryNote?.id}"
-                                            name="editInfo">Lưu
-                                    </button>
-                                    <button class="btn btn-outline-dark" type="reset" id="btnCancel"
-                                            name="editInfo">Reset
-                                    </button>
+                            <!--                            <div class="row">-->
+                            <div class="col-6 col-md-6">
+                                <button class="btn btn-secondary" type="button" id="btnEdit"
+                                        name="editInfo">Chỉnh sửa
+                                </button>
+                                <button class="btn btn-secondary" type="button" id="btnSave"
+                                        th:value="${deliveryNote?.id}"
+                                        name="editInfo">Lưu
+                                </button>
+                                <button class="btn btn-secondary" type="reset" id="btnCancel"
+                                        name="editInfo">Reset
+                                </button>
 
-                                </div>
                             </div>
+                            <!--                            </div>-->
                             <hr>
                             <div class="table-responsive text-wrap">
                                 <table class="table table-bordered">
@@ -85,14 +99,14 @@
                                         <td><strong>Tên khách hàng:</strong>
                                         </td>
                                         <td>
-                                            <p id="nameText" th:text="${deliveryNote?.received}"></p>
+                                            <p th:text="${billDetail.customer.name}"></p>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td><strong>SĐT khách hàng:</strong>
                                         </td>
                                         <td>
-                                            <p id="phoneText" th:text="${deliveryNote?.receiverPhone}"></p>
+                                            <p th:text="${billDetail.customer.phoneNumber}"></p>
                                         </td>
                                     </tr>
                                     <tr>
@@ -101,6 +115,21 @@
                                         <td>
                                             <p id="emailCustomerText" th:text="${deliveryNote?.receivedEmail}"></p></td>
                                     </tr>
+                                    <tr>
+                                        <td><strong>Tên người nhận:</strong>
+                                        </td>
+                                        <td>
+                                            <p id="nameText" th:text="${deliveryNote?.received}"></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>SĐT người nhận:</strong>
+                                        </td>
+                                        <td>
+                                            <p id="phoneText" th:text="${deliveryNote?.receiverPhone}"></p>
+                                        </td>
+                                    </tr>
+
                                     <tr>
                                         <td><strong>Địa chỉ người nhận:</strong>
                                         </td>
@@ -115,10 +144,14 @@
                                         <td><strong>Phí giao hàng:</strong>
                                         </td>
                                         <td class="input-group">
-                                            <input class="form-check form-control " type="number"
-                                                   th:value="${#numbers.formatInteger(deliveryNote?.deliveryFee,1)}"
-                                                   name="deliveryFee"
-                                                   id="deliveryFee" disabled="true">
+
+                                            <div class=" input-group">
+                                                <input class="form-check form-control " type="number"
+                                                       th:value="${#numbers.formatInteger(deliveryNote?.deliveryFee,1)}"
+                                                       name="deliveryFee"
+                                                       id="deliveryFee" disabled="true">
+                                                <span class="input-group-text">VNĐ</span>
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -211,26 +244,6 @@
                         <div class="mt-2 mb-2">
                             <label class="form-label"><b class="text-start">Ghi chú:</b></label>
                             <textarea class="form-control" th:value="${billDetail.note}" disabled></textarea>
-                        </div>
-                        <div class="col-md">
-                            <div class="form-check mt-3" th:each="pm : ${paymentMethod}">
-                                <input class="form-check-input" type="radio" name="paymentMethod"
-                                       th:checked="${billDetail.paymentMethod.id==pm.id}"
-                                       th:id="${pm.id}"
-                                       th:value="${pm.id}" th:name="paymentMethod">
-                                <label class="form-check-label" th:for="${pm.id}" th:text="${pm.paymentMethod}"></label>
-                            </div>
-                            <!--                            <div class="form-check mt-3">-->
-                            <!--                                <input class="form-check-input" type="radio" name="paymentMethod" th:field="${billDetail.paymentMethod.code}"-->
-                            <!--                                       id="inlineRadio2"-->
-                            <!--                                       value="VNP">-->
-                            <!--                                <label class="form-check-label" for="inlineRadio2">Chuyển khoản Vnpay</label>-->
-                            <!--                            </div>-->
-                        </div>
-                        <div class="col-12 text-center" th:if="${billDetail.paymentStatus==2}">
-                            <button class="btn btn-warning mt-4" id="pay" type="submit" value="1" name="paymentStatus">
-                                Thanh toán
-                            </button>
                         </div>
                     </div>
                 </form>

@@ -10,10 +10,7 @@ import com.poly.repository.ProductDetailRepo;
 import com.poly.service.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -116,6 +114,7 @@ public class ProductDetailImpl implements ProductDetailService {
         return product;
     }
 
+
     @Override
     public ProductDetail findById(Integer id) {
         Optional<ProductDetail> optional = productDetailRepo.findById(id);
@@ -135,6 +134,14 @@ public class ProductDetailImpl implements ProductDetailService {
 
         if (!productDetailListDto.getSku().isEmpty()) {
             list.add(criteriaBuilder.equal(productDetailRoot.get("sku"), productDetailListDto.getSku()));
+        }
+        if (productDetailListDto.getKey() != null && productDetailListDto.getKey().trim().length() != 0) {
+            Join<ProductDetail, ProductDetailField> fieldValueJoin = productDetailRoot.joinList("fieldList");
+            list.add(criteriaBuilder.or(
+                    criteriaBuilder.like(fieldValueJoin.get("value"), "%" + productDetailListDto.getKey() + "%"),
+                    criteriaBuilder.like(productDetailRoot.get("product").get("nameProduct"), "%" + productDetailListDto.getKey() + "%"),
+                    criteriaBuilder.like(productDetailRoot.get("sku"), "%" + productDetailListDto.getKey() + "%")
+            ));
         }
         if (productDetailListDto.getSort() == 1) {
             productCriteriaQuery.orderBy(criteriaBuilder.desc(productDetailRoot.get("createDate")));
@@ -171,13 +178,13 @@ public class ProductDetailImpl implements ProductDetailService {
         ProductDetail productDetail = findById(productDetailListDto.getId());
         if (productDetail != null) {
             productDetail.setActive(productDetailListDto.isActive());
-            if (productDetailListDto.getPriceExport() != null) {
+            if (productDetailListDto.getPriceExport() != null && productDetailListDto.getPriceExport().compareTo(BigDecimal.valueOf(0)) >= 0) {
                 productDetail.setPriceExport(productDetailListDto.getPriceExport());
             }
-            if (productDetailListDto.getPriceImport() != null) {
-                productDetail.setPriceExport(productDetailListDto.getPriceImport());
+            if (productDetailListDto.getPriceImport() != null && productDetailListDto.getPriceImport().compareTo(BigDecimal.valueOf(0)) >= 0) {
+                productDetail.setPriceImport(productDetailListDto.getPriceImport());
             }
-            if (productDetailListDto.getQuantity() != null) {
+            if (productDetailListDto.getQuantity() != null && productDetailListDto.getQuantity() >= 0) {
                 productDetail.setQuantity(productDetailListDto.getQuantity());
             }
             if (productDetailListDto.getSku().trim().length() != 0) {
@@ -195,6 +202,64 @@ public class ProductDetailImpl implements ProductDetailService {
             productDetailRepo.save(productDetail);
         }
         return productDetail;
+    }
+
+    @Override
+    public ProductDetail save(ProductDetailDto productDetailDto) {
+        Product product = productService.findById(productDetailDto.getId());
+        if (validate(productDetailDto) == false) {
+            return null;
+        }
+        for (ProductDetailListDto productDetailListDto : productDetailDto.getListProduct()) {
+            ProductDetail productDetail = new ProductDetail();
+            productDetail.setActive(true);
+            productDetail.setQuantity(productDetailListDto.getQuantity());
+            productDetail.setPriceExport(productDetailListDto.getPriceExport());
+            productDetail.setPriceImport(productDetailListDto.getPriceImport());
+            productDetail.setProduct(product);
+            productDetail.setCreateDate(new Date());
+            productDetail.setSku(productDetailListDto.getSku());
+            productDetail = productDetailRepo.save(productDetail);
+            for (ImageDto imageDto : productDetailListDto.getImage()) {
+                Image image = new Image();
+                image.setLink(imageDto.getMultipartFile());
+                image.setLocation(imageDto.getLocation());
+                image.setProduct(productDetail);
+                imageService.add(image);
+            }
+            for (Attribute attribute : productDetailListDto.getListAttributes()) {
+                Optional<Field> field = fieldService.findById(attribute.getId());
+                if (field.isPresent()) {
+                    ProductDetailField productDetailField = new ProductDetailField();
+                    productDetailField.setValue(attribute.getValue());
+                    productDetailField.setField(field.get());
+                    productDetailField.setProductDetail(productDetail);
+                    productDetailFieldService.save(productDetailField);
+                }
+            }
+            return productDetail;
+        }
+        return null;
+    }
+
+    public boolean validate(ProductDetailDto productDetailDto) {
+        for (ProductDetailListDto productDetailListDto : productDetailDto.getListProduct()) {
+
+            if (productDetailListDto.getQuantity() == null || productDetailListDto.getQuantity() < 0) {
+                return false;
+            }
+            if (productDetailListDto.getPriceExport() == null || productDetailListDto.getPriceExport().compareTo(BigDecimal.valueOf(0)) < 0) {
+                return false;
+            }
+            if (productDetailListDto.getPriceImport() == null || productDetailListDto.getPriceImport().compareTo(BigDecimal.valueOf(0)) < 0) {
+                return false;
+            }
+            if (productDetailListDto.getSku() == null || productDetailListDto.getSku().trim().length() == 0) {
+                return false;
+            }
+
+        }
+        return true;
     }
 
     public void deleteProductDiscount(Integer id) {

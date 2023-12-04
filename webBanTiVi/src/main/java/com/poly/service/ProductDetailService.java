@@ -21,7 +21,7 @@ public interface ProductDetailService {
 
     ProductDetail update(ProductDetailListDto productDetailListDto);
 
-//    List<ProductDetail> update(List<ProductDetailDto> productDetailDto);
+    ProductDetail save(ProductDetailDto productDetailDto);
 
 
 }

@@ -1,3 +1,9 @@
+<style>
+    div.swal2-container {
+        z-index: 1100;
+    }
+
+</style>
 <link rel="stylesheet" href="/admin/plugin/css/product.css">
 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Sản phẩm/<a class="text-muted fw-light"
                                                                             href="/admin/product/list">Danh sách sản phẩm/</a></span>
@@ -72,6 +78,7 @@
                     <div class="modal-body">
                         <label class="label">Tên thuộc tính</label>
                         <input class="form-control" type="text" id="name-attribute">
+                        <span class="fst-italic text-danger"id="attributes-error"></span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" id="submit-add-attribute"
@@ -157,6 +164,7 @@
                     <div class="modal-body">
                         <label class="label">Tên thuộc tính</label>
                         <input class="form-control" type="text" id="name-variant">
+                        <span class="fst-italic text-danger "id="variant-error"></span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" id="submit-add-variant">
@@ -188,14 +196,14 @@
                     <div class="mb-3 col">
                         <label class="form-label">Mã SKU</label>
                         <input class="form-control" id="sku-code">
-                        <span class="fst-italic text-danger sku-code-error"></span>
+                        <span class="fst-italic text-danger" id="sku-code-error"></span>
                     </div>
                     <div class="mb-3 col">
                         <label class="form-label">Hãng</label>
                         <select class="form-select" id="select-brand">
                             <option></option>
                         </select>
-                        <span class="fst-italic text-danger group-error"></span>
+                        <span class="fst-italic text-danger" id="brand-error"></span>
                     </div>
                 </div>
             </div>
@@ -204,6 +212,7 @@
                     <label class="form-label">Tên sản phẩm</label>
                     <textarea class="form-control" rows="3"
                               id="name-display"></textarea>
+                    <span class="fst-italic text-danger " id="name-error"></span>
                 </div>
             </div>
 

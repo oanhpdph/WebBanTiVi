@@ -63,4 +63,10 @@ public class HomeController {
         session.setAttribute("active", "/product/attributes");
         return "admin/layout";
     }
+    @GetMapping("/brand/list")
+    public String listBrand(HttpSession session) {
+        session.setAttribute("pageView", "/admin/page/product/brand.html");
+        session.setAttribute("active", "/product/brand");
+        return "admin/layout";
+    }
 }

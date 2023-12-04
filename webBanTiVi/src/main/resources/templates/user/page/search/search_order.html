@@ -15,6 +15,11 @@
                 <h4>Đơn hàng của bạn</h4>
                 <div class="mb-4 mx-4">
                     <div class="mb-3 row order">
+                        <div class="row mt-3">
+                            <span class="text-start col-sm-6">Mã đơn:[(${session.bill.code})]</span>
+                            <span class="text-end col-sm-6" th:text="${session.bill.billStatus.status}"></span>
+                            <hr>
+                        </div>
                         <div class="col-sm-6">
                             <div th:each="image:${session.bill.billProducts[0].product.listImage}">
                                 <img th:if="${image.location == true}"
@@ -89,14 +94,21 @@
                                                                    disabled>
                                                         </td>
                                                         <td>
-                                                            <input th:class="|form-control quantityReturn${session.bill.id}|"
-                                                                   value="1" disabled>
+                                                            <div class="input-group input-group-merge">
+                                                                <input type="number"
+                                                                       th:class="|form-control quantityReturn${session.bill.id}|"
+                                                                       th:value="${quantity}"
+                                                                       th:max="${billProduct.quantity}" disabled>
+                                                                <span class="input-group-text w-px-60"  disabled>/[(${billProduct.quantity})]</span>
+                                                            </div>
+                                                            <span th:class="|errorQuantity${billProduct.id} text-danger|"></span>
                                                         </td>
                                                         <td>
                                                                 <textarea name="" id="" cols=""
                                                                           rows="2" th:name="reason"
                                                                           th:class="|reason${session.bill.id} form-control|"
                                                                           disabled></textarea>
+                                                            <span th:class="|errorReason${billProduct.id} text-danger|"></span>
                                                         </td>
                                                         <td>
                                                             <ul class="list-unstyled users-list avatar-group m-0 d-flex align-items-center">
@@ -146,6 +158,7 @@
                                                                            disabled>
                                                                 </li>
                                                             </ul>
+                                                            <span th:class="|errorImage${billProduct.id} text-danger|"></span>
                                                         </td>
 
                                                     </tr>
@@ -154,9 +167,8 @@
                                             </div>
                                         </div>
                                         <div class="mb-3 text-center">
-                                                <button type="submit" class="btn btn-primary" onclick="clickSave()" hidden="hidden">Hoàn tất</button>
+                                                <button type="submit" th:class="|btn btn-primary completed${session.bill.id}|" onclick="clickSave()" hidden="hidden">Hoàn tất</button>
                                         </div>
-                                        <!--                                        </form>-->
                                     </div>
                                 </div>
                             </div>

@@ -42,8 +42,7 @@ document.getElementById("pageInput").addEventListener("keypress", function (even
     // If the user presses the "Enter" key on the keyboard
     if (event.key === "Enter") {
         // Cancel the default action, if needed
-        if (document.getElementById("pageInput").value != Number(document.getElementById("pageInput").getAttribute("temp"))) {
-
+        if (document.getElementById("pageInput").value !== Number(document.getElementById("pageInput").getAttribute("temp"))) {
             if (document.getElementById("pageInput").value <= Number(document.getElementById("total").getAttribute("value")) && document.getElementById("pageInput").value > 0) {
                 $("#form-product").submit()
             } else {
@@ -53,6 +52,14 @@ document.getElementById("pageInput").addEventListener("keypress", function (even
         event.preventDefault();
     }
 });
+
+$("#search").on("click", function () {
+    if ($(this).val().trim().length !== 0) {
+        $("#form-product").submit()
+    }
+})
+
+
 if (document.getElementById("edit-attri")) {
     document.getElementById("edit-attri").addEventListener("click", function () {
         $.each($(".span-value-attri"), function (index, item) {
@@ -65,6 +72,7 @@ if (document.getElementById("edit-attri")) {
         })
     })
 }
+
 $.each(document.getElementsByClassName("update-active-product"), function (index, item) {
     item.addEventListener("click", function () {
         function change() {
@@ -73,9 +81,9 @@ $.each(document.getElementsByClassName("update-active-product"), function (index
 
         var text;
         if (item.checked) {
-            document.getElementById("cancelActive").removeEventListener("click", change)
+            $("#cancelActive").unbind("click")
             document.getElementById("cancelActive").addEventListener("click", change)
-            document.getElementById("closeActive").removeEventListener("click", change)
+            $("#closeActive").unbind("click")
             document.getElementById("closeActive").addEventListener("click", change)
 
             var data = {
@@ -88,10 +96,10 @@ $.each(document.getElementsByClassName("update-active-product"), function (index
                 // contentType: "application/json",
                 success: function (data) {
                     console.log(data)
-
                     var table = document.querySelector("#table-active tbody")
                     $("#table-active tbody").empty()
                     $.each(data.productDetails, function (index, item2) {
+                        console.log(item2)
                         var nameProduct = []
                         nameProduct.push(data.nameProduct)
                         nameProduct.push("[")
@@ -159,7 +167,7 @@ $.each(document.getElementsByClassName("update-active-product"), function (index
                         confirmButtonColor: "#3085d6",
                         cancelButtonColor: "#d33",
                         confirmButtonText: "Xác nhận!",
-                        cancelButtonText:"Hủy"
+                        cancelButtonText: "Hủy"
                     }).then((result) => {
                         if (result.isConfirmed) {
                             var productDetailList = []
@@ -215,7 +223,7 @@ $.each(document.getElementsByClassName("update-active-product"), function (index
             $("#active").click()
             return
         } else {
-            text = "Nếu thay đổi thì một số sản phẩm chi tiết có thể sẽ ngừng bày bán!"
+            text = "Sản phẩm chi tiết thuộc sản phẩm này sẽ được cập nhật lại trạng thái!"
         }
         Swal.fire({
             title: "Bạn xác nhận cập nhật?",
@@ -225,7 +233,7 @@ $.each(document.getElementsByClassName("update-active-product"), function (index
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Xác nhận!",
-            cancelButtonText:"Hủy"
+            cancelButtonText: "Hủy"
         }).then((result) => {
             if (result.isConfirmed) {
                 var data = {
@@ -252,6 +260,7 @@ $.each(document.getElementsByClassName("update-active-product"), function (index
         });
     })
 })
+
 $.each(document.getElementsByClassName("active-product-detail"), function (index, item) {
     item.addEventListener("click", function () {
             // if (item.checked) {
@@ -263,7 +272,7 @@ $.each(document.getElementsByClassName("active-product-detail"), function (index
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Xác nhận!",
-                cancelButtonText:"Hủy"
+                cancelButtonText: "Hủy"
             }).then((result) => {
                 if (result.isConfirmed) {
                     var data = []
@@ -305,94 +314,109 @@ $.each(document.getElementsByClassName("active-product-detail"), function (index
 
 $.each(document.getElementsByClassName("edit-product"), function (index, item) {
     item.addEventListener("click", function () {
-        var data = {
-            id: item.getAttribute('value')
-        }
-        $.ajax({
-            url: "/product/get-product-by-id",
-            method: "get",
-            data: data,
-            success: function (data) {
-                var localData = data
-                document.getElementById("evaluate").href = "/admin/evaluate/" + data.id
-                document.getElementById("save").value = data.id
-                var table = document.querySelector("#table-detail-modal tbody")
-                $("#table-detail-modal tbody").empty()
-                $.each(data.productFieldValues, function (index, item) {
-                        if (item.field.active == true) {
-                            var row = document.createElement("tr")
-                            var cell1 = document.createElement("td")
-                            var nameAttri = document.createElement("span")
-                            nameAttri.innerText = item.field.name
-                            cell1.appendChild(nameAttri)
+        getOneProduct(item).then(function (data) {
+            var localData = data
+            document.getElementById("save").value = data.id
+            $("#product-detail").val(data.id)
+            var table = document.querySelector("#table-detail-modal tbody")
+            $("#table-detail-modal tbody").empty()
 
-                            var cell2 = document.createElement("td")
-                            var value = document.createElement("span")
-                            value.className = "span-value-attri"
-                            // value.disabled = true
-                            value.innerText = item.value
-                            value.setAttribute('value', item.field.id)
-                            cell2.appendChild(value)
+            $("#name-product").text(data.nameProduct + " " + data.sku)
+            $("#group-product").text("Nhóm sản phẩm: " + data.groupProduct.nameGroup)
+            $.each(data.productFieldValues, function (index, item) {
+                    if (item.field.active == true) {
+                        var row = document.createElement("tr")
+                        var cell1 = document.createElement("td")
+                        var nameAttri = document.createElement("span")
+                        nameAttri.innerText = item.field.name
+                        cell1.appendChild(nameAttri)
 
-                            row.appendChild(cell1)
-                            row.appendChild(cell2)
-                            table.appendChild(row)
-                        }
+                        var cell2 = document.createElement("td")
+                        var value = document.createElement("span")
+                        value.className = "span-value-attri"
+                        // value.disabled = true
+                        value.innerText = item.value
+                        value.setAttribute('value', item.field.id)
+                        cell2.appendChild(value)
+
+                        row.appendChild(cell1)
+                        row.appendChild(cell2)
+                        table.appendChild(row)
                     }
-                )
-                $("#save").on("click", function () {
-                    var data = {}
-                    data.product = []
-                    data.id = $("#save").val()
-                    data.active = localData.active
-                    $.each($(".attributes-update"), function (index, item) {
-                        var attri = {
-                            id: item.id.substring(2, item.id.length),
-                            value: item.value,
-                        }
-                        data.product.push(attri)
-                    })
-                    $.ajax({
-                        url: "/product/update-product",
-                        method: "post",
-                        data: JSON.stringify(data),
-                        contentType: "application/json",
-                        success: function (data) {
-                            $("#close").click()
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: "top-end",
-                                showConfirmButton: false,
-                                timer: 3000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.onmouseenter = Swal.stopTimer;
-                                    toast.onmouseleave = Swal.resumeTimer;
-                                }
-                            });
-                            Toast.fire({
-                                icon: "success",
-                                title: "Cập nhật thành công"
-                            });
-                        }
-                    })
+                }
+            )
+            $("#save").on("click", function () {
+                var data = {}
+                data.product = []
+                data.id = $("#save").val()
+                data.active = localData.active
+                var text = "";
+                $.each($(".attributes-update"), function (index, item) {
+                    if (item.value.trim().length == 0) {
+                        text = "Thuộc tính không điền thông tin sẽ không thay đổi giá trị"
+                    }
+                    var attri = {
+                        id: item.id.substring(2, item.id.length),
+                        value: item.value,
+                    }
+                    data.product.push(attri)
+                })
+                Swal.fire({
+                    title: "Bạn xác nhận cập nhật?",
+                    text: text,
+                    icon: "question",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Xác nhận!",
+                    cancelButtonText: "Hủy"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "/product/update-product",
+                            method: "post",
+                            data: JSON.stringify(data),
+                            contentType: "application/json",
+                            success: function (data) {
+                                $("#close").click()
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: "Cập nhật thành công"
+                                });
+                            }
+                        })
+                    }
                 })
 
-            }
+            })
         })
     })
+    // })
 })
 
 $.each($(".view-product"), function (index, item) {
         item.addEventListener("click", function () {
-            var data = {
-                id: this.getAttribute('value'),
-            }
-            $.ajax({
-                url: "/product/get-one-product",
-                method: "get",
-                data: data,
-                success: function (data) {
+            // var data = {
+            //     id: this.getAttribute('value'),
+            // }
+            // $.ajax({
+            //     url: "/product/get-one-product",
+            //     method: "get",
+            //     data: data,
+            //     success: function (data)
+            getOneProductDetail(item).then(function (data) {
+                {
                     $("#save-product-detail").val(data.id)
                     $("#sku").val(data.sku)
                     $("#quantity").val(data.quantity)
@@ -479,74 +503,96 @@ $.each($(".view-product"), function (index, item) {
     }
 )
 $("#save-product-detail").on('click', function () {
-    Swal.fire({
-        title: "Bạn xác nhận cập nhật?",
-        text: "",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Xác nhận!",
-        cancelButtonText: "Hủy"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            var data = {}
-            data.id = this.value
-            data.sku = $("#sku").val()
-            data.priceImport = $("#price-import").val()
-            data.priceExport = $("#price-export").val()
-            console.log(document.getElementById("active").checked)
-            if (document.getElementById("active").checked) {
-                data.active = true
-            } else {
-                data.active = false
-            }
-            data.quantity = $("#quantity").val()
-            data.image = []
+    var $this = this
+    validateUpdateProductDetail().then(function (data) {
+        if (data == false) {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "error",
+                title: "Xảy ra lỗi, xem lại thông tin sản phẩm"
+            });
+        } else {
+            Swal.fire({
+                title: "Bạn xác nhận cập nhật?",
+                text: "",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Xác nhận!",
+                cancelButtonText: "Hủy"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    var data = {}
+                    data.id = $this.value
+                    data.sku = $("#sku").val()
+                    data.priceImport = $("#price-import").val()
+                    data.priceExport = $("#price-export").val()
+                    console.log(document.getElementById("active").checked)
+                    if (document.getElementById("active").checked) {
+                        data.active = true
+                    } else {
+                        data.active = false
+                    }
+                    data.quantity = $("#quantity").val()
+                    data.image = []
 
-            $.each($(".file-input"), function (index, item) {
-                var imageItem;
-                var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
+                    $.each($(".file-input"), function (index, item) {
+                        var imageItem;
+                        var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
 // Trích xuất tên tệp từ đường dẫn
-                var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
-                if (lastIndex >= 0) {
-                    fileName = fileName.substr(lastIndex + 1);
-                }
-                imageItem = {
-                    id: item.id.substring(5, item.id.length),
-                    multipartFile: fileName,
-                }
-                data.image.push(imageItem)
-            })
-            uploadImage()
-
-            console.log(data)
-            $.ajax({
-                url: '/product/update-productdetail',
-                method: 'post',
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                success: function (data) {
-                    $("#close").click()
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
+                        var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
+                        if (lastIndex >= 0) {
+                            fileName = fileName.substr(lastIndex + 1);
                         }
-                    });
-                    Toast.fire({
-                        icon: "success",
-                        title: "Cập nhật thành công"
-                    });
+                        imageItem = {
+                            id: item.id.substring(5, item.id.length),
+                            multipartFile: fileName,
+                        }
+                        data.image.push(imageItem)
+                    })
+                    uploadImage()
+
+                    $.ajax({
+                        url: '/product/update-productdetail',
+                        method: 'post',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            $("#close").click()
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: "Cập nhật thành công",
+                                text: "Tải lại trang để làm mới thông tin"
+                            });
+                        }
+                    })
                 }
             })
         }
     })
+
 })
 
 function uploadImage() {
@@ -575,3 +621,279 @@ function uploadImage() {
     });
 
 }
+
+function getOneProduct(item) {
+    var data = {
+        id: item.getAttribute('value')
+    }
+    console.log(data)
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/product/get-product-by-id",
+            method: "get",
+            data: data,
+            success: function (data) {
+                resolve(data)
+            }, error: function (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
+function getOneProductDetail(item) {
+    var data = {
+        id: item.getAttribute('value'),
+    }
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: "/product/get-one-product",
+            method: "get",
+            data: data,
+            success: function (data) {
+                resolve(data)
+            },
+            error: function (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
+$("#product-detail").on("click", function () {
+    getOneProduct(this).then(function (data) {
+        $("#name__product__add").text(data.nameProduct + " " + data.sku)
+        $("#add-product-detail").val(data.id)
+        var fieldList = data.productDetails[0].fieldList
+        $.each(fieldList, function (index, item) {
+            if (fieldList.length - 1 !== index) {
+                // Sao chép thẻ cha và tất cả các thẻ con
+                var clonedElement = $("#attribute").clone();
+
+                // Xóa thuộc tính id để tránh trùng lặp
+                clonedElement.removeAttr("id");
+
+                // Thêm thẻ sao chép vào đích
+                $("#group-attribute").append(clonedElement);
+            }
+        })
+
+        $.each($(".name-attributes"), function (index, item) {
+            $(item).text(fieldList[index].field.name)
+            $(".value-attribute").eq(index).attr('temp', fieldList[index].field.id)
+        })
+    })
+})
+
+$("#add-product-detail").on('click', function () {
+    var $this = this
+    validateAddProductDetail().then(function (data) {
+        if (data == false) {
+            return
+        }
+        Swal.fire({
+            title: "Đồng ý tạo sản phẩm mới?",
+            text: "",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Xác nhận!",
+            cancelButtonText: "Hủy"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var data = {}
+                data.id = $this.value
+                data.listProduct = []
+                var listAttributes = []
+                var image = []
+                $.each($(".value-attribute"), function (index, item) {
+                    var attri = {
+                        id: $(item).attr('temp'),
+                        value: $(item).val()
+                    }
+                    listAttributes.push(attri)
+                })
+
+
+                $.each($(".file-input"), function (index, item) {
+                    var imageItem;
+                    var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
+// Trích xuất tên tệp từ đường dẫn
+                    var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
+                    if (lastIndex >= 0) {
+                        fileName = fileName.substr(lastIndex + 1);
+                    }
+                    imageItem = {
+                        id: item.id.substring(5, item.id.length),
+                        multipartFile: fileName,
+                        location: $(this).hasClass('true') ? 'true' : 'false'
+                    }
+                    image.push(imageItem)
+                })
+
+                var temp = {
+                    sku: $("#sku").val(),
+                    priceImport: $("#price-import").val(),
+                    priceExport: $("#price-export").val(),
+                    quantity: $("#quantity").val(),
+                    listAttributes: listAttributes,
+                    image: image
+                }
+                data.listProduct.push(temp)
+                uploadImage()
+                $.ajax({
+                    url: '/product/save-product-detail',
+                    method: 'post',
+                    data: JSON.stringify(data),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data) {
+                            $("#closeAdd").click()
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "success",
+                                title: "Tạo thành công, tải lại trang để làm mới"
+                            });
+                        }
+                        else{
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            Toast.fire({
+                                icon: "error",
+                                title: "Thất bại, xem lại thông tin đã nhập"
+                            });
+                        }
+                    }
+                })
+            }
+        })
+    })
+})
+
+function validateAddProductDetail() {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: '/product/product-detail/all',
+            method: "get",
+            success: function (data) {
+                console.log(data)
+                var check;
+                if ($("#sku").val().trim().length == 0) {
+                    $("#error-sku").text("Chưa nhập mã sku")
+                    check = false
+                } else {
+                    $.each(data, function (index, item) {
+                        console.log(item)
+                        if ($("#sku").val().trim() == item) {
+                            $("#error-sku").text("Mã sku đã tồn tại")
+                            check = false
+                            return false
+                        }
+                    })
+                }
+                if ($("#price-export").val().trim().length == 0 || $("#price-export").val() < 0) {
+                    $("#error-priceExport").text("Giá bán >=0")
+                    check = false
+                }
+                if ($("#price-import").val().trim().length == 0 || $("#price-import").val() < 0) {
+                    $("#error-priceImport").text("Giá nhập >=0")
+                    check = false
+                }
+                if ($("#quantity").val().trim().length == 0 || $("#quantity").val() < 0) {
+                    $("#error-quantity").text("Số lượng sản phẩm >=0")
+                    check = false
+                }
+                $.each($(".value-attribute"), function (index, item) {
+                    if ($(item).val().trim().length == 0) {
+                        $(".error-attribute").eq(index).text("Cần nhập giá trị cho thông số")
+                        check = false
+                    }
+                })
+                $.each($(".file-input"), function (index, item) {
+                    if ($(item).val().trim().length == 0) {
+                        $("#error-image").text("Cần thêm đủ 5 ảnh cho sản phẩm")
+                        check = false
+                    }
+                })
+                resolve(check)
+            },
+            error: function (error) {
+                reject(error)
+            }
+        })
+    })
+}
+
+function validateUpdateProductDetail() {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: '/product/product-detail/all',
+            method: "get",
+            success: function (data) {
+                var check
+                if ($("#price-export").val().trim().length == 0 || $("#price-export").val() < 0) {
+                    $("#error-priceExport").text("Giá bán >=0")
+                    check = false
+                }
+                if ($("#price-import").val().trim().length == 0 || $("#price-import").val() < 0) {
+                    $("#error-priceImport").text("Giá nhập >=0")
+                    check = false
+                }
+                if ($("#quantity").val().trim().length == 0 || $("#quantity").val() < 0) {
+                    $("#error-quantity").text("Số lượng sản phẩm >=0")
+                    check = false
+                }
+                resolve(check)
+            }
+        })
+    })
+}
+
+$.each($(".view-discount"), function (index, item) {
+    $(item).on("click", function () {
+        getOneProductDetail(item).then(function (data) {
+            var list = []
+            list.push(data.product.nameProduct)
+            list.push('[')
+            $.each(data.fieldList, function (index, item) {
+                list.push(item.value)
+            })
+            list.push(']')
+            $("#title-discount").text("Sản phẩm: " + list.join(' '))
+            if (data.coupon != null) {
+                $("#code").text(data.coupon.code)
+                $("#value").text(data.coupon.value)
+                $("#date-start").text((data.coupon.dateStart))
+                $("#date-end").text((data.coupon.dateEnd))
+                $("#active-discount").text(data.coupon.active == true ? 'Đang hoạt động' : 'Không hoạt động')
+                $("#have-discount").attr('hidden', false)
+                $("#no-discount").attr('hidden', true)
+
+            } else {
+                $("#have-discount").attr('hidden', true)
+                $("#no-discount").attr('hidden', false)
+            }
+        })
+    })
+})
+

@@ -3,6 +3,7 @@ package com.poly.controller.admin;
 import com.poly.common.UploadFile;
 import com.poly.dto.ProductDetailDto;
 import com.poly.dto.ProductDetailListDto;
+import com.poly.entity.ProductDetail;
 import com.poly.service.ProductDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/product")
@@ -45,5 +47,15 @@ public class ProductDetailController {
     public ResponseEntity<?> updateProductDetail(@RequestBody ProductDetailListDto productDetailListDto) {
 
         return ResponseEntity.ok(productDetailService.update(productDetailListDto));
+    }
+
+    @GetMapping("/product-detail/all")
+    public ResponseEntity<?> getALl() {
+        return ResponseEntity.ok(productDetailService.findAll().stream().map(ProductDetail::getSku).collect(Collectors.toList()));
+    }
+
+    @PostMapping("/save-product-detail")
+    public ResponseEntity<?> save(@RequestBody ProductDetailDto productDetailDto) {
+        return ResponseEntity.ok(productDetailService.save(productDetailDto));
     }
 }

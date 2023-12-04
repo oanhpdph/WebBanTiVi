@@ -163,3 +163,8 @@ function uploadImage() {
         }
     });
 }
+$.each($(".image-evaluate"), function (index, item) {
+    item.addEventListener("click", function () {
+        $("#image-evaluate-modal").attr('src', this.getAttribute('src'))
+    })
+})

@@ -25,7 +25,7 @@
                         <div class="row g-3">
                             <div class="col-lg-5 col-sm-12 text-center">
                                 <div class="text-center">
-                                    <img th:src="@{'/image/default.jpg'}" alt="Chưa chọn ảnh"
+                                    <img th:src="@{'/image/product/anhdefault.jpg'}" alt="Chưa chọn ảnh"
                                          class="rounded image-preview mb-3"
                                          width="250">
                                 </div>
@@ -79,7 +79,7 @@
                                         <div class="form-check form-check-inline mt-3">
                                             <input class="form-check-input" type="radio"
                                                    th:name="active"
-                                                   th:value="true">
+                                                   th:value="true" checked>
                                             <label class="form-check-label">Hoạt Động</label>
                                         </div>
                                         <div class="form-check form-check-inline">
@@ -98,7 +98,6 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="reset" class="btn btn-secondary">Đặt lại</button>
                         <button type="submit" class="btn btn-primary">Lưu</button>
                     </div>
                 </div>
@@ -108,34 +107,34 @@
 </div>
 <div class="card mb-3 ">
     <div class="card-header">
-        <form class="col-12 mt-2">
-            <div class="col-12 row">
-                <div class="col-7">
-                    <div class="form-check input-group input-group-merge">
-                    <span class="input-group-text">
-                        <i class="bx bx-search"></i>
-                    </span>
-                        <input type="text" class="form-control" placeholder="Tìm id">
-                        <button class="btn btn-primary" type="button">Tìm kiếm</button>
-                    </div>
-                </div>
-                <div class="col-1">
-                    <button class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-offset="0,4"
-                            data-bs-placement="bottom" data-bs-html="true" title=""
-                            data-bs-original-title="<span>Reset filter</span>" aria-describedby="tooltip91262">
-                        <i class='bx bx-reset'></i>
-                    </button>
-                </div>
-            </div>
-        </form>
+<!--        <form class="col-12 mt-2">-->
+<!--            <div class="col-12 row">-->
+<!--                <div class="col-7">-->
+<!--                    <div class="form-check input-group input-group-merge">-->
+<!--                    <span class="input-group-text">-->
+<!--                        <i class="bx bx-search"></i>-->
+<!--                    </span>-->
+<!--                        <input type="text" class="form-control" placeholder="Tìm id">-->
+<!--                        <button class="btn btn-primary" type="button">Tìm kiếm</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-1">-->
+<!--                    <button class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-offset="0,4"-->
+<!--                            data-bs-placement="bottom" data-bs-html="true" title=""-->
+<!--                            data-bs-original-title="<span>Reset filter</span>" aria-describedby="tooltip91262">-->
+<!--                        <i class='bx bx-reset'></i>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </form>-->
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-2 d-flex align-items-center">
-                <p>Coupon :
+<!--            <div class="col-md-2 d-flex align-items-center">-->
+<!--                <p>Coupon :-->
                     <!--                    <span th:text="${#lists.size(listCou)}"></span>-->
-                </p>
-            </div>
+<!--                </p>-->
+<!--            </div>-->
         </div>
         <hr>
         <div class="table-responsive text-nowrap">
@@ -245,18 +244,27 @@
                                                        class="btn btn-primary btn-control">Các sản phẩm được giảm</a>
                                                 </div>
                                                 <div class="w-auto">
-                                                    <button type="reset"
-                                                            class="btn btn-primary btn-control">
-                                                        Đặt lại
-                                                    </button>
-                                                </div>
-                                                <div class="w-auto">
                                                     <button type="submit"
                                                             class="btn btn-primary btn-control"
                                                             onclick="return confirm('Xác nhận cập nhật')">
-                                                        Sửa
+<!--<<<<<<< HEAD-->
+                                                        Cập nhật
                                                     </button>
                                                 </div>
+                                                <div class="w-auto">
+                                                    <a th:href="@{/admin/coupon/delete/{id}(id=${coupon.id})}"
+                                                       onclick="return confirm('Xác nhận xóa')">
+                                                        <button type="button"
+                                                                class="btn btn-primary btn-control">
+                                                            Xóa
+                                                        </button>
+                                                    </a>
+                                                </div>
+<!--=======-->
+<!--                                                        Sửa-->
+<!--                                                    </button>-->
+<!--                                                </div>-->
+<!--&gt;>>>>>> origin/manhsieuvippro-->
                                             </div>
                                         </form>
                                     </div>
@@ -271,9 +279,7 @@
         <hr class="card-separator">
     </div>
     <div class="card-footer">
-        <div class="d-inline-flex float-end">
 
-        </div>
     </div>
 </div>
 <script src="/admin/plugin/js/loadImage.js">

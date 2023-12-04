@@ -38,7 +38,7 @@
                                         <div class="card-body">
                     <span>
                       <b>Tổng Tiền: </b>
-                      <p th:text="*{totalPrice}"></p
+                      <p th:text="|*{#numbers.formatDecimal(totalPrice,0,'COMMA',0,'POINT')} (VNĐ)|"></p
                       ></span>
 
                                             <br/>
@@ -50,8 +50,7 @@
                                             <br/>
                                             <span>
                       <b>Trạng Thái Thanh Toán: </b>
-                      <p th:text="*{paymentStatus}"></p
-                      ></span>
+                      <p th:text="*{paymentStatus == 2 ? 'Thành công':'Thất bạn'}"></p></span>
 
                                             <br/>
                                             <span>

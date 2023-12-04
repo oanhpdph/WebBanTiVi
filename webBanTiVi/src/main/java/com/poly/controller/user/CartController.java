@@ -117,11 +117,12 @@ public class CartController {
 
 
     @PostMapping("/purchase")
-    public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes,
+    public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes,BindingResult result,
                           HttpServletRequest request,
                           Model model,
-                          Integer id,
-                          BindingResult result) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+                          Integer id
+                          ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+
         if (result.hasErrors()) {
             return "redirect:/pay";
         }

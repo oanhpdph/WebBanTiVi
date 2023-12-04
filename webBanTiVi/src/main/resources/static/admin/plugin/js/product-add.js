@@ -18,7 +18,6 @@ function loadDataField() {
         success: function (data) {
             // var dataTable = $('#tableAttributes tbody');
             $("#tableAttributes tbody").empty()
-            console.log(data)
             $.each(data, function (index, item) {
                 if (item.variant == false) {
                     var button = document.createElement('button');
@@ -168,7 +167,7 @@ function onchangeImage() {
                     this.value = ''; // Đặt lại trường nhập
                 }
             } else {
-                imageElement.src = "/oanh"
+                imageElement.src = "/image/product/anhdefault.jpg"
             }
         }
     }
@@ -178,105 +177,103 @@ function saveProduct() {
     $("#save-product").unbind()
 
     $("#save-product").on("click", function clickSave() {
-        var valueReturn = validate()
-        if (valueReturn === false) {
-            return
-        }
-        var sku = document.getElementsByClassName("sku")
-        var priceImport = document.getElementsByClassName("priceImport")
-        var priceExport = document.getElementsByClassName("priceExport")
-        var quantity = document.getElementsByClassName("quantity")
-        var checkActive = document.getElementsByClassName("check-active")
+        validate().then(function (response) {
+            if (response === false) {
+                return
+            }
+            var sku = document.getElementsByClassName("sku")
+            var priceImport = document.getElementsByClassName("priceImport")
+            var priceExport = document.getElementsByClassName("priceExport")
+            var quantity = document.getElementsByClassName("quantity")
+            var checkActive = document.getElementsByClassName("check-active")
 
-        var data = {}
-        data.listProduct = []
-        data.product = []
-        console.log(document.getElementById("table-product-detail").rows)
+            var data = {}
+            data.listProduct = []
+            data.product = []
+            // set ảnh
 
-        // set ảnh
-
-        $.each(checkActive, function (index, item) {
-            var value = item.getAttribute("value")
-            var image = "imageUpload" + value
-            var arrImage = []
-            var listImage = document.getElementsByClassName(image)
-            $.each(listImage, function (index, item) {
-                // Lấy tệp từ trường chọn tệp
-                var imageItem;
-                var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
+            $.each(checkActive, function (index, item) {
+                var value = item.getAttribute("value")
+                var image = "imageUpload" + value
+                var arrImage = []
+                var listImage = document.getElementsByClassName(image)
+                $.each(listImage, function (index, item) {
+                    // Lấy tệp từ trường chọn tệp
+                    var imageItem;
+                    var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
 // Trích xuất tên tệp từ đường dẫn
-                var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
-                if (lastIndex >= 0) {
-                    fileName = fileName.substr(lastIndex + 1);
-                }
+                    var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
+                    if (lastIndex >= 0) {
+                        fileName = fileName.substr(lastIndex + 1);
+                    }
 
-                if (item.classList.contains("true")) {
-                    imageItem = {
-                        location: "true",
-                        multipartFile: fileName
+                    if (item.classList.contains("true")) {
+                        imageItem = {
+                            location: "true",
+                            multipartFile: fileName
+                        }
+                    } else {
+                        imageItem = {
+                            location: "false",
+                            multipartFile: fileName
+                        }
                     }
-                } else {
-                    imageItem = {
-                        location: "false",
-                        multipartFile: fileName
-                    }
-                }
-                arrImage.push(imageItem)
-            })
-            console.log(sku[index])
-            var temp = {
-                sku: sku[index].value,
-                priceImport: priceImport[index].value,
-                priceExport: priceExport[index].value,
-                quantity: quantity[index].value,
-                image: arrImage,
-                listAttributes: dataProductDetail.listAttributes[index],
-                active: checkActive[index].checked
-            }
-            data.listProduct.push(temp)
-            data.nameProduct = document.getElementById("name-display").value
-            data.sku = document.getElementById("sku-code").value
-            data.brand = $("#select-brand").val()
-            data.group = document.getElementById("select-group").value
-        })
-        var inputAttributes = document.querySelectorAll(".input-data.data-attributes")
-        $.each(inputAttributes, function (index, item) {
-            // var arr = []
-            var allTag = document.querySelector("." + item.id)
-            if (allTag) {
-                data.product.push({
-                    id: item.id.substring(2),
-                    value: allTag.textContent,
+                    arrImage.push(imageItem)
                 })
-            }
+                var temp = {
+                    sku: sku[index].value.trim(),
+                    priceImport: priceImport[index].value,
+                    priceExport: priceExport[index].value,
+                    quantity: quantity[index].value,
+                    image: arrImage,
+                    listAttributes: dataProductDetail.listAttributes[index],
+                    active: checkActive[index].checked
+                }
+                data.listProduct.push(temp)
+                data.nameProduct = document.getElementById("name-display").value.trim()
+                data.sku = document.getElementById("sku-code").value.trim()
+                data.brand = $("#select-brand").val()
+                data.group = document.getElementById("select-group").value
+            })
+            var inputAttributes = document.querySelectorAll(".input-data.data-attributes")
+            $.each(inputAttributes, function (index, item) {
+                // var arr = []
+                var allTag = document.querySelector("." + item.id)
+                if (allTag) {
+                    data.product.push({
+                        id: item.id.substring(2),
+                        value: allTag.textContent,
+                    })
+                }
+            })
+            uploadImage()
+            $.ajax({
+                url: "/product/save-product",
+                method: "post",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: function () {
+                    $("#table-product-detail tbody").empty()
+                    clear()
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: "Thêm sản phẩm thành công"
+                    });
+                }
+            })
         })
-        console.log(data)
-        uploadImage()
-        $.ajax({
-            url: "/product/save-product",
-            method: "post",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            success: function () {
-                $("#table-product-detail tbody").empty()
-                clear()
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    icon: "success",
-                    title: "Thêm sản phẩm thành công"
-                });
-            }
-        })
+
     })
 }
 
@@ -309,139 +306,218 @@ function uploadImage() {
 
 // Thêm thuộc tính
 $("#submit-add-attribute").click(function () {
-    var value = $("#name-attribute").val()
-    var dataPost = {
-        name: value,
-        active: true
-    }
-    $.ajax(
-        {
-            url: "/field/add",
-            method: "post",
-            data: JSON.stringify(dataPost), // Chuyển đổi dữ liệu thành chuỗi JSON
-            contentType: 'application/json',
-            success: function (data) {
-                // $("#close-add-attribute").click()
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    Swal.fire({
+        title: "Đồng ý thêm thuộc tính?",
+        text: "",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Xác nhận!",
+        cancelButtonText: "Hủy"
+    }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "/field/all",
+                    method: 'get',
+                    success: function (data) {
+                        var check;
+                        var value = $("#name-attribute").val().trim()
+                        if (value.length == 0) {
+
+                            $("#attributes-error").text("Chưa nhập tên thuộc tính")
+                            check = false
+                        } else {
+                            $.each(data, function (index, item) {
+                                if (item.name.toLowerCase() == value.toLowerCase()) {
+                                    $("#attributes-error").text("Thuộc tính đã tồn tại")
+                                    check = false
+                                    return false
+                                } else {
+                                    $("#attributes-error").text("")
+                                }
+                            })
+                        }
+
+                        if (check == false) {
+                            return
+                        }
+                        var dataPost = {
+                            name: value,
+                            active: true
+                        }
+                        $.ajax(
+                            {
+                                url: "/field/add",
+                                method: "post",
+                                data: JSON.stringify(dataPost), // Chuyển đổi dữ liệu thành chuỗi JSON
+                                contentType: 'application/json',
+                                success: function (data) {
+                                    $("#attributes-error").text("")
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    })
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'Thêm thành công thuộc tính ' + data.name,
+                                        customClass: {
+                                            container: 'alert' // Tên lớp tùy chỉnh
+                                        }
+                                    })
+                                    $("#name-attribute").val("")
+
+                                    var button = document.createElement('button');
+                                    button.innerHTML = 'Thêm'; // Đặt văn bản cho nút
+                                    button.className = "btn btn-outline-secondary addAttributes mx-2"
+                                    button.value = data.name
+                                    button.id = "_" + data.id
+
+                                    var label = document.createElement('label')
+                                    button.appendChild(label)
+                                    // Tạo một ô trong bảng
+                                    var cell1 = document.createElement('td');
+                                    var cell2 = document.createElement('td');
+                                    var cell3 = document.createElement('td');
+
+                                    var tbody = document.getElementById('tableAttributes').getElementsByTagName('tbody')[0];
+
+
+                                    cell1.innerText = document.getElementById('tableAttributes').rows.length
+                                    cell2.innerText = data.name
+                                    cell3.appendChild(button); // Thêm nút vào ô
+                                    // Lấy bảng theo ID
+
+                                    // Thêm ô (cell) vào dòng (row) trong bảng
+                                    var row = tbody.insertRow($("tableAttributes").rows); // Thay đổi chỉ số hàng theo ý muốn
+                                    row.appendChild(cell1);
+                                    row.appendChild(cell2);
+                                    row.appendChild(cell3);
+
+                                },
+                                error: function (error) {
+                                    console.log('Lỗi trong quá trình POST yêu cầu:', error);
+                                }
+                            }
+                        )
                     }
                 })
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Thêm thành công thuộc tính ' + data.name,
-                    customClass: {
-                        container: 'alert' // Tên lớp tùy chỉnh
-                    }
-                })
-                $("#name-attribute").val("")
-
-                var button = document.createElement('button');
-                button.innerHTML = 'Thêm'; // Đặt văn bản cho nút
-                button.className = "btn btn-outline-secondary addAttributes mx-2"
-                button.value = data.name
-                button.id = "_" + data.id
-
-                var label = document.createElement('label')
-                button.appendChild(label)
-                // Tạo một ô trong bảng
-                var cell1 = document.createElement('td');
-                var cell2 = document.createElement('td');
-                var cell3 = document.createElement('td');
-
-                var tbody = document.getElementById('tableAttributes').getElementsByTagName('tbody')[0];
-
-
-                cell1.innerText = document.getElementById('table-variant').rows.length
-                cell2.innerText = data.name
-                cell3.appendChild(button); // Thêm nút vào ô
-                // Lấy bảng theo ID
-
-                // Thêm ô (cell) vào dòng (row) trong bảng
-                var row = tbody.insertRow($("tableAttributes").rows); // Thay đổi chỉ số hàng theo ý muốn
-                row.appendChild(cell1);
-                row.appendChild(cell2);
-                row.appendChild(cell3);
-
-            },
-            error: function (error) {
-                console.log('Lỗi trong quá trình POST yêu cầu:', error);
             }
         }
     )
 })
 $("#submit-add-variant").click(function () {
-    var value = $("#name-variant").val()
-    var dataPost = {
-        name: value,
-        variant: 1,
-        active: true
-    }
-    $.ajax(
-        {
-            url: "/field/add",
-            method: "post",
-            data: JSON.stringify(dataPost), // Chuyển đổi dữ liệu thành chuỗi JSON
-            contentType: 'application/json',
-            success: function (data) {
-                // $("#close-add-attribute").click()
+    Swal.fire({
+        title: "Đồng ý thêm thuộc tính?",
+        text: "",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Xác nhận!",
+        cancelButtonText: "Hủy",
+    }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "/field/all",
+                    method: 'get',
+                    success: function (data) {
+                        var check;
+                        var value = $("#name-variant").val()
+                        if (value.length == 0) {
+                            console.log(value.length)
+                            $("#variant-error").text("Chưa nhập tên thuộc tính")
+                            check = false
+                        } else {
+                            $.each(data, function (index, item) {
+                                if (item.name.toLowerCase() == value.toLowerCase()) {
+                                    $("#variant-error").text("Thuộc tính đã tồn tại")
+                                    check = false
+                                    return false
+                                } else {
+                                    $("#variant-error").text("")
+                                }
+                            })
+                        }
+                        if (check == false) {
+                            return
+                        }
 
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        var dataPost = {
+                            name: value,
+                            variant: 1,
+                            active: true
+                        }
+                        $.ajax(
+                            {
+                                url: "/field/add",
+                                method: "post",
+                                data: JSON.stringify(dataPost), // Chuyển đổi dữ liệu thành chuỗi JSON
+                                contentType: 'application/json',
+                                success: function (data) {
+                                    $("#variant-error").text("")
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    })
+
+                                    Toast.fire({
+                                        icon: 'success',
+                                        title: 'Thêm thành công biến thể ' + data.name,
+                                        customClass: {
+                                            container: 'alert' // Tên lớp tùy chỉnh
+                                        }
+                                    })
+                                    $("#name-variant").val("")
+
+                                    var button = document.createElement('button');
+                                    button.innerHTML = 'Thêm'; // Đặt văn bản cho nút
+                                    button.className = "btn btn-outline-secondary add-variant mx-2"
+                                    button.value = data.name
+                                    button.id = "_" + data.id
+
+                                    var label = document.createElement('label')
+                                    button.appendChild(label)
+                                    // Tạo một ô trong bảng
+                                    var cell1 = document.createElement('td');
+                                    var cell2 = document.createElement('td');
+                                    var cell3 = document.createElement('td');
+
+                                    var tbody = document.getElementById('table-variant').getElementsByTagName('tbody')[0];
+
+
+                                    cell1.innerText = document.getElementById('table-variant').rows.length
+                                    cell2.innerText = data.name
+                                    cell3.appendChild(button); // Thêm nút vào ô
+                                    // Lấy bảng theo ID
+
+                                    // Thêm ô (cell) vào dòng (row) trong bảng
+                                    var row = tbody.insertRow($("table-variant").rows); // Thay đổi chỉ số hàng theo ý muốn
+                                    row.appendChild(cell1);
+                                    row.appendChild(cell2);
+                                    row.appendChild(cell3);
+                                },
+                                error: function (error) {
+                                    console.log('Lỗi trong quá trình POST yêu cầu:', error);
+                                }
+                            }
+                        )
                     }
                 })
-
-                Toast.fire({
-                    icon: 'success',
-                    title: 'Thêm thành công biến thể ' + data.name,
-                    customClass: {
-                        container: 'alert' // Tên lớp tùy chỉnh
-                    }
-                })
-                $("#name-variant").val("")
-
-                var button = document.createElement('button');
-                button.innerHTML = 'Thêm'; // Đặt văn bản cho nút
-                button.className = "btn btn-outline-secondary add-variant mx-2"
-                button.value = data.name
-                button.id = "_" + data.id
-
-                var label = document.createElement('label')
-                button.appendChild(label)
-                // Tạo một ô trong bảng
-                var cell1 = document.createElement('td');
-                var cell2 = document.createElement('td');
-                var cell3 = document.createElement('td');
-
-                var tbody = document.getElementById('table-variant').getElementsByTagName('tbody')[0];
-
-
-                cell1.innerText = document.getElementById('table-variant').rows.length
-                cell2.innerText = data.name
-                cell3.appendChild(button); // Thêm nút vào ô
-                // Lấy bảng theo ID
-
-                // Thêm ô (cell) vào dòng (row) trong bảng
-                var row = tbody.insertRow($("table-variant").rows); // Thay đổi chỉ số hàng theo ý muốn
-                row.appendChild(cell1);
-                row.appendChild(cell2);
-                row.appendChild(cell3);
-            },
-            error: function (error) {
-                console.log('Lỗi trong quá trình POST yêu cầu:', error);
             }
         }
     )
@@ -872,104 +948,154 @@ function removeTag(tagValue, tagElement, e) {
 
 
 function validate() {
-    var check = [];
-    var skuCode = document.getElementById("sku-code")
-    var listSku = document.getElementsByClassName("sku")
-    var listQuantity = document.getElementsByClassName("quantity")
-    var listPriceImport = document.getElementsByClassName("priceImport")
-    var listPriceExport = document.getElementsByClassName("priceExport")
-    var checkActive = document.getElementsByClassName("check-active")
-    $.each(checkActive, function (index, item) {
-        var parentElement;
-        var span;
-        if (item.checked) {
-            parentElement = listSku[index].closest('td');
-            span = parentElement.querySelector("span.error-sku")
-            if (listSku[index].value === "") {
-                span.textContent = "Nhập mã sku cho sản phẩm"
-                check.sku = false
-            } else {
-                check.sku = true
-                span.textContent = ""
-            }
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            url: '/product/all',
+            method: "get",
+            success: function (response) {
+                var check;
+                var skuCode = document.getElementById("sku-code")
+                var name = $("#name-display")
+                var brand = $("#select-brand")
+                var listSku = document.getElementsByClassName("sku")
+                var listQuantity = document.getElementsByClassName("quantity")
+                var listPriceImport = document.getElementsByClassName("priceImport")
+                var listPriceExport = document.getElementsByClassName("priceExport")
+                var checkActive = document.getElementsByClassName("check-active")
+                $.each(checkActive, function (index, item) {
+                    var parentElement;
+                    var span;
+                    if (item.checked) {
 
-            parentElement = listQuantity[index].closest('td');
-            span = parentElement.querySelector("span.error-quantity")
-            if (listQuantity[index].value === "" || Number(item.value) < 0) {
-                span.textContent = "Số lượng >=0"
-                check.quantity = false
-            } else {
-                check.quantity = true
-                span.textContent = ""
-            }
+                        parentElement = listSku[index].closest('td');
+                        span = parentElement.querySelector("span.error-sku")
+                        if (listSku[index].value === "") {
+                            span.textContent = "Nhập mã sku cho sản phẩm"
+                            check = false
+                        } else {
+                            check = true
+                            span.textContent = ""
+                        }
 
-            parentElement = listPriceImport[index].closest('td');
-            span = parentElement.querySelector("span.error-priceImport")
-            if (listPriceImport[index].value === "" || Number(item.value) < 0) {
-                span.textContent = "Giá nhập >=0 "
-                check.priceImport = false
-            } else {
-                check.priceImport = true
-                span.textContent = ""
-            }
+                        parentElement = listQuantity[index].closest('td');
+                        span = parentElement.querySelector("span.error-quantity")
+                        if (listQuantity[index].value === "" || Number(item.value) < 0) {
+                            span.textContent = "Số lượng >=0"
+                            check = false
+                        } else {
+                            check = true
+                            span.textContent = ""
+                        }
 
-            parentElement = listPriceExport[index].closest('td');
-            span = parentElement.querySelector("span.error-priceExport")
-            if (listPriceExport[index].value === "" || Number(item.value) < 0) {
-                span.textContent = "Giá bán >=0"
-                check.priceExport = false
-            } else {
-                check.priceExport = true
-                span.textContent = ""
-            }
-            var value = item.getAttribute("value")
-            var image = "imageUpload" + value
-            var listImage = document.getElementsByClassName(image)
-            $.each(listImage, function (index, item) {
-                parentElement = item.closest('td');
-                span = parentElement.querySelector("span.error-image")
-                // Lấy tệp từ trường chọn tệp
-                var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
-                var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
-                if (lastIndex >= 0) {
-                    fileName = fileName.substr(lastIndex + 1);
-                }
-                if (fileName === "") {
-                    span.textContent = "Chọn ảnh sản phẩm"
+                        parentElement = listPriceImport[index].closest('td');
+                        span = parentElement.querySelector("span.error-priceImport")
+                        if (listPriceImport[index].value === "" || Number(item.value) < 0) {
+                            span.textContent = "Giá nhập >=0 "
+                            check = false
+                        } else {
+                            check = true
+                            span.textContent = ""
+                        }
+
+                        parentElement = listPriceExport[index].closest('td');
+                        span = parentElement.querySelector("span.error-priceExport")
+                        if (listPriceExport[index].value === "" || Number(item.value) < 0) {
+                            span.textContent = "Giá bán >=0"
+                            check = false
+                        } else {
+                            check = true
+                            span.textContent = ""
+                        }
+                        var value = item.getAttribute("value")
+                        var image = "imageUpload" + value
+                        var listImage = document.getElementsByClassName(image)
+                        $.each(listImage, function (index, item) {
+                            parentElement = item.closest('td');
+                            span = parentElement.querySelector("span.error-image")
+                            // Lấy tệp từ trường chọn tệp
+                            var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
+                            var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
+                            if (lastIndex >= 0) {
+                                fileName = fileName.substr(lastIndex + 1);
+                            }
+                            if (fileName === "") {
+                                check = false
+                                span.textContent = "Chọn ảnh sản phẩm"
+                                return false
+                            } else {
+                                check = true
+                                span.textContent = ""
+                            }
+                        })
+                    } else {
+                        parentElement = listSku[index].closest('td');
+                        span = parentElement.querySelector("span.error-sku")
+                        span.textContent = ""
+
+                        parentElement = listPriceExport[index].closest('td');
+                        span = parentElement.querySelector("span.error-priceExport")
+                        span.textContent = ""
+
+                        parentElement = listQuantity[index].closest('td');
+                        span = parentElement.querySelector("span.error-quantity")
+                        span.textContent = ""
+
+                        parentElement = listPriceExport[index].closest('td');
+                        span = parentElement.querySelector("span.error-priceExport")
+                        span.textContent = ""
+
+                        var value = item.getAttribute("value")
+                        var image = "imageUpload" + value
+                        var listImage = document.getElementsByClassName(image)
+                        parentElement = listImage[0].closest('td');
+                        span = parentElement.querySelector("span.error-image")
+                        span.textContent = ""
+                    }
+                })
+
+                if ($(name).val().trim().length === 0) {
+                    $("#name-error").text("Chưa nhập tên sản phẩm")
+                    check = false
                 } else {
-                    span.textContent = ""
+                    $("#name-error").text("")
+                    check = true
                 }
-            })
-        } else {
-            parentElement = listSku[index].closest('td');
-            span = parentElement.querySelector("span.error-sku")
-            span.textContent = ""
 
-            parentElement = listPriceExport[index].closest('td');
-            span = parentElement.querySelector("span.error-priceExport")
-            span.textContent = ""
+                if ($(brand).val() == -1) {
+                    $("#brand-error").text("Chưa chọn hãng cho sản phẩm")
+                    check = false
+                } else {
+                    $("#brand-error").text("")
+                    check = true
+                }
 
-            parentElement = listQuantity[index].closest('td');
-            span = parentElement.querySelector("span.error-quantity")
-            span.textContent = ""
+                if (skuCode.value.trim().length == 0) {
+                    check = false
+                    $("#sku-code-error").text("Chưa nhập mã sku")
+                } else {
+                    check = true
+                }
+                $.each(response, function (index, item) {
+                    if (item.sku === skuCode.value.trim()) {
+                        check = false
+                        $("#sku-code-error").text("Mã sku đã tồn tại")
+                        return false
+                    } else {
+                        check = true
+                        $("#sku-code-error").text("")
+                    }
+                })
 
-            parentElement = listPriceExport[index].closest('td');
-            span = parentElement.querySelector("span.error-priceExport")
-            span.textContent = ""
 
-            var value = item.getAttribute("value")
-            var image = "imageUpload" + value
-            var listImage = document.getElementsByClassName(image)
-            parentElement = listImage[0].closest('td');
-            span = parentElement.querySelector("span.error-image")
-            span.textContent = ""
-        }
+                resolve(check);
+            },
+            error: function (error) {
+                reject(error);
+            }
+        })
     })
-    if (check.sku === false || check.quantity === false || check.priceExport === false || check.priceImport === false) {
-        return false
-    }
-    return true;
 }
+
 
 // clear form modal add product
 function clear() {

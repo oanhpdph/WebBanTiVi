@@ -105,7 +105,6 @@
                                                      th:if="${#fields.hasErrors('email')}"
                                                      th:errors="*{email}"></div>
                                             </div>
-                                            <br>
                                             <!--                                                address-->
                                             <div class="mb-3">
                                                 <label class="form-label">Địa chỉ nhận hàng</label>
@@ -293,51 +292,36 @@
         var email = document.myform.email.value;
         var address = document.myform.address.value;
         var phoneNumber = document.myform.phoneNumber.value;
-        var status = false;
-
+        var status = [];
         //name
-        if (name.length < 1) {
+        if (name.trim().length < 1) {
             document.getElementById("nameloc").innerHTML =
                 " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống tên!";
-            status = false;
+            status.push(false)
+
         } else {
-            // document.getElementById("nameloc").innerHTML = "";
-            status = true;
         }
         //address
-        if (address.length < 1) {
+        if (address.trim().length < 1) {
             document.getElementById("addressloc").innerHTML =
                 " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống địa chỉ!";
-            status = false;
+            status.push(false)
         } else {
-            // document.getElementById("addressloc").innerHTML = "";
-            status = true;
         }
+
         //phone
         var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-        if (phoneNumber.length < 1) {
+        if (phoneNumber.trim().length < 1) {
             document.getElementById("numloc").innerHTML =
                 " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống số điện thoại!";
-            status = false;
+            status.push(false)
         } else if (phoneNumber.match(phoneno)) {
-            status = true;
+            // status = true;
+            document.getElementById("numloc").innerHTML = "";
         } else {
             document.getElementById("numloc").innerHTML = "Không đúng định dạng số điện thoại!";
-            status = false;
+            status.push(false)
         }
-        //email
-        var atposition = email.indexOf("@");
-        var dotposition = email.lastIndexOf(".");
-        if (atposition < 1 || dotposition < (atposition + 2)
-            || (dotposition + 2) >= email.length) {
-            document.getElementById("emailloc").innerHTML =
-                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không đúng định dạng email!";
-            alert("Please enter a valid e-mail address.");
-            return false;
-        } else {
-            return true;
-        }
-        return status;
     }
 
     function tinhtong() {

@@ -87,6 +87,7 @@ public class EvaluateServiceImpl implements EvaluateService {
         eval.setDateCreate(new Date());
         eval.setPoint(evaluate.getPoint());
         eval.setComment(evaluate.getComment());
+        eval.setActive(evaluate.isActive());
         eval = this.evaluateRepos.save(eval);
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();

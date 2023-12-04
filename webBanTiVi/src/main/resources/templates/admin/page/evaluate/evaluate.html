@@ -8,7 +8,23 @@
     giá: <span th:text="${product.nameProduct}"></span></h4>
 <div class="card mb-3 ">
     <div class="card-header">
-        <input class="form-control" type="search" id="search" placeholder="Nhập tên thuộc tính muốn tìm">
+        <input class="form-control mb-3" type="search" id="search" placeholder="Nhập thông tin muốn tìm">
+        <div class="mb-3 d-inline">
+            <select class="form-select w-auto d-inline" id="filter-point">
+                <option value="-1">Tất cả</option>
+                <option value="1">Từ 1 sao</option>
+                <option value="2">Từ 2 sao</option>
+                <option value="3">Từ 3 sao</option>
+                <option value="4">Từ 4 sao</option>
+                <option value="5">Từ 5 sao</option>
+            </select>
+            <select class="form-select w-auto d-inline mx-3" id="filter-active">
+                <option value="-1">Trạng thái</option>
+                <option value="true">Hiển thị</option>
+                <option value="false">Không hiển thị</option>
+            </select>
+        </div>
+
     </div>
     <div class="card-body">
         <div class="row">
@@ -60,7 +76,6 @@
             </div>
 
         </div>
-        <hr class="card-separator">
     </div>
 </div>
 <script src="/admin/plugin/js/evaluate-admin.js"></script>

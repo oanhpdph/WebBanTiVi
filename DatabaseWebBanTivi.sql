@@ -30,6 +30,12 @@ Create table field(
 	variant bit,
 	active  bit
 )
+Create table Brand
+(
+id	   int identity(1,1) primary key,
+name   nvarchar(100),
+active bit
+)
 
 CREATE TABLE product
   (
@@ -43,12 +49,7 @@ CREATE TABLE product
      active         BIT
 )
 
-Create table Brand
-(
-id	   int identity(1,1) primary key,
-name   nvarchar(100),
-active bit
-)
+
 
 CREATE TABLE product_detail
   (
@@ -107,7 +108,7 @@ CREATE TABLE voucher
   (
      id               INT IDENTITY(1, 1) PRIMARY KEY,
      code             VARCHAR(30) not null unique,
-     name_voucher     VARCHAR(100) not null,
+     name_voucher     NVARCHAR(100) not null,
      [value]          INT not null,
      minimum_value    MONEY not null,-- giá trị đơn hàng tối thiểu cần
      quantity         INT not null, -- số lượng voucher
@@ -287,19 +288,9 @@ INSERT INTO [dbo].[bill_status]
            ,[status]
            ,[description])
      VALUES
-           ('SC'
-           ,N'Shop hủy'
-           ,N'Đơn hàng bị hủy từ phía cửa hàng')
-
-GO
-INSERT INTO [dbo].[bill_status]
-           ([code]
-           ,[status]
-           ,[description])
-     VALUES
-           ('CC'
-           ,N'Khách hủy'
-           ,N'Khách hàng hủy mua sản phẩm')
+           ('CA'
+           ,N'Hủy hàng'
+           ,N'Đơn hàng bị hủy')
 
 GO
 INSERT INTO [dbo].[bill_status]

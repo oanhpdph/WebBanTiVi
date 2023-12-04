@@ -72,6 +72,10 @@ public class BillImpl implements BillService {
     @Autowired
     private CheckLogin checkLogin;
 
+    @Override
+    public List<Bill> all() {
+        return billRepos.findAll();
+    }
 
     @Override
     public Bill add(BillProRes bill) {
@@ -153,8 +157,7 @@ public class BillImpl implements BillService {
         } else if (searchBillDto.getBillStatus().equals("hoanthanh")) {
             billStatus.add("CO");
         } else if (searchBillDto.getBillStatus().equals("donhuy")) {
-            list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "SC"),
-                    criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "CC")));
+            list.add(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "CA"));
         } else if (searchBillDto.getBillStatus().equals("dontra")) {
             list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "RR"),
                     criteriaBuilder.equal(billRoot.get("billStatus").get("code"), "WR"),
@@ -168,8 +171,8 @@ public class BillImpl implements BillService {
 
         if (!searchBillDto.getKey().isEmpty()) {
             list.add(criteriaBuilder.or(criteriaBuilder.equal(billRoot.get("code"), searchBillDto.getKey()),
-                    criteriaBuilder.like(billRoot.get("customer").get("name"), searchBillDto.getKey()),
-                    criteriaBuilder.like(billRoot.get("customer").get("phoneNumber"), searchBillDto.getKey())));
+                    criteriaBuilder.like(billRoot.get("customer").get("name"), "%" + searchBillDto.getKey() + "%"),
+                    criteriaBuilder.like(billRoot.get("customer").get("phoneNumber"), "%" + searchBillDto.getKey() + "%")));
         }
         if (searchBillDto.getPaymentStatus() != -1) {
             list.add(criteriaBuilder.equal(billRoot.get("paymentStatus"), searchBillDto.getPaymentStatus()));
@@ -265,6 +268,7 @@ public class BillImpl implements BillService {
             }
             if (i == bill.getBillProducts().size()) {
                 listBillFilter.add(bill);
+                i=0;
             }
         }
         return listBillFilter;
