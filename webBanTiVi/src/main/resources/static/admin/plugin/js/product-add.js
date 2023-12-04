@@ -953,7 +953,7 @@ function validate() {
             url: '/product/all',
             method: "get",
             success: function (response) {
-                var check;
+                var check = [], active = 0;
                 var skuCode = document.getElementById("sku-code")
                 var name = $("#name-display")
                 var brand = $("#select-brand")
@@ -963,17 +963,15 @@ function validate() {
                 var listPriceExport = document.getElementsByClassName("priceExport")
                 var checkActive = document.getElementsByClassName("check-active")
                 $.each(checkActive, function (index, item) {
-                    var parentElement;
-                    var span;
+                    var parentElement, span;
                     if (item.checked) {
-
+                        active = 1
                         parentElement = listSku[index].closest('td');
                         span = parentElement.querySelector("span.error-sku")
                         if (listSku[index].value === "") {
                             span.textContent = "Nhập mã sku cho sản phẩm"
-                            check = false
+                            check.push(false)
                         } else {
-                            check = true
                             span.textContent = ""
                         }
 
@@ -981,9 +979,8 @@ function validate() {
                         span = parentElement.querySelector("span.error-quantity")
                         if (listQuantity[index].value === "" || Number(item.value) < 0) {
                             span.textContent = "Số lượng >=0"
-                            check = false
+                            check.push(false)
                         } else {
-                            check = true
                             span.textContent = ""
                         }
 
@@ -991,9 +988,8 @@ function validate() {
                         span = parentElement.querySelector("span.error-priceImport")
                         if (listPriceImport[index].value === "" || Number(item.value) < 0) {
                             span.textContent = "Giá nhập >=0 "
-                            check = false
+                            check.push(false)
                         } else {
-                            check = true
                             span.textContent = ""
                         }
 
@@ -1001,9 +997,8 @@ function validate() {
                         span = parentElement.querySelector("span.error-priceExport")
                         if (listPriceExport[index].value === "" || Number(item.value) < 0) {
                             span.textContent = "Giá bán >=0"
-                            check = false
+                            check.push(false)
                         } else {
-                            check = true
                             span.textContent = ""
                         }
                         var value = item.getAttribute("value")
@@ -1019,7 +1014,7 @@ function validate() {
                                 fileName = fileName.substr(lastIndex + 1);
                             }
                             if (fileName === "") {
-                                check = false
+                                check.push(false)
                                 span.textContent = "Chọn ảnh sản phẩm"
                                 return false
                             } else {
@@ -1052,42 +1047,43 @@ function validate() {
                         span.textContent = ""
                     }
                 })
-
+                if (active === 0) {
+                    $("#active-error").text("Cần có ít nhất 1 sản phẩm bày bán")
+                }
                 if ($(name).val().trim().length === 0) {
                     $("#name-error").text("Chưa nhập tên sản phẩm")
-                    check = false
+                    check.push(false)
                 } else {
                     $("#name-error").text("")
-                    check = true
                 }
 
                 if ($(brand).val() == -1) {
                     $("#brand-error").text("Chưa chọn hãng cho sản phẩm")
-                    check = false
+                    check.push(false)
                 } else {
                     $("#brand-error").text("")
-                    check = true
                 }
 
                 if (skuCode.value.trim().length == 0) {
-                    check = false
+                    check.push(false)
                     $("#sku-code-error").text("Chưa nhập mã sku")
                 } else {
-                    check = true
+                    $.each(response, function (index, item) {
+                        if (item.sku === skuCode.value.trim()) {
+                            check.push(false)
+                            $("#sku-code-error").text("Mã sku đã tồn tại")
+                            return false
+                        } else {
+                            $("#sku-code-error").text("")
+                        }
+                    })
                 }
-                $.each(response, function (index, item) {
-                    if (item.sku === skuCode.value.trim()) {
-                        check = false
-                        $("#sku-code-error").text("Mã sku đã tồn tại")
-                        return false
-                    } else {
-                        check = true
-                        $("#sku-code-error").text("")
-                    }
-                })
 
-
-                resolve(check);
+                if (check.indexOf(false) > -1) {
+                    resolve(false);
+                } else {
+                    resolve(true)
+                }
             },
             error: function (error) {
                 reject(error);
