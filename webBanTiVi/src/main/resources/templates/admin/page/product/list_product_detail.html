@@ -94,7 +94,7 @@
                         <td th:text="${ product.coupon!=null &&product.coupon.active == true && #dates.createNow().before(product.coupon.dateEnd) && #dates.createNow().after(product.coupon.dateStart)  ? product.coupon.value+'%':'0%'}">
                         </td>
                         <td th:text="${product.quantity}"></td>
-                        <td class="form-switch text-center"><input class="form-check-input active-product-detail"
+                        <td class="form-switch text-center"><input class="form-check-input active-product-detail cursor-pointer"
                                                                    type="checkbox" th:value="${product.id}"
                                                                    th:checked="${product.active}"></td>
                         <td>

@@ -202,11 +202,6 @@ public class BillImpl implements BillService {
     }
 
     @Override
-    public List<Bill> findAlBill() {
-        return this.billRepos.findAll();
-    }
-
-    @Override
     public Bill update(Bill bill, Integer id) {
         Optional<Bill> optional = billRepos.findById(id);
         if (optional.isPresent()) {
