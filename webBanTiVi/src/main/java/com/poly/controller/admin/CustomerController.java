@@ -5,7 +5,6 @@ import com.poly.dto.SearchStaffDto;
 import com.poly.entity.Users;
 import com.poly.service.CustomerService;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -64,10 +62,10 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/save")
-    public String addCustomer(@Valid @ModelAttribute("customer") Users customer, BindingResult result, Model model, @RequestParam("image") MultipartFile file) {
-        if (result.hasErrors()) {
-            return "admin/layout";
-        }
+    public String addCustomer( @ModelAttribute("customer") Users customer, Model model,
+                              @RequestParam("image") MultipartFile file
+    ) {
+
         String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
         customer.setAvatar(fileName);
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));

@@ -2,11 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div class="mb-4">
     <div class="row justify-content-end me-4">
-        <button type="button" class="btn btn-secondary mb-4 w-auto" data-bs-toggle="modal" data-bs-target="#largeModal">
+        <button type="button" class="btn btn-secondary mb-4 w-auto" id="createAccount" data-bs-toggle="modal"
+                data-bs-target="#largeModal">
             Tạo tài khoản
         </button>
     </div>
-    <form th:action="@{/admin/customer/save}" method="post" th:object="${customer}" enctype="multipart/form-data">
+    <form th:action="@{/admin/customer/save}" method="post" th:object="${customer}" enctype="multipart/form-data"
+          th:name="formAccount" onsubmit="return validateAdd()">
         <div class="modal fade" th:id="largeModal" tabindex="-1"
              aria-hidden="true">
             <div class="modal-dialog modal-xl" role="document">
@@ -33,7 +35,8 @@
                             <div class="row col-lg-8 col-xl-9">
                                 <div class="col-sm-4 mb-3">
                                     <label class="form-label">Tên đăng nhập:</label>
-                                    <input type="text" class="form-control" th:name="username">
+                                    <input type="text" class="form-control" id="username" th:name="username">
+                                    <span id="errorUsername" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-4 mb-3">
                                     <label class="form-label">Họ tên:</label>
@@ -46,14 +49,15 @@
                                 </div>
                                 <div class="col-sm-4 mb-3">
                                     <label class="form-label">Số điện thoại</label>
-                                    <input type="text" class="form-control" th:name="phoneNumber">
+                                    <input type="text" class="form-control" id="phoneNumber" th:name="phoneNumber">
+                                    <span id="errorPhoneNumber" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-4 mb-3">
                                     <label class="form-label">Giới tính:</label>
                                     <div>
                                         <div class="form-check form-check-inline mt-3">
                                             <input class="form-check-input" type="radio" th:name="gender"
-                                                   th:value="true">
+                                                   th:value="true" checked>
                                             <label class="form-check-label">Nam</label>
                                         </div>
                                         <div class="form-check form-check-inline">
@@ -66,15 +70,18 @@
                                 </div>
                                 <div class="col-sm-4 mb-3">
                                     <label class="form-label">Ngày sinh</label>
-                                    <input class="form-control" type="date" th:name="birthday">
+                                    <input class="form-control" type="date" id="birthday" th:name="birthday">
+                                    <span id="errorBirthday" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-4 mb-3">
                                     <label class="form-label">Email</label>
-                                    <input class="form-control" type="email" th:name="email">
+                                    <input class="form-control" type="email" id="email" th:name="email">
+                                    <span id="errorEmail" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-4 mb-3">
                                     <label class="form-label">Password</label>
-                                    <input class="form-control" type="text" th:name="password">
+                                    <input class="form-control" type="text" id="password" th:name="password">
+                                    <span id="errorPassword" class="text-danger"></span>
                                 </div>
 
                                 <div class="col-sm-4 mb-3">
@@ -222,7 +229,9 @@
                                     </div>
                                     <div class="modal-body">
                                         <form th:action="@{/admin/customer/update/{id}(id=${customer.id})}"
-                                              method="post" th:object="${customer}" enctype="multipart/form-data">
+                                              method="post" th:object="${customer}" enctype="multipart/form-data"
+                                              th:name="formUpdate" onsubmit="return validateUpdate()"
+                                        >
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3 text-center">
                                                     <div class="text-center">
@@ -245,6 +254,7 @@
                                                         <label class="form-label">Tên đăng nhập:</label>
                                                         <input type="text" class="form-control" th:name="username"
                                                                th:value="${customer.username}">
+                                                        <span id="errorUsernameUD" class="text-danger"></span>
                                                     </div>
                                                     <div class="col-sm-4 p-3">
                                                         <label class="form-label">Họ tên:</label>
@@ -263,6 +273,7 @@
                                                         <input type="text" class="form-control"
                                                                th:name="phoneNumber"
                                                                th:value="${customer.phoneNumber}">
+                                                        <span id="errorPhoneNumberUD" class="text-danger"></span>
                                                     </div>
                                                     <div class="col-sm-4 p-3">
                                                         <label class="form-label">Giới tính:</label>
@@ -291,17 +302,20 @@
                                                         <label class="form-label">Ngày sinh</label>
                                                         <input class="form-control" type="date" th:name="birthday"
                                                                th:value="${customer.birthday}">
+                                                        <span id="errorBirthdayUD" class="text-danger"></span>
                                                     </div>
                                                     <div class="col-sm-4 p-3">
                                                         <label class="form-label">Email</label>
                                                         <input class="form-control" type="email" th:name="email"
                                                                th:value="${customer.email}">
+                                                        <span id="errorEmailUD" class="text-danger"></span>
                                                     </div>
                                                     <div class="col-sm-4 p-3">
                                                         <label class="form-label">Mật khẩu</label>
                                                         <input class="form-control" type="password" th:name="password"
                                                                th:value="${customer.password}"
                                                         >
+                                                        <span id="errorPasswordUD" class="text-danger"></span>
                                                     </div>
                                                     <div class="col-sm-4 p-3">
                                                         <label class="form-label">Trạng thái :</label>
@@ -430,9 +444,32 @@
 </div>
 
 <script>
+    $("#createAccount").on("click", function () {
+        this.click()
+    });
+
     const fileInputs = document.getElementsByClassName('file-input');
     const imagePreviews = document.getElementsByClassName('image-preview');
-
+    const errorPassword = document.getElementById("errorPassword")
+    const errorEmail = document.getElementById("errorEmail")
+    const errorUsername = document.getElementById("errorUsername")
+    const errorPhone = document.getElementById("errorPhone")
+    const errorBirthday = document.getElementById("errorBirthday")
+    console.log($("#createAccount"))
+    console.log(errorUsername.textContent)
+    // document.getElementById("createAccount").onclick= ()=>{
+    //     console.log('123');
+    // }
+    if (
+        errorEmail.textContent != "" ||
+        errorPassword.textContent != "" ||
+        errorPhone.textContent != "" ||
+        errorBirthday.textContent != "" ||
+        errorUsername.textContent != ""
+    ) {
+        console.log('123');
+        document.getElementById("createAccount").click();
+    }
     for (let i = 0; i < fileInputs.length; i++) {
         const fileInput = fileInputs[i];
         const imagePreview = imagePreviews[i];
@@ -486,6 +523,137 @@
         $("#role").val('USER')
         $("#form-user").submit()
     })
+
+    function validateAdd() {
+
+        var username = document.formAccount.username.value;
+        var password = document.formAccount.password.value;
+        var email = document.formAccount.email.value;
+        var phone = document.formAccount.phoneNumber.value;
+        var birthday = document.formAccount.birthday.value;
+        var status = [];
+
+        if (username.trim().length < 1) {
+            document.getElementById("errorUsername").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống tài khoản!";
+            status.push(false);
+        } else {
+            document.getElementById("errorUsername").innerHTML = "";
+        }
+        if (birthday.trim().length < 1) {
+            document.getElementById("errorBirthday").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày sinh!";
+            status.push(false);
+        } else {
+            document.getElementById("errorBirthday").innerHTML = "";
+        }
+        if (password.trim().length < 1) {
+            document.getElementById("errorPassword").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mật khẩu!";
+            status.push(false);
+        } else {
+            document.getElementById("errorPassword").innerHTML = "";
+        }
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+        if (email.trim().length < 1) {
+            document.getElementById("errorEmail").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống email!";
+            status.push(false)
+        } else if (filter.test(email.value)) {
+            document.getElementById("errorEmail").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i>Địa chỉ email không hợp lệ.\n Example@gmail.com!";
+            // email.focus();
+            status.push(false)
+        } else {
+            if (document.getElementById("errorEmail")) {
+                document.getElementById("errorEmail").innerHTML = "";
+            }
+            // status = true;
+        }
+        var phoneCondition = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+        if (phone.trim().length < 1) {
+            document.getElementById("errorPhoneNumber").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống số điện thoại!";
+            status.push(false)
+        } else if (phone.match(phoneCondition)) {
+            // status = true;
+            document.getElementById("errorPhoneNumber").innerHTML = "";
+        } else {
+            document.getElementById("errorPhoneNumber").innerHTML = "Không đúng định dạng số điện thoại!";
+            status.push(false)
+        }
+
+        console.log(status)
+        if (status.indexOf(false) > -1) {
+            return false
+        }
+    }
+    function validateUpdate() {
+
+        var username = document.formUpdate.username.value;
+        var password = document.formUpdate.password.value;
+        var email = document.formUpdate.email.value;
+        var phone = document.formUpdate.phoneNumber.value;
+        var birthday = document.formUpdate.birthday.value;
+        var status = [];
+
+        if (username.trim().length < 1) {
+            document.getElementById("errorUsernameUD").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống tài khoản!";
+            status.push(false);
+        } else {
+            document.getElementById("errorUsernameUD").innerHTML = "";
+        }
+        if (birthday.trim().length < 1) {
+            document.getElementById("errorBirthdayUD").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày sinh!";
+            status.push(false);
+        } else {
+            document.getElementById("errorBirthdayUD").innerHTML = "";
+        }
+        if (password.trim().length < 1) {
+            document.getElementById("errorPasswordUD").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mật khẩu!";
+            status.push(false);
+        } else {
+            document.getElementById("errorPasswordUD").innerHTML = "";
+        }
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+        if (email.trim().length < 1) {
+            document.getElementById("errorEmailUD").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống email!";
+            status.push(false)
+        } else if (filter.test(email.value)) {
+            document.getElementById("errorEmailUD").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i>Địa chỉ email không hợp lệ.\n Example@gmail.com!";
+            // email.focus();
+            status.push(false)
+        } else {
+            if (document.getElementById("errorEmailUD")) {
+                document.getElementById("errorEmailUD").innerHTML = "";
+            }
+            // status = true;
+        }
+        var phoneCondition = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+        if (phone.trim().length < 1) {
+            document.getElementById("errorPhoneNumberUD").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống số điện thoại!";
+            status.push(false)
+        } else if (phone.match(phoneCondition)) {
+            // status = true;
+            document.getElementById("errorPhoneNumberUD").innerHTML = "";
+        } else {
+            document.getElementById("errorPhoneNumberUD").innerHTML = "Không đúng định dạng số điện thoại!";
+            status.push(false)
+        }
+
+        console.log(status)
+        if (status.indexOf(false) > -1) {
+            return false
+        }
+    }
 </script>
 
 </html>
