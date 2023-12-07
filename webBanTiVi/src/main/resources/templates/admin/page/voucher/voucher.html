@@ -1,9 +1,3 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<style>
-    .error {
-        color: red;
-    }
-</style>
 <h4 class="fw-semibold py-3 mb-4"> Danh sách Voucher</h4>
 
 <div class="row justify-content-end me-4">
@@ -21,8 +15,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form th:action="@{/admin/voucher/add}" method="post" th:object="${voucher}"
-                      enctype="multipart/form-data" th:name="myform"
-                      th:onsubmit="return validateForm()">
+                      enctype="multipart/form-data" th:name="myform" th:onsubmit="return validateForm()">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-4 col-sm-12 col-xl-3 text-center">
@@ -31,6 +24,7 @@
                                          class="rounded image-preview mb-3"
                                          width="200">
                                 </div>
+                                <span id="imageloc" class="error"></span> <br>
                                 <label class="btn btn-primary me-2 mb-4" tabindex="0">
                                     <span class="d-none d-sm-block">Tải ảnh lên</span>
                                     <i class="bx bx-upload d-block d-sm-none"></i>
@@ -44,9 +38,6 @@
                                         <label class="form-label">Mã voucher:</label>
                                         <input type="text" class="form-control" th:name="code">
                                         <span id="codeloc" class="error"></span>
-                                        <div class="alert alert-warning"
-                                             th:if="${#fields.hasErrors('code')}"
-                                             th:errors="*{code}"></div>
                                     </div>
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
@@ -54,9 +45,6 @@
                                         <label class="form-label">Tên voucher:</label>
                                         <input type="text" class="form-control" th:name="nameVoucher">
                                         <span id="nameVoucherloc" class="error"></span>
-                                        <div class="alert alert-warning"
-                                             th:if="${#fields.hasErrors('nameVoucher')}"
-                                             th:errors="*{nameVoucher}"></div>
                                     </div>
                                 </div>
 
@@ -64,29 +52,23 @@
                                     <div class="mb-3">
                                         <label class="form-label">Giá trị giảm</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" th:name="value" step="any"
-                                                   pattern="[-+]?[0-9]">
+                                            <input type="text" class="form-control" th:name="value">
                                             <span class="input-group-text">VNĐ</span>
-                                            <span id="valueloc" class="error"></span>
-                                            <div class="alert alert-warning"
-                                                 th:if="${#fields.hasErrors('value')}"
-                                                 th:errors="*{value}"></div>
                                         </div>
+                                        <span id="valueloc" class="error"></span>
                                     </div>
+
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Giá trị tối thiểu</label>
                                         <div class="input-group">
                                             <input class="form-control" type="text"
-                                                   th:name="minimumValue" step="any" pattern="[-+]?[0-9]"
+                                                   th:name="minimumValue"
                                             >
                                             <span class="input-group-text">VNĐ</span>
-                                            <span id="minimumValueloc" class="error"></span>
-                                            <div class="alert alert-warning"
-                                                 th:if="${#fields.hasErrors('minimumValue')}"
-                                                 th:errors="*{minimumValue}"></div>
                                         </div>
+                                        <span id="minimumValueloc" class="error"></span>
                                     </div>
                                 </div>
 
@@ -96,9 +78,6 @@
                                         <input type="date" class="form-control" th:name="startDay">
                                     </div>
                                     <span id="startDayloc" class="error"></span>
-                                    <div class="alert alert-warning"
-                                         th:if="${#fields.hasErrors('startDay')}"
-                                         th:errors="*{startDay}"></div>
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
                                     <div class="mb-3">
@@ -106,20 +85,13 @@
                                         <input type="date" class="form-control" th:name="expirationDate"/>
                                     </div>
                                     <span id="expirationDateloc" class="error"></span>
-                                    <div class="alert alert-warning"
-                                         th:if="${#fields.hasErrors('expirationDate')}"
-                                         th:errors="*{expirationDate}"></div>
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Số lượng:</label>
-                                        <input type="number" class="form-control" th:name="quantity"
-                                               pattern="[-+]?[0-9]"/>
-                                        <span id="quantityloc" class="error"></span>
-                                        <div class="alert alert-warning"
-                                             th:if="${#fields.hasErrors('quantity')}"
-                                             th:errors="*{quantity}"></div>
+                                        <input type="number" class="form-control" th:name="quantity"/>
                                     </div>
+                                    <span id="quantityloc" class="error"></span>
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
                                     <div class="mb-3">
@@ -128,7 +100,7 @@
                                             <div class="form-check form-check-inline mt-3">
                                                 <input class="form-check-input" type="radio" th:name="active"
                                                        id="inlineRadio1"
-                                                       th:value="true">
+                                                       th:value="true" checked>
                                                 <label class="form-check-label" for="inlineRadio1">Hoạt động</label>
                                             </div>
                                             <div class="form-check form-check-inline">
@@ -137,10 +109,6 @@
                                                        th:value="false">
                                                 <label class="form-check-label" for="inlineRadio2">Không hoạt
                                                     động</label>
-                                                <span id="activeloc" class="error"></span>
-                                                <div class="alert alert-warning"
-                                                     th:if="${#fields.hasErrors('active')}"
-                                                     th:errors="*{active}"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -348,7 +316,7 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Số lượng:</label>
                                                             <input type="number" class="form-control"
-                                                                   th:name="quantity" pattern="[-+]?[0-9]"
+                                                                   th:name="quantity"
                                                                    th:value="${voucher.quantity}"/>
                                                         </div>
                                                     </div>
@@ -452,98 +420,87 @@
         var quantity = document.myform.quantity.value;
         var startDay = document.myform.startDay.value;
         var expirationDate = document.myform.expirationDate.value;
-        // var phoneNumber = document.myform.phoneNumber.value;
-        var status = false;
+        let today = new Date().toISOString().slice(0, 10);
+        var image = document.myform.image.value;
+        var status = [];
 
         //code
-        if (code.length < 1) {
+        if (code.trim().length < 1) {
             document.getElementById("codeloc").innerHTML =
                 " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!";
-            status = false;
+            status.push(false);
         } else {
-            document.getElementById("codeloc").innerHTML =
-                " <i class='bx bx-x-circle' style='color:#ff0000' ></i>";
-            status = true;
+            document.getElementById("codeloc").innerHTML = "";
+        }
+        //image
+        if (image.trim().length < 1) {
+            document.getElementById("imageloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ảnh!";
+            status.push(false);
+        } else {
+            document.getElementById("imageloc").innerHTML = "";
         }
         //name
-        if (nameVoucher.length < 1) {
+        if (nameVoucher.trim().length < 1) {
             document.getElementById("nameVoucherloc").innerHTML =
                 " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống tên!";
-            status = false;
+            status.push(false);
         } else {
             document.getElementById("nameVoucherloc").innerHTML = "";
-            status = true;
         }
         //value
-        if (value.length < 1) {
+        if (value.trim().length < 1) {
             document.getElementById("valueloc").innerHTML =
                 " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống giá trị!";
-            status = false;
+            status.push(false);
         } else {
             document.getElementById("valueloc").innerHTML = "";
-            status = true;
         }
         //minimumValue
-        if (minimumValue.length < 1) {
+        if (minimumValue.trim().length < 1) {
             document.getElementById("minimumValueloc").innerHTML =
                 " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống giá trị!";
-            status = false;
+            status.push(false);
         } else {
             document.getElementById("minimumValueloc").innerHTML = "";
-            status = true;
         }
         //startDay
-        if (startDay.length < 1) {
+        if (startDay.trim().length < 1) {
             document.getElementById("startDayloc").innerHTML =
                 " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!";
-            status = false;
+            status.push(false);
+        } else if (today.valueOf() > startDay.valueOf()) {
+            document.getElementById("startDayloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày bắt đầu phải lớn hơn ngày hiện tại!";
+            status.push(false);
         } else {
             document.getElementById("startDayloc").innerHTML = "";
-            status = true;
         }
         //expirationDate
-        if (expirationDate.length < 1) {
+        if (expirationDate.trim().length < 1) {
             document.getElementById("expirationDateloc").innerHTML =
                 " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!";
-            status = false;
-        } else if (expirationDate.length < startDay.length) {
+            status.push(false);
+        } else if (expirationDate.valueOf() < startDay.valueOf()) {
             document.getElementById("expirationDateloc").innerHTML =
                 " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!";
-            status = false;
+            status.push(false);
         } else {
             document.getElementById("expirationDateloc").innerHTML = "";
-            status = true;
         }
         //quantity
-        var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-        if (quantity.length < 1) {
+        if (quantity.trim().length < 1) {
             document.getElementById("quantityloc").innerHTML =
                 " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống số lượng!";
-            status = false;
-        } else if (quantity.length == Number(quantity)) {
-            document.getElementById("quantityloc").innerHTML = "";
-            status = true;
+            status.push(false);
         } else {
-            document.getElementById("quantityloc").innerHTML =
-                " <i class='bx bx-x-circle' style='color:#ff0000' ></i>";
-            status = false;
+            document.getElementById("quantityloc").innerHTML = "";
         }
-        //active
-        // var active = document.form.lang;
-        var active = document.myform.active.value;
-        for (var i = 0; i < active.length; i++) {
-            if (active[i].checked) {
-                break;
-            }
-        }
-        if (i == active.length) {
-            document.getElementById("activeloc").innerHTML =
-                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống trạng thái!";
-            status = false;
-        }
-        return document.getElementById("activeloc").innerHTML = "You select option " + (i + 1);
 
-        return status;
+        console.log(status)
+        if (status.indexOf(false) > -1) {
+            return false
+        }
     }
 
     for (let i = 0; i < fileInputs.length; i++) {
@@ -569,4 +526,3 @@
         });
     }
 </script>
-</html>

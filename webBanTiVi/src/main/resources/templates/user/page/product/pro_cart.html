@@ -238,6 +238,23 @@
             title: "Đã cập nhật lại giỏ hàng"
         });
     }
+    if (document.getElementById("message").textContent == 'false') {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "error",
+            title: "Không đủ sản phẩm!"
+        });
+    }
     const plus = document.querySelectorAll(".plus")
     const minus = document.querySelectorAll(".minus")
 

@@ -202,11 +202,6 @@ public class BillImpl implements BillService {
     }
 
     @Override
-    public List<Bill> findAlBill() {
-        return this.billRepos.findAll();
-    }
-
-    @Override
     public Bill update(Bill bill, Integer id) {
         Optional<Bill> optional = billRepos.findById(id);
         if (optional.isPresent()) {
@@ -268,7 +263,7 @@ public class BillImpl implements BillService {
             }
             if (i == bill.getBillProducts().size()) {
                 listBillFilter.add(bill);
-                i=0;
+                i = 0;
             }
         }
         return listBillFilter;
@@ -315,12 +310,12 @@ public class BillImpl implements BillService {
 
     @Override
     public Boolean checkBillNoLogin(String code) {
-        Boolean bool= false;
+        Boolean bool = false;
         Bill bill = this.findByCode(code).get();
-        int check=0;
-        for(BillProduct billPro : bill.getBillProducts()){
-            if(billPro.getStatus()==0){
-                check=1;
+        int check = 0;
+        for (BillProduct billPro : bill.getBillProducts()) {
+            if (billPro.getStatus() == 0) {
+                check = 1;
             }
         }
         if (check == 1) {

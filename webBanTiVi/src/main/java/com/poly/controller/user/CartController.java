@@ -117,11 +117,11 @@ public class CartController {
 
 
     @PostMapping("/purchase")
-    public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes,BindingResult result,
+    public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
                           Model model,
                           Integer id
-                          ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         if (result.hasErrors()) {
             return "redirect:/pay";
@@ -307,35 +307,39 @@ public class CartController {
                 if (optional.isPresent()) {
                     CartProduct cartProduct = optional.get();
                     cartProduct.setQuantity(qty.get(i));
-                    list.add(cartProductService.update(cartProduct));
+
+                    //update
+                    if (productDetail != null) {
+                        if (qty.get(i) > productDetail.getQuantity()) {
+                            redirectAttributes.addFlashAttribute("message", false);
+                            return "redirect:/cart";
+                        } else {
+                            list.add(cartProductService.update(cartProduct));
+                            session.setAttribute("list", list);
+                        }
+                    } else {
+                        redirectAttributes.addFlashAttribute("message", false);
+                    }
                 }
             }
             session.setAttribute("list", list);
         } else {
             List<CartProduct> list = new ArrayList<>();
             for (int i = 0; i < id.size(); i++) {
-                list = cartService.update(id.get(i), qty.get(i));
+                ProductDetail productDetail = productDetailService.findById(id.get(i));
+                if (productDetail != null) {
+                    if (qty.get(i) > productDetail.getQuantity()) {
+                        redirectAttributes.addFlashAttribute("message", false);
+                        return "redirect:/cart";
+                    } else {
+                        list = cartService.update(id.get(i), qty.get(i));
+                        session.setAttribute("list", list);
+                    }
+                } else {
+                    redirectAttributes.addFlashAttribute("message", false);
+                }
             }
-            session.setAttribute("list", list);
         }
-        model.addAttribute("qty", qty);
-//        for (CartProduct item : list) {
-//            ProductDetail product = item.getProduct();
-//
-//            if (product != null) {
-//                if (quantity > product.getQuantity()) {
-//                    model.addAttribute("error", "Số lượng sản phẩm trong giỏ hàng không được lớn hơn số lượng tồn");
-//                    return "redirect:/cart";
-//                } else {
-//                    for (int i = 0; i < id.size(); i++) {
-//                        list = cartService.update(id.get(i), qty.get(i));
-//                    }
-//                    session.setAttribute("list", list);
-//                }
-//            } else {
-//                model.addAttribute("error", "Sản phẩm không tồn tại");
-//            }
-//        }
         redirectAttributes.addFlashAttribute("message", "update-success");
         return "redirect:/cart";
     }
