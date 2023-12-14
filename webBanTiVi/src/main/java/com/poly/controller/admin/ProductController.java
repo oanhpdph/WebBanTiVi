@@ -2,6 +2,7 @@ package com.poly.controller.admin;
 
 import com.poly.dto.ProductDetailDto;
 import com.poly.dto.ProductDetailListDto;
+import com.poly.entity.Product;
 import com.poly.entity.ProductDetail;
 import com.poly.entity.ProductDetailField;
 import com.poly.service.ProductDetailService;
@@ -9,6 +10,7 @@ import com.poly.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -67,6 +69,11 @@ public class ProductController {
         model.addAttribute("countDetail", productDetailService.findAll());
 
         return "/admin/layout";
+    }
+
+    @GetMapping("/product/sku")
+    public ResponseEntity<?> getALl() {
+        return ResponseEntity.ok(productService.findAll().stream().map(Product::getSku).collect(Collectors.toList()));
     }
 
 }

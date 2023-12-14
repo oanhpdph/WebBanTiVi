@@ -26,12 +26,13 @@
                     <div>
                         <button class="btn btn-primary" style="width: 40%" data-bs-target="#writeEvaluate"
                                 data-bs-toggle="modal"
-                                th:if="${(session.user != null && hasEvaluate ==true)}">
+                                th:if="${(session.user != null && hasEvaluate == false && hasBuy==true)}">
                             Viết đánh giá
                         </button>
                     </div>
+                    <small th:if="${hasBuy == false}">Bạn cần mua hàng để đánh giá</small>
                     <small th:if="${session.user == null}">Bạn cần đăng nhập để đánh giá</small>
-                    <small th:unless="${(session.user != null && hasEvaluate ==false)}">Bạn đã đánh giá sản phẩm
+                    <small th:if="${(session.user != null && hasEvaluate == true)}">Bạn đã đánh giá sản phẩm
                         này</small>
                 </div>
             </div>
