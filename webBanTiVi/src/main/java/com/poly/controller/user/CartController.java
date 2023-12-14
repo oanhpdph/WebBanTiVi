@@ -117,11 +117,11 @@ public class CartController {
 
 
     @PostMapping("/purchase")
-    public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes,BindingResult result,
+    public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
                           Model model,
                           Integer id
-                          ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+    ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         if (result.hasErrors()) {
             return "redirect:/pay";
@@ -163,6 +163,9 @@ public class CartController {
             total = cartService.getAmount();
             billProRes.setTotalPrice(total);// lấy tổng tiền
         } else {
+            if (userDetailDto.getRoles().equals("ADMIN") || userDetailDto.getRoles().equals("STAFF")) {
+                return "redirect:/error/403";
+            }
             billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
             billProRes.setEmail(userDetailDto.getEmail());
         }
