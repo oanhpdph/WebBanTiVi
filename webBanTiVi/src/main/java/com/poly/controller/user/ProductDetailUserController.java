@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -69,8 +70,7 @@ public class ProductDetailUserController {
                 if (evaluate.getCustomer().getId() == userDetailDto.getId()) {
                     model.addAttribute("hasEvaluate", true);
                     break;
-                }
-                else {
+                } else {
                     model.addAttribute("hasEvaluate", false);
                 }
             }
@@ -82,8 +82,39 @@ public class ProductDetailUserController {
     @PostMapping("/product/detail/{id}")
     public String add(@PathVariable Integer id, @RequestParam("qty") Integer qty, HttpSession session, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         String url = request.getRequestURI();
-        List<CartProduct> list = cartService.add(id, qty);
-        session.setAttribute("list", list);
+        ProductDetail productDetail = productDetailService.findById(id);
+        List<CartProduct> list = new ArrayList<>();
+        if (session.getAttribute("list") != null) {
+            list = (List<CartProduct>) session.getAttribute("list");
+            if (list.isEmpty() == false) {
+                boolean check = false;
+                for (CartProduct cartProduct : list) {
+                    if (cartProduct.getProduct().getId() == id) {
+                        if (cartProduct.getQuantity() + qty < 10) {
+                            if (cartProduct.getQuantity() + qty > productDetail.getQuantity()) {
+                                redirectAttributes.addFlashAttribute("message", false);
+                                return "redirect:" + url;
+                            } else {
+                                session.setAttribute("list", cartService.add(id, qty));
+                                check = true;
+                                break;
+                            }
+                        } else {
+                            redirectAttributes.addFlashAttribute("message", false);
+                            return "redirect:" + url;
+                        }
+
+                    }
+                }
+                if (check == false) {
+                    session.setAttribute("list", cartService.add(id, qty));
+                }
+            } else {
+                session.setAttribute("list", cartService.add(id, qty));
+            }
+        } else {
+            session.setAttribute("list", cartService.add(id, qty));
+        }
         UserDetailDto userDetailDto = checkLogin.checkLogin();
         if (userDetailDto != null) {
             CartDto cartDto = new CartDto();
@@ -95,6 +126,7 @@ public class ProductDetailUserController {
         redirectAttributes.addFlashAttribute("message", true);
         return "redirect:" + url;
     }
+
 
     @GetMapping("/product/evaluate/{id}")
     public String index(@ModelAttribute(name = "evaluate") EvaluateRes evaluateDto, @PathVariable Integer id, Model model, HttpSession httpSession) {

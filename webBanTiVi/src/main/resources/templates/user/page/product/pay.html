@@ -70,7 +70,7 @@
                                     <div class="card-body" th:id="add">
                                         <div>
                                             <!--                                            ten, sdt-->
-                                            <div class="row justify-content-between mb-3">
+                                            <div class="row justify-content-between">
                                                 <div class="col">
                                                     <label class="form-label">Tên người nhận</label>
                                                     <input class="form-control" type="text" placeholder="họ và tên"
@@ -92,8 +92,9 @@
                                                          th:errors="*{phoneNumber}"></div>
                                                 </div>
                                             </div>
+                                            <br>
                                             <!--                                                email-->
-                                            <div class="mb-3" th:if="${session.user==null}">
+                                            <div class="mb-3">
                                                 <label class="form-label">Email</label>
                                                 <input type="email" class="form-control"
                                                        placeholder="oanhpham085@gmail.com"
@@ -103,12 +104,6 @@
                                                 <div class="alert alert-warning"
                                                      th:if="${#fields.hasErrors('email')}"
                                                      th:errors="*{email}"></div>
-                                            </div>
-                                            <div class="mb-3" th:if="${session.user!=null}" hidden="hidden">
-                                                <input type="email" class="form-control"
-                                                       placeholder="oanhpham085@gmail.com"
-                                                       th:value="${session.user.email}"
-                                                       th:name="email">
                                             </div>
                                             <!--                                                address-->
                                             <div class="mb-3">
@@ -305,7 +300,6 @@
             status.push(false)
 
         } else {
-            document.getElementById("nameloc").innerHTML = "";
         }
         //address
         if (address.trim().length < 1) {
@@ -313,27 +307,6 @@
                 " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống địa chỉ!";
             status.push(false)
         } else {
-            document.getElementById("addressloc").innerHTML = "";
-            // status = true;
-        }
-
-        //email
-        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
-        if (email.trim().length < 1) {
-            document.getElementById("emailloc").innerHTML =
-                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống email!";
-            status.push(false)
-        } else if (filter.test(email.value)) {
-            document.getElementById("emailloc").innerHTML =
-                " <i class='bx bx-x-circle' style='color:#ff0000' ></i>Địa chỉ email không hợp lệ.\n Example@gmail.com!";
-            // email.focus();
-            status.push(false)
-        } else {
-            if (document.getElementById("emailloc")) {
-                document.getElementById("emailloc").innerHTML = "";
-            }
-            // status = true;
         }
 
         //phone
@@ -348,10 +321,6 @@
         } else {
             document.getElementById("numloc").innerHTML = "Không đúng định dạng số điện thoại!";
             status.push(false)
-        }
-
-        if (status.indexOf(false) > -1) {
-            return false
         }
     }
 

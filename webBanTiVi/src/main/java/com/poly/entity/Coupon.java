@@ -19,13 +19,13 @@ public class Coupon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name="code")
+    @Column(name = "code")
     private String code;
 
-    @Column(name="value")
+    @Column(name = "value")
     private String value;
 
-    @Column(name="active")
+    @Column(name = "active")
     private boolean active;
 
     @Column(name = "image")

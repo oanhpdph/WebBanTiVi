@@ -128,6 +128,9 @@
                                                                th:value="${item.quantity}">
                                                         <input class="plus is-form plus"
                                                                type="button" value="+">
+                                                        <div th:if="${qty>item.quantity}">
+                                                            <span>Lỗi</span>
+                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -181,7 +184,8 @@
                         <div class="card-body">
                                <span class="fs-4"> Tổng tiền:
                                    <span class="text-end text-danger">
-                                    <span class="total-pro" th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} (VNĐ)|"></span>
+                                    <span class="total-pro"
+                                          th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} (VNĐ)|"></span>
                                 </span></span>
                         </div>
                         <div class="card-footer">
@@ -232,6 +236,23 @@
         Toast.fire({
             icon: "success",
             title: "Đã cập nhật lại giỏ hàng"
+        });
+    }
+    if (document.getElementById("message").textContent == 'false') {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "error",
+            title: "Không đủ sản phẩm!"
         });
     }
     const plus = document.querySelectorAll(".plus")
