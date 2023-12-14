@@ -178,7 +178,7 @@ function saveProduct() {
 
     $("#save-product").on("click", function clickSave() {
         validate().then(function (response) {
-            if (response === false) {
+            if (response == false) {
                 return
             }
             var sku = document.getElementsByClassName("sku")
@@ -950,10 +950,11 @@ function removeTag(tagValue, tagElement, e) {
 function validate() {
     return new Promise(function (resolve, reject) {
         $.ajax({
-            url: '/product/all',
+            url: '/admin/product/sku',
             method: "get",
             success: function (response) {
-                var check = [], active = 0;
+                var check = [];
+                var active = 0;
                 var skuCode = document.getElementById("sku-code")
                 var name = $("#name-display")
                 var brand = $("#select-brand")
@@ -1018,7 +1019,6 @@ function validate() {
                                 span.textContent = "Chọn ảnh sản phẩm"
                                 return false
                             } else {
-                                check = true
                                 span.textContent = ""
                             }
                         })
@@ -1047,9 +1047,13 @@ function validate() {
                         span.textContent = ""
                     }
                 })
-                if (active === 0) {
+                if (active == 0) {
                     $("#active-error").text("Cần có ít nhất 1 sản phẩm bày bán")
+                    check.push(false)
+                } else {
+                    $("#active-error").text("")
                 }
+
                 if ($(name).val().trim().length === 0) {
                     $("#name-error").text("Chưa nhập tên sản phẩm")
                     check.push(false)
@@ -1068,8 +1072,9 @@ function validate() {
                     check.push(false)
                     $("#sku-code-error").text("Chưa nhập mã sku")
                 } else {
+                    console.log(response)
                     $.each(response, function (index, item) {
-                        if (item.sku === skuCode.value.trim()) {
+                        if (item === skuCode.value.trim()) {
                             check.push(false)
                             $("#sku-code-error").text("Mã sku đã tồn tại")
                             return false
@@ -1078,7 +1083,6 @@ function validate() {
                         }
                     })
                 }
-
                 if (check.indexOf(false) > -1) {
                     resolve(false);
                 } else {

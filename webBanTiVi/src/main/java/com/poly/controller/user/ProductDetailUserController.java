@@ -4,9 +4,7 @@ import com.poly.common.CheckLogin;
 import com.poly.dto.CartDto;
 import com.poly.dto.EvaluateRes;
 import com.poly.dto.UserDetailDto;
-import com.poly.entity.CartProduct;
-import com.poly.entity.Evaluate;
-import com.poly.entity.ProductDetail;
+import com.poly.entity.*;
 import com.poly.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -45,6 +43,9 @@ public class ProductDetailUserController {
     ProductService productService;
 
     @Autowired
+    private BillService billService;
+
+    @Autowired
     private CheckLogin checkLogin;
 
     @GetMapping("/product/detail/{id}")
@@ -63,15 +64,27 @@ public class ProductDetailUserController {
         session.setAttribute("pageView", "/user/page/product/detail.html");
         model.addAttribute("listPro", this.productDetailService.findAll());
         UserDetailDto userDetailDto = checkLogin.checkLogin();
+
         List<Evaluate> evaluates = product.getProduct().getListEvaluate();
+        model.addAttribute("hasEvaluate", false);
         if (userDetailDto != null) {
             for (Evaluate evaluate : evaluates) {
                 if (evaluate.getCustomer().getId() == userDetailDto.getId()) {
                     model.addAttribute("hasEvaluate", true);
                     break;
-                }
-                else {
+                } else {
                     model.addAttribute("hasEvaluate", false);
+                }
+            }
+            List<Bill> bills = findAllByUser(userDetailDto.getId());
+            model.addAttribute("hasBuy", false);
+            if (!bills.isEmpty()) {
+                for (Bill bill : bills) {
+                    for (BillProduct billProduct : bill.getBillProducts()) {
+                        if (billProduct.getProduct().getId() == id) {
+                            model.addAttribute("hasBuy", true);
+                        }
+                    }
                 }
             }
         }
@@ -104,6 +117,7 @@ public class ProductDetailUserController {
         Page<Evaluate> evaluates = evaluateService.getAll(evaluateDto);
         model.addAttribute("list", evaluates);
         UserDetailDto userDetailDto = checkLogin.checkLogin();
+        model.addAttribute("hasEvaluate", false);
         if (userDetailDto != null) {
             for (Evaluate evaluate : evaluates.getContent()) {
                 if (evaluate.getCustomer().getId() == userDetailDto.getId()) {
@@ -112,9 +126,26 @@ public class ProductDetailUserController {
                     model.addAttribute("hasEvaluate", false);
                 }
             }
+            List<Bill> bills = findAllByUser(userDetailDto.getId());
+            model.addAttribute("hasBuy", false);
+            if (!bills.isEmpty()) {
+                for (Bill bill : bills) {
+                    for (BillProduct billProduct : bill.getBillProducts()) {
+                        if (billProduct.getProduct().getId() == id) {
+                            model.addAttribute("hasBuy", true);
+                        }
+                    }
+                }
+            }
         }
+
         httpSession.setAttribute("pageView", "/user/page/product/evaluate.html");
         model.addAttribute("product", productService.findById(id));
+        model.addAttribute("evaluate", evaluates.stream().filter(evaluate -> evaluate.isActive() == true).toList());
         return "user/index";
+    }
+
+    public List<Bill> findAllByUser(Integer id) {
+        return billService.findAllBillByUser(id);
     }
 }

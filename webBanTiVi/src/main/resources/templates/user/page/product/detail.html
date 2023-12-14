@@ -302,8 +302,9 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" id="sendEvaluate"
-                                            th:value="${product.product.id}">Lưu
+                                            th:value="${product.product.id}" th:if="${(hasBuy==true)}">Lưu
                                     </button>
+                                    <span th:if="${hasBuy == false}">Bạn cần mua hàng để đánh giá</span>
                                 </div>
                             </div>
                         </div>
