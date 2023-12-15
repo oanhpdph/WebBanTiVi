@@ -3,8 +3,8 @@
 
 <section class="ss1">
     <div class="container">
-        <div class="row mb-4 pt-3 ow-cols-lg-3 row-cols-md-3 row-cols-xl-3">
-            <h3 class="header col text-center bg-red  pt-2 pb-2 title px-3 text-uppercase fw-bold">
+        <div >
+            <h3 class="text-center pt-2 pb-2 title px-3 text-uppercase fw-bold">
                 [(${voucher.getNameVoucher()})]
             </h3>
         </div>
@@ -14,13 +14,14 @@
         <hr>
         <div class="row">
         <div  class="alert alert-warning col-6">
-        <p class="text-danger fs-xlarge fw-bold">Giảm ngay [(${voucher.getValue()})]đ trong hóa đơn</p>
+        <p class="text-danger fs-xlarge fw-bold">
+            Giảm ngay [(${voucher.getValue()})](VNĐ) trong hóa đơn</p>
             <hr>
-            <p class="fw-bold text-black">Khi mua đơn hàng có giá trị từ [(${voucher.getMinimumValue().intValue()})]đ
+            <p class="fw-bold text-black">Khi mua đơn hàng có giá trị từ [(${voucher.getMinimumValue().intValue()})](VNĐ)
                 trở lên</p>
         </div>
             <div class="alert alert-danger col-6">
-                <p class="text-danger fs-xlarge fw-bold">Số lượng có hạn: chỉ [(${voucher.getQuantity()})] voucher</p>
+                <p class="text-danger fs-xlarge fw-bold">Số lượng: chỉ [(${voucher.getQuantity()})] voucher</p>
                 <hr>
                 <a type="button"
                    class="btn btn-outline-danger" data-bs-toggle="modal"
@@ -45,8 +46,8 @@
                 [(${voucher.getCode()})]
             </span>
                     </p>
-                    <p class="text-center">Quý khách chỉ được sử dụng voucher cho một hóa đơn duy nhất.</p>
-                    <p class="text-center">Mã voucher sẽ tự động nhập vào hóa đơn gần nhất để giảm tiền theo khuyến mại!</p>
+                    <p class="text-center">Quý khách đã nhận voucher thành công.</p>
+                    <p class="text-center">Vui lòng chọn đúng voucher trong trang thanh toán để giảm tiền theo khuyến mại!</p>
                 </div>
                 <div th:if="${check == false && check2 == false}">
                     <p class=" fs-large fw-bold text-center text-danger">[(${thongbao})]</p>
