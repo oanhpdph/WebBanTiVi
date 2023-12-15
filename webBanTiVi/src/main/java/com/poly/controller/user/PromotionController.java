@@ -43,7 +43,7 @@ public class PromotionController {
     LocalDate localDate = LocalDate.now();
 
     Date date = (Date) Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    
+
     @GetMapping()
     public String index(HttpSession session, Model model, @RequestParam(defaultValue = "0") int p) {
 
@@ -72,7 +72,7 @@ public class PromotionController {
         session.setAttribute("pageView", "/user/page/promotion/coupondetail.html");
         return "/user/index";
     }
-    @PreAuthorize("hasAuthority('USER') or isAnonymous()")
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/voucherdetail/{id}")
     public String voucherdetail(HttpSession session, Model model, @PathVariable("id") Integer id) {
         Voucher voucher = new Voucher();
