@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.UnsupportedEncodingException;
@@ -32,6 +33,9 @@ public class UserServiceImpl implements CustomerService {
 
     @Autowired
     CustomerRepository customerRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public Users add(BillProRes customer) throws NoSuchAlgorithmException, UnsupportedEncodingException {
@@ -52,6 +56,8 @@ public class UserServiceImpl implements CustomerService {
         cus.setEmail(customer.getEmail());
         cus.setPhoneNumber(customer.getPhoneNumber());
         cus.setAddress(customer.getAddress());
+        cus.setPassword(passwordEncoder.encode("123"));
+        cus.setBirthday(null);
         this.customerRepository.save(cus);
         return cus;
     }

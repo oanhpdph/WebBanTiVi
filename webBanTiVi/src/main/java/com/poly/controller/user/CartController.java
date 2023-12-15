@@ -111,6 +111,8 @@ public class CartController {
     @GetMapping("/confirm")
     public String con(Model model) {
 //        model.addAttribute("listBill", new Bill());
+        String code = (String) session.getAttribute("listBill");
+        session.setAttribute("listBill", billService.findByCode(code).get());
         session.setAttribute("pageView", "/user/page/product/confirm.html");
         return "user/index";
     }
@@ -221,7 +223,8 @@ public class CartController {
                 }
                 session.setAttribute("list", null);
             }
-            session.setAttribute("listBill", bill1);
+
+            session.setAttribute("listBill", bill1.getCode());
             cartService.clear();
             return "redirect:/confirm";
         }
