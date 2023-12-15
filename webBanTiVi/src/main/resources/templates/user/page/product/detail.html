@@ -172,17 +172,17 @@
                 Thông số kỹ thuật
                 <!--                <span th:text="${product.product.nameProduct}"></span>-->
             </h3>
-            <div class="table-responsive">
-                <table class="table" border="0px">
-                    <caption class="ms-4">
-                    </caption>
-                    <tbody class="table-border-bottom-0">
-                    <tr th:each="item : ${product.product.productFieldValues}" th:if="${item.field.active==true}">
-                        <td>[(${item.field.name})]:</td>
-                        <td>[(${item.value})]</td>
-                    </tr>
-                    </tbody>
-                </table>
+
+            <div class="" border="0px">
+                <div th:each="item : ${product.product.productFieldValues}"
+                     th:if="${item.field.active==true}">
+                    <div class="row row-cols-sm-2 mb-3">
+                        <span class="col">[(${item.field.name})]:</span>
+                        <span class="col">[(${item.value})]</span>
+                    </div>
+                    <hr>
+                </div>
+
             </div>
 
         </div>
