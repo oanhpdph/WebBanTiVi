@@ -70,7 +70,7 @@
                                     <div class="card-body" th:id="add">
                                         <div>
                                             <!--                                            ten, sdt-->
-                                            <div class="row justify-content-between">
+                                            <div class="row justify-content-between mb-3">
                                                 <div class="col">
                                                     <label class="form-label">Tên người nhận</label>
                                                     <input class="form-control" type="text" placeholder="họ và tên"
@@ -92,12 +92,11 @@
                                                          th:errors="*{phoneNumber}"></div>
                                                 </div>
                                             </div>
-                                            <br>
                                             <!--                                                email-->
                                             <div class="mb-3">
                                                 <label class="form-label">Email</label>
                                                 <input type="email" class="form-control"
-                                                       placeholder="oanhpham085@gmail.com"
+                                                       placeholder="example123@gmail.com"
                                                        th:field="*{email}"
                                                        id="email" th:name="email">
                                                 <span id="emailloc" class="error"></span>

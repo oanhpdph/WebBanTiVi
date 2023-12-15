@@ -2,14 +2,14 @@ package com.poly.common;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.util.ByteArrayDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
+import java.io.IOException;
 
 @Service
 public class SendEmail {
@@ -17,32 +17,37 @@ public class SendEmail {
     @Autowired
     private JavaMailSender emailSender;
 
+//    @Autowired
+//    private SavePdf savePdf;
+
     public void sendSimpleMessage(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("noreply@baeldung.com");
+        message.setFrom("big6store@6store.com");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
         emailSender.send(message);
     }
 
-    public void sendMessageWithAttachment(
-            String to, String subject, String text, String pathToAttachment) throws MessagingException {
+    public void sendMessageWithAttachment(byte[] attachmentData, String attachmentName,
+                                          String to, String subject, String text) throws MessagingException, IOException {
         // ...
 
+        // Tạo đối tượng MimeMessage và MimeMessageHelper
         MimeMessage message = emailSender.createMimeMessage();
-
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-        helper.setFrom("noreply@baeldung.com");
+        // Cấu hình thông tin cơ bản
+        helper.setFrom("big6store@6store.com");
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(text);
 
-        FileSystemResource file
-                = new FileSystemResource(new File(pathToAttachment));
-        helper.addAttachment("Invoice", file);
+        // Tạo một tệp đính kèm từ ByteArrayOutputStream
+        ByteArrayDataSource dataSource = new ByteArrayDataSource(attachmentData, "application/pdf");
+        helper.addAttachment(attachmentName, dataSource);
 
+        // Gửi email
         emailSender.send(message);
     }
 }
