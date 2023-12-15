@@ -66,10 +66,13 @@ public class VoucherController {
     @PostMapping("/voucher/add")
     public String addVoucher(
             HttpSession session,
-            @Valid @ModelAttribute("voucher") Voucher voucher,
+            @Valid @ModelAttribute(name = "voucher", binding = true) Voucher voucher,
             BindingResult result,
-            @RequestParam("image") MultipartFile file
+            @RequestParam("imgae") MultipartFile file
     ) {
+        if (result.hasErrors()) {
+            return "redirect:/admin/voucher/list";
+        }
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         voucher.setImage(fileName);
         this.voucherService.save(voucher);

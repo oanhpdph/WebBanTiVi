@@ -16,11 +16,11 @@ public interface BillService {
 
     Bill add(Bill bill);
 
-    List<Bill> findAlBill();
+    List<Bill> all();
 
-     Bill add(BillProRes bill);
+    Bill add(BillProRes bill);
 
-     void addBillPro(Bill bill, BillProRes billProRes);
+    void addBillPro(Bill bill, BillProRes billProRes);
 
     Bill update(Bill bill, Integer id);
 

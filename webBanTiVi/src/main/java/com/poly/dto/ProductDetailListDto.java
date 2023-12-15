@@ -24,4 +24,5 @@ public class ProductDetailListDto {
     Integer page = 1;
     Integer size = 10;
     Integer sort = 1;
+    String key;
 }

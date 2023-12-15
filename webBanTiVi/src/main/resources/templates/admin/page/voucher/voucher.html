@@ -15,7 +15,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form th:action="@{/admin/voucher/add}" method="post" th:object="${voucher}"
-                      enctype="multipart/form-data">
+                      enctype="multipart/form-data" th:name="myform" th:onsubmit="return validateForm()">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-4 col-sm-12 col-xl-3 text-center">
@@ -24,6 +24,7 @@
                                          class="rounded image-preview mb-3"
                                          width="200">
                                 </div>
+                                <span id="imageloc" class="error"></span> <br>
                                 <label class="btn btn-primary me-2 mb-4" tabindex="0">
                                     <span class="d-none d-sm-block">Tải ảnh lên</span>
                                     <i class="bx bx-upload d-block d-sm-none"></i>
@@ -36,12 +37,14 @@
                                     <div class="mb-3">
                                         <label class="form-label">Mã voucher:</label>
                                         <input type="text" class="form-control" th:name="code">
+                                        <span id="codeloc" class="error"></span>
                                     </div>
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Tên voucher:</label>
                                         <input type="text" class="form-control" th:name="nameVoucher">
+                                        <span id="nameVoucherloc" class="error"></span>
                                     </div>
                                 </div>
 
@@ -52,7 +55,7 @@
                                             <input type="text" class="form-control" th:name="value">
                                             <span class="input-group-text">VNĐ</span>
                                         </div>
-
+                                        <span id="valueloc" class="error"></span>
                                     </div>
 
                                 </div>
@@ -65,7 +68,7 @@
                                             >
                                             <span class="input-group-text">VNĐ</span>
                                         </div>
-
+                                        <span id="minimumValueloc" class="error"></span>
                                     </div>
                                 </div>
 
@@ -74,18 +77,21 @@
                                         <label class="form-label">Ngày bắt đầu:</label>
                                         <input type="date" class="form-control" th:name="startDay">
                                     </div>
+                                    <span id="startDayloc" class="error"></span>
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Ngày kết thúc:</label>
                                         <input type="date" class="form-control" th:name="expirationDate"/>
                                     </div>
+                                    <span id="expirationDateloc" class="error"></span>
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Số lượng:</label>
                                         <input type="number" class="form-control" th:name="quantity"/>
                                     </div>
+                                    <span id="quantityloc" class="error"></span>
                                 </div>
                                 <div class=" col-lg-6 col-md-6">
                                     <div class="mb-3">
@@ -94,7 +100,7 @@
                                             <div class="form-check form-check-inline mt-3">
                                                 <input class="form-check-input" type="radio" th:name="active"
                                                        id="inlineRadio1"
-                                                       th:value="true">
+                                                       th:value="true" checked>
                                                 <label class="form-check-label" for="inlineRadio1">Hoạt động</label>
                                             </div>
                                             <div class="form-check form-check-inline">
@@ -291,7 +297,7 @@
                                                             <div class="input-group">
                                                                 <input class="form-control" type="text"
                                                                        th:name="minimumValue"
-                                                                       th:value="${voucher.minimumValue}">
+                                                                       th:value="${#numbers.formatDecimal(voucher.minimumValue,0,'COMMA',0,'POINT')}">
                                                                 <span class="input-group-text">VNĐ</span>
                                                             </div>
 
@@ -404,6 +410,98 @@
 <script>
     const fileInputs = document.getElementsByClassName('file-input');
     const imagePreviews = document.getElementsByClassName('image-preview');
+
+    function validateForm() {
+
+        var nameVoucher = document.myform.nameVoucher.value;
+        var code = document.myform.code.value;
+        var value = document.myform.value.value;
+        var minimumValue = document.myform.minimumValue.value;
+        var quantity = document.myform.quantity.value;
+        var startDay = document.myform.startDay.value;
+        var expirationDate = document.myform.expirationDate.value;
+        let today = new Date().toISOString().slice(0, 10);
+        var image = document.myform.image.value;
+        var status = [];
+
+        //code
+        if (code.trim().length < 1) {
+            document.getElementById("codeloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!";
+            status.push(false);
+        } else {
+            document.getElementById("codeloc").innerHTML = "";
+        }
+        //image
+        if (image.trim().length < 1) {
+            document.getElementById("imageloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ảnh!";
+            status.push(false);
+        } else {
+            document.getElementById("imageloc").innerHTML = "";
+        }
+        //name
+        if (nameVoucher.trim().length < 1) {
+            document.getElementById("nameVoucherloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống tên!";
+            status.push(false);
+        } else {
+            document.getElementById("nameVoucherloc").innerHTML = "";
+        }
+        //value
+        if (value.trim().length < 1) {
+            document.getElementById("valueloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống giá trị!";
+            status.push(false);
+        } else {
+            document.getElementById("valueloc").innerHTML = "";
+        }
+        //minimumValue
+        if (minimumValue.trim().length < 1) {
+            document.getElementById("minimumValueloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống giá trị!";
+            status.push(false);
+        } else {
+            document.getElementById("minimumValueloc").innerHTML = "";
+        }
+        //startDay
+        if (startDay.trim().length < 1) {
+            document.getElementById("startDayloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!";
+            status.push(false);
+        } else if (today.valueOf() > startDay.valueOf()) {
+            document.getElementById("startDayloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày bắt đầu phải lớn hơn ngày hiện tại!";
+            status.push(false);
+        } else {
+            document.getElementById("startDayloc").innerHTML = "";
+        }
+        //expirationDate
+        if (expirationDate.trim().length < 1) {
+            document.getElementById("expirationDateloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!";
+            status.push(false);
+        } else if (expirationDate.valueOf() < startDay.valueOf()) {
+            document.getElementById("expirationDateloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!";
+            status.push(false);
+        } else {
+            document.getElementById("expirationDateloc").innerHTML = "";
+        }
+        //quantity
+        if (quantity.trim().length < 1) {
+            document.getElementById("quantityloc").innerHTML =
+                " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống số lượng!";
+            status.push(false);
+        } else {
+            document.getElementById("quantityloc").innerHTML = "";
+        }
+
+        console.log(status)
+        if (status.indexOf(false) > -1) {
+            return false
+        }
+    }
 
     for (let i = 0; i < fileInputs.length; i++) {
         const fileInput = fileInputs[i];

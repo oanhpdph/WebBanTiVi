@@ -66,14 +66,13 @@ public class ProductServiceImpl implements ProductService {
 
         list.add(criteriaBuilder.greaterThanOrEqualTo(productRoot.get("avgPoint"), productDetailDto.getPoint()));
 
-
         if (productDetailDto.getKey() != null && productDetailDto.getKey().trim().length() != 0) {
             Join<Product, ProductFieldValue> fieldValueJoin = productRoot.joinList("productFieldValues");
             list.add(
                     criteriaBuilder.or(
-                            criteriaBuilder.like(fieldValueJoin.get("value"),"%"+ productDetailDto.getKey()+"%"),
-                            criteriaBuilder.like(productRoot.get("nameProduct"),"%"+ productDetailDto.getKey()+"%"),
-                            criteriaBuilder.like(productRoot.get("sku"), "%"+ productDetailDto.getKey()+"%")
+                            criteriaBuilder.like(fieldValueJoin.get("value"), "%" + productDetailDto.getKey() + "%"),
+                            criteriaBuilder.like(productRoot.get("nameProduct"), "%" + productDetailDto.getKey() + "%"),
+                            criteriaBuilder.like(productRoot.get("sku"), "%" + productDetailDto.getKey() + "%")
                     ));
         }
 
@@ -92,6 +91,9 @@ public class ProductServiceImpl implements ProductService {
         }
         if (productDetailDto.getSort() == 3) {
             productCriteriaQuery.orderBy(criteriaBuilder.desc(productRoot.get("avgPoint")));
+        }
+        if (productDetailDto.getSort() == 4) {
+            productCriteriaQuery.orderBy(criteriaBuilder.asc(productRoot.get("avgPoint")));
         }
 
         productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
@@ -133,8 +135,10 @@ public class ProductServiceImpl implements ProductService {
                     for (int i = 0; i < productFieldValue.size(); i++) {
                         for (Attribute attribute : product.getProduct()) {
                             if (attribute.getId() == productFieldValue.get(i).getField().getId()) {
-                                productFieldValue.get(i).setValue(attribute.getValue());
-                                productFieldValueService.save(productFieldValue.get(i));
+                                if (attribute.getValue().trim().length() != 0) {
+                                    productFieldValue.get(i).setValue(attribute.getValue());
+                                    productFieldValueService.save(productFieldValue.get(i));
+                                }
                             }
                         }
                     }

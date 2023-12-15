@@ -131,36 +131,38 @@ public class HomeUserController {
             productDetailDto1.setNameProduct(product.getNameProduct() + " " + product.getSku());
             //name
             int temp = 0;
-            for (ProductDetail productDetail : product.getProductDetails()) {
-                if (productDetail.isActive()) {
-                    for (Image image : productDetail.getListImage()) {
-                        if (image.isLocation()) {
-                            productDetailDto1.setImage(image.getLink());
-                            // ảnh
-                            break;
+            if (product.getActive() == true) {
+                for (ProductDetail productDetail : product.getProductDetails()) {
+                    if (productDetail.isActive()) {
+                        for (Image image : productDetail.getListImage()) {
+                            if (image.isLocation()) {
+                                productDetailDto1.setImage(image.getLink());
+                                // ảnh
+                                break;
+                            }
                         }
-                    }
 
-                    if (productDetail.getCoupon() != null && productDetail.getCoupon().isActive() && (LocalDate.now().isAfter(productDetail.getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(productDetail.getCoupon().getDateEnd().toLocalDate()))) {
-                        BigDecimal reduceMoney = productDetail.getPriceExport().multiply(BigDecimal.valueOf(Integer.parseInt(productDetail.getCoupon().getValue()))).divide(BigDecimal.valueOf(100));
-                        productDetailDto1.setReduceMoney(productDetail.getPriceExport().subtract(reduceMoney));
-                        //giá sau giảm
-                        productDetailDto1.setPrice(productDetail.getPriceExport());
-                        // giá trước giảm
-                    } else {
-                        productDetailDto1.setPrice(BigDecimal.valueOf(0));
-                        productDetailDto1.setReduceMoney(productDetail.getPriceExport());
-                    }
+                        if (productDetail.getCoupon() != null && productDetail.getCoupon().isActive() && (LocalDate.now().isAfter(productDetail.getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(productDetail.getCoupon().getDateEnd().toLocalDate()))) {
+                            BigDecimal reduceMoney = productDetail.getPriceExport().multiply(BigDecimal.valueOf(Integer.parseInt(productDetail.getCoupon().getValue()))).divide(BigDecimal.valueOf(100));
+                            productDetailDto1.setReduceMoney(productDetail.getPriceExport().subtract(reduceMoney));
+                            //giá sau giảm
+                            productDetailDto1.setPrice(productDetail.getPriceExport());
+                            // giá trước giảm
+                        } else {
+                            productDetailDto1.setPrice(BigDecimal.valueOf(0));
+                            productDetailDto1.setReduceMoney(productDetail.getPriceExport());
+                        }
 
-                    productDetailDto1.setId(productDetail.getId());
-                    productDetailDto1.setPoint(product.getAvgPoint());
-                    productDetailDto1.setQuantityEvalute(product.getListEvaluate().size());
-                    temp = 1;
-                    break;
+                        productDetailDto1.setId(productDetail.getId());
+                        productDetailDto1.setPoint(product.getAvgPoint());
+                        productDetailDto1.setQuantityEvalute(product.getListEvaluate().stream().filter(evaluate -> evaluate.isActive() == true).toList().size());
+                        temp = 1;
+                        break;
+                    }
                 }
-            }
-            if (temp == 1) {
-                listReturn.add(productDetailDto1);
+                if (temp == 1) {
+                    listReturn.add(productDetailDto1);
+                }
             }
         }
         return listReturn;

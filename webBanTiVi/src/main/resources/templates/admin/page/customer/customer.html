@@ -90,7 +90,7 @@
                                         <div class="form-check form-check-inline mt-3">
                                             <input class="form-check-input" type="radio"
                                                    th:name="status"
-                                                   th:value="true"
+                                                   th:value="true" checked
                                             >
                                             <label class="form-check-label">Hoạt Động</label>
                                         </div>
@@ -450,26 +450,26 @@
 
     const fileInputs = document.getElementsByClassName('file-input');
     const imagePreviews = document.getElementsByClassName('image-preview');
-    const errorPassword = document.getElementById("errorPassword")
-    const errorEmail = document.getElementById("errorEmail")
-    const errorUsername = document.getElementById("errorUsername")
-    const errorPhone = document.getElementById("errorPhone")
-    const errorBirthday = document.getElementById("errorBirthday")
-    console.log($("#createAccount"))
-    console.log(errorUsername.textContent)
+    // const errorPassword = document.getElementById("errorPassword")
+    // const errorEmail = document.getElementById("errorEmail")
+    // const errorUsername = document.getElementById("errorUsername")
+    // const errorPhone = document.getElementById("errorPhone")
+    // const errorBirthday = document.getElementById("errorBirthday")
+    // console.log($("#createAccount"))
+    // console.log(errorUsername.textContent)
     // document.getElementById("createAccount").onclick= ()=>{
     //     console.log('123');
     // }
-    if (
-        errorEmail.textContent != "" ||
-        errorPassword.textContent != "" ||
-        errorPhone.textContent != "" ||
-        errorBirthday.textContent != "" ||
-        errorUsername.textContent != ""
-    ) {
-        console.log('123');
-        document.getElementById("createAccount").click();
-    }
+    // if (
+    //     errorEmail.textContent != "" ||
+    //     errorPassword.textContent != "" ||
+    //     errorPhone.textContent != "" ||
+    //     errorBirthday.textContent != "" ||
+    //     errorUsername.textContent != ""
+    // ) {
+    //     console.log('123');
+    //     document.getElementById("createAccount").click();
+    // }
     for (let i = 0; i < fileInputs.length; i++) {
         const fileInput = fileInputs[i];
         const imagePreview = imagePreviews[i];

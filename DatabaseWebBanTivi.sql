@@ -108,7 +108,7 @@ CREATE TABLE voucher
   (
      id               INT IDENTITY(1, 1) PRIMARY KEY,
      code             VARCHAR(30) not null unique,
-     name_voucher     VARCHAR(100) not null,
+     name_voucher     NVARCHAR(100) not null,
      [value]          INT not null,
      minimum_value    MONEY not null,-- giá trị đơn hàng tối thiểu cần
      quantity         INT not null, -- số lượng voucher
@@ -288,19 +288,9 @@ INSERT INTO [dbo].[bill_status]
            ,[status]
            ,[description])
      VALUES
-           ('SC'
-           ,N'Shop hủy'
-           ,N'Đơn hàng bị hủy từ phía cửa hàng')
-
-GO
-INSERT INTO [dbo].[bill_status]
-           ([code]
-           ,[status]
-           ,[description])
-     VALUES
-           ('CC'
-           ,N'Khách hủy'
-           ,N'Khách hàng hủy mua sản phẩm')
+           ('CA'
+           ,N'Hủy hàng'
+           ,N'Đơn hàng bị hủy')
 
 GO
 INSERT INTO [dbo].[bill_status]

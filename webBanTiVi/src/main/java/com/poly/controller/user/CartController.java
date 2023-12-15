@@ -111,17 +111,20 @@ public class CartController {
     @GetMapping("/confirm")
     public String con(Model model) {
 //        model.addAttribute("listBill", new Bill());
+        String code = (String) session.getAttribute("listBill");
+        session.setAttribute("listBill", billService.findByCode(code).get());
         session.setAttribute("pageView", "/user/page/product/confirm.html");
         return "user/index";
     }
 
 
     @PostMapping("/purchase")
-    public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes,
+    public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
                           Model model,
-                          Integer id,
-                          BindingResult result) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+                          Integer id
+    ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+
         if (result.hasErrors()) {
             return "redirect:/pay";
         }
@@ -162,6 +165,9 @@ public class CartController {
             total = cartService.getAmount();
             billProRes.setTotalPrice(total);// lấy tổng tiền
         } else {
+            if (userDetailDto.getRoles().equals("ADMIN") || userDetailDto.getRoles().equals("STAFF")) {
+                return "redirect:/error/403";
+            }
             billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
             billProRes.setEmail(userDetailDto.getEmail());
         }
@@ -217,7 +223,8 @@ public class CartController {
                 }
                 session.setAttribute("list", null);
             }
-            session.setAttribute("listBill", bill1);
+
+            session.setAttribute("listBill", bill1.getCode());
             cartService.clear();
             return "redirect:/confirm";
         }
@@ -304,16 +311,38 @@ public class CartController {
                 if (optional.isPresent()) {
                     CartProduct cartProduct = optional.get();
                     cartProduct.setQuantity(qty.get(i));
-                    list.add(cartProductService.update(cartProduct));
+
+                    //update
+                    if (productDetail != null) {
+                        if (qty.get(i) > productDetail.getQuantity()) {
+                            redirectAttributes.addFlashAttribute("message", false);
+                            return "redirect:/cart";
+                        } else {
+                            list.add(cartProductService.update(cartProduct));
+                            session.setAttribute("list", list);
+                        }
+                    } else {
+                        redirectAttributes.addFlashAttribute("message", false);
+                    }
                 }
             }
             session.setAttribute("list", list);
         } else {
             List<CartProduct> list = new ArrayList<>();
             for (int i = 0; i < id.size(); i++) {
-                list = cartService.update(id.get(i), qty.get(i));
+                ProductDetail productDetail = productDetailService.findById(id.get(i));
+                if (productDetail != null) {
+                    if (qty.get(i) > productDetail.getQuantity()) {
+                        redirectAttributes.addFlashAttribute("message", false);
+                        return "redirect:/cart";
+                    } else {
+                        list = cartService.update(id.get(i), qty.get(i));
+                        session.setAttribute("list", list);
+                    }
+                } else {
+                    redirectAttributes.addFlashAttribute("message", false);
+                }
             }
-            session.setAttribute("list", list);
         }
         redirectAttributes.addFlashAttribute("message", "update-success");
         return "redirect:/cart";

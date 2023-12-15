@@ -52,7 +52,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Evaluate> listEvaluate;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
     private List<ProductDetail> productDetails;
 
     @OneToMany(mappedBy = "product")

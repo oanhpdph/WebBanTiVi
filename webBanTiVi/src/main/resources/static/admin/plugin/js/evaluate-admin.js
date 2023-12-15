@@ -77,5 +77,79 @@ $("#search").keyup(function () {
         } else {
             tr[i].style.display = "none"
         }
+
     }
+    $("#filter-point").prop("selectedIndex", 0);
+    $("#filter-active").prop("selectedIndex", 0);
+
+})
+
+$("#filter-point").on("change", function () {
+    var input, filter, table, tr, td, i, txtValue, check;
+    input = $("#filter-point");
+    filter = input.val();
+    table = $("#table-evaluate");
+    tr = table.find("tr");
+
+    for (i = 0; i < tr.length; i++) {
+        td = $(tr[i]).find("td");
+        if (td.length != 0) {
+            txtValue = td[2].textContent || td[2].innerText;
+            if (Number(txtValue) >= Number(filter)) {
+                check = true;
+            } else {
+                check = false;
+            }
+        } else {
+            check = true;
+        }
+        console.log(check)
+
+        if (check) {
+            tr[i].style.display = ""
+        } else {
+            tr[i].style.display = "none"
+        }
+    }
+    $("#filter-active").prop("selectedIndex", 0);
+    $("#search").val("")
+})
+$("#filter-active").on("change", function () {
+    var input, filter, table, tr, td, i, txtValue, check;
+    input = $("#filter-active");
+    filter = input.val();
+    table = $("#table-evaluate");
+    tr = table.find("tr");
+    for (i = 0; i < tr.length; i++) {
+        td = $(tr[i]).find("td");
+
+        if (td.length != 0) {
+            txtValue = $(td[4]).find("input");
+            var value = $(this).val()
+            var temp = $(txtValue[0]).is(":checked")
+            if (value == 'true') {
+                value = true
+            } else {
+                value = false
+            }
+            if (value == -1) {
+                check = true;
+            } else if (value == temp) {
+                check = true;
+            } else {
+                check = false;
+            }
+        } else {
+            check = true;
+        }
+        // console.log(check)
+        if (check) {
+            tr[i].style.display = ""
+        } else {
+            tr[i].style.display = "none"
+        }
+    }
+    $("#filter-point").prop("selectedIndex", 0);
+    $("#search").val("")
+
 })

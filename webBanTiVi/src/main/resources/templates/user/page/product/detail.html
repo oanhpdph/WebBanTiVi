@@ -112,12 +112,13 @@
                     </tbody>
                 </table>
                 <div class="mb-3">
-                    <a th:class="|border border-2 p-2 mb-3 mx-2 text-black ${product.id==productAll.id ? 'bg-label-primary':''}|"
-                       th:each="productAll:${productAll.productDetails}"
-                       th:href="@{'/product/detail/'+${productAll.id}}" th:if="${productAll.active==true}">
+                    <div class="d-inline-block mb-4" th:each="productAll:${productAll.productDetails}">
+                        <a th:class="|border border-2 p-2 mb-3 mx-2 text-black ${product.id==productAll.id ? 'bg-label-primary':''}|"
+                           th:href="@{'/product/detail/'+${productAll.id}}" th:if="${productAll.active==true}">
                         <span th:each="field:${productAll.fieldList}" class="mx-2"><span
                                 th:text="|${field.value}|"></span></span>
-                    </a>
+                        </a>
+                    </div>
                 </div>
                 <div class="buttons_added mt-4 " th:id="${product.id}">
                     <input class="minus is-form" type="button"
@@ -171,7 +172,7 @@
                 Thông số kỹ thuật
                 <!--                <span th:text="${product.product.nameProduct}"></span>-->
             </h3>
-            <div class="table-responsive text-nowrap">
+            <div class="table-responsive">
                 <table class="table" border="0px">
                     <caption class="ms-4">
                     </caption>
@@ -248,17 +249,17 @@
                         <div>
                             <a th:href="|/product/evaluate/${productAll.id}|" class="btn btn-outline-secondary"
                                style="width: 40%">
-                                Xem tất cả đánh giá([(${#lists.size(product.product.listEvaluate)})])
+                                Xem tất cả đánh giá([(${countEvaluate})])
                             </a>
                             <button class="btn btn-primary" style="width: 40%" data-bs-target="#writeEvaluate"
                                     data-bs-toggle="modal"
-                                    th:if="${(session.user != null && hasEvaluate !=true)}">
+                                    th:if="${(session.user != null && hasEvaluate == false)}">
                                 Viết đánh giá
                             </button>
                         </div>
                         <small th:if="${session.user == null}">Bạn cần đăng nhập để đánh giá</small>
-                        <small  th:unless="${(session.user != null && hasEvaluate !=true)}">Bạn đã đánh giá sản phẩm này</small>
-
+                        <small th:if="${session.user != null and hasEvaluate ==true}">Bạn đã đánh giá sản phẩm
+                            này</small>
                     </div>
                     <div class="modal fade" id="writeEvaluate" tabindex="-1" aria-modal="true" role="dialog">
                         <div class="modal-dialog" role="document">
@@ -301,8 +302,9 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-primary" id="sendEvaluate"
-                                            th:value="${product.product.id}">Lưu
+                                            th:value="${product.product.id}" th:if="${(hasBuy==true)}">Lưu
                                     </button>
+                                    <span th:if="${hasBuy == false}">Bạn cần mua hàng để đánh giá</span>
                                 </div>
                             </div>
                         </div>
@@ -331,6 +333,23 @@
         Toast.fire({
             icon: "success",
             title: "Thêm thành công"
+        });
+    }
+    if (document.getElementById("message").textContent == 'false') {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "error",
+            title: "Không đủ sản phẩm!"
         });
     }
 
