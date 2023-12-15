@@ -102,7 +102,7 @@ public class BillDetailController {
             billStatusList.removeIf(s -> !s.getCode().equals("DE") &&
                     !s.getCode().equals("DEE") &&
                     !s.getCode().equals("CO") &&
-                    !s.getCode().equals("CA")
+                    !s.getCode().equals("RN")
             );
         }
         if (code.equals("CO")) {
