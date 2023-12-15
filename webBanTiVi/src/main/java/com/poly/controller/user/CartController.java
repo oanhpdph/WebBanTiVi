@@ -152,6 +152,7 @@ public class CartController {
                           HttpServletRequest request,
                           Model model,
                           RedirectAttributes redirectAttributes
+                          String tinh, String quan, String xa
     ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         if (result.hasErrors()) {
@@ -200,7 +201,7 @@ public class CartController {
             billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
             billProRes.setEmail(userDetailDto.getEmail());
         }
-
+        billProRes.setAddress(xa + quan + tinh + billProRes.getAddress());
         Bill bill1 = billService.add(billProRes);// tạo hóa đơn mới
         billProRes.setBill(bill1);
 
@@ -328,9 +329,7 @@ public class CartController {
 
     @PostMapping("/cart/update")
     public String update(@RequestParam(value = "id", required = false) List<Integer> id, @RequestParam("qty") List<Integer> qty, Model model, RedirectAttributes redirectAttributes) {
-
         UserDetailDto userDetailDto = checkLogin.checkLogin();
-
         if (userDetailDto != null) {
             Cart cart = cartService.getOneByUser(userDetailDto.getId());
 
@@ -351,6 +350,9 @@ public class CartController {
                         if (qty.get(i) > productDetail.getQuantity()) {
                             redirectAttributes.addFlashAttribute("message", false);
                             return "redirect:/cart";
+                        } else if (qty.get(i) < 1) {
+                            redirectAttributes.addFlashAttribute("message", "nhohon1");
+                            return "redirect:/cart";
                         } else {
                             list.add(cartProductService.update(cartProduct));
                             session.setAttribute("list", list);
@@ -368,6 +370,9 @@ public class CartController {
                 if (productDetail != null) {
                     if (qty.get(i) > productDetail.getQuantity()) {
                         redirectAttributes.addFlashAttribute("message", false);
+                        return "redirect:/cart";
+                    } else if (qty.get(i) < 1) {
+                        redirectAttributes.addFlashAttribute("message", "nhohon1");
                         return "redirect:/cart";
                     } else {
                         list = cartService.update(id.get(i), qty.get(i));

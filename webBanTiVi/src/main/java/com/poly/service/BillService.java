@@ -41,4 +41,5 @@ public interface BillService {
     void logicBillReturn(Integer id, List<ReturnDto> returnDto);
 
     Boolean checkBillNoLogin(String code);
+
 }
