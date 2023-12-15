@@ -87,6 +87,11 @@
                                         class="btn btn-outline-dark return" data-bs-toggle="modal"
                                         th:data-bs-target="|#modal${bill.id}|" th:value="${bill.id}">Trả hàng
                                 </button>
+                                <a class="btn btn-outline-dark"
+                                   th:href="@{/order/remove/{id}(id=${bill.id})}"
+                                   th:if="${bill.billStatus.code== 'WP' || bill.billStatus.code== 'PG' }"
+                                >Hủy đơn hàng
+                                </a>
                             </div>
                             <div class="modal fade" th:id="|modal${bill.id}|" tabindex="-1"
                                  aria-hidden="true">

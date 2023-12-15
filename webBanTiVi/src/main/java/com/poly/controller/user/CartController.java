@@ -289,9 +289,7 @@ public class CartController {
 
     @PostMapping("/cart/update")
     public String update(@RequestParam(value = "id", required = false) List<Integer> id, @RequestParam("qty") List<Integer> qty, Model model, RedirectAttributes redirectAttributes) {
-
         UserDetailDto userDetailDto = checkLogin.checkLogin();
-
         if (userDetailDto != null) {
             Cart cart = cartService.getOneByUser(userDetailDto.getId());
 
