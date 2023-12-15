@@ -150,8 +150,7 @@ public class CartController {
     @PostMapping("/purchase")
     public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
-                          Model model,
-                          RedirectAttributes redirectAttributes
+                          Model model
     ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         if (result.hasErrors()) {
@@ -254,9 +253,6 @@ public class CartController {
             }
 
             session.setAttribute("listBill", bill1.getCode());
-//            Bill bill = billService.findByCode(bill1.getCode()) == null ? null : billService.findByCode(bill1.getCode()).get();
-//            if (bill != null) {
-//            }
             cartService.clear();
             return "redirect:/confirm";
         }

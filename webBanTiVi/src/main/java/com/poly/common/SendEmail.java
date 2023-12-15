@@ -17,8 +17,6 @@ public class SendEmail {
     @Autowired
     private JavaMailSender emailSender;
 
-//    @Autowired
-//    private SavePdf savePdf;
 
     public void sendSimpleMessage(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -43,7 +41,7 @@ public class SendEmail {
         helper.setSubject(subject);
         helper.setText(text);
 
-        // Tạo một tệp đính kèm từ ByteArrayOutputStream
+        // Tạo một tệp đính kèm từ
         ByteArrayDataSource dataSource = new ByteArrayDataSource(attachmentData, "application/pdf");
         helper.addAttachment(attachmentName, dataSource);
 
