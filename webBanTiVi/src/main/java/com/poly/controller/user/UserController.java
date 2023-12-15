@@ -118,4 +118,12 @@ public class UserController {
         return "redirect:/search_order";
     }
 
+    @GetMapping("/order/remove/{id}")
+    public String removeOrder (@PathVariable("id") Integer id){
+        Bill billCancel = this.billService.getOneById(id);
+        billCancel.setBillStatus(this.billStatusService.getOneBycode("CC"));
+        this.billService.add(billCancel);
+        return "redirect:/order";
+    }
+
 }

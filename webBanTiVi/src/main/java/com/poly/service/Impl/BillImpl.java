@@ -324,7 +324,6 @@ public class BillImpl implements BillService {
         return bool;
     }
 
-
     @Override
     public List<Bill> findBillReturnByStatus(String code) {
         return this.billRepos.findBillReturn(code);
