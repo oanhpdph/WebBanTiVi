@@ -8,6 +8,7 @@ import com.poly.entity.VoucherCustomer;
 import com.poly.service.Impl.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,8 +36,14 @@ public class PromotionController {
     CouponServiceImpl couponService;
     @Autowired
     ProductServiceImpl productService;
+
+    @Autowired
+    UserServiceImpl customerService;
+
     LocalDate localDate = LocalDate.now();
+
     Date date = (Date) Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
     @GetMapping()
     public String index(HttpSession session, Model model, @RequestParam(defaultValue = "0") int p) {
 
@@ -65,7 +72,7 @@ public class PromotionController {
         session.setAttribute("pageView", "/user/page/promotion/coupondetail.html");
         return "/user/index";
     }
-
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/voucherdetail/{id}")
     public String voucherdetail(HttpSession session, Model model, @PathVariable("id") Integer id) {
         Voucher voucher = new Voucher();
@@ -83,17 +90,27 @@ public class PromotionController {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
+            if(customerUserDetail.getRoles().equals("ADMIN")||
+                    customerUserDetail.getRoles().equals("STAFF")){
+                check = false;
+                model.addAttribute("check", check);
+                model.addAttribute("check2", check2);
+                model.addAttribute("thongbao",
+                        "Chỉ khách hàng thành viên mới được nhận voucher!");
+                session.setAttribute("pageView", "/user/page/promotion/voucherdetail.html");
+                return "/user/index";
+            }else{
             for (VoucherCustomer x : voucherCustomerService.findAllByVoucher(id)) {
                 if (x.getCustomer().getId() == customerUserDetail.getId()) {
                     check2 = true;
                     model.addAttribute("check", check);
                     model.addAttribute("check2", check2);
-                    model.addAttribute("thongbao", "Voucher này chỉ được giảm cho một hóa đơn duy nhất, hẹn quý khách ở các chương trình khuyến mại sau!");
+                    model.addAttribute("thongbao", "Mỗi khách hàng chỉ nhận được 1 voucher duy nhất, hẹn quý khách ở các chương trình khuyến mại sau!");
                     session.setAttribute("pageView", "/user/page/promotion/voucherdetail.html");
                     return "/user/index";
                 }
             }
-            if (soluong <= voucher.getQuantity()) {
+            if (soluong < voucher.getQuantity()) {
                 check = true;
                 model.addAttribute("check", check);
                 model.addAttribute("check2", check2);
@@ -109,7 +126,7 @@ public class PromotionController {
                 model.addAttribute("check2", check2);
                 model.addAttribute("thongbao", "Số lượng voucher đã hết, hẹn quý khách ở các chương trình khuyến mại sau!");
             }
-        } else {
+        }} else {
             model.addAttribute("check", check);
             model.addAttribute("check2", check2);
             model.addAttribute("thongbao", "Bạn cần đăng nhập để nhận voucher!");
@@ -118,6 +135,5 @@ public class PromotionController {
         return "/user/index";
     }
 
-    @Autowired
-    UserServiceImpl customerService;
+
 }

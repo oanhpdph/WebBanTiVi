@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -124,7 +125,7 @@ public class CartController {
         Optional<Bill> optional = billService.findByCode(code);
         if (optional.isPresent()) {
             Bill bill = optional.get();
-            session.setAttribute("listBill",bill);
+            session.setAttribute("listBill", bill);
 
             try {
                 byte[] file = savePdf.generatePdf(optional.get());
@@ -146,11 +147,12 @@ public class CartController {
         return "user/index";
     }
 
-
+    @PreAuthorize("hasAuthority('USER') or isAnonymous()")
     @PostMapping("/purchase")
     public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
-                          Model model
+                          Model model,
+                          String tinh, String quan, String xa
     ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         if (result.hasErrors()) {
@@ -192,14 +194,15 @@ public class CartController {
             }
             total = cartService.getAmount();
             billProRes.setTotalPrice(total);// lấy tổng tiền
-        } else {
-            if (userDetailDto.getRoles().equals("ADMIN") || userDetailDto.getRoles().equals("STAFF")) {
-                return "redirect:/error/403";
-            }
-            billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
-            billProRes.setEmail(userDetailDto.getEmail());
         }
-
+//        else {
+//            if (userDetailDto.getRoles().equals("ADMIN") || userDetailDto.getRoles().equals("STAFF")) {
+//                return "redirect:/error/403";
+//            }
+//            billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
+//            billProRes.setEmail(userDetailDto.getEmail());
+//        }
+        billProRes.setAddress(xa + quan + tinh + billProRes.getAddress());
         Bill bill1 = billService.add(billProRes);// tạo hóa đơn mới
         billProRes.setBill(bill1);
 
@@ -324,9 +327,7 @@ public class CartController {
 
     @PostMapping("/cart/update")
     public String update(@RequestParam(value = "id", required = false) List<Integer> id, @RequestParam("qty") List<Integer> qty, Model model, RedirectAttributes redirectAttributes) {
-
         UserDetailDto userDetailDto = checkLogin.checkLogin();
-
         if (userDetailDto != null) {
             Cart cart = cartService.getOneByUser(userDetailDto.getId());
 
@@ -347,6 +348,9 @@ public class CartController {
                         if (qty.get(i) > productDetail.getQuantity()) {
                             redirectAttributes.addFlashAttribute("message", false);
                             return "redirect:/cart";
+                        } else if (qty.get(i) < 1) {
+                            redirectAttributes.addFlashAttribute("message", "nhohon1");
+                            return "redirect:/cart";
                         } else {
                             list.add(cartProductService.update(cartProduct));
                             session.setAttribute("list", list);
@@ -364,6 +368,9 @@ public class CartController {
                 if (productDetail != null) {
                     if (qty.get(i) > productDetail.getQuantity()) {
                         redirectAttributes.addFlashAttribute("message", false);
+                        return "redirect:/cart";
+                    } else if (qty.get(i) < 1) {
+                        redirectAttributes.addFlashAttribute("message", "nhohon1");
                         return "redirect:/cart";
                     } else {
                         list = cartService.update(id.get(i), qty.get(i));
