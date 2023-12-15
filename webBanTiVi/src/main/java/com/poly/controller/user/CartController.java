@@ -125,7 +125,7 @@ public class CartController {
         Optional<Bill> optional = billService.findByCode(code);
         if (optional.isPresent()) {
             Bill bill = optional.get();
-            session.setAttribute("listBill",bill);
+            session.setAttribute("listBill", bill);
 
             try {
                 byte[] file = savePdf.generatePdf(optional.get());
@@ -152,7 +152,6 @@ public class CartController {
     public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
                           Model model,
-                          RedirectAttributes redirectAttributes
                           String tinh, String quan, String xa
     ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
@@ -257,9 +256,6 @@ public class CartController {
             }
 
             session.setAttribute("listBill", bill1.getCode());
-//            Bill bill = billService.findByCode(bill1.getCode()) == null ? null : billService.findByCode(bill1.getCode()).get();
-//            if (bill != null) {
-//            }
             cartService.clear();
             return "redirect:/confirm";
         }

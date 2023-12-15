@@ -124,6 +124,10 @@
                                                             th:if="${voucher.active==true}">[(${voucher.voucher.code})]
                                                     </option>
                                                 </select>
+                                                <div class="mt-2" th:if="${session.user==null}">
+                                                    <span id="nofitication-voucher" class="text-danger"><a
+                                                            href="/login">Đăng ký</a> tài khoản để có thể nhận voucher ưu đãi của của hàng</span>
+                                                </div>
                                                 <div class="mt-2">
                                                     <span id="info-voucher" class="text-danger"></span>
                                                 </div>
