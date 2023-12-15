@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -146,7 +147,7 @@ public class CartController {
         return "user/index";
     }
 
-
+    @PreAuthorize("hasAuthority('USER') or isAnonymous()")
     @PostMapping("/purchase")
     public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
@@ -194,13 +195,14 @@ public class CartController {
             }
             total = cartService.getAmount();
             billProRes.setTotalPrice(total);// lấy tổng tiền
-        } else {
-            if (userDetailDto.getRoles().equals("ADMIN") || userDetailDto.getRoles().equals("STAFF")) {
-                return "redirect:/error/403";
-            }
-            billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
-            billProRes.setEmail(userDetailDto.getEmail());
         }
+//        else {
+//            if (userDetailDto.getRoles().equals("ADMIN") || userDetailDto.getRoles().equals("STAFF")) {
+//                return "redirect:/error/403";
+//            }
+//            billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
+//            billProRes.setEmail(userDetailDto.getEmail());
+//        }
         billProRes.setAddress(xa + quan + tinh + billProRes.getAddress());
         Bill bill1 = billService.add(billProRes);// tạo hóa đơn mới
         billProRes.setBill(bill1);
