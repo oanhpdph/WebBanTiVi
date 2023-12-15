@@ -122,7 +122,7 @@ public class CartController {
     public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
                           Model model,
-                          Integer id
+                          String tinh, String quan, String xa
     ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         if (result.hasErrors()) {
@@ -171,7 +171,7 @@ public class CartController {
             billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
             billProRes.setEmail(userDetailDto.getEmail());
         }
-
+        billProRes.setAddress(xa + quan + tinh + billProRes.getAddress());
         Bill bill1 = billService.add(billProRes);// tạo hóa đơn mới
         billProRes.setBill(bill1);
 
@@ -317,6 +317,9 @@ public class CartController {
                         if (qty.get(i) > productDetail.getQuantity()) {
                             redirectAttributes.addFlashAttribute("message", false);
                             return "redirect:/cart";
+                        } else if (qty.get(i) < 1) {
+                            redirectAttributes.addFlashAttribute("message", "nhohon1");
+                            return "redirect:/cart";
                         } else {
                             list.add(cartProductService.update(cartProduct));
                             session.setAttribute("list", list);
@@ -334,6 +337,9 @@ public class CartController {
                 if (productDetail != null) {
                     if (qty.get(i) > productDetail.getQuantity()) {
                         redirectAttributes.addFlashAttribute("message", false);
+                        return "redirect:/cart";
+                    } else if (qty.get(i) < 1) {
+                        redirectAttributes.addFlashAttribute("message", "nhohon1");
                         return "redirect:/cart";
                     } else {
                         list = cartService.update(id.get(i), qty.get(i));

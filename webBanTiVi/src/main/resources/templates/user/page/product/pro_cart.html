@@ -71,7 +71,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-12">
-                                <form th:action="@{/cart/update}" method="post">
+                                <form th:action="@{/cart/update}" method="post" id="form-cart">
                                     <div class="table-responsive">
                                         <table class="table table-borderless">
                                             <thead>
@@ -120,14 +120,14 @@
                                                 </td>
                                                 <td>
                                                     <div class="buttons_added" th:id="${item.product.id}">
-                                                        <input class="minus is-form" type="button"
+                                                        <input class="minus is-form" type="submit"
                                                                value="-">
-                                                        <input aria-label="quantity" class="input-qty" max="10" min="1"
+                                                        <input aria-label="quantity" class="input-qty" max="10" min="0"
                                                                name="qty"
                                                                type="number"
                                                                th:value="${item.quantity}">
                                                         <input class="plus is-form plus"
-                                                               type="button" value="+">
+                                                               type="submit" value="+">
                                                         <div th:if="${qty>item.quantity}">
                                                             <span>Lỗi</span>
                                                         </div>
@@ -148,14 +148,22 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <hr>
-                                    <div class="text-end">
-                                        <a href="/" type="submit" class="btn btn-lg btn-outline-primary">Quay
-                                            Lại</a>
-                                        <button type="submit" class="btn btn-lg btn-primary">Cập Nhật Giỏ Hàng
-                                        </button>
-                                    </div>
                                 </form>
+                                <hr>
+                                <div class="text-end">
+                                    <span class="fs-4"> Tổng tiền:
+                                   <span class="text-end text-danger">
+                                    <span class="total-pro"
+                                          th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} (VNĐ)|"></span>
+                                </span></span>
+                                    <div>
+                                        <a type="button" class="btn btn-primary btn-lg" th:href="@{/pay}">Thanh
+                                            Toán
+                                        </a>
+                                        <a href="/" type="" class="btn btn-lg btn-outline-primary">Quay
+                                            Lại</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <hr>
@@ -164,41 +172,41 @@
             </div>
         </div>
 
-        <div class="col-lg-3">
-            <div class="card">
-                <div class="card-body">
-                    <!--                    <div>-->
-                    <!--                        <h6>Discount codes</h6>-->
-                    <!--                        <form action="#">-->
-                    <!--                            <div class="input-group">-->
-                    <!--                                <input type="text" class="form-control" placeholder="Coupon code"-->
-                    <!--                                       aria-label="Recipient's username" aria-describedby="button-addon2">-->
-                    <!--                                <button class="btn btn-outline-primary" type="button" id="button-addon2">-->
-                    <!--                                    Apply-->
-                    <!--                                </button>-->
-                    <!--                            </div>-->
-                    <!--                        </form>-->
-                    <!--                    </div>-->
-                    <br>
-                    <div class="card shadow-none bg-transparent border border-secondary mb-3">
-                        <div class="card-body">
-                               <span class="fs-4"> Tổng tiền:
-                                   <span class="text-end text-danger">
-                                    <span class="total-pro"
-                                          th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} (VNĐ)|"></span>
-                                </span></span>
-                        </div>
-                        <div class="card-footer">
-                            <div style="text-align: center">
-                                <a type="submit" class="btn btn-primary btn-lg" th:href="@{/pay}">Thanh
-                                    Toán
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!--        <div class="col-lg-3">-->
+        <!--            <div class="card">-->
+        <!--                <div class="card-body">-->
+        <!--                    <div>-->
+        <!--                        <h6>Discount codes</h6>-->
+        <!--                        <form action="#">-->
+        <!--                            <div class="input-group">-->
+        <!--                                <input type="text" class="form-control" placeholder="Coupon code"-->
+        <!--                                       aria-label="Recipient's username" aria-describedby="button-addon2">-->
+        <!--                                <button class="btn btn-outline-primary" type="button" id="button-addon2">-->
+        <!--                                    Apply-->
+        <!--                                </button>-->
+        <!--                            </div>-->
+        <!--                        </form>-->
+        <!--                    </div>-->
+        <!--                    <br>-->
+        <!--                    &lt;!&ndash;                    <div class="card shadow-none bg-transparent border border-secondary mb-3">&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        <div class="card-body">&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                               <span class="fs-4"> Tổng tiền:&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                                   <span class="text-end text-danger">&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                                    <span class="total-pro"&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                                          th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} (VNĐ)|"></span>&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                                </span></span>&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        </div>&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        <div class="card-footer">&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                            <div style="text-align: center">&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                                <a type="submit" class="btn btn-primary btn-lg" th:href="@{/pay}">Thanh&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                                    Toán&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                                </a>&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                            </div>&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        </div>&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                    </div>&ndash;&gt;-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 </div>
 <script>
@@ -253,6 +261,23 @@
         Toast.fire({
             icon: "error",
             title: "Không đủ sản phẩm!"
+        });
+    }
+    if (document.getElementById("message").textContent == 'nhohon1') {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "error",
+            title: "Số lượng sản phẩm phải lớn hơn 0!"
         });
     }
     const plus = document.querySelectorAll(".plus")
@@ -330,7 +355,15 @@
 
                 totalProForm.innerText = new Intl.NumberFormat().format(totalPro) + ' (VNĐ)'
             })
+        }),
+        // $.each($("#form-cart"), function (index, item) {
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault()
+                $("#form-cart").submit()
+            }
         })
+        // })
     )
 
 
@@ -338,4 +371,6 @@
         var tr = x.parentElement.parentElement;
         tr.remove();
     }
+
+
 </script>
