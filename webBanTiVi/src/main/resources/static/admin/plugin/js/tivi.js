@@ -1,6 +1,28 @@
 $(document).ready(
     loadProduct()
 )
+var rangeSlider = document.getElementById('range');
+
+noUiSlider.create(rangeSlider, {
+    start: [0, 500000000], // Giá trị khởi tạo cho 2 thanh kéo
+    connect: true,    // Kết nối 2 thanh kéo bằng đường nối
+    step: 1000000,
+    range: {
+        'min': 0,
+        'max': 50000000
+    }
+});
+
+// Lắng nghe sự kiện khi giá trị thay đổi
+rangeSlider.noUiSlider.on('update', function (values) {
+    // Hiển thị giá trị đã chọn
+    var list=[]
+    $.each(values, function (index,item){
+        list.push(new Intl.NumberFormat().format(item))
+    })
+
+    $("#price").text(list.join(' - ')+" VNĐ");
+});
 
 function loadProduct() {
     var data = {
@@ -43,16 +65,16 @@ function loadProduct() {
                     .addClass("stretched-link mb-2 text-black");
 
 // Tạo đối tượng span với class "fs-5 card-title" và text
-                var spanTitle = $("<span>").addClass("fs-5 card-title")
+                var spanTitle = $("<span>").addClass("fs-5 card-title mb-3")
                     .text(item.nameProduct);
 
 // Tạo các đối tượng div và span cho giá và đánh giá
                 if (item.price != 0) {
-                    var strikeThroughDiv = $("<div>").append($("<span>").addClass("text-strike-through fs-6")
-                        .html(item.price + "<small class='align-text-top'>đ</small>"));
+                    var strikeThroughDiv = $("<div>").addClass("mb-3").append($("<span>").addClass("text-strike-through fs-6")
+                        .html(new Intl.NumberFormat().format(item.price) + "<small class='align-text-top'>đ</small>"));
                 }
-                var boldTextDiv = $("<div>").append($("<span>").addClass("text-danger fs-6 fw-bold")
-                    .html(item.reduceMoney + "<small class='align-text-top'>đ</small>"));
+                var boldTextDiv = $("<div>").addClass("mb-3").append($("<span>").addClass("text-danger fs-6 fw-bold")
+                    .html(new Intl.NumberFormat().format(item.reduceMoney) + "<small class='align-text-top'>đ</small>"));
 
                 var starDiv = $("<div>").append($("<span>").html(item.point + "<i class='bx bxs-star' style='color:#fee500'></i>" + " (" + item.quantityEvalute + ")"));
 

@@ -12,9 +12,6 @@ import com.poly.service.ImageReturnService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,11 +35,11 @@ public class UserController {
     BillProductService billProductService;
 
 
-   @Autowired
+    @Autowired
     CheckLogin checkLogin;
 
 
-
+    Date today = new Date();
 
     @GetMapping("/invoice")
     public String loadInvoice(HttpSession session) {
@@ -71,13 +68,10 @@ public class UserController {
     @PreAuthorize("hasAnyAuthority('USER','ADMIN','STAFF')")
     public String order(HttpSession session, Model model) {
         session.setAttribute("pageView", "/user/page/profile/order.html");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        UserDetailDto customerUserDetail = (UserDetailDto) userDetails;
+        UserDetailDto customerUserDetail = this.checkLogin.checkLogin();
         List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
-        Date today = new Date();
-        List<Bill> listBillFilter= this.billService.listBillFilter(billList);
-        List<Bill> listBillFilterStill= this.billService.listBillFilterStill(billList);
+        List<Bill> listBillFilter = this.billService.listBillFilter(billList);
+        List<Bill> listBillFilterStill = this.billService.listBillFilterStill(billList);
         model.addAttribute("listBillCheck", listBillFilter);
         model.addAttribute("listBillFilterStill", listBillFilterStill);
         model.addAttribute("today", today);
@@ -86,42 +80,40 @@ public class UserController {
     }
 
     @PostMapping("/return/{id}")
-    public String returnProduct(HttpSession session,
-                                @PathVariable("id") Integer id,
+    public String returnProduct(@PathVariable("id") Integer id,
                                 @RequestBody List<ReturnDto> returnDto) {
-       this.billService.logicBillReturn(id,returnDto);
-        if(checkLogin.checkLogin() == null){
-         return "redirect:/";
+        this.billService.logicBillReturn(id, returnDto);
+        if (checkLogin.checkLogin() == null) {
+            return "redirect:/";
         }
         return "redirect:/order";
     }
 
 
-
     @GetMapping("/search_order")
-    public String getSearch(HttpSession session){
+    public String getSearch(HttpSession session) {
         session.setAttribute("pageView", "/user/page/search/search_order.html");
         return "/user/index";
     }
 
     @PostMapping("/search_order_user")
-    public String getSearchOder(@ModelAttribute("search") String search,HttpSession session,Model model){
-         Optional<Bill> bill =  this.billService.findByCode(search);
-         if(bill.isEmpty()){
-             model.addAttribute("errorSearch","Xin lỗi! Đơn hàng bạn tìm không tồn tại trên hệ thống!");
-             return "/user/index";
-         }
-         Date today = new Date();
-         session.setAttribute("today",today);
-         session.setAttribute("bill",bill.get());
-         session.setAttribute("bool",this.billService.checkBillNoLogin(search));
+    public String getSearchOder(@ModelAttribute("search") String search, HttpSession session, Model model) {
+        Optional<Bill> bill = this.billService.findByCode(search);
+        if (bill.isEmpty()) {
+            model.addAttribute("errorSearch", "Xin lỗi! Đơn hàng bạn tìm không tồn tại trên hệ thống!");
+            return "/user/index";
+        }
+        Date today = new Date();
+        session.setAttribute("today", today);
+        session.setAttribute("bill", bill.get());
+        session.setAttribute("bool", this.billService.checkBillNoLogin(search));
         return "redirect:/search_order";
     }
 
     @GetMapping("/order/remove/{id}")
-    public String removeOrder (@PathVariable("id") Integer id){
+    public String removeOrder(@PathVariable("id") Integer id) {
         Bill billCancel = this.billService.getOneById(id);
-        billCancel.setBillStatus(this.billStatusService.getOneBycode("CC"));
+        billCancel.setBillStatus(this.billStatusService.getOneBycode("CA"));
         this.billService.add(billCancel);
         return "redirect:/order";
     }

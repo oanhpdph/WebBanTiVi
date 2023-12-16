@@ -51,13 +51,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex">
-                                <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto" type="button">
-                                    Tìm
-                                </button>
-                            </div>
+                            <!--                            <div class="d-flex">-->
+                            <!--                                <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto" type="button">-->
+                            <!--                                    Tìm-->
+                            <!--                                </button>-->
+                            <!--                            </div>-->
                         </div>
-                        <select class="form-select w-auto d-inline mx-3" id="filterRate" >
+                        <select class="form-select w-auto d-inline mx-3" id="filterRate">
                             <option value="-1">Đánh giá</option>
                             <option value="1">Từ 1 sao</option>
                             <option value="2">Từ 2 sao</option>
@@ -66,6 +66,17 @@
                             <option value="5">Từ 5 sao</option>
                         </select>
                     </div>
+                </div>
+                <div class="mb-3 d-flex">
+                    <div class="d-inline col-sm-2"><span> Chọn khoảng giá:</span></div>
+                    <div class="w-25">
+                        <div id="range" class="slider-styled"></div>
+                    </div>
+                </div>
+                <div class="mb-3 d-flex">
+                    <div class="d-inline col-sm-2" ></div>
+                    <div id="price"></div>
+
                 </div>
             </div>
         </div>
@@ -180,17 +191,8 @@
         </div>
     </section>
 </div>
+<script type="text/javascript" src="/admin/assets/js/nouislider.min.js"></script>
 
-<script>
-    // $("#loadMore").click(function () {
-    //     var scrollPosition = window.scrollY || window.scrollTop || document.getElementsByTagName("html")[0].scrollTop;
-    //
-    //     // gửi yêu cầu
-    //     location.reload();
-    //     window.onload = function () {
-    //         window.scrollTo(0, scrollPosition);
-    //     };
-    // })
-</script>
 <script src="/admin/plugin/js/tivi.js"></script>
+
 </html>

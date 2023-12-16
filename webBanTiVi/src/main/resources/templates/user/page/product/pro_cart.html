@@ -54,7 +54,7 @@
 <div class="container">
     <span hidden id="message">[(${message})]</span>
     <div class="row">
-        <div class="col-lg-9 mb-4 order-0">
+        <div class="col-lg-12 mb-4 order-0">
             <!--    <div class="col-md-10">-->
             <div class="card"><br>
                 <section class="breadcrumb-option">
@@ -151,26 +151,17 @@
                                 </form>
                                 <hr>
                                 <div class="text-end">
-                                    <span class="col fs-6">Tạm tính: </span>
-                                    <span class="col text-black" style="text-align: right">
-                                                <span
-                                                        th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} đ|"
-                                                        class="total-pro fs-6" name="totalPrice"></span>
-                                                                            <hr>
-                                            </span>
-                                    <span class="fs-4"> Tổng tiền:
-                                   <span class="text-end text-danger">
-                                    <span class="total-pro"
-                                          th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} (VNĐ)|"></span>
-                                </span></span>
-                                </div>
-                                <br>
-                                <div class="text-end">
-                                    <a type="button" class="btn btn-primary btn-lg" th:href="@{/pay}">Thanh
-                                        Toán
-                                    </a>
-                                    <a href="/" type="" class="btn btn-lg btn-outline-primary">Quay
-                                        Lại</a>
+                                    <div class="mb-3">
+                                    <span class="fs-4 text-danger"> Tổng tiền:
+                                              <span class="total-pro" th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} (VNĐ)|"></span>
+                                    </span></div>
+                                    <div>
+                                        <a href="/" type="" class="btn btn-lg btn-outline-primary">Quay
+                                            Lại</a>
+                                        <a type="button" class="btn btn-primary btn-lg mx-3" th:href="@{/pay}">Thanh
+                                            Toán
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

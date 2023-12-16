@@ -48,11 +48,11 @@ function loadProduct() {
 
 // Tạo các đối tượng div và span cho giá và đánh giá
                 if (item.price != 0) {
-                    var strikeThroughDiv = $("<div>").append($("<span>").addClass("text-strike-through fs-6")
-                        .html(item.price + "<small class='align-text-top'>đ</small>"));
+                    var strikeThroughDiv = $("<div>").addClass("mb-3").append($("<span>").addClass("text-strike-through fs-6")
+                        .html(new Intl.NumberFormat().format(item.price) + "<small class='align-text-top'>đ</small>"));
                 }
-                var boldTextDiv = $("<div>").append($("<span>").addClass("text-danger fs-6 fw-bold")
-                    .html(item.reduceMoney + "<small class='align-text-top'>đ</small>"));
+                var boldTextDiv = $("<div>").addClass("mb-3").append($("<span>").addClass("text-danger fs-6 fw-bold")
+                    .html(new Intl.NumberFormat().format(item.reduceMoney) + "<small class='align-text-top'>đ</small>"));
 
                 var starDiv = $("<div>").append($("<span>").html(item.point + "<i class='bx bxs-star' style='color:#fee500'></i>" + " (" + item.quantityEvalute + ")"));
 
