@@ -1,6 +1,28 @@
 $(document).ready(
     loadProduct()
 )
+var rangeSlider = document.getElementById('range');
+
+noUiSlider.create(rangeSlider, {
+    start: [0, 500000000], // Giá trị khởi tạo cho 2 thanh kéo
+    connect: true,    // Kết nối 2 thanh kéo bằng đường nối
+    step: 1000000,
+    range: {
+        'min': 0,
+        'max': 50000000
+    }
+});
+
+// Lắng nghe sự kiện khi giá trị thay đổi
+rangeSlider.noUiSlider.on('update', function (values) {
+    // Hiển thị giá trị đã chọn
+    var list=[]
+    $.each(values, function (index,item){
+        list.push(new Intl.NumberFormat().format(item))
+    })
+
+    $("#price").text(list.join(' - ')+" VNĐ");
+});
 
 function loadProduct() {
     var data = {

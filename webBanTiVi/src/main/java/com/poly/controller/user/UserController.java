@@ -113,7 +113,7 @@ public class UserController {
     @GetMapping("/order/remove/{id}")
     public String removeOrder(@PathVariable("id") Integer id) {
         Bill billCancel = this.billService.getOneById(id);
-        billCancel.setBillStatus(this.billStatusService.getOneBycode("CC"));
+        billCancel.setBillStatus(this.billStatusService.getOneBycode("CA"));
         this.billService.add(billCancel);
         return "redirect:/order";
     }
