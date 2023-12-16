@@ -62,9 +62,9 @@ public class VNPayController {
         String transactionId = request.getParameter("vnp_TransactionNo");
         String totalPrice = request.getParameter("vnp_Amount");
         String responseCode = request.getParameter("vnp_ResponseCode");
-
+paymentTime=paymentTime.substring(0,4)+"/"+paymentTime.substring(4,6)+"/"+paymentTime.substring(6,8)+" "+paymentTime.substring(8,10)+":"+paymentTime.substring(10,12)+":"+paymentTime.substring(12,14);
         model.addAttribute("orderId", orderInfo);
-        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("totalPrice", Integer.parseInt(totalPrice) / 100);
         model.addAttribute("paymentTime", paymentTime);
         model.addAttribute("transactionId", transactionId);
         model.addAttribute("vnp_ResponseCode", responseCode);

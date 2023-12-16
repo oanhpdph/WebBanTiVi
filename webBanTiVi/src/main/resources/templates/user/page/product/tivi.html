@@ -26,7 +26,7 @@
                                    placeholder="Tìm tên sản phẩm, thông số ...">
                         </div>
                         <div class="w-25">
-                            <button type="button" class="btn btn-outline-secondary" id="btn-search">Tìm</button>
+                            <button type="button" class="btn btn-outline-secondary" id="btn-reset">Đặt lại</button>
                         </div>
                     </div>
                 </div>
@@ -67,40 +67,10 @@
                         </select>
                     </div>
                 </div>
-                <div class="mb-3 d-flex">
-                    <div class="d-inline col-sm-2"><span> Chọn khoảng giá:</span></div>
-                    <div class="pt-2 px-4 justify-content-between">
-                        <div class="form-check form-check-inline w-auto pb-2">
-                            <input type="checkbox" class="form-check-input" value="1" id="under5"
-                            >
-                            <label class="form-check-label" th:for="under5"
-                            >Dưới 5 triệu</label>
-                        </div>
-                        <div class="form-check form-check-inline w-auto pb-2">
-                            <input type="checkbox" class="form-check-input" value="2" id="5to20"
-                            >
-                            <label class="form-check-label" th:for="5to20"
-                            >Từ 5 - 20 triệu</label>
-                        </div>
-                        <div class="form-check form-check-inline w-auto pb-2">
-                            <input type="checkbox" class="form-check-input" value="3" id="20to50"
-                            >
-                            <label class="form-check-label" th:for="20to50"
-                            >Từ 20 - 50 triệu</label>
-                        </div>
-                        <div class="form-check form-check-inline w-auto pb-2">
-                            <input type="checkbox" class="form-check-input" value="4" id="upto50"
-                            >
-                            <label class="form-check-label" th:for="upto50"
-                            >Trên 50 triệu</label>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-sm-2 g-4"
              id="list-product-tivi">
-
         </div>
         <div class="text-center mt-4">
             <button class="btn btn-outline-secondary w-auto" id="loadMore" value="20">Xem thêm sản phẩm</button>
