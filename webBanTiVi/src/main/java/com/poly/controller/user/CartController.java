@@ -152,7 +152,7 @@ public class CartController {
     public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
                           Model model,
-                          String tinh, String quan, String xa
+                          String city, String district, String ward
     ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         if (result.hasErrors()) {
@@ -195,11 +195,10 @@ public class CartController {
             total = cartService.getAmount();
             billProRes.setTotalPrice(total);// lấy tổng tiền
         }
-        else {
-
-            billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
-            billProRes.setEmail(userDetailDto.getEmail());
-        }
+       else {
+           billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
+           billProRes.setEmail(userDetailDto.getEmail());
+       }
         billProRes.setAddress(xa + quan + tinh + billProRes.getAddress());
         Bill bill1 = billService.add(billProRes);// tạo hóa đơn mới
         billProRes.setBill(bill1);
