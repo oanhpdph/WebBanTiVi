@@ -287,11 +287,16 @@
     let today = new Date().toISOString().slice(0, 10);
     var avatar = document.myform.avatar.value;
     var status = [];
+    var ma = [];
 
     //code
     if (code.trim().length < 1) {
         document.getElementById("codeloc").innerHTML =
             " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!";
+        status.push(false);
+    } else if (ma.includes(code.trim().length)) {
+        document.getElementById("codeloc").innerHTML =
+            " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Mã đã tồn tại!";
         status.push(false);
     } else {
         document.getElementById("codeloc").innerHTML = "";
@@ -305,9 +310,13 @@
         document.getElementById("imageloc").innerHTML = "";
     }
     //value
-    if (value.trim().length < 1) {
+    if ((value == "") || (value <= 0)) {
         document.getElementById("valueloc").innerHTML =
-            " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống giá trị!";
+            " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!";
+        status.push(false);
+    } else if (value > 100) {
+        document.getElementById("valueloc").innerHTML =
+            " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được lớn hơn 100!";
         status.push(false);
     } else {
         document.getElementById("valueloc").innerHTML = "";
