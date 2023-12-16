@@ -68,7 +68,68 @@
                                 <div class="card mb-4">
                                     <span class="card-header text-uppercase fs-5">THÔNG TIN KHÁCH HÀNG:</span>
                                     <div class="card-body" th:id="add">
-                                        <div>
+                                        <div th:if="${session.user!=null}">
+                                            <!--                                            ten, sdt-->
+                                            <div class="row justify-content-between mb-3">
+                                                <div class="col">
+                                                    <label class="form-label">Tên người nhận</label>
+                                                    <input class="form-control" type="text" placeholder="họ và tên"
+                                                           th:value="${session.user.name}"
+                                                           th:name="name">
+                                                    <span id="nameloc" class="error"></span>
+                                                    <div class="alert alert-warning"
+                                                         th:if="${#fields.hasErrors('name')}"
+                                                         th:errors="*{name}"></div>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="form-label">Số điện thoại người nhận</label>
+                                                    <input class="form-control" type="text" placeholder="0284738477"
+                                                           th:value="${session.user.phone}"
+                                                           id="phoneNumber" th:name="phoneNumber">
+                                                    <span id="numloc" class="error"></span>
+                                                    <div class="alert alert-warning"
+                                                         th:if="${#fields.hasErrors('phoneNumber')}"
+                                                         th:errors="*{phoneNumber}"></div>
+                                                </div>
+                                            </div>
+                                            <!--                                                email-->
+                                            <div class="mb-3">
+                                                <label class="form-label">Email</label>
+                                                <input type="email" class="form-control"
+                                                       placeholder="example123@gmail.com"
+                                                       th:value="${session.user.email}"
+                                                       id="email" th:name="email">
+                                                <span id="emailloc" class="error"></span>
+                                                <div class="alert alert-warning"
+                                                     th:if="${#fields.hasErrors('email')}"
+                                                     th:errors="*{email}"></div>
+                                            </div>
+                                            <!--                                                address-->
+                                            <div class="mb-3">
+                                                <label class="form-label">Địa chỉ nhận hàng</label>
+                                                <input type="text" class="form-control"
+                                                       placeholder="Thôn liên trì 1, xã Yên hòa" th:field="*{address}"
+                                                       id="address" th:name="address">
+                                                <span id="addressloc" class="error"></span>
+                                                <div class="alert alert-warning"
+                                                     th:if="${#fields.hasErrors('address')}"
+                                                     th:errors="*{address}"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Voucher</label>
+                                                <select class="form-select" id="voucher" name="voucher">
+                                                    <option value="-1">Chưa chọn voucher</option>
+                                                    <option th:value="${voucher.voucher.id}"
+                                                            th:each="voucher:${listVoucher}"
+                                                            th:if="${voucher.active==true}">[(${voucher.voucher.code})]
+                                                    </option>
+                                                </select>
+                                                <div class="mt-2">
+                                                    <span id="info-voucher" class="text-danger">[(${#lists.size(listVoucher)>0?'Bạn có voucher có thể sử dụng':''})]</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div th:if="${session.user==null}">
                                             <!--                                            ten, sdt-->
                                             <div class="row justify-content-between mb-3">
                                                 <div class="col">
@@ -124,13 +185,8 @@
                                                             th:if="${voucher.active==true}">[(${voucher.voucher.code})]
                                                     </option>
                                                 </select>
-                                                <div class="mt-2" th:if="${session.user==null}">
-                                                    <span id="nofitication-voucher" class="text-danger"><a
-                                                            href="/login">Đăng ký</a> tài khoản để có thể nhận voucher ưu đãi của của hàng</span>
-                                                </div>
-                                                <div class="mt-2">
-                                                    <span id="info-voucher" class="text-danger"></span>
-                                                </div>
+                                                <span class="text-danger"><a class="text-danger fw-bold"
+                                                                             href="/login">Đăng ký</a> tài khoản để có thể nhận voucher ưu đãi của của hàng</span>
                                             </div>
                                         </div>
                                         <div class="mb-3 table-responsive">
@@ -253,7 +309,7 @@
     </div>
 </div>
 <script>
-    console.log(parseInt(document.querySelector('.total-pro').textContent.replace(/,/g, ''), 10))
+    // console.log(parseInt(document.querySelector('.total-pro').textContent.replace(/,/g, ''), 10))
 
     $("#voucher").on("change", function () {
         console.log(this.value)
@@ -261,7 +317,7 @@
             id: this.value,
         }
         $.ajax({
-            url: "/admin/voucher/getone",
+            url: "/user/voucher/getone",
             method: "get",
             data: data,
             success: function (data) {
@@ -332,7 +388,7 @@
         const totalProForm = document.querySelector(".total-pro")
         var totalPro = 0;
         for (let i = 0; i < totalPriceForm.length; i++) {
-            totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
+            totalPro = Number(totalPriceForm[i].textContent) + totalPro;
             console.log(totalPro);
         }
         totalProForm.value = totalPro

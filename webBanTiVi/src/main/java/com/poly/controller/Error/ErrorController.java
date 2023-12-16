@@ -14,7 +14,7 @@ public class ErrorController {
 
     @GetMapping("/404")
     public String error404() {
-        return "login/error403";
+        return "error/error404";
     }
     @GetMapping("/500")
     public String error500() {
