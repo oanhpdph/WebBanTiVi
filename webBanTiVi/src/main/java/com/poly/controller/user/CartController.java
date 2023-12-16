@@ -194,12 +194,11 @@ public class CartController {
             }
             total = cartService.getAmount();
             billProRes.setTotalPrice(total);// lấy tổng tiền
+        } else {
+            billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
+            billProRes.setEmail(userDetailDto.getEmail());
         }
-       else {
-           billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
-           billProRes.setEmail(userDetailDto.getEmail());
-       }
-        billProRes.setAddress(ward + district + city + billProRes.getAddress());
+        billProRes.setAddress(billProRes.getAddress() + "," + ward + "," + district + "," + city);
         Bill bill1 = billService.add(billProRes);// tạo hóa đơn mới
         billProRes.setBill(bill1);
 
