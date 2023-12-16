@@ -69,14 +69,32 @@
                 </div>
                 <div class="mb-3 d-flex">
                     <div class="d-inline col-sm-2"><span> Chọn khoảng giá:</span></div>
-                    <div class="w-25">
-                        <div id="range" class="slider-styled"></div>
+                    <div class="pt-2 px-4 justify-content-between">
+                        <div class="form-check form-check-inline w-auto pb-2">
+                            <input type="checkbox" class="form-check-input" value="1" id="under5"
+                            >
+                            <label class="form-check-label" th:for="under5"
+                            >Dưới 5 triệu</label>
+                        </div>
+                        <div class="form-check form-check-inline w-auto pb-2">
+                            <input type="checkbox" class="form-check-input" value="2" id="5to20"
+                            >
+                            <label class="form-check-label" th:for="5to20"
+                            >Từ 5 - 20 triệu</label>
+                        </div>
+                        <div class="form-check form-check-inline w-auto pb-2">
+                            <input type="checkbox" class="form-check-input" value="3" id="20to50"
+                            >
+                            <label class="form-check-label" th:for="20to50"
+                            >Từ 20 - 50 triệu</label>
+                        </div>
+                        <div class="form-check form-check-inline w-auto pb-2">
+                            <input type="checkbox" class="form-check-input" value="4" id="upto50"
+                            >
+                            <label class="form-check-label" th:for="upto50"
+                            >Trên 50 triệu</label>
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3 d-flex">
-                    <div class="d-inline col-sm-2" ></div>
-                    <div id="price"></div>
-
                 </div>
             </div>
         </div>

@@ -190,7 +190,7 @@ public class CartController {
             } else if (checkEmail != null && checkEmail.getRoles() == null) {
                 billProRes.setCustomer(checkEmail);
             } else if (checkEmail != null && checkEmail.getRoles().equals("USER")) {
-                return "";// thông báo email đã dùng đăng ký tài khoản
+                return "redirect:/pay";// thông báo email đã dùng đăng ký tài khoản
             }
             total = cartService.getAmount();
             billProRes.setTotalPrice(total);// lấy tổng tiền
@@ -199,7 +199,7 @@ public class CartController {
            billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
            billProRes.setEmail(userDetailDto.getEmail());
        }
-        billProRes.setAddress(xa + quan + tinh + billProRes.getAddress());
+        billProRes.setAddress(ward + district + city + billProRes.getAddress());
         Bill bill1 = billService.add(billProRes);// tạo hóa đơn mới
         billProRes.setBill(bill1);
 
