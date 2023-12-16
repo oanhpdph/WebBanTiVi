@@ -1,35 +1,15 @@
 $(document).ready(
     loadProduct()
 )
-var rangeSlider = document.getElementById('range');
-
-noUiSlider.create(rangeSlider, {
-    start: [0, 500000000], // Giá trị khởi tạo cho 2 thanh kéo
-    connect: true,    // Kết nối 2 thanh kéo bằng đường nối
-    step: 1000000,
-    range: {
-        'min': 0,
-        'max': 50000000
-    }
-});
-
-// Lắng nghe sự kiện khi giá trị thay đổi
-rangeSlider.noUiSlider.on('update', function (values) {
-    // Hiển thị giá trị đã chọn
-    var list=[]
-    $.each(values, function (index,item){
-        list.push(new Intl.NumberFormat().format(item))
-    })
-
-    $("#price").text(list.join(' - ')+" VNĐ");
-});
+let timeout;
+let filter;
 
 function loadProduct() {
     var data = {
         point: $("#filterRate").val(),
         sort: $("#sort").val(),
         key: $("#key").val(),
-        size: $("#loadMore").val()
+        size: $("#loadMore").val(),
     }
     data.listBrand = []
 
@@ -96,11 +76,24 @@ $("#filterRate").on("change", function () {
 $(".filter-brand").on("change", function () {
     loadProduct()
 })
-$("#btn-search").on("click", function () {
-    loadProduct()
+$("#key").on("keydown", function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+        // Thực hiện xử lý sau khi đã chờ một khoảng thời gian
+        loadProduct()
+    }, 500);
+
 })
 $("#loadMore").on("click", function () {
     this.value = Number(this.value) + 10
     loadProduct()
 })
 
+$("#btn-reset").on("click", function () {
+    $("#key").val("");
+    $("#filterRate").val(-1)
+    $.each($(".filter-brand"), function (index, item) {
+        $(item).prop('checked', false)
+    })
+    loadProduct()
+})
