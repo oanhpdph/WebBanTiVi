@@ -170,48 +170,48 @@
                 </section>
             </div>
         </div>
-        <div class="col-lg-3">
-            <div class="card">
-                <div class="card-body">
-                    <div>
-                        <h6>Discount codes</h6>
-                        <form action="#">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Coupon code"
-                                       aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-primary" type="button" id="button-addon2">
-                                    Apply
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <br>
-                    <div class="card shadow-none bg-transparent border border-secondary mb-3">
-                        <div class="card-body">
-                            <span class="col fs-6">Tạm tính: </span>
-                            <span class="col text-black" style="text-align: right">
-                                                <span
-                                                        th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} đ|"
-                                                        class="total-pro fs-6" name="totalPrice"></span>
-                                            </span>
-                            <hr>
-                            <span class="fs-5 text-end"> Tổng tiền:
-                                                               <span class="text-danger">
-                                                                <span class="total-pro fs-4" style="text-align: right"
-                                                                      th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} đ|"></span>
-                                                            </span></span>
-                        </div>
-                        <div class="card-footer">
-                            <div style="text-align: center">
-                                <a type="submit" class="btn btn-primary btn-lg" th:href="@{/pay}">Thanh
-                                    Toán
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!--        <div class="col-lg-3">-->
+        <!--            <div class="card">-->
+        <!--                <div class="card-body">-->
+        <!--                    <div>-->
+        <!--                        <h6>Discount codes</h6>-->
+        <!--                        <form action="#">-->
+        <!--                            <div class="input-group">-->
+        <!--                                <input type="text" class="form-control" placeholder="Coupon code"-->
+        <!--                                       aria-label="Recipient's username" aria-describedby="button-addon2">-->
+        <!--                                <button class="btn btn-outline-primary" type="button" id="button-addon2">-->
+        <!--                                    Apply-->
+        <!--                                </button>-->
+        <!--                            </div>-->
+        <!--                        </form>-->
+        <!--                    </div>-->
+        <!--                    <br>-->
+        <!--                    <div class="card shadow-none bg-transparent border border-secondary mb-3">-->
+        <!--                        <div class="card-body">-->
+        <!--                            <span class="col fs-6">Tạm tính: </span>-->
+        <!--                            <span class="col text-black" style="text-align: right">-->
+        <!--                                                <span-->
+        <!--                                                        th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} đ|"-->
+        <!--                                                        class="total-pro fs-6" name="totalPrice"></span>-->
+        <!--                                            </span>-->
+        <!--                            <hr>-->
+        <!--                            <span class="fs-5 text-end"> Tổng tiền:-->
+        <!--                                                               <span class="text-danger">-->
+        <!--                                                                <span class="total-pro fs-4" style="text-align: right"-->
+        <!--                                                                      th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} đ|"></span>-->
+        <!--                                                            </span></span>-->
+        <!--                        </div>-->
+        <!--                        <div class="card-footer">-->
+        <!--                            <div style="text-align: center">-->
+        <!--                                <a type="submit" class="btn btn-primary btn-lg" th:href="@{/pay}">Thanh-->
+        <!--                                    Toán-->
+        <!--                                </a>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
     </div>
 </div>
 <script>
