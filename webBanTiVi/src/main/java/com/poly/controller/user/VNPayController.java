@@ -1,11 +1,13 @@
 package com.poly.controller.user;
 
+import com.poly.common.SavePdf;
+import com.poly.common.SendEmail;
 import com.poly.dto.BillProRes;
 import com.poly.entity.Bill;
-import com.poly.repository.BillStatusRepos;
 import com.poly.repository.PaymentMethodRepos;
 import com.poly.service.BillService;
 import com.poly.service.VNPayService;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +28,15 @@ public class VNPayController {
     private VNPayService vnPayService;
     @Autowired
     BillService billService;
-    @Autowired
-    private BillStatusRepos billStatusRepos;
+
     @Autowired
     private PaymentMethodRepos paymentMethodRepos;
+
+    @Autowired
+    private SavePdf savePdf;
+
+    @Autowired
+    private SendEmail sendEmail;
 
     @GetMapping("/vnpay")
     public String home() {
@@ -71,11 +78,41 @@ public class VNPayController {
 //                contractRepository.save(contract);
             bill.setPaymentStatus(1);
             bill.setPaymentMethod(paymentMethodRepos.findById(2).get());
-            billService.update(bill, bill.getId());
-            return paymentStatus == 1 ? "/user/page/product/ordersuccsess" : "/user/page/product/orderfail";
+            bill = billService.update(bill, bill.getId());
+            try {
+                byte[] file = savePdf.generatePdf(bill);
+                if (file != null) {
+                    try {
+                        sendEmail.sendMessageWithAttachment(file, "Hóa đơn mua hàng.pdf", bill.getDeliveryNotes().get(0).getReceivedEmail(), "Hóa đơn mua hàng Big6 Store", "Gửi anh/chị " + bill.getCustomer().getName() + "\n"
+                                + "Cảm ơn anh/chị đã tin tưởng và mua hàng tại cửa hàng điện tử Big6 Store. Dưới đây cửa hàng xin gửi lại hóa đơn đặt hàng của quý khách. \n" + "Trân trọng.");
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return "/user/page/product/ordersuccsess";
         }
 
-        return paymentStatus == 1 ? "/user/page/product/ordersuccsess" : "/user/page/product/orderfail";
+        try {
+            byte[] file = savePdf.generatePdf(bill);
+            if (file != null) {
+                try {
+                    sendEmail.sendMessageWithAttachment(file, "Hóa đơn mua hàng.pdf", bill.getDeliveryNotes().get(0).getReceivedEmail(), "Hóa đơn mua hàng Big6 Store", "Gửi anh/chị " + bill.getCustomer().getName() + "\n"
+                            + "Cảm ơn anh/chị đã tin tưởng và mua hàng tại cửa hàng điện tử Big6 Store. Dưới đây cửa hàng xin gửi lại hóa đơn đặt hàng của quý khách. \n" + "Trân trọng.");
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "/user/page/product/orderfail";
     }
 
     @GetMapping("/payment-callback")

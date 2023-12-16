@@ -1,6 +1,8 @@
 package com.poly.controller.user;
 
 import com.poly.common.CheckLogin;
+import com.poly.common.SavePdf;
+import com.poly.common.SendEmail;
 import com.poly.dto.BillProRes;
 import com.poly.dto.UserDetailDto;
 import com.poly.entity.*;
@@ -8,16 +10,19 @@ import com.poly.entity.idClass.CartProductId;
 import com.poly.repository.ProductDetailRepo;
 import com.poly.service.*;
 import com.poly.service.Impl.DeliveryNotesImpl;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
@@ -60,11 +65,16 @@ public class CartController {
     private CheckLogin checkLogin;
 
     @Autowired
+    private SavePdf savePdf;
+
+    @Autowired
+    private SendEmail sendEmail;
+
+    @Autowired
     private VNPayService vnPayService;
 
     @Autowired
     private DeliveryNotesImpl deliveryNotes;
-
 
     @GetMapping("/pay")
     public String pay(Model model) {
@@ -112,12 +122,32 @@ public class CartController {
     public String con(Model model) {
 //        model.addAttribute("listBill", new Bill());
         String code = (String) session.getAttribute("listBill");
-        session.setAttribute("listBill", billService.findByCode(code).get());
+        Optional<Bill> optional = billService.findByCode(code);
+        if (optional.isPresent()) {
+            Bill bill = optional.get();
+            session.setAttribute("listBill", bill);
+
+            try {
+                byte[] file = savePdf.generatePdf(optional.get());
+                if (file != null) {
+                    try {
+                        sendEmail.sendMessageWithAttachment(file, "Hóa đơn mua hàng.pdf", bill.getDeliveryNotes().get(0).getReceivedEmail(), "Hóa đơn mua hàng Big6 Store", "Gửi anh/chị " + bill.getCustomer().getName() + "\n"
+                                + "Cảm ơn anh/chị đã tin tưởng và mua hàng tại cửa hàng điện tử Big6 Store. Dưới đây cửa hàng xin gửi lại hóa đơn đặt hàng của quý khách. \n" + "Trân trọng.");
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         session.setAttribute("pageView", "/user/page/product/confirm.html");
         return "user/index";
     }
 
-
+    @PreAuthorize("hasAuthority('USER') or isAnonymous()")
     @PostMapping("/purchase")
     public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
@@ -164,14 +194,12 @@ public class CartController {
             }
             total = cartService.getAmount();
             billProRes.setTotalPrice(total);// lấy tổng tiền
-        } else {
-            if (userDetailDto.getRoles().equals("ADMIN") || userDetailDto.getRoles().equals("STAFF")) {
-                return "redirect:/error/403";
-            }
-            billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
-            billProRes.setEmail(userDetailDto.getEmail());
         }
-        billProRes.setAddress(ward + " " + district + " " + city + " " + billProRes.getAddress());
+       else {
+           billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
+           billProRes.setEmail(userDetailDto.getEmail());
+       }
+        billProRes.setAddress(xa + quan + tinh + billProRes.getAddress());
         Bill bill1 = billService.add(billProRes);// tạo hóa đơn mới
         billProRes.setBill(bill1);
 
