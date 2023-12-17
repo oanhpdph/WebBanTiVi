@@ -118,7 +118,7 @@ public class UserController {
         if(checkLogin.checkLogin() !=null){
             return "redirect:/order";
         }
-        return "redirect:/search_order";
+        return "redirect:/";
     }
 
 }
