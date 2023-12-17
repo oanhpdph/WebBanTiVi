@@ -73,11 +73,26 @@ $("#filterRate").on("change", function () {
 $(".filter-brand").on("change", function () {
     loadProduct()
 })
-$("#btn-search").on("click", function () {
-    loadProduct()
-})
+// $("#btn-search").on("click", function () {
+//     loadProduct()
+// })
 $("#loadMore").on("click", function () {
     this.value = Number(this.value) + 10
     loadProduct()
 })
+$("#key").on("keydown", function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+        // Thực hiện xử lý sau khi đã chờ một khoảng thời gian
+        loadProduct()
+    }, 500);
 
+})
+$("#btn-reset").on("click", function () {
+    $("#key").val("");
+    $("#filterRate").val(-1)
+    $.each($(".filter-brand"), function (index, item) {
+        $(item).prop('checked', false)
+    })
+    loadProduct()
+})

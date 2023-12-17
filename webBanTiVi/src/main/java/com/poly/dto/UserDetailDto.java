@@ -21,6 +21,8 @@ public class UserDetailDto implements UserDetails {
 
     private int id;
 
+    private String fullName;
+
     private String name;
 
     private String password;
@@ -43,6 +45,7 @@ public class UserDetailDto implements UserDetails {
 
     public UserDetailDto(Users customer) {
         id=customer.getId();
+        fullName = customer.getName();
         name = customer.getUsername();
         password = customer.getPassword();
         roles = customer.getRoles();

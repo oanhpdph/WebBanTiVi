@@ -97,3 +97,4 @@ $("#btn-reset").on("click", function () {
     })
     loadProduct()
 })
+
