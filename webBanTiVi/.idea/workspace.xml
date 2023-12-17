@@ -29,13 +29,13 @@
         <option value="Interface" />
         <option value="JavaScript File" />
         <option value="Interface" />
-        <option value="HTML File" />
         <option value="Interface" />
         <option value="Interface" />
         <option value="JavaScript File" />
         <option value="JavaScript File" />
         <option value="HTML File" />
         <option value="Class" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -334,7 +334,7 @@
       <workItem from="1702709486902" duration="5896000" />
       <workItem from="1702716187208" duration="6236000" />
       <workItem from="1702749281348" duration="4011000" />
-      <workItem from="1702794750093" duration="4188000" />
+      <workItem from="1702794750093" duration="22996000" />
     </task>
     <servers />
   </component>
