@@ -23,8 +23,67 @@ function loadProduct() {
         data: data,
         success: function (data) {
             $("#list-product-accessory").empty()
-            // data.reverse()
+            var filterPrice = [];
+
+            $.each($(".filter-price"), function (index, item) {
+                if ($(item).prop("checked")) {
+                    filterPrice.push($(item).val())
+                }
+            })
+            if ($("#price-begin").val() || $("#price-end").val()) {
+                filterPrice.push(5)
+            }
+
             $.each(data, function (index, item) {
+                var check = true;
+                $.each(filterPrice, function (index, item1) {
+                    if (item1 == 1) {
+                        if (item.reduceMoney > 200000) {
+                            check = false
+                            return false
+                        }
+                    } else if (item1 == 2) {
+
+                        if (item.reduceMoney < 2000000 || item.reduceMoney > 500000) {
+
+                            check = false
+                            return false
+                        }
+                    } else if (item1 == 3) {
+                        if (item.reduceMoney < 500000 || item.reduceMoney > 700000) {
+                            check = false
+                            return false
+                        }
+                    } else if (item1 == 4) {
+                        if (item.reduceMoney < 700000) {
+                            check = false
+                            return false
+                        }
+                    } else if (item1 == 5) {
+                        if ($("#price-begin").val().trim() != 0 && $("#price-end").val().trim() == 0) {
+                            if (item.reduceMoney < Number($("#price-begin").val())) {
+                                check = false
+                                return false
+                            }
+                        }
+                        if ($("#price-begin").val().trim() == 0 && $("#price-end").val().trim() != 0) {
+                            if (item.reduceMoney > Number($("#price-end").val())) {
+                                check = false
+                                return false
+                            }
+                        }
+                        if ($("#price-begin").val().trim() != 0 && $("#price-end").val().trim() != 0) {
+                            if (item.reduceMoney < Number($("#price-begin").val()) || item.reduceMoney > Number($("#price-end").val())) {
+                                check = false
+                                return false
+                            }
+                        }
+                    }
+                })
+
+                if (check == false) {
+                    return true
+                }
                 var colDiv = $("<div>").addClass("col");
 
 // Tạo đối tượng div với class "card h-100 item-product"
@@ -73,9 +132,7 @@ $("#filterRate").on("change", function () {
 $(".filter-brand").on("change", function () {
     loadProduct()
 })
-// $("#btn-search").on("click", function () {
-//     loadProduct()
-// })
+
 $("#loadMore").on("click", function () {
     this.value = Number(this.value) + 10
     loadProduct()
@@ -94,5 +151,28 @@ $("#btn-reset").on("click", function () {
     $.each($(".filter-brand"), function (index, item) {
         $(item).prop('checked', false)
     })
+    $("#price-begin").val("");
+    $("#price-end").val("");
+    $.each($(".filter-price"), function (index, item) {
+        $(item).prop("checked", false)
+    })
     loadProduct()
+})
+
+$("#price-begin").on("keydown", function () {
+    clearTimeout(timeout);
+
+    timeout = setTimeout(function () {
+        // Thực hiện xử lý sau khi đã chờ một khoảng thời gian
+        loadProduct()
+    }, 500);
+
+})
+$("#price-end").on("keydown", function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+        // Thực hiện xử lý sau khi đã chờ một khoảng thời gian
+        loadProduct()
+    }, 500);
+
 })
