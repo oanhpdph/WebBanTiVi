@@ -77,6 +77,7 @@ public class PromotionController {
         model.addAttribute("voucher", voucher);
         LocalDate today = LocalDate.now();
         int soluong = voucherCustomerService.findAllByVoucher(id).size();
+        model.addAttribute("soluongcon",voucher.getQuantity()-soluong);
         boolean check = false;
         boolean check2 = false;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
