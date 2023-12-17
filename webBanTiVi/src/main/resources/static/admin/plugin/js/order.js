@@ -143,6 +143,7 @@ function clickSave() {
     uploadImage();
     var xacNhan = confirm("Bạn có chắc chắn muốn trả hàng không?");
     if (xacNhan) {
+        console.log('123');
         $.ajax({
             url: "/return/" + idBill,
             method: "post",
