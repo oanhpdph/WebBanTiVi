@@ -170,7 +170,7 @@ public class CartController {
         List<Integer> quantity = new ArrayList<>();
         BigDecimal total = new BigDecimal(0);
         for (CartProduct product : listCart) {
-            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive() && product.getProduct().getCoupon().isActive() && (LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate()))) {
+            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive() && (LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate()))) {
                 reduceMoney = product.getProduct().getPriceExport().multiply(new BigDecimal(product.getProduct().getCoupon().getValue()).divide(new BigDecimal(100)));
                 listRedu.add(reduceMoney);
                 total = total.add(product.getProduct().getPriceExport().subtract(reduceMoney).multiply(BigDecimal.valueOf(product.getQuantity())));
@@ -192,8 +192,6 @@ public class CartController {
             } else if (checkEmail != null && checkEmail.getRoles().equals("USER")) {
                 return "redirect:/pay";// thông báo email đã dùng đăng ký tài khoản
             }
-            total = cartService.getAmount();
-            billProRes.setTotalPrice(total);// lấy tổng tiền
         } else {
             billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
             billProRes.setEmail(userDetailDto.getEmail());
