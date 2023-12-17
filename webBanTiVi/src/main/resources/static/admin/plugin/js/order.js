@@ -8,7 +8,7 @@ $.each(document.getElementsByClassName("return"), function (index, item) {
                 var quantityReturn = document.getElementsByClassName("quantityReturn" + idBill)
                 var image = document.getElementsByClassName("returnImg" + item.value)
                 var reason = document.getElementsByClassName("reason" + idBill)
-                var completed=document.getElementsByClassName("completed"+idBill)
+                var completed = document.getElementsByClassName("completed" + idBill)
                 if (item.checked == false) {
                     nameProduct[index].disabled = true;
                     quantityReturn[index].disabled = true;
@@ -16,7 +16,7 @@ $.each(document.getElementsByClassName("return"), function (index, item) {
                     $.each(image, function (index, item) {
                         item.disabled = true;
                     })
-                    completed[index].hidden=true;
+                    completed[index].hidden = true;
                 } else {
                     nameProduct[index].disabled = false;
                     quantityReturn[index].disabled = false;
@@ -24,7 +24,7 @@ $.each(document.getElementsByClassName("return"), function (index, item) {
                     $.each(image, function (index, item) {
                         item.disabled = false;
                     })
-                    completed[index].hidden=false;
+                    completed[index].hidden = false;
                 }
             })
             document.getElementById("checkboxAll" + idBill).addEventListener("click", function () {
@@ -32,7 +32,7 @@ $.each(document.getElementsByClassName("return"), function (index, item) {
                 var quantityReturn = document.getElementsByClassName("quantityReturn" + idBill)
                 var image = document.getElementsByClassName("returnImg" + item.value)
                 var reason = document.getElementsByClassName("reason" + idBill)
-                var completed=document.getElementsByClassName("completed"+idBill)
+                var completed = document.getElementsByClassName("completed" + idBill)
                 if (this.checked) {
                     $.each($(".checkbox" + idBill), function (index, item) {
                         item.checked = true;
@@ -42,7 +42,7 @@ $.each(document.getElementsByClassName("return"), function (index, item) {
                         $.each(image, function (index, item) {
                             item.disabled = false;
                         })
-                        completed[index].hidden=false;
+                        completed[index].hidden = false;
                     })
                 } else {
                     $.each($(".checkbox" + idBill), function (index, item) {
@@ -53,7 +53,7 @@ $.each(document.getElementsByClassName("return"), function (index, item) {
                         $.each(image, function (index, item) {
                             item.disabled = true;
                         })
-                        completed[index].hidden=true;
+                        completed[index].hidden = true;
                     })
                 }
             })
@@ -73,7 +73,7 @@ function clickSave() {
     $.each(idBillProduct, function (index, item) {
         var errorQuantity = document.querySelector(".errorQuantity" + item.value);
         var errorReason = document.querySelector(".errorReason" + item.value);
-        if(item.checked) {
+        if (item.checked) {
             if (quantityReturn[index].value > Number(quantityReturn[index].getAttribute("max"))) {
                 errorQuantity.innerHTML = "Số lượng trả không lớn hơn số lượng mua!"
                 check = false;
@@ -118,7 +118,7 @@ function clickSave() {
 
 
             })
-            if(item.checked) {
+            if (item.checked) {
                 if (arrImage.length == 0) {
                     errorImage.innerHTML = "Vui lòng tải lên ít nhất 1 ảnh!"
                     check = false;
@@ -141,20 +141,26 @@ function clickSave() {
         return
     }
     uploadImage();
-    $.ajax({
-        url: "/return/" + idBill,
-        method: "post",
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        success: function () {
-            var close = document.getElementsByClassName("close" + idBill)
-            $.each(close, function (index, item) {
-                item.click();
-            })
-            console.log("Thành công!")
-            window.location.reload();
-        }
-    })
+    var xacNhan = confirm("Bạn có chắc chắn muốn trả hàng không?");
+    if (xacNhan) {
+        $.ajax({
+            url: "/return/" + idBill,
+            method: "post",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function () {
+                var close = document.getElementsByClassName("close" + idBill)
+                $.each(close, function (index, item) {
+                    item.click();
+                })
+                console.log("Thành công!")
+                window.location.reload();
+            }
+        })
+    } else {
+        return;
+    }
+
 }
 
 function uploadImage() {

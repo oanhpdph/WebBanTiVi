@@ -51,8 +51,9 @@
                                     hàng
                                 </button>
                                 <a class="btn btn-outline-dark"
+                                   onclick="return confirm('Xác nhận hủy đơn hàng')"
                                    th:href="@{/order/remove/{id}(id=${bill.id})}"
-                                   th:if="${bill.billStatus.code== 'WP' || bill.billStatus.code== 'PG' }"
+                                   th:if="${session.bill.billStatus.code== 'WP' || session.bill.billStatus.code== 'PG' }"
                                 >Hủy đơn hàng
                                 </a>
                             </div>
