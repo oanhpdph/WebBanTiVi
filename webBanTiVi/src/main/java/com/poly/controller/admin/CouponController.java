@@ -6,6 +6,7 @@ import com.poly.service.CouponService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 @Controller
 @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
@@ -22,6 +24,11 @@ import java.io.IOException;
 public class CouponController {
     @Autowired
     CouponService couponService;
+
+    @GetMapping("/coupon/all")
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(couponService.findAll().stream().map(Coupon::getCode).collect(Collectors.toList()));
+    }
 
     @GetMapping("/coupon/list")
     public String loadCoupon(HttpSession session, Model model) {

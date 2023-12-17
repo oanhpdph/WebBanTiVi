@@ -1,13 +1,15 @@
 $(document).ready(
     loadProduct()
 )
+let timeout;
+let filter;
 
 function loadProduct() {
     var data = {
         point: $("#filterRate").val(),
         sort: $("#sort").val(),
         key: $("#key").val(),
-        size: $("#loadMore").val()
+        size: $("#loadMore").val(),
     }
     data.listBrand = []
 
@@ -43,16 +45,16 @@ function loadProduct() {
                     .addClass("stretched-link mb-2 text-black");
 
 // Tạo đối tượng span với class "fs-5 card-title" và text
-                var spanTitle = $("<span>").addClass("fs-5 card-title")
+                var spanTitle = $("<span>").addClass("fs-5 card-title mb-3")
                     .text(item.nameProduct);
 
 // Tạo các đối tượng div và span cho giá và đánh giá
                 if (item.price != 0) {
-                    var strikeThroughDiv = $("<div>").append($("<span>").addClass("text-strike-through fs-6")
-                        .html(item.price + "<small class='align-text-top'>đ</small>"));
+                    var strikeThroughDiv = $("<div>").addClass("mb-3").append($("<span>").addClass("text-strike-through fs-6")
+                        .html(new Intl.NumberFormat().format(item.price) + "<small class='align-text-top'>đ</small>"));
                 }
-                var boldTextDiv = $("<div>").append($("<span>").addClass("text-danger fs-6 fw-bold")
-                    .html(item.reduceMoney + "<small class='align-text-top'>đ</small>"));
+                var boldTextDiv = $("<div>").addClass("mb-3").append($("<span>").addClass("text-danger fs-6 fw-bold")
+                    .html(new Intl.NumberFormat().format(item.reduceMoney) + "<small class='align-text-top'>đ</small>"));
 
                 var starDiv = $("<div>").append($("<span>").html(item.point + "<i class='bx bxs-star' style='color:#fee500'></i>" + " (" + item.quantityEvalute + ")"));
 
@@ -74,11 +76,25 @@ $("#filterRate").on("change", function () {
 $(".filter-brand").on("change", function () {
     loadProduct()
 })
-$("#btn-search").on("click", function () {
-    loadProduct()
+$("#key").on("keydown", function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+        // Thực hiện xử lý sau khi đã chờ một khoảng thời gian
+        loadProduct()
+    }, 500);
+
 })
 $("#loadMore").on("click", function () {
     this.value = Number(this.value) + 10
+    loadProduct()
+})
+
+$("#btn-reset").on("click", function () {
+    $("#key").val("");
+    $("#filterRate").val(-1)
+    $.each($(".filter-brand"), function (index, item) {
+        $(item).prop('checked', false)
+    })
     loadProduct()
 })
 

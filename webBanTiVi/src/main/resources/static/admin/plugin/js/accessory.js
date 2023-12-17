@@ -48,11 +48,11 @@ function loadProduct() {
 
 // Tạo các đối tượng div và span cho giá và đánh giá
                 if (item.price != 0) {
-                    var strikeThroughDiv = $("<div>").append($("<span>").addClass("text-strike-through fs-6")
-                        .html(item.price + "<small class='align-text-top'>đ</small>"));
+                    var strikeThroughDiv = $("<div>").addClass("mb-3").append($("<span>").addClass("text-strike-through fs-6")
+                        .html(new Intl.NumberFormat().format(item.price) + "<small class='align-text-top'>đ</small>"));
                 }
-                var boldTextDiv = $("<div>").append($("<span>").addClass("text-danger fs-6 fw-bold")
-                    .html(item.reduceMoney + "<small class='align-text-top'>đ</small>"));
+                var boldTextDiv = $("<div>").addClass("mb-3").append($("<span>").addClass("text-danger fs-6 fw-bold")
+                    .html(new Intl.NumberFormat().format(item.reduceMoney) + "<small class='align-text-top'>đ</small>"));
 
                 var starDiv = $("<div>").append($("<span>").html(item.point + "<i class='bx bxs-star' style='color:#fee500'></i>" + " (" + item.quantityEvalute + ")"));
 
@@ -73,11 +73,26 @@ $("#filterRate").on("change", function () {
 $(".filter-brand").on("change", function () {
     loadProduct()
 })
-$("#btn-search").on("click", function () {
-    loadProduct()
-})
+// $("#btn-search").on("click", function () {
+//     loadProduct()
+// })
 $("#loadMore").on("click", function () {
     this.value = Number(this.value) + 10
     loadProduct()
 })
+$("#key").on("keydown", function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+        // Thực hiện xử lý sau khi đã chờ một khoảng thời gian
+        loadProduct()
+    }, 500);
 
+})
+$("#btn-reset").on("click", function () {
+    $("#key").val("");
+    $("#filterRate").val(-1)
+    $.each($(".filter-brand"), function (index, item) {
+        $(item).prop('checked', false)
+    })
+    loadProduct()
+})

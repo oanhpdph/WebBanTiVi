@@ -68,9 +68,91 @@
                                 <div class="card mb-4">
                                     <span class="card-header text-uppercase fs-5">THÔNG TIN KHÁCH HÀNG:</span>
                                     <div class="card-body" th:id="add">
-                                        <div>
+                                        <div th:if="${session.user!=null}">
                                             <!--                                            ten, sdt-->
+                                            <div class="row justify-content-between mb-3">
+                                                <div class="col">
+                                                    <label class="form-label">Tên người nhận</label>
+                                                    <input class="form-control" type="text" placeholder="họ và tên"
+                                                           th:value="${session.user.fullName}"
+                                                           th:name="name">
+                                                    <span id="nameloc" class="error"></span>
+                                                    <div class="alert alert-warning"
+                                                         th:if="${#fields.hasErrors('name')}"
+                                                         th:errors="*{name}"></div>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="form-label">Số điện thoại người nhận</label>
+                                                    <input class="form-control" type="text" placeholder="0284738477"
+                                                           th:value="${session.user.phone}"
+                                                           id="phoneNumber" th:name="phoneNumber">
+                                                    <span id="numloc" class="error"></span>
+                                                    <div class="alert alert-warning"
+                                                         th:if="${#fields.hasErrors('phoneNumber')}"
+                                                         th:errors="*{phoneNumber}"></div>
+                                                </div>
+                                            </div>
+                                            <!--                                                email-->
+                                            <div class="mb-3">
+                                                <label class="form-label">Email</label>
+                                                <input type="email" class="form-control"
+                                                       placeholder="example123@gmail.com"
+                                                       th:value="${session.user.email}"
+                                                       id="email" th:name="email">
+                                                <span id="emailloc" class="error"></span>
+                                                <div class="alert alert-warning"
+                                                     th:if="${#fields.hasErrors('email')}"
+                                                     th:errors="*{email}"></div>
+                                            </div>
+                                            <!--                                                address-->
                                             <div class="row justify-content-between">
+                                                <label class="form-label">Địa chỉ nhận hàng</label>
+                                                <div class="col">
+                                                    <select class="form-select" id="city"
+                                                            aria-label=".form-select-sm" th:name="city">
+                                                        <option value="tinh" selected>Chọn tỉnh thành</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <select class="form-select" th:name="district" id="district"
+                                                            aria-label=".form-select-sm">
+                                                        <option value="quan" selected>Chọn quận huyện</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <select class="form-select" th:name="ward" id="ward"
+                                                            aria-label=".form-select-sm">
+                                                        <option value="xa" selected>Chọn phường xã</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Địa chỉ nhận hàng</label>
+                                                <input type="text" class="form-control"
+                                                       placeholder="Thôn liên trì 1, xã Yên hòa" th:field="*{address}"
+                                                       id="address" th:name="address">
+                                                <span id="addressloc" class="error"></span>
+                                                <div class="alert alert-warning"
+                                                     th:if="${#fields.hasErrors('address')}"
+                                                     th:errors="*{address}"></div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Voucher</label>
+                                                <select class="form-select" id="voucher" name="voucher">
+                                                    <option value="-1">Chưa chọn voucher</option>
+                                                    <option th:value="${voucher.voucher.id}"
+                                                            th:each="voucher:${listVoucher}"
+                                                            th:if="${voucher.active==true}">[(${voucher.voucher.code})]
+                                                    </option>
+                                                </select>
+                                                <div class="mt-2">
+                                                    <span id="info-voucher" class="text-danger">[(${#lists.size(listVoucher)>0?'Bạn có voucher có thể sử dụng':''})]</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div th:if="${session.user==null}">
+                                            <!--                                            ten, sdt-->
+                                            <div class="row justify-content-between mb-3">
                                                 <div class="col">
                                                     <label class="form-label">Tên người nhận</label>
                                                     <input class="form-control" type="text" placeholder="họ và tên"
@@ -92,12 +174,11 @@
                                                          th:errors="*{phoneNumber}"></div>
                                                 </div>
                                             </div>
-                                            <br>
                                             <!--                                                email-->
-                                            <div class="mb-3">
+                                            <div class="col">
                                                 <label class="form-label">Email</label>
                                                 <input type="email" class="form-control"
-                                                       placeholder="oanhpham085@gmail.com"
+                                                       placeholder="example123@gmail.com"
                                                        th:field="*{email}"
                                                        id="email" th:name="email">
                                                 <span id="emailloc" class="error"></span>
@@ -105,9 +186,31 @@
                                                      th:if="${#fields.hasErrors('email')}"
                                                      th:errors="*{email}"></div>
                                             </div>
+                                            <br>
                                             <!--                                                address-->
-                                            <div class="mb-3">
+                                            <div class="row justify-content-between">
                                                 <label class="form-label">Địa chỉ nhận hàng</label>
+                                                <div class="col">
+                                                    <select class="form-select" id="city"
+                                                            aria-label=".form-select-sm" th:name="city">
+                                                        <option value="tinh" selected>Chọn tỉnh thành</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <select class="form-select" th:name="district" id="district"
+                                                            aria-label=".form-select-sm">
+                                                        <option value="quan" selected>Chọn quận huyện</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <select class="form-select" th:name="ward" id="ward"
+                                                            aria-label=".form-select-sm">
+                                                        <option value="xa" selected>Chọn phường xã</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label"></label>
                                                 <input type="text" class="form-control"
                                                        placeholder="Thôn liên trì 1, xã Yên hòa" th:field="*{address}"
                                                        id="address" th:name="address">
@@ -119,15 +222,15 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Voucher</label>
                                                 <select class="form-select" id="voucher" name="voucher">
-                                                    <option value="-1">Chưa chọn voucher</option>
+                                                    <option value="-1" style="color: red">Đăng nhập để nhận voucher
+                                                    </option>
                                                     <option th:value="${voucher.voucher.id}"
                                                             th:each="voucher:${listVoucher}"
                                                             th:if="${voucher.active==true}">[(${voucher.voucher.code})]
                                                     </option>
                                                 </select>
-                                                <div class="mt-2">
-                                                    <span id="info-voucher" class="text-danger"></span>
-                                                </div>
+                                                <span class="text-danger"><a class="text-danger fw-bold"
+                                                                             href="/login">Đăng ký</a> tài khoản để có thể nhận voucher ưu đãi của của hàng</span>
                                             </div>
                                         </div>
                                         <div class="mb-3 table-responsive">
@@ -186,10 +289,10 @@
                                         </div>
                                         <hr>
                                         <div class="row justify-content-center">
-                                            <span class="col fs-5">Tạm tính: </span>
-                                            <span class="col text-danger text-end">
+                                            <span class="col fs-6">Tạm tính: </span>
+                                            <span class="col text-black text-end">
                                                 <span th:text="|${#numbers.formatDecimal(total,0,'COMMA',0,'POINT')} đ|"
-                                                      class="total-pro fs-4" name="totalPrice"></span>
+                                                      class="total-pro fs-5" name="totalPrice"></span>
                                             </span>
                                         </div>
                                         <div class="row justify-content-center" id="voucher-info" hidden="hidden">
@@ -250,7 +353,7 @@
     </div>
 </div>
 <script>
-    console.log(parseInt(document.querySelector('.total-pro').textContent.replace(/,/g, ''), 10))
+    // console.log(parseInt(document.querySelector('.total-pro').textContent.replace(/,/g, ''), 10))
 
     $("#voucher").on("change", function () {
         console.log(this.value)
@@ -258,7 +361,7 @@
             id: this.value,
         }
         $.ajax({
-            url: "/admin/voucher/getone",
+            url: "/user/voucher/getone",
             method: "get",
             data: data,
             success: function (data) {
@@ -329,7 +432,7 @@
         const totalProForm = document.querySelector(".total-pro")
         var totalPro = 0;
         for (let i = 0; i < totalPriceForm.length; i++) {
-            totalPro = Number(totalPriceForm[i].textContent) + Number(totalPro);
+            totalPro = Number(totalPriceForm[i].textContent) + totalPro;
             console.log(totalPro);
         }
         totalProForm.value = totalPro
@@ -392,6 +495,62 @@
     function xoa(x) {
         var tr = x.parentElement.parentElement;
         tr.remove();
+    }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    var citis = document.getElementById("city");
+    var districts = document.getElementById("district");
+    var wards = document.getElementById("ward");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            var opt = document.createElement('option');
+            opt.value = x.Name;
+            opt.text = x.Name;
+            opt.setAttribute('data-id', x.Id);
+            citis.options.add(opt);
+        }
+        citis.onchange = function () {
+            district.length = 1;
+            ward.length = 1;
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
+
+                for (const k of result[0].Districts) {
+                    var opt = document.createElement('option');
+                    opt.value = k.Name;
+                    opt.text = k.Name;
+                    opt.setAttribute('data-id', k.Id);
+                    district.options.add(opt);
+                }
+            }
+        };
+        district.onchange = function () {
+            ward.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
+            if (this.options[this.selectedIndex].dataset.id != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
+
+                for (const w of dataWards) {
+                    var opt = document.createElement('option');
+                    opt.value = w.Name;
+                    opt.text = w.Name;
+                    opt.setAttribute('data-id', w.Id);
+                    wards.options.add(opt);
+                }
+            }
+        };
     }
 </script>
 </html>

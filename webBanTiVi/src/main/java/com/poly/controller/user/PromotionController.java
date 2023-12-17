@@ -8,6 +8,7 @@ import com.poly.entity.VoucherCustomer;
 import com.poly.service.Impl.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,8 +36,14 @@ public class PromotionController {
     CouponServiceImpl couponService;
     @Autowired
     ProductServiceImpl productService;
+
+    @Autowired
+    UserServiceImpl customerService;
+
     LocalDate localDate = LocalDate.now();
+
     Date date = (Date) Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
     @GetMapping()
     public String index(HttpSession session, Model model, @RequestParam(defaultValue = "0") int p) {
 
@@ -65,7 +72,7 @@ public class PromotionController {
         session.setAttribute("pageView", "/user/page/promotion/coupondetail.html");
         return "/user/index";
     }
-
+    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/voucherdetail/{id}")
     public String voucherdetail(HttpSession session, Model model, @PathVariable("id") Integer id) {
         Voucher voucher = new Voucher();
@@ -129,6 +136,5 @@ public class PromotionController {
         return "/user/index";
     }
 
-    @Autowired
-    UserServiceImpl customerService;
+
 }

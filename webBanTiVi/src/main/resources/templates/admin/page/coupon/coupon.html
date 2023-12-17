@@ -12,7 +12,8 @@
         </button>
     </div>
     <form th:action="@{/admin/coupon/save}" method="post" th:object="${coupon}" enctype="multipart/form-data"
-          th:name="myform" th:onsubmit="return validateForm()">
+          class="formAdd"
+          th:name="myform">
         <div class="modal fade" th:id="largeModal" tabindex="-1"
              aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -29,7 +30,7 @@
                                          class="rounded image-preview mb-3"
                                          width="250">
                                 </div>
-                                <span id="imageloc" class="error"></span> <br>
+                                <div  class="error imageloc"></div>
                                 <label class="btn btn-primary me-2 mb-4" tabindex="0">
                                     <span class="d-none d-sm-block">Tải ảnh lên</span>
                                     <i class="bx bx-upload d-block d-sm-none"></i>
@@ -42,10 +43,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Mã giảm giá:</label>
                                     <input type="text" class="form-control" th:name="code">
-                                    <span id="codeloc" class="error"></span>
-                                    <!--                                    <div class="alert alert-warning"-->
-                                    <!--                                         th:if="${#fields.hasErrors('code')}"-->
-                                    <!--                                         th:errors="*{code}"></div>-->
+                                    <span  class="error codeloc"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Giá trị:</label>
@@ -53,27 +51,18 @@
                                         <input type="number" class="form-control" name="value">
                                         <span class="input-group-text">%</span>
                                     </div>
-                                    <span id="valueloc" class="error"></span>
-                                    <!--                                    <div class="alert alert-warning"-->
-                                    <!--                                         th:if="${#fields.hasErrors('value')}"-->
-                                    <!--                                         th:errors="*{value}"></div>-->
+                                    <span  class="error valueloc"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Ngày bắt đầu:</label>
                                     <input type="date" class="form-control" name="dateStart"
                                            min="">
-                                    <span id="dateStartloc" class="error"></span>
-                                    <!--                                    <div class="alert alert-warning"-->
-                                    <!--                                         th:if="${#fields.hasErrors('dateStart')}"-->
-                                    <!--                                         th:errors="*{dateStart}"></div>-->
+                                    <span  class="error dateStartloc"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Ngày kết thúc:</label>
                                     <input type="date" class="form-control" name="dateEnd"/>
-                                    <span id="dateEndloc" class="error"></span>
-                                    <!--                                    <div class="alert alert-warning"-->
-                                    <!--                                         th:if="${#fields.hasErrors('dateEnd')}"-->
-                                    <!--                                         th:errors="*{dateEnd}"></div>-->
+                                    <span  class="error dateEndloc"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Trạng thái:</label>
@@ -91,9 +80,6 @@
                                             >Chưa hoạt động</label>
                                         </div>
                                         <span id="activeloc" class="error"></span>
-                                        <!--                                        <div class="alert alert-warning"-->
-                                        <!--                                             th:if="${#fields.hasErrors('active')}"-->
-                                        <!--                                             th:errors="*{active}"></div>-->
                                     </div>
                                 </div>
                             </div>
@@ -177,7 +163,8 @@
                                     </div>
                                     <div class="modal-body">
                                         <form th:action="@{/admin/coupon/update/{id}(id=${coupon.id})}"
-                                              method="post" th:object="${coupon}" enctype="multipart/form-data">
+                                              method="post" th:object="${coupon}" enctype="multipart/form-data"
+                                              class="formUpdate">
                                             <div class="row">
                                                 <div class="col-lg-5 col-sm-12 text-center">
                                                     <div class="text-center">
@@ -185,6 +172,7 @@
                                                              class="rounded mb-3 image-preview"
                                                              width="250">
                                                     </div>
+                                                    <div  class="error imageloc"></div>
                                                     <label class="btn btn-primary me-2 mb-4"
                                                            tabindex="0">
                                                         <span class="d-none d-sm-block">Tải ảnh lên</span>
@@ -200,6 +188,7 @@
                                                         <label class="form-label">Mã giảm giá:</label>
                                                         <input type="text" class="form-control" th:name="code"
                                                                th:value="${coupon.code}">
+                                                        <span  class="error codeloc"></span>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Giá trị:</label>
@@ -208,16 +197,20 @@
                                                                    th:value="${coupon.value}">
                                                             <span class="input-group-text">%</span>
                                                         </div>
+                                                        <span  class="error valueloc"></span>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Ngày bắt đầu:</label>
                                                         <input type="date" class="form-control" th:name="dateStart"
                                                                th:value="${coupon.dateStart}"/>
+                                                        <span  class="error dateStartloc"></span>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Ngày kết thúc:</label>
                                                         <input type="date" class="form-control" th:name="dateEnd"
                                                                th:value="${coupon.dateEnd}"/>
+                                                        <span  class="error dateEndloc"></span>
+
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Trạng thái :</label>
@@ -278,71 +271,222 @@
         </div>
     </div>
 </div>
-<script>    function validateForm() {
+<script>
+    $.each($(".formAdd"), function (index, item) {
+    $(item).on("submit", function (event) {
+        event.preventDefault();
+        var $this = this
+        console.log($this)
+        $.ajax({
+            url: '/admin/coupon/all',
+            method: "get",
+            success: function (data) {
+                var code = $this.code;
+                var value = $this.value;
+                var dateStart = $this.dateStart;
+                var dateEnd = $this.dateEnd;
+                let today = new Date().toISOString().slice(0, 10);
+                var avatar = $this.avatar;
+                var status = [];
 
-    var code = document.myform.code.value;
-    var value = document.myform.value.value;
-    var dateStart = document.myform.dateStart.value;
-    var dateEnd = document.myform.dateEnd.value;
-    let today = new Date().toISOString().slice(0, 10);
-    var avatar = document.myform.avatar.value;
-    var status = [];
+                if (code.value.trim().length == 0) {
 
-    //code
-    if (code.trim().length < 1) {
-        document.getElementById("codeloc").innerHTML =
-            " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!";
-        status.push(false);
-    } else {
-        document.getElementById("codeloc").innerHTML = "";
-    }
-    //image
-    if (avatar.trim().length < 1) {
-        document.getElementById("imageloc").innerHTML =
-            " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ảnh!";
-        status.push(false);
-    } else {
-        document.getElementById("imageloc").innerHTML = "";
-    }
-    //value
-    if (value.trim().length < 1) {
-        document.getElementById("valueloc").innerHTML =
-            " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống giá trị!";
-        status.push(false);
-    } else {
-        document.getElementById("valueloc").innerHTML = "";
-    }
-    //dateStart
-    if (dateStart.trim().length < 1) {
-        document.getElementById("dateStartloc").innerHTML =
-            " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!";
-        status.push(false);
-    } else if (today.valueOf() > dateStart.valueOf()) {
-        document.getElementById("dateStartloc").innerHTML =
-            " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày bắt đầu phải lớn hơn ngày hiện tại!";
-        status.push(false);
-    } else {
-        document.getElementById("dateStartloc").innerHTML = "";
-    }
-    //dateEnd
-    if (dateEnd.trim().length < 1) {
-        document.getElementById("dateEndloc").innerHTML =
-            " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!";
-        status.push(false);
-    } else if (dateStart.valueOf() > dateEnd.valueOf()) {
-        document.getElementById("dateEndloc").innerHTML =
-            " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!";
-        status.push(false);
-    } else {
-        document.getElementById("dateEndloc").innerHTML = "";
-    }
+                    $(code).siblings('.codeloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!");
 
-    console.log(status)
-    if (status.indexOf(false) > -1) {
-        return false
-    }
-    // return false
-}
+                    status.push(false);
+                } else {
+                    $.each(data, function (index, item) {
+                        if (code.value.trim() == item) {
+                            $(code).siblings('.codeloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Mã đã tồn tại!");
+
+                            status.push(false);
+                            return false
+                        } else {
+                            $(code).siblings('.codeloc').first().html( "");
+
+                        }
+                    })
+                }
+                // if (code.trim().length < 1) {
+                //     document.getElementById("codeloc").innerHTML =
+                //         " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!";
+                //     status.push(false);
+                // } else {
+                //     document.getElementById("codeloc").innerHTML = "";
+                // }
+                //image
+                if (avatar.value.trim().length < 1) {
+                    $(avatar).parent().siblings('.imageloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ảnh!");
+
+                    status.push(false);
+                } else {
+                    $(avatar).parent().siblings('.imageloc').first().html( "");
+                }
+                //value
+                if ((value.value.trim() == "") || (value.value <= 0)) {
+
+                    $(value).parent().siblings('.valueloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
+
+                    status.push(false);
+                } else if (value.value > 100) {
+
+                    $(value).parent().siblings('.valueloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được lớn hơn 100!");
+
+                    status.push(false);
+                } else {
+                    $(value).parent().siblings('.valueloc').first().html( "");
+
+                }
+                //dateStart
+                if (dateStart.value.trim().length < 1) {
+                    $(dateStart).siblings('.dateStartloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!");
+
+                    status.push(false);
+                } else if (today.valueOf() > dateStart.value.valueOf()) {
+                    $(dateStart).siblings('.dateStartloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày bắt đầu phải lớn hơn ngày hiện tại!");
+
+                    status.push(false);
+                } else {
+                    $(dateStart).siblings('.dateStartloc').first().html( "");
+
+                }
+                //dateEnd
+                if (dateEnd.value.trim().length < 1) {
+                    $(dateEnd).siblings('.dateEndloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!");
+
+                    status.push(false);
+                } else if (dateStart.value.valueOf() > dateEnd.value.valueOf()) {
+
+                    $(dateEnd).siblings('.dateEndloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!");
+
+                    status.push(false);
+                } else {
+                    $(dateEnd).siblings('.dateEndloc').first().html( "");
+
+                }
+
+                if (status.indexOf(false) > -1) {
+                    // resolve(false)
+                    // event.preventDefault()
+                    return
+                }
+                $this.submit();
+            },
+            error: function (error) {
+                // reject(error)
+                return
+            }
+        })
+    })
+})
+    $.each($(".formUpdate"), function (index, item) {
+        $(item).on("submit", function (event) {
+            event.preventDefault();
+            var $this = this
+            console.log($this)
+            $.ajax({
+                url: '/admin/coupon/all',
+                method: "get",
+                success: function (data) {
+                    var code = $this.code;
+                    var value = $this.value;
+                    var dateStart = $this.dateStart;
+                    var dateEnd = $this.dateEnd;
+                    let today = new Date().toISOString().slice(0, 10);
+                    var avatar = $this.avatar;
+                    var status = [];
+
+                    if (code.value.trim().length == 0) {
+
+                        $(code).siblings('.codeloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!");
+
+                        status.push(false);
+                    } else {
+                        $.each(data, function (index, item) {
+                            if (code.value.trim() == item) {
+                                $(code).siblings('.codeloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Mã đã tồn tại!");
+
+                                status.push(false);
+                                return false
+                            } else {
+                                $(code).siblings('.codeloc').first().html( "");
+
+                            }
+                        })
+                    }
+                    // if (code.trim().length < 1) {
+                    //     document.getElementById("codeloc").innerHTML =
+                    //         " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!";
+                    //     status.push(false);
+                    // } else {
+                    //     document.getElementById("codeloc").innerHTML = "";
+                    // }
+                    //image
+                    if (avatar.value.trim().length < 1) {
+                        $(avatar).parent().siblings('.imageloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ảnh!");
+
+                        status.push(false);
+                    } else {
+                        $(avatar).parent().siblings('.imageloc').first().html( "");
+                    }
+                    //value
+                    if ((value.value.trim() == "") || (value.value <= 0)) {
+
+                        $(value).parent().siblings('.valueloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
+
+                        status.push(false);
+                    } else if (value.value > 100) {
+
+                        $(value).parent().siblings('.valueloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được lớn hơn 100!");
+
+                        status.push(false);
+                    } else {
+                        $(value).parent().siblings('.valueloc').first().html( "");
+
+                    }
+                    //dateStart
+                    if (dateStart.value.trim().length < 1) {
+                        $(dateStart).siblings('.dateStartloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!");
+
+                        status.push(false);
+                    } else if (today.valueOf() > dateStart.value.valueOf()) {
+                        $(dateStart).siblings('.dateStartloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày bắt đầu phải lớn hơn ngày hiện tại!");
+
+                        status.push(false);
+                    } else {
+                        $(dateStart).siblings('.dateStartloc').first().html( "");
+
+                    }
+                    //dateEnd
+                    if (dateEnd.value.trim().length < 1) {
+                        $(dateEnd).siblings('.dateEndloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!");
+
+                        status.push(false);
+                    } else if (dateStart.value.valueOf() > dateEnd.value.valueOf()) {
+
+                        $(dateEnd).siblings('.dateEndloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!");
+
+                        status.push(false);
+                    } else {
+                        $(dateEnd).siblings('.dateEndloc').first().html( "");
+
+                    }
+
+                    if (status.indexOf(false) > -1) {
+                        // resolve(false)
+                        // event.preventDefault()
+                        return
+                    }
+                    $this.submit();
+                },
+                error: function (error) {
+                    // reject(error)
+                    return
+                }
+            })
+        })
+    })
+
 </script>
 <script src="/admin/plugin/js/loadImage.js">
 </script>

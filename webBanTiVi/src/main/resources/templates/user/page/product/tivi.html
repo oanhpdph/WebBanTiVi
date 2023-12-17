@@ -11,7 +11,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-style1">
                 <li class="breadcrumb-item">
-                    <a href="/client">Trang chủ</a>
+                    <a href="/">Trang chủ</a>
                 </li>
                 <li class="breadcrumb-item active">Tivi</li>
             </ol>
@@ -26,7 +26,7 @@
                                    placeholder="Tìm tên sản phẩm, thông số ...">
                         </div>
                         <div class="w-25">
-                            <button type="button" class="btn btn-outline-secondary" id="btn-search">Tìm</button>
+                            <button type="button" class="btn btn-outline-secondary" id="btn-reset">Đặt lại</button>
                         </div>
                     </div>
                 </div>
@@ -51,13 +51,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex">
-                                <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto" type="button">
-                                    Tìm
-                                </button>
-                            </div>
+                            <!--                            <div class="d-flex">-->
+                            <!--                                <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto" type="button">-->
+                            <!--                                    Tìm-->
+                            <!--                                </button>-->
+                            <!--                            </div>-->
                         </div>
-                        <select class="form-select w-auto d-inline mx-3" id="filterRate" >
+                        <select class="form-select w-auto d-inline mx-3" id="filterRate">
                             <option value="-1">Đánh giá</option>
                             <option value="1">Từ 1 sao</option>
                             <option value="2">Từ 2 sao</option>
@@ -71,7 +71,6 @@
         </div>
         <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-sm-2 g-4"
              id="list-product-tivi">
-
         </div>
         <div class="text-center mt-4">
             <button class="btn btn-outline-secondary w-auto" id="loadMore" value="20">Xem thêm sản phẩm</button>
@@ -180,17 +179,8 @@
         </div>
     </section>
 </div>
+<script type="text/javascript" src="/admin/assets/js/nouislider.min.js"></script>
 
-<script>
-    // $("#loadMore").click(function () {
-    //     var scrollPosition = window.scrollY || window.scrollTop || document.getElementsByTagName("html")[0].scrollTop;
-    //
-    //     // gửi yêu cầu
-    //     location.reload();
-    //     window.onload = function () {
-    //         window.scrollTo(0, scrollPosition);
-    //     };
-    // })
-</script>
 <script src="/admin/plugin/js/tivi.js"></script>
+
 </html>

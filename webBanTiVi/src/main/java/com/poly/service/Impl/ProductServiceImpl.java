@@ -96,6 +96,7 @@ public class ProductServiceImpl implements ProductService {
             productCriteriaQuery.orderBy(criteriaBuilder.asc(productRoot.get("avgPoint")));
         }
 
+
         productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
 
         Pageable pageable = PageRequest.of(productDetailDto.getPage() - 1, productDetailDto.getSize());

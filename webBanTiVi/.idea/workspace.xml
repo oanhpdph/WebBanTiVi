@@ -27,15 +27,15 @@
         <option value="CSS File" />
         <option value="Interface" />
         <option value="Interface" />
-        <option value="HTML File" />
         <option value="JavaScript File" />
         <option value="Interface" />
         <option value="HTML File" />
         <option value="Interface" />
         <option value="Interface" />
+        <option value="JavaScript File" />
+        <option value="JavaScript File" />
+        <option value="HTML File" />
         <option value="Class" />
-        <option value="JavaScript File" />
-        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -68,7 +68,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Website_selling_mens_sports_shoes/Website_sell_soccer_shoes_bumblebee" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/static/admin/assets/js" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -88,13 +88,14 @@
       <recent name="com.poly" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\DuAnTotNghiep\webBanTiVi\src\main\resources\static\admin\assets\js" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\admin\page\coupon" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\promotion" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page\promotion" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page" />
-      <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\static\image" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\DuAnTotNghiep\webBanTiVi\src\main\resources\static\admin\assets\css" />
       <recent name="D:\DuAnTotNghiep\webBanTiVi\src\main\resources\static\image\product" />
       <recent name="C:\Users\admin\OneDrive\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\product" />
       <recent name="C:\Users\TGDD\OneDrive\Máy tính\tivi\webBanTiVi\src\main\resources\templates" />
@@ -330,8 +331,15 @@
       <workItem from="1702601484003" duration="13595000" />
       <workItem from="1702632377127" duration="19000" />
       <workItem from="1702632488925" duration="6749000" />
+<<<<<<< HEAD
       <workItem from="1702740004913" duration="631000" />
       <workItem from="1702829923276" duration="945000" />
+=======
+      <workItem from="1702709486902" duration="5896000" />
+      <workItem from="1702716187208" duration="6236000" />
+      <workItem from="1702749281348" duration="4011000" />
+      <workItem from="1702794750093" duration="4188000" />
+>>>>>>> 14fbf69facba1234bab85c0358adc2a92bb857de
     </task>
     <servers />
   </component>
@@ -375,11 +383,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java</url>
           <line>150</line>
           <option name="timeStamp" value="59" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user/UserController.java</url>
-          <line>108</line>
-          <option name="timeStamp" value="60" />
         </line-breakpoint>
         <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user1/PromotionController.java</url>
