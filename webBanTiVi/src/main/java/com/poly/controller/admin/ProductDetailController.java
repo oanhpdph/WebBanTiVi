@@ -33,7 +33,7 @@ public class ProductDetailController {
         if (list != null) {
             for (MultipartFile multipartFile : list) {
                 String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-                UploadFile.saveFile("src/main/resources/static/image/product", fileName, multipartFile);
+                    UploadFile.saveFile("src/main/resources/static/image/product", fileName, multipartFile);
             }
         }
         return ResponseEntity.ok(200);
