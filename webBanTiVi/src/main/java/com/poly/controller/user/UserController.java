@@ -115,7 +115,10 @@ public class UserController {
         Bill billCancel = this.billService.getOneById(id);
         billCancel.setBillStatus(this.billStatusService.getOneBycode("CA"));
         this.billService.add(billCancel);
-        return "redirect:/order";
+        if(checkLogin.checkLogin() !=null){
+            return "redirect:/order";
+        }
+        return "redirect:/search_order";
     }
 
 }
