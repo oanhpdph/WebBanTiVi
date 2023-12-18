@@ -1,72 +1,21 @@
-function showData() {
-    // Hiển thị table chứa dữ liệu
-    $("#myDiv table").hide()
-    $("#myDiv4 table").hide();
-    $("#myDiv3 table").hide();
-    $("#myDiv2 table").show();
-    $("#myDivProductCount table").hide();
-    $("#myDivVoucher table").hide();
-    $("#myDivDisCount table").hide();
-}
-function showData2() {
-    // Hiển thị table chứa dữ liệu
-    $("#myDiv table").hide()
-    $("#myDiv4 table").hide();
-    $("#myDiv2 table").hide();
-    $("#myDivProductCount table").hide();
-    $("#myDivVoucher table").hide();
-    $("#myDivDisCount table").hide();
-    $("#myDiv3 table").show();
 
+function oncl() {
+    window.location.href = "http://localhost:8080/admin/bill/list_bill"
 }
-function showData3() {
-    // Hiển thị table chứa dữ liệu
-    $("#myDiv table").hide()
-    $("#myDiv3 table").hide();
-    $("#myDiv2 table").hide();
-    $("#myDivProductCount table").hide();
-    $("#myDivVoucher table").hide();
-    $("#myDivDisCount table").hide();
-    $("#myDiv4 table").show();
-
+function onclProduct() {
+    window.location.href = "http://localhost:8080/admin/product/list"
 }
-function showData4() {
-    // Hiển thị table chứa dữ liệu
-    $("#myDiv3 table").hide();
-    $("#myDiv2 table").hide();
-    $("#myDiv4 table").hide();
-    $("#myDivProductCount table").show();
-    $("#myDivVoucher table").hide();
-    $("#myDivDisCount table").hide();
+function onclWait() {
+    window.location.href = "http://localhost:8080/admin/bill/list_bill?billStatus=doncho&size=10&page=1"
 }
-function showData5() {
-    // Hiển thị table chứa dữ liệu
-    $("#myDiv3 table").hide();
-    $("#myDiv2 table").hide();
-    $("#myDiv4 table").hide();
-    $("#myDivProductCount table").hide();
-    $("#myDivVoucher table").hide();
-    $("#myDivDisCount table").show();
-
-}
-function showData6() {
-    // Hiển thị table chứa dữ liệu
-    $("#myDiv3 table").hide();
-    $("#myDiv2 table").hide();
-    $("#myDiv4 table").hide();
-    $("#myDivProductCount table").hide();
-    $("#myDivVoucher table").show();
-    $("#myDivDisCount table").hide();
-
-}
-function oncl(id) {
-    window.location.href = "http://localhost:8080/admin/bill/bill_detail/" + id
-}
-function onclProduct(id) {
-    window.location.href = "http://localhost:8080/admin/product/list_detail/" + id
+function onclDeliver() {
+    window.location.href = "http://localhost:8080/admin/bill/list_bill?billStatus=danggiao&size=10&page=1"
 }
 function onclDiscount() {
     window.location.href = "http://localhost:8080/admin/coupon/list"
+}
+function onclReturn() {
+    window.location.href = "http://localhost:8080/admin/bill/list_invoice_return"
 }
 function onclVoucher() {
     window.location.href = "http://localhost:8080/admin/voucher/list"

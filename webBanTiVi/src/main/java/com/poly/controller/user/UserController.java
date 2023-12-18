@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.List;
@@ -81,10 +82,13 @@ public class UserController {
 
     @PostMapping("/return/{id}")
     public String returnProduct(@PathVariable("id") Integer id,
-                                @RequestBody List<ReturnDto> returnDto) {
+                                @RequestBody List<ReturnDto> returnDto, RedirectAttributes redirectAttributes) {
         this.billService.logicBillReturn(id, returnDto);
+        Bill bill = this.billService.getOneById(id);
+        String code = bill.getCode();
+        redirectAttributes.addFlashAttribute("return","return");
         if (checkLogin.checkLogin() == null) {
-            return "redirect:/";
+            return "redirect:/search_order_user?search="+code;
         }
         return "redirect:/order";
     }
@@ -96,9 +100,9 @@ public class UserController {
         return "/user/index";
     }
 
-    @PostMapping("/search_order_user")
+    @GetMapping("/search_order_user")
     public String getSearchOder(@ModelAttribute("search") String search, HttpSession session, Model model) {
-        Optional<Bill> bill = this.billService.findByCode(search);
+        Optional<Bill> bill = this.billService.findByCode(search.trim());
         if (bill.isEmpty()) {
             model.addAttribute("errorSearch", "Xin lỗi! Đơn hàng bạn tìm không tồn tại trên hệ thống!");
             return "/user/index";

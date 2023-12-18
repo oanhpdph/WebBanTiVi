@@ -41,7 +41,7 @@
     <div class="text-center">
         <h4 class="fw-bold">Kiểm tra đơn hàng của bạn</h4>
         <div class="text-center">
-            <form th:action="@{/search_order_user}" method="post">
+            <form th:action="@{/search_order_user}" method="get">
                 <input type="text" class="form-control w-px-500 d-inline" id="search_invoice" placeholder="HD93849" th:name="search">
                 <p class="text-danger" th:if="${errorSearch!=''}">[(${errorSearch})]</p>
                 <button class="btn btn-danger">Tìm kiếm</button>
