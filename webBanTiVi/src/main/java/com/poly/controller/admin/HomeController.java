@@ -32,6 +32,9 @@ public class HomeController {
         model.addAttribute("billProcessing", this.dashBoardService.getAllBillProcessing());
         model.addAttribute("billAll", this.dashBoardService.getAllBill());
         model.addAttribute("billDelivering", this.dashBoardService.getAllBillDelivering());
+        model.addAttribute("productCount", this.dashBoardService.getProductCount());
+        model.addAttribute("listDisCount", this.dashBoardService.getDisCount());
+        model.addAttribute("listVoucher", this.dashBoardService.getVoucherCount());
         return "admin/layout";
     }
 

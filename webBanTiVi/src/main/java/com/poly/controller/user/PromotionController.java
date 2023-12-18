@@ -50,6 +50,7 @@ public class PromotionController {
         model.addAttribute("listcoupon", couponService.getAllByActive(date));
         model.addAttribute("listvoucher", voucherService.findAllByDate(date));
         session.setAttribute("pageView", "/user/page/promotion/promotions.html");
+        model.addAttribute("active","promotion");
         return "/user/index";
     }
 
@@ -84,6 +85,7 @@ public class PromotionController {
         model.addAttribute("voucher", voucher);
         LocalDate today = LocalDate.now();
         int soluong = voucherCustomerService.findAllByVoucher(id).size();
+        model.addAttribute("soluongcon",voucher.getQuantity()-soluong);
         boolean check = false;
         boolean check2 = false;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
