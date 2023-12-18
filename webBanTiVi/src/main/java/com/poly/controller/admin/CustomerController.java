@@ -22,7 +22,7 @@ import java.io.IOException;
 
 @Controller
 @RequestMapping("/admin")
-@PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class CustomerController {
 
     @Autowired
@@ -30,6 +30,7 @@ public class CustomerController {
 
     @Autowired
     CustomerService customerService;
+
 
     @GetMapping("/customer/list")
     public String loadStaff(HttpSession session, Model model,
