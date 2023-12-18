@@ -474,11 +474,6 @@
                         $(value).parent().siblings('.valueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
 
                         status.push(false);
-                    } else if (value.value > 100) {
-
-                        $(value).parent().siblings('.valueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được lớn hơn 100!");
-
-                        status.push(false);
                     } else {
                         $(value).parent().siblings('.valueloc').first().html("");
 
@@ -487,8 +482,8 @@
                     if ((minimumValue.value.trim() == "") || (value.value <= 0)) {
                         $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
                         status.push(false);
-                    } else if (minimumValue.value > 100) {
-                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được lớn hơn 100!");
+                    } else if (minimumValue.value > value.value) {
+                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị tối thiểu phải nhỏ hơn giá trị giảm!");
                         status.push(false);
                     } else {
                         $(minimumValue).parent().siblings('.minimumValueloc').first().html("");
@@ -543,135 +538,139 @@
             })
         })
     })
-    // $.each($(".formUpdate"), function (index, item) {
-    //     $(item).on("submit", function (event) {
-    //         event.preventDefault();
-    //         var $this = this
-    //         console.log($this)
-    //         $.ajax({
-    //             url: '/admin/voucher/all',
-    //             method: "get",
-    //             success: function (data) {
-    //                 var nameVoucher = $this.nameVoucher;
-    //                 var code = $this.code;
-    //                 var value = $this.value;
-    //                 var minimumValue = $this.minimumValue;
-    //                 var quantity = $this.quantity;
-    //                 var startDay = $this.startDay;
-    //                 var expirationDate = $this.expirationDate;
-    //                 let today = new Date().toISOString().slice(0, 10);
-    //                 var image = $this.image;
-    //                 var status = [];
-    //
-    //                 //code
-    //                 if (code.value.trim().length == 0) {
-    //
-    //                     $(code).siblings('.codeloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!");
-    //
-    //                     status.push(false);
-    //                 } else {
-    //                     $.each(data, function (index, item) {
-    //                         if (code.value.trim() == item) {
-    //                             $(code).siblings('.codeloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Mã đã tồn tại!");
-    //
-    //                             status.push(false);
-    //                             return false
-    //                         } else {
-    //                             $(code).siblings('.codeloc').first().html("");
-    //
-    //                         }
-    //                     })
-    //                 }
-    //                 //image
-    //                 if (image.value.trim().length < 1) {
-    //                     $(image).parent().siblings('.imageloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ảnh!");
-    //
-    //                     status.push(false);
-    //                 } else {
-    //                     $(image).parent().siblings('.imageloc').first().html("");
-    //                 }
-    //                 //name
-    //                 if (nameVoucher.value.trim().length < 1) {
-    //                     $(nameVoucher).siblings('.nameVoucherloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống tên!");
-    //                     status.push(false);
-    //                 } else {
-    //                     $(nameVoucher).siblings('.nameVoucherloc').first().html("");
-    //                 }
-    //                 //value
-    //                 if ((value.value.trim() == "") || (value.value <= 0)) {
-    //
-    //                     $(value).parent().siblings('.valueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
-    //
-    //                     status.push(false);
-    //                 } else if (value.value > 100) {
-    //
-    //                     $(value).parent().siblings('.valueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được lớn hơn 100!");
-    //
-    //                     status.push(false);
-    //                 } else {
-    //                     $(value).parent().siblings('.valueloc').first().html("");
-    //
-    //                 }
-    //                 //minimumValue
-    //                 if ((minimumValue.value.trim() == "") || (value.value <= 0)) {
-    //                     $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
-    //                     status.push(false);
-    //                 } else if (minimumValue.value > 100) {
-    //                     $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được lớn hơn 100!");
-    //                     status.push(false);
-    //                 } else {
-    //                     $(minimumValue).parent().siblings('.minimumValueloc').first().html("");
-    //                 }
-    //                 //startDay
-    //                 if (startDay.value.trim().length < 1) {
-    //                     $(startDay).parents().siblings('.startDayloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!");
-    //
-    //                     status.push(false);
-    //                 } else if (today.valueOf() > startDay.value.valueOf()) {
-    //                     $(startDay).parents().siblings('.startDayloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày bắt đầu phải lớn hơn ngày hiện tại!");
-    //
-    //                     status.push(false);
-    //                 } else {
-    //                     $(startDay).parents().siblings('.startDayloc').first().html("");
-    //
-    //                 }
-    //                 //expirationDate
-    //                 if (expirationDate.value.trim().length < 1) {
-    //                     $(expirationDate).parents().siblings('.expirationDateloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!");
-    //
-    //                     status.push(false);
-    //                 } else if (expirationDate.value.valueOf() < startDay.value.valueOf()) {
-    //
-    //                     $(expirationDate).parents().siblings('.expirationDateloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!");
-    //
-    //                     status.push(false);
-    //                 } else {
-    //                     $(expirationDate).parents().siblings('.expirationDateloc').first().html("");
-    //
-    //                 }
-    //                 //quantity
-    //                 if (quantity.value.trim().length < 1) {
-    //                     $(quantity).parent().siblings('.quantityloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống số lượng!");
-    //                     status.push(false);
-    //                 } else {
-    //                     $(quantity).parent().siblings('.quantityloc').first().html("");
-    //                 }
-    //
-    //                 if (status.indexOf(false) > -1) {
-    //                     // resolve(false)
-    //                     // event.preventDefault()
-    //                     return
-    //                 }
-    //                 $this.submit();
-    //                 $("#formUpdate")[0].submit();
-    //             },
-    //             error: function (error) {
-    //                 // reject(error)
-    //                 return
-    //             }
-    //         })
-    //     })
-    // })
+    $.each($(".formUpdate"), function (index, item) {
+        $(item).on("submit", function (event) {
+            event.preventDefault();
+            var $this = this
+            console.log($this)
+            $.ajax({
+                url: '/admin/voucher/all',
+                method: "get",
+                success: function (data) {
+                    var nameVoucher = $this.nameVoucher;
+                    var code = $this.code;
+                    var value = $this.value;
+                    var minimumValue = $this.minimumValue;
+                    var quantity = $this.quantity;
+                    var startDay = $this.startDay;
+                    var expirationDate = $this.expirationDate;
+                    let today = new Date().toISOString().slice(0, 10);
+                    var image = $this.image;
+                    var status = [];
+
+                    //code
+                    if (code.value.trim().length == 0) {
+
+                        $(code).siblings('.codeloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!");
+
+                        status.push(false);
+                    }
+                        // else {
+                        //     $.each(data, function (index, item) {
+                        //         if (code.value.trim() == item) {
+                        //             $(code).siblings('.codeloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Mã đã tồn tại!");
+                        //
+                        //             status.push(false);
+                        //             return false
+                        //         } else {
+                        //             $(code).siblings('.codeloc').first().html("");
+                        //
+                        //         }
+                        //     })
+                    // }
+                    else {
+                        $(code).siblings('.codeloc').first().html("");
+
+                    }
+                    //image
+                    // if (image.value.trim().length < 1) {
+                    //     $(image).parent().siblings('.imageloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ảnh!");
+                    //
+                    //     status.push(false);
+                    // } else {
+                    //     $(image).parent().siblings('.imageloc').first().html("");
+                    // }
+                    //name
+                    if (nameVoucher.value.trim().length < 1) {
+                        $(nameVoucher).siblings('.nameVoucherloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống tên!");
+                        status.push(false);
+                    } else {
+                        $(nameVoucher).siblings('.nameVoucherloc').first().html("");
+                    }
+                    //value
+                    if ((value.value.trim() == "") || (value.value <= 0)) {
+
+                        $(value).parent().siblings('.valueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
+
+                        status.push(false);
+                    } else {
+                        $(value).parent().siblings('.valueloc').first().html("");
+
+                    }
+                    //minimumValue
+                    if ((minimumValue.value.trim() == "") || (value.value <= 0)) {
+                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
+                        status.push(false);
+                    } else if (minimumValue.value < value.value) {
+                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị tối thiểu phải nhỏ hơn giá trị giảm!");
+                        status.push(false);
+                    } else {
+                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("");
+                    }
+                    //startDay
+                    if (startDay.value.trim().length < 1) {
+                        $(startDay).parents().siblings('.startDayloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!");
+
+                        status.push(false);
+                    }
+                        // else if (today.valueOf() > startDay.value.valueOf()) {
+                        //     $(startDay).parents().siblings('.startDayloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày bắt đầu phải lớn hơn ngày hiện tại!");
+                        //
+                        //     status.push(false);
+                    // }
+                    else {
+                        $(startDay).parents().siblings('.startDayloc').first().html("");
+
+                    }
+                    //expirationDate
+                    if (expirationDate.value.trim().length < 1) {
+                        $(expirationDate).parents().siblings('.expirationDateloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!");
+
+                        status.push(false);
+                    }
+                        // else if (expirationDate.value.valueOf() < startDay.value.valueOf()) {
+                        //
+                        //     $(expirationDate).parents().siblings('.expirationDateloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!");
+                        //
+                        //     status.push(false);
+                    // }
+                    else {
+                        $(expirationDate).parents().siblings('.expirationDateloc').first().html("");
+
+                    }
+                    //quantity
+                    if (quantity.value.trim().length < 1) {
+                        $(quantity).parent().siblings('.quantityloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống số lượng!");
+                        status.push(false);
+                    } else {
+                        $(quantity).parent().siblings('.quantityloc').first().html("");
+                    }
+
+                    if (status.indexOf(false) > -1) {
+                        // resolve(false)
+                        // event.preventDefault()
+                        return
+                    }
+                    $this.submit();
+                    $("#formUpdate")[0].submit();
+                },
+                error: function (error) {
+                    // reject(error)
+                    return
+                }
+            })
+        })
+    })
 
     for (let i = 0; i < fileInputs.length; i++) {
         const fileInput = fileInputs[i];
