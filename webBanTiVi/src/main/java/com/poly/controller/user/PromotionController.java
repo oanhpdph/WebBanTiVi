@@ -8,7 +8,6 @@ import com.poly.entity.VoucherCustomer;
 import com.poly.service.Impl.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -73,7 +72,6 @@ public class PromotionController {
         session.setAttribute("pageView", "/user/page/promotion/coupondetail.html");
         return "/user/index";
     }
-    @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/voucherdetail/{id}")
     public String voucherdetail(HttpSession session, Model model, @PathVariable("id") Integer id) {
         Voucher voucher = new Voucher();
@@ -104,6 +102,7 @@ public class PromotionController {
             }else{
             for (VoucherCustomer x : voucherCustomerService.findAllByVoucher(id)) {
                 if (x.getCustomer().getId() == customerUserDetail.getId()) {
+                    check =true;
                     check2 = true;
                     model.addAttribute("check", check);
                     model.addAttribute("check2", check2);
@@ -123,7 +122,7 @@ public class PromotionController {
                 voucherCustomer.setActive(voucher.getActive());
                 voucherCustomerService.save(voucherCustomer);
             } else {
-                check = false;
+                check2 = true;
                 model.addAttribute("check", check);
                 model.addAttribute("check2", check2);
                 model.addAttribute("thongbao", "Số lượng voucher đã hết, hẹn quý khách ở các chương trình khuyến mại sau!");

@@ -33,14 +33,14 @@
 
 
 <!--        th:href="@{'/promotion/vouchercode/' + *{voucher.getId()}}"-->
-        <div class="modal" th:id="modalVoucher"
+        <div class="modal" th:id="modalVoucher" data-bs-backdrop="static"
         >
             <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <br>
                 <div class="modal-header">
                 </div>
-                <div th:if="${check == true}" class="modal-body">
+                <div th:if="${check == true && check2 == false}" class="modal-body">
                     <p class=" fs-large fw-bold text-center">
                         Mã voucher của bạn là: <span class="text-danger">
                 [(${voucher.getCode()})]
@@ -53,6 +53,9 @@
                     <p class=" fs-large fw-bold text-center text-danger">[(${thongbao})]</p>
                 </div>
                 <div th:if="${check == false && check2 == true}">
+                    <p class=" fs-large fw-bold text-center text-danger">[(${thongbao})]</p>
+                </div>
+                <div th:if="${check == true && check2 == true}">
                     <p class=" fs-large fw-bold text-center">
                         Mã voucher của bạn là: <span class="text-danger">
                 [(${voucher.getCode()})]
@@ -61,7 +64,18 @@
                     <p class="text-center text-danger">Bạn đã nhận mã voucher 1 lần. <br>
                         [(${thongbao})]</p>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer  text-center mx-auto">
+                    <div th:if="${check == false && check2 == false}">
+                        <a type="button"
+                           class="btn btn-outline-primary" th:href="@{'/login'}"
+                        >Chuyển sang trang đăng nhập</a>
+                    </div>
+                    <a type="button"
+                       class="btn btn-outline-primary" th:href="@{'/promotion'}"
+                    >Xem các khuyễn mãi khác</a>
+                    <a type="button"
+                       class="btn btn-outline-primary" th:href="@{'/promotion/voucherdetail/' + *{voucher.getId()}}"
+                       >Quay lại trang</a>
                 </div>
             </div>
             </div>
