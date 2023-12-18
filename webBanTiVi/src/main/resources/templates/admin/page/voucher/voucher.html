@@ -191,7 +191,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="voucher,Stat : ${session.list.content}">
+                <tr th:each="voucher,Stat : ${session.listVoucher.content}">
                     <td th:text="${Stat.index+1}"></td>
                     <td th:text="${voucher.nameVoucher}"></td>
                     <td><p>

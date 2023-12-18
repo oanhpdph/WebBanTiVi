@@ -58,7 +58,7 @@ public class VoucherController {
         Page<Voucher> vouchers = voucherService.loadData(search, pageable);
 
         model.addAttribute("totalElements", vouchers.getTotalElements());
-        session.setAttribute("list", vouchers);
+        session.setAttribute("listVoucher", vouchers);
 
         session.setAttribute("pageView", "/admin/page/voucher/voucher.html");
         session.setAttribute("active", "/promotion/voucher");
