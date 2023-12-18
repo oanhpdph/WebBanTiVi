@@ -11,8 +11,9 @@
             <div class="card-header d-flex align-items-center justify-content-between pb-0 text-uppercase text-primary">
                 Tổng đơn hàng
             </div>
-            <div class="card-body" >
-                <button class="fw-bold" id="completed" style="border : none" th:text="${#lists.size(billAll)}" th:onclick="|showData()|" ></button>
+            <div class="card-body">
+                <button class="fw-bold" id="completed" style="border : none" th:text="${#lists.size(billAll)}"
+                        th:onclick="|showData()|"></button>
             </div>
         </div>
     </div>
@@ -21,8 +22,9 @@
             <div class="card-header d-flex align-items-center justify-content-between pb-0 text-uppercase text-success ">
                 Đơn hàng đang giao
             </div>
-            <div class="card-body" >
-                <button class="fw-bold" id="delivering" style="border : none" th:text="${#lists.size(billDelivering)}" th:onclick="|showData4()|" ></button>
+            <div class="card-body">
+                <button class="fw-bold" id="delivering" style="border : none" th:text="${#lists.size(billDelivering)}"
+                        th:onclick="|showData4()|"></button>
             </div>
         </div>
     </div>
@@ -32,7 +34,8 @@
                 Đơn yêu cầu hoàn trả
             </div>
             <div class="card-body">
-                <button class="fw-bold" id="return" style="border : none" th:text="${#lists.size(billReturn)}" th:onclick="|showData2()|"></button>
+                <button class="fw-bold" id="return" style="border : none" th:text="${#lists.size(billReturn)}"
+                        th:onclick="|showData2()|"></button>
             </div>
         </div>
     </div>
@@ -42,13 +45,47 @@
                 Đơn chờ xử lý
             </div>
             <div class="card-body">
-                <button class="fw-bold" id="processing" style="border : none" th:text="${#lists.size(billProcessing)}" th:onclick="|showData3()|" ></button>
+                <button class="fw-bold" id="processing" style="border : none" th:text="${#lists.size(billProcessing)}"
+                        th:onclick="|showData3()|"></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100 border-danger" style="border-left: 5px solid">
+            <div class="card-header d-flex align-items-center justify-content-between pb-0 text-uppercase text-danger">
+                Số lượng sản phẩm
+            </div>
+            <div class="card-body">
+                <button class="fw-bold" id="productCount" style="border : none" th:text="${#lists?.size(productCount)}"
+                        th:onclick="|showData4()|"></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100 border-danger" style="border-left: 5px solid">
+            <div class="card-header d-flex align-items-center justify-content-between pb-0 text-uppercase text-danger">
+                Danh sách discount
+            </div>
+            <div class="card-body">
+                <button class="fw-bold" id="listDisCount" style="border : none" th:text="${#lists?.size(listDisCount)}"
+                        th:onclick="|showData5()|"></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100 border-danger" style="border-left: 5px solid">
+            <div class="card-header d-flex align-items-center justify-content-between pb-0 text-uppercase text-danger">
+                Danh sách voucher
+            </div>
+            <div class="card-body">
+                <button class="fw-bold" id="listVoucher" style="border : none" th:text="${#lists.size(listVoucher)}"
+                        th:onclick="|showData6()|"></button>
             </div>
         </div>
     </div>
 </div>
 <div class="overflow-auto" id="myDiv">
-    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTable4" >
+    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTable4">
         <thead>
         <tr class="row-table">
             <th>#</th>
@@ -78,7 +115,7 @@
     </table>
 </div>
 <div class="overflow-auto" id="myDiv2">
-    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTable" >
+    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTable">
         <thead>
         <tr class="row-table">
             <th>#</th>
@@ -108,7 +145,7 @@
     </table>
 </div>
 <div class="overflow-auto" id="myDiv3">
-    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTable2" >
+    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTable2">
         <thead>
         <tr class="row-table">
             <th>#</th>
@@ -138,7 +175,7 @@
     </table>
 </div>
 <div class="overflow-auto" id="myDiv4">
-    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTable3" >
+    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTable3">
         <thead>
         <tr class="row-table">
             <th>#</th>
@@ -168,4 +205,116 @@
     </table>
 </div>
 
+<div class="overflow-auto" id="myDivProductCount">
+    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTableProductCount">
+        <thead>
+        <tr class="row-table">
+            <th>#</th>
+            <th>Mã SKU</th>
+            <th>Group Product</th>
+            <th>Name Product</th>
+            <th>Avg Point</th>
+            <th>Date Create</th>
+            <th>Brand</th>
+            <th>Active</th>
+        </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+        <tr th:each="product,prodcutes: ${productCount}" th:onclick="|onclProduct(${ product.id })|">
+            <td>
+                <strong>[(${prodcutes.index+1})]</strong>
+            </td>
+            <td>
+                [(${product.sku})]
+            </td>
+            <td>
+                [(${product.groupProduct.nameGroup})]
+            </td>
+            <td>[(${product.nameProduct})]</td>
+            <td>[(${product.avgPoint})]</td>
+            <td>[(${product.createDate})]</td>
+            <td>[(${product.brand.name})]</td>
+            <td>[(${product.active})]</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="overflow-auto" id="myDivDisCount">
+    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTableDisCount">
+        <thead>
+        <tr class="row-table">
+            <th>#</th>
+            <th>Code</th>
+            <th>Value</th>
+            <th>Image</th>
+            <th>Date Start</th>
+            <th>Date End</th>
+            <th>Active</th>
+        </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+        <tr th:each="discount,discountes: ${listDisCount}" th:onclick="|onclDiscount()|">
+            <td>
+                <strong>[(${discountes.index+1})]</strong>
+            </td>
+            <td>
+                [(${discount.code})]
+            </td>
+            <td>
+                [(${discount.value})]
+            </td>
+            <td><p>
+                <img th:src="@{'/image/'+*{discount.image}}"
+                     class="w-px-100"/>
+            </p>
+            <td>[(${discount.dateStart})]</td>
+            <td>[(${discount.dateEnd})]</td>
+            <td><span th:text="${discount.active} == true?'Hoạt động':'Không hoạt động'"/></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="overflow-auto" id="myDivVoucher">
+    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTableVoucher">
+        <thead>
+        <tr class="row-table">
+            <th>#</th>
+            <th>Code</th>
+            <th>Name Voucher</th>
+            <th>Value</th>
+            <th>Minimum Value</th>
+            <th>Quantity</th>
+            <th>Start Day</th>
+            <th>Expiration Date</th>
+            <th>Active</th>
+            <th>Image</th>
+        </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+        <tr th:each="voucher,vouchers: ${listVoucher}" th:onclick="|onclVoucher()|">
+            <td>
+                <strong>[(${vouchers.index+1})]</strong>
+            </td>
+            <td>
+                [(${voucher.code})]
+            </td>
+            <td>
+                [(${voucher.nameVoucher})]
+            </td>
+            <td>[(${voucher.value})]</td>
+            <td>[(${voucher.minimumValue})]</td>
+            <td>[(${voucher.quantity})]</td>
+            <td>[(${voucher.startDay})]</td>
+            <td>[(${voucher.expirationDate})]</td>
+            <td> <span th:text="${voucher.active} == true?'Hoạt động':'Không hoạt động'"/></td>
+            <td><p>
+                <img th:src="@{'/image/'+*{voucher.image}}"
+                     class="w-px-100"/>
+            </p>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <script th:src="@{/admin/plugin/js/dashboard.js}"></script>

@@ -32,13 +32,13 @@
                 </div>
                 <div class="mb-3 d-flex">
                     <div class="d-inline col-sm-2"><span>Lọc sản phẩm:</span></div>
-                    <div class="btn-group d-inline w-100">
-                        <button type="button" class="mx-3 btn btn-outline-secondary d-inline dropdown-toggle w-auto"
-                                data-bs-toggle="dropdown"
-                                data-bs-auto-close="outside"
-                                aria-haspopup="true" aria-expanded="true">
+                    <div class="d-inline w-100">
+                        <div class="mx-3 btn border-secondary d-inline dropdown-toggle w-auto"
+                             data-bs-toggle="dropdown"
+                             data-bs-auto-close="outside"
+                             aria-haspopup="true" aria-expanded="true">
                             Hãng
-                        </button>
+                        </div>
                         <div class="dropdown-menu w-px-500 h-auto" style="overflow-x: hidden; max-height: 300px">
                             <div class="pt-2 px-4 justify-content-between">
                                 <div class="d-inline mx-3 " th:each="brand:${listBrand}">
@@ -51,11 +51,56 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--                            <div class="d-flex">-->
-                            <!--                                <button class="btn btn-outline-secondary ms-auto mx-5 mb-2 w-auto" type="button">-->
-                            <!--                                    Tìm-->
-                            <!--                                </button>-->
-                            <!--                            </div>-->
+                        </div>
+                        <div class="mx-3 btn border-secondary d-inline dropdown-toggle w-auto"
+                             data-bs-toggle="dropdown"
+                             data-bs-auto-close="outside"
+                             aria-haspopup="true" aria-expanded="true">
+                            Giá
+                        </div>
+                        <div class="dropdown-menu w-px-600 h-auto" style="overflow-x: hidden; max-height: 300px">
+                            <div class="pt-2 px-4 justify-content-between">
+                                <div class="mx-3 mb-3">
+                                    <div class="form-check form-check-inline w-auto pb-2">
+                                        <input type="checkbox" class="form-check-input filter-price" id="under5"
+                                               value="1">
+                                        <label class="form-check-label" for="under5">Dười 5tr</label>
+                                    </div>
+                                    <div class="form-check form-check-inline w-auto pb-2">
+                                        <input type="checkbox" class="form-check-input  filter-price" id="5to20"
+                                               value="2">
+                                        <label class="form-check-label" for="5to20">Từ 5tr - 20tr</label>
+                                    </div>
+                                    <div class="form-check form-check-inline w-auto pb-2">
+                                        <input type="checkbox" class="form-check-input  filter-price" id="20to50"
+                                               value="3">
+                                        <label class="form-check-label" for="20to50">Từ 20tr - 50tr</label>
+                                    </div>
+                                    <div class="form-check form-check-inline w-auto pb-2">
+                                        <input type="checkbox" class="form-check-input  filter-price" id="up50"
+                                               value="4">
+                                        <label class="form-check-label" for="up50">Trên 50tr</label>
+                                    </div>
+                                </div>
+                                <div class="mx-3">
+                                    <div class="w-auto pb-2 row-cols-2 row">
+                                        <div class="col">
+                                            Từ:
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" id="price-begin">
+                                                <span class="input-group-text">VNĐ</span>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            Đến:
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" id="price-end" >
+                                                <span class="input-group-text">VNĐ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <select class="form-select w-auto d-inline mx-3" id="filterRate">
                             <option value="-1">Đánh giá</option>

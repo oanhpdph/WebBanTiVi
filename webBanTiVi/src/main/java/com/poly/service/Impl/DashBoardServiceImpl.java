@@ -1,12 +1,17 @@
 package com.poly.service.Impl;
 
 import com.poly.entity.Bill;
+import com.poly.entity.Coupon;
+import com.poly.entity.Product;
+import com.poly.entity.Voucher;
 import com.poly.repository.BillRepos;
+import com.poly.repository.CouponRepository;
+import com.poly.repository.ProductRepository;
+import com.poly.repository.VoucherRepository;
 import com.poly.service.DashBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,35 +21,33 @@ public class DashBoardServiceImpl implements DashBoardService {
     @Autowired
     BillRepos billRepos;
 
+    @Autowired
+    ProductRepository productRepository;
 
-    @Override
-    public List<Bill> getBillByDate(Date date) {
-        List<Bill> orders = billRepos.findBillByDate(date);
-        return  orders ;
-    }
+    @Autowired
+    VoucherRepository voucherRepository;
 
-    @Override
-    public List<Bill> getBillReturned(Date date) {
-        List<Bill> orders = billRepos.findBillByDate(date);
-        List<Bill> listBillReturn = new ArrayList<>();
-        for(Bill bill : orders){
-            if(bill.getBillStatus().getStatus().equals("RR")){
-                listBillReturn.add(bill);
-            }
-        }
-        return listBillReturn;
-    }
-    @Override
-    public List<Bill> getBillByProccesing(Date date) {
-        List<Bill> orders = billRepos.findBillByDate(date);
-        List<Bill> listBillPro = new ArrayList<>();
-        for(Bill bill : orders){
-            if(bill.getBillStatus().getStatus().equals("WP")){
-                listBillPro.add(bill);
-            }
-        }
-        return listBillPro;
-    }
+
+    @Autowired
+    CouponRepository couponRepository;
+
+//    @Override
+//    public List<Bill> getBillByDate(Date date) {
+//        List<Bill> orders = billRepos.findBillByDate(date);
+//        return  orders ;
+//    }
+//
+//    @Override
+//    public List<Bill> getBillReturned(Date date) {
+//        List<Bill> orders = billRepos.findBillByDate(date);
+//        List<Bill> listBillReturn = new ArrayList<>();
+//        for(Bill bill : orders){
+//            if(bill.getBillStatus().getStatus().equals("RR")){
+//                listBillReturn.add(bill);
+//            }
+//        }
+//        return listBillReturn;
+//    }
 
     @Override
     public List<Bill> getAllBill() {
@@ -83,5 +86,22 @@ public class DashBoardServiceImpl implements DashBoardService {
             }
         }
         return listBillPro;
+    }
+
+    @Override
+    public List<Product> getProductCount() {
+        return this.productRepository.findAll();
+    }
+
+    @Override
+    public List<Voucher> getVoucherCount() {
+       List<Voucher> listVoucher = this.voucherRepository.findAll();
+       return listVoucher.stream().filter(voucher -> voucher.getActive() == true).toList();
+    }
+
+    @Override
+    public List<Coupon> getDisCount() {
+        List<Coupon> listCoupon = this.couponRepository.findAll();
+        return listCoupon.stream().filter(voucher -> voucher.isActive() == true).toList();
     }
 }

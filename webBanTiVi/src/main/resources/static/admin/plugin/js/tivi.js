@@ -26,7 +26,72 @@ function loadProduct() {
         success: function (data) {
             $("#list-product-tivi").empty()
             // data.reverse()
+            var filterPrice = [];
+
+            $.each($(".filter-price"), function (index, item) {
+                if ($(item).prop("checked")) {
+                    filterPrice.push($(item).val())
+                }
+            })
+            if ($("#price-begin").val() || $("#price-end").val()) {
+                filterPrice.push(5)
+            }
             $.each(data, function (index, item) {
+                var check = true;
+                $.each(filterPrice, function (index, item1) {
+                    if (item1 == 1) {
+                        if (item.reduceMoney > 5000000) {
+                            check = false
+                            return false
+                        }
+                    } else if (item1 == 2) {
+                        console.log(item.reduceMoney > 20000000)
+                        if (item.reduceMoney < 5000000 || item.reduceMoney > 20000000) {
+
+                            check = false
+                            return false
+                        }
+                    } else if (item1 == 3) {
+                        if (item.reduceMoney < 20000000 || item.reduceMoney > 50000000) {
+                            check = false
+                            return false
+                        }
+                    } else if (item1 == 4) {
+                        if (item.reduceMoney < 50000000) {
+                            check = false
+                            return false
+                        }
+                    } else if (item1 == 5) {
+                        if ($("#price-begin").val().trim() != 0 && $("#price-end").val().trim() == 0) {
+
+                            if (item.reduceMoney < Number($("#price-begin").val())) {
+                                check = false
+                                return false
+                            }
+                        }
+                        if ($("#price-begin").val().trim() == 0 && $("#price-end").val().trim() != 0) {
+
+
+                            if (item.reduceMoney > Number($("#price-end").val())) {
+                                check = false
+                                return false
+                            }
+                        }
+                        if ($("#price-begin").val().trim() != 0 && $("#price-end").val().trim() != 0) {
+                            console.log("3")
+
+                            if (item.reduceMoney < Number($("#price-begin").val()) || item.reduceMoney > Number($("#price-end").val())) {
+                                check = false
+                                return false
+                            }
+                        }
+                    }
+                })
+
+                if (check == false) {
+                    return true
+                }
+
                 var colDiv = $("<div>").addClass("col");
 
 // Tạo đối tượng div với class "card h-100 item-product"
@@ -65,7 +130,6 @@ function loadProduct() {
                 colDiv.append(cardDiv);
                 $("#list-product-tivi").append(colDiv)
             })
-
         }
     })
 }
@@ -89,12 +153,38 @@ $("#loadMore").on("click", function () {
     loadProduct()
 })
 
+$(".filter-price").on("change", function () {
+    loadProduct()
+})
 $("#btn-reset").on("click", function () {
     $("#key").val("");
     $("#filterRate").val(-1)
     $.each($(".filter-brand"), function (index, item) {
         $(item).prop('checked', false)
     })
+    $("#price-begin").val("");
+    $("#price-end").val("");
+    $.each($(".filter-price"), function (index, item) {
+        $(item).prop("checked", false)
+    })
     loadProduct()
+})
+
+$("#price-begin").on("keydown", function () {
+    clearTimeout(timeout);
+
+    timeout = setTimeout(function () {
+        // Thực hiện xử lý sau khi đã chờ một khoảng thời gian
+        loadProduct()
+    }, 500);
+
+})
+$("#price-end").on("keydown", function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+        // Thực hiện xử lý sau khi đã chờ một khoảng thời gian
+        loadProduct()
+    }, 500);
+
 })
 
