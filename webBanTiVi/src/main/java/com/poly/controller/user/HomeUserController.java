@@ -58,6 +58,8 @@ public class HomeUserController {
         Page<Product> phuKien = productService.findAll(productDetailDto);
         model.addAttribute("listPhuKien", getProduct(new ArrayList<>(), phuKien.getContent()));
 
+        productDetailDto.setSize(10);
+
         productDetailDto.setGroup(0);
         Page<Product> productNew = productService.findAll(productDetailDto);
         model.addAttribute("listNewProduct", getProduct(new ArrayList<>(), productNew.getContent()));

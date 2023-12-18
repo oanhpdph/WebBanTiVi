@@ -193,48 +193,50 @@ function saveProduct() {
             // set ảnh
 
             $.each(checkActive, function (index, item) {
-                var value = item.getAttribute("value")
-                var image = "imageUpload" + value
-                var arrImage = []
-                var listImage = document.getElementsByClassName(image)
-                $.each(listImage, function (index, item) {
-                    // Lấy tệp từ trường chọn tệp
-                    var imageItem;
-                    var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
+                if (item.checked == true) {
+                    var value = item.getAttribute("value")
+                    var image = "imageUpload" + value
+                    var arrImage = []
+                    var listImage = document.getElementsByClassName(image)
+                    $.each(listImage, function (index, item) {
+                        // Lấy tệp từ trường chọn tệp
+                        var imageItem;
+                        var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
 // Trích xuất tên tệp từ đường dẫn
-                    var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
-                    if (lastIndex >= 0) {
-                        fileName = fileName.substr(lastIndex + 1);
-                    }
+                        var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
+                        if (lastIndex >= 0) {
+                            fileName = fileName.substr(lastIndex + 1);
+                        }
 
-                    if (item.classList.contains("true")) {
-                        imageItem = {
-                            location: "true",
-                            multipartFile: fileName
+                        if (item.classList.contains("true")) {
+                            imageItem = {
+                                location: "true",
+                                multipartFile: fileName
+                            }
+                        } else {
+                            imageItem = {
+                                location: "false",
+                                multipartFile: fileName
+                            }
                         }
-                    } else {
-                        imageItem = {
-                            location: "false",
-                            multipartFile: fileName
-                        }
+                        arrImage.push(imageItem)
+                    })
+                    var temp = {
+                        sku: sku[index].value.trim(),
+                        priceImport: priceImport[index].value,
+                        priceExport: priceExport[index].value,
+                        quantity: quantity[index].value,
+                        image: arrImage,
+                        listAttributes: dataProductDetail.listAttributes[index],
+                        active: checkActive[index].checked
                     }
-                    arrImage.push(imageItem)
-                })
-                var temp = {
-                    sku: sku[index].value.trim(),
-                    priceImport: priceImport[index].value,
-                    priceExport: priceExport[index].value,
-                    quantity: quantity[index].value,
-                    image: arrImage,
-                    listAttributes: dataProductDetail.listAttributes[index],
-                    active: checkActive[index].checked
+                    data.listProduct.push(temp)
                 }
-                data.listProduct.push(temp)
-                data.nameProduct = document.getElementById("name-display").value.trim()
-                data.sku = document.getElementById("sku-code").value.trim()
-                data.brand = $("#select-brand").val()
-                data.group = document.getElementById("select-group").value
             })
+            data.nameProduct = document.getElementById("name-display").value.trim()
+            data.sku = document.getElementById("sku-code").value.trim()
+            data.brand = $("#select-brand").val()
+            data.group = document.getElementById("select-group").value
             var inputAttributes = document.querySelectorAll(".input-data.data-attributes")
             $.each(inputAttributes, function (index, item) {
                 // var arr = []
