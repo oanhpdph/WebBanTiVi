@@ -57,6 +57,7 @@
     }
 </style>
 <div class="layout-wrapper layout-content-navbar">
+    <span hidden id="message">[(${message})]</span>
     <div class="layout-container">
         <div class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y">
@@ -354,6 +355,24 @@
 </div>
 <script>
     // console.log(parseInt(document.querySelector('.total-pro').textContent.replace(/,/g, ''), 10))
+
+    if (document.getElementById("message").textContent == 'emailTrung') {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "error",
+            title: "Email của bạn đã có tài khoản, đăng nhập để tiếp tục hoặc nhập một email mới."
+        });
+    }
 
     $("#voucher").on("change", function () {
         console.log(this.value)
