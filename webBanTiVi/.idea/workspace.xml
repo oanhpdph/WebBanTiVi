@@ -334,7 +334,11 @@
       <workItem from="1702709486902" duration="5896000" />
       <workItem from="1702716187208" duration="6236000" />
       <workItem from="1702749281348" duration="4011000" />
-      <workItem from="1702794750093" duration="22996000" />
+
+      <workItem from="1702794750093" duration="4188000" />
+      <workItem from="1702829780330" duration="2866000" />
+      <workItem from="1702883708255" duration="4456000" />
+
     </task>
     <servers />
   </component>
@@ -398,6 +402,7 @@
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile" memberName="filename" />
+        <PinnedItemInfo parentTag="com.poly.service.Impl.CartProductImpl" memberName="cartService" />
         <PinnedItemInfo parentTag="com.poly.dto.ProductDetailListDto" memberName="image" />
         <PinnedItemInfo parentTag="org.springframework.security.web.servletapi.HttpServlet3RequestFactory$Servlet3SecurityContextHolderAwareRequestWrapper" memberName="response" />
         <PinnedItemInfo parentTag="com.poly.entity.Evaluate" memberName="customer" />
