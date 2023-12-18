@@ -124,19 +124,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="WebBanTiViApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="WebBanTiVi" />
       <extension name="coverage">
@@ -331,15 +318,6 @@
       <workItem from="1702601484003" duration="13595000" />
       <workItem from="1702632377127" duration="19000" />
       <workItem from="1702632488925" duration="6749000" />
-<<<<<<< HEAD
-      <workItem from="1702740004913" duration="631000" />
-      <workItem from="1702829923276" duration="945000" />
-=======
-      <workItem from="1702709486902" duration="5896000" />
-      <workItem from="1702716187208" duration="6236000" />
-      <workItem from="1702749281348" duration="4011000" />
-      <workItem from="1702794750093" duration="4188000" />
->>>>>>> 14fbf69facba1234bab85c0358adc2a92bb857de
     </task>
     <servers />
   </component>
