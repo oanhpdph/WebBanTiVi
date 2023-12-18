@@ -58,7 +58,9 @@ public class ProductDetailUserController {
         model.addAttribute("productAll", product.getProduct());
 
         BigDecimal reduceMoney = BigDecimal.valueOf(0);
-        if (product.getCoupon() != null && product.getCoupon().isActive() && (LocalDate.now().isAfter(product.getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(product.getCoupon().getDateEnd().toLocalDate()))) {
+        if (product.getCoupon() != null && product.getCoupon().isActive()
+                && ((LocalDate.now().isAfter(product.getCoupon().getDateStart().toLocalDate()) || (LocalDate.now().isEqual(product.getCoupon().getDateStart().toLocalDate())))
+                && ((LocalDate.now().isBefore(product.getCoupon().getDateEnd().toLocalDate()) || LocalDate.now().isEqual(product.getCoupon().getDateEnd().toLocalDate()))))) {
             reduceMoney = product.getPriceExport().subtract(product.getPriceExport().multiply(BigDecimal.valueOf(Double.parseDouble(product.getCoupon().getValue())).divide(new BigDecimal(100))));
         }
         model.addAttribute("reduceMoney", reduceMoney);

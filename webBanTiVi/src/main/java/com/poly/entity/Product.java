@@ -2,6 +2,7 @@ package com.poly.entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,7 @@ public class Product {
     @Column(name = "avg_point")
     private float avgPoint;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_brand")
     private Brand brand;
@@ -52,7 +54,8 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Evaluate> listEvaluate;
 
-    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    @OneToMany(mappedBy = "product")
     private List<ProductDetail> productDetails;
 
     @OneToMany(mappedBy = "product")

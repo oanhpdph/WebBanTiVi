@@ -103,7 +103,9 @@ public class CartController {
             return "user/index";
         }
         for (CartProduct product : list) {
-            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive() && product.getProduct().getCoupon().isActive() && (LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate()))) {
+            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive() && product.getProduct().getCoupon().isActive()
+                    && ((LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) || LocalDate.now().isEqual(product.getProduct().getCoupon().getDateStart().toLocalDate()))
+                    && (LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate())) || LocalDate.now().isEqual(product.getProduct().getCoupon().getDateEnd().toLocalDate()))) {
                 reduceMoney = product.getProduct().getPriceExport().subtract(product.getProduct().getPriceExport().multiply(new BigDecimal(product.getProduct().getCoupon().getValue()).divide(new BigDecimal(100))));
                 total = total.add(reduceMoney.multiply(BigDecimal.valueOf(product.getQuantity())));
                 listRedu.add(reduceMoney);
@@ -170,7 +172,10 @@ public class CartController {
         List<Integer> quantity = new ArrayList<>();
         BigDecimal total = new BigDecimal(0);
         for (CartProduct product : listCart) {
-            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive() && (LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate()))) {
+
+            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive()
+                    && ((LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) || LocalDate.now().isEqual(product.getProduct().getCoupon().getDateStart().toLocalDate()))
+                    && (LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate()) || LocalDate.now().isEqual(product.getProduct().getCoupon().getDateEnd().toLocalDate())))) {
                 reduceMoney = product.getProduct().getPriceExport().multiply(new BigDecimal(product.getProduct().getCoupon().getValue()).divide(new BigDecimal(100)));
                 listRedu.add(reduceMoney);
                 total = total.add(product.getProduct().getPriceExport().subtract(reduceMoney).multiply(BigDecimal.valueOf(product.getQuantity())));
@@ -279,7 +284,9 @@ public class CartController {
         }
 
         for (CartProduct product : list) {
-            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive() && (LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate()))) {
+            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive() &&
+                    ((LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) || LocalDate.now().isEqual(product.getProduct().getCoupon().getDateStart().toLocalDate())) &&
+                            LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate()) || LocalDate.now().isEqual(product.getProduct().getCoupon().getDateEnd().toLocalDate()))) {
                 reduceMoney = product.getProduct().getPriceExport().subtract(product.getProduct().getPriceExport().multiply(new BigDecimal(product.getProduct().getCoupon().getValue()).divide(new BigDecimal(100))));
                 total = total.add(reduceMoney.multiply(BigDecimal.valueOf(product.getQuantity())));
                 listRedu.add(reduceMoney);
@@ -307,6 +314,7 @@ public class CartController {
                 cartProductId.setCart(cart);
             }
             boolean check = cartProductService.delete(cartProductId);
+            session.setAttribute("list", cartService.getOneByUser(userDetailDto.getId()).getListCartPro());
         } else {
             List<CartProduct> list = new ArrayList<>();
             for (int i = 0; i < id.size(); i++) {

@@ -142,7 +142,8 @@ public class HomeUserController {
                             }
                         }
 
-                        if (productDetail.getCoupon() != null && productDetail.getCoupon().isActive() && (LocalDate.now().isAfter(productDetail.getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(productDetail.getCoupon().getDateEnd().toLocalDate()))) {
+
+                        if (productDetail.getCoupon() != null && productDetail.getCoupon().isActive() && ((LocalDate.now().isAfter(productDetail.getCoupon().getDateStart().toLocalDate()) || LocalDate.now().isEqual(productDetail.getCoupon().getDateStart().toLocalDate())) && (LocalDate.now().isBefore(productDetail.getCoupon().getDateEnd().toLocalDate()) || LocalDate.now().isEqual(productDetail.getCoupon().getDateEnd().toLocalDate())))) {
                             BigDecimal reduceMoney = productDetail.getPriceExport().multiply(BigDecimal.valueOf(Integer.parseInt(productDetail.getCoupon().getValue()))).divide(BigDecimal.valueOf(100));
                             productDetailDto1.setReduceMoney(productDetail.getPriceExport().subtract(reduceMoney));
                             //giá sau giảm

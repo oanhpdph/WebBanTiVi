@@ -150,7 +150,7 @@ public class BillController {
         List<String> header = listHeader();
 
         List<DataExportExcel> dataExport = new ArrayList<>();
-        listData(bills, (List<DataExportExcel>) dataExport);
+        listData(bills, dataExport);
 
         String headerKey = "Content-Disposition";
         String headerValue = "attachment; filename=Danh_sach_hoa_don_" + currentDateTime + ".xlsx";
@@ -165,7 +165,7 @@ public class BillController {
         List<String> header = listHeader();
 
         List<DataExportExcel> dataExport = new ArrayList<>();
-        listData(bills, (List<DataExportExcel>) dataExport);
+        listData(bills, dataExport);
 
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         String currentDateTime = dateFormatter.format(new Date());
