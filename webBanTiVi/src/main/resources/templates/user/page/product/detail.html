@@ -375,6 +375,23 @@
             title: "Không đủ sản phẩm!"
         });
     }
+    if (document.getElementById("message").textContent == 'qua10') {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "error",
+            title: "Số lượng mua tối đa là 10!"
+        });
+    }
 
     const plus = document.querySelectorAll(".plus")
     const minus = document.querySelectorAll(".minus")
