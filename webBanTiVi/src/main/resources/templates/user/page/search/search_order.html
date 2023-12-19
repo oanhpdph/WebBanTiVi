@@ -46,7 +46,7 @@
                                    th:href="@{/invoice/invoice_detail/{id}(id=${session.bill.id})}"
                                 >Xem chi tiết
                                 </a>
-                                <button th:if="${session.bill.billStatus.code== 'CO' && (session.today.getTime()-session.bill.paymentDate.getTime()) <  86400000 * 3}" type="button"
+                                <button th:if="${session.bill.billStatus.code== 'CO' && session.checkReturn}" type="button"
                                         class="btn btn-outline-dark return" data-bs-toggle="modal"
                                         th:data-bs-target="|#modal${session.bill.id}|" th:value="${session.bill.id}">Trả
                                     hàng
