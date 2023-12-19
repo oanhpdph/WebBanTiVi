@@ -202,7 +202,7 @@ public class SavePdf<T> {
             }
             twoColTable2.addCell(getCell10fLeft("Tổng tiền phải trả", true));
             twoColTable2.addCell(getCell10fLeft("Voucher", true));
-            twoColTable2.addCell(getCell10fLeft(decimalFormat1.format(totalSum) + " VNĐ", false));
+            twoColTable2.addCell(getCell10fLeft(decimalFormat1.format(totalSum.subtract(bill.getVoucherValue())) + " VNĐ", false));
             twoColTable2.addCell(getCell10fLeft(decimalFormat1.format(bill.getVoucherValue()) + " VNĐ", false));
 
 
@@ -273,7 +273,7 @@ public class SavePdf<T> {
             totalTable2.addCell(new Cell().add(new Paragraph("")).setBorder(Border.NO_BORDER).setMarginLeft(10f));
             totalTable2.addCell(new Cell().add(new Paragraph("")).setBorder(Border.NO_BORDER).setMarginLeft(10f));
             totalTable2.addCell(new Cell().add(new Paragraph("")).setBorder(Border.NO_BORDER).setMarginLeft(10f));
-            totalTable2.addCell(new Cell().add(new Paragraph("Tổng tiền").setFont(font)).setTextAlignment(TextAlignment.CENTER).setBorder(Border.NO_BORDER).setMarginLeft(10f));
+            totalTable2.addCell(new Cell().add(new Paragraph("Tổng").setFont(font)).setTextAlignment(TextAlignment.CENTER).setBorder(Border.NO_BORDER).setMarginLeft(10f));
             totalTable2.addCell(new Cell().add(new Paragraph(decimalFormat1.format(totalSum))).setTextAlignment(TextAlignment.RIGHT).setBorder(Border.NO_BORDER).setMarginLeft(10f));
             document.add(totalTable2);
 
