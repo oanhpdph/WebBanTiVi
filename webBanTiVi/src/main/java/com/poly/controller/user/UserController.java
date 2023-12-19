@@ -87,21 +87,10 @@ public class UserController {
         Bill bill = this.billService.getOneById(id);
         String code = bill.getCode();
         redirectAttributes.addFlashAttribute("return","return");
-        if(checkLogin.checkLogin() != null) {
-            UserDetailDto customerUserDetail = checkLogin.checkLogin();
-            List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
-            for(Bill billCheck : billList){
-                if(bill.equals(billCheck)) {
-                    model.addAttribute("errorSearch", "Xin lỗi! Đơn hàng này không tồn tại trong lịch sử đơn hàng của bạn!");
-                    return "/user/index";
-                }
-            }
-            return "redirect:/order";
-        }
-        if (checkLogin.checkLogin() == null) {
+        if (code == null) {
             return "redirect:/search_order_user?search="+code;
         }
-        return null;
+        return "redirect:/order";
     }
 
 
