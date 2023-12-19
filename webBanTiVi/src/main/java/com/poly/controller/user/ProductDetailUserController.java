@@ -104,10 +104,10 @@ public class ProductDetailUserController {
         boolean check = false;
         if (session.getAttribute("list") != null) {
             list = (List<CartProduct>) session.getAttribute("list");
-            if (list.isEmpty() == false) {
+            if (list.isEmpty() == false) {// list có phần tử
                 for (CartProduct cartProduct : list) {
                     if (cartProduct.getProduct().getId() == id) {
-                        if (cartProduct.getQuantity() + qty < 10) {
+                        if (cartProduct.getQuantity() + qty <= 10) {
                             if (cartProduct.getQuantity() + qty > productDetail.getQuantity()) {
                                 redirectAttributes.addFlashAttribute("message", false);
                                 return "redirect:" + url;
@@ -125,16 +125,24 @@ public class ProductDetailUserController {
                     }
                 }
             } else {
+                list = (List<CartProduct>) session.getAttribute("list");
+                check = true;
+                for (CartProduct cartProduct : list) {
+                    if (cartProduct.getQuantity() + qty <= 10) {
 //                session.setAttribute("list", cartService.add(id, qty));
-                if (qty > productDetail.getQuantity()) {
-                    redirectAttributes.addFlashAttribute("message", false);
-                    return "redirect:" + url;
-                } else {
-                    check = true;
+                        if (qty > productDetail.getQuantity()) {
+                            redirectAttributes.addFlashAttribute("message", false);
+                            return "redirect:" + url;
+                        } else {
+                            check = true;
+                        }
+                    } else {
+                        redirectAttributes.addFlashAttribute("message", false);
+                        return "redirect:" + url;
+                    }
                 }
             }
         } else {
-//            session.setAttribute("list", cartService.add(id, qty));
             if (qty > productDetail.getQuantity()) {
                 redirectAttributes.addFlashAttribute("message", false);
                 return "redirect:" + url;
@@ -148,15 +156,35 @@ public class ProductDetailUserController {
             if (session.getAttribute("list") != null) {
                 list1 = (List<CartProduct>) session.getAttribute("list");
             }
+            for (CartProduct cartProduct : list1) {
+                if (cartProduct.getProduct().getId() == id) {
+                    if (qty + cartProduct.getQuantity() > productDetail.getQuantity()) {
+                        redirectAttributes.addFlashAttribute("message", false);
+                        return "redirect:" + url;
+                    }
+                } else {
+                    if (qty > productDetail.getQuantity()) {
+                        redirectAttributes.addFlashAttribute("message", false);
+                        return "redirect:" + url;
+                    }
+                }
+            }
             if (userDetailDto != null) {
+
                 CartDto cartDto = new CartDto();
                 cartDto.setIdProduct(id);
                 cartDto.setIdUser(userDetailDto.getId());
                 cartDto.setQuantity(qty);
                 CartProduct cartProduct = cartProductService.save(cartDto);
-
-                if (list1.indexOf(cartProduct) > -1) {
-                    list1.set(list1.indexOf(cartProduct), cartProduct);
+                boolean checkTrung = false;
+                for (int i = 0; i < list1.size(); i++) {
+                    if (list1.get(i).getProduct().getId() == id) {
+                        list1.set(i, cartProduct);
+                        checkTrung = true;
+                    }
+                }
+                if (checkTrung == false) {
+                    list1.add(cartProduct);
                 }
             } else {
                 list1 = cartService.add(id, qty);
