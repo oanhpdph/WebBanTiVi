@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -38,7 +39,8 @@ public class BillReturnController {
         session.setAttribute("pageView", "/admin/page/bill/invoice_return.html");
         session.setAttribute("active", "/bill/invoice_return");
         List<Bill> ListB =this.billService.findBillReturnByStatus("RR");
-        model.addAttribute("listBill",ListB);
+        Collections.reverse(ListB);
+        model.addAttribute("listBill", ListB);
         model.addAttribute("formReturnDto", new formReturnDto());
         return "admin/layout";
     }
@@ -133,13 +135,17 @@ public class BillReturnController {
     @GetMapping("/agree")
     public String getViewAgree(HttpSession session,Model model){
         session.setAttribute("pageView", "/admin/page/bill/agree_bill_return.html");
-        model.addAttribute("listAgree",this.billProductService.findBillByStatus(3));
+        List<BillProduct> listBillPro = this.billProductService.findBillByStatus(3);
+        Collections.reverse(listBillPro);
+        model.addAttribute("listAgree",listBillPro);
         return "admin/layout";
     }
     @GetMapping("/refuse")
     public String getViewRefuse(HttpSession session,Model model){
         session.setAttribute("pageView", "/admin/page/bill/refuse_bill_return.html");
-        model.addAttribute("listRefuse",this.billProductService.findBillByStatus(2));
+        List<BillProduct> listBillPro = this.billProductService.findBillByStatus(2);
+        Collections.reverse(listBillPro);
+        model.addAttribute("listRefuse",listBillPro);
         return "admin/layout";
     }
 
