@@ -116,6 +116,9 @@ public class ProductDetailUserController {
                                 check = true;
                                 break;
                             }
+                        } else if (cartProduct.getQuantity() + qty > 10) {
+                            redirectAttributes.addFlashAttribute("message", "qua10");
+                            return "redirect:" + url;
                         } else {
                             redirectAttributes.addFlashAttribute("message", false);
                             return "redirect:" + url;

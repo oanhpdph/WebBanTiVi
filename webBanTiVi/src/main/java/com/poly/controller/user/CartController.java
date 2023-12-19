@@ -259,6 +259,7 @@ public class CartController {
 
     @GetMapping("/cart")
     public String index(Model model) {
+
         session.setAttribute("pageView", "/user/page/product/pro_cart.html");
         List<BigDecimal> listRedu = new ArrayList<>();
         BigDecimal reduceMoney = new BigDecimal(0);
@@ -268,11 +269,25 @@ public class CartController {
 
         if (userDetailDto != null) {
             Cart cart = cartService.getOneByUser(userDetailDto.getId());
-            list = cart.getListCartPro();
-            session.setAttribute("list", cart.getListCartPro());
+//            list = cart.getListCartPro();
+
+            CartProduct cartProduct = new CartProduct();
+
+            for (int i = 0; i < cart.getListCartPro().size(); i++) {
+                cartProduct = cart.getListCartPro().get(i);
+                ProductDetail productDetail = productDetailService.findById(cart.getListCartPro().get(i).getProduct().getId());
+                if (cart.getListCartPro().get(i).getQuantity() > productDetail.getQuantity()) {
+
+                    cartProduct.setQuantity(productDetail.getQuantity());
+                    cartProduct = cartProductService.update(cartProduct);
+                }
+                list.add(cartProduct);
+            }
+            session.setAttribute("list", list);
         } else {
             list = (List<CartProduct>) session.getAttribute("list");
         }
+
 
         if (list == null || list.isEmpty()) {
             session.setAttribute("pageView", "/user/page/product/cart_null.html");
