@@ -50,7 +50,7 @@
             <div class="tab-pane fade show active " id="navs-top-profile" role="tabpanel">
                 <h4>Đơn hàng của bạn</h4>
                 <div class="mb-4 mx-4">
-                    <div class="mb-3 row order" th:each="bill : ${bill}">
+                    <div class="mb-3 row order" th:each="bill, billStat : ${bill}">
                         <div class="row mt-3">
                             <span class="text-start col-sm-6">Mã đơn:[(${bill.code})]</span>
                             <span class="text-end col-sm-6" th:text="${bill.billStatus.status}"></span>
@@ -84,7 +84,7 @@
                                    th:href="@{/invoice/invoice_detail/{id}(id=${bill.id})}"
                                 >Xem chi tiết
                                 </a>
-                                <button th:if="${bill.billStatus.code== 'CO' && bill.deliveryNotes[0]?.deliveryDate != null && (today.getTime()-bill.deliveryNotes[0]?.deliveryDate()) <  86400000 * 3 }" type="button"
+                                <button th:if="${bill.billStatus.code== 'CO' && check[billStat.index] }" type="button"
                                         class="btn btn-outline-dark return" data-bs-toggle="modal"
                                         th:data-bs-target="|#modal${bill.id}|" th:value="${bill.id}">Trả hàng
                                 </button>
