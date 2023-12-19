@@ -56,6 +56,7 @@
                             <span class="text-end col-sm-6" th:text="${bill.billStatus.status}"></span>
                             <hr>
                         </div>
+                        <input type="text" th:value="${return}" id="return" hidden="hidden" >
                         <div class="row">
                             <div class="col-sm-6">
                                 <div th:each="image:${bill.billProducts[0].product.listImage}">
@@ -225,3 +226,22 @@
 <script src="/admin/plugin/js/loadImage.js"></script>
 <script src="/admin/plugin/js/order.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script>
+    if(document.getElementById("return").value=="return") {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "success",
+            title: "Trả hàng thành công!"
+        });
+    }
+</script>
