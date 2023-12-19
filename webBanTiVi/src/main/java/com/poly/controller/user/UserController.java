@@ -87,7 +87,7 @@ public class UserController {
         Bill bill = this.billService.getOneById(id);
         String code = bill.getCode();
         redirectAttributes.addFlashAttribute("return","return");
-        if (code == null) {
+        if (code == null || code != "") {
             return "redirect:/search_order_user?search="+code;
         }
         return "redirect:/order";
