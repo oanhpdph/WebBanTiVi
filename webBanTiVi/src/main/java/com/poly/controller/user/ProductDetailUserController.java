@@ -120,6 +120,8 @@ public class ProductDetailUserController {
                             redirectAttributes.addFlashAttribute("message", false);
                             return "redirect:" + url;
                         }
+                    } else {
+                        check = true;
                     }
                 }
             } else {
@@ -151,21 +153,16 @@ public class ProductDetailUserController {
                 cartDto.setIdProduct(id);
                 cartDto.setIdUser(userDetailDto.getId());
                 cartDto.setQuantity(qty);
-                list1.add(cartProductService.save(cartDto));
+                CartProduct cartProduct = cartProductService.save(cartDto);
 
-
+                if (list1.indexOf(cartProduct) > -1) {
+                    list1.set(list1.indexOf(cartProduct), cartProduct);
+                }
             } else {
                 list1 = cartService.add(id, qty);
             }
             session.setAttribute("list", list1);
         }
-//        if (userDetailDto != null) {
-//            CartDto cartDto = new CartDto();
-//            cartDto.setIdProduct(id);
-//            cartDto.setIdUser(userDetailDto.getId());
-//            cartDto.setQuantity(qty);
-//            cartProductService.save(cartDto);
-//        }
         redirectAttributes.addFlashAttribute("message", true);
         return "redirect:" + url;
     }
@@ -193,7 +190,7 @@ public class ProductDetailUserController {
             if (!bills.isEmpty()) {
                 for (Bill bill : bills) {
                     for (BillProduct billProduct : bill.getBillProducts()) {
-                        if (billProduct.getProduct().getId() == id) {
+                        if (billProduct.getProduct().getId() == id && billProduct.getBill().getBillStatus().equals("CO")) {
                             model.addAttribute("hasBuy", true);
                         }
                     }
