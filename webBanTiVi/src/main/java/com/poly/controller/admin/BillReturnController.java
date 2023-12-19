@@ -42,6 +42,15 @@ public class BillReturnController {
         model.addAttribute("formReturnDto", new formReturnDto());
         return "admin/layout";
     }
+    @GetMapping("/invoice_return/{id}")
+    public String getInvoiceReturnBill(HttpSession session, Model model, @PathVariable("id") Integer id,
+                                   @ModelAttribute("formReturnDto") formReturnDto dto){
+        session.setAttribute("pageView", "/admin/page/bill/billProduct_return.html");
+        session.setAttribute("active", "/bill/invoice_return");
+        List<BillProduct> product=this.billProductService.findBillProductReturn(1,id);
+        model.addAttribute("listBillReturn",product);
+        return "admin/layout";
+    }
     @GetMapping("/invoice_return/agree/{id}")
     public String getInvoiceReturn(HttpSession session, Model model, @PathVariable("id") Integer id,
                                    @ModelAttribute("formReturnDto") formReturnDto dto){
@@ -95,7 +104,7 @@ public class BillReturnController {
         billProduct.setNote(dto.getNote());
         billProduct.setStatus(2);
         this.billProductService.save(billProduct);
-        return "redirect:/admin/invoice_return/"+billProduct.getBill().getId();
+        return "redirect:/admin/invoice_return/refuse/"+billProduct.getBill().getId();
     }
 
     @RequestMapping("/agree/{id}")
@@ -113,7 +122,7 @@ public class BillReturnController {
         }
         if(Integer.parseInt(dto.getQuantity()) > billProduct.getQuantity()){
             redirectAttributes.addFlashAttribute("errorAdminQuantity","(*)Số lượng sản phẩm được trả không lớn hơn số lương yêu cầu!");
-            return "redirect:/admin/invoice_return/"+billProduct.getBill().getId();
+            return "redirect:/admin/invoice_return/agree/"+billProduct.getBill().getId();
         }
         billProduct.setNote(dto.getNote());
         billProduct.setQuantityAcceptReturn(Integer.parseInt(dto.getQuantity()));
