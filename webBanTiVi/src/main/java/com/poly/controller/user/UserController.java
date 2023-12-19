@@ -122,7 +122,7 @@ public class UserController {
         if(checkLogin.checkLogin() !=null){
             return "redirect:/order";
         }
-        return "redirect:/";
+        return "redirect:/search_order_user?search="+billCancel.getCode();
     }
 
 }
