@@ -70,6 +70,9 @@ public class BillImpl implements BillService {
     BillStatusService billStatusService;
 
     @Autowired
+    DeliveryNotesRepos deliveryNotesRepos;
+
+    @Autowired
     private CheckLogin checkLogin;
 
     @Override
@@ -206,6 +209,11 @@ public class BillImpl implements BillService {
         if (optional.isPresent()) {
             Bill billUpdate = optional.get();
             if (bill.getBillStatus() != null) {
+                if ("CO".equals(bill.getBillStatus().getCode())) {
+                    DeliveryNotes deliveryNotes = billUpdate.getDeliveryNotes().get(0);
+                    deliveryNotes.setReceivedDate(new java.util.Date());
+                    deliveryNotesRepos.save(deliveryNotes);
+                }
                 billUpdate.setBillStatus(bill.getBillStatus());
             }
             if (bill.getPaymentMethod() != null) {

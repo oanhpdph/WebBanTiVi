@@ -17,7 +17,7 @@ function getField() {
                 var tr = $('<tr>')
                 var td1 = $('<td>').text(index + 1)
                 var td2 = $('<td>').text(item.name)
-                var td3 = $('<td>').text(item.variant == true ? 'Thuộc tính tùy chỉnh' : 'Thuộc tính thường')
+                var td3 = $('<td>').text(item.variant == true ? 'Thuộc tính biến thể' : 'Thuộc tính thường')
                 if (item.variant) {
                     var td4 = $('<td>').append($('<div>').addClass('form-check form-switch mb-2').html("<input class='form-check-input active-attributes variant' type='checkbox' value=" + item.id + " " + (item.active == true ? 'checked' : '') + ">"))
                 } else {
@@ -45,7 +45,7 @@ function updateActive() {
                 text = 'Nếu tắt hoạt động thuộc tính sẽ không được hiển thị'
             }
             if (item.closest('.variant') && item.checked == false) {
-                text = 'Tắt hoạt động của thuộc tính tùy chỉnh sẽ ngừng bán các sản phẩm đang có thuộc tính này'
+                text = 'Tắt hoạt động của thuộc tính biến thể sẽ ngừng bán các sản phẩm đang có thuộc tính này'
             }
             Swal.fire({
                 title: "Bạn xác nhận cập nhật trạng thái?",
@@ -105,7 +105,7 @@ function findById() {
                 success: function (data) {
                     $("#name-attribute").val(data.name)
                     $("#update-attribute").val(data.id)
-                    $("#type-attribute").addClass(data.variant).text(data.variant == true ? 'Thuộc tính tùy chỉnh' : 'Thuộc tính thường')
+                    $("#type-attribute").addClass(data.variant).text(data.variant == true ? 'Thuộc tính biến thể' : 'Thuộc tính thường')
                     $("#active").attr('checked', false)
                     $("#inactive").attr('checked', false)
                     if (data.active) {
@@ -119,7 +119,7 @@ function findById() {
                             text = 'Nếu tắt hoạt động thuộc tính sẽ không được hiển thị'
                         }
                         if ($("#type-attribute").hasClass('true') && $("#inactive").is(':checked') == true) {
-                            text = 'Tắt hoạt động của thuộc tính tùy chỉnh sẽ ngừng bán các sản phẩm đang có thuộc tính này'
+                            text = 'Tắt hoạt động của thuộc tính biến thể sẽ ngừng bán các sản phẩm đang có thuộc tính này'
                         }
                         $("#close").click()
                         Swal.fire({
