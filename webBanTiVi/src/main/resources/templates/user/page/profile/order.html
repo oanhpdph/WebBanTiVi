@@ -84,7 +84,7 @@
                                    th:href="@{/invoice/invoice_detail/{id}(id=${bill.id})}"
                                 >Xem chi tiết
                                 </a>
-                                <button th:if="${bill.billStatus.code== 'CO' &&  (today.getTime()-bill.paymentDate.getTime()) <  86400000 * 3 }" type="button"
+                                <button th:if="${bill.billStatus.code== 'CO' && bill.deliveryNotes[0]?.deliveryDate != null && (today.getTime()-bill.deliveryNotes[0]?.deliveryDate()) <  86400000 * 3 }" type="button"
                                         class="btn btn-outline-dark return" data-bs-toggle="modal"
                                         th:data-bs-target="|#modal${bill.id}|" th:value="${bill.id}">Trả hàng
                                 </button>
