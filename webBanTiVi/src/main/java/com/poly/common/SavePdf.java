@@ -192,7 +192,7 @@ public class SavePdf<T> {
             Table twoColTable2 = new Table(twocolumnWidth);
             twoColTable2.addCell(getCell10fLeft("Người nhận", true));
             twoColTable2.addCell(getCell10fLeft("SĐT nhận hàng", true));
-            twoColTable2.addCell(getCell10fLeft(bill.getDeliveryNotes().get(0).getDeliver(), false));
+            twoColTable2.addCell(getCell10fLeft(bill.getDeliveryNotes().get(0).getReceived(), false));
             twoColTable2.addCell(getCell10fLeft(bill.getDeliveryNotes().get(0).getReceiverPhone(), false));
 
             if (bill.getBillProducts() != null) {
