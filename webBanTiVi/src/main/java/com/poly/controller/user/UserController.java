@@ -82,15 +82,26 @@ public class UserController {
 
     @PostMapping("/return/{id}")
     public String returnProduct(@PathVariable("id") Integer id,
-                                @RequestBody List<ReturnDto> returnDto, RedirectAttributes redirectAttributes) {
+                                @RequestBody List<ReturnDto> returnDto,Model model, RedirectAttributes redirectAttributes) {
         this.billService.logicBillReturn(id, returnDto);
         Bill bill = this.billService.getOneById(id);
         String code = bill.getCode();
         redirectAttributes.addFlashAttribute("return","return");
+        if(checkLogin.checkLogin() != null) {
+            UserDetailDto customerUserDetail = checkLogin.checkLogin();
+            List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
+            for(Bill billCheck : billList){
+                if(bill.equals(billCheck)) {
+                    model.addAttribute("errorSearch", "Xin lỗi! Đơn hàng này không tồn tại trong lịch sử đơn hàng của bạn!");
+                    return "/user/index";
+                }
+            }
+            return "redirect:/order";
+        }
         if (checkLogin.checkLogin() == null) {
             return "redirect:/search_order_user?search="+code;
         }
-        return "redirect:/order";
+        return null;
     }
 
 
@@ -117,7 +128,7 @@ public class UserController {
     @GetMapping("/order/remove/{id}")
     public String removeOrder(@PathVariable("id") Integer id) {
         Bill billCancel = this.billService.getOneById(id);
-        billCancel.setBillStatus(this.billStatusService.getOneBycode("CA"));
+        billCancel.setBillStatus(this.billStatusService.getOneBycode("CC"));
         this.billService.add(billCancel);
         if(checkLogin.checkLogin() !=null){
             return "redirect:/order";
