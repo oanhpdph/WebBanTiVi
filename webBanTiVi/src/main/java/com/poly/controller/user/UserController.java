@@ -117,10 +117,16 @@ public class UserController {
     @GetMapping("/order/remove/{id}")
     public String removeOrder(@PathVariable("id") Integer id) {
         Bill billCancel = this.billService.getOneById(id);
-        billCancel.setBillStatus(this.billStatusService.getOneBycode("CC"));
+        billCancel.setBillStatus(this.billStatusService.getOneBycode("CA"));
         this.billService.add(billCancel);
         if(checkLogin.checkLogin() !=null){
-            return "redirect:/order";
+            UserDetailDto userDetailDto = checkLogin.checkLogin();
+            List<Bill> billList = this.billService.findAllBillByUser(userDetailDto.getId());
+            for (Bill bill : billList){
+                if(billCancel.equals(bill)){
+                    return "redirect:/order";
+                }
+            }
         }
         return "redirect:/search_order_user?search="+billCancel.getCode();
     }
