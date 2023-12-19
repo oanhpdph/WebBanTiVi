@@ -340,6 +340,7 @@
       <workItem from="1702972600542" duration="3943000" />
       <workItem from="1702977066836" duration="39000" />
       <workItem from="1702977258359" duration="5199000" />
+      <workItem from="1702984655402" duration="8000" />
     </task>
     <servers />
   </component>
@@ -383,11 +384,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/login/LoginController.java</url>
           <line>150</line>
           <option name="timeStamp" value="59" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user/CartController.java</url>
-          <line>264</line>
-          <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user1/PromotionController.java</url>

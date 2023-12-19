@@ -286,6 +286,21 @@ public class CartController {
             session.setAttribute("list", list);
         } else {
             list = (List<CartProduct>) session.getAttribute("list");
+            CartProduct cartProduct = new CartProduct();
+            if (session.getAttribute("list") != null) {
+                if (list.isEmpty() == false) {
+                    for (int i = 0; i < list.size(); i++) {
+                        cartProduct = list.get(i);
+                        ProductDetail productDetail = productDetailService.findById(list.get(i).getProduct().getId());
+                        if (list.get(i).getQuantity() > productDetail.getQuantity()) {
+                            cartProduct.setQuantity(productDetail.getQuantity());
+                            list = cartService.update(productDetail.getId(), productDetail.getQuantity());
+//                            list.add(cartProduct);
+                        }
+                    }
+                }
+            }
+            session.setAttribute("list", list);
         }
 
 
