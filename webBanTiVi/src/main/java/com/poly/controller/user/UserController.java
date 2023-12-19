@@ -82,13 +82,13 @@ public class UserController {
 
     @PostMapping("/return/{id}")
     public String returnProduct(@PathVariable("id") Integer id,
-                                @RequestBody List<ReturnDto> returnDto,Model model, RedirectAttributes redirectAttributes) {
+                                @RequestBody List<ReturnDto> returnDto, Model model, RedirectAttributes redirectAttributes) {
         this.billService.logicBillReturn(id, returnDto);
         Bill bill = this.billService.getOneById(id);
         String code = bill.getCode();
-        redirectAttributes.addFlashAttribute("return","return");
+        redirectAttributes.addFlashAttribute("return", "return");
         if (code == null || code != "") {
-            return "redirect:/search_order_user?search="+code;
+            return "redirect:/search_order_user?search=" + code;
         }
         return "redirect:/order";
     }
@@ -119,16 +119,16 @@ public class UserController {
         Bill billCancel = this.billService.getOneById(id);
         billCancel.setBillStatus(this.billStatusService.getOneBycode("CA"));
         this.billService.add(billCancel);
-        if(checkLogin.checkLogin() !=null){
+        if (checkLogin.checkLogin() != null) {
             UserDetailDto userDetailDto = checkLogin.checkLogin();
             List<Bill> billList = this.billService.findAllBillByUser(userDetailDto.getId());
-            for (Bill bill : billList){
-                if(billCancel.equals(bill)){
+            for (Bill bill : billList) {
+                if (billCancel.equals(bill)) {
                     return "redirect:/order";
                 }
             }
         }
-        return "redirect:/search_order_user?search="+billCancel.getCode();
+        return "redirect:/search_order_user?search=" + billCancel.getCode();
     }
 
 }
