@@ -83,6 +83,7 @@ public class HomeUserController {
             session.setAttribute("list", cart.getListCartPro());
             session.setAttribute("user", userDetailDto);
         } else {
+            session.setAttribute("list", cartService.getitems());
             session.setAttribute("user", null);
         }
         return "/user/index";

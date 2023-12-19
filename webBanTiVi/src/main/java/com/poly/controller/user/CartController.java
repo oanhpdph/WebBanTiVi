@@ -13,7 +13,6 @@ import com.poly.service.Impl.DeliveryNotesImpl;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -151,15 +150,12 @@ public class CartController {
 
     @PreAuthorize("hasAuthority('USER') or isAnonymous()")
     @PostMapping("/purchase")
-    public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
+    public String addBill(@ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
                           Model model,
                           String city, String district, String ward, RedirectAttributes redirectAttributes
     ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
-        if (result.hasErrors()) {
-            return "redirect:/pay";
-        }
         //
         Users checkEmail = customerService.findByEmail(billProRes.getEmail());
         UserDetailDto userDetailDto = checkLogin.checkLogin();
