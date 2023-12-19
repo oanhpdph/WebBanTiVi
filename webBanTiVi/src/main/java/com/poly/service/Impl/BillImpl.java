@@ -184,7 +184,6 @@ public class BillImpl implements BillService {
         if (!searchBillDto.getDate().isEmpty()) {
             String date1 = searchBillDto.getDate().substring(0, searchBillDto.getDate().indexOf("-") - 1).replace("/", "-");
             String date2 = searchBillDto.getDate().substring(searchBillDto.getDate().indexOf("-") + 1, searchBillDto.getDate().length()).replace("/", "-");
-            System.out.println(date1 + date2);
             Date dateStart = Date.valueOf(date1.trim());
             Date dateEnd = Date.valueOf(date2.trim());
             list.add(criteriaBuilder.between(billRoot.get("createDate"), dateStart, dateEnd));

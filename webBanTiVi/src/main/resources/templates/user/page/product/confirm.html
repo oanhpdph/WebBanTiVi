@@ -97,7 +97,19 @@
                                                             </div>
 
                                                         </td>
-                                                        <td th:text="${#numbers.formatDecimal(billProducts.price,0,'COMMA',0,'POINT')}"></td>
+                                                        <td>
+                                                            <div th:if="${billProducts.reducedMoney==0}">
+                                                                <span class="fs-5">[(${#numbers.formatDecimal(billProducts.price,0,'COMMA',0,'POINT')})]</span>
+                                                            </div>
+                                                            <div th:if="${billProducts.reducedMoney!=0}"
+                                                                 class="text-strike-through">
+                                                                <span class="fs-5">[(${#numbers.formatDecimal(billProducts.price,0,'COMMA',0,'POINT')})]</span>
+                                                            </div>
+                                                            <div th:if="${billProducts.reducedMoney!=0}">
+                                                                <span class="fs-5"
+                                                                      th:text="|${#numbers.formatDecimal(billProducts.price - billProducts.reducedMoney,0,'COMMA',0,'POINT')}|"></span>
+                                                            </div>
+                                                        </td>
                                                         <td th:text="${billProducts.quantity}"></td>
                                                         <td th:text="${#numbers.formatDecimal(billProducts.price * billProducts.quantity - billProducts.reducedMoney,0,'COMMA',0,'POINT')}">
 

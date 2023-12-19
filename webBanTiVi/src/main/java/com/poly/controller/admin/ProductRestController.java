@@ -28,6 +28,7 @@ public class ProductRestController {
 
     @GetMapping(path = "/get-product-by-id")
     public ResponseEntity<?> getById(@RequestParam("id") Integer id) {
+        Product product = productService.findById(id);
         return ResponseEntity.ok(productService.findById(id));
     }
 

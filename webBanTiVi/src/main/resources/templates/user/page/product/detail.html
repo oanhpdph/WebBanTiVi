@@ -174,15 +174,38 @@
             </h3>
 
             <div class="" border="0px">
-                <div th:each="item : ${product.product.productFieldValues}"
-                     th:if="${item.field.active==true}">
+                <div th:each="item,itemStat : ${product.product.productFieldValues}"
+                     th:if="${item.field.active == true && itemStat.index<10}">
                     <div class="row row-cols-sm-2 mb-3">
                         <span class="col">[(${item.field.name})]:</span>
                         <span class="col">[(${item.value})]</span>
                     </div>
                     <hr>
                 </div>
-
+                <div class="text-center" th:if="${#lists.size(product.product.productFieldValues)>=10}">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#field">Xem chi tiết thông số</button>
+                </div>
+                <div class="modal fade" id="field" aria-modal="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" th:text="${product.product.nameProduct+' '+product.product.sku}"></h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div th:each="item,itemStat : ${product.product.productFieldValues}"
+                                     th:if="${item.field.active==true}">
+                                    <div class="row row-cols-sm-2 mb-3">
+                                        <span class="col">[(${item.field.name})]:</span>
+                                        <span class="col">[(${item.value})]</span>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>

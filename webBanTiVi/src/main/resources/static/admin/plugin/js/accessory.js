@@ -1,10 +1,11 @@
 $(document).ready(
     loadProduct()
 )
-
+let timeout;
 function loadProduct() {
     var data = {
         point: $("#filterRate").val(),
+
         sort: $("#sort").val(),
         key: $("#key").val(),
         size: $("#loadMore").val()
@@ -158,7 +159,9 @@ $("#btn-reset").on("click", function () {
     })
     loadProduct()
 })
-
+$(".filter-price").on("change", function () {
+    loadProduct()
+})
 $("#price-begin").on("keydown", function () {
     clearTimeout(timeout);
 
