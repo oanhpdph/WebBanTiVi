@@ -655,10 +655,10 @@ function getOneProductDetail(item) {
 
 $(".product-detail").on("click", function () {
     getOneProduct(this).then(function (data) {
-        console.log(data)
         $("#name__product__add").text(data.nameProduct + " " + data.sku)
         $("#add-product-detail").val(data.id)
         var fieldList = data.productDetails[0].fieldList
+        $(".attributes").remove()
         $.each(fieldList, function (index, item) {
             if (fieldList.length - 1 !== index) {
                 // Sao chép thẻ cha và tất cả các thẻ con
@@ -666,7 +666,7 @@ $(".product-detail").on("click", function () {
 
                 // Xóa thuộc tính id để tránh trùng lặp
                 clonedElement.removeAttr("id");
-
+                $(clonedElement).addClass("attributes")
                 // Thêm thẻ sao chép vào đích
                 $("#group-attribute").append(clonedElement);
             }

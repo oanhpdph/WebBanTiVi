@@ -11,4 +11,6 @@ public class SearchBillDto {
     public String key = "";
     public String billStatus = "";
     public Integer paymentStatus = -1;
+    public Integer sort = 1;
+
 }
