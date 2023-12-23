@@ -187,13 +187,10 @@ CREATE TABLE bill_product
      id_bill		INT REFERENCES bill(id),
      id_product		INT REFERENCES product_detail(id),
      quantity		INT not null,
-     quantity_request_return	INT ,
-     reason 		nvarchar(max),
      price			money not null,
 	 reduced_money	money,
 	 status			int,
 	 note			NVARCHAR(200),
-	 quantity_accept_return INT 
    --  PRIMARY KEY(id_bill, id_product)
   )
 
@@ -202,7 +199,12 @@ CREATE TABLE image_returned
   (
      id					 INT IDENTITY(1, 1) PRIMARY KEY,
      id_bill_product	 INT REFERENCES bill_product(id) not null,
-	 name_image			 varchar(200) not null
+	 name_image			 varchar(200) not null,
+	 return_count        INT not null,
+	 quantity_request_return	INT ,
+	 quantity_accept_return INT ,
+	 reason 		     nvarchar(max),
+
   )
 
 CREATE TABLE delivery_notes
@@ -244,6 +246,9 @@ GO
 
 insert into users(username, password,gender,roles,status,phone_number,email)
 values('PDO','$2a$10$qHWKLl/DjkAuZaVcqOML4OsFYzLMPcD70E1xh9DA30K7takJbMRXO',0,'ADMIN',1,'0978973','oanh')
+
+insert into users(username, password,gender,roles,status,phone_number,email)
+values('PDO123','$2a$10$qHWKLl/DjkAuZaVcqOML4OsFYzLMPcD70E1xh9DA30K7takJbMRXO',0,'USER',1,'0978973','oanh123')
 
 
  INSERT INTO [dbo].[bill_status]
