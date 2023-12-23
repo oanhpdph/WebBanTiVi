@@ -483,7 +483,7 @@
                         $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
                         status.push(false);
                     } else if (minimumValue.value < value.value) {
-                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị tối thiểu phải nhỏ hơn giá trị giảm!");
+                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị phải nhỏ hơn giá trị tối thiểu!");
                         status.push(false);
                     } else {
                         $(minimumValue).parent().siblings('.minimumValueloc').first().html("");
@@ -598,25 +598,25 @@
                         $(nameVoucher).siblings('.nameVoucherloc').first().html("");
                     }
                     //value
-                    if ((value.value.trim() == "") || (value.value <= 0)) {
-
-                        $(value).parent().siblings('.valueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
-
-                        status.push(false);
-                    } else {
-                        $(value).parent().siblings('.valueloc').first().html("");
-
-                    }
+                    // if ((value.value.trim() == "") || (value.value <= 0)) {
+                    //
+                    //     $(value).parent().siblings('.valueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
+                    //
+                    //     status.push(false);
+                    // } else {
+                    //     $(value).parent().siblings('.valueloc').first().html("");
+                    //
+                    // }
                     //minimumValue
-                    if ((minimumValue.value.trim() == "") || (value.value <= 0)) {
-                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
-                        status.push(false);
-                    } else if (minimumValue.value < value.value) {
-                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị tối thiểu phải nhỏ hơn giá trị giảm!");
-                        status.push(false);
-                    } else {
-                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("");
-                    }
+                    // if ((minimumValue.value.trim() == "") || (value.value <= 0)) {
+                    //     $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
+                    //     status.push(false);
+                    // } else if (minimumValue.value < value.value) {
+                    //     $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị phải nhỏ hơn giá trị tối thiểu!");
+                    //     status.push(false);
+                    // } else {
+                    //     $(minimumValue).parent().siblings('.minimumValueloc').first().html("");
+                    // }
                     //startDay
                     if (startDay.value.trim().length < 1) {
                         $(startDay).parents().siblings('.startDayloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!");

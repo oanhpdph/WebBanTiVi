@@ -885,34 +885,36 @@ function changeTableProductDetail() {
             imageList.className = "list-unstyled users-list avatar-group m-0 d-flex align-items-center";
 
             for (let i = 0; i < 5; i++) {
-                const listItem = document.createElement("li");
-                listItem.setAttribute("data-bs-toggle", "tooltip");
-                listItem.setAttribute("data-popup", "tooltip-custom");
-                listItem.setAttribute("data-bs-placement", "bottom");
-                listItem.className = "avatar avatar-xl pull-up border-dark border";
-                listItem.setAttribute("data-bs-offset", "0,4");
-                listItem.setAttribute("data-bs-html", "true");
+            const listItem = document.createElement("li");
+            listItem.setAttribute("data-bs-toggle", "tooltip");
+            listItem.setAttribute("data-popup", "tooltip-custom");
+            listItem.setAttribute("data-bs-placement", "bottom");
+            listItem.className = "avatar avatar-xl pull-up border-dark border";
+            listItem.setAttribute("data-bs-offset", "0,4");
+            listItem.setAttribute("data-bs-html", "true");
 
-                const image = document.createElement("img");
-                image.src = "/image/product/anhdefault.jpg";
-                image.alt = "Chưa có ảnh";
-                image.className = "image-preview";
-                image.onclick = clickImage
+            const image = document.createElement("img");
+            image.src = "/image/product/anhdefault.jpg";
+            image.alt = "Chưa có ảnh";
+            image.className = "image-preview";
+            image.onclick = clickImage
 
-                const inputFile = document.createElement("input");
-                inputFile.type = "file";
-                inputFile.hidden = true;
-                inputFile.onchange = onchangeImage
-                if (i == 0) {
-                    listItem.setAttribute("title", "Ảnh chính");
-                    inputFile.className = "file-input true" + " imageUpload" + index;
-                } else {
-                    listItem.setAttribute("title", "Ảnh phụ");
-                    inputFile.className = "file-input false" + " imageUpload" + index;
-                }
-                listItem.appendChild(image);
-                listItem.appendChild(inputFile);
-                imageList.appendChild(listItem);
+            const inputFile = document.createElement("input");
+            inputFile.type = "file";
+            inputFile.hidden = true;
+            inputFile.onchange = onchangeImage
+            // inputFile.setAttribute("data-m")
+            if (i == 0) {
+            listItem.setAttribute("title", "Ảnh chính");
+            inputFile.className = "file-input true" + " imageUpload" + index;
+            inputFile.multiple = true
+            } else {
+                listItem.setAttribute("title", "Ảnh phụ");
+                inputFile.className = "file-input false" + " imageUpload" + index;
+            }
+            listItem.appendChild(image);
+            listItem.appendChild(inputFile);
+            imageList.appendChild(listItem);
             }
 
             var lable = document.createElement("span")

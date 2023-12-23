@@ -191,6 +191,9 @@ public class BillImpl implements BillService {
             Date dateEnd = Date.valueOf(date2.trim());
             list.add(criteriaBuilder.between(billRoot.get("createDate"), dateStart, dateEnd));
         }
+        if (searchBillDto.getSort() == 1) {
+            billCriteriaQuery.orderBy(criteriaBuilder.desc(billRoot.get("createDate")));
+        }
         billCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
         List<Bill> result = entityManager.createQuery(billCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
         List<Bill> result2 = entityManager.createQuery(billCriteriaQuery).getResultList();

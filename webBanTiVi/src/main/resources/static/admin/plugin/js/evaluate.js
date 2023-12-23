@@ -91,52 +91,65 @@ $(".point").on("click", function () {
     }
 })
 $("#sendEvaluate").on("click", function () {
-    uploadImage()
-
-    var image = []
-    $.each($(".file-input"), function (index, item) {
-
-        if (item.value != '') {
-            var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
-// Trích xuất tên tệp từ đường dẫn
-            var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
-            if (lastIndex >= 0) {
-                fileName = fileName.substr(lastIndex + 1);
-            }
-            image.push(fileName)
-        }
-    })
-    var data = {
-        point: point,
-        comment: $("#comment").val(),
-        product: $("#sendEvaluate").val(),
-        image: image,
-        active: true
-    }
     $.ajax({
-        url: "/product/evaluate/add",
-        method: 'post',
-        data: JSON.stringify(data),
+        method: 'GET',
+        url: 'https://api.api-ninjas.com/v1/profanityfilter?text=' + $("#comment").val(),
+        headers: { 'X-Api-Key': 'xS+CJDBblU3WBHDMu6fUeg==xyXxDA67DMh2kL2z'},
         contentType: 'application/json',
-        success: function (data) {
-            const Toast = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.onmouseenter = Swal.stopTimer;
-                    toast.onmouseleave = Swal.resumeTimer;
+        success: function(result) {
+            uploadImage()
+
+            var image = []
+            $.each($(".file-input"), function (index, item) {
+
+                if (item.value != '') {
+                    var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
+// Trích xuất tên tệp từ đường dẫn
+                    var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
+                    if (lastIndex >= 0) {
+                        fileName = fileName.substr(lastIndex + 1);
+                    }
+                    image.push(fileName)
                 }
-            });
-            Toast.fire({
-                icon: "success",
-                title: "Thêm thành công"
-            });
-            window.location.reload()
+            })
+            var data = {
+                point: point,
+                comment: result.censored,
+                product: $("#sendEvaluate").val(),
+                image: image,
+                active: true
+            }
+            $.ajax({
+                url: "/product/evaluate/add",
+                method: 'post',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function (data) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: "Thêm thành công"
+                    });
+                    window.location.reload()
+                }
+            })
+        },
+        error: function ajaxError(jqXHR) {
+            console.error('Error: ', jqXHR.responseText);
         }
-    })
+    });
+
+
 })
 
 function uploadImage() {

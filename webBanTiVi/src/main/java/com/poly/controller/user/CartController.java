@@ -90,7 +90,7 @@ public class CartController {
             list = cart.getListCartPro();
 
             List<VoucherCustomer> voucherCustomer = voucherCustomerService.findByUser(userDetailDto.getId());
-            model.addAttribute("listVoucher", voucherCustomer.stream().filter(voucherCustomer1 -> voucherCustomer1.isActive() == true).toList());
+            model.addAttribute("listVoucher", voucherCustomer.stream().filter(voucherCustomer1 -> voucherCustomer1.isActive() == true && voucherCustomer1.getVoucher().getActive() == true).toList());
 
             session.setAttribute("list", cart.getListCartPro());
         } else {

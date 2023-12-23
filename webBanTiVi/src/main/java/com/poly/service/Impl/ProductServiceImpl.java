@@ -82,7 +82,9 @@ public class ProductServiceImpl implements ProductService {
                     .toArray(Predicate[]::new);
             list.add(criteriaBuilder.or(predicates));
         }
-
+        if (productDetailDto.isActive()) {
+            list.add(criteriaBuilder.equal(productRoot.get("active"), true));
+        }
         if (productDetailDto.getSort() == 1) {
             productCriteriaQuery.orderBy(criteriaBuilder.desc(productRoot.get("createDate")));
         }
