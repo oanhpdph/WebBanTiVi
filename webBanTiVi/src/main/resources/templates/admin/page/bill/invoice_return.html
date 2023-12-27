@@ -36,14 +36,14 @@
                         <th>#</th>
                         <th>Mã Hóa Đơn</th>
                         <th>Người gửi</th>
-                        <th>Actions</th>
+                        <th>Thao tác</th>
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0 text-left">
-                    <tr th:each="billReturn : ${listBill}">
-                        <td>1</td>
+                    <tr th:each="billReturn,billIndex : ${listBill}">
+                        <td>[(${billIndex.index+1})]</td>
                         <td>[(${billReturn.code})]</td>
-                        <td>[(${billReturn.customer.name})]</td>
+                        <td>[(${billReturn?.deliveryNotes[0].received})]</td>
                         <td>
                             <a th:href="@{/admin/invoice_return/{id}(id=*{billReturn.id})}">
                                 <button type="button" class="btn btn-icon btn-primary return">

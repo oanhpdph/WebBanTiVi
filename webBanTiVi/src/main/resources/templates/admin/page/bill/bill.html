@@ -158,7 +158,7 @@
                         </td>
                         <td>[(${listBill.createDate})]</td>
                         <td>
-                            [(${#numbers.formatDecimal(listBill.totalPrice-listBill.voucherValue,0,'COMMA',0,'POINT')})]
+                            [(${#numbers.formatDecimal(listBill.totalPrice,0,'COMMA',0,'POINT')})]
                         </td>
                         <td th:text="${listBill.paymentStatus == 1 ? 'Đã thanh toán' : listBill.paymentStatus == 2 ? 'Chưa thanh toán' : 'Đã hoàn tiền'}"></td>
                         <td>

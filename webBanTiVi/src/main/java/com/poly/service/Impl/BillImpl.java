@@ -70,6 +70,9 @@ public class BillImpl implements BillService {
     BillStatusService billStatusService;
 
     @Autowired
+    DeliveryNotesRepos deliveryNotesRepos;
+
+    @Autowired
     private CheckLogin checkLogin;
 
     @Override
@@ -184,10 +187,12 @@ public class BillImpl implements BillService {
         if (!searchBillDto.getDate().isEmpty()) {
             String date1 = searchBillDto.getDate().substring(0, searchBillDto.getDate().indexOf("-") - 1).replace("/", "-");
             String date2 = searchBillDto.getDate().substring(searchBillDto.getDate().indexOf("-") + 1, searchBillDto.getDate().length()).replace("/", "-");
-            System.out.println(date1 + date2);
             Date dateStart = Date.valueOf(date1.trim());
             Date dateEnd = Date.valueOf(date2.trim());
             list.add(criteriaBuilder.between(billRoot.get("createDate"), dateStart, dateEnd));
+        }
+        if (searchBillDto.getSort() == 1) {
+            billCriteriaQuery.orderBy(criteriaBuilder.desc(billRoot.get("createDate")));
         }
         billCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
         List<Bill> result = entityManager.createQuery(billCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
@@ -207,6 +212,11 @@ public class BillImpl implements BillService {
         if (optional.isPresent()) {
             Bill billUpdate = optional.get();
             if (bill.getBillStatus() != null) {
+                if ("CO".equals(bill.getBillStatus().getCode())) {
+                    DeliveryNotes deliveryNotes = billUpdate.getDeliveryNotes().get(0);
+                    deliveryNotes.setReceivedDate(new java.util.Date());
+                    deliveryNotesRepos.save(deliveryNotes);
+                }
                 billUpdate.setBillStatus(bill.getBillStatus());
             }
             if (bill.getPaymentMethod() != null) {

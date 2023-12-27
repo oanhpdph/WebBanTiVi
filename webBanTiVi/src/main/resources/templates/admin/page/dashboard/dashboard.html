@@ -1,7 +1,4 @@
-<h4 class="fw-semibold py-3 mb-4"> Thống kê đơn hàng theo ngày :
-    <br>
-    <br>
-    <input type="date" id="date" class="form-control w-px-200" th:value="${date}">
+<h4 class="fw-semibold py-3 mb-4"> Thống kê :
 </h4>
 
 <div class="row">
@@ -13,7 +10,7 @@
             </div>
             <div class="card-body">
                 <button class="fw-bold" id="completed" style="border : none" th:text="${#lists.size(billAll)}"
-                        th:onclick="|showData()|"></button>
+                        th:onclick="|oncl()|"></button>
             </div>
         </div>
     </div>
@@ -24,7 +21,7 @@
             </div>
             <div class="card-body">
                 <button class="fw-bold" id="delivering" style="border : none" th:text="${#lists.size(billDelivering)}"
-                        th:onclick="|showData4()|"></button>
+                        th:onclick="|onclDeliver()|"></button>
             </div>
         </div>
     </div>
@@ -35,7 +32,7 @@
             </div>
             <div class="card-body">
                 <button class="fw-bold" id="return" style="border : none" th:text="${#lists.size(billReturn)}"
-                        th:onclick="|showData2()|"></button>
+                        th:onclick="|onclReturn()|"></button>
             </div>
         </div>
     </div>
@@ -46,7 +43,7 @@
             </div>
             <div class="card-body">
                 <button class="fw-bold" id="processing" style="border : none" th:text="${#lists.size(billProcessing)}"
-                        th:onclick="|showData3()|"></button>
+                        th:onclick="|onclWait()|"></button>
             </div>
         </div>
     </div>
@@ -57,7 +54,7 @@
             </div>
             <div class="card-body">
                 <button class="fw-bold" id="productCount" style="border : none" th:text="${#lists?.size(productCount)}"
-                        th:onclick="|showData4()|"></button>
+                        th:onclick="|onclProduct()|"></button>
             </div>
         </div>
     </div>
@@ -68,7 +65,7 @@
             </div>
             <div class="card-body">
                 <button class="fw-bold" id="listDisCount" style="border : none" th:text="${#lists?.size(listDisCount)}"
-                        th:onclick="|showData5()|"></button>
+                        th:onclick="|onclDiscount()|"></button>
             </div>
         </div>
     </div>
@@ -79,242 +76,9 @@
             </div>
             <div class="card-body">
                 <button class="fw-bold" id="listVoucher" style="border : none" th:text="${#lists.size(listVoucher)}"
-                        th:onclick="|showData6()|"></button>
+                        th:onclick="|onclVoucher()|"></button>
             </div>
         </div>
     </div>
-</div>
-<div class="overflow-auto" id="myDiv">
-    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTable4">
-        <thead>
-        <tr class="row-table">
-            <th>#</th>
-            <th>Code bill</th>
-            <th>Name</th>
-            <th>Phone number</th>
-            <th>Time create</th>
-            <th>Payment Status</th>
-            <th>Bill Status</th>
-        </tr>
-        </thead>
-        <tbody class="table-border-bottom-0">
-        <tr th:each="listBill,billStat: ${billDelivering}" th:onclick="|oncl(${ listBill.id })|">
-            <td>
-                <strong>[(${billStat.index+1})]</strong>
-            </td>
-            <td>[(${listBill.code})]</td>
-            <td>
-                [(${listBill.customer.name})]
-            </td>
-            <td>[(${listBill.customer.phoneNumber})]</td>
-            <td>[(${listBill.createDate})]</td>
-            <td th:text="${listBill.paymentStatus == 1 ? 'Đã thanh toán' : listBill.paymentStatus == 2 ? 'Chưa thanh toán' : 'Đã hoàn tiền'}"></td>
-            <td>[(${listBill.billStatus.status})]</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="overflow-auto" id="myDiv2">
-    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTable">
-        <thead>
-        <tr class="row-table">
-            <th>#</th>
-            <th>Code bill</th>
-            <th>Name</th>
-            <th>Phone number</th>
-            <th>Time create</th>
-            <th>Payment Status</th>
-            <th>Bill Status</th>
-        </tr>
-        </thead>
-        <tbody class="table-border-bottom-0">
-        <tr th:each="listBill,billStat: ${billAll}" th:onclick="|oncl(${ listBill.id })|">
-            <td>
-                <strong>[(${billStat.index+1})]</strong>
-            </td>
-            <td>[(${listBill.code})]</td>
-            <td>
-                [(${listBill.customer.name})]
-            </td>
-            <td>[(${listBill.customer.phoneNumber})]</td>
-            <td>[(${listBill.createDate})]</td>
-            <td th:text="${listBill.paymentStatus == 1 ? 'Đã thanh toán' : listBill.paymentStatus == 2 ? 'Chưa thanh toán' : 'Đã hoàn tiền'}"></td>
-            <td>[(${listBill.billStatus.status})]</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="overflow-auto" id="myDiv3">
-    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTable2">
-        <thead>
-        <tr class="row-table">
-            <th>#</th>
-            <th>Code bill</th>
-            <th>Name</th>
-            <th>Phone number</th>
-            <th>Time create</th>
-            <th>Payment Status</th>
-            <th>Bill Status</th>
-        </tr>
-        </thead>
-        <tbody class="table-border-bottom-0">
-        <tr th:each="listBill,billStat: ${billReturn}" th:onclick="|oncl(${ listBill.id })|">
-            <td>
-                <strong>[(${billStat.index+1})]</strong>
-            </td>
-            <td>[(${listBill.code})]</td>
-            <td>
-                [(${listBill.customer.name})]
-            </td>
-            <td>[(${listBill.customer.phoneNumber})]</td>
-            <td>[(${listBill.createDate})]</td>
-            <td th:text="${listBill.paymentStatus == 1 ? 'Đã thanh toán' : listBill.paymentStatus == 2 ? 'Chưa thanh toán' : 'Đã hoàn tiền'}"></td>
-            <td>[(${listBill.billStatus.status})]</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="overflow-auto" id="myDiv4">
-    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTable3">
-        <thead>
-        <tr class="row-table">
-            <th>#</th>
-            <th>Code bill</th>
-            <th>Name</th>
-            <th>Phone number</th>
-            <th>Time create</th>
-            <th>Payment Status</th>
-            <th>Bill Status</th>
-        </tr>
-        </thead>
-        <tbody class="table-border-bottom-0">
-        <tr th:each="listBill,billStat: ${billProcessing}" th:onclick="|oncl(${ listBill.id })|">
-            <td>
-                <strong>[(${billStat.index+1})]</strong>
-            </td>
-            <td>[(${listBill.code})]</td>
-            <td>
-                [(${listBill.customer.name})]
-            </td>
-            <td>[(${listBill.customer.phoneNumber})]</td>
-            <td>[(${listBill.createDate})]</td>
-            <td th:text="${listBill.paymentStatus == 1 ? 'Đã thanh toán' : listBill.paymentStatus == 2 ? 'Chưa thanh toán' : 'Đã hoàn tiền'}"></td>
-            <td>[(${listBill.billStatus.status})]</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-<div class="overflow-auto" id="myDivProductCount">
-    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTableProductCount">
-        <thead>
-        <tr class="row-table">
-            <th>#</th>
-            <th>Mã SKU</th>
-            <th>Group Product</th>
-            <th>Name Product</th>
-            <th>Avg Point</th>
-            <th>Date Create</th>
-            <th>Brand</th>
-            <th>Active</th>
-        </tr>
-        </thead>
-        <tbody class="table-border-bottom-0">
-        <tr th:each="product,prodcutes: ${productCount}" th:onclick="|onclProduct(${ product.id })|">
-            <td>
-                <strong>[(${prodcutes.index+1})]</strong>
-            </td>
-            <td>
-                [(${product.sku})]
-            </td>
-            <td>
-                [(${product.groupProduct.nameGroup})]
-            </td>
-            <td>[(${product.nameProduct})]</td>
-            <td>[(${product.avgPoint})]</td>
-            <td>[(${product.createDate})]</td>
-            <td>[(${product.brand.name})]</td>
-            <td>[(${product.active})]</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<div class="overflow-auto" id="myDivDisCount">
-    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTableDisCount">
-        <thead>
-        <tr class="row-table">
-            <th>#</th>
-            <th>Code</th>
-            <th>Value</th>
-            <th>Image</th>
-            <th>Date Start</th>
-            <th>Date End</th>
-            <th>Active</th>
-        </tr>
-        </thead>
-        <tbody class="table-border-bottom-0">
-        <tr th:each="discount,discountes: ${listDisCount}" th:onclick="|onclDiscount()|">
-            <td>
-                <strong>[(${discountes.index+1})]</strong>
-            </td>
-            <td>
-                [(${discount.code})]
-            </td>
-            <td>
-                [(${discount.value})]
-            </td>
-            <td><p>
-                <img th:src="@{'/image/'+*{discount.image}}"
-                     class="w-px-100"/>
-            </p>
-            <td>[(${discount.dateStart})]</td>
-            <td>[(${discount.dateEnd})]</td>
-            <td><span th:text="${discount.active} == true?'Hoạt động':'Không hoạt động'"/></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-
-<div class="overflow-auto" id="myDivVoucher">
-    <table class="table table-hover table-bordered overflow-hidden" style="display: none;" id="myTableVoucher">
-        <thead>
-        <tr class="row-table">
-            <th>#</th>
-            <th>Code</th>
-            <th>Name Voucher</th>
-            <th>Value</th>
-            <th>Minimum Value</th>
-            <th>Quantity</th>
-            <th>Start Day</th>
-            <th>Expiration Date</th>
-            <th>Active</th>
-            <th>Image</th>
-        </tr>
-        </thead>
-        <tbody class="table-border-bottom-0">
-        <tr th:each="voucher,vouchers: ${listVoucher}" th:onclick="|onclVoucher()|">
-            <td>
-                <strong>[(${vouchers.index+1})]</strong>
-            </td>
-            <td>
-                [(${voucher.code})]
-            </td>
-            <td>
-                [(${voucher.nameVoucher})]
-            </td>
-            <td>[(${voucher.value})]</td>
-            <td>[(${voucher.minimumValue})]</td>
-            <td>[(${voucher.quantity})]</td>
-            <td>[(${voucher.startDay})]</td>
-            <td>[(${voucher.expirationDate})]</td>
-            <td> <span th:text="${voucher.active} == true?'Hoạt động':'Không hoạt động'"/></td>
-            <td><p>
-                <img th:src="@{'/image/'+*{voucher.image}}"
-                     class="w-px-100"/>
-            </p>
-        </tr>
-        </tbody>
-    </table>
 </div>
 <script th:src="@{/admin/plugin/js/dashboard.js}"></script>

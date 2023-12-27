@@ -58,6 +58,8 @@ public class HomeUserController {
         Page<Product> phuKien = productService.findAll(productDetailDto);
         model.addAttribute("listPhuKien", getProduct(new ArrayList<>(), phuKien.getContent()));
 
+        productDetailDto.setSize(10);
+
         productDetailDto.setGroup(0);
         Page<Product> productNew = productService.findAll(productDetailDto);
         model.addAttribute("listNewProduct", getProduct(new ArrayList<>(), productNew.getContent()));
@@ -81,6 +83,7 @@ public class HomeUserController {
             session.setAttribute("list", cart.getListCartPro());
             session.setAttribute("user", userDetailDto);
         } else {
+            session.setAttribute("list", cartService.getitems());
             session.setAttribute("user", null);
         }
         return "/user/index";
@@ -142,7 +145,8 @@ public class HomeUserController {
                             }
                         }
 
-                        if (productDetail.getCoupon() != null && productDetail.getCoupon().isActive() && (LocalDate.now().isAfter(productDetail.getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(productDetail.getCoupon().getDateEnd().toLocalDate()))) {
+
+                        if (productDetail.getCoupon() != null && productDetail.getCoupon().isActive() && ((LocalDate.now().isAfter(productDetail.getCoupon().getDateStart().toLocalDate()) || LocalDate.now().isEqual(productDetail.getCoupon().getDateStart().toLocalDate())) && (LocalDate.now().isBefore(productDetail.getCoupon().getDateEnd().toLocalDate()) || LocalDate.now().isEqual(productDetail.getCoupon().getDateEnd().toLocalDate())))) {
                             BigDecimal reduceMoney = productDetail.getPriceExport().multiply(BigDecimal.valueOf(Integer.parseInt(productDetail.getCoupon().getValue()))).divide(BigDecimal.valueOf(100));
                             productDetailDto1.setReduceMoney(productDetail.getPriceExport().subtract(reduceMoney));
                             //giá sau giảm

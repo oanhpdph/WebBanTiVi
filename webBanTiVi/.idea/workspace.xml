@@ -70,7 +70,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+<<<<<<< HEAD
     <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/finaljava6" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Template_DoAn/WebBanTiVi" />
+>>>>>>> main
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -122,6 +126,19 @@
         </value>
       </option>
       <option name="TEST_OBJECT" value="CLASS" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -327,11 +344,18 @@
       <workItem from="1702709486902" duration="5896000" />
       <workItem from="1702716187208" duration="6236000" />
       <workItem from="1702749281348" duration="4011000" />
-
       <workItem from="1702794750093" duration="4188000" />
       <workItem from="1702829780330" duration="2866000" />
       <workItem from="1702883708255" duration="4456000" />
+<<<<<<< HEAD
 >>>>>>> b98db2e413442970175d71e1125c78d61e01ef6f
+=======
+      <workItem from="1702972600542" duration="3943000" />
+      <workItem from="1702977066836" duration="39000" />
+      <workItem from="1702977258359" duration="5199000" />
+      <workItem from="1702984655402" duration="8000" />
+      <workItem from="1702986012652" duration="5617000" />
+>>>>>>> main
     </task>
     <servers />
   </component>
@@ -396,7 +420,9 @@
       <pinned-members>
         <PinnedItemInfo parentTag="org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile" memberName="filename" />
         <PinnedItemInfo parentTag="com.poly.service.Impl.CartProductImpl" memberName="cartService" />
+        <PinnedItemInfo parentTag="com.poly.entity.Cart" memberName="id" />
         <PinnedItemInfo parentTag="com.poly.dto.ProductDetailListDto" memberName="image" />
+        <PinnedItemInfo parentTag="com.poly.entity.Cart" memberName="customer" />
         <PinnedItemInfo parentTag="org.springframework.security.web.servletapi.HttpServlet3RequestFactory$Servlet3SecurityContextHolderAwareRequestWrapper" memberName="response" />
         <PinnedItemInfo parentTag="com.poly.entity.Evaluate" memberName="customer" />
       </pinned-members>

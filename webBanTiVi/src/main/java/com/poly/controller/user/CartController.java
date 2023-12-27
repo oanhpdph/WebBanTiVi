@@ -13,7 +13,6 @@ import com.poly.service.Impl.DeliveryNotesImpl;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -91,7 +90,7 @@ public class CartController {
             list = cart.getListCartPro();
 
             List<VoucherCustomer> voucherCustomer = voucherCustomerService.findByUser(userDetailDto.getId());
-            model.addAttribute("listVoucher", voucherCustomer.stream().filter(voucherCustomer1 -> voucherCustomer1.isActive() == true).toList());
+            model.addAttribute("listVoucher", voucherCustomer.stream().filter(voucherCustomer1 -> voucherCustomer1.isActive() == true && voucherCustomer1.getVoucher().getActive() == true).toList());
 
             session.setAttribute("list", cart.getListCartPro());
         } else {
@@ -103,7 +102,9 @@ public class CartController {
             return "user/index";
         }
         for (CartProduct product : list) {
-            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive() && product.getProduct().getCoupon().isActive() && (LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate()))) {
+            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive() && product.getProduct().getCoupon().isActive()
+                    && ((LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) || LocalDate.now().isEqual(product.getProduct().getCoupon().getDateStart().toLocalDate()))
+                    && (LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate())) || LocalDate.now().isEqual(product.getProduct().getCoupon().getDateEnd().toLocalDate()))) {
                 reduceMoney = product.getProduct().getPriceExport().subtract(product.getProduct().getPriceExport().multiply(new BigDecimal(product.getProduct().getCoupon().getValue()).divide(new BigDecimal(100))));
                 total = total.add(reduceMoney.multiply(BigDecimal.valueOf(product.getQuantity())));
                 listRedu.add(reduceMoney);
@@ -149,15 +150,12 @@ public class CartController {
 
     @PreAuthorize("hasAuthority('USER') or isAnonymous()")
     @PostMapping("/purchase")
-    public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
+    public String addBill(@ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
                           Model model,
                           String city, String district, String ward, RedirectAttributes redirectAttributes
     ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
-        if (result.hasErrors()) {
-            return "redirect:/pay";
-        }
         //
         Users checkEmail = customerService.findByEmail(billProRes.getEmail());
         UserDetailDto userDetailDto = checkLogin.checkLogin();
@@ -170,7 +168,10 @@ public class CartController {
         List<Integer> quantity = new ArrayList<>();
         BigDecimal total = new BigDecimal(0);
         for (CartProduct product : listCart) {
-            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive() && (LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate()))) {
+
+            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive()
+                    && ((LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) || LocalDate.now().isEqual(product.getProduct().getCoupon().getDateStart().toLocalDate()))
+                    && (LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate()) || LocalDate.now().isEqual(product.getProduct().getCoupon().getDateEnd().toLocalDate())))) {
                 reduceMoney = product.getProduct().getPriceExport().multiply(new BigDecimal(product.getProduct().getCoupon().getValue()).divide(new BigDecimal(100)));
                 listRedu.add(reduceMoney);
                 total = total.add(product.getProduct().getPriceExport().subtract(reduceMoney).multiply(BigDecimal.valueOf(product.getQuantity())));
@@ -258,6 +259,7 @@ public class CartController {
 
     @GetMapping("/cart")
     public String index(Model model) {
+
         session.setAttribute("pageView", "/user/page/product/pro_cart.html");
         List<BigDecimal> listRedu = new ArrayList<>();
         BigDecimal reduceMoney = new BigDecimal(0);
@@ -267,11 +269,40 @@ public class CartController {
 
         if (userDetailDto != null) {
             Cart cart = cartService.getOneByUser(userDetailDto.getId());
-            list = cart.getListCartPro();
-            session.setAttribute("list", cart.getListCartPro());
+//            list = cart.getListCartPro();
+
+            CartProduct cartProduct = new CartProduct();
+
+            for (int i = 0; i < cart.getListCartPro().size(); i++) {
+                cartProduct = cart.getListCartPro().get(i);
+                ProductDetail productDetail = productDetailService.findById(cart.getListCartPro().get(i).getProduct().getId());
+                if (cart.getListCartPro().get(i).getQuantity() > productDetail.getQuantity()) {
+
+                    cartProduct.setQuantity(productDetail.getQuantity());
+                    cartProduct = cartProductService.update(cartProduct);
+                }
+                list.add(cartProduct);
+            }
+            session.setAttribute("list", list);
         } else {
             list = (List<CartProduct>) session.getAttribute("list");
+            CartProduct cartProduct = new CartProduct();
+            if (session.getAttribute("list") != null) {
+                if (list.isEmpty() == false) {
+                    for (int i = 0; i < list.size(); i++) {
+                        cartProduct = list.get(i);
+                        ProductDetail productDetail = productDetailService.findById(list.get(i).getProduct().getId());
+                        if (list.get(i).getQuantity() > productDetail.getQuantity()) {
+                            cartProduct.setQuantity(productDetail.getQuantity());
+                            list = cartService.update(productDetail.getId(), productDetail.getQuantity());
+//                            list.add(cartProduct);
+                        }
+                    }
+                }
+            }
+            session.setAttribute("list", list);
         }
+
 
         if (list == null || list.isEmpty()) {
             session.setAttribute("pageView", "/user/page/product/cart_null.html");
@@ -280,7 +311,9 @@ public class CartController {
         }
 
         for (CartProduct product : list) {
-            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive() && (LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate()))) {
+            if (product.getProduct().getCoupon() != null && product.getProduct().getCoupon().isActive() &&
+                    ((LocalDate.now().isAfter(product.getProduct().getCoupon().getDateStart().toLocalDate()) || LocalDate.now().isEqual(product.getProduct().getCoupon().getDateStart().toLocalDate())) &&
+                            LocalDate.now().isBefore(product.getProduct().getCoupon().getDateEnd().toLocalDate()) || LocalDate.now().isEqual(product.getProduct().getCoupon().getDateEnd().toLocalDate()))) {
                 reduceMoney = product.getProduct().getPriceExport().subtract(product.getProduct().getPriceExport().multiply(new BigDecimal(product.getProduct().getCoupon().getValue()).divide(new BigDecimal(100))));
                 total = total.add(reduceMoney.multiply(BigDecimal.valueOf(product.getQuantity())));
                 listRedu.add(reduceMoney);
@@ -308,6 +341,7 @@ public class CartController {
                 cartProductId.setCart(cart);
             }
             boolean check = cartProductService.delete(cartProductId);
+            session.setAttribute("list", cartService.getOneByUser(userDetailDto.getId()).getListCartPro());
         } else {
             List<CartProduct> list = new ArrayList<>();
             for (int i = 0; i < id.size(); i++) {

@@ -39,9 +39,9 @@
                              aria-haspopup="true" aria-expanded="true">
                             Hãng
                         </div>
-                        <div class="dropdown-menu w-px-500 h-auto" style="overflow-x: hidden; max-height: 300px">
-                            <div class="pt-2 px-4 justify-content-between">
-                                <div class="d-inline mx-3 " th:each="brand:${listBrand}">
+                        <div class="dropdown-menu w-px-600 h-auto" style="overflow-x: hidden; max-height: 300px">
+                            <div class="pt-2 px-4 row row-cols-3">
+                                <div class="d-inline col" th:each="brand:${listBrand}">
                                     <div class="form-check form-check-inline w-auto pb-2">
                                         <input type="checkbox" class="form-check-input filter-brand"
                                                th:id="|brand${brand.id}|" th:value="${brand.id}"

@@ -84,11 +84,11 @@ public class BillDetailController {
 
     private List<BillStatus> billStatus(List<BillStatus> billStatusList, String code) {
         if (code.equals("WP")) {
-            billStatusList.removeIf(s -> s.getCode().equals("WP") &&
-                    s.getCode().equals("PG") &&
-                    s.getCode().equals("DE") &&
-                    s.getCode().equals("CO") &&
-                    s.getCode().equals("CA")
+            billStatusList.removeIf(s -> !s.getCode().equals("WP") &&
+                    !s.getCode().equals("PG") &&
+                    !s.getCode().equals("DE") &&
+                    !s.getCode().equals("CO") &&
+                    !s.getCode().equals("CA")
             );
         }
         if (code.equals("PG")) {

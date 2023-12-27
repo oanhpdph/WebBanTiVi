@@ -58,7 +58,9 @@ public class ProductDetailUserController {
         model.addAttribute("productAll", product.getProduct());
 
         BigDecimal reduceMoney = BigDecimal.valueOf(0);
-        if (product.getCoupon() != null && product.getCoupon().isActive() && (LocalDate.now().isAfter(product.getCoupon().getDateStart().toLocalDate()) && LocalDate.now().isBefore(product.getCoupon().getDateEnd().toLocalDate()))) {
+        if (product.getCoupon() != null && product.getCoupon().isActive()
+                && ((LocalDate.now().isAfter(product.getCoupon().getDateStart().toLocalDate()) || (LocalDate.now().isEqual(product.getCoupon().getDateStart().toLocalDate())))
+                && ((LocalDate.now().isBefore(product.getCoupon().getDateEnd().toLocalDate()) || LocalDate.now().isEqual(product.getCoupon().getDateEnd().toLocalDate()))))) {
             reduceMoney = product.getPriceExport().subtract(product.getPriceExport().multiply(BigDecimal.valueOf(Double.parseDouble(product.getCoupon().getValue())).divide(new BigDecimal(100))));
         }
         model.addAttribute("reduceMoney", reduceMoney);
@@ -98,44 +100,99 @@ public class ProductDetailUserController {
         String url = request.getRequestURI();
         ProductDetail productDetail = productDetailService.findById(id);
         List<CartProduct> list = new ArrayList<>();
+        UserDetailDto userDetailDto = checkLogin.checkLogin();
+        boolean check = false;
         if (session.getAttribute("list") != null) {
             list = (List<CartProduct>) session.getAttribute("list");
-            if (list.isEmpty() == false) {
-                boolean check = false;
+            if (list.isEmpty() == false) {// list có phần tử
                 for (CartProduct cartProduct : list) {
                     if (cartProduct.getProduct().getId() == id) {
-                        if (cartProduct.getQuantity() + qty < 10) {
+                        if (cartProduct.getQuantity() + qty <= 10) {
                             if (cartProduct.getQuantity() + qty > productDetail.getQuantity()) {
                                 redirectAttributes.addFlashAttribute("message", false);
                                 return "redirect:" + url;
                             } else {
-                                session.setAttribute("list", cartService.add(id, qty));
+//                                session.setAttribute("list", cartService.add(id, qty));
                                 check = true;
                                 break;
                             }
+                        } else if (cartProduct.getQuantity() + qty > 10) {
+                            redirectAttributes.addFlashAttribute("message", "qua10");
+                            return "redirect:" + url;
                         } else {
                             redirectAttributes.addFlashAttribute("message", false);
                             return "redirect:" + url;
                         }
-
+                    } else {
+                        check = true;
                     }
                 }
-                if (check == false) {
-                    session.setAttribute("list", cartService.add(id, qty));
-                }
             } else {
-                session.setAttribute("list", cartService.add(id, qty));
+                list = (List<CartProduct>) session.getAttribute("list");
+                check = true;
+                for (CartProduct cartProduct : list) {
+                    if (cartProduct.getQuantity() + qty <= 10) {
+//                session.setAttribute("list", cartService.add(id, qty));
+                        if (qty > productDetail.getQuantity()) {
+                            redirectAttributes.addFlashAttribute("message", false);
+                            return "redirect:" + url;
+                        } else {
+                            check = true;
+                        }
+                    } else {
+                        redirectAttributes.addFlashAttribute("message", false);
+                        return "redirect:" + url;
+                    }
+                }
             }
         } else {
-            session.setAttribute("list", cartService.add(id, qty));
+            if (qty > productDetail.getQuantity()) {
+                redirectAttributes.addFlashAttribute("message", false);
+                return "redirect:" + url;
+            } else {
+                check = true;
+            }
         }
-        UserDetailDto userDetailDto = checkLogin.checkLogin();
-        if (userDetailDto != null) {
-            CartDto cartDto = new CartDto();
-            cartDto.setIdProduct(id);
-            cartDto.setIdUser(userDetailDto.getId());
-            cartDto.setQuantity(qty);
-            cartProductService.save(cartDto);
+        if (check == true) {
+            List<CartProduct> list1 = new ArrayList<>();
+
+            if (session.getAttribute("list") != null) {
+                list1 = (List<CartProduct>) session.getAttribute("list");
+            }
+            for (CartProduct cartProduct : list1) {
+                if (cartProduct.getProduct().getId() == id) {
+                    if (qty + cartProduct.getQuantity() > productDetail.getQuantity()) {
+                        redirectAttributes.addFlashAttribute("message", false);
+                        return "redirect:" + url;
+                    }
+                } else {
+                    if (qty > productDetail.getQuantity()) {
+                        redirectAttributes.addFlashAttribute("message", false);
+                        return "redirect:" + url;
+                    }
+                }
+            }
+            if (userDetailDto != null) {
+
+                CartDto cartDto = new CartDto();
+                cartDto.setIdProduct(id);
+                cartDto.setIdUser(userDetailDto.getId());
+                cartDto.setQuantity(qty);
+                CartProduct cartProduct = cartProductService.save(cartDto);
+                boolean checkTrung = false;
+                for (int i = 0; i < list1.size(); i++) {
+                    if (list1.get(i).getProduct().getId() == id) {
+                        list1.set(i, cartProduct);
+                        checkTrung = true;
+                    }
+                }
+                if (checkTrung == false) {
+                    list1.add(cartProduct);
+                }
+            } else {
+                list1 = cartService.add(id, qty);
+            }
+            session.setAttribute("list", list1);
         }
         redirectAttributes.addFlashAttribute("message", true);
         return "redirect:" + url;
@@ -164,8 +221,9 @@ public class ProductDetailUserController {
             if (!bills.isEmpty()) {
                 for (Bill bill : bills) {
                     for (BillProduct billProduct : bill.getBillProducts()) {
-                        if (billProduct.getProduct().getId() == id) {
+                        if (billProduct.getProduct().getId() == id && billProduct.getBill().getBillStatus().getCode().equals("CO")) {
                             model.addAttribute("hasBuy", true);
+                            break;
                         }
                     }
                 }

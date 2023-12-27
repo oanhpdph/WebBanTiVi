@@ -15,7 +15,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -72,19 +74,38 @@ public class UserController {
         List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
         List<Bill> listBillFilter = this.billService.listBillFilter(billList);
         List<Bill> listBillFilterStill = this.billService.listBillFilterStill(billList);
+        List<Boolean> listeck = new ArrayList<>();
+        for (int i = 0; i < billList.size(); i++) {
+            if (billList.get(i).getDeliveryNotes().get(0).getReceivedDate() == null) {
+                boolean check = false;
+                listeck.add(check);
+                continue;
+            }
+            if (billList.get(i).getDeliveryNotes().get(0).getReceivedDate().compareTo(today) <= 3) {
+                boolean check = true;
+                listeck.add(check);
+            } else {
+                boolean check = false;
+                listeck.add(check);
+            }
+        }
+        model.addAttribute("check", listeck);
+
         model.addAttribute("listBillCheck", listBillFilter);
         model.addAttribute("listBillFilterStill", listBillFilterStill);
-        model.addAttribute("today", today);
         model.addAttribute("bill", billList);
         return "/user/index";
     }
 
     @PostMapping("/return/{id}")
     public String returnProduct(@PathVariable("id") Integer id,
-                                @RequestBody List<ReturnDto> returnDto) {
+                                @RequestBody List<ReturnDto> returnDto, Model model, RedirectAttributes redirectAttributes) {
         this.billService.logicBillReturn(id, returnDto);
-        if (checkLogin.checkLogin() == null) {
-            return "redirect:/";
+        Bill bill = this.billService.getOneById(id);
+        String code = bill.getCode();
+        redirectAttributes.addFlashAttribute("return", "return");
+        if (code == null || code != "") {
+            return "redirect:/search_order_user?search=" + code;
         }
         return "redirect:/order";
     }
@@ -96,15 +117,24 @@ public class UserController {
         return "/user/index";
     }
 
-    @PostMapping("/search_order_user")
+    @GetMapping("/search_order_user")
     public String getSearchOder(@ModelAttribute("search") String search, HttpSession session, Model model) {
-        Optional<Bill> bill = this.billService.findByCode(search);
+        Optional<Bill> bill = this.billService.findByCode(search.trim());
         if (bill.isEmpty()) {
             model.addAttribute("errorSearch", "Xin lỗi! Đơn hàng bạn tìm không tồn tại trên hệ thống!");
             return "/user/index";
         }
-        Date today = new Date();
-        session.setAttribute("today", today);
+        boolean check = false;
+        if (bill.get().getDeliveryNotes().get(0).getReceivedDate() != null) {
+            if (bill.get().getDeliveryNotes().get(0).getReceivedDate().compareTo(today) <= 3) {
+                check = true;
+            } else {
+                check = false;
+            }
+        }
+        session.setAttribute("checkReturn", check);
+
+
         session.setAttribute("bill", bill.get());
         session.setAttribute("bool", this.billService.checkBillNoLogin(search));
         return "redirect:/search_order";
@@ -115,10 +145,16 @@ public class UserController {
         Bill billCancel = this.billService.getOneById(id);
         billCancel.setBillStatus(this.billStatusService.getOneBycode("CA"));
         this.billService.add(billCancel);
-        if(checkLogin.checkLogin() !=null){
-            return "redirect:/order";
+        if (checkLogin.checkLogin() != null) {
+            UserDetailDto userDetailDto = checkLogin.checkLogin();
+            List<Bill> billList = this.billService.findAllBillByUser(userDetailDto.getId());
+            for (Bill bill : billList) {
+                if (billCancel.equals(bill)) {
+                    return "redirect:/order";
+                }
+            }
         }
-        return "redirect:/";
+        return "redirect:/search_order_user?search=" + billCancel.getCode();
     }
 
 }

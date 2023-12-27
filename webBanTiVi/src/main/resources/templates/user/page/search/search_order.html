@@ -13,6 +13,7 @@
         <div class="tab-content col-lg-9">
             <div class="tab-pane fade show active " id="navs-top-profile" role="tabpanel">
                 <h4>Đơn hàng của bạn</h4>
+                <input type="text" th:value="${return}" id="return" hidden="hidden" >
                 <div class="mb-4 mx-4">
                     <div class="mb-3 row order">
                         <div class="row mt-3">
@@ -45,7 +46,7 @@
                                    th:href="@{/invoice/invoice_detail/{id}(id=${session.bill.id})}"
                                 >Xem chi tiết
                                 </a>
-                                <button th:if="${session.bill.billStatus.code== 'CO' && (session.today.getTime()-session.bill.paymentDate.getTime()) <  86400000 * 3}" type="button"
+                                <button th:if="${session.bill.billStatus.code== 'CO' && session.checkReturn}" type="button"
                                         class="btn btn-outline-dark return" data-bs-toggle="modal"
                                         th:data-bs-target="|#modal${session.bill.id}|" th:value="${session.bill.id}">Trả
                                     hàng
@@ -73,12 +74,13 @@
                                         </div>
                                         <div th:if="${session.bool==true}">
                                             <h4 style="color: black" class="px-3"> Thông tin trả hàng</h4>
+                                            <p class="text-danger">(*)Lưu ý mỗi đơn hàng  chỉ được trả hàng một lần!</p>
                                             <div class="table-responsive text-nowrap">
                                                 <table class="table table-bordered">
                                                     <thead>
                                                     <tr>
                                                         <th>
-                                                            <input type="checkbox">
+                                                            <input type="checkbox"  th:id="|checkboxAll${session.bill.id}|">
                                                         </th>
                                                         <th>Tên sản phẩm</th>
                                                         <th>Số lượng</th>
@@ -187,3 +189,22 @@
 </section>
 <script src="/admin/plugin/js/loadImage.js"></script>
 <script src="/admin/plugin/js/order.js"></script>
+<script>
+    if(document.getElementById("return").value=="return") {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "success",
+            title: "Trả hàng thành công!"
+        });
+    }
+</script>

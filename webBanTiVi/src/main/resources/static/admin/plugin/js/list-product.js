@@ -317,7 +317,7 @@ $.each(document.getElementsByClassName("edit-product"), function (index, item) {
         getOneProduct(item).then(function (data) {
             var localData = data
             document.getElementById("save").value = data.id
-            $("#product-detail").val(data.id)
+            // $("#product-detail").val(data.id)
             var table = document.querySelector("#table-detail-modal tbody")
             $("#table-detail-modal tbody").empty()
 
@@ -402,19 +402,10 @@ $.each(document.getElementsByClassName("edit-product"), function (index, item) {
             })
         })
     })
-    // })
 })
 
 $.each($(".view-product"), function (index, item) {
         item.addEventListener("click", function () {
-            // var data = {
-            //     id: this.getAttribute('value'),
-            // }
-            // $.ajax({
-            //     url: "/product/get-one-product",
-            //     method: "get",
-            //     data: data,
-            //     success: function (data)
             getOneProductDetail(item).then(function (data) {
                 {
                     $("#save-product-detail").val(data.id)
@@ -626,7 +617,6 @@ function getOneProduct(item) {
     var data = {
         id: item.getAttribute('value')
     }
-    console.log(data)
     return new Promise(function (resolve, reject) {
         $.ajax({
             url: "/product/get-product-by-id",
@@ -641,6 +631,8 @@ function getOneProduct(item) {
     })
 }
 
+var productDetail;
+
 function getOneProductDetail(item) {
     var data = {
         id: item.getAttribute('value'),
@@ -651,6 +643,7 @@ function getOneProductDetail(item) {
             method: "get",
             data: data,
             success: function (data) {
+                productDetail = data;
                 resolve(data)
             },
             error: function (error) {
@@ -660,11 +653,12 @@ function getOneProductDetail(item) {
     })
 }
 
-$("#product-detail").on("click", function () {
+$(".product-detail").on("click", function () {
     getOneProduct(this).then(function (data) {
         $("#name__product__add").text(data.nameProduct + " " + data.sku)
         $("#add-product-detail").val(data.id)
         var fieldList = data.productDetails[0].fieldList
+        $(".attributes").remove()
         $.each(fieldList, function (index, item) {
             if (fieldList.length - 1 !== index) {
                 // Sao chép thẻ cha và tất cả các thẻ con
@@ -672,7 +666,7 @@ $("#product-detail").on("click", function () {
 
                 // Xóa thuộc tính id để tránh trùng lặp
                 clonedElement.removeAttr("id");
-
+                $(clonedElement).addClass("attributes")
                 // Thêm thẻ sao chép vào đích
                 $("#group-attribute").append(clonedElement);
             }
@@ -765,8 +759,7 @@ $("#add-product-detail").on('click', function () {
                                 icon: "success",
                                 title: "Tạo thành công, tải lại trang để làm mới"
                             });
-                        }
-                        else{
+                        } else {
                             const Toast = Swal.mixin({
                                 toast: true,
                                 position: "top-end",
@@ -808,31 +801,43 @@ function validateAddProductDetail() {
                             $("#error-sku").text("Mã sku đã tồn tại")
                             check = false
                             return false
+                        } else {
+                            $("#error-sku").text("")
                         }
                     })
                 }
                 if ($("#price-export").val().trim().length == 0 || $("#price-export").val() < 0) {
-                    $("#error-priceExport").text("Giá bán >=0")
+                    $("#error-priceExport").text("Giá bán phải >=0")
                     check = false
+                } else {
+                    $("#price-export").text("")
                 }
                 if ($("#price-import").val().trim().length == 0 || $("#price-import").val() < 0) {
-                    $("#error-priceImport").text("Giá nhập >=0")
+                    $("#error-priceImport").text("Giá nhập phải >=0")
                     check = false
+                } else {
+                    $("#price-import").text("")
                 }
                 if ($("#quantity").val().trim().length == 0 || $("#quantity").val() < 0) {
-                    $("#error-quantity").text("Số lượng sản phẩm >=0")
+                    $("#error-quantity").text("Số lượng sản phẩm phải >=0")
                     check = false
+                } else {
+                    $("#quantity").text("")
                 }
                 $.each($(".value-attribute"), function (index, item) {
                     if ($(item).val().trim().length == 0) {
-                        $(".error-attribute").eq(index).text("Cần nhập giá trị cho thông số")
+                        $(".error-attribute").eq(index).text("Cần nhập giá trị cho thuộc tính")
                         check = false
+                    } else {
+                        $(".error-attribute").eq(index).text("")
                     }
                 })
                 $.each($(".file-input"), function (index, item) {
                     if ($(item).val().trim().length == 0) {
                         $("#error-image").text("Cần thêm đủ 5 ảnh cho sản phẩm")
                         check = false
+                    } else {
+                        $("#error-image").text("")
                     }
                 })
                 resolve(check)
@@ -850,18 +855,40 @@ function validateUpdateProductDetail() {
             url: '/product/product-detail/all',
             method: "get",
             success: function (data) {
-                var check
-                if ($("#price-export").val().trim().length == 0 || $("#price-export").val() < 0) {
+                var check;
+                if ($("#sku").val().trim().length == 0) {
+                    $("#error-sku").text("Chưa nhập mã sku")
+                    check = false
+                } else {
+                    if ($("#sku").val().trim() != productDetail.sku) {
+                        $.each(data, function (index, item) {
+                            if ($("#sku").val().trim() == item) {
+                                $("#error-sku").text("Mã sku đã tồn tại")
+                                check = false
+                                return false
+                            } else {
+                                $("#error-sku").text("")
+                            }
+                        })
+                    }
+                }
+                if ($("#price-export").val().trim().length === 0 || $("#price-export").val() < 0) {
                     $("#error-priceExport").text("Giá bán >=0")
                     check = false
+                } else {
+                    $("#error-priceExport").text("")
                 }
-                if ($("#price-import").val().trim().length == 0 || $("#price-import").val() < 0) {
+                if ($("#price-import").val().trim().length === 0 || $("#price-import").val() < 0) {
                     $("#error-priceImport").text("Giá nhập >=0")
                     check = false
+                } else {
+                    $("#error-priceImport").text("")
                 }
                 if ($("#quantity").val().trim().length == 0 || $("#quantity").val() < 0) {
                     $("#error-quantity").text("Số lượng sản phẩm >=0")
                     check = false
+                } else {
+                    $("#error-quantity").text("")
                 }
                 resolve(check)
             }

@@ -72,7 +72,7 @@
                                     placeholder="Nhập username"
                                     th:field="*{username}"
                             />
-                            <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}" />
+                            <p th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"/>
                             <p class="text-danger" th:if="${errorUsername!=''}">[(${errorUsername})]</p>
                         </div>
                         <div class="mb-3">
@@ -85,20 +85,21 @@
                                     placeholder="Nhập email"
                                     th:field="*{email}"
                             />
-                            <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}" />
+                            <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"/>
                             <p class="text-danger" th:if="${errorEmail!=''}">[(${errorEmail})]</p>
                         </div>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Số điện thoại</label>
                             <input
-                                    type="text"
+                                    type="number"
                                     class="form-control"
                                     id="phoneNumber"
                                     name="phoneNumber"
                                     placeholder="Nhập số điện thoại"
                                     th:field="*{phoneNumber}"
                             />
-                            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="error" th:errors="*{phoneNumber}" />
+                            <p th:if="${#fields.hasErrors('phoneNumber')}" th:errorclass="error"
+                               th:errors="*{phoneNumber}"/>
                             <p class="text-danger" th:if="${errorPhone!=''}">[(${errorPhone})]</p>
                         </div>
                         <div class="mb-3 form-password-toggle">
@@ -117,7 +118,7 @@
                                 ><i class="bx bx-hide"></i
                                 ></span>
                             </div>
-                            <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}" />
+                            <p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"/>
                         </div>
                         <div class="mb-3 form-password-toggle">
                             <label class="form-label" for="password">Nhập lại mật khẩu</label>
@@ -152,7 +153,7 @@
                                 </label>
                             </div>
                         </div>
-                        <button  class="btn btn-primary d-grid w-100" id="dangky" name="dangky">Đăng ký</button>
+                        <button class="btn btn-primary d-grid w-100" id="dangky" name="dangky">Đăng ký</button>
                     </form>
 
                     <p class="text-center">

@@ -50,12 +50,13 @@
             <div class="tab-pane fade show active " id="navs-top-profile" role="tabpanel">
                 <h4>Đơn hàng của bạn</h4>
                 <div class="mb-4 mx-4">
-                    <div class="mb-3 row order" th:each="bill : ${bill}">
+                    <div class="mb-3 row order" th:each="bill, billStat : ${bill}">
                         <div class="row mt-3">
                             <span class="text-start col-sm-6">Mã đơn:[(${bill.code})]</span>
                             <span class="text-end col-sm-6" th:text="${bill.billStatus.status}"></span>
                             <hr>
                         </div>
+                        <input type="text" th:value="${return}" id="return" hidden="hidden" >
                         <div class="row">
                             <div class="col-sm-6">
                                 <div th:each="image:${bill.billProducts[0].product.listImage}">
@@ -83,7 +84,7 @@
                                    th:href="@{/invoice/invoice_detail/{id}(id=${bill.id})}"
                                 >Xem chi tiết
                                 </a>
-                                <button th:if="${bill.billStatus.code== 'CO' &&  (today.getTime()-bill.paymentDate.getTime()) <  86400000 * 3 }" type="button"
+                                <button th:if="${bill.billStatus.code== 'CO' && check[billStat.index] }" type="button"
                                         class="btn btn-outline-dark return" data-bs-toggle="modal"
                                         th:data-bs-target="|#modal${bill.id}|" th:value="${bill.id}">Trả hàng
                                 </button>
@@ -104,11 +105,7 @@
                                                     aria-label="Close"></button>
                                         </div>
                                         <input type="text" th:value="${bill.id}" class="id" hidden="hidden">
-                                        <div th:each="billCheck:${listBillCheck}" th:if="${billCheck.id - bill.id ==0}">
-                                            <h4 class="text-center">Đơn hàng của bạn đã không còn sản phẩm nào được trả</h4>
-                                        </div>
-                                        <div th:each="billCheckStill:${listBillFilterStill}"
-                                             th:if="${billCheckStill.id - bill.id ==0}">
+                                        <div>
                                             <h4 style="color: black" class="px-3"> Thông tin trả hàng</h4>
                                             <div class="table-responsive text-nowrap">
                                                 <table class="table table-bordered">
@@ -225,3 +222,22 @@
 <script src="/admin/plugin/js/loadImage.js"></script>
 <script src="/admin/plugin/js/order.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script>
+    if(document.getElementById("return").value=="return") {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "success",
+            title: "Trả hàng thành công!"
+        });
+    }
+</script>
