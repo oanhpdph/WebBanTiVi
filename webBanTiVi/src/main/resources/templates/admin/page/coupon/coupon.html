@@ -30,7 +30,7 @@
                                          class="rounded image-preview mb-3"
                                          width="250">
                                 </div>
-                                <div  class="error imageloc"></div>
+                                <div class="error imageloc"></div>
                                 <label class="btn btn-primary me-2 mb-4" tabindex="0">
                                     <span class="d-none d-sm-block">Tải ảnh lên</span>
                                     <i class="bx bx-upload d-block d-sm-none"></i>
@@ -43,7 +43,7 @@
                                 <div class="mb-3">
                                     <label class="form-label">Mã giảm giá:</label>
                                     <input type="text" class="form-control" th:name="code">
-                                    <span  class="error codeloc"></span>
+                                    <span class="error codeloc"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Giá trị:</label>
@@ -51,18 +51,18 @@
                                         <input type="number" class="form-control" name="value">
                                         <span class="input-group-text">%</span>
                                     </div>
-                                    <span  class="error valueloc"></span>
+                                    <span class="error valueloc"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Ngày bắt đầu:</label>
                                     <input type="date" class="form-control" name="dateStart"
                                            min="">
-                                    <span  class="error dateStartloc"></span>
+                                    <span class="error dateStartloc"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Ngày kết thúc:</label>
                                     <input type="date" class="form-control" name="dateEnd"/>
-                                    <span  class="error dateEndloc"></span>
+                                    <span class="error dateEndloc"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Trạng thái:</label>
@@ -172,7 +172,7 @@
                                                              class="rounded mb-3 image-preview"
                                                              width="250">
                                                     </div>
-                                                    <div  class="error imageloc"></div>
+                                                    <div class="error imageloc"></div>
                                                     <label class="btn btn-primary me-2 mb-4"
                                                            tabindex="0">
                                                         <span class="d-none d-sm-block">Tải ảnh lên</span>
@@ -188,7 +188,7 @@
                                                         <label class="form-label">Mã giảm giá:</label>
                                                         <input type="text" class="form-control" th:name="code"
                                                                th:value="${coupon.code}">
-                                                        <span  class="error codeloc"></span>
+                                                        <!--                                                        <span  class="error codeloc"></span>-->
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Giá trị:</label>
@@ -197,19 +197,19 @@
                                                                    th:value="${coupon.value}">
                                                             <span class="input-group-text">%</span>
                                                         </div>
-                                                        <span  class="error valueloc"></span>
+                                                        <span class="error valueloc"></span>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Ngày bắt đầu:</label>
                                                         <input type="date" class="form-control" th:name="dateStart"
                                                                th:value="${coupon.dateStart}"/>
-                                                        <span  class="error dateStartloc"></span>
+                                                        <span class="error dateStartloc"></span>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Ngày kết thúc:</label>
                                                         <input type="date" class="form-control" th:name="dateEnd"
                                                                th:value="${coupon.dateEnd}"/>
-                                                        <span  class="error dateEndloc"></span>
+                                                        <span class="error dateEndloc"></span>
 
                                                     </div>
                                                     <div class="mb-3">
@@ -273,112 +273,112 @@
 </div>
 <script>
     $.each($(".formAdd"), function (index, item) {
-    $(item).on("submit", function (event) {
-        event.preventDefault();
-        var $this = this
-        console.log($this)
-        $.ajax({
-            url: '/admin/coupon/all',
-            method: "get",
-            success: function (data) {
-                var code = $this.code;
-                var value = $this.value;
-                var dateStart = $this.dateStart;
-                var dateEnd = $this.dateEnd;
-                let today = new Date().toISOString().slice(0, 10);
-                var avatar = $this.avatar;
-                var status = [];
+        $(item).on("submit", function (event) {
+            event.preventDefault();
+            var $this = this
+            console.log($this)
+            $.ajax({
+                url: '/admin/coupon/all',
+                method: "get",
+                success: function (data) {
+                    var code = $this.code;
+                    var value = $this.value;
+                    var dateStart = $this.dateStart;
+                    var dateEnd = $this.dateEnd;
+                    let today = new Date().toISOString().slice(0, 10);
+                    var avatar = $this.avatar;
+                    var status = [];
 
-                if (code.value.trim().length == 0) {
+                    if (code.value.trim().length == 0) {
 
-                    $(code).siblings('.codeloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!");
+                        $(code).siblings('.codeloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!");
 
-                    status.push(false);
-                } else {
-                    $.each(data, function (index, item) {
-                        if (code.value.trim() == item) {
-                            $(code).siblings('.codeloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Mã đã tồn tại!");
+                        status.push(false);
+                    } else {
+                        $.each(data, function (index, item) {
+                            if (code.value.trim() == item) {
+                                $(code).siblings('.codeloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Mã đã tồn tại!");
 
-                            status.push(false);
-                            return false
-                        } else {
-                            $(code).siblings('.codeloc').first().html( "");
+                                status.push(false);
+                                return false
+                            } else {
+                                $(code).siblings('.codeloc').first().html("");
 
-                        }
-                    })
-                }
-                // if (code.trim().length < 1) {
-                //     document.getElementById("codeloc").innerHTML =
-                //         " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!";
-                //     status.push(false);
-                // } else {
-                //     document.getElementById("codeloc").innerHTML = "";
-                // }
-                //image
-                if (avatar.value.trim().length < 1) {
-                    $(avatar).parent().siblings('.imageloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ảnh!");
+                            }
+                        })
+                    }
+                    // if (code.trim().length < 1) {
+                    //     document.getElementById("codeloc").innerHTML =
+                    //         " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!";
+                    //     status.push(false);
+                    // } else {
+                    //     document.getElementById("codeloc").innerHTML = "";
+                    // }
+                    //image
+                    if (avatar.value.trim().length < 1) {
+                        $(avatar).parent().siblings('.imageloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ảnh!");
 
-                    status.push(false);
-                } else {
-                    $(avatar).parent().siblings('.imageloc').first().html( "");
-                }
-                //value
-                if ((value.value.trim() == "") || (value.value <= 0)) {
+                        status.push(false);
+                    } else {
+                        $(avatar).parent().siblings('.imageloc').first().html("");
+                    }
+                    //value
+                    if ((value.value.trim() == "") || (value.value <= 0)) {
 
-                    $(value).parent().siblings('.valueloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
+                        $(value).parent().siblings('.valueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
 
-                    status.push(false);
-                } else if (value.value > 100) {
+                        status.push(false);
+                    } else if (value.value > 100) {
 
-                    $(value).parent().siblings('.valueloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được lớn hơn 100!");
+                        $(value).parent().siblings('.valueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được lớn hơn 100!");
 
-                    status.push(false);
-                } else {
-                    $(value).parent().siblings('.valueloc').first().html( "");
+                        status.push(false);
+                    } else {
+                        $(value).parent().siblings('.valueloc').first().html("");
 
-                }
-                //dateStart
-                if (dateStart.value.trim().length < 1) {
-                    $(dateStart).siblings('.dateStartloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!");
+                    }
+                    //dateStart
+                    if (dateStart.value.trim().length < 1) {
+                        $(dateStart).siblings('.dateStartloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!");
 
-                    status.push(false);
-                } else if (today.valueOf() > dateStart.value.valueOf()) {
-                    $(dateStart).siblings('.dateStartloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày bắt đầu phải lớn hơn ngày hiện tại!");
+                        status.push(false);
+                    } else if (today.valueOf() > dateStart.value.valueOf()) {
+                        $(dateStart).siblings('.dateStartloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày bắt đầu phải lớn hơn ngày hiện tại!");
 
-                    status.push(false);
-                } else {
-                    $(dateStart).siblings('.dateStartloc').first().html( "");
+                        status.push(false);
+                    } else {
+                        $(dateStart).siblings('.dateStartloc').first().html("");
 
-                }
-                //dateEnd
-                if (dateEnd.value.trim().length < 1) {
-                    $(dateEnd).siblings('.dateEndloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!");
+                    }
+                    //dateEnd
+                    if (dateEnd.value.trim().length < 1) {
+                        $(dateEnd).siblings('.dateEndloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!");
 
-                    status.push(false);
-                } else if (dateStart.value.valueOf() > dateEnd.value.valueOf()) {
+                        status.push(false);
+                    } else if (dateStart.value.valueOf() > dateEnd.value.valueOf()) {
 
-                    $(dateEnd).siblings('.dateEndloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!");
+                        $(dateEnd).siblings('.dateEndloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!");
 
-                    status.push(false);
-                } else {
-                    $(dateEnd).siblings('.dateEndloc').first().html( "");
+                        status.push(false);
+                    } else {
+                        $(dateEnd).siblings('.dateEndloc').first().html("");
 
-                }
+                    }
 
-                if (status.indexOf(false) > -1) {
-                    // resolve(false)
-                    // event.preventDefault()
+                    if (status.indexOf(false) > -1) {
+                        // resolve(false)
+                        // event.preventDefault()
+                        return
+                    }
+                    $this.submit();
+                },
+                error: function (error) {
+                    // reject(error)
                     return
                 }
-                $this.submit();
-            },
-            error: function (error) {
-                // reject(error)
-                return
-            }
+            })
         })
     })
-})
     $.each($(".formUpdate"), function (index, item) {
         $(item).on("submit", function (event) {
             event.preventDefault();
@@ -398,22 +398,26 @@
 
                     if (code.value.trim().length == 0) {
 
-                        $(code).siblings('.codeloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!");
+                        $(code).siblings('.codeloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!");
 
                         status.push(false);
                     } else {
-                        $.each(data, function (index, item) {
-                            if (code.value.trim() == item) {
-                                $(code).siblings('.codeloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Mã đã tồn tại!");
+                        $(code).siblings('.codeloc').first().html("");
 
-                                status.push(false);
-                                return false
-                            } else {
-                                $(code).siblings('.codeloc').first().html( "");
-
-                            }
-                        })
                     }
+                    // else {
+                    //     $.each(data, function (index, item) {
+                    //         if (code.value.trim() == item) {
+                    //             $(code).siblings('.codeloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Mã đã tồn tại!");
+                    //
+                    //             status.push(false);
+                    //             return false
+                    //         } else {
+                    //             $(code).siblings('.codeloc').first().html("");
+                    //
+                    //         }
+                    //     })
+                    // }
                     // if (code.trim().length < 1) {
                     //     document.getElementById("codeloc").innerHTML =
                     //         " <i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!";
@@ -422,53 +426,55 @@
                     //     document.getElementById("codeloc").innerHTML = "";
                     // }
                     //image
-                    if (avatar.value.trim().length < 1) {
-                        $(avatar).parent().siblings('.imageloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ảnh!");
-
-                        status.push(false);
-                    } else {
-                        $(avatar).parent().siblings('.imageloc').first().html( "");
-                    }
+                    // if (avatar.value.trim().length < 1) {
+                    //     $(avatar).parent().siblings('.imageloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ảnh!");
+                    //
+                    //     status.push(false);
+                    // } else {
+                    //     $(avatar).parent().siblings('.imageloc').first().html("");
+                    // }
                     //value
                     if ((value.value.trim() == "") || (value.value <= 0)) {
 
-                        $(value).parent().siblings('.valueloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
+                        $(value).parent().siblings('.valueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
 
                         status.push(false);
                     } else if (value.value > 100) {
 
-                        $(value).parent().siblings('.valueloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được lớn hơn 100!");
+                        $(value).parent().siblings('.valueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được lớn hơn 100!");
 
                         status.push(false);
                     } else {
-                        $(value).parent().siblings('.valueloc').first().html( "");
+                        $(value).parent().siblings('.valueloc').first().html("");
 
                     }
                     //dateStart
                     if (dateStart.value.trim().length < 1) {
-                        $(dateStart).siblings('.dateStartloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!");
+                        $(dateStart).siblings('.dateStartloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!");
 
                         status.push(false);
-                    } else if (today.valueOf() > dateStart.value.valueOf()) {
-                        $(dateStart).siblings('.dateStartloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày bắt đầu phải lớn hơn ngày hiện tại!");
-
-                        status.push(false);
-                    } else {
-                        $(dateStart).siblings('.dateStartloc').first().html( "");
+                    }
+                        // else if (today.valueOf() > dateStart.value.valueOf()) {
+                        //     $(dateStart).siblings('.dateStartloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày bắt đầu phải lớn hơn ngày hiện tại!");
+                        //
+                        //     status.push(false);
+                    // }
+                    else {
+                        $(dateStart).siblings('.dateStartloc').first().html("");
 
                     }
                     //dateEnd
                     if (dateEnd.value.trim().length < 1) {
-                        $(dateEnd).siblings('.dateEndloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!");
+                        $(dateEnd).siblings('.dateEndloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!");
 
                         status.push(false);
                     } else if (dateStart.value.valueOf() > dateEnd.value.valueOf()) {
 
-                        $(dateEnd).siblings('.dateEndloc').first().html( "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!");
+                        $(dateEnd).siblings('.dateEndloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!");
 
                         status.push(false);
                     } else {
-                        $(dateEnd).siblings('.dateEndloc').first().html( "");
+                        $(dateEnd).siblings('.dateEndloc').first().html("");
 
                     }
 
@@ -478,6 +484,7 @@
                         return
                     }
                     $this.submit();
+                    $("#formUpdate")[0].submit();
                 },
                 error: function (error) {
                     // reject(error)

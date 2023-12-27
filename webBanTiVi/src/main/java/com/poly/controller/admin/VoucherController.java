@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -32,6 +33,11 @@ public class VoucherController {
 
 
     // voucher
+    @GetMapping("/voucher/all")
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(voucherService.findAllList().stream().map(Voucher::getCode).collect(Collectors.toList()));
+    }
+
     @GetMapping("/voucher/list")
     public String voucher(HttpSession session, Model model,
                           @RequestParam(name = "page", required = false, defaultValue = "1") Integer pageRequest,

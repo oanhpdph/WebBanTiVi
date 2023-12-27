@@ -49,6 +49,7 @@ public class PromotionController {
         model.addAttribute("listcoupon", couponService.getAllByActive(date));
         model.addAttribute("listvoucher", voucherService.findAllByDate(date));
         session.setAttribute("pageView", "/user/page/promotion/promotions.html");
+        model.addAttribute("active","promotion");
         return "/user/index";
     }
 

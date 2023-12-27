@@ -152,7 +152,7 @@ public class CartController {
     public String addBill(@Valid @ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
                           Model model,
-                          String city, String district, String ward
+                          String city, String district, String ward, RedirectAttributes redirectAttributes
     ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
         if (result.hasErrors()) {
@@ -190,13 +190,14 @@ public class CartController {
             } else if (checkEmail != null && checkEmail.getRoles() == null) {
                 billProRes.setCustomer(checkEmail);
             } else if (checkEmail != null && checkEmail.getRoles().equals("USER")) {
+                redirectAttributes.addFlashAttribute("message", "emailTrung");
                 return "redirect:/pay";// thông báo email đã dùng đăng ký tài khoản
             }
         } else {
             billProRes.setCustomer(customerService.findByEmail(userDetailDto.getEmail()));
             billProRes.setEmail(userDetailDto.getEmail());
         }
-        billProRes.setAddress(billProRes.getAddress() + "," + ward + "," + district + "," + city);
+        billProRes.setAddress(billProRes.getAddress() + ", " + ward + ", " + district + ", " + city);
         Bill bill1 = billService.add(billProRes);// tạo hóa đơn mới
         billProRes.setBill(bill1);
 
@@ -345,6 +346,9 @@ public class CartController {
                         } else if (qty.get(i) < 1) {
                             redirectAttributes.addFlashAttribute("message", "nhohon1");
                             return "redirect:/cart";
+                        } else if (qty.get(i) > 10) {
+                            redirectAttributes.addFlashAttribute("message", "qua10");
+                            return "redirect:/cart";
                         } else {
                             list.add(cartProductService.update(cartProduct));
                             session.setAttribute("list", list);
@@ -365,6 +369,9 @@ public class CartController {
                         return "redirect:/cart";
                     } else if (qty.get(i) < 1) {
                         redirectAttributes.addFlashAttribute("message", "nhohon1");
+                        return "redirect:/cart";
+                    } else if (qty.get(i) > 10) {
+                        redirectAttributes.addFlashAttribute("message", "qua10");
                         return "redirect:/cart";
                     } else {
                         list = cartService.update(id.get(i), qty.get(i));

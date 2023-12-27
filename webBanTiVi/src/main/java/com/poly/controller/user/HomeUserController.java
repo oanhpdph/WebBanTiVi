@@ -167,4 +167,12 @@ public class HomeUserController {
         }
         return listReturn;
     }
+
+    @GetMapping("/policy")
+    public String policy(HttpSession session, Model model) {
+        session.setAttribute("pageView", "/user/page/policy/policy.html");
+        model.addAttribute("active", "policy");
+
+        return "user/index";
+    }
 }
