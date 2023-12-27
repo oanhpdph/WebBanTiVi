@@ -177,7 +177,8 @@ CREATE TABLE bill
 	 id_voucher		  int references voucher(id),
 	 voucher_value	  money,
 	 payment_status	  INT default 1,
-     note             NVARCHAR(max)
+     note             NVARCHAR(max),
+	 ship_price	  Money
   )
 
 -- hoa don chi tiet

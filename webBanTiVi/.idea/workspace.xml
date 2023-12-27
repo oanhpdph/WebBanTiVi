@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="" />
+    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -68,7 +70,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/static/admin/assets/js" />
+    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/finaljava6" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -318,6 +320,8 @@
       <workItem from="1702601484003" duration="13595000" />
       <workItem from="1702632377127" duration="19000" />
       <workItem from="1702632488925" duration="6749000" />
+      <workItem from="1703338645419" duration="547000" />
+      <workItem from="1703686362429" duration="1136000" />
     </task>
     <servers />
   </component>
