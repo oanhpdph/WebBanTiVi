@@ -1,115 +1,165 @@
-<h4 class="fw-semibold py-3 mb-4"> Danh sách Voucher</h4>
+<h4 class="fw-semibold py-3 mb-4">Danh sách Voucher</h4>
 
 <div class="row justify-content-end me-4">
-    <button type="button" class="btn btn-success mb-4 w-auto" data-bs-toggle="modal" data-bs-target="#largeModal">
-        <i class='tf-icon bx bx-plus-medical'></i> Thêm voucher
+    <button
+            type="button"
+            class="btn btn-success mb-4 w-auto"
+            data-bs-toggle="modal"
+            data-bs-target="#largeModal"
+    >
+        <i class="tf-icon bx bx-plus-medical"></i> Thêm voucher
     </button>
 </div>
 <div class="mb-4">
-    <div class="modal fade" th:id="largeModal" tabindex="-1"
-         aria-hidden="true">
+    <div class="modal fade" th:id="largeModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Thông tin voucher</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                    ></button>
                 </div>
-                <form th:action="@{/admin/voucher/add}" method="post" th:object="${voucher}"
-                      enctype="multipart/form-data" class="formAdd"
-                      th:name="myform">
+                <form
+                        th:action="@{/admin/voucher/add}"
+                        method="post"
+                        th:object="${voucher}"
+                        enctype="multipart/form-data"
+                        class="formAdd"
+                        th:name="myform"
+                >
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-4 col-sm-12 col-xl-3 text-center">
                                 <div class="text-center">
-                                    <img th:src="@{'/image/product/anhdefault.jpg'}" alt="Chưa có ảnh"
-                                         class="rounded image-preview mb-3"
-                                         width="200">
+                                    <img
+                                            th:src="@{'/image/product/anhdefault.jpg'}"
+                                            alt="Chưa có ảnh"
+                                            class="rounded image-preview mb-3"
+                                            width="200"
+                                    />
                                 </div>
-                                <span class="error imageloc"></span> <br>
+                                <span class="error imageloc"></span> <br />
                                 <label class="btn btn-primary me-2 mb-4" tabindex="0">
                                     <span class="d-none d-sm-block">Tải ảnh lên</span>
                                     <i class="bx bx-upload d-block d-sm-none"></i>
-                                    <input type="file" class="file-input" hidden=""
-                                           name="image">
+                                    <input
+                                            type="file"
+                                            class="file-input"
+                                            hidden=""
+                                            name="image"
+                                    />
                                 </label>
                             </div>
                             <div class="row col-xl-9">
-                                <div class=" col-lg-6 col-md-6">
+                                <div class="col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Mã voucher:</label>
-                                        <input type="text" class="form-control" th:name="code">
+                                        <input type="text" class="form-control" th:name="code" />
                                         <span class="error codeloc"></span>
                                     </div>
                                 </div>
-                                <div class=" col-lg-6 col-md-6">
+                                <div class="col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Tên voucher:</label>
-                                        <input type="text" class="form-control" th:name="nameVoucher">
+                                        <input
+                                                type="text"
+                                                class="form-control"
+                                                th:name="nameVoucher"
+                                        />
                                         <span class="error nameVoucherloc"></span>
                                     </div>
                                 </div>
 
-                                <div class=" col-lg-6 col-md-6">
+                                <div class="col-lg-6 col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Giá trị giảm</label>
+                                        <label class="form-label">Giảm tối đa</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control" th:name="value">
+                                            <input type="text" class="form-control" th:name="value" />
                                             <span class="input-group-text">VNĐ</span>
                                         </div>
                                         <span class="error valueloc"></span>
                                     </div>
-
                                 </div>
-                                <div class=" col-lg-6 col-md-6">
+                                <div class="col-lg-6 col-md-6">
                                     <div class="mb-3">
-                                        <label class="form-label">Giá trị tối thiểu</label>
+                                        <label class="form-label">Đơn tối thiểu</label>
                                         <div class="input-group">
-                                            <input class="form-control" type="text"
-                                                   th:name="minimumValue"
-                                            >
+                                            <input
+                                                    class="form-control"
+                                                    type="text"
+                                                    th:name="minimumValue"
+                                            />
                                             <span class="input-group-text">VNĐ</span>
                                         </div>
                                         <span class="error minimumValueloc"></span>
                                     </div>
                                 </div>
 
-                                <div class=" col-lg-6 col-md-6">
+                                <div class="col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Ngày bắt đầu:</label>
-                                        <input type="date" class="form-control" th:name="startDay">
+                                        <input
+                                                type="date"
+                                                class="form-control"
+                                                th:name="startDay"
+                                        />
                                     </div>
                                     <span class="error startDayloc"></span>
                                 </div>
-                                <div class=" col-lg-6 col-md-6">
+                                <div class="col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Ngày kết thúc:</label>
-                                        <input type="date" class="form-control" th:name="expirationDate"/>
+                                        <input
+                                                type="date"
+                                                class="form-control"
+                                                th:name="expirationDate"
+                                        />
                                     </div>
                                     <span class="error expirationDateloc"></span>
                                 </div>
-                                <div class=" col-lg-6 col-md-6">
+                                <div class="col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Số lượng:</label>
-                                        <input type="number" class="form-control" th:name="quantity"/>
+                                        <input
+                                                type="number"
+                                                class="form-control"
+                                                th:name="quantity"
+                                        />
                                     </div>
                                     <span class="error quantityloc"></span>
                                 </div>
-                                <div class=" col-lg-6 col-md-6">
+                                <div class="col-lg-6 col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Trạng thái:</label>
                                         <div>
                                             <div class="form-check form-check-inline mt-3">
-                                                <input class="form-check-input" type="radio" th:name="active"
-                                                       id="inlineRadio1"
-                                                       th:value="true" checked>
-                                                <label class="form-check-label" for="inlineRadio1">Hoạt động</label>
+                                                <input
+                                                        class="form-check-input"
+                                                        type="radio"
+                                                        th:name="active"
+                                                        id="inlineRadio1"
+                                                        th:value="true"
+                                                        checked
+                                                />
+                                                <label class="form-check-label" for="inlineRadio1"
+                                                >Hoạt động</label
+                                                >
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="radio" th:name="active"
-                                                       id="inlineRadio2"
-                                                       th:value="false">
-                                                <label class="form-check-label" for="inlineRadio2">Không hoạt
-                                                    động</label>
+                                                <input
+                                                        class="form-check-input"
+                                                        type="radio"
+                                                        th:name="active"
+                                                        id="inlineRadio2"
+                                                        th:value="false"
+                                                />
+                                                <label class="form-check-label" for="inlineRadio2"
+                                                >Không hoạt động</label
+                                                >
                                             </div>
                                         </div>
                                     </div>
@@ -117,9 +167,14 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="reset" class="btn btn-outline-secondary">Làm mới
+                            <button type="reset" class="btn btn-outline-secondary">
+                                Làm mới
                             </button>
-                            <button type="submit" class="btn btn-primary" onclick="return confirm('Xác nhận thêm')">
+                            <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                    onclick="return confirm('Xác nhận thêm')"
+                            >
                                 Lưu
                             </button>
                         </div>
@@ -129,25 +184,45 @@
         </div>
     </div>
 </div>
-<div class="card mb-3 ">
+<div class="card mb-3">
     <div class="card-header">
-        <form class="col-12 mt-2" th:action="@{/admin/voucher/list}" method="get" th:object="${search}">
+        <form
+                class="col-12 mt-2"
+                th:action="@{/admin/voucher/list}"
+                method="get"
+                th:object="${search}"
+        >
             <div class="col-12 row">
                 <div class="col-7">
                     <div class="form-check input-group input-group-merge">
-                    <span class="input-group-text">
-                        <i class="bx bx-search"></i>
-                    </span>
-                        <input type="text" class="form-control" placeholder="Mã voucher, tên voucher" name="keywords"
-                               th:name="key" id="key" th:field="*{key}" autocomplete="off">
+            <span class="input-group-text">
+              <i class="bx bx-search"></i>
+            </span>
+                        <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Mã voucher, tên voucher"
+                                name="keywords"
+                                th:name="key"
+                                id="key"
+                                th:field="*{key}"
+                                autocomplete="off"
+                        />
                         <button class="btn btn-primary" type="submit">Tìm kiếm</button>
                     </div>
                 </div>
                 <div class="col-1">
-                    <button class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-offset="0,4"
-                            data-bs-placement="bottom" data-bs-html="true" title=""
-                            data-bs-original-title="<span>Reset filter</span>" aria-describedby="tooltip91262">
-                        <i class='bx bx-reset'></i>
+                    <button
+                            class="btn btn-secondary"
+                            data-bs-toggle="tooltip"
+                            data-bs-offset="0,4"
+                            data-bs-placement="bottom"
+                            data-bs-html="true"
+                            title=""
+                            data-bs-original-title="<span>Reset filter</span>"
+                            aria-describedby="tooltip91262"
+                    >
+                        <i class="bx bx-reset"></i>
                     </button>
                 </div>
             </div>
@@ -155,10 +230,18 @@
                 <div class="col-lg-9 col-xl-7 col-md-9 col-sm-8">
                     <div class="input-group form-check">
                         <div class="input-group input-group-merge input">
-                            <label for="date-seach-voucher" class="input-group-text">Select date:</label>
-                            <input type="text" class="form-control" id="date-seach-voucher" name="date"
-                                   th:field="*{date}"
-                                   placeholder="MM/DD/YYYY-MM/DD/YYYY" autocomplete="off">
+                            <label for="date-seach-voucher" class="input-group-text"
+                            >Select date:</label
+                            >
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="date-seach-voucher"
+                                    name="date"
+                                    th:field="*{date}"
+                                    placeholder="MM/DD/YYYY-MM/DD/YYYY"
+                                    autocomplete="off"
+                            />
                         </div>
                     </div>
                 </div>
@@ -168,12 +251,10 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-2 d-flex align-items-center">
-                <p>Voucher:
-
-                </p>
+                <p>Voucher:</p>
             </div>
         </div>
-        <hr>
+        <hr />
 
         <div class="table-responsive text-nowrap">
             <table class="table table-hover overflow-hidden">
@@ -186,7 +267,7 @@
                     <th>Ảnh</th>
                     <th>Giá trị</th>
                     <th>Số lượng</th>
-                    <th>Hoạt động</th>
+                    <th>Trạng thái</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -194,75 +275,114 @@
                 <tr th:each="voucher,Stat : ${session.listVoucher.content}">
                     <td th:text="${Stat.index+1}"></td>
                     <td th:text="${voucher.nameVoucher}"></td>
-                    <td><p>
-                        <img th:src="@{'/image/'+*{voucher.image}}"
-                             class="w-px-100"/>
-                    </p>
+                    <td>
+                        <p>
+                            <img th:src="@{'/image/'+*{voucher.image}}" class="w-px-100" />
+                        </p>
                     </td>
                     <td th:text="${voucher.value}"></td>
                     <td th:text="${voucher.quantity}"></td>
                     <td>
-                        <span th:text="${voucher.active} == true?'Hoạt động':'Không hoạt động'"/>
+              <span
+                      th:text="${voucher.active} == true?'Hoạt động':'Không hoạt động'"
+              />
                     </td>
                     <td>
-                        <button type="button" class="btn btn-icon btn-primary" data-bs-toggle="modal"
-                                th:data-bs-target="|#modal${voucher.id}|">
+                        <button
+                                type="button"
+                                class="btn btn-icon btn-primary"
+                                data-bs-toggle="modal"
+                                th:data-bs-target="|#modal${voucher.id}|"
+                        >
                             <i class="bx bxs-edit-alt"></i>
                         </button>
-                        <div class="modal fade" th:id="|modal${voucher.id}|" tabindex="-1"
-                             aria-hidden="true">
+                        <div
+                                class="modal fade"
+                                th:id="|modal${voucher.id}|"
+                                tabindex="-1"
+                                aria-hidden="true"
+                        >
                             <div class="modal-dialog modal-xl" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title">Thêm mới voucher</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                                        <button
+                                                type="button"
+                                                class="btn-close"
+                                                data-bs-dismiss="modal"
+                                                aria-label="Close"
+                                        ></button>
                                     </div>
-                                    <form th:action="@{/admin/voucher/update/{id}(id=${voucher.id})}" method="post"
-                                          th:object="${voucher}" class="formUpdate" enctype="multipart/form-data">
+                                    <form
+                                            th:action="@{/admin/voucher/update/{id}(id=${voucher.id})}"
+                                            method="post"
+                                            th:object="${voucher}"
+                                            class="formUpdate"
+                                            enctype="multipart/form-data"
+                                    >
                                         <div class="modal-body">
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-12 col-sm-12 col-xl-3 text-center">
+                                                <div
+                                                        class="col-lg-4 col-md-12 col-sm-12 col-xl-3 text-center"
+                                                >
                                                     <div class="text-center">
-                                                        <img th:src="@{'/image/'+*{image}}" alt="Chưa có ảnh"
-                                                             class="rounded image-preview mb-3"
-                                                             width="200">
+                                                        <img
+                                                                th:src="@{'/image/'+*{image}}"
+                                                                alt="Chưa có ảnh"
+                                                                class="rounded image-preview mb-3"
+                                                                width="200"
+                                                        />
                                                     </div>
-                                                    <span class="error imageloc"></span> <br/>
-                                                    <label class="btn btn-primary me-2 mb-4" tabindex="0">
+                                                    <span class="error imageloc"></span> <br />
+                                                    <label
+                                                            class="btn btn-primary me-2 mb-4"
+                                                            tabindex="0"
+                                                    >
                                                         <span class="d-none d-sm-block">Tải ảnh lên</span>
                                                         <i class="bx bx-upload d-block d-sm-none"></i>
-                                                        <input type="file" class="account-file-input file-input"
-                                                               hidden="" name="image">
+                                                        <input
+                                                                type="file"
+                                                                class="account-file-input file-input"
+                                                                hidden=""
+                                                                name="image"
+                                                        />
                                                     </label>
                                                 </div>
                                                 <div class="row col-lg-12 col-xl-9">
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="mb-3">
                                                             <label class="form-label">Mã voucher:</label>
-                                                            <input type="text" class="form-control"
-                                                                   th:name="code"
-                                                                   th:value="${voucher.code}">
+                                                            <input
+                                                                    type="text"
+                                                                    class="form-control"
+                                                                    th:name="code"
+                                                                    th:value="${voucher.code}"
+                                                            />
                                                             <span class="error codeloc"></span>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="mb-3">
                                                             <label class="form-label">Tên voucher:</label>
-                                                            <input type="text" class="form-control"
-                                                                   th:name="nameVoucher"
-                                                                   th:value="${voucher.nameVoucher}">
+                                                            <input
+                                                                    type="text"
+                                                                    class="form-control"
+                                                                    th:name="nameVoucher"
+                                                                    th:value="${voucher.nameVoucher}"
+                                                            />
                                                             <span class="error nameVoucherloc"></span>
                                                         </div>
-
                                                     </div>
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="mb-3">
-                                                            <label class="form-label">Giá trị giảm</label>
+                                                            <label class="form-label">Giảm tối đa</label>
                                                             <div class="input-group">
-                                                                <input type="text" class="form-control"
-                                                                       th:name="value"
-                                                                       th:value="${voucher.value}">
+                                                                <input
+                                                                        type="text"
+                                                                        class="form-control"
+                                                                        th:name="value"
+                                                                        th:value="${voucher.value}"
+                                                                />
                                                                 <span class="input-group-text">VNĐ</span>
                                                             </div>
                                                             <span class="error valueloc"></span>
@@ -272,34 +392,45 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Trạng thái:</label>
                                                             <div>
-                                                                <div class="form-check form-check-inline mt-3">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           th:name="active"
-                                                                           th:value="true"
-                                                                           th:checked="${voucher.active==true}"
+                                                                <div
+                                                                        class="form-check form-check-inline mt-3"
+                                                                >
+                                                                    <input
+                                                                            class="form-check-input"
+                                                                            type="radio"
+                                                                            th:name="active"
+                                                                            th:value="true"
+                                                                            th:checked="${voucher.active==true}"
+                                                                    />
+                                                                    <label class="form-check-label"
+                                                                    >Hoạt động</label
                                                                     >
-                                                                    <label class="form-check-label">Hoạt
-                                                                        động</label>
                                                                 </div>
                                                                 <div class="form-check form-check-inline">
-                                                                    <input class="form-check-input" type="radio"
-                                                                           th:name="active"
-                                                                           th:value="false"
-                                                                           th:checked="${voucher.active==false}">
+                                                                    <input
+                                                                            class="form-check-input"
+                                                                            type="radio"
+                                                                            th:name="active"
+                                                                            th:value="false"
+                                                                            th:checked="${voucher.active==false}"
+                                                                    />
                                                                     <label class="form-check-label"
-                                                                    >Không hoạt
-                                                                        động</label>
+                                                                    >Không hoạt động</label
+                                                                    >
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="mb-3">
-                                                            <label class="form-label">Giá trị tối thiểu</label>
+                                                            <label class="form-label">Đơn tối thiểu</label>
                                                             <div class="input-group">
-                                                                <input class="form-control" type="text"
-                                                                       th:name="minimumValue"
-                                                                       th:value="${#strings.replace(#numbers.formatDecimal(voucher.minimumValue, 0,'COMMA',0,'POINT'), ',', '')}">
+                                                                <input
+                                                                        class="form-control"
+                                                                        type="text"
+                                                                        th:name="minimumValue"
+                                                                        th:value="${#strings.replace(#numbers.formatDecimal(voucher.minimumValue, 0,'COMMA',0,'POINT'), ',', '')}"
+                                                                />
                                                                 <span class="input-group-text">VNĐ</span>
                                                             </div>
                                                             <span class="error minimumValueloc"></span>
@@ -308,57 +439,72 @@
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="mb-3">
                                                             <label class="form-label">Ngày bắt đầu:</label>
-                                                            <input type="date" class="form-control"
-                                                                   th:name="startDay"
-                                                                   th:value="${voucher.startDay}"
-                                                            >
+                                                            <input
+                                                                    type="date"
+                                                                    class="form-control"
+                                                                    th:name="startDay"
+                                                                    th:value="${voucher.startDay}"
+                                                            />
                                                         </div>
                                                         <span class="error startDayloc"></span>
                                                     </div>
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="mb-3">
                                                             <label class="form-label">Số lượng:</label>
-                                                            <input type="number" class="form-control"
-                                                                   th:name="quantity"
-                                                                   th:value="${voucher.quantity}"/>
+                                                            <input
+                                                                    type="number"
+                                                                    class="form-control"
+                                                                    th:name="quantity"
+                                                                    th:value="${voucher.quantity}"
+                                                            />
                                                         </div>
                                                         <span class="error quantityloc"></span>
                                                     </div>
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="mb-3">
-                                                            <label class="form-label">Ngày kết thúc :</label>
-                                                            <input type="date" class="form-control"
-                                                                   th:name="expirationDate"
-                                                                   th:value="${voucher.expirationDate}"/>
+                                                            <label class="form-label"
+                                                            >Ngày kết thúc :</label
+                                                            >
+                                                            <input
+                                                                    type="date"
+                                                                    class="form-control"
+                                                                    th:name="expirationDate"
+                                                                    th:value="${voucher.expirationDate}"
+                                                            />
                                                         </div>
                                                         <span id="expirationDateloc" class="error"></span>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="modal-footer">
                                             <div class="row justify-content-xl-end">
                                                 <div class="w-auto">
-                                                    <a th:href="@{'/admin/vouchercustomer/' + *{id}}"
-                                                       class="btn btn-primary btn-control">Xem chi tiết</a>
+                                                    <a
+                                                            th:href="@{'/admin/vouchercustomer/' + *{id}}"
+                                                            class="btn btn-primary btn-control"
+                                                    >Xem chi tiết</a
+                                                    >
                                                 </div>
 
                                                 <div class="w-auto">
-                                                    <button type="reset"
-                                                            class="btn btn-primary btn-control">
+                                                    <button
+                                                            type="reset"
+                                                            class="btn btn-primary btn-control"
+                                                    >
                                                         Làm mới
                                                     </button>
                                                 </div>
                                                 <div class="w-auto">
-                                                    <button type="submit"
+                                                    <button
+                                                            type="submit"
                                                             class="btn btn-primary btn-control"
-                                                            onclick="return confirm('Xác nhận cập nhật')">
+                                                            onclick="return confirm('Xác nhận cập nhật')"
+                                                    >
                                                         Cập nhật
                                                     </button>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </form>
                                 </div>
@@ -375,10 +521,9 @@
                 </tbody>
             </table>
         </div>
-        <hr class="card-separator">
+        <hr class="card-separator" />
     </div>
     <div class="card-footer">
-
         <!--        <div class="d-inline-flex float-end">-->
         <!--            <div aria-label="Page pagination">-->
         <!--                <ul class="pagination">-->
@@ -412,15 +557,15 @@
     </div>
 </div>
 <script>
-    const fileInputs = document.getElementsByClassName('file-input');
-    const imagePreviews = document.getElementsByClassName('image-preview');
+    const fileInputs = document.getElementsByClassName("file-input");
+    const imagePreviews = document.getElementsByClassName("image-preview");
     $.each($(".formAdd"), function (index, item) {
         $(item).on("submit", function (event) {
             event.preventDefault();
-            var $this = this
-            console.log($this)
+            var $this = this;
+            console.log($this);
             $.ajax({
-                url: '/admin/voucher/all',
+                url: "/admin/voucher/all",
                 method: "get",
                 success: function (data) {
                     var nameVoucher = $this.nameVoucher;
@@ -436,115 +581,183 @@
 
                     //code
                     if (code.value.trim().length == 0) {
-
-                        $(code).siblings('.codeloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!");
+                        $(code)
+                            .siblings(".codeloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!"
+                            );
 
                         status.push(false);
                     } else {
                         $.each(data, function (index, item) {
                             if (code.value.trim() == item) {
-                                $(code).siblings('.codeloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Mã đã tồn tại!");
+                                $(code)
+                                    .siblings(".codeloc")
+                                    .first()
+                                    .html(
+                                        "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Mã đã tồn tại!"
+                                    );
 
                                 status.push(false);
-                                return false
+                                return false;
                             } else {
-                                $(code).siblings('.codeloc').first().html("");
-
+                                $(code).siblings(".codeloc").first().html("");
                             }
-                        })
+                        });
                     }
                     //image
                     if (image.value.trim().length < 1) {
-                        $(image).parent().siblings('.imageloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ảnh!");
+                        $(image)
+                            .parent()
+                            .siblings(".imageloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ảnh!"
+                            );
 
                         status.push(false);
                     } else {
-                        $(image).parent().siblings('.imageloc').first().html("");
+                        $(image).parent().siblings(".imageloc").first().html("");
                     }
                     //name
                     if (nameVoucher.value.trim().length < 1) {
-                        $(nameVoucher).siblings('.nameVoucherloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống tên!");
+                        $(nameVoucher)
+                            .siblings(".nameVoucherloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống tên!"
+                            );
                         status.push(false);
                     } else {
-                        $(nameVoucher).siblings('.nameVoucherloc').first().html("");
+                        $(nameVoucher).siblings(".nameVoucherloc").first().html("");
                     }
                     //value
-                    if ((value.value.trim() == "") || (value.value <= 0)) {
-
-                        $(value).parent().siblings('.valueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
+                    if (value.value.trim() == "" || value.value <= 0) {
+                        $(value)
+                            .parent()
+                            .siblings(".valueloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!"
+                            );
 
                         status.push(false);
                     } else {
-                        $(value).parent().siblings('.valueloc').first().html("");
-
+                        $(value).parent().siblings(".valueloc").first().html("");
                     }
                     //minimumValue
-                    if ((minimumValue.value.trim() == "") || (value.value <= 0)) {
-                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
+                    if (minimumValue.value.trim() == "" || value.value <= 0) {
+                        $(minimumValue)
+                            .parent()
+                            .siblings(".minimumValueloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!"
+                            );
                         status.push(false);
-                    } else if (minimumValue.value < value.value) {
-                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị phải nhỏ hơn giá trị tối thiểu!");
-                        status.push(false);
-                    } else {
-                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("");
+                    }
+                        // else if (minimumValue.value > value.value) {
+                        //     $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị tối thiểu phải nhỏ hơn giá trị giảm!");
+                        //     status.push(false);
+                    // }
+                    else {
+                        $(minimumValue)
+                            .parent()
+                            .siblings(".minimumValueloc")
+                            .first()
+                            .html("");
                     }
                     //startDay
                     if (startDay.value.trim().length < 1) {
-                        $(startDay).parents().siblings('.startDayloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!");
+                        $(startDay)
+                            .parents()
+                            .siblings(".startDayloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!"
+                            );
 
                         status.push(false);
                     } else if (today.valueOf() > startDay.value.valueOf()) {
-                        $(startDay).parents().siblings('.startDayloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày bắt đầu phải lớn hơn ngày hiện tại!");
+                        $(startDay)
+                            .parents()
+                            .siblings(".startDayloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày bắt đầu phải lớn hơn ngày hiện tại!"
+                            );
 
                         status.push(false);
                     } else {
-                        $(startDay).parents().siblings('.startDayloc').first().html("");
-
+                        $(startDay).parents().siblings(".startDayloc").first().html("");
                     }
                     //expirationDate
                     if (expirationDate.value.trim().length < 1) {
-                        $(expirationDate).parents().siblings('.expirationDateloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!");
+                        $(expirationDate)
+                            .parents()
+                            .siblings(".expirationDateloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!"
+                            );
 
                         status.push(false);
-                    } else if (expirationDate.value.valueOf() < startDay.value.valueOf()) {
-
-                        $(expirationDate).parents().siblings('.expirationDateloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!");
+                    } else if (
+                        expirationDate.value.valueOf() < startDay.value.valueOf()
+                    ) {
+                        $(expirationDate)
+                            .parents()
+                            .siblings(".expirationDateloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Ngày kết thúc phải lớn hơn ngày bắt đầu!"
+                            );
 
                         status.push(false);
                     } else {
-                        $(expirationDate).parents().siblings('.expirationDateloc').first().html("");
-
+                        $(expirationDate)
+                            .parents()
+                            .siblings(".expirationDateloc")
+                            .first()
+                            .html("");
                     }
                     //quantity
                     if (quantity.value.trim().length < 1) {
-                        $(quantity).parent().siblings('.quantityloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống số lượng!");
+                        $(quantity)
+                            .parent()
+                            .siblings(".quantityloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống số lượng!"
+                            );
                         status.push(false);
                     } else {
-                        $(quantity).parent().siblings('.quantityloc').first().html("");
+                        $(quantity).parent().siblings(".quantityloc").first().html("");
                     }
 
                     if (status.indexOf(false) > -1) {
                         // resolve(false)
                         // event.preventDefault()
-                        return
+                        return;
                     }
                     $this.submit();
                     $("#formUpdate")[0].submit();
                 },
                 error: function (error) {
                     // reject(error)
-                    return
-                }
-            })
-        })
-    })
+                    return;
+                },
+            });
+        });
+    });
     $.each($(".formUpdate"), function (index, item) {
         $(item).on("submit", function (event) {
             event.preventDefault();
-            var $this = this
-            console.log($this)
+            var $this = this;
+            console.log($this);
             $.ajax({
-                url: '/admin/voucher/all',
+                url: "/admin/voucher/all",
                 method: "get",
                 success: function (data) {
                     var nameVoucher = $this.nameVoucher;
@@ -560,8 +773,12 @@
 
                     //code
                     if (code.value.trim().length == 0) {
-
-                        $(code).siblings('.codeloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!");
+                        $(code)
+                            .siblings(".codeloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống mã!"
+                            );
 
                         status.push(false);
                     }
@@ -579,8 +796,7 @@
                         //     })
                     // }
                     else {
-                        $(code).siblings('.codeloc').first().html("");
-
+                        $(code).siblings(".codeloc").first().html("");
                     }
                     //image
                     // if (image.value.trim().length < 1) {
@@ -592,34 +808,61 @@
                     // }
                     //name
                     if (nameVoucher.value.trim().length < 1) {
-                        $(nameVoucher).siblings('.nameVoucherloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống tên!");
+                        $(nameVoucher)
+                            .siblings(".nameVoucherloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống tên!"
+                            );
                         status.push(false);
                     } else {
-                        $(nameVoucher).siblings('.nameVoucherloc').first().html("");
+                        $(nameVoucher).siblings(".nameVoucherloc").first().html("");
                     }
                     //value
-                    // if ((value.value.trim() == "") || (value.value <= 0)) {
-                    //
-                    //     $(value).parent().siblings('.valueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
-                    //
-                    //     status.push(false);
-                    // } else {
-                    //     $(value).parent().siblings('.valueloc').first().html("");
-                    //
-                    // }
+                    if (value.value.trim() == "" || value.value <= 0) {
+                        $(value)
+                            .parent()
+                            .siblings(".valueloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!"
+                            );
+
+                        status.push(false);
+                    } else {
+                        $(value).parent().siblings(".valueloc").first().html("");
+                    }
                     //minimumValue
-                    // if ((minimumValue.value.trim() == "") || (value.value <= 0)) {
-                    //     $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!");
-                    //     status.push(false);
-                    // } else if (minimumValue.value < value.value) {
-                    //     $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị phải nhỏ hơn giá trị tối thiểu!");
-                    //     status.push(false);
-                    // } else {
-                    //     $(minimumValue).parent().siblings('.minimumValueloc').first().html("");
+                    if (minimumValue.value.trim() == "" || value.value <= 0) {
+                        $(minimumValue)
+                            .parent()
+                            .siblings(".minimumValueloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!"
+                            );
+                        status.push(false);
+                    }
+                        // else if (minimumValue.value < value.value) {
+                        //     $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị tối thiểu phải nhỏ hơn giá trị giảm!");
+                        //     status.push(false);
                     // }
+                    else {
+                        $(minimumValue)
+                            .parent()
+                            .siblings(".minimumValueloc")
+                            .first()
+                            .html("");
+                    }
                     //startDay
                     if (startDay.value.trim().length < 1) {
-                        $(startDay).parents().siblings('.startDayloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!");
+                        $(startDay)
+                            .parents()
+                            .siblings(".startDayloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày bắt đầu!"
+                            );
 
                         status.push(false);
                     }
@@ -629,12 +872,17 @@
                         //     status.push(false);
                     // }
                     else {
-                        $(startDay).parents().siblings('.startDayloc').first().html("");
-
+                        $(startDay).parents().siblings(".startDayloc").first().html("");
                     }
                     //expirationDate
                     if (expirationDate.value.trim().length < 1) {
-                        $(expirationDate).parents().siblings('.expirationDateloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!");
+                        $(expirationDate)
+                            .parents()
+                            .siblings(".expirationDateloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống ngày kết thúc!"
+                            );
 
                         status.push(false);
                     }
@@ -645,51 +893,59 @@
                         //     status.push(false);
                     // }
                     else {
-                        $(expirationDate).parents().siblings('.expirationDateloc').first().html("");
-
+                        $(expirationDate)
+                            .parents()
+                            .siblings(".expirationDateloc")
+                            .first()
+                            .html("");
                     }
                     //quantity
                     if (quantity.value.trim().length < 1) {
-                        $(quantity).parent().siblings('.quantityloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống số lượng!");
+                        $(quantity)
+                            .parent()
+                            .siblings(".quantityloc")
+                            .first()
+                            .html(
+                                "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Không được để trống số lượng!"
+                            );
                         status.push(false);
                     } else {
-                        $(quantity).parent().siblings('.quantityloc').first().html("");
+                        $(quantity).parent().siblings(".quantityloc").first().html("");
                     }
 
                     if (status.indexOf(false) > -1) {
                         // resolve(false)
                         // event.preventDefault()
-                        return
+                        return;
                     }
                     $this.submit();
                     $("#formUpdate")[0].submit();
                 },
                 error: function (error) {
                     // reject(error)
-                    return
-                }
-            })
-        })
-    })
+                    return;
+                },
+            });
+        });
+    });
 
     for (let i = 0; i < fileInputs.length; i++) {
         const fileInput = fileInputs[i];
         const imagePreview = imagePreviews[i];
 
         // Lắng nghe sự kiện khi người dùng chọn tệp
-        fileInput.addEventListener('change', function () {
+        fileInput.addEventListener("change", function () {
             const file = fileInput.files[0]; // Lấy tệp đã chọn
 
             if (file) {
                 // Kiểm tra xem tệp đã chọn có phải là hình ảnh
-                if (file.type.startsWith('image/')) {
+                if (file.type.startsWith("image/")) {
                     // Tạo đường dẫn URL cho hình ảnh và hiển thị nó
                     const imageURL = URL.createObjectURL(file);
                     imagePreview.src = imageURL;
-
                 } else {
-                    alert('Vui lòng chọn một tệp hình ảnh.');
-                    fileInput.value = ''; // Đặt lại trường nhập
+                    alert("Vui lòng chọn một tệp hình ảnh.");
+                    fileInput.value = ""; // Đặt lại trường nhập
                 }
             }
         });
