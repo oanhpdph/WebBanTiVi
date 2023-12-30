@@ -93,7 +93,7 @@ function clickSave() {
         }
     })
     $.each(idBillProduct, function (index, item) {
-        if (item.disabled == false) {
+        if (item.checked) {
             var image = "returnImg" + item.value
             var arrImage = []
             var listImage = document.getElementsByClassName(image)
@@ -111,7 +111,6 @@ function clickSave() {
                 if (fileName.length != 0) {
                     imageItem = {
                         nameImage: imageName,
-                        idBillProduct: item.value
                     }
                     arrImage.push(imageItem)
                 }
@@ -135,6 +134,7 @@ function clickSave() {
 
             }
             data.push(temp)
+            console.log(data);
         }
     })
     if (check == false) {

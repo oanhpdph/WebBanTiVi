@@ -25,7 +25,6 @@ public class FieldController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addAttributes(@RequestBody Field f) {
-
         return ResponseEntity.ok(field.save(f));
     }
 

@@ -177,7 +177,8 @@ CREATE TABLE bill
 	 id_voucher		  int references voucher(id),
 	 voucher_value	  money,
 	 payment_status	  INT default 1,
-     note             NVARCHAR(max)
+     note             NVARCHAR(max),
+
   )
 
 -- hoa don chi tiet
@@ -193,19 +194,28 @@ CREATE TABLE bill_product
 	 note			NVARCHAR(200),
    --  PRIMARY KEY(id_bill, id_product)
   )
-
+  CREATE TABLE history_billProduct
+  (
+     id			          INT IDENTITY(1, 1) PRIMARY KEY,
+	 id_bill              int REFERENCES bill(id) not null,
+     id_bill_product	  INT REFERENCES bill_product(id) not null,
+     quantity_request_return	INT not null,
+	 quantity_accept_return		INT,
+	 date                DATE not null,
+     reason 		     nvarchar(max),
+     status		         int ,
+	 return_times        int ,
+	 note               nvarchar(max)
+  )
+ 
 
 CREATE TABLE image_returned
   (
      id					 INT IDENTITY(1, 1) PRIMARY KEY,
-     id_bill_product	 INT REFERENCES bill_product(id) not null,
+     id_history_billProduct	 INT REFERENCES history_billProduct(id) not null,
 	 name_image			 varchar(200) not null,
-	 return_count        INT not null,
-	 quantity_request_return	INT ,
-	 quantity_accept_return INT ,
-	 reason 		     nvarchar(max),
-
   )
+
 
 CREATE TABLE delivery_notes
   (
@@ -368,3 +378,4 @@ insert into group_product values(N'Phụ kiện')
 insert into Brand values(N'Samsung',1)
 insert into Brand values(N'Sony',1)
 insert into Brand values(N'LG',1)
+insert into field values('123','Loai Tivi', 1,1)

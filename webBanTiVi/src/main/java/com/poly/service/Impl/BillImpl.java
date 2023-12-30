@@ -3,10 +3,6 @@ package com.poly.service.Impl;
 import com.poly.common.CheckLogin;
 import com.poly.common.RandomNumber;
 import com.poly.dto.*;
-import com.poly.entity.Bill;
-import com.poly.entity.BillProduct;
-import com.poly.entity.ProductDetail;
-import com.poly.entity.Voucher;
 import com.poly.entity.*;
 import com.poly.repository.*;
 import com.poly.service.*;
@@ -30,6 +26,9 @@ import java.util.Optional;
 
 @Service
 public class BillImpl implements BillService {
+
+    java.util.Date today = new java.util.Date();
+
     @Autowired
     private BillRepos billRepos;
 
@@ -75,10 +74,18 @@ public class BillImpl implements BillService {
     @Autowired
     private CheckLogin checkLogin;
 
+    @Autowired
+    HistoryBillProductRepository historyBillProductRepository;
+
+
+    @Autowired  HistoryBillProductService historyBillProductService;
+
     @Override
     public List<Bill> all() {
         return billRepos.findAll();
     }
+
+
 
     @Override
     public Bill add(BillProRes bill) {
@@ -132,10 +139,6 @@ public class BillImpl implements BillService {
                 billProduct.setProduct(list.get(i).get());
                 billProduct.setPrice(list.get(i).get().getPriceExport());
                 billProduct.setQuantity(billProRes.getQuantity().get(i));
-                billProduct.setQuantityRequestReturn(0);
-                billProduct.setQuantityAcceptReturn(0);
-                billProduct.setStatus(0);
-                billProduct.setReason("");
                 billProduct.setStatus(0);
                 billProduct.setReducedMoney(billProRes.getReducedMoney().get(i));
                 this.billProductRepos.save(billProduct);
@@ -261,77 +264,93 @@ public class BillImpl implements BillService {
         return this.billRepos.findByCode(code);
     }
 
-    @Override
-    public List<Bill> listBillFilter(List<Bill> billList) {
-        List<Bill> listBillFilter = new ArrayList<>();
-        int i = 0;
-        for (Bill bill : billList) {
-            for (BillProduct billPro : bill.getBillProducts()) {
-                if (billPro.getStatus() != 0) {
-                    i++;
-                }
-            }
-            if (i == bill.getBillProducts().size()) {
-                listBillFilter.add(bill);
-                i = 0;
-            }
-        }
-        return listBillFilter;
-    }
-
-    @Override
-    public List<Bill> listBillFilterStill(List<Bill> billList) {
-        List<Bill> listBillFilterStill = new ArrayList<>();
-        int j = 0;
-        for (Bill bill : billList) {
-            for (BillProduct billPro : bill.getBillProducts()) {
-                if (billPro.getStatus() == 0) {
-                    j = 1;
-                }
-            }
-            if (j == 1) {
-                listBillFilterStill.add(bill);
-            }
-        }
-
-        return listBillFilterStill;
-    }
 
     @Override
     public void logicBillReturn(Integer id, List<ReturnDto> returnDto) {
+        BillStatus billStatus = this.billStatusService.getOneBycode("RR");
+        Bill bill = this.billRepos.findById(id).get();
+        bill.setBillStatus(billStatus);
+        this.billRepos.save(bill);
+        Integer returnCount = this.historyBillProductRepository.findReturnCountBillById(id);
+        if (returnCount != null){
+            returnCount=returnCount+1;
+        }else{
+           returnCount=1;
+        }
         for (ReturnDto dto : returnDto) {
+            BillProduct billProduct = this.billProductService.edit(dto.getIdBillProduct());
+            billProduct.setStatus(1);
+            this.billProductService.save(billProduct);
+            HistoryBillProduct historyBillProduct = new HistoryBillProduct();
+            historyBillProduct.setBillProduct(billProduct);
+            historyBillProduct.setQuantityRequestReturn(Integer.parseInt(dto.getQuantityReturn()));
+            historyBillProduct.setReason(dto.getReason());
+            historyBillProduct.setDate(today);
+            historyBillProduct.setStatus(1);
+            historyBillProduct.setBill(bill);
+            historyBillProduct.setReturnTimes(returnCount);
+            this.historyBillProductService.save(historyBillProduct);
             for (ImageReturnDto image : dto.getImage()) {
                 ImageReturned img = new ImageReturned();
-                BillProduct billProduct = this.billProductService.edit(image.getIdBillProduct());
-                billProduct.setStatus(1); // yêu cầu trả hàng
-                billProduct.setReason(dto.getReason());
-                billProduct.setQuantityRequestReturn(Integer.parseInt(dto.getQuantityReturn()));
-                this.billProductService.save(billProduct);
-                img.setBillProduct(billProduct);
+                img.setHBillProduct(historyBillProduct);
                 img.setNameImage(image.getNameImage());
                 this.imageReturnService.save(img);
             }
         }
-        BillStatus billStatus = this.billStatusService.getOneBycode("RR");
-        Bill bill = this.getOneById(id);
-        bill.setBillStatus(billStatus);
-        this.add(bill);
     }
 
     @Override
-    public Boolean checkBillNoLogin(String code) {
-        Boolean bool = false;
-        Bill bill = this.findByCode(code).get();
-        int check = 0;
-        for (BillProduct billPro : bill.getBillProducts()) {
-            if (billPro.getStatus() == 0) {
-                check = 1;
+    public List<Boolean> checkValidationReturn() {
+        UserDetailDto customerUserDetail = this.checkLogin.checkLogin();
+        List<Bill> billList = this.findAllBillByUser(customerUserDetail.getId());
+        List<Boolean> listeck = new ArrayList<>();
+        for (int i = 0; i < billList.size(); i++) {
+            if (billList.get(i).getDeliveryNotes().get(0).getReceivedDate() == null) {
+                boolean check = false;
+                listeck.add(check);
+                continue;
+            }
+            if (billList.get(i).getDeliveryNotes().get(0).getReceivedDate().compareTo(today) <= 3) {
+                boolean check = true;
+                listeck.add(check);
+            } else {
+                boolean check = false;
+                listeck.add(check);
             }
         }
-        if (check == 1) {
-            bool = true;
+        return listeck;
+    }
+
+
+    @Override
+    public List<Boolean> checkConditionReturn() {
+        UserDetailDto customerUserDetail = this.checkLogin.checkLogin();
+        List<Bill> billList = this.findAllBillByUser(customerUserDetail.getId());
+        List<Boolean> listeck = new ArrayList<>();
+        boolean check = false;
+        for (Bill bill  : billList) {
+                for(BillProduct billProduct : bill.getBillProducts()){
+                    if(billProduct.getQuantity() != 0 ){
+                         check = true;
+                    }
+                }
+                listeck.add(check);
         }
-        return bool;
+        return listeck;
+    }
+
+    @Override
+    public Boolean checkValidateReturnNologin(String search) {
+        Optional<Bill> bill = this.findByCode(search.trim());
+        boolean check = false;
+        if (bill.get().getDeliveryNotes().get(0).getReceivedDate() != null) {
+            if (bill.get().getDeliveryNotes().get(0).getReceivedDate().compareTo(today) <= 3) {
+                check = true;
+            } else {
+                check = false;
+            }
+        }
+        return check;
     }
 
     @Override

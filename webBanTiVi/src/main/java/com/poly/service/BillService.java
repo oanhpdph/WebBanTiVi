@@ -34,12 +34,13 @@ public interface BillService {
 
     Optional<Bill> findByCode(String code);
 
-    List<Bill> listBillFilter(List<Bill> billList);
-
-    List<Bill> listBillFilterStill(List<Bill> billList);
-
     void logicBillReturn(Integer id, List<ReturnDto> returnDto);
 
-    Boolean checkBillNoLogin(String code);
+    List<Boolean> checkValidationReturn();
+
+    Boolean checkValidateReturnNologin(String search);
+
+    List<Boolean> checkConditionReturn();
+
 
 }
