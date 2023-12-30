@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @Table(name = "bill_product")
@@ -39,18 +38,7 @@ public class BillProduct {
     @Column(name="note")
     private String note;
 
-    @Column(name="reason")
-    private String reason;
-
-    @Column(name="quantity_request_return")
-    private Integer quantityRequestReturn;
-
-    @Column(name="quantity_accept_return")
-    private Integer quantityAcceptReturn;
-
     @Column(name="status")
     private Integer status;
 
-    @OneToMany(mappedBy="billProduct")
-    private List<ImageReturned> listImage;
 }

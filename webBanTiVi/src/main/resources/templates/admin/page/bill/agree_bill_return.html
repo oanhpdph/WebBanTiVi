@@ -43,14 +43,18 @@
                     </tr>
                     </thead>
                     <tbody class="table-border-bottom-0 text-left">
-                    <tr th:each="billReturn : ${listAgree}">
-                        <td>1</td>
-                        <td>[(${billReturn.bill.code})]</td>
-                        <td>[(${billReturn.product.product.nameProduct})]</td>
-                        <td>[(${billReturn.quantityRequestReturn})]</td>
-                        <td>[(${billReturn.note})]</td>
-                        <td>[(${billReturn.quantityAcceptReturn})]</td>
-                        <td>[(${billReturn.reason})]</td>
+                    <tr th:each="historyBillReturn,billStart : ${listAgree}">
+                        <td>[(${billStart.index+1})]</td>
+                        <td>[(${historyBillReturn.bill.code})]</td>
+                        <td>[(${historyBillReturn.billProduct.product.product.nameProduct})]
+                            [
+                            <span th:each="field:${historyBillReturn.billProduct.product.fieldList}">[(${field.value})]</span>
+                            ]
+                        </td>
+                        <td>[(${historyBillReturn.quantityRequestReturn})]</td>
+                        <td>[(${historyBillReturn.note})]</td>
+                        <td>[(${historyBillReturn.quantityAcceptReturn})]</td>
+                        <td>[(${historyBillReturn.reason})]</td>
                     </tr>
                     </tbody>
                 </table>

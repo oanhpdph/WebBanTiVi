@@ -16,8 +16,8 @@ public class ImageReturned {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "id_bill_product")
-    private BillProduct billProduct;
+    @JoinColumn(name = "id_history_billProduct")
+    private HistoryBillProduct hBillProduct;
 
     @Column(name = "name_image")
     private String nameImage;

@@ -12,4 +12,6 @@ public interface ImageReturnService {
     List<ImageReturned> findAll();
 
     ImageReturned findById(Integer id);
+
+    ImageReturned findByBillid( Integer id);
 }

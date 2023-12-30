@@ -2,13 +2,11 @@ package com.poly.controller.user;
 
 import com.poly.common.CheckLogin;
 import com.poly.dto.ChangeInforDto;
+import com.poly.dto.HistoryBillReturnDto;
 import com.poly.dto.ReturnDto;
 import com.poly.dto.UserDetailDto;
 import com.poly.entity.Bill;
-import com.poly.service.BillProductService;
-import com.poly.service.BillService;
-import com.poly.service.BillStatusService;
-import com.poly.service.ImageReturnService;
+import com.poly.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,12 +33,13 @@ public class UserController {
     @Autowired
     BillProductService billProductService;
 
+    @Autowired
+    HistoryBillProductService historyBillProductService;
+
 
     @Autowired
     CheckLogin checkLogin;
 
-
-    Date today = new Date();
 
     @GetMapping("/invoice")
     public String loadInvoice(HttpSession session) {
@@ -60,7 +58,9 @@ public class UserController {
     @GetMapping("/invoice/invoice_detail/{id}")
     public String loadInvoiceDetail(HttpSession session, Model model, @PathVariable("id") Integer id) {
         Bill bill = this.billService.getOneById(id);
+        List<HistoryBillReturnDto> listHistoryDto = this.historyBillProductService.findAllHistoryBillReturnByIdBill(id);
         model.addAttribute("bill", bill);
+        model.addAttribute("listHistoryReturn", listHistoryDto);
         model.addAttribute("billProducts", bill.getBillProducts());
         session.setAttribute("pageView", "/user/page/invoice/detail_invoice.html");
         return "/user/index";
@@ -72,28 +72,16 @@ public class UserController {
         session.setAttribute("pageView", "/user/page/profile/order.html");
         UserDetailDto customerUserDetail = this.checkLogin.checkLogin();
         List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
-        List<Bill> listBillFilter = this.billService.listBillFilter(billList);
-        List<Bill> listBillFilterStill = this.billService.listBillFilterStill(billList);
-        List<Boolean> listeck = new ArrayList<>();
-        for (int i = 0; i < billList.size(); i++) {
-            if (billList.get(i).getDeliveryNotes().get(0).getReceivedDate() == null) {
-                boolean check = false;
-                listeck.add(check);
-                continue;
-            }
-            if (billList.get(i).getDeliveryNotes().get(0).getReceivedDate().compareTo(today) <= 3) {
-                boolean check = true;
-                listeck.add(check);
-            } else {
-                boolean check = false;
-                listeck.add(check);
-            }
+        List<Bill> billListNew = new ArrayList<>();
+        for(Bill bill : billList){
+            Bill newBill = this.historyBillProductService.listBillWhenReturned(String.valueOf(bill.getId()));
+            billListNew.add(newBill);
         }
+        List<Boolean> checkQuantity = this.billService.checkConditionReturn();
+        List<Boolean> listeck = this.billService.checkValidationReturn();
         model.addAttribute("check", listeck);
-
-        model.addAttribute("listBillCheck", listBillFilter);
-        model.addAttribute("listBillFilterStill", listBillFilterStill);
-        model.addAttribute("bill", billList);
+        model.addAttribute("bill", billListNew);
+        model.addAttribute("checkQuantity", checkQuantity);
         return "/user/index";
     }
 
@@ -124,19 +112,9 @@ public class UserController {
             model.addAttribute("errorSearch", "Xin lỗi! Đơn hàng bạn tìm không tồn tại trên hệ thống!");
             return "/user/index";
         }
-        boolean check = false;
-        if (bill.get().getDeliveryNotes().get(0).getReceivedDate() != null) {
-            if (bill.get().getDeliveryNotes().get(0).getReceivedDate().compareTo(today) <= 3) {
-                check = true;
-            } else {
-                check = false;
-            }
-        }
+        Boolean check = this.billService.checkValidateReturnNologin(search);
         session.setAttribute("checkReturn", check);
-
-
         session.setAttribute("bill", bill.get());
-        session.setAttribute("bool", this.billService.checkBillNoLogin(search));
         return "redirect:/search_order";
     }
 

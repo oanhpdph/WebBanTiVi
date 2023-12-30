@@ -26,12 +26,12 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="billProduct : ${listBillReturn}">
+            <tr th:each="hBillProduct : ${listBillReturn}">
                 <td>
                     <input type="checkbox" class="checkbox" readonly="readonly">
                 </td>
                 <td>
-                    <input type="text" th:value="${billProduct.product.product.nameProduct}" th:name="nameProduct"
+                    <input type="text" th:value="${hBillProduct.billProduct.product.product.nameProduct}" th:name="nameProduct"
                            th:class="|nameProduct form-control|" disabled>
                 </td>
                 <td>
@@ -39,21 +39,21 @@
                         <input type="text"
                                th:class="|form-control w-px-50 quantityReturn|"
                                th:name="quantity"
-                               th:max="${billProduct.quantityRequestReturn}"
+                               th:max="${hBillProduct.quantityRequestReturn}"
                                disabled>
-                        <span class="input-group-text w-px-60"  disabled>/[(${billProduct.quantityRequestReturn})]</span>
+                        <span class="input-group-text w-px-60"  disabled>/[(${hBillProduct.quantityRequestReturn})]</span>
                     </div>
                     <p class="text-danger" th:if="${errorAdminQuantity!=''}">[(${errorAdminQuantity})]</p>
                     <p class="text-danger" th:if="${errorQuantityNull!=''}">[(${errorQuantityNull})]</p>
                 </td>
                 <td>
                             <textarea name="" id="" cols=""
-                                      rows="2" th:text="${billProduct.reason}"
+                                      rows="2" th:text="${hBillProduct.reason}"
                                       th:class="|reason form-control|" th:name="reason" disabled></textarea>
                 </td>
                 <td>
                             <textarea name=""  cols=""
-                                      rows="2" th:value="${billProduct.note}"
+                                      rows="2" th:value="${hBillProduct.note}"
                                       th:class="|note form-control|" th:name="note"
                                       disabled></textarea>
                     <p class="text-danger" th:if="${errorNoteNull!=''}">[(${errorNoteNull})]</p>
@@ -66,7 +66,7 @@
                             class="avatar avatar-xl pull-up border-dark border"
                             data-bs-offset="0,4" data-bs-html="true"
                             title=""
-                             th:each="image:${billProduct.listImage}">
+                             th:each="image:${hBillProduct.listImage}">
                             <img th:src="@{'/image/product/'+${image.nameImage}}"
                                  alt="Avatar"
                                  class="image-preview">
@@ -74,13 +74,13 @@
                     </ul>
                 </td>
                 <td>
-                    <button th:formaction="@{/admin/refuse/{id}(id=${billProduct.id})}" formmethod="post" type="submit"
+                    <button th:formaction="@{/admin/refuse/{id}(id=${hBillProduct.billProduct.id})}" formmethod="post" type="submit"
                             class="btn btn-icon btn-secondary refuse "
                             onclick="return confirm('Xác nhận từ chối trả hàng')" disabled>
                         <i class='bx bx-x'></i>
                     </button>
 
-                    <button th:formaction="@{/admin/agree/{id}(id=${billProduct.id})}" formmethod="post" type="submit"
+                    <button th:formaction="@{/admin/agree/{id}(id=${hBillProduct.billProduct.id})}" formmethod="post" type="submit"
                             class="btn btn-icon btn-success agree" onclick="return confirm('Xác nhận đồng ý trả hàng')"
                             disabled>
                         <i class='bx bx-check'></i>

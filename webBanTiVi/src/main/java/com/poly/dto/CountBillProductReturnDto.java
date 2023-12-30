@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ImageReturnDto {
-  private String nameImage;
-
+public class CountBillProductReturnDto {
+    private int idBillProduct;
+    private int totalRequestReturn;
 }

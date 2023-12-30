@@ -19,6 +19,7 @@ public class ImageReturnServiceImpl implements ImageReturnService {
         return this.imageReturnRepository.save(image);
     }
 
+
     @Override
     public void delete(Integer id) {
         this.imageReturnRepository.deleteById(id);
@@ -32,5 +33,10 @@ public class ImageReturnServiceImpl implements ImageReturnService {
     @Override
     public ImageReturned findById(Integer id) {
         return this.imageReturnRepository.findById(id).get();
+    }
+
+    @Override
+    public ImageReturned findByBillid(Integer id) {
+        return null;
     }
 }

@@ -84,7 +84,7 @@
                                    th:href="@{/invoice/invoice_detail/{id}(id=${bill.id})}"
                                 >Xem chi tiết
                                 </a>
-                                <button th:if="${bill.billStatus.code== 'CO' && check[billStat.index] }" type="button"
+                                <button th:if="${bill.billStatus.code== 'CO' || bill.billStatus.code== 'RE' && check[billStat.index] }" type="button"
                                         class="btn btn-outline-dark return" data-bs-toggle="modal"
                                         th:data-bs-target="|#modal${bill.id}|" th:value="${bill.id}">Trả hàng
                                 </button>
@@ -105,7 +105,11 @@
                                                     aria-label="Close"></button>
                                         </div>
                                         <input type="text" th:value="${bill.id}" class="id" hidden="hidden">
-                                        <div>
+                                        <div th:if="${!checkQuantity[billStat.index]}">
+                                            <h4 style="color: black" class="text-center">(*)Rất tiếc,đơn hàng này của bạn không còn sản phẩm có thể trả!</h4>
+                                        </div>
+                                        <div th:if="${checkQuantity[billStat.index]}">
+                                            <input type="text" th:value="${#lists.size(bill.billProducts)}">
                                             <h4 style="color: black" class="px-3"> Thông tin trả hàng</h4>
                                             <div class="table-responsive text-nowrap">
                                                 <table class="table table-bordered">
@@ -121,8 +125,7 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr th:each="billProduct : ${bill.billProducts}"
-                                                        th:if="${billProduct.status ==0}">
+                                                    <tr th:each="billProduct : ${bill.billProducts}" th:if="${billProduct.quantity !=0}">
                                                         <td>
                                                             <input type="checkbox" readonly="readonly"
                                                                    th:class="|checkbox${bill.id}|"

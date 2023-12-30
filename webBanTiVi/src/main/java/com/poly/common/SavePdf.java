@@ -21,9 +21,7 @@ import com.itextpdf.layout.properties.VerticalAlignment;
 import com.poly.entity.Bill;
 import com.poly.entity.BillProduct;
 import com.poly.entity.ProductDetailField;
-import com.poly.service.BillService;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -38,8 +36,6 @@ import static com.itextpdf.kernel.colors.DeviceGray.*;
 
 @Service
 public class SavePdf<T> {
-    @Autowired
-    public BillService billService;
 
     public void savePdf(HttpServletResponse response, List<T> listData, List<String> header) throws IOException {
         response.setContentType("application/pdf");
