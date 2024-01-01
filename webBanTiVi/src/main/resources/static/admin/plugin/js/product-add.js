@@ -151,24 +151,59 @@ function clickImage() {
 }
 
 function onchangeImage() {
+    var $this = this
     if (this) {
         var parentElement = this.closest('li');
         if (parentElement) {
-            var imageElement = parentElement.querySelector("img.image-preview")
-            const file = this.files[0]; // Lấy tệp đã chọn
-            if (file && imageElement) {
-                // Kiểm tra xem tệp đã chọn có phải là hình ảnh
-                if (file.type.startsWith('image/')) {
-                    // Tạo đường dẫn URL cho hình ảnh và hiển thị nó
-                    const imageURL = URL.createObjectURL(file);
-                    imageElement.src = imageURL;
-                } else {
-                    alert('Vui lòng chọn một tệp hình ảnh.');
-                    this.value = ''; // Đặt lại trường nhập
-                }
-            } else {
-                imageElement.src = "/image/product/anhdefault.jpg"
+            var imageElement = parentElement.querySelector("img.select-image")
+            // const file = this.files[0]; // Lấy tệp đã chọn
+            $($this).parent().parent().find(".create-image").remove()
+            console.log(this.files.length)
+            console.log(this)
+            if (this.files.length > 5) {
+                Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Sô lượng ảnh bằng 5",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                this.value = ''; // Xóa các file đã chọn
+                return
             }
+
+            $.each(this.files, function (index, item) {
+
+                if (item && imageElement) {
+                    // Kiểm tra xem tệp đã chọn có phải là hình ảnh
+                    const listItem = document.createElement("li");
+                    listItem.setAttribute("data-bs-toggle", "tooltip");
+                    listItem.setAttribute("data-popup", "tooltip-custom");
+                    listItem.setAttribute("data-bs-placement", "bottom");
+                    listItem.className = "avatar avatar-xl pull-up border-dark border create-image";
+                    listItem.setAttribute("data-bs-offset", "0,4");
+                    listItem.setAttribute("data-bs-html", "true");
+
+                    const image = document.createElement("img");
+                    image.alt = "Chưa có ảnh";
+                    image.className = "image-preview";
+                    if (item.type.startsWith('image/')) {
+                        // Tạo đường dẫn URL cho hình ảnh và hiển thị nó
+                        const imageURL = URL.createObjectURL(item);
+                        image.src = imageURL;
+
+                        // imageElement.src = imageURL;
+                    } else {
+                        alert('Vui lòng chọn một tệp hình ảnh.');
+                        this.value = ''; // Đặt lại trường nhập
+                    }
+                    listItem.appendChild(image);
+                    $($this).parent().parent().append(listItem);
+                } else {
+                    imageElement.src = "/image/product/anhdefault.jpg"
+                }
+            })
+
         }
     }
 }
@@ -198,17 +233,17 @@ function saveProduct() {
                     var image = "imageUpload" + value
                     var arrImage = []
                     var listImage = document.getElementsByClassName(image)
-                    $.each(listImage, function (index, item) {
+                    $.each(listImage[0].files, function (index, item) {
                         // Lấy tệp từ trường chọn tệp
                         var imageItem;
-                        var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
+                        var fileName = item.name; // Lấy đường dẫn đầy đủ của tệp
 // Trích xuất tên tệp từ đường dẫn
                         var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
                         if (lastIndex >= 0) {
                             fileName = fileName.substr(lastIndex + 1);
                         }
 
-                        if (item.classList.contains("true")) {
+                        if (index == 0) {
                             imageItem = {
                                 location: "true",
                                 multipartFile: fileName
@@ -884,7 +919,7 @@ function changeTableProductDetail() {
             const imageList = document.createElement("ul");
             imageList.className = "list-unstyled users-list avatar-group m-0 d-flex align-items-center";
 
-            for (let i = 0; i < 5; i++) {
+            // for (let i = 0; i < 5; i++) {
             const listItem = document.createElement("li");
             listItem.setAttribute("data-bs-toggle", "tooltip");
             listItem.setAttribute("data-popup", "tooltip-custom");
@@ -896,26 +931,28 @@ function changeTableProductDetail() {
             const image = document.createElement("img");
             image.src = "/image/product/anhdefault.jpg";
             image.alt = "Chưa có ảnh";
-            image.className = "image-preview";
+            image.className = "select-image";
             image.onclick = clickImage
 
             const inputFile = document.createElement("input");
             inputFile.type = "file";
             inputFile.hidden = true;
             inputFile.onchange = onchangeImage
-            // inputFile.setAttribute("data-m")
-            if (i == 0) {
-            listItem.setAttribute("title", "Ảnh chính");
+            // inputFile.setAttribute("data-m")c
+            // if (i == 0) {
+            listItem.setAttribute("title", "Chọn ảnh");
             inputFile.className = "file-input true" + " imageUpload" + index;
             inputFile.multiple = true
-            } else {
-                listItem.setAttribute("title", "Ảnh phụ");
-                inputFile.className = "file-input false" + " imageUpload" + index;
-            }
+            inputFile.accept = "image/*"
+            inputFile.max = 5
+            // } else {
+            //     listItem.setAttribute("title", "Ảnh phụ");
+            //     inputFile.className = "file-input false" + " imageUpload" + index;
+            // }
             listItem.appendChild(image);
             listItem.appendChild(inputFile);
             imageList.appendChild(listItem);
-            }
+            // }
 
             var lable = document.createElement("span")
             lable.className = "fst-italic text-danger " + "error-image"
@@ -1009,23 +1046,35 @@ function validate() {
                         var value = item.getAttribute("value")
                         var image = "imageUpload" + value
                         var listImage = document.getElementsByClassName(image)
-                        $.each(listImage, function (index, item) {
-                            parentElement = item.closest('td');
-                            span = parentElement.querySelector("span.error-image")
-                            // Lấy tệp từ trường chọn tệp
-                            var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
-                            var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
-                            if (lastIndex >= 0) {
-                                fileName = fileName.substr(lastIndex + 1);
-                            }
-                            if (fileName === "") {
-                                check.push(false)
-                                span.textContent = "Chọn ảnh sản phẩm"
-                                return false
-                            } else {
-                                span.textContent = ""
-                            }
-                        })
+                        console.log(listImage[0].files)
+                        parentElement = listImage[0].closest('td');
+                        span = parentElement.querySelector("span.error-image")
+                        if (listImage[0].files.length < 5) {
+
+                            check.push(false)
+                            span.textContent = "Chọn 5 ảnh sản phẩm"
+                            return false
+                        } else {
+                            span.textContent = ""
+                        }
+                        // $.each(listImage.files, function (index, item) {
+                        //     parentElement = item.closest('td');
+                        //     span = parentElement.querySelector("span.error-image")
+                        //     // Lấy tệp từ trường chọn tệp
+                        //     console.log(item.value)
+                        //     var fileName = item.value; // Lấy đường dẫn đầy đủ của tệp
+                        //     var lastIndex = fileName.lastIndexOf("\\"); // Sử dụng "\\" để tách tên tệp trên Windows
+                        //     if (lastIndex >= 0) {
+                        //         fileName = fileName.substr(lastIndex + 1);
+                        //     }
+                        //     if (fileName === "") {
+                        //         check.push(false)
+                        //         span.textContent = "Chọn ảnh sản phẩm"
+                        //         return false
+                        //     } else {
+                        //         span.textContent = ""
+                        //     }
+                        // })
                     } else {
                         parentElement = listSku[index].closest('td');
                         span = parentElement.querySelector("span.error-sku")
