@@ -1,4 +1,8 @@
-
+<style>
+    .pull-up:hover {
+        border-radius: 0px !important;
+    }
+</style>
 <section class="mt-4 container-xl">
     <div class="mb-2">
         <div>
@@ -73,10 +77,6 @@
                                 <div class="mb-2">
                                     <span>Số lượng: [(${billProduct.quantity})]</span>
                                 </div>
-                                <div class="mb-2">
-                                    <span th:if="${billProduct.status ==2}">Ghi chú:Từ chối trả hàng</span>
-                                    <span th:if="${billProduct.status ==3}">Ghi chú:Đồng ý trả hàng (Số lượng: [(${billProduct.quantityAcceptReturn})]/[(${billProduct.quantityRequestReturn})])</span>
-                                </div>
                             </div>
                             <div class="col-sm-3 text-end">
                                 <div>
@@ -120,6 +120,80 @@
                                 </span>
 
                             </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group-item mb-2 align-items-center">
+                            <i class='bx bx-shopping-bag'></i>
+                            <span class="fs-5 text-uppercase">Lịch sử trả hàng</span>
+                        </div>
+                        <div th:if="${#lists.size(listHistoryReturn) != 0}" >
+                          <div class="row mb-3" th:each="historyDto : ${listHistoryReturn}">
+                            <div>Lần [(${historyDto.returnTimes})]
+                                <div class="table-responsive text-nowrap">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Ảnh</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Số lượng yêu cầu trả</th>
+                                            <th>Số lượng đồng ý trả</th>
+                                            <th>Lí do</th>
+                                            <th>Ghi chú</th>
+                                            <th>Ảnh trả hàng</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="historyBillreturn :${historyDto.historyBillProductList}">
+                                            <td>
+                                                <div th:each="image:${historyBillreturn?.billProduct?.product?.listImage}">
+                                                    <img th:if="${image.location == true}"
+                                                         th:src="@{'/image/product/'+${image.link}}"
+                                                         alt="" width="100px">
+                                                </div>
+                                            </td>
+                                            <td class="flex-wrap">
+                                                [(${historyBillreturn?.billProduct?.product?.product?.nameProduct})]
+                                                ,[
+                                                <span th:each="field:${historyBillreturn?.billProduct.product.fieldList}">[(${field.value})]</span>
+                                                ]
+                                            </td>
+                                            <td>
+                                                [(${historyBillreturn?.quantityRequestReturn})]
+                                            </td>
+                                            <td>
+                                                [(${historyBillreturn?.quantityAcceptReturn})]
+                                            </td>
+                                            <td>
+                                                [(${historyBillreturn?.reason})]
+                                            </td>
+                                            <td>
+                                                [(${historyBillreturn?.note})]
+                                            </td>
+                                            <td>
+                                                <ul class="list-unstyled users-list avatar-group m-0 d-flex align-items-center">
+                                                    <li data-bs-toggle="tooltip"
+                                                        data-popup="tooltip-custom"
+                                                        data-bs-placement="bottom"
+                                                        class="avatar avatar-xl pull-up border-dark border"
+                                                        data-bs-offset="0,4" data-bs-html="true"
+                                                        title=""
+                                                        th:each="image:${historyBillreturn.listImage}">
+                                                        <img th:src="@{'/image/product/'+${image.nameImage}}"
+                                                             alt="Avatar"
+                                                             class="image-preview">
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div th:if="${#lists.size(listHistoryReturn) == 0}" >
+                            <span class="fs-5 text-center" >Không có dữ liệu trả hàng!</span>
                         </div>
                         <div class="text-center mt-2">
                             <a type="button" class="btn btn-outline-dark" href="/order"

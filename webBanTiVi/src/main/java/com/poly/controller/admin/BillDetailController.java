@@ -1,12 +1,10 @@
 package com.poly.controller.admin;
 
+import com.poly.dto.HistoryBillReturnDto;
 import com.poly.entity.Bill;
 import com.poly.entity.BillProduct;
 import com.poly.entity.BillStatus;
-import com.poly.service.BillService;
-import com.poly.service.BillStatusService;
-import com.poly.service.DeliveryNotesSevice;
-import com.poly.service.PaymentMethodService;
+import com.poly.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,12 +33,16 @@ public class BillDetailController {
     @Autowired
     private PaymentMethodService paymentMethodService;
 
+    @Autowired
+    HistoryBillProductService historyBillProductService;
+
     @GetMapping("/bill/bill_detail/{billCode}")
     public String loadBillById(HttpSession session, Model model,
                                @PathVariable(name = "billCode") Integer idBill) {
         model.addAttribute("deliveryNote", deliveryNotesSevice.getByIdBill(idBill));
 
         Bill bill = billService.getOneById(idBill);
+        List<HistoryBillReturnDto> listHistoryDto = this.historyBillProductService.findAllHistoryBillReturnByIdBill(idBill);
         model.addAttribute("billDetail", bill);
 
         List<BillProduct> billProducts = bill.getBillProducts();
@@ -51,7 +53,7 @@ public class BillDetailController {
         BigDecimal reduceMoney = billProducts.stream()
                 .map(billProduct -> billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
+        model.addAttribute("listHistoryReturn", listHistoryDto);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("paymentMethod", paymentMethodService.getAll());
         model.addAttribute("totalReduceMoney", reduceMoney);

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImageReturnDto {
-  private Integer idBillProduct;
   private String nameImage;
 
 }
