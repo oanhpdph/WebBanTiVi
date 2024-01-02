@@ -6,12 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface HistoryBillProductRepository extends JpaRepository<HistoryBillProduct, Integer> {
 
     @Query(value="Select Max(b.returnTimes) from HistoryBillProduct b where b.bill.id=?1")
-    Integer findReturnCountBillById(Integer id);
+    Optional<Integer> findReturnCountBillById(Integer id);
 
     @Query(value = "select b from HistoryBillProduct b inner join Bill  a on b.bill.id=a.id where  b.status=?1 and a.id=?2")
     List<HistoryBillProduct> findHistoryBillProductReturn(Integer status, Integer id);

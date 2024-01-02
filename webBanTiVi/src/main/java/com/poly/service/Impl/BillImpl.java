@@ -271,11 +271,12 @@ public class BillImpl implements BillService {
         Bill bill = this.billRepos.findById(id).get();
         bill.setBillStatus(billStatus);
         this.billRepos.save(bill);
-        Integer returnCount = this.historyBillProductRepository.findReturnCountBillById(id);
-        if (returnCount != null){
-            returnCount=returnCount+1;
+        Optional<Integer> returnCount = this.historyBillProductRepository.findReturnCountBillById(id);
+        Integer count = returnCount.get();
+        if (returnCount.isPresent()){
+            count = count + 1;
         }else{
-           returnCount=1;
+            count = 1;
         }
         for (ReturnDto dto : returnDto) {
             BillProduct billProduct = this.billProductService.edit(dto.getIdBillProduct());
@@ -288,7 +289,7 @@ public class BillImpl implements BillService {
             historyBillProduct.setDate(today);
             historyBillProduct.setStatus(1);
             historyBillProduct.setBill(bill);
-            historyBillProduct.setReturnTimes(returnCount);
+            historyBillProduct.setReturnTimes(count);
             this.historyBillProductService.save(historyBillProduct);
             for (ImageReturnDto image : dto.getImage()) {
                 ImageReturned img = new ImageReturned();
