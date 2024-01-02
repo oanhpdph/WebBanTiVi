@@ -272,9 +272,9 @@ public class BillImpl implements BillService {
         bill.setBillStatus(billStatus);
         this.billRepos.save(bill);
         Optional<Integer> returnCount = this.historyBillProductRepository.findReturnCountBillById(id);
-        Integer count = returnCount.get();
+        Integer count = 0;
         if (returnCount.isPresent()){
-            count = count + 1;
+            count = returnCount.get() + 1;
         }else{
             count = 1;
         }
