@@ -308,6 +308,12 @@
                                                 <span class="fs-5" id="voucher-reduce"></span>
                                             </span>
                                         </div>
+                                        <div class="row justify-content-center" id="ship-info" hidden="hidden">
+                                            <span class="col fs-5">Phí vận chuyển: </span>
+                                            <span class="col text-danger text-end">
+                                                <span class="fs-5" th:name="shipprice" id="ship-price"></span>
+                                            </span>
+                                        </div>
                                         <div class="row justify-content-center">
                                             <span class="col fs-5">Tổng tiền: </span>
                                             <span class="col text-danger text-end">
@@ -381,7 +387,118 @@
             title: "Email của bạn đã có tài khoản, đăng nhập để tiếp tục hoặc nhập một email mới."
         });
     }
-
+    $("#ward").on("change",function (){
+        $.ajax({
+            url:"https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
+            method: "get",
+            dataType: "json",  // Xác định kiểu dữ liệu mong muốn
+            headers: {
+                token: "4d0b3d7c-65a5-11ee-a59f-a260851ba65c",
+                shop_id: "4611572",
+                ContentType: "application/json",
+            },
+            data: {
+                "service_type_id":2,
+                "from_district_id":1713,
+                "to_district_id":districtID,
+                "to_ward_code":wardID,
+                "height":50, // cao
+                "length":70, // dài
+                "weight":5000,
+                "width":20 // rộng
+            },
+            success: function (data) {
+                // Xử lý khi yêu cầu thành công
+                var calculatedFee = data.data.total;
+                console.log("Cước vận chuyển: ", calculatedFee);
+                var temp = parseInt(document.querySelector('.total-pro').textContent.replace(/,/g, ''), 10)
+                if (parseInt(districtID) != 1713 || temp<200000) {
+                    if(temp < 200000){
+                        document.getElementById("ship-price").innerText =
+                            new Intl.NumberFormat().format(parseInt(data.total) - 60000)+ ' đ'
+                        document.getElementById("ship-info").hidden = false
+                        document.getElementById("total").innerText =
+                            new Intl.NumberFormat().format(temp + data.total)
+                    }
+                    else if(temp < 1000000) {
+                        document.getElementById("ship-price").innerText =
+                            new Intl.NumberFormat().format(parseInt(data.total) - 50000)+ ' đ'
+                        document.getElementById("ship-info").hidden = false
+                        document.getElementById("total").innerText =
+                            new Intl.NumberFormat().format(temp + data.total)
+                    }
+                    else if (temp <3000000){
+                        document.getElementById("ship-price").innerText =
+                            new Intl.NumberFormat().format(parseInt(data.total) - 20000)+ ' đ'
+                        document.getElementById("ship-info").hidden = false
+                        document.getElementById("total").innerText =
+                            new Intl.NumberFormat().format(temp + data.total)
+                    }
+                    else if (temp <5000000){
+                        document.getElementById("ship-price").innerText =
+                            new Intl.NumberFormat().format(parseInt(data.total))+ ' đ'
+                        document.getElementById("ship-info").hidden = false
+                        document.getElementById("total").innerText =
+                            new Intl.NumberFormat().format(temp + data.total)
+                    }
+                    else if (temp <8000000){
+                        document.getElementById("ship-price").innerText =
+                            new Intl.NumberFormat().format(parseInt(data.total)+ 30000)+ ' đ'
+                        document.getElementById("ship-info").hidden = false
+                        document.getElementById("total").innerText =
+                            new Intl.NumberFormat().format(temp + data.total)
+                    }
+                    else if (temp <10000000){
+                        document.getElementById("ship-price").innerText =
+                            new Intl.NumberFormat().format(parseInt(data.total) + 50000)+ ' đ'
+                        document.getElementById("ship-info").hidden = false
+                        document.getElementById("total").innerText =
+                            new Intl.NumberFormat().format(temp + data.total)
+                    }
+                    else if (temp <15000000){
+                        document.getElementById("ship-price").innerText =
+                            new Intl.NumberFormat().format(parseInt(data.total) + 120000)+ ' đ'
+                        document.getElementById("ship-info").hidden = false
+                        document.getElementById("total").innerText =
+                            new Intl.NumberFormat().format(temp + data.total)
+                    }
+                    else if (temp <20000000){
+                        document.getElementById("ship-price").innerText =
+                            new Intl.NumberFormat().format(parseInt(data.total) + 200000)+ ' đ'
+                        document.getElementById("ship-info").hidden = false
+                        document.getElementById("total").innerText =
+                            new Intl.NumberFormat().format(temp + data.total)
+                    }
+                    else if (temp <30000000){
+                        document.getElementById("ship-price").innerText =
+                            new Intl.NumberFormat().format(parseInt(data.total) + 250000)+ ' đ'
+                        document.getElementById("ship-info").hidden = false
+                        document.getElementById("total").innerText =
+                            new Intl.NumberFormat().format(temp + data.total)
+                    }
+                    else if (temp <50000000){
+                        document.getElementById("ship-price").innerText =
+                            new Intl.NumberFormat().format(parseInt(data.total) + 350000)+ ' đ'
+                        document.getElementById("ship-info").hidden = false
+                        document.getElementById("total").innerText =
+                            new Intl.NumberFormat().format(temp + data.total)
+                    }
+                    else{
+                        document.getElementById("ship-price").innerText =
+                            new Intl.NumberFormat().format(parseInt(data.total) + 500000)+ ' đ'
+                        document.getElementById("ship-info").hidden = false
+                        document.getElementById("total").innerText =
+                            new Intl.NumberFormat().format(temp + data.total)
+                    }
+                }
+                else
+                    {
+                        document.getElementById("ship-price").innerText = '0.00 đ'
+                        document.getElementById("ship-info").hidden = false
+                    }
+                }
+        })
+    })
     $("#voucher").on("change", function () {
         console.log(this.value)
         var data = {
@@ -418,7 +535,9 @@
 
     var citis = document.getElementById("city");
     var districts = document.getElementById("district");
+    var districtID = document.getElementById("districtID");
     var wards = document.getElementById("ward");
+    var wardID = document.getElementById("wardID");
     var Parameter = {
         url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
         method: "GET",
@@ -430,44 +549,75 @@
     });
 
     function renderCity(data) {
+        // Duyệt qua mảng 'data'
         for (const x of data) {
+            // Tạo một phần tử option cho thành phố (city)
             var opt = document.createElement('option');
             opt.value = x.Name;
             opt.text = x.Name;
             opt.setAttribute('data-id', x.Id);
+            // Thêm option vào select element có id là 'citis'
             citis.options.add(opt);
         }
+
+        // Gắn sự kiện onchange cho select element có id là 'citis'
         citis.onchange = function () {
-            district.length = 1;
+            // Xóa tất cả các option trong select element có id là 'district' và 'ward', khi thành phố thay đổi
+            districts.length = 1;
             ward.length = 1;
+
+            // Kiểm tra nếu option được chọn có data-id khác rỗng
             if (this.options[this.selectedIndex].dataset.id != "") {
+                // Lọc dữ liệu để lấy thông tin về quận (districts) của thành phố được chọn
                 const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
 
+                // Duyệt qua các quận và thêm chúng vào select element có id là 'district'
                 for (const k of result[0].Districts) {
                     var opt = document.createElement('option');
                     opt.value = k.Name;
                     opt.text = k.Name;
+                    var opt1 = document.createElement('option');
+                    opt1.value = k.Id;
+                    opt1.text = k.Id;
                     opt.setAttribute('data-id', k.Id);
-                    district.options.add(opt);
+                    districts.options.add(opt);
+                    districtID.options.add(opt);
                 }
             }
         };
-        district.onchange = function () {
+
+        // Gắn sự kiện onchange cho select element có id là 'district'
+        districts.onchange = function () {
+            // Xóa tất cả các option trong select element có id là 'ward', trừ option đầu tiên
             ward.length = 1;
+
+            // Lọc dữ liệu để lấy thông tin về thành phố của quận được chọn
             const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
+            const selectedCityId = citis.options[citis.selectedIndex].dataset.id;
+            const selectedDistrictId = districts.options[districts.selectedIndex].dataset.id;
+
+
+            // Kiểm tra nếu option được chọn có data-id khác rỗng
             if (this.options[this.selectedIndex].dataset.id != "") {
+                // Lọc dữ liệu để lấy thông tin về các phường (wards) của quận được chọn
                 const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
 
+                // Duyệt qua các phường và thêm chúng vào select element có id là 'ward'
                 for (const w of dataWards) {
                     var opt = document.createElement('option');
                     opt.value = w.Name;
                     opt.text = w.Name;
                     opt.setAttribute('data-id', w.Id);
                     wards.options.add(opt);
+                    var opt1 = document.createElement('option');
+                    opt1.value = k.Id;
+                    opt1.text = k.Id;
+                    opt.setAttribute('data-id', k.Id);
                 }
             }
         };
     }
+
 
     function validateForm() {
 //city
