@@ -114,6 +114,8 @@ public class CartController {
                 listRedu.add(reduceMoney);
             }
         }
+        model.addAttribute("cartProduct",list);
+
         model.addAttribute("reduceMoney", listRedu);
         model.addAttribute("total", total);
         return "user/index";
@@ -152,7 +154,7 @@ public class CartController {
     @PostMapping("/purchase")
     public String addBill(@ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
-                          Model model,
+                          Model model,BigDecimal shipprice,
                           String city, String district, String ward, RedirectAttributes redirectAttributes
     ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
@@ -183,7 +185,6 @@ public class CartController {
             listPro.add(product.getProduct().getId());
         }
         billProRes.setTotalPrice(total);// lấy tổng tiền
-
         if (userDetailDto == null) {
             if (checkEmail == null) {
                 checkEmail = customerService.add(billProRes);
@@ -199,9 +200,9 @@ public class CartController {
             billProRes.setEmail(userDetailDto.getEmail());
         }
         billProRes.setAddress(billProRes.getAddress() + ", " + ward + ", " + district + ", " + city);
+        billProRes.setDeliveryFee(shipprice);// phi giao hang
         Bill bill1 = billService.add(billProRes);// tạo hóa đơn mới
         billProRes.setBill(bill1);
-
         DeliveryNotes notes = deliveryNotes.save(billProRes);// tạo phiếu giao hàng
         billProRes.setQuantity(quantity);
         billProRes.setReducedMoney(listRedu);// lấy danh sách giảm giá

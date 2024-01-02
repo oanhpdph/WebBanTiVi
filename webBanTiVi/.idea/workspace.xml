@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" afterDir="false" />
-    </list>
+    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,11 +68,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-<<<<<<< HEAD
-    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/finaljava6" />
-=======
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Template_DoAn/WebBanTiVi" />
->>>>>>> main
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates/user/page/policy" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -94,11 +88,11 @@
       <recent name="com.poly" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\policy" />
       <recent name="D:\DuAnTotNghiep\webBanTiVi\src\main\resources\static\admin\assets\js" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\admin\page\coupon" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\promotion" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page\promotion" />
-      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\DuAnTotNghiep\webBanTiVi\src\main\resources\static\admin\assets\css" />
@@ -337,25 +331,7 @@
       <workItem from="1702601484003" duration="13595000" />
       <workItem from="1702632377127" duration="19000" />
       <workItem from="1702632488925" duration="6749000" />
-<<<<<<< HEAD
-      <workItem from="1703338645419" duration="547000" />
-      <workItem from="1703686362429" duration="1136000" />
-=======
-      <workItem from="1702709486902" duration="5896000" />
-      <workItem from="1702716187208" duration="6236000" />
-      <workItem from="1702749281348" duration="4011000" />
-      <workItem from="1702794750093" duration="4188000" />
-      <workItem from="1702829780330" duration="2866000" />
-      <workItem from="1702883708255" duration="4456000" />
-<<<<<<< HEAD
->>>>>>> b98db2e413442970175d71e1125c78d61e01ef6f
-=======
-      <workItem from="1702972600542" duration="3943000" />
-      <workItem from="1702977066836" duration="39000" />
-      <workItem from="1702977258359" duration="5199000" />
-      <workItem from="1702984655402" duration="8000" />
-      <workItem from="1702986012652" duration="5617000" />
->>>>>>> main
+      <workItem from="1704172501564" duration="17615000" />
     </task>
     <servers />
   </component>

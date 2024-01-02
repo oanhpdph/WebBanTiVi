@@ -66,7 +66,5 @@ public class Bill {
     @OneToMany(mappedBy = "idBill")
     private List<DeliveryNotes> deliveryNotes;
 
-    @Column(name="ship_price")
-    private BigDecimal shipPrice;
 }
 
