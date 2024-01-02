@@ -127,7 +127,8 @@
                             <i class='bx bx-shopping-bag'></i>
                             <span class="fs-5 text-uppercase">Lịch sử trả hàng</span>
                         </div>
-                        <div class="row mb-3" th:each="historyDto : ${listHistoryReturn}">
+                        <div th:if="${#lists.size(listHistoryReturn) != 0}" >
+                          <div class="row mb-3" th:each="historyDto : ${listHistoryReturn}">
                             <div>Lần [(${historyDto.returnTimes})]
                                 <div class="table-responsive text-nowrap">
                                     <table class="table table-bordered">
@@ -189,6 +190,10 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                        </div>
+                        <div th:if="${#lists.size(listHistoryReturn) == 0}" >
+                            <span class="fs-5 text-center" >Không có dữ liệu trả hàng!</span>
                         </div>
                         <div class="text-center mt-2">
                             <a type="button" class="btn btn-outline-dark" href="/order"

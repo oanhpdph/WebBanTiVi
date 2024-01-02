@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HistoryBillProductImpl implements HistoryBillProductService {
@@ -35,12 +36,14 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
     @Override
     public HistoryBillProduct findByBillProductAndReturnTimes(Integer idBillProduct, Integer idBill) {
         HistoryBillProduct hBillProduct = new HistoryBillProduct();
-        Integer returnCount = this.historyBillProductRepository.findReturnCountBillById(idBill);
+        Optional<Integer> returnCount = this.historyBillProductRepository.findReturnCountBillById(idBill);
         List<HistoryBillProduct> historyBillProducts = this.historyBillProductRepository.findAll();
-        for (HistoryBillProduct historyBillProduct : historyBillProducts) {
-            if (historyBillProduct.getBillProduct().getId() == idBillProduct &&
-                    historyBillProduct.getReturnTimes() == returnCount) {
-                return historyBillProduct;
+        if(returnCount.isPresent()) {
+            for (HistoryBillProduct historyBillProduct : historyBillProducts) {
+                if (historyBillProduct.getBillProduct().getId() == idBillProduct &&
+                        historyBillProduct.getReturnTimes() == returnCount.get()) {
+                    return historyBillProduct;
+                }
             }
         }
         return hBillProduct;
@@ -91,13 +94,15 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
     @Override
     public List<HistoryBillReturnDto> findAllHistoryBillReturnByIdBill(Integer id) {
         List<HistoryBillReturnDto> historyBillReturnDtos = new ArrayList<>();
-        Integer returnMax = this.historyBillProductRepository.findReturnCountBillById(id);
-        for (int i = 0; i < returnMax; i++) {
-            List<HistoryBillProduct> historyBillProducts = this.historyBillProductRepository.findAllHistoryBillReturnByIdBill(id, i + 1);
-            HistoryBillReturnDto historyBillReturnDto = new HistoryBillReturnDto();
-            historyBillReturnDto.setReturnTimes(i + 1);
-            historyBillReturnDto.setHistoryBillProductList(historyBillProducts);
-            historyBillReturnDtos.add(historyBillReturnDto);
+        Optional<Integer> returnMax = this.historyBillProductRepository.findReturnCountBillById(id);
+        if( returnMax.isPresent() && returnMax.get() != 0 ) {
+            for (int i = 0; i < returnMax.get(); i++) {
+                List<HistoryBillProduct> historyBillProducts = this.historyBillProductRepository.findAllHistoryBillReturnByIdBill(id, i + 1);
+                HistoryBillReturnDto historyBillReturnDto = new HistoryBillReturnDto();
+                historyBillReturnDto.setReturnTimes(i + 1);
+                historyBillReturnDto.setHistoryBillProductList(historyBillProducts);
+                historyBillReturnDtos.add(historyBillReturnDto);
+            }
         }
         return historyBillReturnDtos;
     }
