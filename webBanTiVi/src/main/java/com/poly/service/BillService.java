@@ -42,5 +42,11 @@ public interface BillService {
 
     List<Boolean> checkConditionReturn();
 
+    Bill findBillNewReturnByCode (String code);
+
+    Boolean checkConditionReturnNoLogin(String code);
+
+
+
 
 }

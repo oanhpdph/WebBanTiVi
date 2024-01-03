@@ -43,6 +43,13 @@ public class BillDetailController {
 
         Bill bill = billService.getOneById(idBill);
         List<HistoryBillReturnDto> listHistoryDto = this.historyBillProductService.findAllHistoryBillReturnByIdBill(idBill);
+        BigDecimal total = BigDecimal.ZERO;
+        for(HistoryBillReturnDto hBillReturnDto : listHistoryDto){
+            total =total.add(hBillReturnDto.getReturnMoney());
+            if(bill.getTotalPrice().subtract(total).compareTo(bill.getVoucherValue())<0){
+                hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
+            }
+        }
         model.addAttribute("billDetail", bill);
 
         List<BillProduct> billProducts = bill.getBillProducts();

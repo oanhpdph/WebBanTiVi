@@ -12,6 +12,7 @@ import com.poly.service.HistoryBillProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -71,14 +72,14 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
         for (Object[] result : resultList) {
             CountBillProductReturnDto count = new CountBillProductReturnDto();
             count.setIdBillProduct((Integer) result[0]);
-            count.setTotalRequestReturn(Integer.parseInt(String.valueOf((long) result[1])));
+            count.setTotalAcceptReturn(Integer.parseInt(String.valueOf((long) result[1])));
             billProductDTOList.add(count);
         }
         Bill bill = this.billRepos.findById(Integer.parseInt(id)).get();
         for (CountBillProductReturnDto countBilProductReturnDto : billProductDTOList) {
             for (BillProduct billProduct : bill.getBillProducts()) {
                 if (countBilProductReturnDto.getIdBillProduct() == billProduct.getId()) {
-                    billProduct.setQuantity(billProduct.getQuantity() - countBilProductReturnDto.getTotalRequestReturn());
+                    billProduct.setQuantity(billProduct.getQuantity() - countBilProductReturnDto.getTotalAcceptReturn());
                 }
 
             }
@@ -101,6 +102,18 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
                 HistoryBillReturnDto historyBillReturnDto = new HistoryBillReturnDto();
                 historyBillReturnDto.setReturnTimes(i + 1);
                 historyBillReturnDto.setHistoryBillProductList(historyBillProducts);
+                BigDecimal total = BigDecimal.ZERO;
+                for(HistoryBillProduct historyBillProduct : historyBillProducts){
+                    BigDecimal price = historyBillProduct.getBillProduct().getPrice();
+                    int quantity = historyBillProduct.getQuantityAcceptReturn();
+                   if(price != null && quantity >= 0){
+                       BigDecimal productTotal = price.multiply(BigDecimal.valueOf(quantity));
+                       total = total.add(productTotal);
+                   }else{
+                       System.out.println("Giá trị null hoặc không hợp lệ được đọc từ historyBillProduct");
+                        }
+                   }
+                historyBillReturnDto.setReturnMoney(total);
                 historyBillReturnDtos.add(historyBillReturnDto);
             }
         }

@@ -129,7 +129,7 @@
                         </div>
                         <div th:if="${#lists.size(listHistoryReturn) != 0}" >
                           <div class="row mb-3" th:each="historyDto : ${listHistoryReturn}">
-                            <div>Lần [(${historyDto.returnTimes})]
+                            <div>Lần [(${historyDto.returnTimes})] (<span>Cửa hàng trả lại : [(${historyDto.returnMoney})] </span>)
                                 <div class="table-responsive text-nowrap">
                                     <table class="table table-bordered">
                                         <thead>

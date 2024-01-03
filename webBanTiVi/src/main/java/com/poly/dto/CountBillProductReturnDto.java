@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CountBillProductReturnDto {
     private int idBillProduct;
-    private int totalRequestReturn;
+    private int totalAcceptReturn;
 }
