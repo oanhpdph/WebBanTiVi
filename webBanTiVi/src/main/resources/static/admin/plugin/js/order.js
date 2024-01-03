@@ -9,22 +9,26 @@ $.each(document.getElementsByClassName("return"), function (index, item) {
                 var image = document.getElementsByClassName("returnImg" + item.value)
                 var reason = document.getElementsByClassName("reason" + idBill)
                 var completed = document.getElementsByClassName("completed" + idBill)
+                console.log(item.checked);
                 if (item.checked == false) {
+                    console.log('123');
                     nameProduct[index].disabled = true;
                     quantityReturn[index].disabled = true;
                     reason[index].disabled = true;
                     $.each(image, function (index, item) {
                         item.disabled = true;
                     })
-                    completed[index].hidden = true;
+                    completed[0].disabled = true;
+                    console.log(completed[index].disabled);
                 } else {
+                    console.log('333');
                     nameProduct[index].disabled = false;
                     quantityReturn[index].disabled = false;
                     reason[index].disabled = false;
                     $.each(image, function (index, item) {
                         item.disabled = false;
                     })
-                    completed[index].hidden = false;
+                    completed[0].disabled = false;
                 }
             })
             document.getElementById("checkboxAll" + idBill).addEventListener("click", function () {
@@ -42,7 +46,7 @@ $.each(document.getElementsByClassName("return"), function (index, item) {
                         $.each(image, function (index, item) {
                             item.disabled = false;
                         })
-                        completed[index].hidden = false;
+                        completed[0].hidden = false;
                     })
                 } else {
                     $.each($(".checkbox" + idBill), function (index, item) {
@@ -53,7 +57,7 @@ $.each(document.getElementsByClassName("return"), function (index, item) {
                         $.each(image, function (index, item) {
                             item.disabled = true;
                         })
-                        completed[index].hidden = true;
+                        completed[0].hidden = true;
                     })
                 }
             })

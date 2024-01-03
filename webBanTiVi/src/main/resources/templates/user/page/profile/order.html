@@ -56,7 +56,7 @@
                             <span class="text-end col-sm-6" th:text="${bill.billStatus.status}"></span>
                             <hr>
                         </div>
-                        <input type="text" th:value="${return}" id="return" hidden="hidden" >
+                        <input type="text" th:value="${return}" id="return" hidden="hidden">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div th:each="image:${bill.billProducts[0].product.listImage}">
@@ -84,7 +84,8 @@
                                    th:href="@{/invoice/invoice_detail/{id}(id=${bill.id})}"
                                 >Xem chi tiết
                                 </a>
-                                <button th:if="${bill.billStatus.code== 'CO' || bill.billStatus.code== 'RE' && check[billStat.index] }" type="button"
+                                <button th:if="${bill.billStatus.code== 'CO' || bill.billStatus.code== 'RE' && check[billStat.index] }"
+                                        type="button"
                                         class="btn btn-outline-dark return" data-bs-toggle="modal"
                                         th:data-bs-target="|#modal${bill.id}|" th:value="${bill.id}">Trả hàng
                                 </button>
@@ -106,7 +107,8 @@
                                         </div>
                                         <input type="text" th:value="${bill.id}" class="id" hidden="hidden">
                                         <div th:if="${!checkQuantity[billStat.index]}">
-                                            <h4 style="color: black" class="text-center">(*)Rất tiếc,đơn hàng này của bạn không còn sản phẩm có thể trả!</h4>
+                                            <h4 style="color: black" class="text-center">(*)Rất tiếc,đơn hàng này của
+                                                bạn không còn sản phẩm có thể trả!</h4>
                                         </div>
                                         <div th:if="${checkQuantity[billStat.index]}">
                                             <h4 style="color: black" class="px-3"> Thông tin trả hàng</h4>
@@ -124,7 +126,8 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr th:each="billProduct : ${bill.billProducts}" th:if="${billProduct.quantity !=0}">
+                                                    <tr th:each="billProduct : ${bill.billProducts}"
+                                                        th:if="${billProduct.quantity !=0}">
                                                         <td>
                                                             <input type="checkbox" readonly="readonly"
                                                                    th:class="|checkbox${bill.id}|"
@@ -141,7 +144,7 @@
                                                                        th:class="|form-control w-px-50 quantityReturn${bill.id}|"
                                                                        th:value="${quantity}"
                                                                        th:max="${billProduct.quantity}" disabled>
-                                                                <span class="input-group-text w-px-60"  disabled>/[(${billProduct.quantity})]</span>
+                                                                <span class="input-group-text w-px-60" disabled>/[(${billProduct.quantity})]</span>
                                                             </div>
                                                             <span th:class="|errorQuantity${billProduct.id} text-danger|"></span>
                                                         </td>
@@ -205,11 +208,11 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </div>
-                                        <div class="mb-3 text-center">
-                                            <Button type="submit" th:class="|btn btn-primary completed${bill.id} |"
-                                                    hidden="hidden" onclick="clickSave()">Hoàn tất
-                                            </Button>
+                                            <div class="mb-3 text-center">
+                                                <Button type="submit" th:class="|btn btn-primary completed${bill.id} |"
+                                                        disabled onclick="clickSave()">Hoàn tất
+                                                </Button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -225,7 +228,7 @@
 <script src="/admin/plugin/js/order.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script>
-    if(document.getElementById("return").value=="return") {
+    if (document.getElementById("return").value == "return") {
         const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
