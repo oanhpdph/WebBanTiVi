@@ -285,6 +285,7 @@ public class BillImpl implements BillService {
             HistoryBillProduct historyBillProduct = new HistoryBillProduct();
             historyBillProduct.setBillProduct(billProduct);
             historyBillProduct.setQuantityRequestReturn(Integer.parseInt(dto.getQuantityReturn()));
+            historyBillProduct.setQuantityAcceptReturn(0);
             historyBillProduct.setReason(dto.getReason());
             historyBillProduct.setDate(today);
             historyBillProduct.setStatus(1);
