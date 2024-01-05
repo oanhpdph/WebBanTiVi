@@ -41,8 +41,11 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
         List<HistoryBillProduct> historyBillProducts = this.historyBillProductRepository.findAll();
         if(returnCount.isPresent()) {
             for (HistoryBillProduct historyBillProduct : historyBillProducts) {
-                if (historyBillProduct.getBillProduct().getId() == idBillProduct &&
-                        historyBillProduct.getReturnTimes() == returnCount.get()) {
+                System.out.println(historyBillProduct.getBillProduct().getId());
+                System.out.println(historyBillProduct.getReturnTimes());
+                System.out.println(returnCount.get());
+                if (historyBillProduct.getBillProduct().getId().equals(idBillProduct) &&
+                        historyBillProduct.getReturnTimes().equals(returnCount.get())) {
                     return historyBillProduct;
                 }
             }
