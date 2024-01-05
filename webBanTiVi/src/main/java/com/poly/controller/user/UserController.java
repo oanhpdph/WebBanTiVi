@@ -36,6 +36,9 @@ public class UserController {
     @Autowired
     HistoryBillProductService historyBillProductService;
 
+    @Autowired
+    VoucherService voucherService;
+
 
     @Autowired
     CheckLogin checkLogin;
@@ -60,10 +63,12 @@ public class UserController {
         Bill bill = this.billService.getOneById(id);
         List<HistoryBillReturnDto> listHistoryDto = this.historyBillProductService.findAllHistoryBillReturnByIdBill(id);
         BigDecimal total = BigDecimal.ZERO;
+        int check = 0;
         for(HistoryBillReturnDto hBillReturnDto : listHistoryDto){
               total =total.add(hBillReturnDto.getReturnMoney());
-              if(bill.getTotalPrice().subtract(total).compareTo(bill.getVoucherValue())<0){
+              if(bill.getTotalPrice().subtract(total).compareTo(bill.getVoucher().getMinimumValue())<0 && check == 0){
                   hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
+                  check=1;
               }
         }
         model.addAttribute("bill", bill);
