@@ -211,7 +211,7 @@ public class CartController {
         if (billProRes.getPaymentMethod() == 2) {
             //VNPAY
             String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-            String vnpayUrl = vnPayService.createOrder(bill1.getTotalPrice(), bill1.getCode(), baseUrl);
+            String vnpayUrl = vnPayService.createOrder(bill1.getTotalPrice().add(billProRes.getDeliveryFee()), bill1.getCode(), baseUrl);
             billService.addBillPro(bill1, billProRes);
 
             if (userDetailDto != null) {
