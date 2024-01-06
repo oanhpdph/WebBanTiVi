@@ -157,7 +157,10 @@
                             [(${listBill.customer.name})]
                         </td>
                         <td>[(${listBill.createDate})]</td>
-                        <td>
+                        <td  th:if="${listBill.getDeliveryNotes()[0].getDeliveryFee() != null}">
+                            [(${#numbers.formatDecimal(listBill.totalPrice+listBill.getDeliveryNotes()[0].getDeliveryFee(),0,'COMMA',0,'POINT')})]
+                        </td>
+                        <td  th:if="${listBill.getDeliveryNotes()[0].getDeliveryFee() == null}">
                             [(${#numbers.formatDecimal(listBill.totalPrice,0,'COMMA',0,'POINT')})]
                         </td>
                         <td th:text="${listBill.paymentStatus == 1 ? 'Đã thanh toán' : listBill.paymentStatus == 2 ? 'Chưa thanh toán' : 'Đã hoàn tiền'}"></td>
