@@ -142,7 +142,7 @@
 
                                             <div class=" input-group">
                                                 <input class="form-check form-control " type="number"
-                                                       th:value="${#numbers.formatInteger(deliveryNote?.deliveryFee,1)}"
+                                                       th:value="${#numbers.formatInteger(deliveryNote.getDeliveryFee(),1)}"
                                                        name="deliveryFee"
                                                        id="deliveryFee" disabled="true">
                                                 <span class="input-group-text">VNĐ</span>
@@ -293,12 +293,19 @@
                                     <span class="text-end col-6 col-md-6">[(${billDetail?.voucher?.value != null ?  billDetail.voucher.value :'0'})]<u>đ</u></span>
                                 </div>
                             </div>
+
+                            <div class="mb-2">
+                                <div class="row">
+                                    <label class="col-6 col-md-6"><b class="text-start">Phí giao hàng:</b></label>
+                                    <span class="text-end col-6 col-md-6">[(${#numbers.formatDecimal(deliveryNote.getDeliveryFee(),0,'COMMA',0,'POINT')})]<u>đ</u></span>
+                                </div>
+                            </div>
                         </div>
                         <hr>
                         <div class="mt-2 mb-2">
                             <div class="row">
-                                <label class="col-6 col-md-6"><b class="text-start">Tổng sau giảm:</b></label>
-                                <span class="text-end col-6 col-md-6">[(${#numbers.formatDecimal(totalAfter,0,'COMMA',0,'POINT')})]<u>đ</u></span>
+                                <label class="col-6 col-md-6"><b class="text-start">Tiền phải trả:</b></label>
+                                <span class="text-end col-6 col-md-6">[(${#numbers.formatDecimal(totalAfter+deliveryNote.getDeliveryFee(),0,'COMMA',0,'POINT')})]<u>đ</u></span>
                             </div>
                         </div>
                         <div class="mt-2 mb-2">

@@ -40,7 +40,7 @@ public class BillDetailController {
     public String loadBillById(HttpSession session, Model model,
                                @PathVariable(name = "billCode") Integer idBill) {
         model.addAttribute("deliveryNote", deliveryNotesSevice.getByIdBill(idBill));
-
+        deliveryNotesSevice.getByIdBill(idBill).getDeliveryFee();
         Bill bill = billService.getOneById(idBill);
         List<HistoryBillReturnDto> listHistoryDto = this.historyBillProductService.findAllHistoryBillReturnByIdBill(idBill);
         BigDecimal total = BigDecimal.ZERO;

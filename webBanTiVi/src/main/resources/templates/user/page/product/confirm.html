@@ -56,9 +56,9 @@
                                                       th:text="${delivery.receivingAddress}"></span>
                                             </div>
                                             <div class="row mb-3">
-                                                <b class="text-start col">Tổng Tiền: </b>
-                                                <span th:text="|*{#numbers.formatDecimal(totalPrice,0,'COMMA',0,'POINT')} (VNĐ)|"
-                                                      class="text-start col"></span>
+                                                <b class="text-start col">Phí vận chuyển: </b>
+                                                <span  class="text-start col"
+                                                      th:text="|*{#numbers.formatDecimal(deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')} (VNĐ)|"/>
                                             </div>
 
                                             <div class="row mb-3">
@@ -117,6 +117,11 @@
                                                     </tr>
                                                     </tbody>
                                                 </table>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <b class="text-start col">Tổng Tiền: </b>
+                                                <span th:text="|*{#numbers.formatDecimal((totalPrice+deliveryNotes[0].deliveryFee),0,'COMMA',0,'POINT')} (VNĐ)|"
+                                                      class="text-start col"></span>
                                             </div>
                                         </div>
                                         <div class="card-footer">

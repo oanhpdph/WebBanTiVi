@@ -134,8 +134,8 @@ public class BillController {
         model.addAttribute("hoantra", bill1.stream().filter(bill -> bill.getBillStatus().getCode().equals("RN")).toList());
         model.addAttribute("huy", bill1.stream().filter(bill -> bill.getBillStatus().getCode().equals("CA")).toList());
         model.addAttribute("trahang", bill1.stream().filter(bill -> bill.getBillStatus().getCode().equals("RR") || bill.getBillStatus().getCode().equals("WR") || bill.getBillStatus().getCode().equals("RE")).toList());
-
         model.addAttribute("listBill", pagebill);
+        pagebill.getContent().get(0).getDeliveryNotes().get(0).getDeliveryFee();
         model.addAttribute("totalElements", pagebill.getTotalElements());
         return "/admin/layout";
     }
