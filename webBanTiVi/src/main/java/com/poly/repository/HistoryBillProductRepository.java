@@ -17,8 +17,7 @@ public interface HistoryBillProductRepository extends JpaRepository<HistoryBillP
     @Query(value = "select b from HistoryBillProduct b inner join Bill  a on b.bill.id=a.id where  b.status=?1 and a.id=?2")
     List<HistoryBillProduct> findHistoryBillProductReturn(Integer status, Integer id);
 
-
-    @Query(value="select b.billProduct.id as idBillProduct, sum(b.quantityRequestReturn) as totalReturned  from HistoryBillProduct b where b.bill.id=?1 group by b.billProduct.id")
+    @Query(value="select b.billProduct.id as idBillProduct, sum(b.quantityAcceptReturn) as totalReturned  from HistoryBillProduct b where b.bill.id=?1 group by b.billProduct.id")
     List<Object[]> getReturnedDataForBill(Long idBill);
 
     @Query(value="Select b from HistoryBillProduct b where b.bill.id=?1 and b.returnTimes=?2")
@@ -27,4 +26,6 @@ public interface HistoryBillProductRepository extends JpaRepository<HistoryBillP
     @Query(value="select b from HistoryBillProduct b where b.status=?1")
     List<HistoryBillProduct> findHistoryBillProductByStatus(Integer status);
 
+    @Query(value="select b from HistoryBillProduct  b where b.bill.id=?1")
+    List<HistoryBillProduct> findHistoryBillProductByIdBill(Integer id);
 }

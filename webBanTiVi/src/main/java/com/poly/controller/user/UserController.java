@@ -15,9 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class UserController {
@@ -35,6 +35,9 @@ public class UserController {
 
     @Autowired
     HistoryBillProductService historyBillProductService;
+
+    @Autowired
+    VoucherService voucherService;
 
 
     @Autowired
@@ -59,6 +62,15 @@ public class UserController {
     public String loadInvoiceDetail(HttpSession session, Model model, @PathVariable("id") Integer id) {
         Bill bill = this.billService.getOneById(id);
         List<HistoryBillReturnDto> listHistoryDto = this.historyBillProductService.findAllHistoryBillReturnByIdBill(id);
+        BigDecimal total = BigDecimal.ZERO;
+        int check = 0;
+        for(HistoryBillReturnDto hBillReturnDto : listHistoryDto){
+              total =total.add(hBillReturnDto.getReturnMoney());
+              if(bill.getTotalPrice().subtract(total).compareTo(bill.getVoucher().getMinimumValue())<0 && check == 0){
+                  hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
+                  check=1;
+              }
+        }
         model.addAttribute("bill", bill);
         model.addAttribute("listHistoryReturn", listHistoryDto);
         model.addAttribute("billProducts", bill.getBillProducts());
@@ -107,14 +119,16 @@ public class UserController {
 
     @GetMapping("/search_order_user")
     public String getSearchOder(@ModelAttribute("search") String search, HttpSession session, Model model) {
-        Optional<Bill> bill = this.billService.findByCode(search.trim());
-        if (bill.isEmpty()) {
+        Bill bill = this.billService.findBillNewReturnByCode(search.trim());
+        if (bill == null) {
             model.addAttribute("errorSearch", "Xin lỗi! Đơn hàng bạn tìm không tồn tại trên hệ thống!");
             return "/user/index";
         }
-        Boolean check = this.billService.checkValidateReturnNologin(search);
+        Boolean check = this.billService.checkValidateReturnNologin(search.trim());
+        Boolean checkQuantity = this.billService.checkConditionReturnNoLogin(search.trim());
+        session.setAttribute("checkQuantity", checkQuantity);
         session.setAttribute("checkReturn", check);
-        session.setAttribute("bill", bill.get());
+        session.setAttribute("bill", bill);
         return "redirect:/search_order";
     }
 

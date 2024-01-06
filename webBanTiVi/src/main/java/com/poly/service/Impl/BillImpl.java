@@ -28,7 +28,7 @@ import java.util.Optional;
 public class BillImpl implements BillService {
 
     java.util.Date today = new java.util.Date();
-
+    Date threedayago = new Date(today.getTime() - (1000 * 60 * 60 * 24*3));
     @Autowired
     private BillRepos billRepos;
 
@@ -285,6 +285,7 @@ public class BillImpl implements BillService {
             HistoryBillProduct historyBillProduct = new HistoryBillProduct();
             historyBillProduct.setBillProduct(billProduct);
             historyBillProduct.setQuantityRequestReturn(Integer.parseInt(dto.getQuantityReturn()));
+            historyBillProduct.setQuantityAcceptReturn(0);
             historyBillProduct.setReason(dto.getReason());
             historyBillProduct.setDate(today);
             historyBillProduct.setStatus(1);
@@ -311,7 +312,7 @@ public class BillImpl implements BillService {
                 listeck.add(check);
                 continue;
             }
-            if (billList.get(i).getDeliveryNotes().get(0).getReceivedDate().compareTo(today) <= 3) {
+            if (billList.get(i).getDeliveryNotes().get(0).getReceivedDate().compareTo(threedayago) >= 0) {
                 boolean check = true;
                 listeck.add(check);
             } else {
@@ -333,9 +334,11 @@ public class BillImpl implements BillService {
                 for(BillProduct billProduct : bill.getBillProducts()){
                     if(billProduct.getQuantity() != 0 ){
                          check = true;
+                         break;
                     }
                 }
                 listeck.add(check);
+                check=false;
         }
         return listeck;
     }
@@ -345,7 +348,7 @@ public class BillImpl implements BillService {
         Optional<Bill> bill = this.findByCode(search.trim());
         boolean check = false;
         if (bill.get().getDeliveryNotes().get(0).getReceivedDate() != null) {
-            if (bill.get().getDeliveryNotes().get(0).getReceivedDate().compareTo(today) <= 3) {
+            if (bill.get().getDeliveryNotes().get(0).getReceivedDate().compareTo(today) <= 0) {
                 check = true;
             } else {
                 check = false;
@@ -357,6 +360,40 @@ public class BillImpl implements BillService {
     @Override
     public List<Bill> findBillReturnByStatus(String code) {
         return this.billRepos.findBillReturn(code);
+    }
+
+    @Override
+    public Bill findBillNewReturnByCode(String code) {
+        Bill bill = this.billRepos.findByCode(code).get();
+        List<CountBillProductReturnDto> billProductDTOList = new ArrayList<>();
+        List<Object[]> resultList = this.historyBillProductRepository.getReturnedDataForBill(Long.parseLong(String.valueOf(bill.getId())));
+        for (Object[] result : resultList) {
+            CountBillProductReturnDto count = new CountBillProductReturnDto();
+            count.setIdBillProduct((Integer) result[0]);
+                count.setTotalAcceptReturn(Integer.parseInt(String.valueOf((long) result[1])));
+            billProductDTOList.add(count);
+        }
+        for (CountBillProductReturnDto countBilProductReturnDto : billProductDTOList) {
+            for (BillProduct billProduct : bill.getBillProducts()) {
+                if (countBilProductReturnDto.getIdBillProduct() == billProduct.getId()) {
+                    billProduct.setQuantity(billProduct.getQuantity() - countBilProductReturnDto.getTotalAcceptReturn());
+                }
+            }
+        }
+        return bill;
+    }
+
+
+    @Override
+    public Boolean checkConditionReturnNoLogin(String code) {
+        Bill bill = this.billRepos.findByCode(code).get();
+        boolean check = false;
+            for(BillProduct billProduct : bill.getBillProducts()){
+                if(billProduct.getQuantity() != 0 ){
+                    check = true;
+                }
+            }
+        return check;
     }
 
 

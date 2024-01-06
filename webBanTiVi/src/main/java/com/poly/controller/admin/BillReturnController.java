@@ -19,13 +19,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 @PreAuthorize("hasAnyAuthority('ADMIN','STAFF')")
 public class BillReturnController {
+
+      Date date =new Date();
 
     @Autowired
     BillService billService;
@@ -52,9 +56,9 @@ public class BillReturnController {
     @GetMapping("/invoice_return/{id}")
     public String getInvoiceReturnBill(HttpSession session, Model model, @PathVariable("id") Integer id,
                                    @ModelAttribute("formReturnDto") formReturnDto dto){
+        List<HistoryBillProduct> product=this.historyBillProductService.findHistoryBillProductReturn(1,id);
         session.setAttribute("pageView", "/admin/page/bill/billProduct_return.html");
         session.setAttribute("active", "/bill/invoice_return");
-        List<HistoryBillProduct> product=this.historyBillProductService.findHistoryBillProductReturn(1,id);
         model.addAttribute("listBillReturn",product);
         session.setAttribute("idBillReturn", id);
         return "admin/layout";
@@ -78,8 +82,6 @@ public class BillReturnController {
     @GetMapping("/invoice_return/refuse/{id}")
     public String getRefuseReturn(HttpSession session, Model model, @PathVariable("id") Integer id,
                                    @ModelAttribute("formReturnDto") formReturnDto dto){
-        session.setAttribute("pageView", "/admin/page/bill/billProduct_return.html");
-        session.setAttribute("active", "/bill/invoice_return");
         List<HistoryBillProduct> product=this.historyBillProductService.findHistoryBillProductReturn(1,id);
         if(product.size()==0){
             Bill bill = this.billService.getOneById(id);
@@ -89,6 +91,8 @@ public class BillReturnController {
             return "redirect:/admin/bill/list_invoice_return";
         }
         model.addAttribute("listBillReturn",product);
+        session.setAttribute("pageView", "/admin/page/bill/billProduct_return.html");
+        session.setAttribute("active", "/bill/invoice_return");
         return "admin/layout";
     }
 
@@ -113,7 +117,10 @@ public class BillReturnController {
         HistoryBillProduct historyBillProduct = this.historyBillProductService.findByBillProductAndReturnTimes(id,idBill);
         historyBillProduct.setNote(dto.getNote());
         historyBillProduct.setStatus(3);
+        historyBillProduct.setDate(date);
         historyBillProduct.setQuantityAcceptReturn(0);
+        historyBillProduct.setBill(this.billService.getOneById(idBill));
+        historyBillProduct.setBillProduct(this.billProductService.edit(id));
         this.historyBillProductService.save(historyBillProduct);
         billProduct.setStatus(2);
         this.billProductService.save(billProduct);
@@ -143,6 +150,9 @@ public class BillReturnController {
         historyBillProduct.setQuantityAcceptReturn(Integer.parseInt(dto.getQuantity()));
         historyBillProduct.setNote(dto.getNote());
         historyBillProduct.setStatus(2);
+        historyBillProduct.setDate(date);
+        historyBillProduct.setBill(this.billService.getOneById(idBill));
+        historyBillProduct.setBillProduct(this.billProductService.edit(id));
         this.historyBillProductService.save(historyBillProduct);
         return "redirect:/admin/invoice_return/agree/"+billProduct.getBill().getId();
     }

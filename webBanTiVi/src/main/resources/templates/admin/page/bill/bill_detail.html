@@ -164,7 +164,7 @@
                     </div>
                     <div class="tab-pane fade" id="navs-billReturn-info" role="tabpanel">
                         <div class="row mb-3" th:each="historyDto : ${listHistoryReturn}">
-                            <div>Lần [(${historyDto.returnTimes})]
+                            <div>Lần [(${historyDto.returnTimes})]  (<span>Cửa hàng trả lại : [(${historyDto.returnMoney})] </span>)
                                 <div class="table-responsive text-nowrap">
                                     <table class="table table-bordered">
                                         <thead>
