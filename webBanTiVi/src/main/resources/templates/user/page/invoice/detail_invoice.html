@@ -2,7 +2,8 @@
     .pull-up:hover {
         border-radius: 0px !important;
     }
-    .return-view:hover{
+
+    .return-view:hover {
         color: #1890ff !important;
         cursor: pointer;
     }
@@ -71,28 +72,28 @@
                             </div>
                             <div class="col-sm-7">
                                 <div class="mb-2">
-                                    <span>[(${billProduct?.product.product.nameProduct})],[
-                                    <span th:each="field:${billProduct.product.fieldList}">
-                                    [(${field.value})]
-                                    </span>
-                                         ]
-                                    </span>
+                                    <div>[(${billProduct?.product.product.nameProduct})]
+
+                                    </div>
+                                    <div>
+                                        <span th:each="field:${billProduct.product.fieldList}">[(${field.value})]</span>
+                                    </div>
                                 </div>
                                 <div class="mb-2">
-                                    <span>Số lượng: [(${billProduct.quantity})]</span>
+                                    <span>x[(${billProduct.quantity})]</span>
                                 </div>
                             </div>
                             <div class="col-sm-3 text-end">
                                 <div>
-                                    <span class="text-strike-through">[(${#numbers.formatDecimal(billProduct.product.priceExport,0,'COMMA',0,'POINT')})]</span>
+                                    <span class="text-strike-through">[(${#numbers.formatDecimal(billProduct.price,0,'COMMA',0,'POINT')})]</span>
                                     <span class="fs-tiny text-decoration-underline">đ</span>
                                 </div>
                                 <div th:if="${billProduct.reducedMoney !=0}">
-                                    <span>[(${#numbers.formatDecimal(billProduct.product.priceExport-billProduct.reducedMoney,0,'COMMA',0,'POINT')})]</span>
+                                    <span>[(${#numbers.formatDecimal(billProduct.product.price-billProduct.reducedMoney,0,'COMMA',0,'POINT')})]</span>
                                     <span class="fs-tiny text-decoration-underline">đ</span>
                                 </div>
                                 <div th:if="${billProduct.reducedMoney==0}">
-                                    <span>[(${#numbers.formatDecimal(billProduct.product.priceExport,0,'COMMA',0,'POINT')})]</span>
+                                    <span>[(${#numbers.formatDecimal(billProduct.price,0,'COMMA',0,'POINT')})]</span>
                                     <span class="fs-tiny text-decoration-underline">đ</span>
                                 </div>
                             </div>
@@ -102,16 +103,36 @@
                         <div class="mb-3">
                             <div class="mb-3 row text-end">
                                 <span class="col-sm-10 ">Tổng tiền:</span>
-                                <span class="col-sm-2 ">
+                                <span class="col-sm-2 "
+                                      th:if="${bill?.voucherValue != null && bill?.deliveryNotes[0]?.deliveryFee != null }">
+                                [(${#numbers.formatDecimal(bill.totalPrice+bill.voucherValue+bill.deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')})]
+                                    <span class="text-decoration-underline fs-tiny">đ</span>
+                                </span>
+                                <span class="col-sm-2 "
+                                      th:if="${bill?.voucherValue == null && bill?.deliveryNotes[0]?.deliveryFee == null }">
+                                [(${#numbers.formatDecimal(bill.totalPrice,0,'COMMA',0,'POINT')})]
+                                    <span class="text-decoration-underline fs-tiny">đ</span>
+                                </span>
+                                <span class="col-sm-2 " th:if="${bill?.voucherValue == null}">
+                                [(${#numbers.formatDecimal(bill.totalPrice+bill.deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')})]
+                                    <span class="text-decoration-underline fs-tiny">đ</span>
+                                </span>
+                                <span class="col-sm-2" th:if="${bill?.deliveryNotes[0]?.deliveryFee == null}">
                                 [(${#numbers.formatDecimal(bill.totalPrice+bill.voucherValue,0,'COMMA',0,'POINT')})]
                                     <span class="text-decoration-underline fs-tiny">đ</span>
                                 </span>
-
                             </div>
                             <div class="mb-3 row text-end">
                                 <span class="col-sm-10 ">Voucher:</span>
                                 <span class="col-sm-2">
                                     [(${#numbers.formatDecimal(bill.voucherValue,0,'COMMA',0,'POINT')})]
+                                    <span class="text-decoration-underline fs-tiny">đ</span>
+                                </span>
+                            </div>
+                            <div class="mb-3 row text-end">
+                                <span class="col-sm-10 ">Phí vận chuyển:</span>
+                                <span class="col-sm-2">
+                                    [(${#numbers.formatDecimal(bill.deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')})]
                                     <span class="text-decoration-underline fs-tiny">đ</span>
                                 </span>
                             </div>
@@ -134,55 +155,6 @@
                         <div th:if="${#lists.size(listHistoryReturn) != 0}">
                             <div class="row mb-3" th:each="historyDto : ${listHistoryReturn}">
                                 <div>Lần [(${historyDto.returnTimes})]
-                                    <span class="return-view" style="" data-bs-toggle="modal" th:data-bs-target="|#modal|">
-                                        <a >Xem chi tiết</a></span>
-                                    <div class="modal fade" th:id="|modal|" tabindex="-1"
-                                         aria-hidden="true">
-                                        <div class="modal-dialog modal-xl" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="btn-close"
-                                                            data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                </div>
-                                                <div class="row mb-3" th:each="historyBillreturn : ${historyDto.historyBillProductList}">
-                                                <div class="col-sm-2">
-                                                    <div th:each="image:${historyBillreturn?.billProduct?.product?.listImage}">
-                                                        <img th:if="${image.location == true}"
-                                                             th:src="@{'/image/product/'+${image.link}}"
-                                                             alt="" width="100px">
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-7">
-                                                    <div class="mb-2">
-                                                        <span>[(${historyBillreturn?.billProduct?.product?.product?.nameProduct})],[<span th:each="field:${historyBillreturn?.billProduct.product.fieldList}">[(${field.value})]</span>]</span>
-                                                    </div>
-                                                    <div class="mb-2">
-                                                        <span>Số lượng yêu cầu:[(${historyBillreturn?.quantityRequestReturn})]</span>
-                                                    </div>
-                                                    <div class="mb-2">
-                                                        <span>Số lượng cho phép:[(${historyBillreturn?.quantityAcceptReturn})]</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3 text-end">
-                                                    <div>
-                                                        <span class="text-strike-through">[(${#numbers.formatDecimal(historyBillreturn?.billProduct.product.priceExport,0,'COMMA',0,'POINT')})]</span>
-                                                        <span class="fs-tiny text-decoration-underline">đ</span>
-                                                    </div>
-                                                    <div th:if="${historyBillreturn?.billProduct.reducedMoney !=0}">
-                                                    <span>[(${#numbers.formatDecimal(historyBillreturn?.billProduct.product.priceExport-historyBillreturn?.billProduct.reducedMoney,0,'COMMA',0,'POINT')})]</span>
-                                                    <span class="fs-tiny text-decoration-underline">đ</span>
-                                                </div>
-                                                    <div th:if="${historyBillreturn?.billProduct.reducedMoney==0}">
-                                                        <span>[(${#numbers.formatDecimal(historyBillreturn?.billProduct.product.priceExport,0,'COMMA',0,'POINT')})]</span>
-                                                        <span class="fs-tiny text-decoration-underline">đ</span>
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                     <div class="table-responsive text-nowrap">
                                         <table class="table table-bordered">
                                             <thead>
@@ -218,15 +190,28 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    <hr>
+                                    <div th:if="${historyDto.returnMoney >=0}" class="text-end text-black fw-bold">
+                                        Số tiền hoàn
+                                        lại:[(${#numbers.formatDecimal(historyDto.returnMoney,0,'COMMA',0,'POINT')})]
+                                    </div>
+                                    <div th:if="${historyDto.returnMoney < 0}" class="text-end text-black fw-bold"
+                                         id="returnMoneyDiv">
+                                        Khách hàng gửi lại : <span>[(${#numbers.formatDecimal(historyDto.returnMoney,0,'COMMA',0,'POINT')})]</span>
+                                    </div>
+                                    <hr>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div th:if="${#lists.size(listHistoryReturn) == 0}">
-                        <span class="fs-5 text-center">Không có dữ liệu trả hàng!</span>
-                    </div>
-                    <div class="text-center mt-2">
-                        <a type="button" class="btn btn-outline-dark" href="/order"
-                           sec:authorize="isAuthenticated()">Về danh sách đơn hàng</a>
+                    <div>
+                        <div th:if="${#lists.size(listHistoryReturn) == 0}">
+                            <div class="fs-5 text-center">Không có dữ liệu trả hàng!</div>
+                        </div>
+                        <div class="text-center mt-2">
+                            <a type="button" class="btn btn-outline-dark" href="/order"
+                               sec:authorize="isAuthenticated()">Về danh sách đơn hàng</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -243,7 +228,11 @@
             }
         })
     })
-
+    var returnMoneyDiv = document.getElementById('returnMoneyDiv');
+    var returnMoney = parseFloat(returnMoneyDiv.innerText.replace(/[^\d.-]/g, ''));
+    if (returnMoney < 0) {
+        returnMoneyDiv.innerText = 'Khách hàng gửi lại: ' + Math.abs(returnMoney).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
 
 </script>
 <script src="/admin/plugin/js/loadImage.js"></script>

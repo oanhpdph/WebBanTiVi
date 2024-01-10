@@ -162,7 +162,6 @@ public class BillController {
 
     @GetMapping("/bill/list_bill/downloadpdf")
     public void exportPdf(HttpServletResponse response, HttpSession session) throws IOException {
-//        Page<Bill> bills = (Page<Bill>) session.getAttribute("listBill");
         List<String> header = listHeader();
 
         List<DataExportExcel> dataExport = new ArrayList<>();
