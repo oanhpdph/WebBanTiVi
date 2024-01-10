@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -64,12 +63,14 @@ public class UserController {
         List<HistoryBillReturnDto> listHistoryDto = this.historyBillProductService.findAllHistoryBillReturnByIdBill(id);
         BigDecimal total = BigDecimal.ZERO;
         int check = 0;
-        for(HistoryBillReturnDto hBillReturnDto : listHistoryDto){
-              total =total.add(hBillReturnDto.getReturnMoney());
-              if(bill.getTotalPrice().subtract(total).compareTo(bill.getVoucher().getMinimumValue())<0 && check == 0){
-                  hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
-                  check=1;
-              }
+        if(bill.getVoucher() !=null && bill.getVoucher().getMinimumValue() != null) {
+            for (HistoryBillReturnDto hBillReturnDto : listHistoryDto) {
+                total = total.add(hBillReturnDto.getReturnMoney());
+                if (bill.getTotalPrice().subtract(total).compareTo(bill.getVoucher().getMinimumValue()) < 0 && check == 0) {
+                    hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
+                    check = 1;
+                }
+            }
         }
         model.addAttribute("bill", bill);
         model.addAttribute("listHistoryReturn", listHistoryDto);
@@ -84,30 +85,37 @@ public class UserController {
         session.setAttribute("pageView", "/user/page/profile/order.html");
         UserDetailDto customerUserDetail = this.checkLogin.checkLogin();
         List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
-        List<Bill> billListNew = new ArrayList<>();
-        for(Bill bill : billList){
-            Bill newBill = this.historyBillProductService.listBillWhenReturned(String.valueOf(bill.getId()));
-            billListNew.add(newBill);
-        }
-        List<Boolean> checkQuantity = this.billService.checkConditionReturn();
-        List<Boolean> listeck = this.billService.checkValidationReturn();
-        model.addAttribute("check", listeck);
-        model.addAttribute("bill", billListNew);
+        List<Boolean> listcheck = this.billService.checkValidationReturn();
+        model.addAttribute("check", listcheck);
+        model.addAttribute("bill", billList);
+        return "/user/index";
+    }
+
+    @GetMapping("/order_return/detail/{id}")
+    public String viewReturnOrder(HttpSession session, Model model,@PathVariable("id") Integer id) {
+        session.setAttribute("pageView", "/user/page/profile/return.html");
+//        UserDetailDto customerUserDetail = this.checkLogin.checkLogin();
+        Bill newBill = this.historyBillProductService.listBillWhenReturned(String.valueOf(id));
+        Boolean checkQuantity = this.billService.checkQuantityBillReturn(id);
+//        Boolean listeck = this.billService.checkQuantityBillReturn(id);
+//        model.addAttribute("check", listeck);
+        model.addAttribute("bill", newBill);
         model.addAttribute("checkQuantity", checkQuantity);
         return "/user/index";
     }
+
 
     @PostMapping("/return/{id}")
     public String returnProduct(@PathVariable("id") Integer id,
                                 @RequestBody List<ReturnDto> returnDto, Model model, RedirectAttributes redirectAttributes) {
         this.billService.logicBillReturn(id, returnDto);
         Bill bill = this.billService.getOneById(id);
-        String code = bill.getCode();
         redirectAttributes.addFlashAttribute("return", "return");
-        if (code == null || code != "") {
-            return "redirect:/search_order_user?search=" + code;
+        UserDetailDto customerUserDetail = this.checkLogin.checkLogin();
+        if (customerUserDetail == null) {
+            return "redirect:/search_order_user?search=" + bill.getCode();
         }
-        return "redirect:/order";
+        return "redirect:/";
     }
 
 
@@ -128,7 +136,8 @@ public class UserController {
         Boolean checkQuantity = this.billService.checkConditionReturnNoLogin(search.trim());
         session.setAttribute("checkQuantity", checkQuantity);
         session.setAttribute("checkReturn", check);
-        session.setAttribute("bill", bill);
+        session.setAttribute("codeSearch", search);
+        session.setAttribute("billSearch", bill);
         return "redirect:/search_order";
     }
 

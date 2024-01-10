@@ -28,7 +28,9 @@ import java.util.Optional;
 public class BillImpl implements BillService {
 
     java.util.Date today = new java.util.Date();
-    Date threedayago = new Date(today.getTime() - (1000 * 60 * 60 * 24*3));
+
+    Date threedayago = new Date(today.getTime() - (1000 * 60 * 60 * 24 * 3));
+
     @Autowired
     private BillRepos billRepos;
 
@@ -78,13 +80,14 @@ public class BillImpl implements BillService {
     HistoryBillProductRepository historyBillProductRepository;
 
 
-    @Autowired  HistoryBillProductService historyBillProductService;
+    @Autowired
+    HistoryBillProductService historyBillProductService;
+
 
     @Override
     public List<Bill> all() {
         return billRepos.findAll();
     }
-
 
 
     @Override
@@ -269,13 +272,14 @@ public class BillImpl implements BillService {
     public void logicBillReturn(Integer id, List<ReturnDto> returnDto) {
         BillStatus billStatus = this.billStatusService.getOneBycode("RR");
         Bill bill = this.billRepos.findById(id).get();
+
         bill.setBillStatus(billStatus);
         this.billRepos.save(bill);
         Optional<Integer> returnCount = this.historyBillProductRepository.findReturnCountBillById(id);
         Integer count = 0;
-        if (returnCount.isPresent()){
+        if (returnCount.isPresent()) {
             count = returnCount.get() + 1;
-        }else{
+        } else {
             count = 1;
         }
         for (ReturnDto dto : returnDto) {
@@ -324,31 +328,13 @@ public class BillImpl implements BillService {
     }
 
 
-    @Override
-    public List<Boolean> checkConditionReturn() {
-        UserDetailDto customerUserDetail = this.checkLogin.checkLogin();
-        List<Bill> billList = this.findAllBillByUser(customerUserDetail.getId());
-        List<Boolean> listeck = new ArrayList<>();
-        boolean check = false;
-        for (Bill bill  : billList) {
-                for(BillProduct billProduct : bill.getBillProducts()){
-                    if(billProduct.getQuantity() != 0 ){
-                         check = true;
-                         break;
-                    }
-                }
-                listeck.add(check);
-                check=false;
-        }
-        return listeck;
-    }
 
     @Override
     public Boolean checkValidateReturnNologin(String search) {
         Optional<Bill> bill = this.findByCode(search.trim());
         boolean check = false;
         if (bill.get().getDeliveryNotes().get(0).getReceivedDate() != null) {
-            if (bill.get().getDeliveryNotes().get(0).getReceivedDate().compareTo(today) <= 0) {
+            if (bill.get().getDeliveryNotes().get(0).getReceivedDate().compareTo(threedayago) >= 0) {
                 check = true;
             } else {
                 check = false;
@@ -370,7 +356,7 @@ public class BillImpl implements BillService {
         for (Object[] result : resultList) {
             CountBillProductReturnDto count = new CountBillProductReturnDto();
             count.setIdBillProduct((Integer) result[0]);
-                count.setTotalAcceptReturn(Integer.parseInt(String.valueOf((long) result[1])));
+            count.setTotalAcceptReturn(Integer.parseInt(String.valueOf((long) result[1])));
             billProductDTOList.add(count);
         }
         for (CountBillProductReturnDto countBilProductReturnDto : billProductDTOList) {
@@ -388,11 +374,23 @@ public class BillImpl implements BillService {
     public Boolean checkConditionReturnNoLogin(String code) {
         Bill bill = this.billRepos.findByCode(code).get();
         boolean check = false;
-            for(BillProduct billProduct : bill.getBillProducts()){
-                if(billProduct.getQuantity() != 0 ){
-                    check = true;
-                }
+        for (BillProduct billProduct : bill.getBillProducts()) {
+            if (billProduct.getQuantity() != 0) {
+                check = true;
             }
+        }
+        return check;
+    }
+
+    @Override
+    public Boolean checkQuantityBillReturn(Integer id) {
+        Bill bill = this.billRepos.findById(id).get();
+        boolean check = false;
+        for (BillProduct billProduct : bill.getBillProducts()) {
+            if (billProduct.getQuantity() != 0) {
+                check = true;
+            }
+        }
         return check;
     }
 
