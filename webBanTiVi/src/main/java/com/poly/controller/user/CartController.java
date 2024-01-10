@@ -154,7 +154,7 @@ public class CartController {
     @PostMapping("/purchase")
     public String addBill(@ModelAttribute(value = "billProduct") BillProRes billProRes, BindingResult result,
                           HttpServletRequest request,
-                          Model model,BigDecimal shipprice,
+                          Model model,BigDecimal deliveryFee,
                           String city, String district, String ward, RedirectAttributes redirectAttributes
     ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
 
@@ -200,7 +200,7 @@ public class CartController {
             billProRes.setEmail(userDetailDto.getEmail());
         }
         billProRes.setAddress(billProRes.getAddress() + ", " + ward + ", " + district + ", " + city);
-        billProRes.setDeliveryFee(shipprice);// phi giao hang
+//        billProRes.setDeliveryFee(deliveryFee);// phi giao hang
         Bill bill1 = billService.add(billProRes);// tạo hóa đơn mới
         billProRes.setBill(bill1);
         DeliveryNotes notes = deliveryNotes.save(billProRes);// tạo phiếu giao hàng
@@ -211,7 +211,7 @@ public class CartController {
         if (billProRes.getPaymentMethod() == 2) {
             //VNPAY
             String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-            String vnpayUrl = vnPayService.createOrder(bill1.getTotalPrice(), bill1.getCode(), baseUrl);
+            String vnpayUrl = vnPayService.createOrder(bill1.getTotalPrice().add(billProRes.getDeliveryFee()), bill1.getCode(), baseUrl);
             billService.addBillPro(bill1, billProRes);
 
             if (userDetailDto != null) {

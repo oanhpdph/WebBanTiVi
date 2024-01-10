@@ -196,10 +196,13 @@ public class SavePdf<T> {
                     totalSum = totalSum.add(billProduct.getPrice().subtract(billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity()))));
                 }
             }
-            twoColTable2.addCell(getCell10fLeft("Tổng tiền phải trả", true));
+            twoColTable2.addCell(getCell10fLeft("Phí vận chuyển", true));
+            twoColTable2.addCell(getCell10fLeft(decimalFormat1.format(bill.getDeliveryNotes().get(0).getDeliveryFee())+ " VNĐ", false));
             twoColTable2.addCell(getCell10fLeft("Voucher", true));
-            twoColTable2.addCell(getCell10fLeft(decimalFormat1.format(totalSum.subtract(bill.getVoucherValue())) + " VNĐ", false));
             twoColTable2.addCell(getCell10fLeft(decimalFormat1.format(bill.getVoucherValue()) + " VNĐ", false));
+            twoColTable2.addCell(getCell10fLeft("Tổng tiền phải trả", true));
+            twoColTable2.addCell(getCell10fLeft(decimalFormat1.format(totalSum.subtract(bill.getVoucherValue()).add(bill.getDeliveryNotes().get(0).getDeliveryFee())) + " VNĐ", false));
+
 
 
             twoColTable2.addCell(getCell10fLeft("Email mua hàng", true));
