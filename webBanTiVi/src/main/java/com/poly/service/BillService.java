@@ -48,4 +48,6 @@ public interface BillService {
 
     Boolean checkQuantityBillReturn(Integer id);
 
+    List<Bill> findBillByUserAndStatus(Integer idUser, Integer status);
+
 }

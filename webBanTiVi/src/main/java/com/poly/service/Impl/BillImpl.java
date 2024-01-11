@@ -350,9 +350,12 @@ public class BillImpl implements BillService {
 
     @Override
     public Bill findBillNewReturnByCode(String code) {
-        Bill bill = this.billRepos.findByCode(code).get();
+        Optional<Bill> bill = this.billRepos.findByCode(code);
+        if(!bill.isPresent()){
+            return null;
+        }
         List<CountBillProductReturnDto> billProductDTOList = new ArrayList<>();
-        List<Object[]> resultList = this.historyBillProductRepository.getReturnedDataForBill(Long.parseLong(String.valueOf(bill.getId())));
+        List<Object[]> resultList = this.historyBillProductRepository.getReturnedDataForBill(Long.parseLong(String.valueOf(bill.get().getId())));
         for (Object[] result : resultList) {
             CountBillProductReturnDto count = new CountBillProductReturnDto();
             count.setIdBillProduct((Integer) result[0]);
@@ -360,13 +363,13 @@ public class BillImpl implements BillService {
             billProductDTOList.add(count);
         }
         for (CountBillProductReturnDto countBilProductReturnDto : billProductDTOList) {
-            for (BillProduct billProduct : bill.getBillProducts()) {
+            for (BillProduct billProduct : bill.get().getBillProducts()) {
                 if (countBilProductReturnDto.getIdBillProduct() == billProduct.getId()) {
                     billProduct.setQuantity(billProduct.getQuantity() - countBilProductReturnDto.getTotalAcceptReturn());
                 }
             }
         }
-        return bill;
+        return bill.get();
     }
 
 
@@ -392,6 +395,11 @@ public class BillImpl implements BillService {
             }
         }
         return check;
+    }
+
+    @Override
+    public List<Bill> findBillByUserAndStatus(Integer idUser, Integer status) {
+        return this.billRepos.findBillByUserAndStatus(idUser,status);
     }
 
 

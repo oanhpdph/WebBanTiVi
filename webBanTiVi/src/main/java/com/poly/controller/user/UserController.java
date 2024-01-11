@@ -6,6 +6,7 @@ import com.poly.dto.HistoryBillReturnDto;
 import com.poly.dto.ReturnDto;
 import com.poly.dto.UserDetailDto;
 import com.poly.entity.Bill;
+import com.poly.entity.BillProduct;
 import com.poly.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,18 +62,23 @@ public class UserController {
     public String loadInvoiceDetail(HttpSession session, Model model, @PathVariable("id") Integer id) {
         Bill bill = this.billService.getOneById(id);
         List<HistoryBillReturnDto> listHistoryDto = this.historyBillProductService.findAllHistoryBillReturnByIdBill(id);
-        BigDecimal total = BigDecimal.ZERO;
+        BigDecimal totalReturn = BigDecimal.ZERO;
         int check = 0;
         if(bill.getVoucher() !=null && bill.getVoucher().getMinimumValue() != null) {
             for (HistoryBillReturnDto hBillReturnDto : listHistoryDto) {
-                total = total.add(hBillReturnDto.getReturnMoney());
-                if (bill.getTotalPrice().subtract(total).compareTo(bill.getVoucher().getMinimumValue()) < 0 && check == 0) {
+                totalReturn = totalReturn.add(hBillReturnDto.getReturnMoney());
+                if (bill.getTotalPrice().subtract(totalReturn).compareTo(bill.getVoucher().getMinimumValue()) < 0 && check == 0) {
                     hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
                     check = 1;
                 }
             }
         }
+        BigDecimal totalBill = BigDecimal.ZERO;
+        for(BillProduct billProduct: bill.getBillProducts()){
+            totalBill= totalBill.add(billProduct.getPrice().multiply(BigDecimal.valueOf(billProduct.getQuantity())));
+        }
         model.addAttribute("bill", bill);
+        model.addAttribute("totalBill", totalBill);
         model.addAttribute("listHistoryReturn", listHistoryDto);
         model.addAttribute("billProducts", bill.getBillProducts());
         session.setAttribute("pageView", "/user/page/invoice/detail_invoice.html");
@@ -82,23 +88,33 @@ public class UserController {
     @GetMapping("/order")
     @PreAuthorize("hasAnyAuthority('USER','ADMIN','STAFF')")
     public String order(HttpSession session, Model model) {
-        session.setAttribute("pageView", "/user/page/profile/order.html");
         UserDetailDto customerUserDetail = this.checkLogin.checkLogin();
         List<Bill> billList = this.billService.findAllBillByUser(customerUserDetail.getId());
         List<Boolean> listcheck = this.billService.checkValidationReturn();
         model.addAttribute("check", listcheck);
         model.addAttribute("bill", billList);
+//        session.setAttribute("activeOrder", 0);
+        session.setAttribute("pageView", "/user/page/profile/order.html");
         return "/user/index";
     }
+//    @GetMapping("/order/status/{id}")
+//    @PreAuthorize("hasAnyAuthority('USER','ADMIN','STAFF')")
+//    public String orderStatus(HttpSession session, Model model, @PathVariable("id") Integer id) {
+//        UserDetailDto customerUserDetail = this.checkLogin.checkLogin();
+//        List<Bill> billList = this.billService.findBillByUserAndStatus(customerUserDetail.getId(), id);
+//        List<Boolean> listcheck = this.billService.checkValidationReturn();
+//        model.addAttribute("check", listcheck);
+//        model.addAttribute("bill", billList);
+//        model.addAttribute("activeOrder",'0');
+//        session.setAttribute("pageView", "/user/page/profile/order.html");
+//        return "/user/index";
+//    }
 
     @GetMapping("/order_return/detail/{id}")
     public String viewReturnOrder(HttpSession session, Model model,@PathVariable("id") Integer id) {
         session.setAttribute("pageView", "/user/page/profile/return.html");
-//        UserDetailDto customerUserDetail = this.checkLogin.checkLogin();
         Bill newBill = this.historyBillProductService.listBillWhenReturned(String.valueOf(id));
         Boolean checkQuantity = this.billService.checkQuantityBillReturn(id);
-//        Boolean listeck = this.billService.checkQuantityBillReturn(id);
-//        model.addAttribute("check", listeck);
         model.addAttribute("bill", newBill);
         model.addAttribute("checkQuantity", checkQuantity);
         return "/user/index";
@@ -115,7 +131,7 @@ public class UserController {
         if (customerUserDetail == null) {
             return "redirect:/search_order_user?search=" + bill.getCode();
         }
-        return "redirect:/";
+        return "redirect:/order";
     }
 
 
