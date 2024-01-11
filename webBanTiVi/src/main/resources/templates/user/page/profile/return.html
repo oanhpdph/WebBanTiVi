@@ -44,13 +44,14 @@
                 </a>
             </li>
             <li class="nav-item">
-                <button type="button" class="nav-link active pb-3 pt-3 fs-5" role="tab" data-bs-toggle="tab"
-                        data-bs-target="#navs-top-profile" aria-controls="navs-top-profile" aria-selected="true">
+                <a type="button" class="nav-link pb-3 pt-3 fs-5" role="tab"
+                       aria-controls="navs-top-profile" aria-selected="true"
+                        th:href="@{/order}">
                     Đơn hàng của bạn
-                </button>
+                </a>
             </li>
             <li class="nav-item">
-                <a type="button" class="nav-link pb-3 pt-35 fs-5" href="/logout"
+                <a type="button" class="nav-link pb-3 pt-35 fs-5" th:href="@{/login/logout}"
                    aria-controls="navs-top-home" aria-selected="false">
                     Đăng xuất
                 </a>
