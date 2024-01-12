@@ -737,7 +737,7 @@ $("#add-product-detail").on('click', function () {
                 data.listProduct.push(temp)
                 uploadImage()
                 $.ajax({
-                    url: '/product/save-product-detail',
+                    url: '/product/save-product',
                     method: 'post',
                     data: JSON.stringify(data),
                     contentType: 'application/json',

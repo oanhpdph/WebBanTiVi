@@ -255,10 +255,10 @@ GO
 
 
 insert into users(username, password,gender,roles,status,phone_number,email)
-values('PDO','$2a$10$qHWKLl/DjkAuZaVcqOML4OsFYzLMPcD70E1xh9DA30K7takJbMRXO',0,'ADMIN',1,'0978973','oanh')
+values('PDO','$2a$10$qHWKLl/DjkAuZaVcqOML4OsFYzLMPcD70E1xh9DA30K7takJbMRXO',0,'ADMIN',1,'0978973','opham084@gmail.com')
 
 insert into users(username, password,gender,roles,status,phone_number,email)
-values('PDO123','$2a$10$qHWKLl/DjkAuZaVcqOML4OsFYzLMPcD70E1xh9DA30K7takJbMRXO',0,'USER',1,'0978973','oanh123')
+values('PDO123','$2a$10$qHWKLl/DjkAuZaVcqOML4OsFYzLMPcD70E1xh9DA30K7takJbMRXO',0,'USER',1,'0978973','phamducoanh03@gmail.com')
 
 
  INSERT INTO [dbo].[bill_status]

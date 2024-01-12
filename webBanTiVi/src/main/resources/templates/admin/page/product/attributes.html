@@ -7,6 +7,53 @@
 <h4 class="fw-bold py-3 mb-4">
     <span class="text-muted fw-light">Sản phẩm/</span> Danh sách thuộc tính
 </h4>
+<div class="mb-3">
+    <button type="button"
+            class="btn btn-secondary d-inline-flex"
+            data-bs-toggle="modal"
+            data-bs-dismiss="modal"
+            data-bs-target="#add-variant-modal"
+            id="add-variant"><span class="">Thêm thuộc tính</span>
+    </button>
+</div>
+<div class="modal fade" id="add-variant-modal" tabindex="-1"
+     style="display: none;"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tạo thuộc tính</h5>
+                <button type="button" class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="label">Tên thuộc tính</label>
+                    <input class="form-control" type="text" id="name-attribute-1">
+                    <span class="fst-italic text-danger " id="attributes-error"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="label">Loại: </label>
+                    <div class="form-check form-check-inline mt-3 mx-3">
+                        <input class="form-check-input" type="radio" name="attri" value="true" id="nomal"
+                               checked="checked">
+                        <label class="form-check-label" for="active">Thường</label>
+                    </div>
+                    <div class="form-check form-check-inline ">
+                        <input class="form-check-input" type="radio" name="attri" value="false" id="variant">
+                        <label class="form-check-label" for="inactive">Biến thể</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" id="submit-add-attribute">
+                    Thêm
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="card mb-4">
     <div class="card-header">
         <input class="form-control" type="search" id="search" placeholder="Nhập tên thuộc tính muốn tìm">

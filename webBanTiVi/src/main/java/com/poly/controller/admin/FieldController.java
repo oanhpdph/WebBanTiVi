@@ -16,11 +16,17 @@ public class FieldController {
     @Autowired
     private FieldService field;
 
+    @GetMapping("/all-active")
+    public ResponseEntity<?> getDataFieldActive() {
+        List<Field> list = field.findAll(new Attribute()).getContent();
+
+        return ResponseEntity.ok(list.stream().filter(field1 -> field1.isActive() == true).toList());
+    }
     @GetMapping("/all")
     public ResponseEntity<?> getDataField() {
         List<Field> list = field.findAll(new Attribute()).getContent();
 
-        return ResponseEntity.ok(list.stream().filter(field1 -> field1.isActive() == true).toList());
+        return ResponseEntity.ok(list);
     }
 
     @PostMapping("/add")

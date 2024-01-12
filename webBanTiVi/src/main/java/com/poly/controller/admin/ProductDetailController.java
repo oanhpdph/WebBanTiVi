@@ -54,9 +54,4 @@ public class ProductDetailController {
     public ResponseEntity<?> getALl() {
         return ResponseEntity.ok(productDetailService.findAll().stream().map(ProductDetail::getSku).collect(Collectors.toList()));
     }
-
-    @PostMapping("/save-product-detail")
-    public ResponseEntity<?> save(@RequestBody ProductDetailDto productDetailDto) {
-        return ResponseEntity.ok(productDetailService.save(productDetailDto));
-    }
 }
