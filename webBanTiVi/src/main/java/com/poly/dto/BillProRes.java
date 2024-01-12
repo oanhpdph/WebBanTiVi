@@ -24,7 +24,7 @@ public class BillProRes {
     String email;
     BigDecimal totalPrice;
     Integer paymentMethod;
-    Integer voucher;
+    Integer voucher=-1;
     List<BigDecimal> reducedMoney;
     Users customer;
     List<Integer> quantity;
