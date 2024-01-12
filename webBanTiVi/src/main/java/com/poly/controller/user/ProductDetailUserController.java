@@ -221,9 +221,8 @@ public class ProductDetailUserController {
             if (!bills.isEmpty()) {
                 for (Bill bill : bills) {
                     for (BillProduct billProduct : bill.getBillProducts()) {
-                        if (billProduct.getProduct().getId() == id && billProduct.getBill().getBillStatus().getCode().equals("CO")) {
+                        if (billProduct.getProduct().getProduct().getId() == id && billProduct.getBill().getBillStatus().getCode().equals("CO")) {
                             model.addAttribute("hasBuy", true);
-                            break;
                         }
                     }
                 }

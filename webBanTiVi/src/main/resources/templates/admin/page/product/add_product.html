@@ -156,7 +156,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Tạo thuộc tính biến thể</h5>
+                        <h5 class="modal-title">Tạo biến thể</h5>
                         <button type="button" class="btn-close"
                                 data-bs-dismiss="modal"
                                 aria-label="Close"></button>
@@ -167,7 +167,7 @@
                         <span class="fst-italic text-danger " id="variant-error"></span>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" id="submit-add-variant">
+                        <button type="button" class="btn btn-outline-secondary" id="submit-add-attributes">
                             Thêm
                         </button>
                         <button type="button" class="btn btn-outline-secondary"
@@ -190,20 +190,20 @@
                     <select class="form-select" id="select-group">
                         <option></option>
                     </select>
-                    <span class="fst-italic text-danger group-error"></span>
+                    <span class="fst-italic text-danger group-error error"></span>
                 </div>
                 <div class="row justify-content-between">
                     <div class="mb-3 col">
                         <label class="form-label">Mã SKU</label>
                         <input class="form-control" id="sku-code">
-                        <span class="fst-italic text-danger" id="sku-code-error"></span>
+                        <span class="fst-italic text-danger error" id="sku-code-error"></span>
                     </div>
                     <div class="mb-3 col">
                         <label class="form-label">Hãng</label>
                         <select class="form-select" id="select-brand">
                             <option></option>
                         </select>
-                        <span class="fst-italic text-danger" id="brand-error"></span>
+                        <span class="fst-italic text-danger error" id="brand-error"></span>
                     </div>
                 </div>
             </div>
@@ -212,7 +212,7 @@
                     <label class="form-label">Tên sản phẩm</label>
                     <textarea class="form-control" rows="3"
                               id="name-display"></textarea>
-                    <span class="fst-italic text-danger " id="name-error"></span>
+                    <span class="fst-italic text-danger error" id="name-error"></span>
                 </div>
             </div>
 
@@ -254,7 +254,7 @@
                                data-bs-toggle="collapse"
                                data-bs-target="#variant"
                                aria-controls="variant">
-                            Thuộc tính biến thể
+                            Biến thể
                         </label>
                     </h2>
                     <div id="variant" class="accordion-collapse collapse overflow-auto"
@@ -311,7 +311,7 @@
             <div>
                 <button class="btn btn-success" type="button" id="save-product">Lưu sản phẩm</button>
             </div>
-            <span class="fst-italic text-danger" id="active-error"></span>
+            <span class="fst-italic text-danger error" id="active-error"></span>
         </div>
     </div>
 </div>
