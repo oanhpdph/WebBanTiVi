@@ -193,16 +193,13 @@ public class SavePdf<T> {
 
             if (bill.getBillProducts() != null) {
                 for (BillProduct billProduct : bill.getBillProducts()) {
-                    totalSum = totalSum.add(billProduct.getPrice().subtract(billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity()))));
+                    totalSum = totalSum.add(billProduct.getPrice().subtract(billProduct.getReducedMoney()).multiply(BigDecimal.valueOf(billProduct.getQuantity())));
                 }
             }
             twoColTable2.addCell(getCell10fLeft("Phí vận chuyển", true));
-            twoColTable2.addCell(getCell10fLeft(decimalFormat1.format(bill.getDeliveryNotes().get(0).getDeliveryFee())+ " VNĐ", false));
             twoColTable2.addCell(getCell10fLeft("Voucher", true));
+            twoColTable2.addCell(getCell10fLeft(decimalFormat1.format(bill.getDeliveryNotes().get(0).getDeliveryFee()) + " VNĐ", false));
             twoColTable2.addCell(getCell10fLeft(decimalFormat1.format(bill.getVoucherValue()) + " VNĐ", false));
-            twoColTable2.addCell(getCell10fLeft("Tổng tiền phải trả", true));
-            twoColTable2.addCell(getCell10fLeft(decimalFormat1.format(totalSum.subtract(bill.getVoucherValue()).add(bill.getDeliveryNotes().get(0).getDeliveryFee())) + " VNĐ", false));
-
 
 
             twoColTable2.addCell(getCell10fLeft("Email mua hàng", true));
@@ -215,6 +212,11 @@ public class SavePdf<T> {
             twoColTable2.addCell(getCell10fLeft("Tình trạng", true));
             twoColTable2.addCell(getCell10fLeft(bill.getPaymentMethod().getId() == 1 ? "Tiền mặt" : "VNPay", false));
             twoColTable2.addCell(getCell10fLeft(bill.getPaymentStatus() == 1 ? "Đã thanh toán" : "Chưa thanh toán", false));
+
+            twoColTable2.addCell(getCell10fLeft("Tổng tiền phải trả", true));
+            twoColTable2.addCell(getCell10fLeft(decimalFormat1.format(totalSum.subtract(bill.getVoucherValue()).add(bill.getDeliveryNotes().get(0).getDeliveryFee())) + " VNĐ", false));
+            twoColTable2.addCell(getCell10fLeft("", true));
+            twoColTable2.addCell(getCell10fLeft("", false));
 
 
             document.add(twoColTable2.setMarginBottom(12f));
@@ -246,7 +248,7 @@ public class SavePdf<T> {
             if (bill.getBillProducts() != null) {
                 for (BillProduct billProduct : bill.getBillProducts()) {
                     nameProduct = new ArrayList<>();
-                    nameProduct.add(billProduct.getProduct().getProduct().getNameProduct());
+                    nameProduct.add(billProduct.getProduct().getProduct().getNameProduct() + billProduct.getProduct().getProduct().getSku());
                     nameProduct.add("[ ");
                     for (ProductDetailField productFieldValue : billProduct.getProduct().getFieldList()) {
                         nameProduct.add(productFieldValue.getValue());
