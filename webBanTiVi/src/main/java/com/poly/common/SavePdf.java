@@ -259,7 +259,7 @@ public class SavePdf<T> {
                     productTable2.addCell(new Cell().add(new Paragraph(decimalFormat1.format(billProduct.getPrice())).setFont(font)));
                     productTable2.addCell(new Cell().add(new Paragraph(decimalFormat1.format(billProduct.getReducedMoney())).setFont(font)));
                     productTable2.addCell(new Cell().add(new Paragraph(String.valueOf(billProduct.getQuantity())).setFont(font)));
-                    productTable2.addCell(new Cell().add(new Paragraph(decimalFormat1.format(billProduct.getPrice().subtract(billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity()))))).setFont(font)));
+                    productTable2.addCell(new Cell().add(new Paragraph(decimalFormat1.format(billProduct.getPrice().subtract(billProduct.getReducedMoney()).multiply(BigDecimal.valueOf(billProduct.getQuantity())))).setFont(font)));
                 }
             }
             document.add(productTable2.setMarginBottom(20f));
@@ -274,7 +274,7 @@ public class SavePdf<T> {
             totalTable2.addCell(new Cell().add(new Paragraph("")).setBorder(Border.NO_BORDER).setMarginLeft(10f));
             totalTable2.addCell(new Cell().add(new Paragraph("")).setBorder(Border.NO_BORDER).setMarginLeft(10f));
             totalTable2.addCell(new Cell().add(new Paragraph("")).setBorder(Border.NO_BORDER).setMarginLeft(10f));
-            totalTable2.addCell(new Cell().add(new Paragraph("Tổng").setFont(font)).setTextAlignment(TextAlignment.CENTER).setBorder(Border.NO_BORDER).setMarginLeft(10f));
+            totalTable2.addCell(new Cell().add(new Paragraph("Tổng tiền sản phẩm").setFont(font)).setTextAlignment(TextAlignment.CENTER).setBorder(Border.NO_BORDER).setMarginLeft(10f));
             totalTable2.addCell(new Cell().add(new Paragraph(decimalFormat1.format(totalSum))).setTextAlignment(TextAlignment.RIGHT).setBorder(Border.NO_BORDER).setMarginLeft(10f));
             document.add(totalTable2);
 
