@@ -49,5 +49,8 @@
 }
 
 .larger-checkbox {
-    transform: scale(2); /* Tăng kích cỡ 1.5 lần */
+    transform: scale(2);
+}
+.larger-checkbox-2 {
+    transform: scale(2.3);
 }

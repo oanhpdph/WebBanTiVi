@@ -51,8 +51,13 @@ public class FieldImpl implements FieldService {
         }
         fieldCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
         List<Field> result2 = entityManager.createQuery(fieldCriteriaQuery).getResultList();
+        Pageable pageable;
+        if (!result2.isEmpty()) {
+            pageable = PageRequest.of(attribute.getPage() - 1, result2.size());
+        } else {
+            pageable = PageRequest.of(attribute.getPage() - 1, 1);
+        }
 
-        Pageable pageable = PageRequest.of(attribute.getPage() - 1, result2.size());
 
         List<Field> result = entityManager.createQuery(fieldCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
 

@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../DatabaseWebBanTivi.sql" afterDir="false" />
-    </list>
+    <list default="true" id="e896c02c-ac98-4eff-b26b-040653c8c96d" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,7 +68,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates/user/page/policy" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Template_DoAn/WebBanTiVi" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -90,11 +88,9 @@
       <recent name="com.poly" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\policy" />
       <recent name="D:\DuAnTotNghiep\webBanTiVi\src\main\resources\static\admin\assets\js" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\admin\page\coupon" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\promotion" />
-      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page\promotion" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\DuAnTotNghiep\webBanTiVi\src\main\resources\static\admin\assets\css" />
@@ -333,9 +329,18 @@
       <workItem from="1702601484003" duration="13595000" />
       <workItem from="1702632377127" duration="19000" />
       <workItem from="1702632488925" duration="6749000" />
-      <workItem from="1704376009000" duration="2311000" />
-      <workItem from="1704424784115" duration="7288000" />
-      <workItem from="1704437228201" duration="5394000" />
+      <workItem from="1702709486902" duration="5896000" />
+      <workItem from="1702716187208" duration="6236000" />
+      <workItem from="1702749281348" duration="4011000" />
+      <workItem from="1702794750093" duration="4188000" />
+      <workItem from="1702829780330" duration="2866000" />
+      <workItem from="1702883708255" duration="4456000" />
+      <workItem from="1702972600542" duration="3943000" />
+      <workItem from="1702977066836" duration="39000" />
+      <workItem from="1702977258359" duration="5199000" />
+      <workItem from="1702984655402" duration="1212000" />
+      <workItem from="1703337425495" duration="1832000" />
+      <workItem from="1703935396716" duration="2341000" />
     </task>
     <servers />
   </component>
@@ -380,21 +385,6 @@
           <line>150</line>
           <option name="timeStamp" value="59" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/admin/BillReturnController.java</url>
-          <line>115</line>
-          <option name="timeStamp" value="62" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/admin/BillReturnController.java</url>
-          <line>135</line>
-          <option name="timeStamp" value="66" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/poly/service/Impl/HistoryBillProductImpl.java</url>
-          <line>38</line>
-          <option name="timeStamp" value="67" />
-        </line-breakpoint>
         <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user1/PromotionController.java</url>
           <line>42</line>
@@ -433,7 +423,7 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1700251615041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1705066616726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.poly.*</FILTER>
     </SUITE>
   </component>

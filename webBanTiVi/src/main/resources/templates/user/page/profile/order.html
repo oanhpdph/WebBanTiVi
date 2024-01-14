@@ -7,6 +7,14 @@
         border-radius: 0px !important;
     }
 
+    .imgOrder {
+        border: 1px solid #6e7881 !important;
+    }
+
+    .statusBP {
+        color: chocolate !important;
+    }
+
 </style>
 <section>
     <div class="text-center mb-3">
@@ -48,174 +56,88 @@
         </ul>
         <div class="tab-content col-lg-9">
             <div class="tab-pane fade show active " id="navs-top-profile" role="tabpanel">
-                <h4>Đơn hàng của bạn</h4>
+               <h4>Đơn hàng của bạn</h4>
                 <div class="mb-4 mx-4">
                     <div class="mb-3 row order" th:each="bill, billStat : ${bill}">
                         <div class="row mt-3">
-                            <span class="text-start col-sm-6">Mã đơn:[(${bill.code})]</span>
+                            <span class="col-sm-6">Mã đơn:[(${bill.code})]</span>
                             <span class="text-end col-sm-6" th:text="${bill.billStatus.status}"></span>
                             <hr>
                         </div>
                         <input type="text" th:value="${return}" id="return" hidden="hidden">
+
                         <div class="row">
-                            <div class="col-sm-6">
-                                <div th:each="image:${bill.billProducts[0].product.listImage}">
-                                    <img th:if="${image.location == true}"
-                                         th:src="@{'/image/product/'+${image.link}}"
-                                         alt="" width="100px">
-                                </div>
-                                <span class="d-inline-flex"
-                                      th:text="${bill.billProducts[0].product.product.nameProduct}">
-                                </span>
-                                <div th:each="field:${bill.billProducts[0].product.fieldList}">
-                                    <p><span
-                                            th:text="|${field.field.name}  :  ${field.value}|"></span>
-                                    </p>
+                            <div th:each="billProduct,iter : ${bill.billProducts}">
+                                <div class="row mb-3">
+                                    <div class="col-sm-1">
+                                        <div class="mb-2">
+                                            <img class="imgOrder" th:each="image:${billProduct.product.listImage}"
+                                                 th:if="${image.location == true}"
+                                                 th:src="@{'/image/product/'+${image.link}}"
+                                                 alt="" width="80px" height="80px">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="mb-2">
+                                            <span class="text-black">[(${billProduct.product.product.nameProduct+'-'+billProduct.product.product.sku})]
+                                            </span>
+                                            <div class="text-decoration-none"> Phân loại hàng:
+                                                <span th:each="field,iterStat : ${billProduct.product.fieldList}">[(${field.value})]
+                                                    <span th:if="${!iterStat.last}">,</span>
+                                                </span>
+                                            </div>
+                                            <div class="text-gray">
+                                                <span>x[(${billProduct.quantity})]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 text-end">
+                                        <div class="mb-2">
+                                        <span th:if="${billProduct.reducedMoney!=0}">
+                                          [(${#numbers.formatDecimal(billProduct.product.priceExport,0,'COMMA',0,'POINT')})]
+                                          <strong class="fs-tiny text-decoration-underline">đ</strong>
+                                        </span>
+                                            <span th:if="${billProduct.reducedMoney !=0}">
+                                                 [(${#numbers.formatDecimal(billProduct.product.priceExport-billProduct.reducedMoney,0,'COMMA',0,'POINT')})]
+                                                 <strong class="fs-tiny text-decoration-underline">đ</strong>
+                                            </span>
+                                            <span th:if="${billProduct.reducedMoney==0}">
+                                          [(${#numbers.formatDecimal(billProduct.product.priceExport,0,'COMMA',0,'POINT')})]
+                                           <strong class="fs-tiny text-decoration-underline">đ</strong>
+                                        </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <span class="col-sm-6 text-end ">
-                                      Tổng tiền:
-                                <span class="fs-4 position-relative">[(${#numbers.formatDecimal(bill.totalPrice,0,'COMMA',0,'POINT')})]</span>
-                                <span
-                                        class="text-decoration-underline fs-6">đ</span>
-                                      </span>
+                            <hr>
+                            <div class="text-end mb-3">
+                                Thanh toán:
+                                <span class="col-sm-2" th:if="${bill.voucherValue != null}">
+                                    [(${#numbers.formatDecimal(bill.totalPrice+bill.deliveryNotes[0].deliveryFee-bill.voucherValue,0,'COMMA',0,'POINT')})]
+                                      <span class="text-decoration-underline fs-tiny">đ</span>
+                                </span>
+                                <span class="col-sm-2" th:if="${bill.voucherValue == null}">
+                                        [(${#numbers.formatDecimal(bill.totalPrice+bill.deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')})]
+                                      <span class="text-decoration-underline fs-tiny">đ</span>
+                                </span>
+                            </div>
+                            <br>
                             <div class="text-end mb-3 ">
                                 <a class="btn btn-outline-dark"
                                    th:href="@{/invoice/invoice_detail/{id}(id=${bill.id})}"
                                 >Xem chi tiết
                                 </a>
-                                <button th:if="${bill.billStatus.code== 'CO' || bill.billStatus.code== 'RE' && check[billStat.index] }"
-                                        type="button"
-                                        class="btn btn-outline-dark return" data-bs-toggle="modal"
-                                        th:data-bs-target="|#modal${bill.id}|" th:value="${bill.id}">Trả hàng
-                                </button>
+                                <a class="btn btn-danger return"
+                                   th:if="${(bill.billStatus.code== 'CO' || bill.billStatus.code== 'RE') && check[billStat.index] }"
+                                   th:href="@{/order_return/detail/{id}(id=${bill.id})}">
+                                    Trả hàng
+                                </a>
                                 <a class="btn btn-outline-dark"
                                    onclick="return confirm('Xác nhận hủy đơn hàng')"
                                    th:href="@{/order/remove/{id}(id=${bill.id})}"
                                    th:if="${bill.billStatus.code== 'WP' || bill.billStatus.code== 'PG' }"
                                 >Hủy đơn hàng
                                 </a>
-                            </div>
-                            <div class="modal fade" th:id="|modal${bill.id}|" tabindex="-1"
-                                 aria-hidden="true">
-                                <div class="modal-dialog modal-xl" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" th:class="|btn-close close${bill.id}|"
-                                                    data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <input type="text" th:value="${bill.id}" class="id" hidden="hidden">
-                                        <div th:if="${!checkQuantity[billStat.index]}">
-                                            <h4 style="color: black" class="text-center">(*)Rất tiếc,đơn hàng này của
-                                                bạn không còn sản phẩm có thể trả!</h4>
-                                        </div>
-                                        <div th:if="${checkQuantity[billStat.index]}">
-                                            <h4 style="color: black" class="px-3"> Thông tin trả hàng</h4>
-                                            <div class="table-responsive text-nowrap">
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>
-                                                            <input type="checkbox" th:id="|checkboxAll${bill.id}|">
-                                                        </th>
-                                                        <th>Tên sản phẩm</th>
-                                                        <th>Số lượng</th>
-                                                        <th>Lí do</th>
-                                                        <th>Ảnh trả hàng</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr th:each="billProduct : ${bill.billProducts}"
-                                                        th:if="${billProduct.quantity !=0}">
-                                                        <td>
-                                                            <input type="checkbox" readonly="readonly"
-                                                                   th:class="|checkbox${bill.id}|"
-                                                                   th:value="${billProduct.id}">
-                                                        </td>
-                                                        <td>
-                                                         <span th:class="|nameProduct${bill.id}|">[(${billProduct?.product.product.nameProduct})] [
-                                                               <span th:each="field:${billProduct.product.fieldList}">[(${field.value})]</span> ]
-                                                          </span>
-                                                        </td>
-                                                        <td>
-                                                            <div class="input-group input-group-merge">
-                                                                <input type="number"
-                                                                       th:class="|form-control w-px-50 quantityReturn${bill.id}|"
-                                                                       th:value="${quantity}"
-                                                                       th:max="${billProduct.quantity}" disabled>
-                                                                <span class="input-group-text w-px-60" disabled>/[(${billProduct.quantity})]</span>
-                                                            </div>
-                                                            <span th:class="|errorQuantity${billProduct.id} text-danger|"></span>
-                                                        </td>
-                                                        <td>
-                                                                <textarea name="" id="" cols=""
-                                                                          rows="2"
-                                                                          th:class="|reason${bill.id} form-control|"
-                                                                          disabled></textarea>
-                                                            <span th:class="|errorReason${billProduct.id} text-danger|"></span>
-                                                        </td>
-                                                        <td>
-                                                            <ul class="list-unstyled users-list avatar-group m-0 d-flex align-items-center">
-                                                                <li data-bs-toggle="tooltip"
-                                                                    data-popup="tooltip-custom"
-                                                                    data-bs-placement="bottom"
-                                                                    class="avatar avatar-xl pull-up border-dark border"
-                                                                    data-bs-offset="0,4" data-bs-html="true"
-                                                                    title="">
-                                                                    <img src="/image/product/anhdefault.jpg"
-                                                                         alt="Avatar"
-                                                                         class="image-preview">
-                                                                    <input type="file" multiple name="return-images"
-                                                                           hidden
-                                                                           th:class="|file-input  returnImg${billProduct.id}|"
-                                                                           disabled>
-                                                                </li>
-                                                                <li data-bs-toggle="tooltip"
-                                                                    data-popup="tooltip-custom"
-                                                                    data-bs-placement="bottom"
-                                                                    class="avatar avatar-xl pull-up border-dark border"
-                                                                    data-bs-offset="0,4" data-bs-html="true"
-                                                                    title=""
-                                                                >
-                                                                    <img src="/image/product/anhdefault.jpg"
-                                                                         alt="Avatar"
-                                                                         class="image-preview">
-                                                                    <input type="file" multiple name="return-images"
-                                                                           hidden
-                                                                           th:class="|file-input  returnImg${billProduct.id}|"
-                                                                           disabled>
-                                                                </li>
-                                                                <li data-bs-toggle="tooltip"
-                                                                    data-popup="tooltip-custom"
-                                                                    data-bs-placement="bottom"
-                                                                    class="avatar avatar-xl pull-up border-dark border"
-                                                                    title=""
-                                                                    data-bs-offset="0,4" data-bs-html="true"
-                                                                >
-                                                                    <img src="/image/product/anhdefault.jpg"
-                                                                         alt="Avatar"
-                                                                         class="image-preview">
-                                                                    <input type="file" multiple name="return-images"
-                                                                           hidden
-                                                                           th:class="|file-input  returnImg${billProduct.id}|"
-                                                                           disabled>
-                                                                </li>
-                                                            </ul>
-                                                            <span th:class="|errorImage${billProduct.id} text-danger|"></span>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="mb-3 text-center">
-                                                <Button type="submit" th:class="|btn btn-primary completed${bill.id} |"
-                                                        disabled onclick="clickSave()">Hoàn tất
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -40,13 +40,14 @@ public interface BillService {
 
     Boolean checkValidateReturnNologin(String search);
 
-    List<Boolean> checkConditionReturn();
 
     Bill findBillNewReturnByCode (String code);
 
     Boolean checkConditionReturnNoLogin(String code);
 
 
+    Boolean checkQuantityBillReturn(Integer id);
 
+    List<Bill> findBillByUserAndStatus(Integer idUser, Integer status);
 
 }
