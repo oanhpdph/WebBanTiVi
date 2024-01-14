@@ -333,16 +333,9 @@
       <workItem from="1702601484003" duration="13595000" />
       <workItem from="1702632377127" duration="19000" />
       <workItem from="1702632488925" duration="6749000" />
-<<<<<<< HEAD
-      <workItem from="1704213110752" duration="229000" />
-      <workItem from="1704349300629" duration="17654000" />
-      <workItem from="1704374181391" duration="10476000" />
-      <workItem from="1704545038229" duration="3637000" />
-=======
       <workItem from="1704376009000" duration="2311000" />
       <workItem from="1704424784115" duration="7288000" />
       <workItem from="1704437228201" duration="5394000" />
->>>>>>> main
     </task>
     <servers />
   </component>
@@ -388,16 +381,6 @@
           <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-<<<<<<< HEAD
-          <url>file://$PROJECT_DIR$/src/main/java/com/poly/service/Impl/DeliveryNotesImpl.java</url>
-          <line>70</line>
-          <option name="timeStamp" value="60" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user/CartController.java</url>
-          <line>205</line>
-          <option name="timeStamp" value="64" />
-=======
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/admin/BillReturnController.java</url>
           <line>115</line>
           <option name="timeStamp" value="62" />
@@ -411,7 +394,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/service/Impl/HistoryBillProductImpl.java</url>
           <line>38</line>
           <option name="timeStamp" value="67" />
->>>>>>> main
         </line-breakpoint>
         <line-breakpoint type="javascript">
           <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user1/PromotionController.java</url>

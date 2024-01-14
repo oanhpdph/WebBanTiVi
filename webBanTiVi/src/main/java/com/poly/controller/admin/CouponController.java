@@ -68,31 +68,29 @@ public class CouponController {
         return "admin/layout";
     }
 
-    @PostMapping("/coupon/update/{id}")
-    public String updateCoupon(@PathVariable("id") Integer id,
-                               @ModelAttribute("coupon") Coupon coupon,
-                               @RequestParam("avatar") MultipartFile file) {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+    @PostMapping("/coupon/update")
+    public ResponseEntity<?> updateCoupon(@RequestBody Coupon coupon) {
+//        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         Coupon findCoupon = this.couponService.findById(coupon.getId()).orElse(null);
 
-        findCoupon.setCode(coupon.getCode());
-        findCoupon.setValue(coupon.getValue());
+//        findCoupon.setCode(coupon.getCode());
+//        findCoupon.setValue(coupon.getValue());
         findCoupon.setActive(coupon.isActive());
-        findCoupon.setDateStart(coupon.getDateStart());
-        findCoupon.setDateEnd(coupon.getDateEnd());
-        System.out.println(coupon.getImage());
-        if (!"".equals(fileName)) {
-            findCoupon.setImage(fileName);
-            String uploadDir = "src/main/resources/static/image";
-            try {
-                UploadFile.saveFile(uploadDir, fileName, file);
-            } catch (IOException e) {
-                //
-                e.printStackTrace();
-            }
-        }
+//        findCoupon.setDateStart(coupon.getDateStart());
+//        findCoupon.setDateEnd(coupon.getDateEnd());
+//        System.out.println(coupon.getImage());
+//        if (!"".equals(fileName)) {
+//            findCoupon.setImage(fileName);
+//            String uploadDir = "src/main/resources/static/image";
+//            try {
+//                UploadFile.saveFile(uploadDir, fileName, file);
+//            } catch (IOException e) {
+//                //
+//                e.printStackTrace();
+//            }
+//        }
         couponService.save(findCoupon);
-        return "redirect:/admin/coupon/list";
+        return ResponseEntity.ok(200);
     }
 
     @GetMapping("/coupon/delete/{id}")
