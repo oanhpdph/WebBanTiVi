@@ -7,7 +7,6 @@ import com.poly.entity.BillProduct;
 import com.poly.entity.HistoryBillProduct;
 import com.poly.repository.BillRepos;
 import com.poly.repository.HistoryBillProductRepository;
-import com.poly.service.BillProductService;
 import com.poly.service.HistoryBillProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +19,13 @@ import java.util.Optional;
 @Service
 public class HistoryBillProductImpl implements HistoryBillProductService {
 
-    @Autowired
-    BillProductService billProductService;
 
     @Autowired
     HistoryBillProductRepository historyBillProductRepository;
 
     @Autowired
     BillRepos billRepos;
+
 
     @Override
     public HistoryBillProduct save(HistoryBillProduct historyBillProduct) {
@@ -41,9 +39,6 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
         List<HistoryBillProduct> historyBillProducts = this.historyBillProductRepository.findAll();
         if(returnCount.isPresent()) {
             for (HistoryBillProduct historyBillProduct : historyBillProducts) {
-                System.out.println(historyBillProduct.getBillProduct().getId());
-                System.out.println(historyBillProduct.getReturnTimes());
-                System.out.println(returnCount.get());
                 if (historyBillProduct.getBillProduct().getId().equals(idBillProduct) &&
                         historyBillProduct.getReturnTimes().equals(returnCount.get())) {
                     return historyBillProduct;
@@ -96,6 +91,52 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
     }
 
     @Override
+    public List<Integer> findIbBillByIdUser(Integer id) {
+        return this.historyBillProductRepository.findListIdBillByIdUser(id);
+    }
+
+    @Override
+    public List<Integer> findIbBillByStatusReturn(Integer id) {
+        return this.historyBillProductRepository.findListIdBillByStatusReturn(id);
+    }
+
+    @Override
+    public List<Integer> findIdBillByStatusAndUserReturn(Integer status, Integer idUser) {
+        return this.historyBillProductRepository.findListIdBillByStatusAndUserReturn(status,idUser);
+    }
+
+    @Override
+    public List<Integer> findIdBillByStatusReturn(Integer status) {
+        return this.historyBillProductRepository.findListIdBillByStatus(status);
+    }
+
+    @Override
+    public List<Integer> findAllIdBillReturn() {
+        return this.historyBillProductRepository.findAllListIdBillByStatus();
+    }
+
+    @Override
+    public HistoryBillReturnDto listHistoryBillAndReturnTimes(Integer id, Integer returnTimes) {
+        List<HistoryBillProduct> historyBillProducts = this.historyBillProductRepository.findAllHistoryBillReturnByIdBill(id, returnTimes);
+        Bill bill = this.billRepos.findById(id).get();
+        HistoryBillReturnDto historyBillReturnDto = new HistoryBillReturnDto();
+        List<HistoryBillReturnDto> listHistoryDto = this.findAllHistoryBillReturnByIdBill(id);
+        BigDecimal totalReturnBill = BigDecimal.ZERO;
+        for(HistoryBillReturnDto hBillReturnDto : listHistoryDto){
+            totalReturnBill =totalReturnBill.add(hBillReturnDto.getReturnMoney());
+            if(bill.getTotalPrice().subtract(totalReturnBill).compareTo(bill.getVoucherValue())<0){
+                hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
+            }
+        }
+        for(HistoryBillReturnDto hBillReturnDto : listHistoryDto){
+            if(hBillReturnDto.getReturnTimes().equals(returnTimes)){
+                historyBillReturnDto = hBillReturnDto;
+            }
+        }
+        return historyBillReturnDto;
+    }
+
+    @Override
     public List<HistoryBillReturnDto> findAllHistoryBillReturnByIdBill(Integer id) {
         List<HistoryBillReturnDto> historyBillReturnDtos = new ArrayList<>();
         Optional<Integer> returnMax = this.historyBillProductRepository.findReturnCountBillById(id);
@@ -106,7 +147,9 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
                 historyBillReturnDto.setReturnTimes(i + 1);
                 historyBillReturnDto.setHistoryBillProductList(historyBillProducts);
                 BigDecimal total = BigDecimal.ZERO;
+                List<Integer> statusList= new ArrayList<>();
                 for(HistoryBillProduct historyBillProduct : historyBillProducts){
+                    statusList.add(historyBillProduct.getStatus());
                     BigDecimal price = historyBillProduct.getBillProduct().getPrice();
                     int quantity = historyBillProduct.getQuantityAcceptReturn();
                    if(price != null && quantity >= 0){
@@ -116,11 +159,38 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
                        System.out.println("Giá trị null hoặc không hợp lệ được đọc từ historyBillProduct");
                         }
                    }
+                historyBillReturnDto.setStatusList(statusList);
+                historyBillReturnDto.setBill(this.billRepos.findById(id).get());
                 historyBillReturnDto.setReturnMoney(total);
                 historyBillReturnDtos.add(historyBillReturnDto);
             }
         }
+        Bill bill = this.billRepos.findById(id).get();
+        BigDecimal totalReturnBill = BigDecimal.ZERO;
+        for(HistoryBillReturnDto hBillReturnDto : historyBillReturnDtos){
+            totalReturnBill =totalReturnBill.add(hBillReturnDto.getReturnMoney());
+            if(bill.getTotalPrice().subtract(totalReturnBill).compareTo(bill.getVoucherValue())<0){
+                hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
+            }
+        }
         return historyBillReturnDtos;
+    }
+
+    public Boolean compareQuantityBillAndHistoryPoduct(Integer id){
+        Boolean check = false;
+        Bill bill = this.billRepos.findById(id).get();
+        int totalBill = 0;
+        for(BillProduct billProduct : bill.getBillProducts()){
+           totalBill += billProduct.getQuantity();
+        }
+        Integer totalQuantityReturn = this.historyBillProductRepository.totalQuantityAcceptReturn(id);
+        if(totalQuantityReturn == null) {
+            return check;
+        }
+        if( totalQuantityReturn.equals(totalBill)){
+            check=true;
+        }
+        return check;
     }
 
 }

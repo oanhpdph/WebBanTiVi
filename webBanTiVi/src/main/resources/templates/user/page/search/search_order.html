@@ -7,6 +7,7 @@
         border-radius: 0px !important;
     }
 
+
 </style>
 <section class="container-xl">
     <div class="nav-align-left mb-4">
@@ -16,6 +17,11 @@
                 <input type="text" th:value="${return}" id="return" hidden="hidden">
                 <div class="mb-4 mx-4">
                     <div class="mb-3 row order">
+                        <div class="row mt-3">
+                            <span class="text-start col-sm-6">Mã đơn:[(${session.billSearch.code})]</span>
+                            <span class="text-end col-sm-6" th:text="${session.billSearch.billStatus.status}"></span>
+                            <hr>
+                        </div>
                         <div th:each="billProduct : ${session.billSearch.billProducts}">
                             <div class="row mb-3">
                                 <div class="col-sm-1">
@@ -63,17 +69,24 @@
                         <hr>
                         <div class="text-end mb-3">
                             Thanh toán:
-                            <span>[(${#numbers.formatDecimal(session.billSearch.totalPrice,0,'COMMA',0,'POINT')})]</span>
-                            <span class="text-decoration-underline fs-6">đ</span>
+                            <span class="col-sm-2">
+                                        [(${#numbers.formatDecimal(session.billSearch.totalPrice+session.billSearch.deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')})]
+                                      <span class="text-decoration-underline fs-tiny">đ</span>
+                                </span>
                         </div>
                         <br>
                         <div class="text-end mb-3">
+                            <a class="btn btn-danger"
+                               th:if="${session.checkDisPlayDetail}"
+                               th:href="@{/order/return_nologin/{id}(id=${session.billSearch.id})}"
+                            >Chi tiết Trả hàng/Hoàn Tiền
+                            </a>
                             <a class="btn btn-outline-dark"
                                th:href="@{/invoice/invoice_detail/{id}(id=${session.billSearch.id})}"
                             >Xem chi tiết
                             </a>
                             <a class="btn btn-danger return"
-                               th:if="${(session.billSearch.billStatus.code == 'CO' || session.billSearch.billStatus.code == 'RE') && session.checkReturn }"
+                               th:if="${ !session.compareBillAndHistory && !session.checkCondition && session.checkReturn }"
                                th:href="@{/order_return/detail/{id}(id=${session.billSearch.id})}">Trả
                                 hàng
                             </a>
@@ -111,4 +124,5 @@
             title: "Trả hàng thành công!"
         });
     }
+
 </script>
