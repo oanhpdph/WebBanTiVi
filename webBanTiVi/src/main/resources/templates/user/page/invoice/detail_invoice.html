@@ -91,7 +91,7 @@
                                     <span class="fs-tiny text-decoration-underline">đ</span>
                                 </div>
                                 <div th:if="${billProduct.reducedMoney !=0}">
-                                    <span>[(${#numbers.formatDecimal(billProduct.product.price-billProduct.reducedMoney,0,'COMMA',0,'POINT')})]</span>
+                                    <span>[(${#numbers.formatDecimal((billProduct.price-billProduct.reducedMoney),0,'COMMA',0,'POINT')})]</span>
                                     <span class="fs-tiny text-decoration-underline">đ</span>
                                 </div>
                                 <div th:if="${billProduct.reducedMoney==0}">
