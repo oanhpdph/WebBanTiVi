@@ -341,6 +341,7 @@
       <workItem from="1702984655402" duration="1212000" />
       <workItem from="1703337425495" duration="1832000" />
       <workItem from="1703935396716" duration="2341000" />
+      <workItem from="1705311968949" duration="20000" />
     </task>
     <servers />
   </component>
@@ -423,7 +424,7 @@
     <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1705066616726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1700251615041" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.poly.*</FILTER>
     </SUITE>
   </component>

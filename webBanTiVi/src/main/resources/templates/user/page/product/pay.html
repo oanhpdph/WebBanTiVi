@@ -488,9 +488,6 @@
             }
         })
     })
-    function tongtien() {
-        wardID = this.options[this.selectedIndex].dataset.id;
-        console.log("ID phuong xa:", wardID);
 
     function tongtien() {
 
@@ -513,7 +510,7 @@
                             document.getElementById("voucher-reduce").innerText = new Intl.NumberFormat().format(dataVoucher.value) + ' đ'
                             document.getElementById("voucher-info").hidden = false
                             $("#voucher").attr("name", "voucher")
-                            valuePrice=dataVoucher.value
+                            valuePrice = dataVoucher.value
                         } else {
                             $("#voucher").attr("name", "")
                         }
