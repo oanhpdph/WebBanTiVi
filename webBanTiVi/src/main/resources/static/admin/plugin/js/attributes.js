@@ -27,7 +27,6 @@ function getField() {
                 var td5 = $('<td>').append(
                     $('<button>').addClass('btn btn-icon btn-outline-primary view-attributes').val(item.id).attr('data-bs-toggle', 'modal').attr('data-bs-target', '#modalDetailAttributes').attr('type', 'button').html("<i class='bx bxs-edit-alt'> </i>"))
 
-
                 tr.append(td1, td2, td3, td4, td5)
                 table.append(tr)
             })
@@ -200,6 +199,80 @@ $("#search").keyup(function () {
             }
         }
     }
+})
+
+$("#submit-add-attribute").click(function () {
+    Swal.fire({
+        title: "Đồng ý thêm thuộc tính?",
+        text: "",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Xác nhận!",
+        cancelButtonText: "Hủy"
+    }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: "/field/all",
+                    method: 'get',
+                    success: function (data) {
+                        var check;
+                        var value = $("#name-attribute-1").val().trim()
+                        if (value.length == 0) {
+                            $("#attributes-error").text("Chưa nhập tên thuộc tính")
+                            check = false
+                        } else {
+                            $.each(data, function (index, item) {
+                                if (item.name.toLowerCase() == value.toLowerCase()) {
+                                    $("#attributes-error").text("Thuộc tính đã tồn tại")
+                                    check = false
+                                    return false
+                                } else {
+                                    $("#attributes-error").text("")
+                                }
+                            })
+                        }
+
+                        if (check == false) {
+                            return
+                        }
+                        var dataPost = {
+                            name: value,
+                            active:true,
+                            variant:$("#nomal").is("checked") == true ? true : false
+                        }
+                        $.ajax(
+                            {
+                                url: "/field/add",
+                                method: "post",
+                                data: JSON.stringify(dataPost), // Chuyển đổi dữ liệu thành chuỗi JSON
+                                contentType: 'application/json',
+                                success: function (data) {
+                                    $("#attributes-error").text("")
+                                    const Toast = Swal.mixin({
+                                        toast: true,
+                                        position: 'top-end',
+                                        showConfirmButton: false,
+                                        timer: 3000,
+                                        timerProgressBar: true,
+                                        didOpen: (toast) => {
+                                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                        }
+                                    })
+                                   window.location.reload()
+                                },
+                                error: function (error) {
+                                    console.log('Lỗi trong quá trình POST yêu cầu:', error);
+                                }
+                            }
+                        )
+                    }
+                })
+            }
+        }
+    )
 })
 
 // }

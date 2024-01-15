@@ -123,7 +123,7 @@
                                                     <span id="quanloc" class="error"></span>
                                                 </div>
                                                 <div class="col">
-                                                    <select class="form-select" th:name="ward" id="ward"
+                                                    <select class="form-select select-ward" th:name="ward" id="ward"
                                                             aria-label=".form-select-sm">
                                                         <option value="xa" selected>Chọn phường xã</option>
                                                     </select>
@@ -146,7 +146,8 @@
                                                     <option value="-1">Chưa chọn voucher</option>
                                                     <option th:value="${voucher.voucher.id}"
                                                             th:each="voucher:${listVoucher}"
-                                                            th:if="${voucher.active  == true && voucher.voucher.active==true}">[(${voucher.voucher.code})]
+                                                            th:if="${voucher.active  == true && voucher.voucher.active==true}">
+                                                        [(${voucher.voucher.code})]
                                                     </option>
                                                 </select>
                                                 <div class="mt-2">
@@ -209,7 +210,7 @@
                                                     <span id="quanloc" class="error"></span>
                                                 </div>
                                                 <div class="col">
-                                                    <select class="form-select" th:name="ward" id="ward"
+                                                    <select class="form-select select-ward" th:name="ward" id="ward"
                                                             aria-label=".form-select-sm">
                                                         <option value="xa" selected>Chọn phường xã</option>
                                                     </select>
@@ -428,12 +429,11 @@
         })
     }
 
-        // Gắn sự kiện onchange cho select element có id là 'citis'
-    $("#city").on("change",function (){
-         provinceID = this.options[this.selectedIndex].dataset.id;
-         console.log("id tinh:",provinceID);
-         district.length = 1;
-         ward.length = 1;
+    // Gắn sự kiện onchange cho select element có id là 'citis'
+    $("#city").on("change", function () {
+        provinceID = this.options[this.selectedIndex].dataset.id;
+        district.length = 1;
+        ward.length = 1;
         $.ajax({
             url: "https://online-gateway.ghn.vn/shiip/public-api/master-data/district",
             method: "get",
@@ -444,10 +444,9 @@
                 ContentType: "application/json",
             },
             data: {
-                    "province_id":provinceID
-                },
+                "province_id": provinceID
+            },
             success: function (data) {
-                console.log("data quan huyen:",data.data);
                 // Xử lý khi yêu cầu thành công
                 for (const x of data.data) {
                     // Tạo một phần tử option cho thành phố (city)
@@ -461,7 +460,7 @@
             }
         })
     })
-    $("#district").on("change",function (){
+    $("#district").on("change", function () {
         districtID = this.options[this.selectedIndex].dataset.id;
         ward.length = 1;
         $.ajax({
@@ -473,10 +472,10 @@
                 shop_id: "4611572",
                 ContentType: "application/json",
             },
-                data: {
-                    "district_id":districtID
-                },
-                success: function (data) {
+            data: {
+                "district_id": districtID
+            },
+            success: function (data) {
                 // Xử lý khi yêu cầu thành công
                 for (const x of data.data) {
                     var opt = document.createElement('option');
@@ -489,10 +488,12 @@
             }
         })
     })
-    function tongtien(){
-        wardID = this.options[this.selectedIndex].dataset.id;
-        console.log("ID phuong xa:", wardID);
 
+
+    function tongtien() {
+
+        wardID = document.getElementById("ward").options[document.getElementById("ward").selectedIndex].dataset.id;
+        console.log(wardID)
         var dataVoucher = {
             id: $("#voucher").val(),
         }
@@ -503,22 +504,26 @@
             success: function (dataVoucher) {
                 var temp = parseInt(document.querySelector('.total-pro').textContent.replace(/,/g, ''), 10)
                 var valuePrice = 0;
-                if( document.getElementById('info-voucher')){
-                if (dataVoucher) {
-                    // var formattedNumber = new Intl.NumberFormat().format(data.minimumValue);
-                    if (temp >= dataVoucher.minimumValue) {
-                        var valuePrice = dataVoucher.value;
-                        document.getElementById("voucher-reduce").innerText = new Intl.NumberFormat().format(dataVoucher.value) + ' đ'
-                        document.getElementById("voucher-info").hidden = false
+                if (document.getElementById('info-voucher')) {
+                    if (dataVoucher) {
+                        // var formattedNumber = new Intl.NumberFormat().format(data.minimumValue);
+                        if (temp >= dataVoucher.minimumValue) {
+                            document.getElementById("voucher-reduce").innerText = new Intl.NumberFormat().format(dataVoucher.value) + ' đ'
+                            document.getElementById("voucher-info").hidden = false
+                            $("#voucher").attr("name", "voucher")
+                            valuePrice = dataVoucher.value
+                        } else {
+                            $("#voucher").attr("name", "")
+                        }
+                        document.getElementById('info-voucher').innerText = 'Giảm ' + new Intl.NumberFormat().format(dataVoucher.value) + ' đ cho đơn hàng có giá trị từ ' + new Intl.NumberFormat().format(dataVoucher.minimumValue) + ' đ'
+                    } else {
+                        document.getElementById("voucher-info").hidden = true
+                        document.getElementById('info-voucher').innerText = ''
+                        document.getElementById("voucher-reduce").innerText = ''
                     }
-                    document.getElementById('info-voucher').innerText = 'Giảm ' + new Intl.NumberFormat().format(dataVoucher.value) + ' đ cho đơn hàng có giá trị từ ' + new Intl.NumberFormat().format(dataVoucher.minimumValue) + ' đ'
-                } else {
-                    document.getElementById("voucher-info").hidden = true
-                    document.getElementById('info-voucher').innerText = ''
-                    document.getElementById("voucher-reduce").innerText = ''
-                }}
+                }
                 $.ajax({
-                    url:"https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
+                    url: "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee",
                     method: "get",
                     dataType: "json",  // Xác định kiểu dữ liệu mong muốn
                     headers: {
@@ -527,137 +532,124 @@
                         ContentType: "application/json",
                     },
                     data: {
-                        "service_type_id":2,
-                        "from_district_id":1713,
-                        "to_district_id":districtID,
-                        "to_ward_code":wardID,
-                        "height":50, // cao
-                        "length":70, // dài
-                        "weight":5000,
-                        "width":20 // rộng
+                        "service_type_id": 2,
+                        "from_district_id": 1713,
+                        "to_district_id": districtID,
+                        "to_ward_code": wardID,
+                        "height": 50, // cao
+                        "length": 70, // dài
+                        "weight": 5000,
+                        "width": 20 // rộng
                     },
                     success: function (data) {
                         // Xử lý khi yêu cầu thành công
                         var calculatedFee = data.data.total;
-                        console.log("Cước vận chuyển: ", calculatedFee);
-                        if (parseInt(districtID) != 1713 || temp<200000) {
-                            if(temp < 200000){
+                        if (parseInt(districtID) != 1713 || temp < 200000) {
+                            if (temp < 200000) {
                                 document.getElementById("ship-price").innerText =
-                                    new Intl.NumberFormat().format(parseInt(data.data.total) - 60000)+ ' đ'
+                                    new Intl.NumberFormat().format(parseInt(data.data.total) - 60000) + ' đ'
                                 document.getElementById("ship-price2").value =
-                                   (parseInt(data.data.total) - 60000);
+                                    (parseInt(data.data.total) - 60000);
                                 document.getElementById("ship-info").hidden = false
                                 document.getElementById("total").innerText =
-                                    new Intl.NumberFormat().format(temp - valuePrice + data.data.total - 60000)+ ' đ'
-                            }
-                            else if(temp < 1000000) {
+                                    new Intl.NumberFormat().format(temp - valuePrice + data.data.total - 60000) + ' đ'
+                            } else if (temp < 1000000) {
                                 document.getElementById("ship-price").innerText =
-                                    new Intl.NumberFormat().format(parseInt(data.data.total) - 50000)+ ' đ'
+                                    new Intl.NumberFormat().format(parseInt(data.data.total) - 50000) + ' đ'
                                 document.getElementById("ship-price2").value =
                                     (parseInt(data.data.total) - 50000);
                                 document.getElementById("ship-info").hidden = false
                                 document.getElementById("total").innerText =
-                                    new Intl.NumberFormat().format(temp- valuePrice + data.data.total- 50000)+ ' đ'
-                            }
-                            else if (temp <3000000){
+                                    new Intl.NumberFormat().format(temp - valuePrice + data.data.total - 50000) + ' đ'
+                            } else if (temp < 3000000) {
                                 document.getElementById("ship-price").innerText =
-                                    new Intl.NumberFormat().format(parseInt(data.data.total) - 20000)+ ' đ'
+                                    new Intl.NumberFormat().format(parseInt(data.data.total) - 20000) + ' đ'
                                 document.getElementById("ship-price2").value =
                                     (parseInt(data.data.total) - 20000);
                                 document.getElementById("ship-info").hidden = false
                                 document.getElementById("total").innerText =
-                                    new Intl.NumberFormat().format(temp- valuePrice + data.data.total- 20000)+ ' đ'
-                            }
-                            else if (temp <5000000){
+                                    new Intl.NumberFormat().format(temp - valuePrice + data.data.total - 20000) + ' đ'
+                            } else if (temp < 5000000) {
                                 document.getElementById("ship-price").innerText =
-                                    new Intl.NumberFormat().format(parseInt(data.data.total))+ ' đ'
+                                    new Intl.NumberFormat().format(parseInt(data.data.total)) + ' đ'
                                 document.getElementById("ship-price2").value =
                                     (parseInt(data.data.total));
                                 document.getElementById("ship-info").hidden = false
                                 document.getElementById("total").innerText =
-                                    new Intl.NumberFormat().format(temp- valuePrice + data.data.total)+ ' đ'
-                            }
-                            else if (temp <8000000){
+                                    new Intl.NumberFormat().format(temp - valuePrice + data.data.total) + ' đ'
+                            } else if (temp < 8000000) {
                                 document.getElementById("ship-price").innerText =
-                                    new Intl.NumberFormat().format(parseInt(data.data.total)+ 30000)+ ' đ'
+                                    new Intl.NumberFormat().format(parseInt(data.data.total) + 30000) + ' đ'
                                 document.getElementById("ship-price2").value =
-                                   (parseInt(data.data.total) + 30000);
+                                    (parseInt(data.data.total) + 30000);
                                 document.getElementById("ship-info").hidden = false
                                 document.getElementById("total").innerText =
-                                    new Intl.NumberFormat().format(temp- valuePrice + data.data.total+ 30000)+ ' đ'
-                            }
-                            else if (temp <10000000){
+                                    new Intl.NumberFormat().format(temp - valuePrice + data.data.total + 30000) + ' đ'
+                            } else if (temp < 10000000) {
                                 document.getElementById("ship-price").innerText =
-                                    new Intl.NumberFormat().format(parseInt(data.data.total) + 50000)+ ' đ'
+                                    new Intl.NumberFormat().format(parseInt(data.data.total) + 50000) + ' đ'
                                 document.getElementById("ship-price2").value =
                                     (parseInt(data.data.total) + 50000);
                                 document.getElementById("ship-info").hidden = false
                                 document.getElementById("total").innerText =
-                                    new Intl.NumberFormat().format(temp- valuePrice + data.data.total+ 50000)+ ' đ'
-                            }
-                            else if (temp <15000000){
+                                    new Intl.NumberFormat().format(temp - valuePrice + data.data.total + 50000) + ' đ'
+                            } else if (temp < 15000000) {
                                 document.getElementById("ship-price").innerText =
-                                    new Intl.NumberFormat().format(parseInt(data.data.total) + 120000)+ ' đ'
+                                    new Intl.NumberFormat().format(parseInt(data.data.total) + 120000) + ' đ'
                                 document.getElementById("ship-price2").value =
-                                    (parseInt(data.data.total) +120000);
+                                    (parseInt(data.data.total) + 120000);
                                 document.getElementById("ship-info").hidden = false
                                 document.getElementById("total").innerText =
-                                    new Intl.NumberFormat().format(temp- valuePrice + data.data.total+ 120000)+ ' đ'
-                            }
-                            else if (temp <20000000){
+                                    new Intl.NumberFormat().format(temp - valuePrice + data.data.total + 120000) + ' đ'
+                            } else if (temp < 20000000) {
                                 document.getElementById("ship-price").innerText =
-                                    new Intl.NumberFormat().format(parseInt(data.data.total) + 200000)+ ' đ'
+                                    new Intl.NumberFormat().format(parseInt(data.data.total) + 200000) + ' đ'
                                 document.getElementById("ship-price2").value =
-                                    (parseInt(data.data.total) +200000);
+                                    (parseInt(data.data.total) + 200000);
                                 document.getElementById("ship-info").hidden = false
                                 document.getElementById("total").innerText =
-                                    new Intl.NumberFormat().format(temp- valuePrice + data.data.total+ 200000)+ ' đ'
-                            }
-                            else if (temp <30000000){
+                                    new Intl.NumberFormat().format(temp - valuePrice + data.data.total + 200000) + ' đ'
+                            } else if (temp < 30000000) {
                                 document.getElementById("ship-price").innerText =
-                                    new Intl.NumberFormat().format(parseInt(data.data.total) + 250000)+ ' đ'
+                                    new Intl.NumberFormat().format(parseInt(data.data.total) + 250000) + ' đ'
                                 document.getElementById("ship-price2").value =
-                                    (parseInt(data.data.total) +250000);
+                                    (parseInt(data.data.total) + 250000);
                                 document.getElementById("ship-info").hidden = false
                                 document.getElementById("total").innerText =
-                                    new Intl.NumberFormat().format(temp- valuePrice + data.data.total+ 250000)+ ' đ'
-                            }
-                            else if (temp <50000000){
+                                    new Intl.NumberFormat().format(temp - valuePrice + data.data.total + 250000) + ' đ'
+                            } else if (temp < 50000000) {
                                 document.getElementById("ship-price").innerText =
-                                    new Intl.NumberFormat().format(parseInt(data.data.total) + 350000)+ ' đ'
+                                    new Intl.NumberFormat().format(parseInt(data.data.total) + 350000) + ' đ'
                                 document.getElementById("ship-price2").value =
                                     (parseInt(data.data.total) + 350000);
                                 document.getElementById("ship-info").hidden = false
                                 document.getElementById("total").innerText =
-                                    new Intl.NumberFormat().format(temp- valuePrice + data.data.total+ 350000)+ ' đ'
-                            }
-                            else{
+                                    new Intl.NumberFormat().format(temp - valuePrice + data.data.total + 350000) + ' đ'
+                            } else {
                                 document.getElementById("ship-price").innerText =
-                                    new Intl.NumberFormat().format(parseInt(data.data.total) + 500000)+ ' đ'
+                                    new Intl.NumberFormat().format(parseInt(data.data.total) + 500000) + ' đ'
                                 document.getElementById("ship-price2").value =
-                                    (parseInt(data.data.total) +500000);
+                                    (parseInt(data.data.total) + 500000);
                                 document.getElementById("ship-info").hidden = false
                                 document.getElementById("total").innerText =
-                                    new Intl.NumberFormat().format(temp- valuePrice + data.data.total+ 500000)+ ' đ'
+                                    new Intl.NumberFormat().format(temp - valuePrice + data.data.total + 500000) + ' đ'
                             }
-                        }
-                        else
-                        {
+                        } else {
                             document.getElementById("ship-price").innerText = '0.00 đ'
                             document.getElementById("ship-price2").value = 0
 
                             document.getElementById("ship-info").hidden = false
                             document.getElementById("total").innerText =
-                                new Intl.NumberFormat().format(temp- valuePrice)+ ' đ'
+                                new Intl.NumberFormat().format(temp - valuePrice) + ' đ'
                         }
-                        console.log(parseInt(data.data.total)-50000);
+                        console.log(parseInt(data.data.total) - 50000);
                     }
                 })
 
             }
         })
     }
-    $("#ward").on("change",tongtien)
+
 
     function validateForm() {
 //city
@@ -753,6 +745,7 @@
         }
         totalProForm.value = totalPro
     }
+    $("#ward").on("change", tongtien)
 
     $(document).ready(
         tinhtong(),
@@ -812,60 +805,7 @@
         var tr = x.parentElement.parentElement;
         tr.remove();
     }
+
 </script>
 
-<script>
-    // var citis = document.getElementById("city");
-    // var districts = document.getElementById("district");
-    // var wards = document.getElementById("ward");
-    // var Parameter = {
-    //     url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-    //     method: "GET",
-    //     responseType: "application/json",
-    // };
-    // var promise = axios(Parameter);
-    // promise.then(function (result) {
-    //     renderCity(result.data);
-    // });
-    //
-    // function renderCity(data) {
-    //     for (const x of data) {
-    //         var opt = document.createElement('option');
-    //         opt.value = x.Name;
-    //         opt.text = x.Name;
-    //         opt.setAttribute('data-id', x.Id);
-    //         citis.options.add(opt);
-    //     }
-    //     citis.onchange = function () {
-    //         district.length = 1;
-    //         ward.length = 1;
-    //         if (this.options[this.selectedIndex].dataset.id != "") {
-    //             const result = data.filter(n => n.Id === this.options[this.selectedIndex].dataset.id);
-    //
-    //             for (const k of result[0].Districts) {
-    //                 var opt = document.createElement('option');
-    //                 opt.value = k.Name;
-    //                 opt.text = k.Name;
-    //                 opt.setAttribute('data-id', k.Id);
-    //                 district.options.add(opt);
-    //             }
-    //         }
-    //     };
-    //     district.onchange = function () {
-    //         ward.length = 1;
-    //         const dataCity = data.filter((n) => n.Id === citis.options[citis.selectedIndex].dataset.id);
-    //         if (this.options[this.selectedIndex].dataset.id != "") {
-    //             const dataWards = dataCity[0].Districts.filter(n => n.Id === this.options[this.selectedIndex].dataset.id)[0].Wards;
-    //
-    //             for (const w of dataWards) {
-    //                 var opt = document.createElement('option');
-    //                 opt.value = w.Name;
-    //                 opt.text = w.Name;
-    //                 opt.setAttribute('data-id', w.Id);
-    //                 wards.options.add(opt);
-    //             }
-    //         }
-    //     };
-    // }
-</script>
 </html>

@@ -99,35 +99,35 @@ public class VoucherController {
         return "admin/layout";
     }
 
-    @PostMapping("/voucher/update/{id}")
-    public String updatevoucher(@PathVariable("id") Integer id,
-                                @Valid @ModelAttribute("voucher") Voucher voucher,
-                                BindingResult result,
-                                @RequestParam("image") MultipartFile file,
-                                @ModelAttribute(name = "search") SearchVoucherDto search) {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
+    @PostMapping("/voucher/update")
+    public ResponseEntity<?> updatevoucher(
+                                            @RequestBody Voucher voucher,
+//                                           BindingResult result,
+//                                           @RequestParam("image") MultipartFile file,
+                                           @ModelAttribute(name = "search") SearchVoucherDto search) {
+//        String fileName = StringUtils.cleanPath(file.getOriginalFilename()); // xóa ký tự đặc biệt
         Voucher findVoucher = voucherService.findById(voucher.getId()).orElse(null);
         findVoucher.setActive(voucher.getActive());
-        findVoucher.setNameVoucher(voucher.getNameVoucher());
-        findVoucher.setQuantity(voucher.getQuantity());
-        findVoucher.setCode(voucher.getCode());
-        findVoucher.setStartDay(voucher.getStartDay());
-        findVoucher.setExpirationDate(voucher.getExpirationDate());
-        findVoucher.setMinimumValue(voucher.getMinimumValue());
-        findVoucher.setValue(voucher.getValue());
+//        findVoucher.setNameVoucher(voucher.getNameVoucher());
+//        findVoucher.setQuantity(voucher.getQuantity());
+//        findVoucher.setCode(voucher.getCode());
+//        findVoucher.setStartDay(voucher.getStartDay());
+//        findVoucher.setExpirationDate(voucher.getExpirationDate());
+//        findVoucher.setMinimumValue(voucher.getMinimumValue());
+//        findVoucher.setValue(voucher.getValue());
 
-        if (!"".equals(fileName)) {
-            findVoucher.setImage(fileName);
-            String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
-            try {
-                UploadFile.saveFile(uploadDir, fileName, file);
-            } catch (IOException e) {
-                //
-                e.printStackTrace();
-            }
-        }
+//        if (!"".equals(fileName)) {
+//            findVoucher.setImage(fileName);
+//            String uploadDir = "src/main/resources/static/image"; // đường dẫn upload
+//            try {
+//                UploadFile.saveFile(uploadDir, fileName, file);
+//            } catch (IOException e) {
+//                //
+//                e.printStackTrace();
+//            }
+//        }
         this.voucherService.save(findVoucher);
-        return "redirect:/admin/voucher/list";
+        return ResponseEntity.ok(200);
     }
 
     @GetMapping("/voucher/delete/{id}")

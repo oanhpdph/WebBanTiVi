@@ -46,7 +46,16 @@
                            th:field="*{key}">
                     <button class="btn btn-secondary" id="search">Tìm kiếm</button>
                 </div>
-
+                <div class="row mb-3">
+                    <div class="input-group w-auto">
+                        <label class="input-group-text" for="select-size">Loại sản phẩm:</label>
+                        <select class="form-select text-start" >
+                            <option value="10" th:selected="*{size == 10}">Loại sản phẩm</option>
+                            <option value="10" th:selected="*{size == 10}">Tivi</option>
+                            <option value="20" th:selected="*{size == 20}">Phụ kiện</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="row justify-content-between">
                     <div class="col-xl-2 col-4">
                         <div class="input-group ">
@@ -96,10 +105,11 @@
                         <td th:text="${product.sku}"></td>
                         <td th:text="${product.brand.name}"></td>
                         <td th:text="${product.avgPoint}"></td>
-                        <td class="form-switch text-center"><input class="form-check-input update-active-product cursor-pointer"
-                                                                   type="checkbox"
-                                                                   th:checked="${product.active}"
-                                                                   th:value="${product.id}"></td>
+                        <td class="form-switch text-center"><input
+                                class="form-check-input update-active-product cursor-pointer"
+                                type="checkbox"
+                                th:checked="${product.active}"
+                                th:value="${product.id}"></td>
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -111,7 +121,7 @@
                                        data-bs-target="#modalProduct" href="javascript:void(0);"
                                        th:value="${product.id}"><i
                                             class="bx bx-show-alt me-1"></i> Thông tin</a>
-                                    <a class="dropdown-item product-detail"  data-bs-toggle="modal"
+                                    <a class="dropdown-item product-detail" data-bs-toggle="modal"
                                        href="javascript:void(0);"
                                        data-bs-target="#modalAddProduct" th:value="${product.id}"><i
                                             class='bx bx-add-to-queue'></i>Tạo sản phẩm</a>

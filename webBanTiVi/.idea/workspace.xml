@@ -36,8 +36,8 @@
         <option value="Interface" />
         <option value="JavaScript File" />
         <option value="JavaScript File" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
         <option value="HTML File" />
       </list>
     </option>
@@ -74,7 +74,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/resources/templates/user/page/policy" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Template_DoAn/WebBanTiVi" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -87,18 +87,16 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.notifications" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.poly" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\policy" />
       <recent name="D:\DuAnTotNghiep\webBanTiVi\src\main\resources\static\admin\assets\js" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\admin\page\coupon" />
       <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user\page\promotion" />
-      <recent name="C:\Users\Admin\Documents\WebBanTiVi\webBanTiVi\src\main\resources\templates\user1\page\promotion" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\DuAnTotNghiep\webBanTiVi\src\main\resources\static\admin\assets\css" />
@@ -363,6 +361,10 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="LAST_COMMIT_MESSAGE" value="" />
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -388,6 +390,20 @@
           <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line" />
+        <line-breakpoint type="javascript">
+          <url>file://$PROJECT_DIR$/src/main/java/com/poly/controller/user1/PromotionController.java</url>
+          <line>42</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/main/resources/templates/admin/page/staff.html</url>
+          <line>422</line>
+          <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <breakpoint type="java-exception">
+          <properties class="java.io.IOException" package="java.io" />
+          <option name="timeStamp" value="42" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
@@ -413,6 +429,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1705302552488" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/WebBanTiVi$WebBanTiViApplication.ic" NAME="WebBanTiViApplication Coverage Results" MODIFIED="1705066616726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.poly.*</FILTER>
     </SUITE>
   </component>
