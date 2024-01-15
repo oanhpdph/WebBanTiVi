@@ -104,22 +104,9 @@
                         <hr>
                         <div class="mb-3">
                             <div class="mb-3 row text-end">
-                                <span class="col-sm-10 ">Tổng tiền hàng:</span>
+                                <span class="col-sm-10 ">Tổng giá trị sản phẩm:</span>
                                 <span class="col-sm-2 ">
                                 [(${#numbers.formatDecimal(totalBill,0,'COMMA',0,'POINT')})]
-                                    <span class="text-decoration-underline fs-tiny">đ</span>
-                                </span>
-                                <span class="col-sm-2 "
-                                      th:if="${bill?.voucherValue == null && bill?.deliveryNotes[0]?.deliveryFee == null }">
-                                [(${#numbers.formatDecimal(bill.totalPrice,0,'COMMA',0,'POINT')})]
-                                    <span class="text-decoration-underline fs-tiny">đ</span>
-                                </span>
-                                <span class="col-sm-2 " th:if="${bill?.voucherValue == null}">
-                                [(${#numbers.formatDecimal(bill.totalPrice+bill.deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')})]
-                                    <span class="text-decoration-underline fs-tiny">đ</span>
-                                </span>
-                                <span class="col-sm-2" th:if="${bill?.deliveryNotes[0]?.deliveryFee == null}">
-                                [(${#numbers.formatDecimal(bill.totalPrice+bill.voucherValue,0,'COMMA',0,'POINT')})]
                                     <span class="text-decoration-underline fs-tiny">đ</span>
                                 </span>
                             </div>
@@ -141,98 +128,23 @@
                             <div class="mb-3 row text-end">
                                 <span class="col-sm-10 fw-semibold ">Thanh toán:</span>
                                 <span class="col-sm-2" th:if="${bill.voucherValue != null}">
-                                    [(${#numbers.formatDecimal(bill.totalPrice+bill.deliveryNotes[0].deliveryFee-bill.voucherValue,0,'COMMA',0,'POINT')})]
+                                    [(${#numbers.formatDecimal(totalBill-bill.voucherValue+bill.deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')})]
                                       <span class="text-decoration-underline fs-tiny">đ</span>
                                 </span>
                                 <span class="col-sm-2" th:if="${bill.voucherValue == null}">
-                                        [(${#numbers.formatDecimal(bill.totalPrice+bill.deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')})]
+                                        [(${#numbers.formatDecimal(totalBill+bill.deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')})]
                                       <span class="text-decoration-underline fs-tiny">đ</span>
                                 </span>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="list-group-item mb-2 align-items-center">
-                            <i class='bx bx-shopping-bag'></i>
-                            <span class="fs-5 text-uppercase">Lịch sử trả hàng</span>
-                        </div>
-                        <div th:if="${#lists.size(listHistoryReturn) != 0}">
-                            <div class="row mb-3" th:each="historyDto : ${listHistoryReturn}">
-                                <div>Lần [(${historyDto.returnTimes})]
-                                    <div class="table-responsive text-nowrap">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                            <tr>
-                                                <th>Ảnh</th>
-                                                <th>Tên sản phẩm</th>
-                                                <th>Số lượng yêu cầu trả</th>
-                                                <th>Số lượng đồng ý trả</th>
-                                                <th>Giá sản phẩm</th>
-                                                <th>Lí do</th>
-                                                <!--                                                <th>Phương thức hoàn tiền</th>-->
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr th:each="historyBillreturn :${historyDto.historyBillProductList}">
-                                                <td>
-                                                    <div th:each="image:${historyBillreturn?.billProduct?.product?.listImage}">
-                                                        <img th:if="${image.location == true}"
-                                                             th:src="@{'/image/product/'+${image.link}}"
-                                                             alt="" width="100px">
-                                                    </div>
-                                                </td>
-                                                <td class="flex-wrap">
-                                                    [(${historyBillreturn?.billProduct?.product?.product?.nameProduct})]
-                                                    <div class="text-decoration-none"> Phân loại hàng:
-                                                        <span th:each="field,iterStat : ${historyBillreturn?.billProduct?.product.fieldList}">[(${field.value})]
-                                                              <span th:if="${!iterStat.last}">,</span>
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    [(${historyBillreturn?.quantityRequestReturn})]
-                                                </td>
-                                                <td>
-                                                    [(${historyBillreturn?.quantityAcceptReturn})]
-                                                </td>
-                                                <td>
-                                                    [(${historyBillreturn?.billProduct.price})]
-                                                </td>
-                                                <td>
-                                                    [(${historyBillreturn?.reason})]
-                                                    <div>
-                                                        <div th:each="image:${historyBillreturn?.listImage}">
-                                                            <img th:src="@{'/image/product/'+${image.nameImage}}"
-                                                                 alt="" width="100px">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <hr>
-                                    <div th:if="${historyDto.returnMoney >=0}" class="text-end text-black fw-bold">
-                                        Số tiền hoàn
-                                        lại:[(${#numbers.formatDecimal(historyDto.returnMoney,0,'COMMA',0,'POINT')})]
-                                    </div>
-                                    <div th:if="${historyDto.returnMoney < 0}" class="text-end text-black fw-bold"
-                                         id="returnMoneyDiv">
-                                        Khách hàng gửi lại : <span>[(${#numbers.formatDecimal(historyDto.returnMoney,0,'COMMA',0,'POINT')})]</span>
-                                    </div>
-                                    <hr>
-                                </div>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <div th:if="${#lists.size(listHistoryReturn) == 0}">
-                            <div class="fs-5 text-center">Không có dữ liệu trả hàng!</div>
-                        </div>
                         <div class="text-center mt-2">
                             <a type="button" class="btn btn-outline-dark" href="/order"
                                sec:authorize="isAuthenticated()">Về danh sách đơn hàng</a>
+                            <a type="button" class="btn btn-outline-dark"
+                               th:href="@{/search_order?search={codeSearch}(codeSearch=${session.codeSearch})}"
+                               sec:authorize="!isAuthenticated()">Về danh sách đơn hàng</a>
                         </div>
                     </div>
                 </div>

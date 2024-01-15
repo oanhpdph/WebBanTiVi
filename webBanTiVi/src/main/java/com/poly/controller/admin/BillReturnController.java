@@ -3,7 +3,6 @@ package com.poly.controller.admin;
 import com.poly.dto.formReturnDto;
 import com.poly.entity.Bill;
 import com.poly.entity.BillProduct;
-import com.poly.entity.BillStatus;
 import com.poly.entity.HistoryBillProduct;
 import com.poly.service.BillProductService;
 import com.poly.service.BillService;
@@ -19,7 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +46,12 @@ public class BillReturnController {
     public String getListInvoice(HttpSession session, Model model){
         session.setAttribute("pageView", "/admin/page/bill/invoice_return.html");
         session.setAttribute("active", "/bill/invoice_return");
-        List<Bill> ListB =this.billService.findBillReturnByStatus("RR");
+        List<Integer> listId = this.historyBillProductService.findIbBillByStatusReturn(1);
+        List<Bill> ListB = new ArrayList<>();
+        for(Integer id :  listId) {
+            Bill bill = this.billService.getOneById(id);
+            ListB.add(bill);
+        }
         Collections.reverse(ListB);
         model.addAttribute("listBill", ListB);
         model.addAttribute("formReturnDto", new formReturnDto());
@@ -68,12 +72,11 @@ public class BillReturnController {
                                    @ModelAttribute("formReturnDto") formReturnDto dto){
         session.setAttribute("pageView", "/admin/page/bill/billProduct_return.html");
         session.setAttribute("active", "/bill/invoice_return");
-        List<HistoryBillProduct> product=this.historyBillProductService.findHistoryBillProductReturn(1,id);
+        List<HistoryBillProduct> product = this.historyBillProductService.findHistoryBillProductReturn(1,id);
         if(product.size()==0){
-            Bill bill = this.billService.getOneById(id);
-            BillStatus  billStatus =this.billStatusService.getOneBycode("WR");
-            bill.setBillStatus(billStatus);
-            this.billService.add(bill);
+            for(HistoryBillProduct historyBillProduct  : product){
+                historyBillProduct.setStatus(2);
+            }
             return "redirect:/admin/bill/list_invoice_return";
         }
         model.addAttribute("listBillReturn",product);
@@ -82,12 +85,11 @@ public class BillReturnController {
     @GetMapping("/invoice_return/refuse/{id}")
     public String getRefuseReturn(HttpSession session, Model model, @PathVariable("id") Integer id,
                                    @ModelAttribute("formReturnDto") formReturnDto dto){
-        List<HistoryBillProduct> product=this.historyBillProductService.findHistoryBillProductReturn(1,id);
+        List<HistoryBillProduct> product = this.historyBillProductService.findHistoryBillProductReturn(1,id);
         if(product.size()==0){
-            Bill bill = this.billService.getOneById(id);
-            BillStatus  billStatus =this.billStatusService.getOneBycode("CO");
-            bill.setBillStatus(billStatus);
-            this.billService.add(bill);
+            for(HistoryBillProduct historyBillProduct  : product){
+                historyBillProduct.setStatus(2);
+            }
             return "redirect:/admin/bill/list_invoice_return";
         }
         model.addAttribute("listBillReturn",product);
@@ -116,14 +118,13 @@ public class BillReturnController {
         Integer idBill =Integer.parseInt(session.getAttribute("idBillReturn").toString());
         HistoryBillProduct historyBillProduct = this.historyBillProductService.findByBillProductAndReturnTimes(id,idBill);
         historyBillProduct.setNote(dto.getNote());
-        historyBillProduct.setStatus(3);
         historyBillProduct.setDate(date);
-        historyBillProduct.setQuantityAcceptReturn(0);
+        historyBillProduct.setStatusBillProduct(2);
+        historyBillProduct.setStatus(0);
+        historyBillProduct.setQuantityAcceptReturn(historyBillProduct.getQuantityRequestReturn()-Integer.parseInt(dto.getQuantity()));
         historyBillProduct.setBill(this.billService.getOneById(idBill));
         historyBillProduct.setBillProduct(this.billProductService.edit(id));
         this.historyBillProductService.save(historyBillProduct);
-        billProduct.setStatus(2);
-        this.billProductService.save(billProduct);
         return "redirect:/admin/invoice_return/refuse/"+billProduct.getBill().getId();
     }
 
@@ -143,13 +144,12 @@ public class BillReturnController {
             redirectAttributes.addFlashAttribute("errorAdminQuantity","(*)Số lượng sản phẩm được trả không lớn hơn số lương yêu cầu!");
             return "redirect:/admin/invoice_return/agree/"+billProduct.getBill().getId();
         }
-        billProduct.setStatus(3);
-        this.billProductService.save(billProduct);
         Integer idBill =Integer.parseInt(session.getAttribute("idBillReturn").toString());
         HistoryBillProduct historyBillProduct = this.historyBillProductService.findByBillProductAndReturnTimes(id, idBill);
         historyBillProduct.setQuantityAcceptReturn(Integer.parseInt(dto.getQuantity()));
         historyBillProduct.setNote(dto.getNote());
-        historyBillProduct.setStatus(2);
+        historyBillProduct.setStatusBillProduct(3);
+        historyBillProduct.setStatus(0);
         historyBillProduct.setDate(date);
         historyBillProduct.setBill(this.billService.getOneById(idBill));
         historyBillProduct.setBillProduct(this.billProductService.edit(id));
@@ -159,7 +159,7 @@ public class BillReturnController {
     @GetMapping("/agree")
     public String getViewAgree(HttpSession session,Model model){
         session.setAttribute("pageView", "/admin/page/bill/agree_bill_return.html");
-        List<HistoryBillProduct> listHistoryBillProducts = this.historyBillProductService.findAllByStatus(2);
+        List<HistoryBillProduct> listHistoryBillProducts = this.historyBillProductService.findAllByStatus(3);
         Collections.reverse(listHistoryBillProducts);
         model.addAttribute("listAgree",listHistoryBillProducts);
         return "admin/layout";
@@ -167,7 +167,7 @@ public class BillReturnController {
     @GetMapping("/refuse")
     public String getViewRefuse(HttpSession session,Model model){
         session.setAttribute("pageView", "/admin/page/bill/refuse_bill_return.html");
-        List<HistoryBillProduct> listHistoryBillProducts = this.historyBillProductService.findAllByStatus(3);
+        List<HistoryBillProduct> listHistoryBillProducts = this.historyBillProductService.findAllByStatus(2);
         Collections.reverse(listHistoryBillProducts);
         model.addAttribute("listRefuse",listHistoryBillProducts);
         return "admin/layout";

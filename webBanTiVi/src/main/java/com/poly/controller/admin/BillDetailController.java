@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -43,13 +44,8 @@ public class BillDetailController {
         deliveryNotesSevice.getByIdBill(idBill).getDeliveryFee();
         Bill bill = billService.getOneById(idBill);
         List<HistoryBillReturnDto> listHistoryDto = this.historyBillProductService.findAllHistoryBillReturnByIdBill(idBill);
-        BigDecimal total = BigDecimal.ZERO;
-        for(HistoryBillReturnDto hBillReturnDto : listHistoryDto){
-            total =total.add(hBillReturnDto.getReturnMoney());
-            if(bill.getTotalPrice().subtract(total).compareTo(bill.getVoucherValue())<0){
-                hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
-            }
-        }
+        List<List<HistoryBillReturnDto>> listNew = new ArrayList<>();
+        listNew.add(listHistoryDto);
         model.addAttribute("billDetail", bill);
 
         List<BillProduct> billProducts = bill.getBillProducts();
@@ -60,7 +56,7 @@ public class BillDetailController {
         BigDecimal reduceMoney = billProducts.stream()
                 .map(billProduct -> billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        model.addAttribute("listHistoryReturn", listHistoryDto);
+        model.addAttribute("listNew", listNew);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("paymentMethod", paymentMethodService.getAll());
         model.addAttribute("totalReduceMoney", reduceMoney);

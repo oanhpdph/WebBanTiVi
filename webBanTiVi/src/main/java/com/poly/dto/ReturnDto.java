@@ -14,5 +14,8 @@ public class ReturnDto {
     private String nameProduct;
     private String quantityReturn;
     private String reason;
+    private String bank;
+    private String accountNumber;
+    private String owner;
     private List<ImageReturnDto> image;
 }

@@ -34,7 +34,7 @@ public class HistoryBillProduct {
     @Column(name = "quantity_accept_return")
     private Integer quantityAcceptReturn;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date")
     private Date date;
 
@@ -47,8 +47,23 @@ public class HistoryBillProduct {
     @Column(name = "status")
     private Integer status;
 
+    @Column(name = "status_bill_product")
+    private Integer statusBillProduct;
+
     @Column(name="note")
     private String note;
+
+    @Column(name="bank")
+    private String bank;
+
+    @Column(name="return_method")
+    private Integer returnMethod;
+
+    @Column(name="owner")
+    private String owner;
+
+    @Column(name="account_number_bank")
+    private String accountNumber;
 
     @OneToMany(mappedBy="hBillProduct")
     private List<ImageReturned> listImage;
