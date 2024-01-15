@@ -122,12 +122,14 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
         HistoryBillReturnDto historyBillReturnDto = new HistoryBillReturnDto();
         List<HistoryBillReturnDto> listHistoryDto = this.findAllHistoryBillReturnByIdBill(id);
         BigDecimal totalReturnBill = BigDecimal.ZERO;
-        for(HistoryBillReturnDto hBillReturnDto : listHistoryDto){
-            totalReturnBill =totalReturnBill.add(hBillReturnDto.getReturnMoney());
-            if(bill.getTotalPrice().subtract(totalReturnBill).compareTo(bill.getVoucherValue())<0){
-                hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
-            }
-        }
+//        int check=0;
+//        for(HistoryBillReturnDto hBillReturnDto : listHistoryDto){
+//            totalReturnBill =totalReturnBill.add(hBillReturnDto.getReturnMoney());
+//            if(bill.getTotalPrice().subtract(totalReturnBill).compareTo(bill.getVoucherValue())<0 && check == 0){
+//                hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
+//                check=1;
+//            }
+//        }
         for(HistoryBillReturnDto hBillReturnDto : listHistoryDto){
             if(hBillReturnDto.getReturnTimes().equals(returnTimes)){
                 historyBillReturnDto = hBillReturnDto;
@@ -151,9 +153,10 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
                 for(HistoryBillProduct historyBillProduct : historyBillProducts){
                     statusList.add(historyBillProduct.getStatus());
                     BigDecimal price = historyBillProduct.getBillProduct().getPrice();
+                    BigDecimal reducedMoney = historyBillProduct.getBillProduct().getReducedMoney();
                     int quantity = historyBillProduct.getQuantityAcceptReturn();
                    if(price != null && quantity >= 0){
-                       BigDecimal productTotal = price.multiply(BigDecimal.valueOf(quantity));
+                       BigDecimal productTotal = (price.subtract(reducedMoney)).multiply(BigDecimal.valueOf(quantity));
                        total = total.add(productTotal);
                    }else{
                        System.out.println("Giá trị null hoặc không hợp lệ được đọc từ historyBillProduct");
@@ -167,10 +170,12 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
         }
         Bill bill = this.billRepos.findById(id).get();
         BigDecimal totalReturnBill = BigDecimal.ZERO;
+        int check = 0;
         for(HistoryBillReturnDto hBillReturnDto : historyBillReturnDtos){
             totalReturnBill =totalReturnBill.add(hBillReturnDto.getReturnMoney());
-            if(bill.getTotalPrice().subtract(totalReturnBill).compareTo(bill.getVoucherValue())<0){
+            if(bill.getTotalPrice().subtract(totalReturnBill).compareTo(bill.getVoucherValue())<0 && check ==0){
                 hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
+                check=1;
             }
         }
         return historyBillReturnDtos;
