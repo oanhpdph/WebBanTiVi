@@ -91,7 +91,7 @@
                                     <span class="fs-tiny text-decoration-underline">đ</span>
                                 </div>
                                 <div th:if="${billProduct.reducedMoney !=0}">
-                                    <span>[(${#numbers.formatDecimal(billProduct.product.price-billProduct.reducedMoney,0,'COMMA',0,'POINT')})]</span>
+                                    <span>[(${#numbers.formatDecimal(billProduct.price-billProduct.reducedMoney,0,'COMMA',0,'POINT')})]</span>
                                     <span class="fs-tiny text-decoration-underline">đ</span>
                                 </div>
                                 <div th:if="${billProduct.reducedMoney==0}">
@@ -127,12 +127,8 @@
                             <hr>
                             <div class="mb-3 row text-end">
                                 <span class="col-sm-10 fw-semibold ">Thanh toán:</span>
-                                <span class="col-sm-2" th:if="${bill.voucherValue != null}">
-                                    [(${#numbers.formatDecimal(totalBill-bill.voucherValue+bill.deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')})]
-                                      <span class="text-decoration-underline fs-tiny">đ</span>
-                                </span>
-                                <span class="col-sm-2" th:if="${bill.voucherValue == null}">
-                                        [(${#numbers.formatDecimal(totalBill+bill.deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')})]
+                                <span class="col-sm-2" >
+                                        [(${#numbers.formatDecimal(bill.totalPrice+bill.deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')})]
                                       <span class="text-decoration-underline fs-tiny">đ</span>
                                 </span>
                             </div>
