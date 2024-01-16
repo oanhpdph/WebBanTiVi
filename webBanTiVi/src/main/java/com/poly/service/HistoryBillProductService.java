@@ -26,4 +26,18 @@ public interface HistoryBillProductService {
    Bill  listBillWhenReturned(String id);
 
    List<HistoryBillProduct> findAllByStatus(Integer status);
+
+   List<Integer> findIbBillByIdUser(Integer id);
+
+    List<Integer> findIbBillByStatusReturn(Integer id);
+
+    List<Integer> findIdBillByStatusAndUserReturn(Integer status, Integer idUser);
+
+    List<Integer> findIdBillByStatusReturn(Integer status);
+
+    List<Integer> findAllIdBillReturn();
+
+    HistoryBillReturnDto listHistoryBillAndReturnTimes(Integer id, Integer status);
+
+    Boolean compareQuantityBillAndHistoryPoduct(Integer id);
 }

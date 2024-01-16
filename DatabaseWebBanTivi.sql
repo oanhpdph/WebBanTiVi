@@ -201,11 +201,17 @@ CREATE TABLE bill_product
      id_bill_product	  INT REFERENCES bill_product(id) not null,
      quantity_request_return	INT,
 	 quantity_accept_return		INT,
-	 date                DATE ,
+	 date                DATETIME ,
      reason 		     nvarchar(max),
      status		         int ,
 	 return_times        int ,
-	 note               nvarchar(max)
+	 note               nvarchar(max),
+	 status_bill_product int,
+	 return_method      int,
+	 account_number_bank nvarchar(100),
+	 bank  nvarchar(max),
+	 owner nvarchar(max)
+
   )
  
 

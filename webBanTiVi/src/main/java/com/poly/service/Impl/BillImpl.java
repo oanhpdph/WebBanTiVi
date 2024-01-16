@@ -270,11 +270,7 @@ public class BillImpl implements BillService {
 
     @Override
     public void logicBillReturn(Integer id, List<ReturnDto> returnDto) {
-        BillStatus billStatus = this.billStatusService.getOneBycode("RR");
         Bill bill = this.billRepos.findById(id).get();
-
-        bill.setBillStatus(billStatus);
-        this.billRepos.save(bill);
         Optional<Integer> returnCount = this.historyBillProductRepository.findReturnCountBillById(id);
         Integer count = 0;
         if (returnCount.isPresent()) {
@@ -292,6 +288,11 @@ public class BillImpl implements BillService {
             historyBillProduct.setQuantityAcceptReturn(0);
             historyBillProduct.setReason(dto.getReason());
             historyBillProduct.setDate(today);
+            historyBillProduct.setStatusBillProduct(1);
+            historyBillProduct.setBank(dto.getBank());
+            historyBillProduct.setOwner(dto.getOwner());
+            historyBillProduct.setReturnMethod(1);
+            historyBillProduct.setAccountNumber(dto.getAccountNumber());
             historyBillProduct.setStatus(1);
             historyBillProduct.setBill(bill);
             historyBillProduct.setReturnTimes(count);
@@ -354,21 +355,21 @@ public class BillImpl implements BillService {
         if(!bill.isPresent()){
             return null;
         }
-        List<CountBillProductReturnDto> billProductDTOList = new ArrayList<>();
-        List<Object[]> resultList = this.historyBillProductRepository.getReturnedDataForBill(Long.parseLong(String.valueOf(bill.get().getId())));
-        for (Object[] result : resultList) {
-            CountBillProductReturnDto count = new CountBillProductReturnDto();
-            count.setIdBillProduct((Integer) result[0]);
-            count.setTotalAcceptReturn(Integer.parseInt(String.valueOf((long) result[1])));
-            billProductDTOList.add(count);
-        }
-        for (CountBillProductReturnDto countBilProductReturnDto : billProductDTOList) {
-            for (BillProduct billProduct : bill.get().getBillProducts()) {
-                if (countBilProductReturnDto.getIdBillProduct() == billProduct.getId()) {
-                    billProduct.setQuantity(billProduct.getQuantity() - countBilProductReturnDto.getTotalAcceptReturn());
-                }
-            }
-        }
+//        List<CountBillProductReturnDto> billProductDTOList = new ArrayList<>();
+//        List<Object[]> resultList = this.historyBillProductRepository.getReturnedDataForBill(Long.parseLong(String.valueOf(bill.get().getId())));
+//        for (Object[] result : resultList) {
+//            CountBillProductReturnDto count = new CountBillProductReturnDto();
+//            count.setIdBillProduct((Integer) result[0]);
+//            count.setTotalAcceptReturn(Integer.parseInt(String.valueOf((long) result[1])));
+//            billProductDTOList.add(count);
+//        }
+//        for (CountBillProductReturnDto countBilProductReturnDto : billProductDTOList) {
+//            for (BillProduct billProduct : bill.get().getBillProducts()) {
+//                if (countBilProductReturnDto.getIdBillProduct() == billProduct.getId()) {
+//                    billProduct.setQuantity(billProduct.getQuantity() - countBilProductReturnDto.getTotalAcceptReturn());
+//                }
+//            }
+//        }
         return bill.get();
     }
 

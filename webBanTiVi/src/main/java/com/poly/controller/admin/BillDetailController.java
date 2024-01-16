@@ -4,6 +4,7 @@ import com.poly.dto.HistoryBillReturnDto;
 import com.poly.entity.Bill;
 import com.poly.entity.BillProduct;
 import com.poly.entity.BillStatus;
+import com.poly.entity.HistoryBillProduct;
 import com.poly.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -43,13 +45,8 @@ public class BillDetailController {
         deliveryNotesSevice.getByIdBill(idBill).getDeliveryFee();
         Bill bill = billService.getOneById(idBill);
         List<HistoryBillReturnDto> listHistoryDto = this.historyBillProductService.findAllHistoryBillReturnByIdBill(idBill);
-        BigDecimal total = BigDecimal.ZERO;
-        for(HistoryBillReturnDto hBillReturnDto : listHistoryDto){
-            total =total.add(hBillReturnDto.getReturnMoney());
-            if(bill.getTotalPrice().subtract(total).compareTo(bill.getVoucherValue())<0){
-                hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
-            }
-        }
+        List<List<HistoryBillReturnDto>> listNew = new ArrayList<>();
+        listNew.add(listHistoryDto);
         model.addAttribute("billDetail", bill);
 
         List<BillProduct> billProducts = bill.getBillProducts();
@@ -60,7 +57,7 @@ public class BillDetailController {
         BigDecimal reduceMoney = billProducts.stream()
                 .map(billProduct -> billProduct.getReducedMoney().multiply(BigDecimal.valueOf(billProduct.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        model.addAttribute("listHistoryReturn", listHistoryDto);
+        model.addAttribute("listNew", listNew);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("paymentMethod", paymentMethodService.getAll());
         model.addAttribute("totalReduceMoney", reduceMoney);
@@ -75,6 +72,20 @@ public class BillDetailController {
 
         session.setAttribute("pageView", "/admin/page/bill/bill_detail.html");
         session.setAttribute("active", "/bill/list_bill");
+        return "/admin/layout";
+    }
+
+    @GetMapping("/bill/detail_return/{id}/{returnTimes}")
+    public String ViewOrderDetailReturn(@PathVariable("id") Integer id, @PathVariable("returnTimes") Integer returnTimes, HttpSession session, Model model) {
+        HistoryBillReturnDto listHistoryDto = this.historyBillProductService.listHistoryBillAndReturnTimes(id, returnTimes);
+        BigDecimal totalReturn = BigDecimal.ZERO;
+        for(HistoryBillProduct historyBillProduct: listHistoryDto.getHistoryBillProductList()){
+            totalReturn = totalReturn.add((historyBillProduct.getBillProduct().getPrice().subtract(historyBillProduct.getBillProduct().getReducedMoney())).multiply(BigDecimal.valueOf(historyBillProduct.getQuantityAcceptReturn())));
+        }
+        Bill bill = this.billService.getOneById(id);
+        model.addAttribute("listHDTO", listHistoryDto);
+        model.addAttribute("totalReturn", totalReturn);
+        session.setAttribute("pageView", "/admin/page/bill/bill_detail_return.html");
         return "/admin/layout";
     }
 
