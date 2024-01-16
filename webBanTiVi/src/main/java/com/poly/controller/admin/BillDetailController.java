@@ -4,6 +4,7 @@ import com.poly.dto.HistoryBillReturnDto;
 import com.poly.entity.Bill;
 import com.poly.entity.BillProduct;
 import com.poly.entity.BillStatus;
+import com.poly.entity.HistoryBillProduct;
 import com.poly.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,20 @@ public class BillDetailController {
 
         session.setAttribute("pageView", "/admin/page/bill/bill_detail.html");
         session.setAttribute("active", "/bill/list_bill");
+        return "/admin/layout";
+    }
+
+    @GetMapping("/bill/detail_return/{id}/{returnTimes}")
+    public String ViewOrderDetailReturn(@PathVariable("id") Integer id, @PathVariable("returnTimes") Integer returnTimes, HttpSession session, Model model) {
+        HistoryBillReturnDto listHistoryDto = this.historyBillProductService.listHistoryBillAndReturnTimes(id, returnTimes);
+        BigDecimal totalReturn = BigDecimal.ZERO;
+        for(HistoryBillProduct historyBillProduct: listHistoryDto.getHistoryBillProductList()){
+            totalReturn = totalReturn.add((historyBillProduct.getBillProduct().getPrice().subtract(historyBillProduct.getBillProduct().getReducedMoney())).multiply(BigDecimal.valueOf(historyBillProduct.getQuantityAcceptReturn())));
+        }
+        Bill bill = this.billService.getOneById(id);
+        model.addAttribute("listHDTO", listHistoryDto);
+        model.addAttribute("totalReturn", totalReturn);
+        session.setAttribute("pageView", "/admin/page/bill/bill_detail_return.html");
         return "/admin/layout";
     }
 

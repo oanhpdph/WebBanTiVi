@@ -6,7 +6,7 @@ import com.poly.dto.HistoryBillReturnDto;
 import com.poly.dto.ReturnDto;
 import com.poly.dto.UserDetailDto;
 import com.poly.entity.Bill;
-import com.poly.entity.BillProduct;
+import com.poly.entity.HistoryBillProduct;
 import com.poly.service.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,12 +75,7 @@ public class UserController {
                 }
             }
         }
-        BigDecimal totalBill = BigDecimal.ZERO;
-        for (BillProduct billProduct : bill.getBillProducts()) {
-            totalBill = totalBill.add(billProduct.getPrice().multiply(BigDecimal.valueOf(billProduct.getQuantity())));
-        }
         model.addAttribute("bill", bill);
-        model.addAttribute("totalBill", totalBill);
         model.addAttribute("listHistoryReturn", listHistoryDto);
         model.addAttribute("billProducts", bill.getBillProducts());
         session.setAttribute("pageView", "/user/page/invoice/detail_invoice.html");
@@ -95,6 +90,7 @@ public class UserController {
         List<Integer> idBillList = this.historyBillProductService.findIdBillByStatusAndUserReturn(1, customerUserDetail.getId());
         List<Integer> idBillALlUser = this.historyBillProductService.findIbBillByIdUser(customerUserDetail.getId());
         List<Boolean> listCheckCondtionReturn = new ArrayList<>();
+        List<Boolean> listCompareBillAndHistory = new ArrayList<>();
         boolean check = false;
         int count = 0;
         for (Bill bill : billList) {
@@ -114,10 +110,13 @@ public class UserController {
             listCheckCondtionReturn.add(check);
             check = false;
             count = 0;
+            Boolean compareBillAndHistory = this.historyBillProductService.compareQuantityBillAndHistoryPoduct(bill.getId());
+            listCompareBillAndHistory.add(compareBillAndHistory);
         }
         List<Boolean> listcheck = this.billService.checkValidationReturn();
         model.addAttribute("check", listcheck);
         model.addAttribute("listCheckConditionReturn", listCheckCondtionReturn);
+        model.addAttribute("listCompareBillAndHistory", listCompareBillAndHistory);
         model.addAttribute("bill", billList);
         session.setAttribute("activeOrder", 0);
         session.setAttribute("pageView", "/user/page/profile/order.html");
@@ -129,7 +128,37 @@ public class UserController {
     public String orderStatus(HttpSession session, Model model, @PathVariable("id") Integer id) {
         UserDetailDto customerUserDetail = this.checkLogin.checkLogin();
         List<Bill> billList = this.billService.findBillByUserAndStatus(customerUserDetail.getId(), id);
+        List<Integer> idBillList = this.historyBillProductService.findIdBillByStatusAndUserReturn(1, customerUserDetail.getId());
+        List<Integer> idBillALlUser = this.historyBillProductService.findIbBillByIdUser(customerUserDetail.getId());
+        List<Boolean> listCheckCondtionReturn = new ArrayList<>();
+        List<Boolean> listCompareBillAndHistory = new ArrayList<>();
+        boolean check = false;
+        int count = 0;
+        for (Bill bill : billList) {
+            for (Integer idBAU : idBillALlUser) {
+                if (bill.getId().equals(idBAU)) {
+                    count = 1;
+                    for (Integer temp : idBillList) {
+                        if (bill.getId().equals(temp)) {
+                            check = true;
+                        }
+                    }
+                }
+            }
+            if (count == 0) {
+                check = false;
+            }
+            listCheckCondtionReturn.add(check);
+            check = false;
+            count = 0;
+            Boolean compareBillAndHistory = this.historyBillProductService.compareQuantityBillAndHistoryPoduct(bill.getId());
+            listCompareBillAndHistory.add(compareBillAndHistory);
+        }
         List<Boolean> listcheck = this.billService.checkValidationReturn();
+        model.addAttribute("check", listcheck);
+        model.addAttribute("listCheckConditionReturn", listCheckCondtionReturn);
+        model.addAttribute("listCompareBillAndHistory", listCompareBillAndHistory);
+        model.addAttribute("bill", billList);
         model.addAttribute("check", listcheck);
         model.addAttribute("bill", billList);
         session.setAttribute("activeOrder", id);
@@ -259,10 +288,13 @@ public class UserController {
     @GetMapping("/view_order/detail_return/{id}/{returnTimes}")
     public String ViewOrderDetailReturn(@PathVariable("id") Integer id, @PathVariable("returnTimes") Integer returnTimes, HttpSession session, Model model) {
         HistoryBillReturnDto listHistoryDto = this.historyBillProductService.listHistoryBillAndReturnTimes(id, returnTimes);
-        BigDecimal total = BigDecimal.ZERO;
+        BigDecimal totalReturn = BigDecimal.ZERO;
+        for(HistoryBillProduct historyBillProduct: listHistoryDto.getHistoryBillProductList()){
+            totalReturn = totalReturn.add((historyBillProduct.getBillProduct().getPrice().subtract(historyBillProduct.getBillProduct().getReducedMoney())).multiply(BigDecimal.valueOf(historyBillProduct.getQuantityAcceptReturn())));
+        }
         Bill bill = this.billService.getOneById(id);
         model.addAttribute("listHDTO", listHistoryDto);
-        model.addAttribute("total", total);
+        model.addAttribute("totalReturn", totalReturn);
         session.setAttribute("pageView", "/user/page/return_for_returned/detail_viewReturn.html");
         return "/user/index";
     }

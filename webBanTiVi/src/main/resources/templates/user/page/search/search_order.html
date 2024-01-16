@@ -49,19 +49,17 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3 text-end">
-                                    <div class="mb-2">
-                                        <span th:if="${billProduct.reducedMoney!=0}">
-                                          [(${#numbers.formatDecimal(billProduct.product.priceExport,0,'COMMA',0,'POINT')})]
-                                          <strong class="fs-tiny text-decoration-underline">đ</strong>
-                                        </span>
-                                        <span th:if="${billProduct.reducedMoney !=0}">
-                                                 [(${#numbers.formatDecimal(billProduct.product.priceExport-billProduct.reducedMoney,0,'COMMA',0,'POINT')})]
-                                                 <strong class="fs-tiny text-decoration-underline">đ</strong>
-                                            </span>
-                                        <span th:if="${billProduct.reducedMoney==0}">
-                                          [(${#numbers.formatDecimal(billProduct.product.priceExport,0,'COMMA',0,'POINT')})]
-                                           <strong class="fs-tiny text-decoration-underline">đ</strong>
-                                        </span>
+                                    <div>
+                                        <span class="text-strike-through">[(${#numbers.formatDecimal(billProduct.price,0,'COMMA',0,'POINT')})]</span>
+                                        <span class="fs-tiny text-decoration-underline">đ</span>
+                                    </div>
+                                    <div th:if="${billProduct.reducedMoney !=0}">
+                                        <span>[(${#numbers.formatDecimal(billProduct.price-billProduct.reducedMoney,0,'COMMA',0,'POINT')})]</span>
+                                        <span class="fs-tiny text-decoration-underline">đ</span>
+                                    </div>
+                                    <div th:if="${billProduct.reducedMoney==0}">
+                                        <span>[(${#numbers.formatDecimal(billProduct.price,0,'COMMA',0,'POINT')})]</span>
+                                        <span class="fs-tiny text-decoration-underline">đ</span>
                                     </div>
                                 </div>
                             </div>

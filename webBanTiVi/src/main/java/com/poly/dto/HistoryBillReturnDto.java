@@ -17,5 +17,5 @@ public class HistoryBillReturnDto {
     private Integer returnTimes;
     private List<HistoryBillProduct> historyBillProductList;
     private BigDecimal returnMoney;
-    private List<Integer> statusList;
+    private Integer quantityAccept;
 }
