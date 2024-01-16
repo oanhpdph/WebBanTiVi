@@ -115,6 +115,10 @@ public class BillReturnController {
             redirectAttributes.addFlashAttribute("errorAdminQuantity","(*)Số lượng sản phẩm được trả không lớn hơn số lương yêu cầu!");
             return "redirect:/admin/invoice_return/refuse/"+billProduct.getBill().getId();
         }
+        if(Integer.parseInt(dto.getQuantity()) <0 ){
+            redirectAttributes.addFlashAttribute("errorAdminQuantity","(*)Số lượng sản phẩm trả không nhỏ nhỏ hơn 0!");
+            return "redirect:/admin/invoice_return/refuse/"+billProduct.getBill().getId();
+        }
         Integer idBill =Integer.parseInt(session.getAttribute("idBillReturn").toString());
         HistoryBillProduct historyBillProduct = this.historyBillProductService.findByBillProductAndReturnTimes(id,idBill);
         historyBillProduct.setNote(dto.getNote());
@@ -142,6 +146,10 @@ public class BillReturnController {
         }
         if(Integer.parseInt(dto.getQuantity()) > billProduct.getQuantity()){
             redirectAttributes.addFlashAttribute("errorAdminQuantity","(*)Số lượng sản phẩm được trả không lớn hơn số lương yêu cầu!");
+            return "redirect:/admin/invoice_return/agree/"+billProduct.getBill().getId();
+        }
+        if(Integer.parseInt(dto.getQuantity()) <0 ){
+            redirectAttributes.addFlashAttribute("errorAdminQuantity","(*)Số lượng sản phẩm trả không nhỏ nhỏ hơn 0!");
             return "redirect:/admin/invoice_return/agree/"+billProduct.getBill().getId();
         }
         Integer idBill =Integer.parseInt(session.getAttribute("idBillReturn").toString());

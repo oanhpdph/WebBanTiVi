@@ -110,11 +110,13 @@ function clickSave() {
                         if (quantityReturn[index].value > Number(quantityReturn[index].getAttribute("max"))) {
                             errorQuantity.innerHTML = "Số lượng trả không lớn hơn số lượng mua!"
                             check = false;
-                            console.log(113, check);
                         } else if (quantityReturn[index].value.length == 0) {
                             errorQuantity.innerHTML = "Vui lòng điền số lượng!"
                             check = false;
-                        } else {
+                        }else if (quantityReturn[index].value <= 0){
+                         errorQuantity.innerHTML = "số lượng trả phải lớn hơn 0!"
+                            check = false;
+                        }else {
                             errorQuantity.innerHTML = ""
                         }
                         if (reason[index].value.length == 0) {
