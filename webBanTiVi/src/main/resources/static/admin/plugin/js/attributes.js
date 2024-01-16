@@ -240,7 +240,7 @@ $("#submit-add-attribute").click(function () {
                         var dataPost = {
                             name: value,
                             active:true,
-                            variant:$("#nomal").is("checked") == true ? true : false
+                            variant:$("#normal").prop("checked") == false ? true : false
                         }
                         $.ajax(
                             {
