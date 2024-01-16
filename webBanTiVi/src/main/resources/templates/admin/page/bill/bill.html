@@ -45,14 +45,14 @@
                     <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger"  th:if="${#lists.size(huy)>0}">[(${#lists.size(huy)})]</span>
                 </button>
             </li>
-            <li class="nav-item">
-                <button type="button" th:class="|nav-link status *{billStatus=='dontra' ? 'active':''}|"
-                        data-bs-toggle="tab" value="dontra"
-                        aria-selected="false">
-                    Đơn trả
-                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger"  th:if="${#lists.size(trahang)>0}">[(${#lists.size(trahang)})]</span>
-                </button>
-            </li>
+<!--            <li class="nav-item">-->
+<!--                <button type="button" th:class="|nav-link status *{billStatus=='dontra' ? 'active':''}|"-->
+<!--                        data-bs-toggle="tab" value="dontra"-->
+<!--                        aria-selected="false">-->
+<!--                    Đơn trả-->
+<!--                    <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-danger"  th:if="${#lists.size(trahang)>0}">[(${#lists.size(trahang)})]</span>-->
+<!--                </button>-->
+<!--            </li>-->
             <li class="nav-item">
                 <button type="button" th:class="|nav-link status *{billStatus=='donhoan' ? 'active':''}|"
                         data-bs-toggle="tab" value="donhoan"
