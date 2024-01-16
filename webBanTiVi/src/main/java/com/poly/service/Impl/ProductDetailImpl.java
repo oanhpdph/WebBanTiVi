@@ -138,9 +138,9 @@ public class ProductDetailImpl implements ProductDetailService {
         if (productDetailListDto.getKey() != null && productDetailListDto.getKey().trim().length() != 0) {
             Join<ProductDetail, ProductDetailField> fieldValueJoin = productDetailRoot.joinList("fieldList");
             list.add(criteriaBuilder.or(
-                    criteriaBuilder.like(fieldValueJoin.get("value"), "%" + productDetailListDto.getKey() + "%"),
-                    criteriaBuilder.like(productDetailRoot.get("product").get("nameProduct"), "%" + productDetailListDto.getKey() + "%"),
-                    criteriaBuilder.like(productDetailRoot.get("sku"), "%" + productDetailListDto.getKey() + "%")
+                    criteriaBuilder.like(fieldValueJoin.get("value"), "%" + productDetailListDto.getKey().trim() + "%"),
+                    criteriaBuilder.like(productDetailRoot.get("product").get("nameProduct"), "%" + productDetailListDto.getKey().trim() + "%"),
+                    criteriaBuilder.like(productDetailRoot.get("sku"), "%" + productDetailListDto.getKey().trim() + "%")
             ));
         }
         if (productDetailListDto.getSort() == 1) {
@@ -148,7 +148,8 @@ public class ProductDetailImpl implements ProductDetailService {
         } else {
             productCriteriaQuery.orderBy(criteriaBuilder.asc(productDetailRoot.get("createDate")));
         }
-        productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
+
+        productCriteriaQuery.select(productDetailRoot).distinct(true).where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
         Pageable pageable = PageRequest.of(productDetailListDto.getPage() - 1, productDetailListDto.getSize());
 
         List<ProductDetail> result = entityManager.createQuery(productCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();

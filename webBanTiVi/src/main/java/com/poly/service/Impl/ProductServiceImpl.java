@@ -68,12 +68,11 @@ public class ProductServiceImpl implements ProductService {
 
         if (productDetailDto.getKey() != null && productDetailDto.getKey().trim().length() != 0) {
             Join<Product, ProductFieldValue> fieldValueJoin = productRoot.joinList("productFieldValues");
-            list.add(
-                    criteriaBuilder.or(
-                            criteriaBuilder.like(fieldValueJoin.get("value"), "%" + productDetailDto.getKey() + "%"),
-                            criteriaBuilder.like(productRoot.get("nameProduct"), "%" + productDetailDto.getKey() + "%"),
-                            criteriaBuilder.like(productRoot.get("sku"), "%" + productDetailDto.getKey() + "%")
-                    ));
+            list.add(criteriaBuilder.or(
+                    criteriaBuilder.like(fieldValueJoin.get("value"), "%" + productDetailDto.getKey() + "%")
+                    , criteriaBuilder.like(productRoot.get("nameProduct"), "%" + productDetailDto.getKey() + "%")
+                    , criteriaBuilder.like(productRoot.get("sku"), "%" + productDetailDto.getKey() + "%")
+            ));
         }
 
         if (productDetailDto.getListBrand() != null && !productDetailDto.getListBrand().isEmpty()) {
@@ -82,6 +81,7 @@ public class ProductServiceImpl implements ProductService {
                     .toArray(Predicate[]::new);
             list.add(criteriaBuilder.or(predicates));
         }
+
         if (productDetailDto.isActive()) {
             list.add(criteriaBuilder.equal(productRoot.get("active"), true));
         }
@@ -98,14 +98,14 @@ public class ProductServiceImpl implements ProductService {
             productCriteriaQuery.orderBy(criteriaBuilder.asc(productRoot.get("avgPoint")));
         }
 
+        productCriteriaQuery.select(productRoot).distinct(true).where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
 
-        productCriteriaQuery.where(criteriaBuilder.and(list.toArray(new Predicate[list.size()])));
+        Pageable pageable = PageRequest.of(productDetailDto.getPage()-1, productDetailDto.getSize());
 
-        Pageable pageable = PageRequest.of(productDetailDto.getPage() - 1, productDetailDto.getSize());
-        List<Product> result = entityManager.createQuery(productCriteriaQuery).setFirstResult((int) pageable.getOffset()).setMaxResults(pageable.getPageSize()).getResultList();
-
+        List<Product> result = entityManager.createQuery(productCriteriaQuery).setMaxResults(pageable.getPageSize()).setFirstResult((int) pageable.getOffset()).getResultList();
         List<Product> result1 = entityManager.createQuery(productCriteriaQuery).getResultList();
         Page<Product> page = new PageImpl<>(result, pageable, result1.size());
+
         return page;
     }
 
