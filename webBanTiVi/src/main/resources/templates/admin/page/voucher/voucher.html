@@ -336,7 +336,7 @@
                                                                 width="200"
                                                         />
                                                     </div>
-<!--                                                    <span class="error imageloc"></span> <br/>-->
+                                                    <!--                                                    <span class="error imageloc"></span> <br/>-->
                                                     <!--                                                    <label-->
                                                     <!--                                                            class="btn btn-primary me-2 mb-4"-->
                                                     <!--                                                            tabindex="0"-->
@@ -356,10 +356,10 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Mã voucher:</label>
                                                             <input disabled
-                                                                    type="text"
-                                                                    class="form-control"
-                                                                    th:name="code"
-                                                                    th:value="${voucher.code}"
+                                                                   type="text"
+                                                                   class="form-control"
+                                                                   th:name="code"
+                                                                   th:value="${voucher.code}"
                                                             />
                                                             <span class="error codeloc"></span>
                                                         </div>
@@ -368,10 +368,10 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Tên voucher:</label>
                                                             <input disabled
-                                                                    type="text"
-                                                                    class="form-control"
-                                                                    th:name="nameVoucher"
-                                                                    th:value="${voucher.nameVoucher}"
+                                                                   type="text"
+                                                                   class="form-control"
+                                                                   th:name="nameVoucher"
+                                                                   th:value="${voucher.nameVoucher}"
                                                             />
                                                             <span class="error nameVoucherloc"></span>
                                                         </div>
@@ -381,10 +381,10 @@
                                                             <label class="form-label">Giảm tối đa</label>
                                                             <div class="input-group">
                                                                 <input disabled
-                                                                        type="text"
-                                                                        class="form-control"
-                                                                        th:name="value"
-                                                                        th:value="${voucher.value}"
+                                                                       type="text"
+                                                                       class="form-control"
+                                                                       th:name="value"
+                                                                       th:value="${voucher.value}"
                                                                 />
                                                                 <span disabled class="input-group-text">VNĐ</span>
                                                             </div>
@@ -396,10 +396,10 @@
                                                             <label class="form-label">Đơn tối thiểu</label>
                                                             <div class="input-group">
                                                                 <input disabled
-                                                                        class="form-control"
-                                                                        type="text"
-                                                                        th:name="minimumValue"
-                                                                        th:value="${#strings.replace(#numbers.formatDecimal(voucher.minimumValue, 0,'COMMA',0,'POINT'), ',', '')}"
+                                                                       class="form-control"
+                                                                       type="text"
+                                                                       th:name="minimumValue"
+                                                                       th:value="${#strings.replace(#numbers.formatDecimal(voucher.minimumValue, 0,'COMMA',0,'POINT'), ',', '')}"
                                                                 />
                                                                 <span class="input-group-text">VNĐ</span>
                                                             </div>
@@ -410,10 +410,10 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Ngày bắt đầu:</label>
                                                             <input disabled
-                                                                    type="date"
-                                                                    class="form-control"
-                                                                    th:name="startDay"
-                                                                    th:value="${voucher.startDay}"
+                                                                   type="date"
+                                                                   class="form-control"
+                                                                   th:name="startDay"
+                                                                   th:value="${voucher.startDay}"
                                                             />
                                                         </div>
                                                         <span class="error startDayloc"></span>
@@ -422,10 +422,10 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Số lượng:</label>
                                                             <input disabled
-                                                                    type="number"
-                                                                    class="form-control"
-                                                                    th:name="quantity"
-                                                                    th:value="${voucher.quantity}"
+                                                                   type="number"
+                                                                   class="form-control"
+                                                                   th:name="quantity"
+                                                                   th:value="${voucher.quantity}"
                                                             />
                                                         </div>
                                                         <span class="error quantityloc"></span>
@@ -436,47 +436,47 @@
                                                             >Ngày kết thúc :</label
                                                             >
                                                             <input disabled
-                                                                    type="date"
-                                                                    class="form-control"
-                                                                    th:name="expirationDate"
-                                                                    th:value="${voucher.expirationDate}"
+                                                                   type="date"
+                                                                   class="form-control"
+                                                                   th:name="expirationDate"
+                                                                   th:value="${voucher.expirationDate}"
                                                             />
                                                         </div>
                                                         <span id="expirationDateloc" class="error"></span>
                                                     </div>
-<!--                                                    <div class="col-lg-6 col-md-6">-->
-<!--                                                        <div class="mb-3">-->
-<!--                                                            <label class="form-label">Trạng thái:</label>-->
-<!--                                                            <div>-->
-<!--                                                                <div-->
-<!--                                                                        class="form-check form-check-inline mt-3"-->
-<!--                                                                >-->
-<!--                                                                    <input disabled-->
-<!--                                                                            class="form-check-input"-->
-<!--                                                                            type="radio"-->
-<!--                                                                            th:name="active"-->
-<!--                                                                            th:value="true"-->
-<!--                                                                            th:checked="${voucher.active==true}"-->
-<!--                                                                    />-->
-<!--                                                                    <label class="form-check-label"-->
-<!--                                                                    >Hoạt động</label-->
-<!--                                                                    >-->
-<!--                                                                </div>-->
-<!--                                                                <div class="form-check form-check-inline">-->
-<!--                                                                    <input disabled-->
-<!--                                                                            class="form-check-input"-->
-<!--                                                                            type="radio"-->
-<!--                                                                            th:name="active"-->
-<!--                                                                            th:value="false"-->
-<!--                                                                            th:checked="${voucher.active==false}"-->
-<!--                                                                    />-->
-<!--                                                                    <label class="form-check-label"-->
-<!--                                                                    >Không hoạt động</label-->
-<!--                                                                    >-->
-<!--                                                                </div>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
+                                                    <!--                                                    <div class="col-lg-6 col-md-6">-->
+                                                    <!--                                                        <div class="mb-3">-->
+                                                    <!--                                                            <label class="form-label">Trạng thái:</label>-->
+                                                    <!--                                                            <div>-->
+                                                    <!--                                                                <div-->
+                                                    <!--                                                                        class="form-check form-check-inline mt-3"-->
+                                                    <!--                                                                >-->
+                                                    <!--                                                                    <input disabled-->
+                                                    <!--                                                                            class="form-check-input"-->
+                                                    <!--                                                                            type="radio"-->
+                                                    <!--                                                                            th:name="active"-->
+                                                    <!--                                                                            th:value="true"-->
+                                                    <!--                                                                            th:checked="${voucher.active==true}"-->
+                                                    <!--                                                                    />-->
+                                                    <!--                                                                    <label class="form-check-label"-->
+                                                    <!--                                                                    >Hoạt động</label-->
+                                                    <!--                                                                    >-->
+                                                    <!--                                                                </div>-->
+                                                    <!--                                                                <div class="form-check form-check-inline">-->
+                                                    <!--                                                                    <input disabled-->
+                                                    <!--                                                                            class="form-check-input"-->
+                                                    <!--                                                                            type="radio"-->
+                                                    <!--                                                                            th:name="active"-->
+                                                    <!--                                                                            th:value="false"-->
+                                                    <!--                                                                            th:checked="${voucher.active==false}"-->
+                                                    <!--                                                                    />-->
+                                                    <!--                                                                    <label class="form-check-label"-->
+                                                    <!--                                                                    >Không hoạt động</label-->
+                                                    <!--                                                                    >-->
+                                                    <!--                                                                </div>-->
+                                                    <!--                                                            </div>-->
+                                                    <!--                                                        </div>-->
+                                                    <!--                                                    </div>-->
                                                 </div>
                                             </div>
                                         </div>
@@ -641,12 +641,10 @@
                                 "<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị không được để trống và phải lớn hơn 0!"
                             );
                         status.push(false);
-                    }
-                        // else if (minimumValue.value > value.value) {
-                        //     $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị tối thiểu phải nhỏ hơn giá trị giảm!");
-                        //     status.push(false);
-                    // }
-                    else {
+                    } else if (minimumValue.value < value.value) {
+                        $(minimumValue).parent().siblings('.minimumValueloc').first().html("<i class='bx bx-x-circle' style='color:#ff0000' ></i> Giá trị tối thiểu không được nhỏ hơn giá trị giảm!");
+                        status.push(false);
+                    } else {
                         $(minimumValue)
                             .parent()
                             .siblings(".minimumValueloc")
