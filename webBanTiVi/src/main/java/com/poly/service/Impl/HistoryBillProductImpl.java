@@ -122,14 +122,6 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
         HistoryBillReturnDto historyBillReturnDto = new HistoryBillReturnDto();
         List<HistoryBillReturnDto> listHistoryDto = this.findAllHistoryBillReturnByIdBill(id);
         BigDecimal totalReturnBill = BigDecimal.ZERO;
-//        int check=0;
-//        for(HistoryBillReturnDto hBillReturnDto : listHistoryDto){
-//            totalReturnBill =totalReturnBill.add(hBillReturnDto.getReturnMoney());
-//            if(bill.getTotalPrice().subtract(totalReturnBill).compareTo(bill.getVoucherValue())<0 && check == 0){
-//                hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
-//                check=1;
-//            }
-//        }
         for(HistoryBillReturnDto hBillReturnDto : listHistoryDto){
             if(hBillReturnDto.getReturnTimes().equals(returnTimes)){
                 historyBillReturnDto = hBillReturnDto;
@@ -149,9 +141,9 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
                 historyBillReturnDto.setReturnTimes(i + 1);
                 historyBillReturnDto.setHistoryBillProductList(historyBillProducts);
                 BigDecimal total = BigDecimal.ZERO;
-                List<Integer> statusList= new ArrayList<>();
+                Integer quantityAccept= 0;
                 for(HistoryBillProduct historyBillProduct : historyBillProducts){
-                    statusList.add(historyBillProduct.getStatus());
+                    quantityAccept = quantityAccept+ historyBillProduct.getQuantityAcceptReturn();
                     BigDecimal price = historyBillProduct.getBillProduct().getPrice();
                     BigDecimal reducedMoney = historyBillProduct.getBillProduct().getReducedMoney();
                     int quantity = historyBillProduct.getQuantityAcceptReturn();
@@ -162,7 +154,7 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
                        System.out.println("Giá trị null hoặc không hợp lệ được đọc từ historyBillProduct");
                         }
                    }
-                historyBillReturnDto.setStatusList(statusList);
+                historyBillReturnDto.setQuantityAccept(quantityAccept);
                 historyBillReturnDto.setBill(this.billRepos.findById(id).get());
                 historyBillReturnDto.setReturnMoney(total);
                 historyBillReturnDtos.add(historyBillReturnDto);
@@ -171,11 +163,13 @@ public class HistoryBillProductImpl implements HistoryBillProductService {
         Bill bill = this.billRepos.findById(id).get();
         BigDecimal totalReturnBill = BigDecimal.ZERO;
         int check = 0;
-        for(HistoryBillReturnDto hBillReturnDto : historyBillReturnDtos){
-            totalReturnBill =totalReturnBill.add(hBillReturnDto.getReturnMoney());
-            if(bill.getTotalPrice().subtract(totalReturnBill).compareTo(bill.getVoucherValue())<0 && check ==0){
-                hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
-                check=1;
+        if(bill.getVoucher() != null) {
+            for (HistoryBillReturnDto hBillReturnDto : historyBillReturnDtos) {
+                totalReturnBill = totalReturnBill.add(hBillReturnDto.getReturnMoney());
+                if (bill.getTotalPrice().subtract(totalReturnBill).compareTo(bill.getVoucher().getMinimumValue()) < 0 && check == 0) {
+                    hBillReturnDto.setReturnMoney(hBillReturnDto.getReturnMoney().subtract(bill.getVoucherValue()));
+                    check = 1;
+                }
             }
         }
         return historyBillReturnDtos;

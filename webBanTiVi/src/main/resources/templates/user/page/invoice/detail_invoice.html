@@ -106,7 +106,7 @@
                             <div class="mb-3 row text-end">
                                 <span class="col-sm-10 ">Tổng giá trị sản phẩm:</span>
                                 <span class="col-sm-2 ">
-                                [(${#numbers.formatDecimal(totalBill,0,'COMMA',0,'POINT')})]
+                                [(${#numbers.formatDecimal(bill.totalPrice+bill.voucherValue,0,'COMMA',0,'POINT')})]
                                     <span class="text-decoration-underline fs-tiny">đ</span>
                                 </span>
                             </div>

@@ -224,7 +224,7 @@
                                                         <span class="fs-tiny text-decoration-underline">đ</span>
                                                     </div>
                                                     <div th:if="${historyBillReturn?.billProduct.reducedMoney !=0}">
-                                                        <span>[(${#numbers.formatDecimal(historyBillReturn.billProduct.price-billProduct.reducedMoney,0,'COMMA',0,'POINT')})]</span>
+                                                        <span>[(${#numbers.formatDecimal(historyBillReturn.billProduct.price-historyBillReturn.billProduct.reducedMoney,0,'COMMA',0,'POINT')})]</span>
                                                         <span class="fs-tiny text-decoration-underline">đ</span>
                                                     </div>
                                                     <div th:if="${historyBillReturn?.billProduct.reducedMoney ==0}">
@@ -236,28 +236,29 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <div th:if="${historyBillReturnList.returnMoney >=0}"
-                                         class="text-end text-black mb-1 fw-bold">
-                                        Số tiền hoàn
-                                        lại:[(${#numbers.formatDecimal(historyBillReturnList?.returnMoney,0,'COMMA',0,'POINT')})]
+                                    <div class="row mb-3">
+                                        <div class="col-6">
+                                            <div>[(${historyBillReturnList?.quantityAccept})] sản phẩm</div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div th:if="${historyBillReturnList.returnMoney >=0}"
+                                                 class="text-end text-black mb-1 fw-bold">
+                                                Số tiền hoàn
+                                                lại:[(${#numbers.formatDecimal(historyBillReturnList?.returnMoney,0,'COMMA',0,'POINT')})]
+                                            </div>
+                                            <div th:if="${historyBillReturnList.returnMoney < 0}"
+                                                 class="text-end text-black mb-1 fw-bold"
+                                                 id="returnMoneyDiv">
+                                                Khách hàng gửi lại : <span>[(${#numbers.formatDecimal(historyBillReturnList?.returnMoney-historyBillReturnList?.returnMoney*2,0,'COMMA',0,'POINT')})]</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div th:if="${historyBillReturnList.returnMoney < 0}"
-                                         class="text-end text-black mb-1 fw-bold"
-                                         id="returnMoneyDiv">
-                                        Khách hàng gửi lại : <span>[(${#numbers.formatDecimal(historyBillReturnList?.returnMoney,0,'COMMA',0,'POINT')})]</span>
-                                    </div>
-
                                     <hr>
                                     <br>
                                     <div class="text-end mb-3 ">
                                         <a class="btn btn-outline-dark"
-                                           th:href="@{/view_order/detail_return/{id}/{returnTimes}(id=${historyBillReturnList?.bill.id}, returnTimes=${historyBillReturnList?.returnTimes})}"
+                                           th:href="@{/admin/bill/detail_return/{id}/{returnTimes}(id=${historyBillReturnList?.bill.id}, returnTimes=${historyBillReturnList?.returnTimes})}"
                                         >Xem chi tiết
-                                        </a>
-                                        <a class="btn btn-outline-dark"
-                                           onclick="return confirm('Xác nhận hủy yêu cầu trả hàng')"
-                                           th:href="@{/order/cancel/{id}(id=${historyBillReturnList?.bill.id})}">
-                                            Hủy yêu cầu
                                         </a>
                                     </div>
                                 </div>

@@ -153,12 +153,10 @@
                                             <div th:if="${historyBillReturn?.statusBillProduct == 1}"
                                                  class="viewReturnwait">Đang đợi người bán phê duyệt
                                             </div>
-                                            <div th:if="${historyBillReturn?.statusBillProduct == 3}"
-                                                 class="viewReturnwait">chấp nhận
+                                            <div th:if="${historyBillReturn?.statusBillProduct != 1}"
+                                                 class="viewReturnwait"> Đã xử lý
                                             </div>
-                                            <div th:if="${historyBillReturn?.statusBillProduct == 2}"
-                                                 class="viewReturnwait">từ chối
-                                            </div>
+
                                         </div>
                                         <div class="col-sm-3 text-end">
                                             <div>
@@ -182,17 +180,23 @@
                                 </div>
                             </div>
                             <hr>
-                            <div th:if="${historyBillReturnList.returnMoney >=0}"
-                                 class="text-end text-black mb-1 fw-bold">
-                                Số tiền hoàn
-                                lại:[(${#numbers.formatDecimal(historyBillReturnList?.returnMoney,0,'COMMA',0,'POINT')})]
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <div>[(${historyBillReturnList?.quantityAccept})] sản phẩm</div>
+                                </div>
+                                <div class="col-6">
+                                    <div th:if="${historyBillReturnList.returnMoney >=0}"
+                                         class="text-end text-black mb-1 fw-bold">
+                                        Số tiền hoàn
+                                        lại:[(${#numbers.formatDecimal(historyBillReturnList?.returnMoney,0,'COMMA',0,'POINT')})]
+                                    </div>
+                                    <div th:if="${historyBillReturnList.returnMoney < 0}"
+                                         class="text-end text-black mb-1 fw-bold"
+                                         id="returnMoneyDiv">
+                                        Khách hàng gửi lại : <span>[(${#numbers.formatDecimal(historyBillReturnList?.returnMoney-(historyBillReturnList?.returnMoney*2),0,'COMMA',0,'POINT')})]</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div th:if="${historyBillReturnList.returnMoney < 0}"
-                                 class="text-end text-black mb-1 fw-bold"
-                                 id="returnMoneyDiv">
-                                Khách hàng gửi lại : <span>[(${#numbers.formatDecimal(historyBillReturnList?.returnMoney+(historyBillReturnList?.returnMoney*2),0,'COMMA',0,'POINT')})]</span>
-                            </div>
-
                             <hr>
                             <br>
                             <div class="text-end mb-3 ">

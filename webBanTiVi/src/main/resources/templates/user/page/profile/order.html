@@ -143,14 +143,14 @@
                                 >Xem chi tiết
                                 </a>
                                 <a class="btn btn-danger return"
-                                   th:if="${!listCheckConditionReturn[billStat.index] && check[billStat.index] }"
+                                   th:if="${ bill.billStatus.code == 'CO' && !listCompareBillAndHistory[billStat.index]   && !listCheckConditionReturn[billStat.index] && check[billStat.index] }"
                                    th:href="@{/order_return/detail/{id}(id=${bill.id})}">
                                     Trả hàng
                                 </a>
                                 <a class="btn btn-outline-dark"
                                    onclick="return confirm('Xác nhận hủy đơn hàng')"
                                    th:href="@{/order/remove/{id}(id=${bill.id})}"
-                                   th:if="${bill.billStatus.code== 'WP' || bill.billStatus.code== 'PG' }"
+                                   th:if="${bill.billStatus.code== 'WP'}"
                                 >Hủy đơn hàng
                                 </a>
                             </div>
