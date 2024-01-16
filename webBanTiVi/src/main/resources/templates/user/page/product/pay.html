@@ -123,7 +123,7 @@
                                                     <span id="quanloc" class="error"></span>
                                                 </div>
                                                 <div class="col">
-                                                    <select class="form-select" th:name="ward" id="ward"
+                                                    <select class="form-select select-ward" th:name="ward" id="ward"
                                                             aria-label=".form-select-sm">
                                                         <option value="xa" selected>Chọn phường xã</option>
                                                     </select>
@@ -210,7 +210,7 @@
                                                     <span id="quanloc" class="error"></span>
                                                 </div>
                                                 <div class="col">
-                                                    <select class="form-select" th:name="ward" id="ward"
+                                                    <select class="form-select select-ward" th:name="ward" id="ward"
                                                             aria-label=".form-select-sm">
                                                         <option value="xa" selected>Chọn phường xã</option>
                                                     </select>
@@ -649,7 +649,6 @@
         })
     }
 
-    $("#ward").on("change", tongtien)
 
     function validateForm() {
 //city
@@ -745,6 +744,7 @@
         }
         totalProForm.value = totalPro
     }
+    $("#ward").on("change", tongtien)
 
     $(document).ready(
         tinhtong(),
@@ -804,6 +804,7 @@
         var tr = x.parentElement.parentElement;
         tr.remove();
     }
+
 </script>
 
 </html>

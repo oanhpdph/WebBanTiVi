@@ -56,7 +56,28 @@
         </ul>
         <div class="tab-content col-lg-9">
             <div class="tab-pane fade show active " id="navs-top-profile" role="tabpanel">
-               <h4>Đơn hàng của bạn</h4>
+                <div class="mb-4 mx-4">
+                    <ul class="nav nav-tabs nav-fill me-lg-auto mb-2 mb-lg-0">
+                        <li class="nav-item  ">
+                            <a th:class="|nav-link page ${session.activeOrder == 0 ?'active':''}|" aria-current="page" th:href="@{/order}">Tất cả</a>
+                        </li>
+                        <li class="nav-item  ">
+                            <a th:class="|nav-link page ${session.activeOrder == 1 ?'active':''}|" th:href="@{/order/status/1}">Chờ xử lý</a>
+                        </li>
+                        <li class="nav-item  ">
+                            <a th:class="|nav-link page ${session.activeOrder == 3 ?'active':''}|" th:href="@{/order/status/3}">Vận chuyển</a>
+                        </li>
+                        <li class="nav-item  ">
+                            <a th:class="|nav-link page ${session.activeOrder == 4 ?'active':''}|" th:href="@{/order/status/4}">Đã giao</a>
+                        </li>
+                        <li class="nav-item  ">
+                            <a th:class="|nav-link page ${session.activeOrder == 5 ?'active':''}|" th:href="@{/order/status/5}">Đã hủy</a>
+                        </li>
+                        <li class="nav-item  ">
+                            <a th:class="|nav-link page ${session.activeOrder== 6 ? 'active':''}|" th:href="@{/order/bill_return}">Trả hàng/Hoàn tiền</a>
+                        </li>
+                    </ul>
+                </div>
                 <div class="mb-4 mx-4">
                     <div class="mb-3 row order" th:each="bill, billStat : ${bill}">
                         <div class="row mt-3">
@@ -92,19 +113,17 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-3 text-end">
-                                        <div class="mb-2">
-                                        <span th:if="${billProduct.reducedMoney!=0}">
-                                          [(${#numbers.formatDecimal(billProduct.product.priceExport,0,'COMMA',0,'POINT')})]
-                                          <strong class="fs-tiny text-decoration-underline">đ</strong>
-                                        </span>
-                                            <span th:if="${billProduct.reducedMoney !=0}">
-                                                 [(${#numbers.formatDecimal(billProduct.product.priceExport-billProduct.reducedMoney,0,'COMMA',0,'POINT')})]
-                                                 <strong class="fs-tiny text-decoration-underline">đ</strong>
-                                            </span>
-                                            <span th:if="${billProduct.reducedMoney==0}">
-                                          [(${#numbers.formatDecimal(billProduct.product.priceExport,0,'COMMA',0,'POINT')})]
-                                           <strong class="fs-tiny text-decoration-underline">đ</strong>
-                                        </span>
+                                        <div>
+                                            <span class="text-strike-through">[(${#numbers.formatDecimal(billProduct.price,0,'COMMA',0,'POINT')})]</span>
+                                            <span class="fs-tiny text-decoration-underline">đ</span>
+                                        </div>
+                                        <div th:if="${billProduct.reducedMoney !=0}">
+                                            <span>[(${#numbers.formatDecimal(billProduct.price-billProduct.reducedMoney,0,'COMMA',0,'POINT')})]</span>
+                                            <span class="fs-tiny text-decoration-underline">đ</span>
+                                        </div>
+                                        <div th:if="${billProduct.reducedMoney==0}">
+                                            <span>[(${#numbers.formatDecimal(billProduct.price,0,'COMMA',0,'POINT')})]</span>
+                                            <span class="fs-tiny text-decoration-underline">đ</span>
                                         </div>
                                     </div>
                                 </div>
@@ -112,11 +131,7 @@
                             <hr>
                             <div class="text-end mb-3">
                                 Thanh toán:
-                                <span class="col-sm-2" th:if="${bill.voucherValue != null}">
-                                    [(${#numbers.formatDecimal(bill.totalPrice+bill.deliveryNotes[0].deliveryFee-bill.voucherValue,0,'COMMA',0,'POINT')})]
-                                      <span class="text-decoration-underline fs-tiny">đ</span>
-                                </span>
-                                <span class="col-sm-2" th:if="${bill.voucherValue == null}">
+                                <span class="col-sm-2">
                                         [(${#numbers.formatDecimal(bill.totalPrice+bill.deliveryNotes[0].deliveryFee,0,'COMMA',0,'POINT')})]
                                       <span class="text-decoration-underline fs-tiny">đ</span>
                                 </span>
@@ -128,14 +143,14 @@
                                 >Xem chi tiết
                                 </a>
                                 <a class="btn btn-danger return"
-                                   th:if="${(bill.billStatus.code== 'CO' || bill.billStatus.code== 'RE') && check[billStat.index] }"
+                                   th:if="${ bill.billStatus.code == 'CO' && !listCompareBillAndHistory[billStat.index]   && !listCheckConditionReturn[billStat.index] && check[billStat.index] }"
                                    th:href="@{/order_return/detail/{id}(id=${bill.id})}">
                                     Trả hàng
                                 </a>
                                 <a class="btn btn-outline-dark"
                                    onclick="return confirm('Xác nhận hủy đơn hàng')"
                                    th:href="@{/order/remove/{id}(id=${bill.id})}"
-                                   th:if="${bill.billStatus.code== 'WP' || bill.billStatus.code== 'PG' }"
+                                   th:if="${bill.billStatus.code== 'WP'}"
                                 >Hủy đơn hàng
                                 </a>
                             </div>

@@ -14,6 +14,43 @@
     .statusBP {
         color: chocolate !important;
     }
+    .qsfSj4 {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 1px dotted rgba(0,0,0,.09);
+     }
+    .lX4Gwk {
+    font-size: 13px;
+    line-height: 16px;
+    color: rgba(0,0,0,.54);
+     }
+    .ROZVxd {
+    padding: 10px 10px 10px 24px;
+    flex: 1;
+    color: rgba(0,0,0,.54);
+    font-size: 13px;
+    }
+     .sabTA\+ {
+    padding: 8px 24px 8px 10px;
+     }
+    .\+MprAa {
+    padding: 10px 24px 10px;
+    width: 240px;
+    border-left: 1px dotted rgba(0,0,0,.09);
+    justify-content: flex-end;
+    word-wrap: break-word;
+    color: rgba(0,0,0,.54);
+    font-size: 13px;
+    }
+    .noteReturn{
+       font-size: 13px;
+       color: rgba(0,0,0,.54);
+    }
+
+
+
 
 </style>
 <section>
@@ -35,7 +72,7 @@
         </div>
     </div>
     <div class="nav-align-left mb-4">
-        <ul class="nav nav-tabs col-lg-3" sec:authorize="isAuthenticated()"  role="tablist">
+        <ul class="nav nav-tabs col-lg-2" sec:authorize="isAuthenticated()" role="tablist">
             <li class="nav-item">
                 <a type="button" class="nav-link pb-3 pt-35 fs-5 te" role="tab"
                    aria-controls="navs-top-home" aria-selected="false"
@@ -45,8 +82,8 @@
             </li>
             <li class="nav-item">
                 <a type="button" class="nav-link pb-3 pt-3 fs-5" role="tab"
-                       aria-controls="navs-top-profile" aria-selected="true"
-                        th:href="@{/order}">
+                   aria-controls="navs-top-profile" aria-selected="true"
+                   th:href="@{/order}">
                     Đơn hàng của bạn
                 </a>
             </li>
@@ -57,7 +94,7 @@
                 </a>
             </li>
         </ul>
-        <div class="col-lg-9"  sec:authorize="isAuthenticated()" >
+        <div class="col-lg-10" sec:authorize="isAuthenticated()">
             <div>
                 <div class="mb-4 mx-4">
                     <div class="mb-3 row order">
@@ -76,12 +113,6 @@
                         <input type="text" th:value="${return}" id="return" hidden="hidden">
                         <div tabindex="-1" aria-hidden="true">
                             <input type="text" th:value="${bill.id}" class="id" hidden="hidden">
-                            <div th:if="${!checkQuantity}">
-                                <h4 style="color: black" class="text-center">(*)Rất tiếc,đơn hàng
-                                    này
-                                    của
-                                    bạn không còn sản phẩm có thể trả!</h4>
-                            </div>
                             <div th:if="${checkQuantity}">
                                 <div class="table-responsive text-nowrap">
                                     <table class="table table-bordered">
@@ -93,37 +124,48 @@
                                             </th>
                                             <th>Tên sản phẩm</th>
                                             <th>Số lượng</th>
+                                            <th>Giá</th>
                                             <th>Lí do</th>
                                             <th>Ảnh trả hàng</th>
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        <input type="text" th:value="${bill.id}" id="billId" hidden="hidden">
                                         <tr th:each="billProduct : ${bill.billProducts}"
                                             th:if="${billProduct.quantity !=0}">
-                                            <input type="text" th:value="${bill.id}" id="billId" hidden="hidden">
+
                                             <td>
                                                 <input type="checkbox" readonly="readonly"
                                                        th:class="|return checkbox${billProduct.id} form-check-input|"
                                                        th:value="${billProduct.id}">
                                             </td>
-                                            <td>
-                                                         <span th:class="|nameProduct${billProduct.id}|">[(${billProduct?.product.product.nameProduct})] [
-                                                               <span th:each="field:${billProduct.product.fieldList}">[(${field.value})]</span> ]
-                                                          </span>
+                                            <td >
+                                                 <div style="text-wrap: wrap"  th:class="|text-black nameProduct${billProduct.id}|">[(${billProduct.product.product.nameProduct+'-'+billProduct.product.product.sku})]</div>
+                                                <div class="text-decoration-none" style="font-size: 13px "> Phân loại hàng:
+                                                    <span th:each="field,iterStat : ${billProduct.product.fieldList}">[(${field.value})]
+                                                    <span th:if="${!iterStat.last}">,</span>
+                                                </span>
+                                                </div>
                                             </td>
                                             <td>
-                                                <div class="input-group input-group-merge">
+                                                <div style="width: 150px" class="input-group input-group-merge">
                                                     <input type="number"
-                                                           th:class="|form-control w-px-50 quantityReturn${billProduct.id}|"
+                                                           onchange="total()"
+                                                           th:class="|form-control w-30 quantityReturn${billProduct.id}|"
                                                            th:value="${quantity}"
                                                            th:max="${billProduct.quantity}"
-                                                           disabled>
+                                                           disabled >
                                                     <span class="input-group-text w-px-60" disabled>/[(${billProduct.quantity})]</span>
                                                 </div>
                                                 <span th:class="|errorQuantity${billProduct.id} text-danger|"></span>
                                             </td>
                                             <td>
-                                                                <textarea name="" id="" cols=""
+                                                <input type th:class="|price${billProduct.id}  form-control|"
+                                                       th:value="${#numbers.formatDecimal(billProduct.price-billProduct.reducedMoney,0,'COMMA',0,'POINT')}"
+                                                       disabled>
+                                            </td>
+                                            <td>
+                                                                <textarea name=""  cols=""
                                                                           rows="2"
                                                                           th:class="|reason${billProduct.id} form-control|"
                                                                           disabled></textarea>
@@ -184,6 +226,38 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                                <hr>
+                                <div class="row mb-3">
+                                    <div class="qsfSj4">
+                                        <div class="ROZVxd dCx+CJ"><span>Tổng giá trị sản phẩm hoàn trả: </span></div>
+                                        <div class="+MprAa" id="total"><span>0 đ</span></div>
+                                    </div>
+                                    <div class="qsfSj4">
+                                        <div class="ROZVxd dCx+CJ"><span>Hoàn trả vào:  </span></div>
+                                        <div class="+MprAa" ><span>Tài khoản ngân hàng</span></div>
+                                    </div>
+                                    <div class="qsfSj4">
+                                        <div class="ROZVxd dCx+CJ"><span>Số tài khoản:  </span></div>
+                                        <div class="+MprAa"><input id="stk"  type="text"></div>
+                                        <span class="errorSTK text-danger"></span>
+                                    </div>
+                                    <div class="qsfSj4">
+                                        <div class="ROZVxd dCx+CJ"><span>Ngân hàng:  </span></div>
+                                        <div class="+MprAa"><input id="nh" type="text"></div>
+                                        <span class="errorNH text-danger"></span>
+                                    </div>
+                                    <div class="qsfSj4">
+                                        <div class="ROZVxd dCx+CJ"><span>Chủ sở hữu:  </span></div>
+                                        <div class="+MprAa" ><input id="csh" type="text"></div>
+                                        <span class="errorCSH text-danger"></span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row mb-3 noteReturn">
+                                    <span class="text-danger">(*)Lưu ý:</span>
+                                    <span>Số tiền hoàn lại có thể sẽ khác so với tổng giá trị sản phẩm hoàn trả do <a
+                                            href="">chính sách trả hàng/hoàn tiền của cửa hàng</a>! </span>
                                 </div>
                                 <div class="mb-3 text-center">
                                     <Button type="submit" id="complete"
@@ -213,15 +287,8 @@
                             <span class="text-end col-sm-6">Mã đơn:[(${bill.code})] | [(${bill.billStatus.status})]</span>
                             <hr>
                         </div>
-                        <input type="text" th:value="${return}" id="return" hidden="hidden">
                         <div tabindex="-1" aria-hidden="true">
                             <input type="text" th:value="${bill.id}" class="id" hidden="hidden">
-                            <div th:if="${!checkQuantity}">
-                                <h4 style="color: black" class="text-center">(*)Rất tiếc,đơn hàng
-                                    này
-                                    của
-                                    bạn không còn sản phẩm có thể trả!</h4>
-                            </div>
                             <div th:if="${checkQuantity}">
                                 <div class="table-responsive text-nowrap">
                                     <table class="table table-bordered">
@@ -233,37 +300,48 @@
                                             </th>
                                             <th>Tên sản phẩm</th>
                                             <th>Số lượng</th>
+                                            <th>Giá</th>
                                             <th>Lí do</th>
                                             <th>Ảnh trả hàng</th>
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        <input type="text" th:value="${bill.id}" id="billId" hidden="hidden">
                                         <tr th:each="billProduct : ${bill.billProducts}"
                                             th:if="${billProduct.quantity !=0}">
-                                            <input type="text" th:value="${bill.id}" id="billId" hidden="hidden">
+
                                             <td>
                                                 <input type="checkbox" readonly="readonly"
                                                        th:class="|return checkbox${billProduct.id} form-check-input|"
                                                        th:value="${billProduct.id}">
                                             </td>
-                                            <td>
-                                                         <span th:class="|nameProduct${billProduct.id}|">[(${billProduct?.product.product.nameProduct})] [
-                                                               <span th:each="field:${billProduct.product.fieldList}">[(${field.value})]</span> ]
-                                                          </span>
+                                            <td >
+                                                <div style="text-wrap: wrap"  th:class="|text-black nameProduct${billProduct.id}|">[(${billProduct.product.product.nameProduct+'-'+billProduct.product.product.sku})]</div>
+                                                <div class="text-decoration-none" style="font-size: 13px "> Phân loại hàng:
+                                                    <span th:each="field,iterStat : ${billProduct.product.fieldList}">[(${field.value})]
+                                                    <span th:if="${!iterStat.last}">,</span>
+                                                </span>
+                                                </div>
                                             </td>
                                             <td>
-                                                <div class="input-group input-group-merge">
+                                                <div style="width: 150px" class="input-group input-group-merge">
                                                     <input type="number"
-                                                           th:class="|form-control w-px-50 quantityReturn${billProduct.id}|"
+                                                           onchange="total()"
+                                                           th:class="|form-control w-30 quantityReturn${billProduct.id}|"
                                                            th:value="${quantity}"
                                                            th:max="${billProduct.quantity}"
-                                                           disabled>
+                                                           disabled >
                                                     <span class="input-group-text w-px-60" disabled>/[(${billProduct.quantity})]</span>
                                                 </div>
                                                 <span th:class="|errorQuantity${billProduct.id} text-danger|"></span>
                                             </td>
                                             <td>
-                                                                <textarea name="" id="" cols=""
+                                                <input type th:class="|price${billProduct.id}  form-control|"
+                                                       th:value="${#numbers.formatDecimal(billProduct.price-billProduct.reducedMoney,0,'COMMA',0,'POINT')}"
+                                                       disabled>
+                                            </td>
+                                            <td>
+                                                                <textarea name=""  cols=""
                                                                           rows="2"
                                                                           th:class="|reason${billProduct.id} form-control|"
                                                                           disabled></textarea>
@@ -324,6 +402,38 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                </div>
+                                <hr>
+                                <div class="row mb-3">
+                                    <div class="qsfSj4">
+                                        <div class="ROZVxd dCx+CJ"><span>Tổng giá trị sản phẩm hoàn trả: </span></div>
+                                        <div class="+MprAa" id="total"><span>0 đ</span></div>
+                                    </div>
+                                    <div class="qsfSj4">
+                                        <div class="ROZVxd dCx+CJ"><span>Hoàn trả vào:  </span></div>
+                                        <div class="+MprAa" ><span>Tài khoản ngân hàng</span></div>
+                                    </div>
+                                    <div class="qsfSj4">
+                                        <div class="ROZVxd dCx+CJ"><span>Số tài khoản:  </span></div>
+                                        <div class="+MprAa" ><input id="stk" type="text"></div>
+                                        <span class="errorSTK text-danger"></span>
+                                    </div>
+                                    <div class="qsfSj4">
+                                        <div class="ROZVxd dCx+CJ"><span>Ngân hàng:  </span></div>
+                                        <div class="+MprAa " ><input id="nh" type="text"></div>
+                                        <span class="errorNH text-danger"></span>
+                                    </div>
+                                    <div class="qsfSj4">
+                                        <div class="ROZVxd dCx+CJ"><span>Chủ sở hữu:  </span></div>
+                                        <div class="+MprAa "  ><input id="csh" type="text"></div>
+                                        <span class="errorCSH text-danger"></span>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row mb-3 noteReturn" >
+                                    <span class="text-danger">(*)Lưu ý:</span>
+                                    <span>Số tiền hoàn lại có thể sẽ khác so với tổng giá trị sản phẩm hoàn trả do <a
+                                            th:href="@{/policy}">chính sách trả hàng/hoàn tiền của cửa hàng</a>! </span>
                                 </div>
                                 <div class="mb-3 text-center">
                                     <Button type="submit" id="complete"
@@ -360,4 +470,5 @@
             title: "Trả hàng thành công!"
         });
     }
+
 </script>

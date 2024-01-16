@@ -28,6 +28,27 @@ $.each(document.getElementsByClassName("return"), function (index, item) {
         checkAll()
     })
 })
+function total(){
+ var total = 0;
+ $.each(document.getElementsByClassName("return"), function (index, item) {
+    idBill = item.value;
+     $.each(document.getElementsByClassName("checkbox" + idBill), function (index, item) {
+    if (item.checked){
+    var quantity = document.getElementsByClassName("quantityReturn" + idBill);
+    var price =document.getElementsByClassName("price" + idBill);
+    var numberWithoutCommas = Number(price[index].value.replace(/,/g, ''));
+    if (quantity[index].value > Number(quantity[index].getAttribute("max"))){
+      quantity[index].value = Number(quantity[index].getAttribute("max"));
+    }
+    total =total + Number(quantity[index].value)*numberWithoutCommas;
+    }
+    })
+})
+ sessionStorage.setItem("totalValue", total);
+ var totalWithCurrency = total +"đ"
+document.getElementById("total").innerHTML=totalWithCurrency ;
+
+}
 
 function checkAll() {
     document.getElementById("checkboxAll").addEventListener("click", function (event) {
@@ -70,16 +91,18 @@ function checkAll() {
 
 function clickSave() {
     var data = [];
+    var check = true;
     $.each(document.getElementsByClassName("return"), function (index, item) {
         idBill = item.value;
         $.each(document.getElementsByClassName("checkbox" + idBill), function (index, item) {
             if (item.checked) {
-                console.log(...data);
                 var idBillProduct = document.getElementsByClassName("checkbox" + idBill)
                 var nameProduct = document.getElementsByClassName("nameProduct" + idBill)
                 var quantityReturn = document.getElementsByClassName("quantityReturn" + idBill)
                 var reason = document.getElementsByClassName("reason" + idBill)
-                var check = true;
+                var stk = document.getElementById("stk").value;
+                var nh = document.getElementById("nh").value;
+                var csh = document.getElementById("csh").value;
                 $.each(idBillProduct, function (index, item) {
                     var errorQuantity = document.querySelector(".errorQuantity" + item.value);
                     var errorReason = document.querySelector(".errorReason" + item.value);
@@ -87,11 +110,13 @@ function clickSave() {
                         if (quantityReturn[index].value > Number(quantityReturn[index].getAttribute("max"))) {
                             errorQuantity.innerHTML = "Số lượng trả không lớn hơn số lượng mua!"
                             check = false;
-                            console.log(errorQuantity);
                         } else if (quantityReturn[index].value.length == 0) {
                             errorQuantity.innerHTML = "Vui lòng điền số lượng!"
                             check = false;
-                        } else {
+                        }else if (quantityReturn[index].value <= 0){
+                         errorQuantity.innerHTML = "số lượng trả phải lớn hơn 0!"
+                            check = false;
+                        }else {
                             errorQuantity.innerHTML = ""
                         }
                         if (reason[index].value.length == 0) {
@@ -102,6 +127,20 @@ function clickSave() {
                         }
                     }
                 })
+
+                 if(stk.length== 0){
+                              document.querySelector(".errorSTK").innerHTML = "Trường bắt buộc!"
+                              check = false
+
+                 }
+                 if(nh.length== 0){
+                               document.querySelector(".errorNH").innerHTML = "Trường bắt buộc!"
+                               check = false
+                 }
+                 if(csh.length== 0){
+                               document.querySelector(".errorCSH").innerHTML = "Trường bắt buộc!"
+                               check = false
+                 }
                 $.each(idBillProduct, function (index, item) {
                     if (item.checked) {
                         var image = "returnImg" + item.value
@@ -142,20 +181,20 @@ function clickSave() {
                             quantityReturn: quantityReturn[index].value,
                             reason: reason[index].value,
                             image: arrImage,
-
+                            accountNumber: stk,
+                            bank:nh,
+                            owner:csh,
                         }
-                        console.log(temp);
                         data.push(temp)
                     }
                 })
-                if (check == false) {
-                    console.log(111);
-                    return
-                }
             }
         })
-
     })
+    if (check == false) {
+
+        return
+    }
     var billIdRequest = document.getElementById("billId");
     uploadImage();
     var xacNhan = confirm("Bạn có chắc chắn muốn trả hàng không?");
@@ -165,8 +204,8 @@ function clickSave() {
             method: "post",
             data: JSON.stringify(data),
             contentType: "application/json",
-            success: function () {
-                console.log("Thành công!")
+            success: function (data) {
+                window.location.href= "http://localhost:8080"+data;
             }
         })
     } else {
