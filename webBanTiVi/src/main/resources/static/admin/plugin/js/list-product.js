@@ -26,6 +26,11 @@ document.getElementById("first").addEventListener("click", function () {
 document.getElementById("select-size").addEventListener("change", function () {
     $("#form-product").submit()
 })
+if (document.getElementById("select-group")) {
+    document.getElementById("select-group").addEventListener("change", function () {
+        $("#form-product").submit()
+    })
+}
 document.getElementById("sort").addEventListener("change", function () {
     $("#form-product").submit()
 })

@@ -49,16 +49,16 @@
                 <div class="row mb-3">
                     <div class="input-group w-auto">
                         <label class="input-group-text" for="select-size">Loại sản phẩm:</label>
-                        <select class="form-select text-start" >
-                            <option value="10" th:selected="*{size == 10}">Loại sản phẩm</option>
-                            <option value="10" th:selected="*{size == 10}">Tivi</option>
-                            <option value="20" th:selected="*{size == 20}">Phụ kiện</option>
+                        <select class="form-select text-start" th:field="*{group}" id="select-group">
+                            <option value="0" >Loại sản phẩm</option>
+                            <option value="1" th:selected="*{group == 1}">Tivi</option>
+                            <option value="2" th:selected="*{group == 2}">Phụ kiện</option>
                         </select>
                     </div>
                 </div>
                 <div class="row justify-content-between">
                     <div class="col-xl-2 col-4">
-                        <div class="input-group ">
+                        <div class="input-group">
                             <label class="input-group-text" for="select-size">Xem:</label>
                             <select class="form-select text-start" id="select-size" name="size" th:field="*{size}">
                                 <option value="10" th:selected="*{size == 10}">10</option>
