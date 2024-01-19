@@ -36,7 +36,7 @@ public interface BillService {
 
     void logicBillReturn(Integer id, List<ReturnDto> returnDto);
 
-    List<Boolean> checkValidationReturn();
+    List<Boolean> checkValidationReturn(int idStatus);
 
     Boolean checkValidateReturnNologin(String search);
 
