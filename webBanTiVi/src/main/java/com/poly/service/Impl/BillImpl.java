@@ -307,9 +307,12 @@ public class BillImpl implements BillService {
     }
 
     @Override
-    public List<Boolean> checkValidationReturn() {
+    public List<Boolean> checkValidationReturn(int idStatus) {
         UserDetailDto customerUserDetail = this.checkLogin.checkLogin();
         List<Bill> billList = this.findAllBillByUser(customerUserDetail.getId());
+        if(idStatus == 4){
+            billList= billList.stream().filter(bill -> bill.getBillStatus().getId()==4).toList();
+        }
         List<Boolean> listeck = new ArrayList<>();
         for (int i = 0; i < billList.size(); i++) {
             if (billList.get(i).getDeliveryNotes().get(0).getReceivedDate() == null) {
@@ -327,7 +330,6 @@ public class BillImpl implements BillService {
         }
         return listeck;
     }
-
 
 
     @Override
@@ -352,7 +354,7 @@ public class BillImpl implements BillService {
     @Override
     public Bill findBillNewReturnByCode(String code) {
         Optional<Bill> bill = this.billRepos.findByCode(code);
-        if(!bill.isPresent()){
+        if (!bill.isPresent()) {
             return null;
         }
 //        List<CountBillProductReturnDto> billProductDTOList = new ArrayList<>();
@@ -400,7 +402,7 @@ public class BillImpl implements BillService {
 
     @Override
     public List<Bill> findBillByUserAndStatus(Integer idUser, Integer status) {
-        return this.billRepos.findBillByUserAndStatus(idUser,status);
+        return this.billRepos.findBillByUserAndStatus(idUser, status);
     }
 
 

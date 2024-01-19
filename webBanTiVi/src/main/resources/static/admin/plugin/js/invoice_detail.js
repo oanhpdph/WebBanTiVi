@@ -4,47 +4,41 @@ const addressDeliverInput = document.getElementById("receivingAddress");
 const deliveryFeeInput = document.getElementById("deliveryFee");
 const noteInput = document.getElementById("note");
 const codeStatus = document.getElementById("codeStatus")
-if (codeStatus.value != 'WP' && codeStatus.value != 'PG') {
-    document.getElementById("btnEdit").hidden = true
-    document.getElementById("btnCancel").hidden = true
-    document.getElementById("btnSave").hidden = true
 
-
-}
 
 const listInput = [addressDeliverInput, deliveryFeeInput, noteInput]
 
-function changeBtn() {
-    //nút chỉnh sửa đang ẩn
-    console.log("oanh")
-    for (let i = 0; i < listInput.length; i++) {
-        if (listInput[i].disabled === true) {
-            listInput[i].disabled = false
-        } else if (listInput[i].disabled === false) {
-            listInput[i].disabled = true
-        }
-    }
+// function changeBtn() {
+//     //nút chỉnh sửa đang ẩn
+//     console.log("oanh")
+//     for (let i = 0; i < listInput.length; i++) {
+//         if (listInput[i].disabled === true) {
+//             listInput[i].disabled = false
+//         } else if (listInput[i].disabled === false) {
+//             listInput[i].disabled = true
+//         }
+//     }
+//
+// }
 
-}
+// $("#btnSave").click(function () {
+//         var $form = $("#formUpdateDeliveryNotes");
+//         var $inputs = $form.find("input")
+//         var serializedData = $form.serialize();
+//         var id = $("#btnSave").val()
+//
+//         $.post("/admin/bill/bill_detail/update_delivery_notes/" + id, serializedData, function (data, status) {
+//             if (status == "success") {
+//                 alert("Cập nhật thành công")
+//                 changeBtn()
+//             }
+//         })
+//     }
+// )
 
-$("#btnSave").click(function () {
-        var $form = $("#formUpdateDeliveryNotes");
-        var $inputs = $form.find("input")
-        var serializedData = $form.serialize();
-        var id = $("#btnSave").val()
-
-        $.post("/admin/bill/bill_detail/update_delivery_notes/" + id, serializedData, function (data, status) {
-            if (status == "success") {
-                alert("Cập nhật thành công")
-                changeBtn()
-            }
-        })
-    }
-)
-
-$("#btnEdit").click(function () {
-    changeBtn()
-})
+// $("#btnEdit").click(function () {
+//     changeBtn()
+// })
 
 function update() {
     var $form = $("#formUpdateStatus");

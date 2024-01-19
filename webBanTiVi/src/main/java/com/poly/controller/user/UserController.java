@@ -113,7 +113,7 @@ public class UserController {
             Boolean compareBillAndHistory = this.historyBillProductService.compareQuantityBillAndHistoryPoduct(bill.getId());
             listCompareBillAndHistory.add(compareBillAndHistory);
         }
-        List<Boolean> listcheck = this.billService.checkValidationReturn();
+        List<Boolean> listcheck = this.billService.checkValidationReturn(-1);
         model.addAttribute("check", listcheck);
         model.addAttribute("listCheckConditionReturn", listCheckCondtionReturn);
         model.addAttribute("listCompareBillAndHistory", listCompareBillAndHistory);
@@ -154,7 +154,7 @@ public class UserController {
             Boolean compareBillAndHistory = this.historyBillProductService.compareQuantityBillAndHistoryPoduct(bill.getId());
             listCompareBillAndHistory.add(compareBillAndHistory);
         }
-        List<Boolean> listcheck = this.billService.checkValidationReturn();
+        List<Boolean> listcheck = this.billService.checkValidationReturn(id);
         model.addAttribute("check", listcheck);
         model.addAttribute("listCheckConditionReturn", listCheckCondtionReturn);
         model.addAttribute("listCompareBillAndHistory", listCompareBillAndHistory);
